@@ -13,6 +13,9 @@
   "dependencies": {
     "@docknetwork/sdk": "^0.4.1",
     "@tradle/react-native-http": "^2.0.1",
+    "appcenter": "^4.1.0",
+    "appcenter-analytics": "^4.1.0",
+    "appcenter-crashes": "^4.1.0",
     "assert": "^1.5.0",
     "browserify-zlib": "^0.1.4",
     "buffer": "^4.9.2",
