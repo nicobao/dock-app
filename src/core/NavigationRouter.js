@@ -6,7 +6,7 @@ import {CreateWalletMnemonicScreen} from '../features/wallets/CreateWalletMnemon
 import {navigationRef} from './navigation';
 import {Routes} from './routes';
 import {useDispatch} from 'react-redux';
-import {walletsOperations} from '../features/wallets/walletsSlice';
+import {walletsOperations} from '../features/wallets/wallets-slice';
 import {UnlockWalletScreen} from '../features/wallets/UnlockWalletScreen';
 import {HomeScreen} from '../features/home/HomeScreen';
 

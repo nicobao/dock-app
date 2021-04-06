@@ -18,12 +18,13 @@ import {
   Col,
 } from 'native-base';
 import React, {useEffect, useState} from 'react';
+import {InteractionManager} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components/native';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {Colors} from '../../theme/colors';
-import {walletsOperations, walletsSelectors} from './walletsSlice';
+import {walletsOperations, walletsSelectors} from './wallets-slice';
 
 const Title = styled(H1)``;
 
@@ -42,14 +43,15 @@ export function UnlockWalletScreen({navigation}) {
   const handleUnlockWallet = async () => {
     setError(null);
     setLoading(true);
-    setTimeout(() => {
+
+    InteractionManager.runAfterInteractions(() => {
       dispatch(
         walletsOperations.unlockWallet({address: selectedAddress, password}),
       ).catch(() => {
         setLoading(false);
         setError('Invalid password, please try again.');
       });
-    }, 10);
+    });
   };
 
   useEffect(() => {
@@ -58,9 +60,7 @@ export function UnlockWalletScreen({navigation}) {
     }
 
     if (!wallets.length) {
-      setTimeout(() => {
-        navigate(Routes.CREATE_WALLET);
-      }, 1000);
+      navigate(Routes.CREATE_WALLET);
 
       return;
     }
@@ -140,13 +140,11 @@ export function UnlockWalletScreen({navigation}) {
                 primary
                 onPress={handleUnlockWallet}
                 disabled={!selectedAddress || loading}>
-                {
-                  loading ? (
-                    <Spinner color="#fff" size={15}/>
-                  ) : (
-                    <Text style={{color: '#fff'}}>Unlock Wallet</Text>
-                  )
-                }
+                {loading ? (
+                  <Spinner color="#fff" size={15} />
+                ) : (
+                  <Text style={{color: '#fff'}}>Unlock Wallet</Text>
+                )}
               </Button>
             </Col>
           </Row>

@@ -13,10 +13,11 @@ import {
   View,
 } from 'native-base';
 import React, {useState} from 'react';
+import { InteractionManager } from 'react-native';
 import {useDispatch} from 'react-redux';
 import styled from 'styled-components/native';
 import {Colors} from '../../theme/colors';
-import {walletsOperations} from './walletsSlice';
+import {walletsOperations} from './wallets-slice';
 
 const Title = styled(H1)``;
 
@@ -46,12 +47,14 @@ export function CreateWalletScreen({navigation}) {
       return;
     }
 
-    dispatch(
-      walletsOperations.createWallet({
-        password: form.password,
-        walletName: form.password,
-      }),
-    );
+    InteractionManager.runAfterInteractions(() => {
+      dispatch(
+        walletsOperations.createWallet({
+          password: form.password,
+          walletName: form.password,
+        }),
+      );
+    });
   };
 
   return (

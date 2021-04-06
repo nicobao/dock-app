@@ -9,7 +9,7 @@ import {
 import React from 'react';
 import {useSelector} from 'react-redux';
 import styled from 'styled-components/native';
-import {walletsSelectors} from '../wallets/walletsSlice';
+import {walletsSelectors} from '../wallets/wallets-slice';
 
 const Title = styled(H1)``;
 
