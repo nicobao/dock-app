@@ -13,13 +13,10 @@ import {
   View,
 } from 'native-base';
 import React, {useState} from 'react';
-import { InteractionManager } from 'react-native';
+import {InteractionManager} from 'react-native';
 import {useDispatch} from 'react-redux';
-import styled from 'styled-components/native';
 import {Colors} from '../../theme/colors';
 import {walletsOperations} from './wallets-slice';
-
-const Title = styled(H1)``;
 
 export function CreateWalletScreen({navigation}) {
   const dispatch = useDispatch();
@@ -60,7 +57,7 @@ export function CreateWalletScreen({navigation}) {
   return (
     <Container>
       <Header style={{alignItems: 'center', marginTop: 10}}>
-        <Title>Create Wallet</Title>
+        <H1>Create Wallet</H1>
       </Header>
       <Content>
         <Form>

@@ -1,5 +1,4 @@
-import React, {useState} from 'react';
-import {View} from 'react-native';
+import React from 'react';
 import {
   Footer,
   FooterTab,
@@ -13,16 +12,11 @@ import {Routes} from '../core/routes';
 import {navigate} from '../core/navigation';
 import {Colors} from '../theme/colors';
 import styled from 'styled-components/native';
-// import { SearchInput } from '../features/search-stock/SearchInput';
 
 const TabText = styled(Text)`
   color: ${({active}) => (active ? '#000' : '#013c73')}
   fontSize: 14px
   fontWeight: ${({active}) => (active ? 'bold' : 'normal')}
-`;
-
-const SearchBar = styled(View)`
-  background: ${Colors.yellow};
 `;
 
 const tabs = [
@@ -39,13 +33,13 @@ const tabs = [
 ];
 
 export function AppLayout(props) {
-  const activeTab = tabs.find((tab) => tab.id === props.route.name);
+  const activeTab = tabs.find(tab => tab.id === props.route.name);
 
   const renderTabs = () => {
     return (
       <Footer style={{backgroundColor: Colors.blue}}>
         <FooterTab>
-          {tabs.map((tab) => {
+          {tabs.map(tab => {
             const active = tab.id === activeTab.id;
             return (
               <Button
@@ -66,15 +60,7 @@ export function AppLayout(props) {
 
   return (
     <Container>
-      <SearchBar style={{
-        zIndex: 1
-      }}>
-        {/* <SearchInput /> */}
-      </SearchBar>
-      <Content style={{ zIndex: 0 }}>
-        <View></View>
-        {props.children}
-      </Content>
+      <Content>{props.children}</Content>
       {activeTab && renderTabs()}
     </Container>
   );

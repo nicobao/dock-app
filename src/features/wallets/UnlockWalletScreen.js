@@ -20,13 +20,10 @@ import {
 import React, {useEffect, useState} from 'react';
 import {InteractionManager} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import styled from 'styled-components/native';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {Colors} from '../../theme/colors';
 import {walletsOperations, walletsSelectors} from './wallets-slice';
-
-const Title = styled(H1)``;
 
 export function UnlockWalletScreen({navigation}) {
   const dispatch = useDispatch();
@@ -93,7 +90,7 @@ export function UnlockWalletScreen({navigation}) {
   return (
     <Container>
       <Header style={{alignItems: 'center', marginTop: 10}}>
-        <Title>Select a Wallet</Title>
+        <H1>Select a Wallet</H1>
       </Header>
       <Content>
         <Form>

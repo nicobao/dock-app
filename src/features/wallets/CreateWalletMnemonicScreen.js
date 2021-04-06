@@ -8,11 +8,8 @@ import {
   Container,
 } from 'native-base';
 import React from 'react';
-import styled from 'styled-components/native';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
-
-const Title = styled(H1)``;
 
 export function CreateWalletMnemonicScreen({navigation, route}) {
   const mnemonic = route.params.mnemonic;
@@ -23,7 +20,7 @@ export function CreateWalletMnemonicScreen({navigation, route}) {
   return (
     <Container>
       <Header style={{alignItems: 'center', marginTop: 10}}>
-        <Title>Backup your Wallet</Title>
+        <H1>Backup your Wallet</H1>
       </Header>
       <Content>
         <Text>Copy your mnemonic phrase:</Text>
