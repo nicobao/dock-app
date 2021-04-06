@@ -1,5 +1,4 @@
 import {
-  H1,
   Header,
   Footer,
   Content,
@@ -8,10 +7,7 @@ import {
 } from 'native-base';
 import React from 'react';
 import {useSelector} from 'react-redux';
-import styled from 'styled-components/native';
 import {walletsSelectors} from '../wallets/wallets-slice';
-
-const Title = styled(H1)``;
 
 export function HomeScreen({navigation}) {
   const wallet = useSelector(walletsSelectors.getCurrentWallet);
@@ -19,7 +15,7 @@ export function HomeScreen({navigation}) {
   return (
     <Container>
       <Header style={{alignItems: 'center', marginTop: 10}}>
-        <Title>Welcome</Title>
+        <H1>Welcome</H1>
       </Header>
       <Content>
         <Text>{wallet.address}</Text>
