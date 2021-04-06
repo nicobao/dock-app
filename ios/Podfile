@@ -14,12 +14,12 @@ target 'DockApp' do
     :hermes_enabled => false
   )
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'DockAppTests' do
     inherit! :complete
     # Pods for testing
   end
-  
-
 
   # Enables Flipper.
   #
