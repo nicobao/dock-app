@@ -1,24 +1,88 @@
+import Clipboard from '@react-native-community/clipboard';
 import {
   Header,
   Footer,
   Content,
   Text,
   Container,
+  H1,
+  View,
+  Button,
+  Toast,
 } from 'native-base';
 import React from 'react';
-import {useSelector} from 'react-redux';
-import {walletsSelectors} from '../wallets/wallets-slice';
+import { RefreshControl } from 'react-native';
+import {TouchableHighlight} from 'react-native-gesture-handler';
+import {useDispatch, useSelector} from 'react-redux';
+import {navigate} from '../../core/navigation';
+import {Routes} from '../../core/routes';
+import {Colors} from '../../theme/colors';
+import {walletsOperations, walletsSelectors} from '../wallets/wallets-slice';
 
 export function HomeScreen({navigation}) {
+  const dispatch = useDispatch();
   const wallet = useSelector(walletsSelectors.getCurrentWallet);
+  const balance = useSelector(walletsSelectors.getBalance);
+  const isLoading = useSelector(walletsSelectors.getLoading);
 
   return (
     <Container>
-      <Header style={{alignItems: 'center', marginTop: 10}}>
-        <H1>Welcome</H1>
-      </Header>
-      <Content>
-        <Text>{wallet.address}</Text>
+      <Content
+        refreshControl={
+          <RefreshControl
+            onRefresh={() => {
+              dispatch(walletsOperations.fetchBalance());
+            }}
+            refreshing={isLoading}
+            colors={Colors.darkBlue}
+            tintColor={Colors.darkBlue}
+          />
+        }>
+        <TouchableHighlight
+          onPress={() => {
+            Clipboard.setString(wallet.address);
+
+            Toast.show({
+              text: 'Address copied to clipboard!',
+              buttonText: 'Ok',
+              duration: 3000,
+            });
+          }}>
+          <View
+            style={{
+              backgroundColor: '#eee',
+              padding: 12,
+              alignItems: 'center',
+            }}>
+            <Text style={{color: '#333', fontWeight: 'bold', marginBottom: 8}}>
+              {wallet.meta.name}
+            </Text>
+            <Text style={{color: '#333', fontSize: 12, marginBottom: 8}}>
+              {wallet.address}
+            </Text>
+            <Text style={{color: '#333', fontWeight: 'bold', marginBottom: 8}}>
+              {balance || ''}
+            </Text>
+          </View>
+        </TouchableHighlight>
+        {/* <View style={{padding: 12, backgroundColor: '#eee'}}></View> */}
+        <View style={{padding: 12}}>
+          <View style={{marginBottom: 12}}>
+            <Button onPress={() => alert('Available soon!')} full>
+              <Text style={{color: '#fff'}}>Send/Receive tokens</Text>
+            </Button>
+          </View>
+          <View style={{marginBottom: 12}}>
+            <Button onPress={() => navigate(Routes.APP_DID)} full>
+              <Text style={{color: '#fff'}}>Manage DIDs</Text>
+            </Button>
+          </View>
+          <View style={{marginBottom: 12}}>
+            <Button onPress={() => alert('Available soon!')} full>
+              <Text style={{color: '#fff'}}>Manage Credentials</Text>
+            </Button>
+          </View>
+        </View>
       </Content>
       <Footer style={{backgroundColor: '#fff', padding: 8}}>
         {

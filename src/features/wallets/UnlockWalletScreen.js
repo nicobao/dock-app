@@ -16,20 +16,67 @@ import {
   Grid,
   Row,
   Col,
+  H2,
+  Icon,
 } from 'native-base';
 import React, {useEffect, useState} from 'react';
-import {InteractionManager} from 'react-native';
+import {Dimensions, InteractionManager} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import { ScreenSpinner } from '../../components/ScreenSpinner';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {Colors} from '../../theme/colors';
 import {walletsOperations, walletsSelectors} from './wallets-slice';
 
+export function WalletPicker({ address, password, onAddressChange, onPasswordChange, error }) {
+  const wallets = useSelector(walletsSelectors.getItems);
+
+  return (
+    <Form>
+      <Item picker>
+        <Picker
+          note
+          mode="dropdown"
+          style={{ width: Dimensions.get('screen').width, height: 70}}
+          iosIcon={<Icon name="arrow-down" />}
+          placeholder="Select a wallet"
+          placeholderStyle={{ color: "#333" }}
+          selectedValue={address}
+          onValueChange={onAddressChange}>
+          {wallets.map(wallet => (
+            <Picker.Item
+              label={
+                <View style={{ paddingTop: 8, paddingLeft: 12  }}>
+                  <Text style={{ fontWeight: 'bold' }}>{wallet.meta.name}</Text>
+                  <Text style={{ color: '#555', fontSize: 12 }}>{wallet.address}</Text>
+                </View>
+              }
+              value={wallet.address}
+              key={wallet.address}
+            />
+          ))}
+        </Picker>
+      </Item>
+      {address ? (
+        <Item floatingLabel>
+          <Label>Enter the password</Label>
+          <Input
+            onChangeText={onPasswordChange}
+            value={password}
+            secureTextEntry={true}
+            error={error}
+          />
+        </Item>
+      ) : null}
+    </Form>
+  );
+}
+
 export function UnlockWalletScreen({navigation}) {
   const dispatch = useDispatch();
   const [selectedAddress, setSelectedAddress] = useState();
   const wallets = useSelector(walletsSelectors.getItems);
-  const [password, setPassword] = useState();
+  const [password, setPassword] = useState('mnemdm25');
   const [error, setError] = useState();
   const [loading, setLoading] = useState();
   const handlePasswordChange = value => setPassword(value);
@@ -44,7 +91,11 @@ export function UnlockWalletScreen({navigation}) {
     InteractionManager.runAfterInteractions(() => {
       dispatch(
         walletsOperations.unlockWallet({address: selectedAddress, password}),
-      ).catch(() => {
+      ).then(() => {
+        setPassword(null);
+        setLoading(false);
+        // setSelectedAddress(false);
+      }).catch(() => {
         setLoading(false);
         setError('Invalid password, please try again.');
       });
@@ -71,17 +122,7 @@ export function UnlockWalletScreen({navigation}) {
     return (
       <Container>
         <Content>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-              width: '100%',
-              height: '100%',
-            }}>
-            <Spinner color={Colors.darkBlue} />
-            <Text>Loading...</Text>
-          </View>
+          <ScreenSpinner />
         </Content>
       </Container>
     );
@@ -90,39 +131,16 @@ export function UnlockWalletScreen({navigation}) {
   return (
     <Container>
       <Header style={{alignItems: 'center', marginTop: 10}}>
-        <H1>Select a Wallet</H1>
+        <H2 style={{ color: '#fff' }}>Select a Wallet</H2>
       </Header>
       <Content>
-        <Form>
-          <Item picker>
-            <Picker
-              note
-              mode="dropdown"
-              style={{width: 200}}
-              placeholder="Select a wallet"
-              selectedValue={selectedAddress}
-              onValueChange={v => setSelectedAddress(v)}>
-              {wallets.map(wallet => (
-                <Picker.Item
-                  label={wallet.meta.name}
-                  value={wallet.address}
-                  key={wallet.address}
-                />
-              ))}
-            </Picker>
-          </Item>
-          {selectedAddress ? (
-            <Item floatingLabel>
-              <Label>Enter the password</Label>
-              <Input
-                onChangeText={handlePasswordChange}
-                value={password}
-                secureTextEntry={true}
-                error={error}
-              />
-            </Item>
-          ) : null}
-        </Form>
+        <WalletPicker
+          password={password}
+          address={selectedAddress}
+          onPasswordChange={handlePasswordChange}
+          onAddressChange={v => setSelectedAddress(v)}
+          error={error}
+        />
         <View style={{padding: 20}}>
           {<Text style={{color: Colors.red}}>{error}</Text>}
         </View>
