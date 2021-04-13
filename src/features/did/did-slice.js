@@ -1,15 +1,16 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {navigate} from '../../core/navigation';
-import {Routes} from '../../core/routes';
-import Keyring from '@polkadot/keyring';
-import {cryptoWaitReady, mnemonicGenerate} from '@polkadot/util-crypto';
 
 import {
   createNewDockDID,
   createKeyDetail,
-  createSignedKeyUpdate,
   createSignedDidRemoval,
+  createSignedKeyUpdate,
 } from '@docknetwork/sdk/utils/did';
+
+import {
+  getPublicKeyFromKeyringPair
+} from '@docknetwork/sdk/utils/misc';
+
 
 import dock, {PublicKeySr25519} from '@docknetwork/sdk';
 
@@ -56,22 +57,21 @@ export const didOperations = {
    * @returns
    */
   fetch: () => async (dispatch, getState) => {
-    // await dispatch(walletsOperations.initialize());
-    // await dispatch(walletsOperations.unlockTestWallet());
-    // const state = getState();
-    // const wallet = walletsSelectors.getCurrentWallet(state);
-    // dock.setAccount(wallet);
-
     dispatch(didActions.setLoading(false));
   },
 
+  updateDID: ({ newController, didDoc }) => async (dispatch, getState) => {
+    const currentPair = walletsSelectors.getCurrentWallet(getState());
+    const publicKey = getPublicKeyFromKeyringPair(currentPair);
+    const [keyUpdate, signature] = await createSignedKeyUpdate(dock.did, didDoc.id, publicKey, currentPair, newController);
+    await dock.did.updateKey(keyUpdate, signature, false);
+  },
   removeDID: didDoc => async (dispatch, getState) => {
     dispatch(didActions.setLoading(true));
     dispatch(didActions.removeItem(didDoc));
 
     const state = getState();
     const wallet = walletsSelectors.getCurrentWallet(state);
-    // const publicKey = PublicKeySr25519.fromKeyringPair(wallet);
 
     try {
       const [didRemoval, signature] = await createSignedDidRemoval(
@@ -79,14 +79,12 @@ export const didOperations = {
         didDoc.id,
         wallet,
       );
-      
-      // TODO: Fix issue 'Signature type does not match public key type' 
 
       await dock.did.remove(didRemoval, signature, false);
 
       dispatch(walletsOperations.fetchBalance());      
     } catch (err) {
-      // console.error(err);
+      console.error(err);
       // TODO: Handle did errors
       dispatch(didActions.setLoading(false));
     }

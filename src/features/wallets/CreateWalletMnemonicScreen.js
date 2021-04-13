@@ -28,18 +28,23 @@ export function CreateWalletMnemonicScreen({navigation, route}) {
   return (
     <Container>
       <Header style={{alignItems: 'center', marginTop: 10}}>
-        <H1 style={{ color: 'white' }}>Backup your Wallet</H1>
+        <H1 style={{color: 'white'}}>Backup your Wallet</H1>
       </Header>
       <Content padder>
-        <Text style={{ fontWeight: 'bold', marginBottom: 12  }}>Please copy your mnemonic phrase</Text>
-        <View style={{ alignSelf: 'flex-start', flexDirection: 'row', flexWrap: 'wrap' }}>
-          {
-            mnemonic.split(' ').map(word => (
-              <WordBox>
-                <Text>{word}</Text>
-              </WordBox>
-            ))
-          }
+        <Text style={{fontWeight: 'bold', marginBottom: 12}}>
+          Please copy your mnemonic phrase
+        </Text>
+        <View
+          style={{
+            alignSelf: 'flex-start',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+          }}>
+          {mnemonic.split(' ').map(word => (
+            <WordBox>
+              <Text>{word}</Text>
+            </WordBox>
+          ))}
         </View>
       </Content>
       <Footer style={{backgroundColor: '#fff', padding: 8}}>

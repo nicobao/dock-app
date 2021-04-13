@@ -54,18 +54,10 @@ export function CreateWalletScreen({navigation}) {
     });
   };
 
-  // headerStyle: {
-  //   ,
-  // },
-  // headerTintColor: '#fff',
-  // headerTitleStyle: {
-  //   fontWeight: 'bold',
-  // },
-  
   return (
     <Container>
-      <Header style={{alignItems: 'center', marginTop: 10 }}>
-        <H1 style={{ color: '#fff' }}>Create Wallet</H1>
+      <Header style={{alignItems: 'center', marginTop: 10}}>
+        <H1 style={{color: '#fff'}}>Create Wallet</H1>
       </Header>
       <Content>
         <Form>

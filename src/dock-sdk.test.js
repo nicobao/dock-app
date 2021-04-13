@@ -1,9 +1,5 @@
-// import sinon from 'sinon';
-// import appModule from './index';
-// import appActions from './actions';
-
 import { getKeyring, initDockSdk } from './features/wallets/wallets-slice';
-import dock, {PublicKeySr25519} from '@docknetwork/sdk';
+import dock from '@docknetwork/sdk';
 
 const walletJson = {
   encoded:

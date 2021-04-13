@@ -1,5 +1,4 @@
 import {
-  H1,
   Picker,
   Header,
   Footer,
@@ -22,13 +21,19 @@ import {
 import React, {useEffect, useState} from 'react';
 import {Dimensions, InteractionManager} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import { ScreenSpinner } from '../../components/ScreenSpinner';
+import {ScreenSpinner} from '../../components/ScreenSpinner';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {Colors} from '../../theme/colors';
 import {walletsOperations, walletsSelectors} from './wallets-slice';
 
-export function WalletPicker({ address, password, onAddressChange, onPasswordChange, error }) {
+export function WalletPicker({
+  address,
+  password,
+  onAddressChange,
+  onPasswordChange,
+  error,
+}) {
   const wallets = useSelector(walletsSelectors.getItems);
 
   return (
@@ -37,18 +42,20 @@ export function WalletPicker({ address, password, onAddressChange, onPasswordCha
         <Picker
           note
           mode="dropdown"
-          style={{ width: Dimensions.get('screen').width, height: 70}}
+          style={{width: Dimensions.get('screen').width, height: 70}}
           iosIcon={<Icon name="arrow-down" />}
           placeholder="Select a wallet"
-          placeholderStyle={{ color: "#333" }}
+          placeholderStyle={{color: '#333'}}
           selectedValue={address}
           onValueChange={onAddressChange}>
           {wallets.map(wallet => (
             <Picker.Item
               label={
-                <View style={{ paddingTop: 8, paddingLeft: 12  }}>
-                  <Text style={{ fontWeight: 'bold' }}>{wallet.meta.name}</Text>
-                  <Text style={{ color: '#555', fontSize: 12 }}>{wallet.address}</Text>
+                <View style={{paddingTop: 8, paddingLeft: 12}}>
+                  <Text style={{fontWeight: 'bold'}}>{wallet.meta.name}</Text>
+                  <Text style={{color: '#555', fontSize: 12}}>
+                    {wallet.address}
+                  </Text>
                 </View>
               }
               value={wallet.address}
@@ -72,11 +79,11 @@ export function WalletPicker({ address, password, onAddressChange, onPasswordCha
   );
 }
 
-export function UnlockWalletScreen({navigation}) {
+export function UnlockWalletScreen() {
   const dispatch = useDispatch();
   const [selectedAddress, setSelectedAddress] = useState();
   const wallets = useSelector(walletsSelectors.getItems);
-  const [password, setPassword] = useState('mnemdm25');
+  const [password, setPassword] = useState();
   const [error, setError] = useState();
   const [loading, setLoading] = useState();
   const handlePasswordChange = value => setPassword(value);
@@ -91,14 +98,15 @@ export function UnlockWalletScreen({navigation}) {
     InteractionManager.runAfterInteractions(() => {
       dispatch(
         walletsOperations.unlockWallet({address: selectedAddress, password}),
-      ).then(() => {
-        setPassword(null);
-        setLoading(false);
-        // setSelectedAddress(false);
-      }).catch(() => {
-        setLoading(false);
-        setError('Invalid password, please try again.');
-      });
+      )
+        .then(() => {
+          setPassword(null);
+          setLoading(false);
+        })
+        .catch(() => {
+          setLoading(false);
+          setError('Invalid password, please try again.');
+        });
     });
   };
 
@@ -131,7 +139,7 @@ export function UnlockWalletScreen({navigation}) {
   return (
     <Container>
       <Header style={{alignItems: 'center', marginTop: 10}}>
-        <H2 style={{ color: '#fff' }}>Select a Wallet</H2>
+        <H2 style={{color: '#fff'}}>Select a Wallet</H2>
       </Header>
       <Content>
         <WalletPicker

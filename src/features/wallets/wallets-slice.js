@@ -101,12 +101,6 @@ export const walletsOperations = {
   initialize: () => async (dispatch, getState) => {
     const keyring = await getKeyring();
     await initDockSdk();
-
-    // await dispatch(walletsOperations.initialize());
-    // await dispatch(walletsOperations.unlockTestWallet());
-    // const state = getState();
-    // const wallet = walletsSelectors.getCurrentWallet(state);
-    // dock.setAccount(wallet);
     dispatch(walletsActions.setKeyring(keyring));
   },
   createWallet: ({password, walletName}) => async (dispatch, getState) => {
@@ -143,21 +137,6 @@ export const walletsOperations = {
     await dispatch(walletsOperations.fetchBalance());
 
     navigate(Routes.APP_HOME);
-  },
-  /**
-   * Operation used just for testing
-   *
-   * @returns
-   */
-  unlockTestWallet: () => async (dispatch, getState) => {
-    const state = getState();
-    const walletJson = walletsSelectors.getItems(state)[0];
-    const keyring = walletsSelectors.getKeyring(state);
-    const decodedPair = keyring.addFromJson(walletJson, true);
-
-    decodedPair.unlock('mnemdm25');
-
-    dispatch(walletsActions.setCurrentWallet(decodedPair));
   },
 };
 

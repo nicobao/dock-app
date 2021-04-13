@@ -1,17 +1,15 @@
 import Clipboard from '@react-native-community/clipboard';
 import {
-  Header,
   Footer,
   Content,
   Text,
   Container,
-  H1,
   View,
   Button,
   Toast,
 } from 'native-base';
 import React from 'react';
-import { RefreshControl } from 'react-native';
+import {RefreshControl} from 'react-native';
 import {TouchableHighlight} from 'react-native-gesture-handler';
 import {useDispatch, useSelector} from 'react-redux';
 import {navigate} from '../../core/navigation';
@@ -65,7 +63,6 @@ export function HomeScreen({navigation}) {
             </Text>
           </View>
         </TouchableHighlight>
-        {/* <View style={{padding: 12, backgroundColor: '#eee'}}></View> */}
         <View style={{padding: 12}}>
           <View style={{marginBottom: 12}}>
             <Button onPress={() => alert('Available soon!')} full>
