@@ -3,12 +3,15 @@ import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import Keyring from '@polkadot/keyring';
 import {cryptoWaitReady, mnemonicGenerate} from '@polkadot/util-crypto';
+import dock from '@docknetwork/sdk';
+import Clipboard from '@react-native-community/clipboard';
 
 const initialState = {
   loading: true,
   items: undefined,
   keyring: undefined,
   currentWallet: undefined,
+  balance: 0,
 };
 
 const wallets = createSlice({
@@ -16,23 +19,26 @@ const wallets = createSlice({
   initialState,
   reducers: {
     setLoading(state, action) {
-      state.listLoading = action.payload;
+      state.loading = action.payload;
     },
     setItems(state, action) {
-      state.list = action.payload;
+      state.items = action.payload;
     },
     addItem(state, action) {
       state.items.push(action.payload);
     },
     removeItem(state, action) {
-      const symbol = action.payload;
-      state.items = state.items.filter(item => item.symbol !== symbol);
+      const wallet = action.payload;
+      state.items = state.items.filter(item => item.address !== wallet.address);
     },
     setKeyring(state, action) {
       state.keyring = action.payload;
     },
     setCurrentWallet(state, action) {
       state.currentWallet = action.payload;
+    },
+    setBalance(state, action) {
+      state.balance = action.payload;
     },
   },
 });
@@ -46,14 +52,56 @@ export const walletsSelectors = {
   getItems: state => getRoot(state).items,
   getKeyring: (state: any): Keyring => getRoot(state).keyring,
   getCurrentWallet: (state: any) => getRoot(state).currentWallet,
+  getBalance: (state: any) => getRoot(state).balance,
 };
 
-export const walletsOperations = {
-  initialize: () => async (dispatch, getState) => {
-    cryptoWaitReady().then(() => {
-      const keyring = new Keyring();
-      dispatch(walletsActions.setKeyring(keyring));
+export async function initDockSdk() {
+  try {
+    // TODO: Implement network switch
+    await dock.init({
+      address: 'ws://localhost:9944',
     });
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export async function getKeyring() {
+  return cryptoWaitReady().then(async () => {
+    return new Keyring();
+  });
+}
+
+export const walletsOperations = {
+  exportJSON: () => async (dispatch, getState) => {
+    const state = getState();
+    const address = walletsSelectors.getCurrentWallet(state).address;
+    const walletJson = walletsSelectors
+      .getItems(state)
+      .find(wallet => wallet.address === address);
+      
+    Clipboard.setString(JSON.stringify(walletJson));
+  },
+  deleteWallet: () => async (dispatch, getState) => {
+    const state = getState();
+    const wallet = walletsSelectors.getCurrentWallet(state);
+    await dispatch(walletsActions.removeItem(wallet));
+    navigate(Routes.UNLOCK_WALLET);
+  },
+  fetchBalance: () => async (dispatch, getState) => {
+    dispatch(walletsActions.setLoading(true));
+    const state = getState();
+    const wallet = walletsSelectors.getCurrentWallet(state);
+    const { data: { free: currentFree }} = await dock.api.query.system.account(wallet.address);
+
+    dispatch(walletsActions.setBalance(currentFree.toHuman()));
+    dispatch(walletsActions.setLoading(false));
+    
+  },
+  initialize: () => async (dispatch, getState) => {
+    const keyring = await getKeyring();
+    await initDockSdk();
+    dispatch(walletsActions.setKeyring(keyring));
   },
   createWallet: ({password, walletName}) => async (dispatch, getState) => {
     const state = getState();
@@ -66,6 +114,8 @@ export const walletsOperations = {
 
     dispatch(walletsActions.addItem(encodedPair));
     dispatch(walletsActions.setCurrentWallet(pair));
+
+    dispatch(walletsOperations.fetchBalance());
 
     navigate(Routes.CREATE_WALLET_MNEMONIC, {
       mnemonic,
@@ -81,7 +131,10 @@ export const walletsOperations = {
 
     decodedPair.unlock(password);
 
+    dock.setAccount(decodedPair);
+
     dispatch(walletsActions.setCurrentWallet(decodedPair));
+    await dispatch(walletsOperations.fetchBalance());
 
     navigate(Routes.APP_HOME);
   },

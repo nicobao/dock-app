@@ -48,7 +48,7 @@ export function CreateWalletScreen({navigation}) {
       dispatch(
         walletsOperations.createWallet({
           password: form.password,
-          walletName: form.password,
+          walletName: form.walletName,
         }),
       );
     });
@@ -57,7 +57,7 @@ export function CreateWalletScreen({navigation}) {
   return (
     <Container>
       <Header style={{alignItems: 'center', marginTop: 10}}>
-        <H1>Create Wallet</H1>
+        <H1 style={{color: '#fff'}}>Create Wallet</H1>
       </Header>
       <Content>
         <Form>

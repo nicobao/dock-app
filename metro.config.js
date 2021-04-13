@@ -5,14 +5,29 @@
  * @format
  */
 
-module.exports = {
-  transformer: {
-    getTransformOptions: async () => ({
-      transform: {
-        experimentalImportSupport: false,
-        inlineRequires: true,
-      },
-    }),
-  },
-  
-};
+const path = require('path');
+const { getDefaultConfig } = require('metro-config');
+
+
+module.exports = (async () => {
+  const {
+    resolver: { sourceExts, assetExts },
+  } = await getDefaultConfig();
+
+  return {
+    transformer: {
+      getTransformOptions: async () => ({
+        transform: {
+          experimentalImportSupport: false,
+          inlineRequires: true,
+        },
+      }),
+      
+    },
+    resolver: {
+      extraNodeModules: {
+        mrklt: path.resolve(__dirname, "./src/mrklt.js")
+      }
+    }
+  };
+})

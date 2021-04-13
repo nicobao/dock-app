@@ -3,23 +3,44 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {CreateWalletScreen} from '../features/wallets/CreateWalletScreen';
 import {CreateWalletMnemonicScreen} from '../features/wallets/CreateWalletMnemonicScreen';
-import {navigationRef} from './navigation';
+import {navigate, navigationRef} from './navigation';
 import {Routes} from './routes';
 import {useDispatch} from 'react-redux';
 import {walletsOperations} from '../features/wallets/wallets-slice';
 import {UnlockWalletScreen} from '../features/wallets/UnlockWalletScreen';
 import {HomeScreen} from '../features/home/HomeScreen';
+import {DIDListScreen} from '../features/did/DIDListScreen';
+import {Icon, View} from 'native-base';
+import {TouchableWithoutFeedback} from 'react-native';
+import {Colors} from '../theme/colors';
+import {SettingsScreen} from '../features/settings/SettingsScreen';
 
 const getMainOptions = opts => {
   return {
     headerStyle: {
-      backgroundColor: '#222',
+      backgroundColor: Colors.darkBlue,
     },
     headerTintColor: '#fff',
     headerTitleStyle: {
       fontWeight: 'bold',
     },
     headerBackTitle: 'Back',
+    headerRight: () => (
+      <React.Fragment>
+        <View style={{flexDirection: 'row', paddingRight: 10}}>
+          <View style={{ marginRight: 12 }}>
+            <TouchableWithoutFeedback
+              onPress={() => alert('Available soon!')}>
+              <Icon size={30} name="scan-outline" style={{color: '#fff'}} />
+            </TouchableWithoutFeedback>
+          </View>
+          <TouchableWithoutFeedback
+            onPress={() => navigate(Routes.APP_SETTINGS)}>
+            <Icon size={30} name="settings" style={{color: '#fff'}} />
+          </TouchableWithoutFeedback>
+        </View>
+      </React.Fragment>
+    ),
     ...opts,
   };
 };
@@ -55,7 +76,29 @@ function AppStackScreen() {
         name={Routes.APP_HOME}
         component={HomeScreen}
         options={{
-          headerShown: false,
+          ...getMainOptions({
+            title: 'Welcome',
+            headerLeft: null,
+          }),
+        }}
+      />
+      <AppStack.Screen
+        name={Routes.APP_DID}
+        component={DIDListScreen}
+        options={{
+          ...getMainOptions({
+            title: 'DIDs',
+          }),
+        }}
+      />
+      <AppStack.Screen
+        name={Routes.APP_SETTINGS}
+        component={SettingsScreen}
+        options={{
+          ...getMainOptions({
+            title: 'Settings',
+            headerRight: null,
+          }),
         }}
       />
     </AppStack.Navigator>
