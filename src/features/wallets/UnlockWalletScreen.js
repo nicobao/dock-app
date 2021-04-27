@@ -83,7 +83,7 @@ export function UnlockWalletScreen() {
   const dispatch = useDispatch();
   const [selectedAddress, setSelectedAddress] = useState();
   const wallets = useSelector(walletsSelectors.getItems);
-  const [password, setPassword] = useState();
+  const [password, setPassword] = useState('mnemdm25');
   const [error, setError] = useState();
   const [loading, setLoading] = useState();
   const handlePasswordChange = value => setPassword(value);

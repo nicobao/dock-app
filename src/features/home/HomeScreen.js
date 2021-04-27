@@ -75,7 +75,7 @@ export function HomeScreen({navigation}) {
             </Button>
           </View>
           <View style={{marginBottom: 12}}>
-            <Button onPress={() => alert('Available soon!')} full>
+            <Button onPress={() => navigate(Routes.APP_CREDENTIAL)} full>
               <Text style={{color: '#fff'}}>Manage Credentials</Text>
             </Button>
           </View>

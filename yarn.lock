@@ -3288,6 +3288,13 @@ absolute-path@^0.0.0:
   resolved "https://registry.yarnpkg.com/absolute-path/-/absolute-path-0.0.0.tgz"
   integrity sha1-p4di+9rftSl76ZsV01p4Wy8JW/c=
 
+abstract-leveldown@2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/abstract-leveldown/-/abstract-leveldown-2.6.1.tgz#f9014a5669b746418e145168dea49a044ae15900"
+  integrity sha1-+QFKVmm3RkGOFFFo3qSaBErhWQA=
+  dependencies:
+    xtend "~4.0.0"
+
 abstract-leveldown@~0.12.1:
   version "0.12.4"
   resolved "https://registry.npmjs.org/abstract-leveldown/-/abstract-leveldown-0.12.4.tgz"
@@ -3481,6 +3488,11 @@ argparse@^1.0.7:
   dependencies:
     sprintf-js "~1.0.2"
 
+argsarray@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/argsarray/-/argsarray-0.0.1.tgz#6e7207b4ecdb39b0af88303fa5ae22bda8df61cb"
+  integrity sha1-bnIHtOzbObCviDA/pa4ivajfYcs=
+
 arr-diff@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/arr-diff/-/arr-diff-4.0.0.tgz"
@@ -3637,6 +3649,17 @@ asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz"
   integrity sha1-x57Zf380y48robyXkLzDZkdLS3k=
+
+asyncstorage-down@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/asyncstorage-down/-/asyncstorage-down-4.2.0.tgz#6d126f42e6e4db0a25113e118ff618f2d4534046"
+  integrity sha512-xTljBjicpnxsoA7yEs6duXFXWEZC0V1Q/PeKcUM7Cd2k2W1XPGfyBY1kPXBxTqR++u6ZuDa5egnU8/E/WkJv4Q==
+  dependencies:
+    abstract-leveldown "2.6.1"
+    argsarray "0.0.1"
+    d64 "^1.0.0"
+    ltgt "^2.1.3"
+    tiny-queue "0.2.0"
 
 at-least-node@^1.0.0:
   version "1.0.0"
@@ -4800,6 +4823,11 @@ cuint@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/cuint/-/cuint-0.2.2.tgz"
   integrity sha1-QICG1AlVDCYxFVYZ6fp7ytw7mRs=
+
+d64@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/d64/-/d64-1.0.0.tgz#4002a87e850cbfc9f9d9706b60fca613a3336e90"
+  integrity sha1-QAKofoUMv8n52XBrYPymE6MzbpA=
 
 d@1, d@^1.0.1:
   version "1.0.1"
@@ -8235,6 +8263,11 @@ lru-queue@^0.1.0:
   dependencies:
     es5-ext "~0.10.2"
 
+ltgt@^2.1.3:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/ltgt/-/ltgt-2.2.1.tgz#f35ca91c493f7b73da0e07495304f17b31f87ee5"
+  integrity sha1-81ypHEk/e3PaDgdJUwTxezH4fuU=
+
 make-dir@^2.0.0, make-dir@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/make-dir/-/make-dir-2.1.0.tgz"
@@ -9976,7 +10009,7 @@ react-native-iphone-x-helper@^1.0.3, react-native-iphone-x-helper@^1.3.0:
 
 react-native-level-fs@^3.0.1:
   version "3.0.1"
-  resolved "https://registry.npmjs.org/react-native-level-fs/-/react-native-level-fs-3.0.1.tgz"
+  resolved "https://registry.yarnpkg.com/react-native-level-fs/-/react-native-level-fs-3.0.1.tgz#f3054614c2bc1a379dcb3d3ee51b6a1b66123283"
   integrity sha1-8wVGFMK8Gjedyz0+5RtqG2YSMoM=
   dependencies:
     level-filesystem "^1.0.1"
@@ -11446,6 +11479,11 @@ timers-ext@^0.1.7:
     es5-ext "~0.10.46"
     next-tick "1"
 
+tiny-queue@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/tiny-queue/-/tiny-queue-0.2.0.tgz#c49fcb5c87555be1b4a5df7eb87101d5b78bc9dc"
+  integrity sha1-xJ/LXIdVW+G0pd9+uHEB1beLydw=
+
 tmp@^0.0.33:
   version "0.0.33"
   resolved "https://registry.yarnpkg.com/tmp/-/tmp-0.0.33.tgz#6d34335889768d21b2bcda0aa277ced3b1bfadf9"
@@ -12203,7 +12241,7 @@ xtend@^2.2.0:
   resolved "https://registry.npmjs.org/xtend/-/xtend-2.2.0.tgz"
   integrity sha1-7vax8ZjByN6vrYsXZaBNrUoBxak=
 
-xtend@^4.0.0, xtend@~4.0.1:
+xtend@^4.0.0, xtend@~4.0.0, xtend@~4.0.1:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-4.0.2.tgz"
   integrity sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==

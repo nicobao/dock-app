@@ -26,7 +26,9 @@ module.exports = (async () => {
     },
     resolver: {
       extraNodeModules: {
-        mrklt: path.resolve(__dirname, "./src/mrklt.js")
+        mrklt: path.resolve(__dirname, "./src/mrklt.js"),
+        'credentials-context': path.resolve(__dirname, "./rn-packages/credentials-context.js"),
+        'security-context': path.resolve(__dirname, "./rn-packages/security-context.js"),
       }
     }
   };
