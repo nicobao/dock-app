@@ -14,6 +14,7 @@ import {Icon, View} from 'native-base';
 import {TouchableWithoutFeedback} from 'react-native';
 import {Colors} from '../theme/colors';
 import {SettingsScreen} from '../features/settings/SettingsScreen';
+import {CredentialListScreen} from '../features/credentials/CredentialListScreen';
 
 const getMainOptions = opts => {
   return {
@@ -28,9 +29,8 @@ const getMainOptions = opts => {
     headerRight: () => (
       <React.Fragment>
         <View style={{flexDirection: 'row', paddingRight: 10}}>
-          <View style={{ marginRight: 12 }}>
-            <TouchableWithoutFeedback
-              onPress={() => alert('Available soon!')}>
+          <View style={{marginRight: 12}}>
+            <TouchableWithoutFeedback onPress={() => alert('Available soon!')}>
               <Icon size={30} name="scan-outline" style={{color: '#fff'}} />
             </TouchableWithoutFeedback>
           </View>
@@ -88,6 +88,15 @@ function AppStackScreen() {
         options={{
           ...getMainOptions({
             title: 'DIDs',
+          }),
+        }}
+      />
+      <AppStack.Screen
+        name={Routes.APP_CREDENTIAL}
+        component={CredentialListScreen}
+        options={{
+          ...getMainOptions({
+            title: 'Credentials',
           }),
         }}
       />
