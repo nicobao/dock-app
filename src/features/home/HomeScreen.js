@@ -32,7 +32,7 @@ export function HomeScreen({navigation}) {
               dispatch(walletsOperations.fetchBalance());
             }}
             refreshing={isLoading}
-            colors={Colors.darkBlue}
+            colors={[Colors.darkBlue]}
             tintColor={Colors.darkBlue}
           />
         }>

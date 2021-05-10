@@ -1,36 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
-
-import dock from '@docknetwork/sdk';
-import {DockResolver} from '@docknetwork/sdk/resolver';
-
-import {
-  KeyringPairDidKeys,
-  OneOfPolicy,
-  getDockRevIdFromCredential,
-  DockRevRegQualifier,
-  RevRegType,
-} from '@docknetwork/sdk/utils/revocation';
-
 import {walletsSelectors} from '../wallets/wallets-slice';
-import getKeyDoc from '@docknetwork/sdk/utils/vc/helpers';
-import {
-  issueCredential,
-  verifyCredential,
-  expandJSONLD,
-} from '@docknetwork/sdk/utils/vc/index';
-import {randomAsHex} from '@polkadot/util-crypto';
-
 import {didSelectors} from '../did/did-slice';
-
-function addRevRegIdToCred(cred, regId) {
-  return {
-    ...cred,
-    credentialStatus: {
-      id: `${DockRevRegQualifier}${regId}`,
-      type: RevRegType,
-    },
-  };
-}
+import { DockRpc } from '../../rn-rpc-webview/dock-rpc';
 
 const initialState = {
   loading: true,
@@ -75,11 +46,11 @@ export const credentialSelectors = {
   getRegistry: state => getRoot(state).registry,
 };
 
-const resolver = new DockResolver(dock);
+// const resolver = new DockResolver(dock);
 
 // hardcoded registry for testing
-const registryId =
-  '0x99bfe2629e7e62928b799a54ccfded19c9b88ed98f032569fffcef6ca82241b5';
+// const registryId =
+//   '0x99bfe2629e7e62928b799a54ccfded19c9b88ed98f032569fffcef6ca82241b5';
 
 export const credentialOperations = {
   /**
@@ -93,44 +64,44 @@ export const credentialOperations = {
   },
 
   loadRegistry: () => async (dispatch, getState) => {
-    const state = getState();
-    let registry = credentialSelectors.getRegistry(state);
+    // const state = getState();
+    // let registry = credentialSelectors.getRegistry(state);
 
-    if (!registry) {
-      const issuerDID = didSelectors.getItems(state)[0].id;
-      const policy = new OneOfPolicy();
-      policy.addOwner(issuerDID);
+    // if (!registry) {
+    //   const issuerDID = didSelectors.getItems(state)[0].id;
+    //   const policy = new OneOfPolicy();
+    //   policy.addOwner(issuerDID);
 
-      registry = await dock.revocation.newRegistry(
-        registryId,
-        policy,
-        false,
-        false,
-      );
+    //   registry = await dock.revocation.newRegistry(
+    //     registryId,
+    //     policy,
+    //     false,
+    //     false,
+    //   );
 
-      dispatch(credentialActions.setRegistry(registry));
-    }
+    //   dispatch(credentialActions.setRegistry(registry));
+    // }
   },
 
   revokeCredential: credentialDoc => async (dispatch, getState) => {
-    const state = getState();
-    credentialDoc = {
-      ...credentialDoc,
-    };
+    // const state = getState();
+    // credentialDoc = {
+    //   ...credentialDoc,
+    // };
 
-    delete credentialDoc.walletId;
+    // delete credentialDoc.walletId;
 
-    const expanded = await expandJSONLD(credentialDoc);
-    const revId = getDockRevIdFromCredential(expanded);
+    // const expanded = await expandJSONLD(credentialDoc);
+    // const revId = getDockRevIdFromCredential(expanded);
 
-    const didKeys = new KeyringPairDidKeys();
-    const pair = walletsSelectors.getCurrentWallet(state);
-    const issuerDID = didSelectors.getItems(state)[0].id;
-    didKeys.set(issuerDID, pair);
+    // const didKeys = new KeyringPairDidKeys();
+    // const pair = walletsSelectors.getCurrentWallet(state);
+    // const issuerDID = didSelectors.getItems(state)[0].id;
+    // didKeys.set(issuerDID, pair);
 
-    await dock.revocation.revokeCredential(didKeys, registryId, revId, false);
+    // await dock.revocation.revokeCredential(didKeys, registryId, revId, false);
 
-    debugger;
+    // debugger;
   },
   verifyCredential: credentialDoc => async (dispatch, getState) => {
     credentialDoc = {
@@ -138,10 +109,7 @@ export const credentialOperations = {
     };
 
     delete credentialDoc.walletId;
-
-    const result = await verifyCredential(credentialDoc, {resolver});
-
-    console.log(result);
+    const result = await DockRpc.verifyCredential(credentialDoc);
 
     alert(`Verified: ${result.verified}`);
   },
@@ -150,29 +118,7 @@ export const credentialOperations = {
     const state = getState();
     const wallet = walletsSelectors.getCurrentWallet(state);
     const did = didSelectors.getItems(state)[0].id;
-    const issuerKey = getKeyDoc(did, wallet, 'Ed25519VerificationKey2018');
-
-    // Use the same did for testing
-    const credId = randomAsHex(32);
-    const holderDID = did;
-
-    let unsignedCred = {
-      '@context': [
-        'https://www.w3.org/2018/credentials/v1',
-        'https://www.w3.org/2018/credentials/examples/v1',
-      ],
-      id: credId,
-      type: ['VerifiableCredential', 'AlumniCredential'],
-      issuanceDate: '2020-03-18T19:23:24Z',
-      credentialSubject: {
-        id: holderDID,
-        alumniOf: 'Example University',
-      },
-    };
-
-    unsignedCred = addRevRegIdToCred(unsignedCred, registryId);
-
-    const credentialDocument = await issueCredential(issuerKey, unsignedCred);
+    const credentialDocument = await DockRpc.issueCredential(did);
 
     dispatch(
       credentialActions.addItem({

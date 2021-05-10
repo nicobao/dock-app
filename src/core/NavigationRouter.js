@@ -117,9 +117,9 @@ function AppStackScreen() {
 export function NavigationRouter() {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(walletsOperations.initialize());
-  }, []);
+  // useEffect(() => {
+    // dispatch(walletsOperations.initialize());
+  // }, []);
 
   return (
     <NavigationContainer ref={navigationRef}>

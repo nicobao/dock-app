@@ -1,24 +1,25 @@
 import {createSlice} from '@reduxjs/toolkit';
+import { DockRpc } from '../../rn-rpc-webview/dock-rpc';
 
-import {
-  createNewDockDID,
-  createKeyDetail,
-  createSignedDidRemoval,
-  createSignedKeyUpdate,
-} from '@docknetwork/sdk/utils/did';
+// import {
+//   createNewDockDID,
+//   createKeyDetail,
+//   createSignedDidRemoval,
+//   createSignedKeyUpdate,
+// } from '@docknetwork/sdk/utils/did';
 
-import {
-  getPublicKeyFromKeyringPair
-} from '@docknetwork/sdk/utils/misc';
+// import {
+//   getPublicKeyFromKeyringPair
+// } from '@docknetwork/sdk/utils/misc';
 
 
-import dock, {PublicKeySr25519} from '@docknetwork/sdk';
+// import dock, {PublicKeySr25519} from '@docknetwork/sdk';
 
 import {walletsOperations, walletsSelectors} from '../wallets/wallets-slice';
 
 const initialState = {
   loading: true,
-  items: undefined,
+  items: [],
 };
 
 const did = createSlice({
@@ -32,6 +33,10 @@ const did = createSlice({
       state.items = action.payload;
     },
     addItem(state, action) {
+      if (!state.items) {
+       state.items = []; 
+      }
+
       state.items.push(action.payload);
     },
     removeItem(state, action) {
@@ -61,48 +66,41 @@ export const didOperations = {
   },
 
   updateDID: ({ newController, didDoc }) => async (dispatch, getState) => {
-    const currentPair = walletsSelectors.getCurrentWallet(getState());
-    const publicKey = getPublicKeyFromKeyringPair(currentPair);
-    const [keyUpdate, signature] = await createSignedKeyUpdate(dock.did, didDoc.id, publicKey, currentPair, newController);
-    await dock.did.updateKey(keyUpdate, signature, false);
+    // const currentPair = walletsSelectors.getCurrentWallet(getState());
+    // const publicKey = getPublicKeyFromKeyringPair(currentPair);
+    // const [keyUpdate, signature] = await createSignedKeyUpdate(dock.did, didDoc.id, publicKey, currentPair, newController);
+    // await dock.did.updateKey(keyUpdate, signature, false);
   },
   removeDID: didDoc => async (dispatch, getState) => {
     dispatch(didActions.setLoading(true));
     dispatch(didActions.removeItem(didDoc));
+    dispatch(didActions.setLoading(false));
+    
 
-    const state = getState();
-    const wallet = walletsSelectors.getCurrentWallet(state);
+    // const state = getState();
+    // const wallet = walletsSelectors.getCurrentWallet(state);
 
-    try {
-      const [didRemoval, signature] = await createSignedDidRemoval(
-        dock.did,
-        didDoc.id,
-        wallet,
-      );
+    // try {
+    //   const [didRemoval, signature] = await createSignedDidRemoval(
+    //     dock.did,
+    //     didDoc.id,
+    //     wallet,
+    //   );
 
-      await dock.did.remove(didRemoval, signature, false);
+    //   await dock.did.remove(didRemoval, signature, false);
 
-      dispatch(walletsOperations.fetchBalance());      
-    } catch (err) {
-      console.error(err);
-      // TODO: Handle did errors
-      dispatch(didActions.setLoading(false));
-    }
+    //   dispatch(walletsOperations.fetchBalance());      
+    // } catch (err) {
+    //   console.error(err);
+    //   // TODO: Handle did errors
+    //   dispatch(didActions.setLoading(false));
+    // }
   },
   createDID: () => async (dispatch, getState) => {
     dispatch(didActions.setLoading(true));
-
     const state = getState();
     const wallet = walletsSelectors.getCurrentWallet(state);
-    const dockDID = createNewDockDID();
-    const publicKey = PublicKeySr25519.fromKeyringPair(wallet);
-
-    // The controller is same as the DID
-    const keyDetail = createKeyDetail(publicKey, dockDID);
-
-    await dock.did.new(dockDID, keyDetail, false);
-
-    const didDocument = await dock.did.getDocument(dockDID);
+    const didDocument = await DockRpc.createDID();
 
     dispatch(walletsOperations.fetchBalance());
     dispatch(didActions.addItem({
