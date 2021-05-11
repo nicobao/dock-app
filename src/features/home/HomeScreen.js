@@ -79,6 +79,11 @@ export function HomeScreen({navigation}) {
               <Text style={{color: '#fff'}}>Manage Credentials</Text>
             </Button>
           </View>
+          <View style={{marginBottom: 12}}>
+            <Button onPress={() => navigate(Routes.APP_CREDENTIAL_ISSUANCE)} full>
+              <Text style={{color: '#fff'}}>Credential Issuance</Text>
+            </Button>
+          </View>
         </View>
       </Content>
       <Footer style={{backgroundColor: '#fff', padding: 8}}>

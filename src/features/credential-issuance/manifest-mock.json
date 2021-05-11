@@ -1,0 +1,102 @@
+{
+  "id": "WA-DL-CLASS-A",
+  "version": "0.1.0",
+  "issuer": {
+    "id": "did:example:123?linked-domains=3",
+    "name": "Washington State Government",
+    "styles": {
+      "thumbnail": {
+        "uri": "https://dol.wa.com/logo.png",
+        "alt": "Washington State Seal"
+      },
+      "hero": {
+        "uri": "https://dol.wa.com/people-working.png",
+        "alt": "People working on serious things"
+      },
+      "background": {
+        "color": "#ff0000"
+      },
+      "text": {
+        "color": "#d4d400"
+      }
+    }
+  },
+  "output_descriptors": [
+    {
+      "schema": [
+        {
+          "uri": "http://washington-state-schemas.org/1.0.0/driver-license.json"
+        }
+      ],
+      "display": {
+        "title": {
+          "path": ["$.title", "$.vc.title"],
+          "text": "Alumni of credential"
+        },
+        "subtitle": {
+          "path": ["$.subtitle", "$.vc.subtitle"],
+          "text": "Some subtitle"
+        },
+        "description": {
+          "text": "This is a drescription for the credential manifest"
+        },
+        "properties": [
+          {
+            "path": ["$.id", "$.vc.id"],
+            "label": "DID"
+          },
+          {
+            "path": ["$.alumniOf", "$.vc.alumniOf"],
+            "label": "Alumni Of"
+          },
+          {
+            "path": ["$.emailAddress", "$.vc.emailAddress"],
+            "label": "E-mail address"
+          }
+        ]
+      },
+      "styles": {
+        "thumbnail": {
+          "uri": "https://dol.wa.com/logo.png",
+          "alt": "Washington State Seal"
+        },
+        "hero": {
+          "uri": "https://dol.wa.com/happy-people-driving.png",
+          "alt": "Happy people driving"
+        },
+        "background": {
+          "color": "#ff0000"
+        },
+        "text": {
+          "color": "#d4d400"
+        }
+      }
+    }
+  ],
+  "format": {
+    "jwt": {
+      "alg": ["EdDSA", "ES256K", "ES384"]
+    },
+    "jwt_vc": {
+      "alg": ["ES256K", "ES384"]
+    },
+    "jwt_vp": {
+      "alg": ["EdDSA", "ES256K"]
+    },
+    "ldp_vc": {
+      "proof_type": [
+        "JsonWebSignature2020",
+        "Ed25519Signature2018",
+        "EcdsaSecp256k1Signature2019",
+        "RsaSignature2018"
+      ]
+    },
+    "ldp_vp": {
+      "proof_type": ["Ed25519Signature2018"]
+    },
+    "ldp": {
+      "proof_type": ["RsaSignature2018"]
+    }
+  },
+  "presentation_definition": {}
+}

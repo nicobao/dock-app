@@ -15,6 +15,7 @@ import {TouchableWithoutFeedback} from 'react-native';
 import {Colors} from '../theme/colors';
 import {SettingsScreen} from '../features/settings/SettingsScreen';
 import {CredentialListScreen} from '../features/credentials/CredentialListScreen';
+import { CredIssuanceScreen } from '../features/credential-issuance/CredIssuaneScreen';
 
 const getMainOptions = opts => {
   return {
@@ -51,6 +52,13 @@ const RootStack = createStackNavigator();
 function AppStackScreen() {
   return (
     <AppStack.Navigator>
+      <AppStack.Screen
+        name={Routes.APP_CREDENTIAL_ISSUANCE}
+        component={CredIssuanceScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
       <AppStack.Screen
         name={Routes.UNLOCK_WALLET}
         component={UnlockWalletScreen}
