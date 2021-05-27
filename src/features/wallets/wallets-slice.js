@@ -8,13 +8,14 @@ import { UtilCryptoRpc } from '../../rn-rpc-webview/util-crypto-rpc';
 import { KeyringPairRpc, KeyringRpc } from '../../rn-rpc-webview/keyring-rpc';
 import { DockRpc } from '../../rn-rpc-webview/dock-rpc';
 import { ApiRpc } from '../../rn-rpc-webview/api-rpc';
+import { walletConnectOperations } from '../wallet-connect/wallet-connect-slice';
 
 const initialState = {
   loading: true,
   items: undefined,
   keyring: undefined,
   currentWallet: undefined,
-  balance: 0,
+  balance: 1000,
   log: [],
 };
 
@@ -75,8 +76,8 @@ export async function initDockSdk() {
   try {
     // TODO: Implement network switch
     await DockRpc.init({
-      // address: 'ws://127.0.0.1:9944',
-      address: 'wss://danforth-1.dock.io',
+      address: 'ws://127.0.0.1:9944',
+      // address: 'wss://danforth-1.dock.io',
       // address: 'wss://mainnet-node.dock.io'
     });
   } catch (err) {
@@ -144,6 +145,9 @@ export const walletsOperations = {
     await KeyringRpc.addFromJson(walletJson);
     await KeyringPairRpc.unlock(password);
     await DockRpc.setAccount();
+    
+    dispatch(walletConnectOperations.initialize());
+    
     
     dispatch(walletsActions.setCurrentWallet(walletJson));
     navigate(Routes.APP_HOME);

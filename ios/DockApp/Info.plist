@@ -35,8 +35,14 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Allow Dock to use your camera to scan qr codes</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Allow Dock to be unlock your wallet with FaceID</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string>Allow Dock to use your location</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Allow Dock to use photos from your library</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Roboto.ttf</string>

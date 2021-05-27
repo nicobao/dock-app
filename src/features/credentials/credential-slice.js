@@ -113,6 +113,21 @@ export const credentialOperations = {
 
     alert(`Verified: ${result.verified}`);
   },
+  addCredential: (credentialDoc) => async (dispatch, getState) => {
+    dispatch(credentialActions.setLoading(true));
+    const state = getState();
+    const wallet = walletsSelectors.getCurrentWallet(state);
+    // const did = didSelectors.getItems(state)[0].id;
+    // const credentialDocument = await DockRpc.issueCredential(did);
+
+    dispatch(
+      credentialActions.addItem({
+        ...credentialDoc,
+        walletId: wallet.address,
+      }),
+    );
+    dispatch(credentialActions.setLoading(false));
+  },
   createCredential: () => async (dispatch, getState) => {
     dispatch(credentialActions.setLoading(true));
     const state = getState();

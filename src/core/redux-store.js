@@ -8,7 +8,7 @@ import {rootReducer} from './root-reducer';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['did', 'credential', 'wallets'],
+  whitelist: ['did', 'credential', 'wallets', 'walletConnect'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "issuer": {
     "id": "did:example:123?linked-domains=3",
-    "name": "Washington State Government",
+    "name": "Dock Demo",
     "styles": {
       "thumbnail": {
         "uri": "https://dol.wa.com/logo.png",
