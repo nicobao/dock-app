@@ -10,4 +10,6 @@ export const Routes = {
   CREATE_WALLET: 'createWallet',
   CREATE_WALLET_MNEMONIC: 'createWallet/mnemonic',
   UNLOCK_WALLET: 'unlockWallet',
+  BACKUP_CREATE: 'backup/create',
+  BACKUP_LOAD: 'backup/load',
 };

@@ -185,6 +185,17 @@ export function UnlockWalletScreen() {
               </Button>
             </Col>
           </Row>
+          <Row>
+            <Col>
+              <Button
+                full
+                style={{width: '100%'}}
+                bordered
+                onPress={() => navigate(Routes.BACKUP_LOAD)}>
+                <Text style={{color: Colors.darkBlue}}>Load from backup</Text>
+              </Button>
+            </Col>
+          </Row>
         </Grid>
       </Footer>
     </Container>

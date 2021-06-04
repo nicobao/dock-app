@@ -12,6 +12,7 @@ import { RNRpcWebView } from './rn-rpc-webview';
 import { ConfirmConnectionModal } from './features/wallet-connect/ConfirmConnectionModal';
 import { walletConnectOperations } from './features/wallet-connect/wallet-connect-slice';
 
+import './backup-test';
 function GlobalComponents() {
   const dispatch = useDispatch();
   return (

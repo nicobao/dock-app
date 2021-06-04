@@ -18,6 +18,8 @@ import {CredentialListScreen} from '../features/credentials/CredentialListScreen
 import {CredIssuanceScreen} from '../features/credential-issuance/CredIssuaneScreen';
 import {QRScanScreen} from '../features/qr-code-scanner/QRScanScreen';
 import {SendTokensScreen} from '../features/transactions/SendTokensScreen';
+import {CreateBackupScreen} from '../features/wallet-backup/CreateBackupScreen';
+import {LoadBackupScreen} from '../features/wallet-backup/LoadBackupScreen';
 
 const getMainOptions = opts => {
   return {
@@ -59,6 +61,20 @@ function AppStackScreen() {
       <AppStack.Screen
         name={Routes.UNLOCK_WALLET}
         component={UnlockWalletScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <AppStack.Screen
+        name={Routes.BACKUP_CREATE}
+        component={CreateBackupScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <AppStack.Screen
+        name={Routes.BACKUP_LOAD}
+        component={LoadBackupScreen}
         options={{
           headerShown: false,
         }}

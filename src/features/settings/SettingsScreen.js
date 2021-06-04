@@ -78,6 +78,18 @@ export function SettingsScreen({navigation}) {
               <Icon name="close-circle-outline" />
             </Right>
           </ListItem>
+          <ListItem onPress={() => navigate(Routes.BACKUP_CREATE)}>
+            <Left>
+              <Icon
+                name="save-outline"
+                style={{color: 'white', marginRight: 12}}
+              />
+              <Text style={{color: 'white'}}>Create Backup</Text>
+            </Left>
+            <Right>
+              <Icon name="arrow-forward" />
+            </Right>
+          </ListItem>
           <ListItem onPress={handleBackup}>
             <Left>
               <Icon
