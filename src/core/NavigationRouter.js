@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {CreateWalletScreen} from '../features/wallets/CreateWalletScreen';
@@ -6,15 +6,20 @@ import {CreateWalletMnemonicScreen} from '../features/wallets/CreateWalletMnemon
 import {navigate, navigationRef} from './navigation';
 import {Routes} from './routes';
 import {useDispatch} from 'react-redux';
-import {walletsOperations} from '../features/wallets/wallets-slice';
 import {UnlockWalletScreen} from '../features/wallets/UnlockWalletScreen';
 import {HomeScreen} from '../features/home/HomeScreen';
+import {PresentationExchangeScreen} from '../features/credentials/PresentationExchangeScreen';
 import {DIDListScreen} from '../features/did/DIDListScreen';
 import {Icon, View} from 'native-base';
 import {TouchableWithoutFeedback} from 'react-native';
 import {Colors} from '../theme/colors';
 import {SettingsScreen} from '../features/settings/SettingsScreen';
 import {CredentialListScreen} from '../features/credentials/CredentialListScreen';
+import {CredIssuanceScreen} from '../features/credential-issuance/CredIssuaneScreen';
+import {QRScanScreen} from '../features/qr-code-scanner/QRScanScreen';
+import {SendTokensScreen} from '../features/transactions/SendTokensScreen';
+import {CreateBackupScreen} from '../features/wallet-backup/CreateBackupScreen';
+import {LoadBackupScreen} from '../features/wallet-backup/LoadBackupScreen';
 
 const getMainOptions = opts => {
   return {
@@ -30,7 +35,8 @@ const getMainOptions = opts => {
       <React.Fragment>
         <View style={{flexDirection: 'row', paddingRight: 10}}>
           <View style={{marginRight: 12}}>
-            <TouchableWithoutFeedback onPress={() => alert('Available soon!')}>
+            <TouchableWithoutFeedback
+              onPress={() => navigate(Routes.APP_QR_SCANNER)}>
               <Icon size={30} name="scan-outline" style={{color: '#fff'}} />
             </TouchableWithoutFeedback>
           </View>
@@ -51,6 +57,7 @@ const RootStack = createStackNavigator();
 function AppStackScreen() {
   return (
     <AppStack.Navigator>
+      
       <AppStack.Screen
         name={Routes.UNLOCK_WALLET}
         component={UnlockWalletScreen}
@@ -58,6 +65,49 @@ function AppStackScreen() {
           headerShown: false,
         }}
       />
+      <AppStack.Screen
+        name={Routes.BACKUP_CREATE}
+        component={CreateBackupScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <AppStack.Screen
+        name={Routes.BACKUP_LOAD}
+        component={LoadBackupScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <AppStack.Screen
+        name={Routes.APP_SEND_TOKENS}
+        component={SendTokensScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <AppStack.Screen
+        name={Routes.APP_PRESENTATION_EXCHANGE}
+        component={PresentationExchangeScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <AppStack.Screen
+        name={Routes.APP_CREDENTIAL_ISSUANCE}
+        component={CredIssuanceScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <AppStack.Screen
+        name={Routes.APP_QR_SCANNER}
+        component={QRScanScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+
       <AppStack.Screen
         name={Routes.CREATE_WALLET}
         component={CreateWalletScreen}
@@ -115,12 +165,6 @@ function AppStackScreen() {
 }
 
 export function NavigationRouter() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(walletsOperations.initialize());
-  }, []);
-
   return (
     <NavigationContainer ref={navigationRef}>
       <RootStack.Navigator mode="modal">

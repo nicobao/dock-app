@@ -1,18 +1,25 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
-import Keyring from '@polkadot/keyring';
-import {cryptoWaitReady, mnemonicGenerate} from '@polkadot/util-crypto';
-import dock from '@docknetwork/sdk';
+// import Keyring from '@polkadot/keyring';
+// import {cryptoWaitReady, mnemonicGenerate} from '@polkadot/util-crypto';
 import Clipboard from '@react-native-community/clipboard';
+import { UtilCryptoRpc } from '../../rn-rpc-webview/util-crypto-rpc';
+import { KeyringPairRpc, KeyringRpc } from '../../rn-rpc-webview/keyring-rpc';
+import { DockRpc } from '../../rn-rpc-webview/dock-rpc';
+import { ApiRpc } from '../../rn-rpc-webview/api-rpc';
+import { walletConnectOperations } from '../wallet-connect/wallet-connect-slice';
 
 const initialState = {
   loading: true,
   items: undefined,
   keyring: undefined,
   currentWallet: undefined,
-  balance: 0,
+  balance: 1000,
+  log: [],
 };
+
+let keyring;
 
 const wallets = createSlice({
   name: 'wallets',
@@ -25,14 +32,22 @@ const wallets = createSlice({
       state.items = action.payload;
     },
     addItem(state, action) {
+      if (!state.items) {
+        state.items = [];
+      }
+
       state.items.push(action.payload);
+    },
+    setLog(state, action) {
+      state.log = action.payload;
     },
     removeItem(state, action) {
       const wallet = action.payload;
       state.items = state.items.filter(item => item.address !== wallet.address);
     },
     setKeyring(state, action) {
-      state.keyring = action.payload;
+      keyring = action.payload;
+      // state.keyring = action.payload;
     },
     setCurrentWallet(state, action) {
       state.currentWallet = action.payload;
@@ -47,29 +62,27 @@ export const walletsActions = wallets.actions;
 
 const getRoot = state => state.wallets;
 
+
 export const walletsSelectors = {
   getLoading: state => getRoot(state).loading,
   getItems: state => getRoot(state).items,
-  getKeyring: (state: any): Keyring => getRoot(state).keyring,
+  getKeyring: (state: any): Keyring => keyring,
   getCurrentWallet: (state: any) => getRoot(state).currentWallet,
   getBalance: (state: any) => getRoot(state).balance,
+  getLog: (state: any) => getRoot(state).log || [],
 };
 
 export async function initDockSdk() {
   try {
     // TODO: Implement network switch
-    await dock.init({
-      address: 'ws://localhost:9944',
+    await DockRpc.init({
+      address: 'ws://127.0.0.1:9944',
+      // address: 'wss://danforth-1.dock.io',
+      // address: 'wss://mainnet-node.dock.io'
     });
   } catch (err) {
     console.error(err);
   }
-}
-
-export async function getKeyring() {
-  return cryptoWaitReady().then(async () => {
-    return new Keyring();
-  });
 }
 
 export const walletsOperations = {
@@ -92,31 +105,33 @@ export const walletsOperations = {
     dispatch(walletsActions.setLoading(true));
     const state = getState();
     const wallet = walletsSelectors.getCurrentWallet(state);
-    const { data: { free: currentFree }} = await dock.api.query.system.account(wallet.address);
+    const balance = await ApiRpc.getAccountBalance(wallet.address);
 
-    dispatch(walletsActions.setBalance(currentFree.toHuman()));
+    dispatch(walletsActions.setBalance(balance));
     dispatch(walletsActions.setLoading(false));
-    
   },
   initialize: () => async (dispatch, getState) => {
-    const keyring = await getKeyring();
-    await initDockSdk();
-    dispatch(walletsActions.setKeyring(keyring));
+    await UtilCryptoRpc.cryptoWaitReady();
+    await KeyringRpc.create();
+
+    // DockRpc.init({
+    //   address: 'wss://danforth-1.dock.io',
+    // });
+    initDockSdk();
+
+    dispatch(walletsActions.setLoading(false));
   },
   createWallet: ({password, walletName}) => async (dispatch, getState) => {
-    const state = getState();
-    const mnemonic = mnemonicGenerate(12);
-    const keyring = walletsSelectors.getKeyring(state);
-    const pair = keyring.addFromMnemonic(mnemonic, {
+    const mnemonic = await UtilCryptoRpc.mnemonicGenerate(12);
+    const pair = await KeyringRpc.addFromMnemonic(mnemonic, {
       name: walletName,
     });
-    const encodedPair = pair.toJson(password);
+
+    const encodedPair = await KeyringPairRpc.toJson(password);
 
     dispatch(walletsActions.addItem(encodedPair));
     dispatch(walletsActions.setCurrentWallet(pair));
-
     dispatch(walletsOperations.fetchBalance());
-
     navigate(Routes.CREATE_WALLET_MNEMONIC, {
       mnemonic,
     });
@@ -126,17 +141,68 @@ export const walletsOperations = {
     const walletJson = walletsSelectors
       .getItems(state)
       .find(wallet => wallet.address === address);
-    const keyring = walletsSelectors.getKeyring(state);
-    const decodedPair = keyring.addFromJson(walletJson, true);
 
-    decodedPair.unlock(password);
-
-    dock.setAccount(decodedPair);
-
-    dispatch(walletsActions.setCurrentWallet(decodedPair));
-    await dispatch(walletsOperations.fetchBalance());
-
+    await KeyringRpc.addFromJson(walletJson);
+    await KeyringPairRpc.unlock(password);
+    await DockRpc.setAccount();
+    
+    dispatch(walletConnectOperations.initialize());
+    
+    
+    dispatch(walletsActions.setCurrentWallet(walletJson));
     navigate(Routes.APP_HOME);
+    dispatch(walletsOperations.fetchBalance());
+  },
+  
+  /**
+   * 
+   * Create test wallet for performance check
+   */
+  createTestWallet: () => async (dispatch, getState) => {
+    let startTime = Date.now();
+    let log = [];
+
+    const logTime = (action) => {
+      log = [
+        ...log,
+        (`${action} in ${Date.now() - startTime}ms`)
+      ]
+      dispatch(walletsActions.setLog(log));
+      startTime = Date.now();
+    }
+
+    logTime('Waiting to get crypto ready...');
+    
+    await UtilCryptoRpc.cryptoWaitReady();
+    
+    logTime('Creating keyring...');
+    await KeyringRpc.create();
+
+    
+    logTime('Generating mnemonic');
+    const mnemonic = await UtilCryptoRpc.mnemonicGenerate(12);
+    
+    logTime('Creating new pair...');
+    
+    await KeyringPairRpc.addFromMnemonic(mnemonic, {
+      name: 'test wallet',
+    })
+    
+    logTime('Pair created');
+    
+    const encodedPair = await KeyringPairRpc.toJson('mnemdm26');
+    
+    logTime('Encoded pair created');
+    
+    console.log(encodedPair);
+    
+    logTime('Init dock sdk....');
+    
+    await DockRpc.init({
+      address: 'wss://danforth-1.dock.io',
+    });
+    
+    logTime('Dock sdk initialized');
   },
 };
 

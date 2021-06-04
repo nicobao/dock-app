@@ -66,11 +66,11 @@ export function CredentialDetailsModal({onClose, credentialDoc, onRevoke, onVeri
         </Row>
         <Row>
           <Col>
-            <View>
+            {/* <View>
               <Button full style={{width: '100%'}} primary onPress={onRevoke}>
                 <Text style={{color: '#fff'}}>Revoke</Text>
               </Button>
-            </View>
+            </View> */}
             <View>
               <Button full style={{width: '100%'}} primary onPress={onVerify}>
                 <Text style={{color: '#fff'}}>Verify</Text>

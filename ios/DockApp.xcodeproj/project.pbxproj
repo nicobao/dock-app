@@ -12,6 +12,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		976065FE2644888900A07BD2 /* app-html in Resources */ = {isa = PBXBuildFile; fileRef = 976065FD2644888900A07BD2 /* app-html */; };
 		97F77BCF26120A9F006217A9 /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 97F77BCE26120A9F006217A9 /* AppCenter-Config.plist */; };
 		DA110114C9EB81C9118E889B /* libPods-DockApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 589EDC2B0137CD92DCF3437C /* libPods-DockApp.a */; };
 		E77DB458ED58BF996A5947EB /* libPods-DockApp-DockAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E39756DE9B1552C4FF77E12C /* libPods-DockApp-DockAppTests.a */; };
@@ -50,6 +51,7 @@
 		8ABF3B909AF2455F9C1E1E4C /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; };
 		8C48E6B6F0DD450F83E24C40 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/native-base/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		947585B890234AD79689946B /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
+		976065FD2644888900A07BD2 /* app-html */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "app-html"; path = "../assets/app-html"; sourceTree = "<group>"; };
 		97DB99FA5AE442C3BEB0E813 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		97F77BCE26120A9F006217A9 /* AppCenter-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "AppCenter-Config.plist"; path = "DockApp/AppCenter-Config.plist"; sourceTree = "<group>"; };
 		9F5F06043FFEEC2103FCE8C8 /* Pods-DockApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DockApp.debug.xcconfig"; path = "Target Support Files/Pods-DockApp/Pods-DockApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 		13B07FAE1A68108700A75B9A /* DockApp */ = {
 			isa = PBXGroup;
 			children = (
+				976065FD2644888900A07BD2 /* app-html */,
 				97F77BCE26120A9F006217A9 /* AppCenter-Config.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -300,6 +303,7 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				97F77BCF26120A9F006217A9 /* AppCenter-Config.plist in Resources */,
+				976065FE2644888900A07BD2 /* app-html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,19 +546,20 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = HDHP999933;
+				DEVELOPMENT_TEAM = V6B5KJVN89;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = DockApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.0.6;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.dock.DockApp;
+				PRODUCT_BUNDLE_IDENTIFIER = labs.dock.DockApp;
 				PRODUCT_NAME = DockApp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -572,18 +577,19 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = HDHP999933;
+				DEVELOPMENT_TEAM = V6B5KJVN89;
 				INFOPLIST_FILE = DockApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.0.6;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.dock.DockApp;
+				PRODUCT_BUNDLE_IDENTIFIER = labs.dock.DockApp;
 				PRODUCT_NAME = DockApp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;

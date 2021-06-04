@@ -11,6 +11,7 @@ import {
   Text,
   Container,
   View,
+  Spinner,
 } from 'native-base';
 import React, {useState} from 'react';
 import {InteractionManager} from 'react-native';
@@ -26,6 +27,7 @@ export function CreateWalletScreen({navigation}) {
     confirmPassword: null,
   });
   const [error, setError] = useState();
+  const [loading, setLoading] = useState();
 
   const handleFormChange = key => value =>
     setForm({
@@ -44,13 +46,17 @@ export function CreateWalletScreen({navigation}) {
       return;
     }
 
+    setLoading(true);
+
     InteractionManager.runAfterInteractions(() => {
       dispatch(
         walletsOperations.createWallet({
           password: form.password,
           walletName: form.walletName,
         }),
-      );
+      ).then(() => {
+        setLoading(false);
+      });
     });
   };
 
@@ -94,8 +100,13 @@ export function CreateWalletScreen({navigation}) {
           full
           style={{width: '100%'}}
           primary
+          disabled={loading}
           onPress={handleCreateWallet}>
-          <Text style={{color: '#fff'}}>Create Wallet</Text>
+          {loading ? (
+            <Spinner color="#fff" size={15} />
+          ) : (
+            <Text style={{color: '#fff'}}>Create Wallet</Text>
+          )}
         </Button>
       </Footer>
     </Container>

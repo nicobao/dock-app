@@ -18,6 +18,7 @@ import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {walletsOperations} from '../wallets/wallets-slice';
 import ExitApp from 'react-native-exit-app';
+import { walletConnectOperations } from '../wallet-connect/wallet-connect-slice';
 
 const Divier = styled(View)`
   margin: 20px 0;
@@ -60,6 +61,30 @@ export function SettingsScreen({navigation}) {
                 style={{color: 'white', marginRight: 12}}
               />
               <Text style={{color: 'white'}}>Create new Wallet</Text>
+            </Left>
+            <Right>
+              <Icon name="arrow-forward" />
+            </Right>
+          </ListItem>
+          <ListItem onPress={() => dispatch(walletConnectOperations.clearSessions())}>
+            <Left>
+              <Icon
+                name="save-outline"
+                style={{color: 'white', marginRight: 12}}
+              />
+              <Text style={{color: 'white'}}>Clear Wallet Connect</Text>
+            </Left>
+            <Right>
+              <Icon name="close-circle-outline" />
+            </Right>
+          </ListItem>
+          <ListItem onPress={() => navigate(Routes.BACKUP_CREATE)}>
+            <Left>
+              <Icon
+                name="save-outline"
+                style={{color: 'white', marginRight: 12}}
+              />
+              <Text style={{color: 'white'}}>Create Backup</Text>
             </Left>
             <Right>
               <Icon name="arrow-forward" />

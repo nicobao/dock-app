@@ -19,7 +19,7 @@ import {
   Icon,
 } from 'native-base';
 import React, {useEffect, useState} from 'react';
-import {Dimensions, InteractionManager} from 'react-native';
+import {Dimensions, InteractionManager, Platform} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {ScreenSpinner} from '../../components/ScreenSpinner';
 import {navigate} from '../../core/navigation';
@@ -51,12 +51,14 @@ export function WalletPicker({
           {wallets.map(wallet => (
             <Picker.Item
               label={
-                <View style={{paddingTop: 8, paddingLeft: 12}}>
-                  <Text style={{fontWeight: 'bold'}}>{wallet.meta.name}</Text>
-                  <Text style={{color: '#555', fontSize: 12}}>
-                    {wallet.address}
-                  </Text>
-                </View>
+                Platform.OS === 'ios' ? (
+                  <View style={{paddingTop: 8, paddingLeft: 12}}>
+                    <Text style={{fontWeight: 'bold'}}>{wallet.meta && wallet.meta.name}</Text>
+                    <Text style={{color: '#555', fontSize: 12}}>
+                      {wallet.address}
+                    </Text>
+                  </View>
+                ) : `${wallet.meta && wallet.meta.name}: ${wallet.address}`
               }
               value={wallet.address}
               key={wallet.address}
@@ -82,8 +84,9 @@ export function WalletPicker({
 export function UnlockWalletScreen() {
   const dispatch = useDispatch();
   const [selectedAddress, setSelectedAddress] = useState();
+  const walletLoading = useSelector(walletsSelectors.getLoading);
   const wallets = useSelector(walletsSelectors.getItems);
-  const [password, setPassword] = useState('mnemdm25');
+  const [password, setPassword] = useState();
   const [error, setError] = useState();
   const [loading, setLoading] = useState();
   const handlePasswordChange = value => setPassword(value);
@@ -103,7 +106,8 @@ export function UnlockWalletScreen() {
           setPassword(null);
           setLoading(false);
         })
-        .catch(() => {
+        .catch((err) => {
+          console.error(err);
           setLoading(false);
           setError('Invalid password, please try again.');
         });
@@ -111,22 +115,21 @@ export function UnlockWalletScreen() {
   };
 
   useEffect(() => {
-    if (!wallets) {
+    if (walletLoading) {
       return;
     }
 
-    if (!wallets.length) {
+    if (!wallets) {
       navigate(Routes.CREATE_WALLET);
-
       return;
     }
 
     if (!selectedAddress) {
       setSelectedAddress(wallets[0].address);
     }
-  }, [wallets]);
+  }, [wallets, walletLoading]);
 
-  if (!wallets || !wallets.length) {
+  if (!wallets || walletLoading) {
     return (
       <Container>
         <Content>
@@ -179,6 +182,17 @@ export function UnlockWalletScreen() {
                 bordered
                 onPress={handleCreateWallet}>
                 <Text style={{color: Colors.darkBlue}}>Create new wallet</Text>
+              </Button>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Button
+                full
+                style={{width: '100%'}}
+                bordered
+                onPress={() => navigate(Routes.BACKUP_LOAD)}>
+                <Text style={{color: Colors.darkBlue}}>Load from backup</Text>
               </Button>
             </Col>
           </Row>
