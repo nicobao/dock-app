@@ -140,7 +140,7 @@ export function UnlockWalletScreen() {
   }
 
   return (
-    <Container>
+    <Container testID="unlockWalletScreen">
       <Header style={{alignItems: 'center', marginTop: 10}}>
         <H2 style={{color: '#fff'}}>Select a Wallet</H2>
       </Header>
@@ -161,6 +161,7 @@ export function UnlockWalletScreen() {
           <Row>
             <Col>
               <Button
+                testID="unlockWalletBtn"
                 full
                 style={{width: '100%'}}
                 primary
@@ -177,6 +178,7 @@ export function UnlockWalletScreen() {
           <Row>
             <Col>
               <Button
+                testID="createWalletBtn"
                 full
                 style={{width: '100%'}}
                 bordered
