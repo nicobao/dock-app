@@ -7,6 +7,8 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
+    "test:e2e": "detox test",
+    "build:e2e": "detox build",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "postinstall": "./node_modules/.bin/rn-nodeify --install --hack --yarn && patch-package && jetifier && rm -rf ./node_modules/mrklt && rm -rf ./node_modules/credentials-context &&  rm -rf ./node_modules/security-context"
   },
