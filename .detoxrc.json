@@ -1,0 +1,30 @@
+{
+  "testRunner": "jest",
+  "runnerConfig": "e2e/config.json",
+  "devices": {
+    "simulator": {
+      "type": "ios.simulator",
+      "device": {
+        "type": "iPhone 12"
+      }
+    }
+  },
+  "apps": {
+    "ios.debug": {
+      "type": "ios.app",
+      "binaryPath": "./ios/build/Build/Products/Debug-iphonesimulator/DockApp.app",
+      "build": "xcodebuild -workspace ios/DockApp.xcworkspace -configuration Debug -scheme DockApp -sdk iphonesimulator -derivedDataPath ios/build"
+    }
+  },
+  "configurations": {
+    "ios.sim.debug": {
+      "device": {
+        "type": "ios.simulator",
+        "device": {
+          "type": "iPhone 12"
+        }
+      },
+      "app": "ios.debug"
+    }
+  }
+}

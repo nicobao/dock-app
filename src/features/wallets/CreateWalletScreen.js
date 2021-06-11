@@ -61,7 +61,7 @@ export function CreateWalletScreen({navigation}) {
   };
 
   return (
-    <Container>
+    <Container testID="createWalletScreen">
       <Header style={{alignItems: 'center', marginTop: 10}}>
         <H1 style={{color: '#fff'}}>Create Wallet</H1>
       </Header>
@@ -97,6 +97,7 @@ export function CreateWalletScreen({navigation}) {
       </Content>
       <Footer style={{backgroundColor: '#fff', padding: 8}}>
         <Button
+          testID="createWalletBtn"
           full
           style={{width: '100%'}}
           primary
