@@ -130,12 +130,16 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    dexOptions {
+        javaMaxHeapSize "8g"
+    }
+
     defaultConfig {
         applicationId "com.dockapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 7
-        versionName "0.0.7"
+        versionCode 8
+        versionName "0.0.8"
         missingDimensionStrategy 'react-native-camera', 'general'
     }
     splits {

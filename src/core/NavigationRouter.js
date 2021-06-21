@@ -1,11 +1,19 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {CreateWalletScreen} from '../features/wallets/CreateWalletScreen';
-import {CreateWalletMnemonicScreen} from '../features/wallets/CreateWalletMnemonicScreen';
+
 import {navigate, navigationRef} from './navigation';
 import {Routes} from './routes';
-import {useDispatch} from 'react-redux';
+
+import {CreateWalletScreen} from '../features/create-wallet/CreateWalletScreen';
+import {CreatePasscodeContainer} from '../features/create-wallet/CreatePasscodeScreen';
+import {ProtectYourWalletContainer} from '../features/create-wallet/ProtectYourWalletScreen';
+import {SetupPasscodeScreen} from '../features/create-wallet/SetupPasscodeScreen';
+import {AccountsScreen} from '../features/accounts/AccountsScreen';
+import {SplashScreen} from '../features/app/SplashScreen';
+
+// POC Screens
+import {CreateWalletMnemonicScreen} from '../features/wallets/CreateWalletMnemonicScreen';
 import {UnlockWalletScreen} from '../features/wallets/UnlockWalletScreen';
 import {HomeScreen} from '../features/home/HomeScreen';
 import {PresentationExchangeScreen} from '../features/credentials/PresentationExchangeScreen';
@@ -20,6 +28,7 @@ import {QRScanScreen} from '../features/qr-code-scanner/QRScanScreen';
 import {SendTokensScreen} from '../features/transactions/SendTokensScreen';
 import {CreateBackupScreen} from '../features/wallet-backup/CreateBackupScreen';
 import {LoadBackupScreen} from '../features/wallet-backup/LoadBackupScreen';
+import { UnlockWalletContainer } from '../features/unlock-wallet/UnlockWalletScreen';
 
 const getMainOptions = opts => {
   return {
@@ -57,14 +66,59 @@ const RootStack = createStackNavigator();
 function AppStackScreen() {
   return (
     <AppStack.Navigator>
-      
       <AppStack.Screen
-        name={Routes.UNLOCK_WALLET}
-        component={UnlockWalletScreen}
+        name={Routes.SPLASH_SCREEN}
+        component={SplashScreen}
         options={{
           headerShown: false,
         }}
       />
+      <AppStack.Screen
+        name={Routes.CREATE_WALLET}
+        component={CreateWalletScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <AppStack.Screen
+        name={Routes.CREATE_WALLET_PASSCODE_SETUP}
+        component={SetupPasscodeScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <AppStack.Screen
+        name={Routes.CREATE_WALLET_PASSCODE}
+        component={CreatePasscodeContainer}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <AppStack.Screen
+        name={Routes.CREATE_WALLET_PROTECT}
+        component={ProtectYourWalletContainer}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <AppStack.Screen
+        name={Routes.UNLOCK_WALLET}
+        component={UnlockWalletContainer}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <AppStack.Screen
+        name={Routes.ACCOUNTS}
+        component={AccountsScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      {
+        // POC Routes
+      }
+      
       <AppStack.Screen
         name={Routes.BACKUP_CREATE}
         component={CreateBackupScreen}
@@ -108,13 +162,6 @@ function AppStackScreen() {
         }}
       />
 
-      <AppStack.Screen
-        name={Routes.CREATE_WALLET}
-        component={CreateWalletScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
       <AppStack.Screen
         name={Routes.CREATE_WALLET_MNEMONIC}
         component={CreateWalletMnemonicScreen}
