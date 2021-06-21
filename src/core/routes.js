@@ -1,4 +1,14 @@
 export const Routes = {
+  SPLASH_SCREEN: 'splashScreen',
+  CREATE_WALLET: 'createWallet',
+  CREATE_WALLET_PROTECT: 'createWallet/protect',
+  CREATE_WALLET_PASSCODE_SETUP: 'createWallet/passcode',
+  CREATE_WALLET_PASSCODE: 'createWallet/passcodeSetup',
+  UNLOCK_WALLET: 'unlockWallet',
+
+  ACCOUNTS: 'accounts',
+  
+  // POC routes
   APP_HOME: 'app/home',
   APP_DID: 'app/did',
   APP_CREDENTIAL: 'app/credential',
@@ -7,9 +17,7 @@ export const Routes = {
   APP_QR_SCANNER: 'app/qrScanner',
   APP_SEND_TOKENS: 'app/appSendTokens',
   APP_SETTINGS: 'app/settings',
-  CREATE_WALLET: 'createWallet',
   CREATE_WALLET_MNEMONIC: 'createWallet/mnemonic',
-  UNLOCK_WALLET: 'unlockWallet',
   BACKUP_CREATE: 'backup/create',
   BACKUP_LOAD: 'backup/load',
 };

@@ -39,6 +39,20 @@ export function RNRpcWebView({onReady}) {
           }
         } else if (data.type === 'json-rpc-response') {
           getRpcClient().receive(data.body);
+        } else if (data.type === 'json-rpc-request') {
+          // rpcServer.receive(data.body).then((response) => {
+          // webViewRef.current.injectJavaScript(`
+          // (function(){
+          //   (navigator.appVersion.includes("Android") ? document : window).dispatchEvent(new MessageEvent('message', {data: ${JSON.stringify(
+          //     {
+          //       type: 'json-rpc-response',
+          //       body: response,
+          //     },
+          //   )}}));
+          // })();
+      
+          // `);
+          // });
         }
       }}
     />

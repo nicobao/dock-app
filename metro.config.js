@@ -24,11 +24,13 @@ module.exports = (async () => {
           inlineRequires: true,
         },
       }),
-      babelTransformerPath: require.resolve('react-native-react-bridge/lib/plugin'),
+      babelTransformerPath: require.resolve('react-native-svg-transformer'),
     },
     resolver: {
       // blacklistRE: exclusionList([/rn-rpc-webview\/source\/.*/]),
       resolverMainFields: ["react-native", "main"],
+      assetExts: assetExts.filter(ext => ext !== 'svg'),
+      sourceExts: [...sourceExts, 'svg'],
       extraNodeModules: {
         ...extraNodeModules,
         vm: require.resolve('vm-browserify'),

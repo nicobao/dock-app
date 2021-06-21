@@ -7,8 +7,14 @@ import {walletConnectReducer} from '../features/wallet-connect/wallet-connect-sl
 import {qrCodeReducer} from '../features/qr-code-scanner/qrcode-slice';
 import {transactionsReducer} from '../features/transactions/transactions-slice';
 import {backupReducer} from '../features/wallet-backup/wallet-backup-slice';
+import { appReducer } from '../features/app/app-slice';
+import { walletReducer } from '../features/create-wallet/wallet-slice';
 
 export const rootReducer = combineReducers({
+  app: appReducer,
+  wallet: walletReducer,
+  
+  // POC reducers
   wallets: walletsReducer,
   did: didReducer,
   credential: credentialReducer,
