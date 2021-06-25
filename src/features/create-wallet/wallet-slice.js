@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {Keychain} from '../../core/keychain';
 import {navigate} from '../../core/navigation';
-import {WalletRpc} from '../../rn-rpc-webview/wallet-rpc';
+import {WalletRpc} from '@docknetwork/react-native-sdk/src/client/wallet-rpc';
 import {Routes} from '../../core/routes';
 import {appSelectors, BiometryType} from '../app/app-slice';
 import AsyncStorage from '@react-native-community/async-storage';

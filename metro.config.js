@@ -34,6 +34,7 @@ module.exports = (async () => {
       extraNodeModules: {
         ...extraNodeModules,
         vm: require.resolve('vm-browserify'),
+        '@docknetwork/react-native-sdk': path.resolve(__dirname, '../dock-rn-web-bridge'),
         mrklt: path.resolve(__dirname, "./src/mrklt.js"),
         'credentials-context': path.resolve(__dirname, "./rn-packages/credentials-context.js"),
         'security-context': path.resolve(__dirname, "./rn-packages/security-context.js"),

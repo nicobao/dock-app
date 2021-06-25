@@ -15,7 +15,11 @@
     "storybook": "start-storybook -p 7007",
     "build-storybook": "build-storybook"
   },
+  "workspaces": [
+    "packages/**"
+  ],
   "dependencies": {
+    "@docknetwork/react-native-sdk": "file:/Users/maycon/dev/dock/dock-rn-web-bridge",
     "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/clipboard": "^1.5.1",
     "@react-native-community/masked-view": "^0.1.11",
@@ -37,7 +41,6 @@
     "constants-browserify": "^1.0.0",
     "detox": "^18.17.0",
     "dns.js": "^1.0.1",
-    "dock-rn-web-bridge": "link:/Users/maycon/dev/dock/dock-rn-web-bridge",
     "domain-browser": "^1.2.0",
     "enhanced-resolve": "4.5.0",
     "events": "^1.1.1",

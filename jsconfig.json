@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@docknetwork/react-native-sdk": ["../dock-rn-web-bridge"]
+    }
+  }
+}
