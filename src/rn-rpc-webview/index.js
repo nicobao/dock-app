@@ -9,7 +9,7 @@ import rpcServer from './server';
 import {Platform} from 'react-native';
 
 const WEBVIEW_URI = 'http://localhost:3000';
-const DEV_MODE = true;
+const DEV_MODE = false;
 
 export function RNRpcWebView({onReady}) {
   const webViewRef = useRef();
@@ -34,10 +34,13 @@ export function RNRpcWebView({onReady}) {
       onMessage={async event => {
         const data = JSON.parse(event.nativeEvent.data);
 
-        console.log('message received', data);
+        // console.log('message received', data);
 
+        
         if (data.type === 'json-rpc-ready') {
-          await initRpcClient(async jsonRPCRequest => {
+          initRpcClient(async jsonRPCRequest => {
+            console.log('Send request to webview client', jsonRPCRequest);
+            
             webViewRef.current.injectJavaScript(`
             (function(){
               (navigator.appVersion.includes("Android") ? document : window).dispatchEvent(new MessageEvent('message', {data: ${JSON.stringify(
@@ -49,6 +52,8 @@ export function RNRpcWebView({onReady}) {
             })();
         
             `);
+            
+            return jsonRPCRequest;
           });
 
           if (onReady) {
@@ -58,17 +63,23 @@ export function RNRpcWebView({onReady}) {
           getRpcClient().receive(data.body);
         } else if (data.type === 'json-rpc-request') {
           rpcServer.receive(data.body).then((response) => {
-          webViewRef.current.injectJavaScript(`
-          (function(){
-            (navigator.appVersion.includes("Android") ? document : window).dispatchEvent(new MessageEvent('message', {data: ${JSON.stringify(
-              {
-                type: 'json-rpc-response',
-                body: response,
-              },
-            )}}));
-          })();
-          `);
+            console.log('RN: Send json-rpc-request to webview client', response);
+            webViewRef.current.injectJavaScript(`
+            (function(){
+              (navigator.appVersion.includes("Android") ? document : window).dispatchEvent(new MessageEvent('message', {data: ${JSON.stringify(
+                {
+                  type: 'json-rpc-response',
+                  body: response,
+                },
+              )}}));
+            })();
+            `);
+            
+            return response;
           });
+        } else if (data.type === 'log') {
+          console.log('====> Webview log:');
+          console.log(...JSON.parse(data.body));
         }
       }}
     />

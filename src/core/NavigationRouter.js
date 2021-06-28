@@ -9,7 +9,7 @@ import {CreateWalletScreen} from '../features/create-wallet/CreateWalletScreen';
 import {CreatePasscodeContainer} from '../features/create-wallet/CreatePasscodeScreen';
 import {ProtectYourWalletContainer} from '../features/create-wallet/ProtectYourWalletScreen';
 import {SetupPasscodeScreen} from '../features/create-wallet/SetupPasscodeScreen';
-import {AccountsScreen} from '../features/accounts/AccountsScreen';
+import {AccountsContainer, AccountsScreen} from '../features/accounts/AccountsScreen';
 import {SplashScreen} from '../features/app/SplashScreen';
 
 // POC Screens
@@ -28,7 +28,12 @@ import {QRScanScreen} from '../features/qr-code-scanner/QRScanScreen';
 import {SendTokensScreen} from '../features/transactions/SendTokensScreen';
 import {CreateBackupScreen} from '../features/wallet-backup/CreateBackupScreen';
 import {LoadBackupScreen} from '../features/wallet-backup/LoadBackupScreen';
-import { UnlockWalletContainer } from '../features/unlock-wallet/UnlockWalletScreen';
+import {UnlockWalletContainer} from '../features/unlock-wallet/UnlockWalletScreen';
+
+import {CreateAccountVerifyPhraseContainer} from '../features/account-creation/CreateAccountVerifyPhraseScreen';
+import {CreateAccountSetupContainer} from '../features/account-creation/CreateAccountSetupScreen';
+import {CreateAccountMnemonicContainer} from '../features/account-creation/CreateAccountMnemonicScreen';
+import {CreateAccountBackupContainer} from '../features/account-creation/CreateAccountBackupScreen';
 
 const getMainOptions = opts => {
   return {
@@ -110,15 +115,48 @@ function AppStackScreen() {
       />
       <AppStack.Screen
         name={Routes.ACCOUNTS}
-        component={AccountsScreen}
+        component={AccountsContainer}
         options={{
           headerShown: false,
         }}
       />
+
+      <AppStack.Screen
+        name={Routes.CREATE_ACCOUNT_SETUP}
+        component={CreateAccountSetupContainer}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <AppStack.Screen
+        name={Routes.CREATE_ACCOUNT_MNEMONIC}
+        component={CreateAccountMnemonicContainer}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <AppStack.Screen
+        name={Routes.CREATE_ACCOUNT_BACKUP}
+        component={CreateAccountBackupContainer}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <AppStack.Screen
+        name={Routes.CREATE_ACCOUNT_VERIFY_PHRASE}
+        component={CreateAccountVerifyPhraseContainer}
+        options={{
+          headerShown: false,
+        }}
+      />
+
       {
         // POC Routes
       }
-      
+
       <AppStack.Screen
         name={Routes.BACKUP_CREATE}
         component={CreateBackupScreen}

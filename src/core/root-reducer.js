@@ -9,11 +9,15 @@ import {transactionsReducer} from '../features/transactions/transactions-slice';
 import {backupReducer} from '../features/wallet-backup/wallet-backup-slice';
 import { appReducer } from '../features/app/app-slice';
 import { walletReducer } from '../features/create-wallet/wallet-slice';
+import { accountReducer } from '../features/accounts/account-slice';
+import { createAccountReducer } from '../features/account-creation/create-account-slice';
 
 export const rootReducer = combineReducers({
   app: appReducer,
   wallet: walletReducer,
-  
+  account: accountReducer,
+  createAccount: createAccountReducer,
+
   // POC reducers
   wallets: walletsReducer,
   did: didReducer,

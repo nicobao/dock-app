@@ -5,6 +5,7 @@ import {WalletRpc} from '@docknetwork/react-native-sdk/src/client/wallet-rpc';
 import {Routes} from '../../core/routes';
 import {appSelectors, BiometryType} from '../app/app-slice';
 import AsyncStorage from '@react-native-community/async-storage';
+import {accountOperations} from '../accounts/account-slice';
 
 const initialState = {
   loading: true,
@@ -59,8 +60,8 @@ export const walletOperations = {
           });
         }
       }
-      
-      // TODO: Load accounts in the wallet
+
+      dispatch(accountOperations.loadAccounts())
 
       navigate(Routes.ACCOUNTS);
     },

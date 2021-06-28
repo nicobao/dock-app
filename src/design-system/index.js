@@ -2,36 +2,12 @@ import React from 'react';
 import styled from 'styled-components/native';
 import {Button as NButton} from 'native-base';
 import {Box, rnStyleAttributes} from './grid';
+import { useTheme } from './theme';
 
-export const Theme = {
-  screen: {
-    backgroundColor: '#18181B',
-  },
-  button: {
-    backgroundColor: '#1E75C5',
-    textColor: '#fff',
-  },
-};
-
+export * from '../assets/icons';
 export const ScreenContainer = styled.SafeAreaView`
   background-color: ${props => props.theme.screen.backgroundColor};
   flex: 1;
-`;
-
-export function useTheme() {
-  return {
-    theme: Theme,
-  };
-}
-
-/**
- * Button
- */
-const StyledButton = styled(NButton)`
-  background-color: ${props => props.theme.button.backgroundColor};
-  padding: 13px;
-  border-radius: 6px;
-  height: 50px
 `;
 
 const StyledButtonText = styled.Text`
@@ -45,18 +21,18 @@ const StyledButtonText = styled.Text`
 export function Button(props) {
   const {theme} = useTheme();
   let {children, icon, ...otherProps} = props;
-  if (typeof children === 'string') {
-    children = <StyledButtonText>{children}</StyledButtonText>
-  }
+  // if (typeof children === 'string') {
+  //   children = <StyledButtonText>{children}</StyledButtonText>
+  // }
   return (
-    <StyledButton {...otherProps}>
+    <NButton {...otherProps}>
       {icon && (
         <Box marginRight={15}>
           {icon}
         </Box>
       )}
       {children}
-    </StyledButton>
+    </NButton>
   );
 }
 
@@ -75,8 +51,10 @@ export const Image = styled.Image`
 
 export * from './grid';
 export * from './buttons';
+export * from './inputs';
+export * from './theme';
 
-export const Text = styled.Text`
+export const SText = styled.Text`
   font-family: Nunito Sans;
   color: #D4D4D8;
 `;
@@ -92,8 +70,8 @@ export function Typography(props) {
   
   
   return (
-    <Text style={style}>
+    <SText style={style}>
       {props.children}
-    </Text>
+    </SText>
   )
 }
