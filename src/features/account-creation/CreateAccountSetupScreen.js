@@ -114,7 +114,7 @@ export function CreateAccountSetupScreen({
           </FormControl>
         </SelectToggler>
       </Content>
-      <Footer marginBottom={114} marginLeft={26} marginRight={26}>
+      <Footer marginBottom={10} marginLeft={26} marginRight={26}>
         <LoadingButton
           full
           testID="next-btn"

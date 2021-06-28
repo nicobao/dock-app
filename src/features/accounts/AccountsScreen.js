@@ -12,6 +12,7 @@ import {
   BigButton,
   DotsVerticalIcon,
   CheckCircleIcon,
+  IconButton,
 } from '../../design-system';
 import DocumentDownloadIcon from '../../assets/icons/document-download.svg';
 import PlusCircleIcon from '../../assets/icons/plus-circle.svg';
@@ -22,7 +23,6 @@ import {
   Button,
   ChevronLeftIcon,
   Divider,
-  IconButton,
   Menu,
   Pressable,
   Stack,
@@ -83,12 +83,12 @@ export function AccountsScreen({
             </Typography>
           </Box>
           <Box row>
-            <Box col marginRight={10} onPress={onAddAccount}>
+            <IconButton col marginRight={10} onPress={onAddAccount}>
               <PlusCircleWhiteIcon />
-            </Box>
-            <Box col>
+            </IconButton>
+            <IconButton col onPress={() => alert('Available soon!')}>
               <CogIcon />
-            </Box>
+            </IconButton>
           </Box>
         </Box>
       </Header>

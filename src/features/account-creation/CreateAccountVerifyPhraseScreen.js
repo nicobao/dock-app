@@ -69,6 +69,23 @@ export function CreateAccountVerifyPhraseScreen({
   );
 }
 
+
+function getRandomNumbers(maxNum = 1, resultSize = 0) {
+  let result = [];
+  
+  for (let i = 0; i < resultSize; i++) {
+    let value;
+
+    do {
+      value = Math.floor(Math.random() * maxNum);
+    } while(result.find(v => v === value));
+
+    result.push(value);
+  }
+  
+  return result;
+}
+
 export function CreateAccountVerifyPhraseContainer() {
   const dispatch = useDispatch();
   const phrase = useSelector(createAccountSelectors.getMnemonicPhrase);
@@ -101,9 +118,9 @@ export function CreateAccountVerifyPhraseContainer() {
       type: 'error'
     })
   };
-  
+
   useEffect(() => {
-    setConfirmationIndexes([0, 2])
+    setConfirmationIndexes(getRandomNumbers(12, 2));
   }, [])
 
   const submitDisabled = !(form.word1 && form.word2);

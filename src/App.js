@@ -34,7 +34,6 @@ function GlobalComponents() {
       <View style={{height: 0}}>
         <RNRpcWebView
           onReady={() => {
-            // dispatch(walletsOperations.initialize());
             dispatch(appOperations.rpcReady());
           }}
         />

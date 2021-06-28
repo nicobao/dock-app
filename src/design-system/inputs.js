@@ -24,14 +24,14 @@ export function SelectToggler({children, placeholder}) {
         <Stack
           backgroundColor="#27272A"
           mt={8}
-          width={0.75}
+          width={0.67}
           direction="row"
           alignItems="center"
           pl={5}
           pr={2}
           py="1px"
           borderRadius={6}>
-          <Box>
+          <Box flex={1}>
             <Text fontWeight={600} fontSize={14}>
               {placeholder}
             </Text>
