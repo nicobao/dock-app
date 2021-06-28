@@ -13,6 +13,7 @@ import {
   NBox as Box,
   Select,
   Input,
+  LoadingButton,
 } from '../../design-system';
 import {BackButton} from '../../design-system/buttons';
 import {createAccountOperations} from './create-account-slice';
@@ -56,12 +57,12 @@ export function CreateAccountBackupScreen({
             to access my account
           </Checkbox>
         </Box>
-        <Button full testID="next-btn" mb={5} onPress={onSubmit} disabled={submitDisabled}>
+        <LoadingButton full testID="next-btn" mb={5} onPress={onSubmit} disabled={submitDisabled}>
           Next
-        </Button>
-        <Button full testID="next-btn" variant="unstyled" onPress={onSkip}>
+        </LoadingButton>
+        <LoadingButton full testID="next-btn" variant="unstyled" onPress={onSkip}>
           Skip
-        </Button>
+        </LoadingButton>
       </Footer>
     </ScreenContainer>
   );
@@ -87,7 +88,7 @@ export function CreateAccountBackupContainer() {
   };
 
   const handleSkip = () => {
-    dispatch(createAccountOperations.createAccount());
+    return dispatch(createAccountOperations.createAccount());
   };
 
   const submitDisabled = !form.agreement;

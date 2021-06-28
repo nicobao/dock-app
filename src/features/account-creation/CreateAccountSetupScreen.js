@@ -21,6 +21,7 @@ import {
   Select,
   Input,
   InputPopover,
+  LoadingButton,
 } from '../../design-system';
 import {BackButton} from '../../design-system/buttons';
 import {
@@ -114,13 +115,13 @@ export function CreateAccountSetupScreen({
         </SelectToggler>
       </Content>
       <Footer marginBottom={114} marginLeft={26} marginRight={26}>
-        <Button
+        <LoadingButton
           full
           testID="next-btn"
           disabled={submitDisabled}
           onPress={onSubmit}>
           Next
-        </Button>
+        </LoadingButton>
       </Footer>
     </ScreenContainer>
   );
@@ -144,8 +145,7 @@ export function CreateAccountSetupContainer() {
   };
 
   const handleSubmit = () => {
-    // TODO: validate it
-    dispatch(createAccountOperations.submitAccountForm(form));
+    return dispatch(createAccountOperations.submitAccountForm(form));
   };
 
   const submitDisabled = !form.accountName;

@@ -13,6 +13,7 @@ import {
   NBox as Box,
   Select,
   Input,
+  LoadingButton,
 } from '../../design-system';
 import {BackButton} from '../../design-system/buttons';
 import { createAccountOperations, createAccountSelectors } from './create-account-slice';
@@ -60,9 +61,9 @@ export function CreateAccountVerifyPhraseScreen({
         </FormControl>
       </Content>
       <Footer marginBottom={0} marginLeft={26} marginRight={26}>
-        <Button full testID="next-btn" mb={5} onPress={onSubmit} disabled={submitDisabled}>
+        <LoadingButton full testID="next-btn" mb={5} onPress={onSubmit} disabled={submitDisabled}>
           Next
-        </Button>
+        </LoadingButton>
       </Footer>
     </ScreenContainer>
   );
@@ -92,8 +93,7 @@ export function CreateAccountVerifyPhraseContainer() {
     const word2 = form.word2.toLowerCase();
 
     if (word1 === words[confirmationIndexes[0]] && word2 === words[confirmationIndexes[1]]) {
-      dispatch(createAccountOperations.createAccount());
-      return;
+      return dispatch(createAccountOperations.createAccount());
     }
 
     showToast({

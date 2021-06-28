@@ -7,6 +7,8 @@ import {
   ScreenContainer,
   Typography,
   Box,
+  BigButton,
+  runAfterInteractions,
 } from '../../design-system';
 import {BackButton} from '../../design-system/buttons';
 import EmojiHappyIcon from '../../assets/icons/emoji-happy.svg';
@@ -16,30 +18,30 @@ import {useDispatch, useSelector} from 'react-redux';
 import {walletOperations} from './wallet-slice';
 import {appSelectors, BiometryType} from '../app/app-slice';
 
-const BigButton = ({icon, children, ...props}) => (
-  <Box
-    row
-    borderWidth={1}
-    borderColor="#3F3F46"
-    borderRadius={8}
-    padding={25}
-    marginBottom={12}
-    alignItems="center"
-    {...props}>
-    <Box autoSize col>
-      {icon}
-    </Box>
-    <Box>
-      <Typography
-        fontSize={14}
-        fontFamily="Nunito Sans"
-        fontWeight="600"
-        color="#fff">
-        {children}
-      </Typography>
-    </Box>
-  </Box>
-);
+// const BigButton = ({icon, children, ...props}) => (
+//   <Box
+//     row
+//     borderWidth={1}
+//     borderColor="#3F3F46"
+//     borderRadius={8}
+//     padding={25}
+//     marginBottom={12}
+//     alignItems="center"
+//     {...props}>
+//     <Box autoSize col>
+//       {icon}
+//     </Box>
+//     <Box>
+//       <Typography
+//         fontSize={14}
+//         fontFamily="Nunito Sans"
+//         fontWeight="600"
+//         color="#fff">
+//         {children}
+//       </Typography>
+//     </Box>
+//   </Box>
+// );
 
 export function ProtectYourWalletScreen({
   onSkip,
@@ -103,11 +105,11 @@ export function ProtectYourWalletContainer() {
   let faceId = supportedBiometryType === BiometryType.FaceId;
 
   const handleEnable = () => {
-    dispatch(walletOperations.createWallet({biometry: true}));
+    runAfterInteractions(() => dispatch(walletOperations.createWallet({biometry: true})));
   };
 
   const handleSkip = () => {
-    dispatch(walletOperations.createWallet());
+    runAfterInteractions(() => dispatch(walletOperations.createWallet()));
   };
 
   useEffect(() => {

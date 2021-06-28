@@ -14,6 +14,7 @@ import {
   NBox as Box,
   Select,
   Input,
+  LoadingButton,
 } from '../../design-system';
 import {BackButton} from '../../design-system/buttons';
 import { createAccountSelectors } from './create-account-slice';
@@ -80,9 +81,9 @@ export function CreateAccountMnemonicScreen({
         </Button>
       </Content>
       <Footer marginBottom={0} marginLeft={26} marginRight={26}>
-        <Button full testID="next-btn" mb={5} onPress={onSubmit}>
+        <LoadingButton full testID="next-btn" mb={5} onPress={onSubmit}>
           Next
-        </Button>
+        </LoadingButton>
       </Footer>
     </ScreenContainer>
   );
@@ -99,9 +100,7 @@ export function CreateAccountMnemonicContainer() {
     });
   };
 
-  const handleSubmit = () => {
-    navigate(Routes.CREATE_ACCOUNT_VERIFY_PHRASE);
-  }
+  const handleSubmit = () => navigate(Routes.CREATE_ACCOUNT_VERIFY_PHRASE);
 
   return (
     <CreateAccountMnemonicScreen

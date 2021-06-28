@@ -5,7 +5,6 @@ import {
   initRpcClient,
 } from '@docknetwork/react-native-sdk/src/rpc-client';
 import rpcServer from './server';
-
 import {Platform} from 'react-native';
 
 const WEBVIEW_URI = 'http://localhost:3000';

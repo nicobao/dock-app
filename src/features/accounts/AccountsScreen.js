@@ -9,6 +9,7 @@ import {
   Typography,
   Box,
   NBox,
+  BigButton,
   DotsVerticalIcon,
   CheckCircleIcon,
 } from '../../design-system';
@@ -32,30 +33,30 @@ import {showToast} from '../../core/toast';
 import {useDispatch, useSelector} from 'react-redux';
 import {accountOperations, accountSelectors} from './account-slice';
 
-const BigButton = ({icon, children, ...props}) => (
-  <Box
-    row
-    borderWidth={1}
-    borderColor="#3F3F46"
-    borderRadius={8}
-    padding={25}
-    marginBottom={12}
-    alignItems="center"
-    {...props}>
-    <Box autoSize col>
-      {icon}
-    </Box>
-    <Box>
-      <Typography
-        fontSize={14}
-        fontFamily="Nunito Sans"
-        fontWeight="600"
-        color="#fff">
-        {children}
-      </Typography>
-    </Box>
-  </Box>
-);
+// const BigButton = ({icon, children, ...props}) => (
+//   <Box
+//     row
+//     borderWidth={1}
+//     borderColor="#3F3F46"
+//     borderRadius={8}
+//     padding={25}
+//     marginBottom={12}
+//     alignItems="center"
+//     {...props}>
+//     <Box autoSize col>
+//       {icon}
+//     </Box>
+//     <Box>
+//       <Typography
+//         fontSize={14}
+//         fontFamily="Nunito Sans"
+//         fontWeight="600"
+//         color="#fff">
+//         {children}
+//       </Typography>
+//     </Box>
+//   </Box>
+// );
 
 export function AccountsScreen({
   accounts = [],

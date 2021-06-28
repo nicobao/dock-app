@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Image,
   Button,
+  LoadingButton,
   Header,
   Footer,
   Content,
@@ -31,12 +32,12 @@ export function CreateWalletScreen() {
         </Box>
       </Content>
       <Footer marginBottom={114} marginLeft={26} marginRight={26}>
-        <Button
+        <LoadingButton
           full
           testID="create-wallet-btn"
           onPress={() => navigate(Routes.CREATE_WALLET_PASSCODE)}>
           Create a new wallet
-        </Button>
+        </LoadingButton>
       </Footer>
     </ScreenContainer>
   );

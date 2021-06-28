@@ -2,18 +2,17 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 export default {
   name: "storage",
-  routes: [
-    async function getItem(...params) {
+  routes: {
+    async getItem(...params) {
+      console.log('Getting storage item with params', params);
+
       const result = await AsyncStorage.getItem(...params);
-      
-      console.log('Getting storage item', {
-        params,
-        result,
-      });
+
+      console.log('Getting storage item result', result);
 
       return result;
     },
-    async function setItem(...params) {
+    async setItem(...params) {
       console.log('Set storage item', {
         params,
       });
@@ -24,5 +23,5 @@ export default {
       
       return result;
     },
-  ],
+  },
 };
