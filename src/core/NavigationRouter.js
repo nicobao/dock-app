@@ -10,6 +10,7 @@ import {CreatePasscodeContainer} from '../features/create-wallet/CreatePasscodeS
 import {ProtectYourWalletContainer} from '../features/create-wallet/ProtectYourWalletScreen';
 import {SetupPasscodeScreen} from '../features/create-wallet/SetupPasscodeScreen';
 import {AccountsContainer, AccountsScreen} from '../features/accounts/AccountsScreen';
+import {AccountDetailsContainer} from '../features/accounts/AccountDetailsScreen';
 import {SplashScreen} from '../features/app/SplashScreen';
 
 // POC Screens
@@ -116,6 +117,13 @@ function AppStackScreen() {
       <AppStack.Screen
         name={Routes.ACCOUNTS}
         component={AccountsContainer}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <AppStack.Screen
+        name={Routes.ACCOUNT_DETAILS}
+        component={AccountDetailsContainer}
         options={{
           headerShown: false,
         }}

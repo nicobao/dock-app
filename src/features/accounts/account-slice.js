@@ -1,12 +1,15 @@
 import {createSlice} from '@reduxjs/toolkit';
 import { WalletRpc } from '@docknetwork/react-native-sdk/src/client/wallet-rpc';
-import { showToast } from '../../core/toast';
+import { showToast, withErrorToast } from '../../core/toast';
 import { navigate } from '../../core/navigation';
 import { Routes } from '../../core/routes';
+import {createAccountActions} from '../account-creation/create-account-slice';
+
 
 const initialState = {
   loading: true,
   accounts: [],
+  accountToBackup: null,
 };
 
 const account = createSlice({
@@ -19,6 +22,9 @@ const account = createSlice({
     setAccounts(state, action) {
       state.accounts = action.payload;
     },
+    setAccountToBackup(state, action) {
+      state.accountToBackup = action.payload;
+    },
   },
 });
 
@@ -29,6 +35,9 @@ const getRoot = state => state.account;
 export const accountSelectors = {
   getLoading: state => getRoot(state).loading,
   getAccounts: state => getRoot(state).accounts,
+  getAccountById: (id) => state => getRoot(state).accounts.find(account => account.id === id),
+  getAccountToBackup: state => getRoot(state).accountToBackup,
+  
 };
 
 export const accountOperations = {
@@ -56,6 +65,53 @@ export const accountOperations = {
       message: 'Account successfully created'
     });
   },
+
+  confirmAccountBackup: () => withErrorToast(async (dispatch, getState) => {
+    const account = accountSelectors.getAccountToBackup(getState());
+    
+    if (!account) {
+      return;
+    }
+
+    const updatedAccount = {
+      ...account,
+      meta: {
+        ...account.meta,
+        hasBackup: true,
+      }
+    }
+
+    // update account meta
+    await WalletRpc.update(updatedAccount);
+    
+    dispatch(accountActions.setAccountToBackup(null));
+    
+    navigate(Routes.ACCOUNT_DETAILS, {
+      id: account.id,
+    });
+
+    await dispatch(accountOperations.loadAccounts());
+    
+    showToast({
+      message: 'Backup complete!'
+    })
+  }),
+  backupAccount: (account) =>
+    withErrorToast(async (dispatch, getState) => {
+      dispatch(accountActions.setAccountToBackup(account));
+
+      // get mnemonic phrase for the acount
+      const result = await WalletRpc.query({
+        equals: {
+          'content.id': account.correlation[0]
+        }
+      });
+      
+      const phrase = result[0].value;
+
+      dispatch(createAccountActions.setMnemonicPhrase(phrase));
+      navigate(Routes.CREATE_ACCOUNT_MNEMONIC);
+    }),
   addAccountFlow: () => async (dispatch, getState) => {
     navigate(Routes.CREATE_ACCOUNT_SETUP);
   },
@@ -71,6 +127,11 @@ export const accountOperations = {
     
   },
   loadAccounts: () => async (dispatch, getState) => {
+    try {
+      await WalletRpc.load();
+      await WalletRpc.sync();
+    } catch(err) {}
+
     const accounts = await WalletRpc.query({
       equals: {
         'content.type': 'Account'

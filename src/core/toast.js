@@ -47,6 +47,7 @@ export function showToast({
   type = 'success',
 }) {
     toast.show({
+      duration: 2000,
       render: () => {
         const typeProps = typeMap[type] || typeMap.success;
         return (

@@ -8,7 +8,7 @@ import rpcServer from './server';
 import {Platform} from 'react-native';
 
 const WEBVIEW_URI = 'http://localhost:3000';
-const DEV_MODE = false;
+const DEV_MODE = true;
 
 export function RNRpcWebView({onReady}) {
   const webViewRef = useRef();

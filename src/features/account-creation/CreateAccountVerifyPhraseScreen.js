@@ -16,6 +16,7 @@ import {
   LoadingButton,
 } from '../../design-system';
 import {BackButton} from '../../design-system/buttons';
+import { accountOperations, accountSelectors } from '../accounts/account-slice';
 import { createAccountOperations, createAccountSelectors } from './create-account-slice';
 
 export function CreateAccountVerifyPhraseScreen({
@@ -89,6 +90,8 @@ function getRandomNumbers(maxNum = 1, resultSize = 0) {
 export function CreateAccountVerifyPhraseContainer() {
   const dispatch = useDispatch();
   const phrase = useSelector(createAccountSelectors.getMnemonicPhrase);
+  const existingAccountBackup = useSelector(accountSelectors.getAccountToBackup);
+  
   const [confirmationIndexes, setConfirmationIndexes] = useState([]);
   const [form, setForm] = useState({
     word1: '',
@@ -110,7 +113,13 @@ export function CreateAccountVerifyPhraseContainer() {
     const word2 = form.word2.toLowerCase();
 
     if (word1 === words[confirmationIndexes[0]] && word2 === words[confirmationIndexes[1]]) {
-      return dispatch(createAccountOperations.createAccount());
+      if (existingAccountBackup) {
+        return dispatch(accountOperations.confirmAccountBackup());
+      }
+
+      return dispatch(createAccountOperations.createAccount({
+        hasBackup: true
+      }));
     }
 
     showToast({

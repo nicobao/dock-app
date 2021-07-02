@@ -13,6 +13,7 @@ import {
   DotsVerticalIcon,
   CheckCircleIcon,
   IconButton,
+  AlertIcon,
 } from '../../design-system';
 import DocumentDownloadIcon from '../../assets/icons/document-download.svg';
 import PlusCircleIcon from '../../assets/icons/plus-circle.svg';
@@ -32,6 +33,8 @@ import {TouchableWithoutFeedback} from 'react-native';
 import {showToast} from '../../core/toast';
 import {useDispatch, useSelector} from 'react-redux';
 import {accountOperations, accountSelectors} from './account-slice';
+import { navigate } from 'src/core/navigation';
+import { Routes } from 'src/core/routes';
 
 // const BigButton = ({icon, children, ...props}) => (
 //   <Box
@@ -63,6 +66,7 @@ export function AccountsScreen({
   onAddAccount,
   onDelete,
   onEdit,
+  onDetails
 }) {
   const isEmpty = accounts.length === 0;
   const toast = useToast();
@@ -125,21 +129,30 @@ export function AccountsScreen({
                     </Text>
                   </Stack>
                   <NBox py={1} px={1}>
-                    <Menu
-                      trigger={triggerProps => {
-                        return (
-                          <Pressable {...triggerProps}>
-                            <DotsVerticalIcon />
-                          </Pressable>
-                        );
-                      }}>
-                      <Menu.Item onPress={() => onDelete(account)}>
-                        Delete
-                      </Menu.Item>
-                      <Menu.Item onPress={() => onEdit(account)}>
-                        Edit
-                      </Menu.Item>
-                    </Menu>
+                    <Stack direction="row">
+                      {
+                        account.meta.hasBackup ? null : (
+                          <NBox mr={3} mt={1}>
+                            <AlertIcon />
+                          </NBox>
+                        )
+                      }
+                      <Menu
+                        trigger={triggerProps => {
+                          return (
+                            <Pressable {...triggerProps}>
+                              <DotsVerticalIcon />
+                            </Pressable>
+                          );
+                        }}>
+                        <Menu.Item onPress={() => onDelete(account)}>
+                          Delete
+                        </Menu.Item>
+                        <Menu.Item onPress={() => onDetails(account)}>
+                          Details
+                        </Menu.Item>
+                      </Menu>
+                    </Stack>
                   </NBox>
                 </Stack>
               );
@@ -175,8 +188,10 @@ export function AccountsContainer() {
       onDelete={accountId => {
         dispatch(accountOperations.removeAccount(accountId));
       }}
-      onEdit={() => {
-        alert('edit');
+      onDetails={(account) => {
+        navigate(Routes.ACCOUNT_DETAILS, {
+          id: account.id,
+        });
       }}
       accounts={accounts}
       onAddAccount={() => {
