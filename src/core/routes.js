@@ -5,8 +5,13 @@ export const Routes = {
   CREATE_WALLET_PASSCODE_SETUP: 'createWallet/passcode',
   CREATE_WALLET_PASSCODE: 'createWallet/passcodeSetup',
   UNLOCK_WALLET: 'unlockWallet',
-
+  CREATE_ACCOUNT_BACKUP: 'createAccount/backup',
+  CREATE_ACCOUNT_MNEMONIC: 'createAccount/mnemonic',
+  CREATE_ACCOUNT_SETUP: 'createAccount/setup',
+  CREATE_ACCOUNT_VERIFY_PHRASE: 'createAccount/',
+  
   ACCOUNTS: 'accounts',
+  ACCOUNT_DETAILS: 'account/details',
   
   // POC routes
   APP_HOME: 'app/home',

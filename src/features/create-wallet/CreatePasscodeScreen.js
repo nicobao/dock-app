@@ -9,6 +9,7 @@ import {
   ScreenContainer,
   Typography,
   Box,
+  runAfterInteractions,
 } from '../../design-system';
 import styled from 'styled-components/native';
 import {BackButton} from '../../design-system/buttons';
@@ -168,17 +169,17 @@ export function CreatePasscodeContainer() {
     }
 
     setPasscode(value);
-
-    if (value.length === DIGITS) {
-      if (confirmation) {
-        handleConfirmation(value);
-      } else {
-        setTimeout(() => {
+    
+    runAfterInteractions(() => {
+      if (value.length === DIGITS) {
+        if (confirmation) {
+          handleConfirmation(value);
+        } else {
           setConfirmation(value);
           setPasscode('');
-        }, 100);
+        }
       }
-    }
+    });
   };
 
   const handleDelete = () => {

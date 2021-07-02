@@ -1,99 +1,47 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components/native';
-import {Button as NButton} from 'native-base';
+import {Button as NButton, Text, Box as NBox, Spinner} from 'native-base';
 import {Box, rnStyleAttributes} from './grid';
-
-export const Theme = {
-  screen: {
-    backgroundColor: '#18181B',
-  },
-  button: {
-    backgroundColor: '#1E75C5',
-    textColor: '#fff',
-  },
-};
+import {useTheme} from './theme';
+import {InteractionManager, Platform} from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export const ScreenContainer = styled.SafeAreaView`
-  background-color: ${props => props.theme.screen.backgroundColor};
-  flex: 1;
+background-color: ${props => props.theme.screen.backgroundColor};
+flex: 1;
 `;
-
-export function useTheme() {
-  return {
-    theme: Theme,
-  };
-}
-
-/**
- * Button
- */
-const StyledButton = styled(NButton)`
-  background-color: ${props => props.theme.button.backgroundColor};
-  padding: 13px;
-  border-radius: 6px;
-  height: 50px
-`;
-
-const StyledButtonText = styled.Text`
-  color: ${props => props.theme.button.textColor};
-  font-family: Nunito Sans;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
-`;
-
-export function Button(props) {
-  const {theme} = useTheme();
-  let {children, icon, ...otherProps} = props;
-  if (typeof children === 'string') {
-    children = <StyledButtonText>{children}</StyledButtonText>
-  }
-  return (
-    <StyledButton {...otherProps}>
-      {icon && (
-        <Box marginRight={15}>
-          {icon}
-        </Box>
-      )}
-      {children}
-    </StyledButton>
-  );
-}
 
 export const Header = styled.View`
-  padding: 22px 6px;
+padding: 22px 6px;
 `;
 export const Footer = styled(Box)``;
-export const Content = styled.View`
-  flex: 1;
+export const Content = styled(ScrollView)`
+flex: 1;
 `;
 
-export const Image = styled.Image`
-  alignSelf: stretch;
-`;
+export const Image = styled.Image``;
+// alignself: stretch;
 
-
+export * from '../assets/icons';
 export * from './grid';
 export * from './buttons';
+export * from './inputs';
+export * from './theme';
+export * from './LoadingScreen';
 
-export const Text = styled.Text`
+export const SText = styled.Text`
   font-family: Nunito Sans;
-  color: #D4D4D8;
+  color: #d4d4d8;
 `;
 
 export function Typography(props) {
   const style = props.style || {};
-  
+
   rnStyleAttributes.forEach(key => {
-		if (props[key]) {
-			style[key] = props[key];
-		}
-	});
-  
-  
-  return (
-    <Text style={style}>
-      {props.children}
-    </Text>
-  )
+    if (props[key]) {
+      style[key] = props[key];
+    }
+  });
+
+  return <SText style={style}>{props.children}</SText>;
 }

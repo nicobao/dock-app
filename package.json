@@ -1,7 +1,7 @@
 {
   "name": "DockApp",
   "version": "0.0.1",
-  "private": true,
+  "private": false,
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
@@ -16,6 +16,7 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@docknetwork/react-native-sdk": "file:/Users/maycon/dev/dock/dock-rn-web-bridge",
     "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/clipboard": "^1.5.1",
     "@react-native-community/masked-view": "^0.1.11",
@@ -37,7 +38,6 @@
     "constants-browserify": "^1.0.0",
     "detox": "^18.17.0",
     "dns.js": "^1.0.1",
-    "dock-rn-web-bridge": "link:/Users/maycon/dev/dock/dock-rn-web-bridge",
     "domain-browser": "^1.2.0",
     "enhanced-resolve": "4.5.0",
     "events": "^1.1.1",
@@ -45,7 +45,7 @@
     "json-rpc-2.0": "^0.2.16",
     "jsonpath": "^1.1.1",
     "lodash": "^4.17.21",
-    "native-base": "^2.15.2",
+    "native-base": "3",
     "node-libs-react-native": "^1.2.1",
     "path-browserify": "^0.0.0",
     "process": "^0.11.10",
@@ -86,6 +86,7 @@
     "stream-browserify": "^1.0.0",
     "string_decoder": "^0.10.31",
     "styled-components": "^5.2.2",
+    "styled-system": "^5.1.5",
     "timers-browserify": "^1.4.2",
     "tty-browserify": "^0.0.0",
     "url": "^0.10.3",

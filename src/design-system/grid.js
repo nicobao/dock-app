@@ -1,6 +1,9 @@
 import React from 'react';
 import { TouchableWithoutFeedback, View } from "react-native";
+import {Box as NBox} from 'native-base';
 import _ from 'lodash';
+
+export { NBox };
 
 export const rnStyleAttributes = _.flatten([
 	'marginBottom',
