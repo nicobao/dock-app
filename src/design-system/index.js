@@ -28,6 +28,7 @@ export * from './buttons';
 export * from './inputs';
 export * from './theme';
 export * from './LoadingScreen';
+export * from './list';
 
 export const SText = styled.Text`
   font-family: Nunito Sans;

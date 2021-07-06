@@ -9,9 +9,12 @@ import {CreateWalletScreen} from '../features/create-wallet/CreateWalletScreen';
 import {CreatePasscodeContainer} from '../features/create-wallet/CreatePasscodeScreen';
 import {ProtectYourWalletContainer} from '../features/create-wallet/ProtectYourWalletScreen';
 import {SetupPasscodeScreen} from '../features/create-wallet/SetupPasscodeScreen';
-import {AccountsContainer, AccountsScreen} from '../features/accounts/AccountsScreen';
+import {AccountsContainer} from '../features/accounts/AccountsScreen';
 import {AccountDetailsContainer} from '../features/accounts/AccountDetailsScreen';
 import {SplashScreen} from '../features/app/SplashScreen';
+import {ImportAccountFromMnemonicContainer} from '../features/accounts/ImportAccountFromMnemonicScreen';
+import {ImportAccountSetupContainer} from '../features/accounts/ImportAccountSetupScreen';
+import {ImportAccountPasswordContainer} from '../features/accounts/ImportAccountPasswordScreen';
 
 // POC Screens
 import {CreateWalletMnemonicScreen} from '../features/wallets/CreateWalletMnemonicScreen';
@@ -93,6 +96,29 @@ function AppStackScreen() {
           headerShown: false,
         }}
       />
+      <AppStack.Screen
+        name={Routes.ACCOUNT_IMPORT_FROM_MNEMONIC}
+        component={ImportAccountFromMnemonicContainer}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <AppStack.Screen
+        name={Routes.ACCOUNT_IMPORT_SETUP}
+        component={ImportAccountSetupContainer}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <AppStack.Screen
+        name={Routes.ACCOUNT_IMPORT_SETUP_PASSWORD}
+        component={ImportAccountPasswordContainer}
+        options={{
+          headerShown: false,
+        }}
+      />
+
       <AppStack.Screen
         name={Routes.CREATE_WALLET_PASSCODE}
         component={CreatePasscodeContainer}

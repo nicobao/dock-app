@@ -1,7 +1,6 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Header,
-  // Button,
   Footer,
   Content,
   Text,
@@ -11,7 +10,6 @@ import {
   NBox,
   BigButton,
   DotsVerticalIcon,
-  CheckCircleIcon,
   IconButton,
   AlertIcon,
 } from '../../design-system';
@@ -21,57 +19,30 @@ import PlusCircleWhiteIcon from '../../assets/icons/plus-circle-white.svg';
 import CogIcon from '../../assets/icons/cog.svg';
 import {
   Avatar,
-  Button,
-  ChevronLeftIcon,
-  Divider,
   Menu,
   Pressable,
   Stack,
   useToast,
 } from 'native-base';
-import {TouchableWithoutFeedback} from 'react-native';
-import {showToast} from '../../core/toast';
 import {useDispatch, useSelector} from 'react-redux';
 import {accountOperations, accountSelectors} from './account-slice';
-import { navigate } from 'src/core/navigation';
-import { Routes } from 'src/core/routes';
-
-// const BigButton = ({icon, children, ...props}) => (
-//   <Box
-//     row
-//     borderWidth={1}
-//     borderColor="#3F3F46"
-//     borderRadius={8}
-//     padding={25}
-//     marginBottom={12}
-//     alignItems="center"
-//     {...props}>
-//     <Box autoSize col>
-//       {icon}
-//     </Box>
-//     <Box>
-//       <Typography
-//         fontSize={14}
-//         fontFamily="Nunito Sans"
-//         fontWeight="600"
-//         color="#fff">
-//         {children}
-//       </Typography>
-//     </Box>
-//   </Box>
-// );
+import {navigate} from 'src/core/navigation';
+import {Routes} from 'src/core/routes';
+import {AddAccountModal} from './AddAccountModal';
+import {ImportExistingAccountModal} from './ImportExistingAccountModal';
+import { createAccountOperations } from '../account-creation/create-account-slice';
 
 export function AccountsScreen({
   accounts = [],
   onAddAccount,
+  onImportExistingAccount,
   onDelete,
   onEdit,
-  onDetails
+  onDetails,
 }) {
   const isEmpty = accounts.length === 0;
-  const toast = useToast();
-
-  useEffect(() => {}, []);
+  const [showAddAccount, setShowAddAccount] = useState();
+  const [showImportAccount, setShowImportAccount] = useState();
 
   return (
     <ScreenContainer testID="accounts-screen">
@@ -87,7 +58,7 @@ export function AccountsScreen({
             </Typography>
           </Box>
           <Box row>
-            <IconButton col marginRight={10} onPress={onAddAccount}>
+            <IconButton col marginRight={10} onPress={() => setShowAddAccount(true)}>
               <PlusCircleWhiteIcon />
             </IconButton>
             <IconButton col onPress={() => alert('Available soon!')}>
@@ -130,13 +101,11 @@ export function AccountsScreen({
                   </Stack>
                   <NBox py={1} px={1}>
                     <Stack direction="row">
-                      {
-                        account.meta.hasBackup ? null : (
-                          <NBox mr={3} mt={1}>
-                            <AlertIcon />
-                          </NBox>
-                        )
-                      }
+                      {account.meta.hasBackup ? null : (
+                        <NBox mr={3} mt={1}>
+                          <AlertIcon />
+                        </NBox>
+                      )}
                       <Menu
                         trigger={triggerProps => {
                           return (
@@ -172,6 +141,12 @@ export function AccountsScreen({
           </BigButton>
         </Footer>
       ) : null}
+      <AddAccountModal
+        visible={showAddAccount}
+        onClose={() => setShowAddAccount(false)}
+        onAddAccount={onAddAccount}
+        onImportExistingAccount={onImportExistingAccount}
+      />
     </ScreenContainer>
   );
 }
@@ -188,7 +163,7 @@ export function AccountsContainer() {
       onDelete={accountId => {
         dispatch(accountOperations.removeAccount(accountId));
       }}
-      onDetails={(account) => {
+      onDetails={account => {
         navigate(Routes.ACCOUNT_DETAILS, {
           id: account.id,
         });
@@ -197,17 +172,17 @@ export function AccountsContainer() {
       onAddAccount={() => {
         dispatch(accountOperations.addAccountFlow());
       }}
+      onImportExistingAccount={(method) => {
+        if (method === 'mnemonic') {
+          navigate(Routes.ACCOUNT_IMPORT_FROM_MNEMONIC);
+        } else if (method === 'qrcode') {
+          navigate(Routes.APP_QR_SCANNER, {
+            onData: (data) => {
+              dispatch(createAccountOperations.importFromJson(data));
+            }
+          })
+        }
+      }}
     />
   );
 }
-
-// [
-//   {
-//     id: 1,
-//     name: 'cocomelon',
-//     balance: {
-//       value: 0,
-//       symbol: 'DOCK',
-//     },
-//   },
-// ]

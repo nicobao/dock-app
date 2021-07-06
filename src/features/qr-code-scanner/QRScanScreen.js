@@ -82,11 +82,8 @@ const QRCodeContainer = styled.View`
   height: 100%;
 `;
 
-export function QRScanScreen(props) {
-  const dispatch = useDispatch();
-  const handleSuccess = data => {
-    dispatch(qrCodeOperations.handleQRCode(data));
-  };
+export function QRScanScreen({ route }) {
+  const { onData } = route.params;
 
   return (
     <Container>
@@ -105,7 +102,7 @@ export function QRScanScreen(props) {
             height: 0,
             flex: 0,
           }}
-          onRead={event => handleSuccess(event.data)}
+          onRead={event => onData(event.data)}
         />
       </QRCodeContainer>
       <Wrapper>
@@ -113,7 +110,7 @@ export function QRScanScreen(props) {
           <Title>Scan QR Code</Title>
           <IconContainer>
             <TouchableWithoutFeedback
-              onPress={() => navigate(Routes.APP_HOME)}
+              onPress={navigateBack}
               style={{padding: 20}}>
               <Text style={{ color: 'white' }}>Back</Text>
             </TouchableWithoutFeedback>
@@ -178,7 +175,7 @@ export function QRScanScreen(props) {
         <TouchableWithoutFeedback
           onPress={async () => {
             const text = await Clipboard.getString();
-            handleSuccess(text);
+            onData(text);
           }}>
           <Footer>
             <Description>Scan the QR Code</Description>

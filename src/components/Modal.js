@@ -2,7 +2,7 @@ import React from 'react';
 import {Dimensions, View} from 'react-native';
 import RNModal from 'react-native-modal';
 
-export function Modal({onClose = () => {}, children, modalSize = 0.7, visible}) {
+export function Modal({onClose = () => {}, children, modalSize = 0.4, visible}) {
   const screenHeight = Dimensions.get('screen').height;
 
   return (
@@ -14,7 +14,7 @@ export function Modal({onClose = () => {}, children, modalSize = 0.7, visible}) 
       style={{justifyContent: 'flex-end', margin: 0}}>
       <View
         style={{
-          backgroundColor: '#fff',
+          backgroundColor: '#18181B',
           height: screenHeight * modalSize,
           width: '100%',
         }}>
