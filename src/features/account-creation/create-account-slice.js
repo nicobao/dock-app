@@ -105,7 +105,7 @@ export const createAccountOperations = {
       let {accountName, keypairType, derivationPath} = form;
       let address;
 
-      if (form.json) {
+      if (!form.json) {
         address = await KeyringRpc.addressFromUri({
           phrase,
           type: keypairType || 'sr25519',
@@ -121,8 +121,15 @@ export const createAccountOperations = {
           value: phrase,
         });
       } else {
-        // add secret from json
-        alert('address secret from json')
+        address = form.data.address;
+
+        await WalletRpc.add({
+          '@context': ['https://w3id.org/wallet/v1'],
+          id: secretId,
+          name: accountName,
+          type: 'Password',
+          value: form.password,
+        });
       }  
 
       // Create account
