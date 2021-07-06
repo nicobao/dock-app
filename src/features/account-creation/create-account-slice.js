@@ -28,7 +28,6 @@ const createAccount = createSlice({
     setMnemonicPhrase(state, action) {
       state.mnemonicPhrase = action.payload;
     },
-
   },
 });
 
@@ -46,46 +45,92 @@ export const createAccountOperations = {
   initFlow: () => async (dispatch, getState) => {
     navigate(Routes.CREATE_ACCOUNT_SETUP);
   },
+  importFromJson: (data) => 
+    withErrorToast(async (dispatch, getState) => {
+      const jsonData = JSON.parse(data);
+      
+      dispatch(createAccountActions.setForm({
+        data: jsonData,
+        json: true,
+      }));
+      navigate(Routes.ACCOUNT_IMPORT_SETUP_PASSWORD);
+    }),
+  unlockJson: (password) => 
+    withErrorToast(async (dispatch, getState) => {
+      const form = createAccountSelectors.getForm(getState());
+
+      await KeyringRpc.addFromJson(form.data, password);
+
+      dispatch(createAccountActions.setForm({
+        ...form,
+        password,
+        accountName: form.data.meta && form.data.meta.name,
+      }));
+
+      navigate(Routes.ACCOUNT_IMPORT_SETUP);
+    }),
+  importFromMnemonic: form =>
+    withErrorToast(async (dispatch, getState) => {
+      dispatch(accountActions.setAccountToBackup(null));
+      dispatch(
+        createAccountActions.setForm({
+          ...form,
+        }),
+      );
+      dispatch(createAccountActions.setMnemonicPhrase(form.phrase));
+      navigate(Routes.ACCOUNT_IMPORT_SETUP);
+    }),
   submitAccountForm: form =>
     withErrorToast(async (dispatch, getState) => {
       dispatch(accountActions.setAccountToBackup(null));
       dispatch(createAccountActions.setForm(form));
-
       const phrase = await UtilCryptoRpc.mnemonicGenerate(12);
-
       dispatch(createAccountActions.setMnemonicPhrase(phrase));
       navigate(Routes.CREATE_ACCOUNT_BACKUP);
     }),
-  createAccount: ({ hasBackup = false} = {}) =>
+  createAccount: ({
+    hasBackup = false,
+    successMessage = 'Account successfully created',
+    form: extraForm
+  } = {}) =>
     withErrorToast(async (dispatch, getState) => {
       const state = getState();
       const phrase = createAccountSelectors.getMnemonicPhrase(state);
-      const {accountName, keypairType, derivationPath} =
-        createAccountSelectors.getForm(state);
+      const form = {
+        ...createAccountSelectors.getForm(state),
+        ...extraForm,
+      }
 
-      const address = await KeyringRpc.addressFromUri({
-        phrase,
-        type: keypairType || 'sr25519',
-        derivePath: derivationPath || ''
-      });
+      const secretId = uuid();
+      let {accountName, keypairType, derivationPath} = form;
+      let address;
 
-      const phraseId = uuid();
-
-      // Create mnemonic phrase
-      await WalletRpc.add({
-        "@context": ["https://w3id.org/wallet/v1"],
-        id: phraseId,
-        name: accountName,
-        type: "Mnemonic",
-        value: phrase
-      });
+      if (form.json) {
+        address = await KeyringRpc.addressFromUri({
+          phrase,
+          type: keypairType || 'sr25519',
+          derivePath: derivationPath || '',
+        });
+        
+        // Create mnemonic phrase
+        await WalletRpc.add({
+          '@context': ['https://w3id.org/wallet/v1'],
+          id: secretId,
+          name: accountName,
+          type: 'Mnemonic',
+          value: phrase,
+        });
+      } else {
+        // add secret from json
+        alert('address secret from json')
+      }  
 
       // Create account
       await WalletRpc.add({
         '@context': ['https://w3id.org/wallet/v1'],
         id: address,
         type: 'Account',
-        correlation: [phraseId],
+        correlation: [secretId],
         meta: {
           name: accountName,
           keypairType,
@@ -101,7 +146,7 @@ export const createAccountOperations = {
       dispatch(accountOperations.loadAccounts());
       navigate(Routes.ACCOUNTS);
       showToast({
-        message: 'Account successfully created',
+        message: successMessage,
       });
     }),
 };

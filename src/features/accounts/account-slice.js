@@ -5,7 +5,6 @@ import { navigate } from '../../core/navigation';
 import { Routes } from '../../core/routes';
 import {createAccountActions} from '../account-creation/create-account-slice';
 
-
 const initialState = {
   loading: true,
   accounts: [],
