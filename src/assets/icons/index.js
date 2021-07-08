@@ -7,8 +7,10 @@ import PlusCircleIcon from './plus-circle.svg';
 import DocumentDownloadIcon from './document-download.svg';
 import ChevronRightIcon from './chevron-right.svg';
 import BackIcon from './back.svg';
+import DockLogoIcon from './dock-logo.svg';
 
 export {
+  DockLogoIcon,
   DotsVerticalIcon,
   CheckCircleIcon,
   ExclamationCircle,

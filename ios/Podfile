@@ -14,6 +14,7 @@ target 'DockApp' do
     :hermes_enabled => false
   )
 
+  pod 'RNFS', :path => '../node_modules/react-native-fs'
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
   permissions_path = '../node_modules/react-native-permissions/ios'
   pod 'Permission-Camera', :path => "#{permissions_path}/Camera"

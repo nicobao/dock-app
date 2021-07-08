@@ -15,6 +15,7 @@ export const Routes = {
   ACCOUNT_IMPORT_FROM_MNEMONIC: 'account/importFromMnemonic',
   ACCOUNT_IMPORT_SETUP: 'account/importSetup',
   ACCOUNT_IMPORT_SETUP_PASSWORD: 'account/importSetupPassword',
+  ACCOUNT_EXPORT_SETUP_PASSWORD: 'account/exportSetupPassword',
   APP_QR_SCANNER: 'app/qrScanner',
   // POC routes
   APP_HOME: 'app/home',
