@@ -36,9 +36,10 @@ import {showToast} from '../../core/toast';
 import {useDispatch, useSelector} from 'react-redux';
 import {accountOperations, accountSelectors} from './account-slice';
 import {navigate, navigateBack} from '../../core/navigation';
-import { AccountSettingsModal } from './AccountSettingsModal';
-import { Routes } from '../../core/routes';
-import { QRCodeModal } from './QRCodeModal';
+import {AccountSettingsModal} from './AccountSettingsModal';
+import {Routes} from '../../core/routes';
+import {QRCodeModal} from './QRCodeModal';
+import Identicon from '@polkadot/reactnative-identicon';
 
 export function AccountDetailsScreen({
   account,
@@ -98,7 +99,7 @@ export function AccountDetailsScreen({
           backgroundColor="#27272A"
           p="32px"
           borderRadius={8}>
-          <Avatar width="40px" height="40px" bgColor="white"></Avatar>
+          <Identicon value={account.id} size={48} />
           <Text
             color="#fff"
             fontSize="32px"
@@ -191,10 +192,7 @@ export function AccountDetailsScreen({
 }
 
 export function AccountDetailsContainer({route}) {
-  const {
-    id: accountId,
-    qrCodeData,
-  } = route.params;
+  const {id: accountId, qrCodeData} = route.params;
   const dispatch = useDispatch();
   const account = useSelector(accountSelectors.getAccountById(accountId));
 
@@ -205,7 +203,9 @@ export function AccountDetailsContainer({route}) {
   return (
     <AccountDetailsScreen
       onDelete={() => {
-        return dispatch(accountOperations.removeAccount(accountId)).then(navigateBack);
+        return dispatch(accountOperations.removeAccount(accountId)).then(
+          navigateBack,
+        );
       }}
       onEdit={() => {
         alert('edit');
@@ -218,7 +218,7 @@ export function AccountDetailsContainer({route}) {
       onExport={method => {
         navigate(Routes.ACCOUNT_EXPORT_SETUP_PASSWORD, {
           method,
-          accountId
+          accountId,
         });
       }}
     />

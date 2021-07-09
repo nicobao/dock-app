@@ -31,16 +31,17 @@ function PasscodeMask({digits = 6, filled = 0, ...props}) {
     <Box {...props}>
       <Box justifyContent="center" row>
         {digitsArray.map((_, idx) => (
-          <Circle filled={idx < filled} />
+          <Circle filled={idx < filled} key={idx} />
         ))}
       </Box>
     </Box>
   );
 }
 
-function KeyboardButton({onPress, value}) {
+function KeyboardButton({onPress, value, testID}) {
   return (
     <Box
+      testID={testID}
       flex
       alignItems="center"
       onPress={() => value !== null && onPress(value)}>
@@ -56,7 +57,7 @@ function KeyboardButton({onPress, value}) {
   );
 }
 
-function NumericKeyboard({onNumber, onDelete, ...props}) {
+export function NumericKeyboard({onNumber, onDelete, ...props}) {
   return (
     <Box {...props} flex>
       <Box
@@ -66,7 +67,7 @@ function NumericKeyboard({onNumber, onDelete, ...props}) {
         autoSize
         marginBottom={24}>
         {[1, 2, 3].map(value => (
-          <KeyboardButton key={value} onPress={onNumber} value={value} />
+          <KeyboardButton key={value} onPress={onNumber} value={value} testID={`keyboardNumber${value}`}/>
         ))}
       </Box>
       <Box
@@ -114,7 +115,7 @@ export function CreatePasscodeScreen({
   onDelete,
 }) {
   return (
-    <ScreenContainer testID="create-wallet-screen">
+    <ScreenContainer testID="createPasscodeScreen">
       <Header>
         <BackButton />
       </Header>

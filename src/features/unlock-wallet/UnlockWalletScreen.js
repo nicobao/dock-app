@@ -14,6 +14,7 @@ import KeyboardDeleteIcon from '../../assets/icons/keyboard-delete.svg';
 import {useDispatch, useSelector} from 'react-redux';
 import {appSelectors} from '../app/app-slice';
 import {walletOperations, walletSelectors} from '../create-wallet/wallet-slice';
+import { NumericKeyboard } from '../create-wallet/CreatePasscodeScreen';
 
 const Circle = styled.View`
   width: 20px;
@@ -31,76 +32,8 @@ function PasscodeMask({digits = 6, filled = 0, ...props}) {
     <Box {...props}>
       <Box justifyContent="center" row>
         {digitsArray.map((_, idx) => (
-          <Circle filled={idx < filled} />
+          <Circle filled={idx < filled} key={idx} />
         ))}
-      </Box>
-    </Box>
-  );
-}
-
-function KeyboardButton({onPress, value}) {
-  return (
-    <Box
-      flex
-      alignItems="center"
-      onPress={() => value !== null && onPress(value)}>
-      <Typography
-        color="white"
-        fontFamily="Montserrat"
-        fontWeight="600"
-        fontSize={30}
-        lineHeight={37}>
-        {value}
-      </Typography>
-    </Box>
-  );
-}
-
-function NumericKeyboard({onNumber, onDelete, ...props}) {
-  return (
-    <Box {...props} flex>
-      <Box
-        justifyContent="center"
-        flexDirection="row"
-        row
-        autoSize
-        marginBottom={24}>
-        {[1, 2, 3].map(value => (
-          <KeyboardButton key={value} onPress={onNumber} value={value} />
-        ))}
-      </Box>
-      <Box
-        justifyContent="center"
-        flexDirection="row"
-        row
-        autoSize
-        marginBottom={24}>
-        {[4, 5, 6].map(value => (
-          <KeyboardButton key={value} onPress={onNumber} value={value} />
-        ))}
-      </Box>
-      <Box
-        justifyContent="center"
-        flexDirection="row"
-        row
-        autoSize
-        marginBottom={24}>
-        {[7, 8, 9].map(value => (
-          <KeyboardButton key={value} onPress={onNumber} value={value} />
-        ))}
-      </Box>
-      <Box
-        justifyContent="center"
-        flexDirection="row"
-        row
-        autoSize
-        marginBottom={24}>
-        {[null, 0].map(value => (
-          <KeyboardButton key={value} onPress={onNumber} value={value} />
-        ))}
-        <Box flex alignItems="center" paddingTop={5} onPress={onDelete}>
-          <KeyboardDeleteIcon />
-        </Box>
       </Box>
     </Box>
   );
@@ -118,7 +51,7 @@ export function UnlockWalletScreen({
   biometry = false,
 }) {
   return (
-    <ScreenContainer testID="unlock-wallet-screen">
+    <ScreenContainer testID="unlockWalletScreen">
       <Box justifyContent="center" row>
         <Image
           source={SplashLogo}

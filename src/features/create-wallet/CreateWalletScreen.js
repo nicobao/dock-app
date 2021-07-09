@@ -18,7 +18,7 @@ import {Routes} from '../../core/routes';
 
 export function CreateWalletScreen() {
   return (
-    <ScreenContainer testID="create-wallet-screen">
+    <ScreenContainer testID="createWalletScreen">
       <Header></Header>
       <Content>
         <Box flex={1} justifyContent="center" row marginTop="50%">
@@ -34,7 +34,7 @@ export function CreateWalletScreen() {
       <Footer marginBottom={114} marginLeft={26} marginRight={26}>
         <LoadingButton
           full
-          testID="create-wallet-btn"
+          testID="createWalletButton"
           onPress={() => navigate(Routes.CREATE_WALLET_PASSCODE)}>
           Create a new wallet
         </LoadingButton>

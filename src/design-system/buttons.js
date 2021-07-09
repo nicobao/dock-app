@@ -33,7 +33,7 @@ export function BackButton(props) {
   const [loading, onPress] = useAsyncCallback(props.onPress || navigateBack);
 
   return (
-    <Box flexDirection="row" onPress={onPress}>
+    <Box flexDirection="row" onPress={onPress} testID={props.testID}>
       {loading ? (
         <Spinner size={12} />
       ) : (

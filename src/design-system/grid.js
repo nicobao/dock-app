@@ -94,7 +94,7 @@ export function Box(props: CSSStyleDeclaration) {
 
 	if (props.onPress) {
 		return (
-			<TouchableWithoutFeedback onPress={props.onPress}>
+			<TouchableWithoutFeedback onPress={props.onPress} testID={props.testID}>
 				{ content }
 			</TouchableWithoutFeedback>
 		)
