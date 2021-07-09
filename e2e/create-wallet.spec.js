@@ -7,6 +7,12 @@ import {
   CreateAccountSetupTestIDs,
 } from '../src/features/account-creation/test-ids';
 
+async function tapPasscode() {
+  for (let i = 0; i < 6; i++) {
+    await element(by.id('keyboardNumber1')).tap();
+  }
+}
+
 export async function createWallet() {
   await waitFor(element(by.id('createWalletScreen')))
     .toBeVisible()
@@ -20,10 +26,7 @@ export async function createWallet() {
     await element(by.id('keyboardNumber1')).tap();
   }
 
-  // passcode confirmation
-  for (let i = 0; i < 6; i++) {
-    await element(by.id('keyboardNumber1')).tap();
-  }
+  await tapPasscode();
 
   await waitFor(element(by.id('accountsScreen')))
     .toBeVisible()
@@ -35,9 +38,7 @@ export async function unlockWallet() {
     .toBeVisible()
     .withTimeout(5000);
 
-  for (let i = 0; i < 6; i++) {
-    await element(by.id('keyboardNumber1')).tap();
-  }
+  await tapPasscode();
 }
 
 describe('Wallet and accounts', () => {
