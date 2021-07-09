@@ -38,6 +38,7 @@ import {CreateAccountVerifyPhraseContainer} from '../features/account-creation/C
 import {CreateAccountSetupContainer} from '../features/account-creation/CreateAccountSetupScreen';
 import {CreateAccountMnemonicContainer} from '../features/account-creation/CreateAccountMnemonicScreen';
 import {CreateAccountBackupContainer} from '../features/account-creation/CreateAccountBackupScreen';
+import { ExportAccountPasswordContainer } from '../features/accounts/ExportAccountPasswordScreen';
 
 const getMainOptions = opts => {
   return {
@@ -118,6 +119,16 @@ function AppStackScreen() {
           headerShown: false,
         }}
       />
+      
+      <AppStack.Screen
+        name={Routes.ACCOUNT_EXPORT_SETUP_PASSWORD}
+        component={ExportAccountPasswordContainer}
+        options={{
+          headerShown: false,
+        }}
+      />
+      
+      
 
       <AppStack.Screen
         name={Routes.CREATE_WALLET_PASSCODE}

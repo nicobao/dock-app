@@ -4,6 +4,9 @@ import { showToast, withErrorToast } from '../../core/toast';
 import { navigate } from '../../core/navigation';
 import { Routes } from '../../core/routes';
 import {createAccountActions} from '../account-creation/create-account-slice';
+import Share from 'react-native-share'
+import RNFS from 'react-native-fs';
+
 
 const initialState = {
   loading: true,
@@ -113,6 +116,49 @@ export const accountOperations = {
     }),
   addAccountFlow: () => async (dispatch, getState) => {
     navigate(Routes.CREATE_ACCOUNT_SETUP);
+  },
+  
+  exportAccountAs: ({
+    accountId,
+    method,
+    password
+  }) => async (dispatch, getState) => { 
+    const encryptedAccount = await WalletRpc.exportAccount(accountId, password);
+    const jsonData = JSON.stringify(encryptedAccount);
+
+    let qrCodeData;
+
+    if (method === 'json') {
+      const path = `${RNFS.DocumentDirectoryPath}/${accountId}.json`;
+      const mimeType = 'application/json';
+      await RNFS.writeFile(path, jsonData);
+
+      try {
+        await Share.open({
+          url: "file://" + path,
+          type: mimeType,
+        })
+      } catch(err) {
+       console.error(err);
+       showToast({
+         message: 'Unable to export account',
+         type: 'error',
+       }) 
+      }
+      
+      RNFS.unlink(path);
+    } else {
+      qrCodeData = jsonData;
+    }
+    
+    navigate(Routes.ACCOUNT_DETAILS, {
+      accountId,
+      qrCodeData,
+    });
+
+    showToast({
+      message: 'Account exported',
+    });
   },
   
   removeAccount: (account: any) => async (dispatch, getState) => {

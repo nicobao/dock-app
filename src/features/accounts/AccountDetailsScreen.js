@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Header,
   // Button,
@@ -35,16 +35,30 @@ import {TouchableWithoutFeedback} from 'react-native';
 import {showToast} from '../../core/toast';
 import {useDispatch, useSelector} from 'react-redux';
 import {accountOperations, accountSelectors} from './account-slice';
-import {navigateBack} from '../../core/navigation';
+import {navigate, navigateBack} from '../../core/navigation';
+import { AccountSettingsModal } from './AccountSettingsModal';
+import { Routes } from '../../core/routes';
+import { QRCodeModal } from './QRCodeModal';
 
 export function AccountDetailsScreen({
   account,
   onSend,
   onReceive,
   onDelete,
-  onEdit,
   onBackup,
+  onEdit,
+  onExport,
+  qrCodeData,
 }) {
+  const [accountSettingsVisible, setAccountSettingsVisible] = useState();
+  const [qrCodeModalVisible, setQrCodeModalVisible] = useState();
+
+  useEffect(() => {
+    if (!!qrCodeData) {
+      setQrCodeModalVisible(true);
+    }
+  }, [qrCodeData]);
+
   return (
     <ScreenContainer testID="AccountDetailsScreen">
       <Header>
@@ -71,17 +85,9 @@ export function AccountDetailsScreen({
             </Typography>
           </NBox>
           <NBox width="80px" alignItems="flex-end">
-            <Menu
-              trigger={triggerProps => {
-                return (
-                  <Pressable {...triggerProps}>
-                    <DotsVerticalIcon width="22px" height="22px" />
-                  </Pressable>
-                );
-              }}>
-              <Menu.Item onPress={() => onDelete(account)}>Delete</Menu.Item>
-              <Menu.Item onPress={() => onEdit(account)}>Edit</Menu.Item>
-            </Menu>
+            <Pressable onPress={() => setAccountSettingsVisible(true)}>
+              <DotsVerticalIcon width="22px" height="22px" />
+            </Pressable>
           </NBox>
         </Box>
       </Header>
@@ -167,12 +173,28 @@ export function AccountDetailsScreen({
           </Stack>
         )}
       </Content>
+      <AccountSettingsModal
+        visible={accountSettingsVisible}
+        onClose={() => setAccountSettingsVisible(false)}
+        onDelete={onDelete}
+        onExport={onExport}
+      />
+      <QRCodeModal
+        data={qrCodeData}
+        title="Export account"
+        description="Scan this QR code in your new device"
+        visible={qrCodeModalVisible}
+        onClose={() => setQrCodeModalVisible(false)}
+      />
     </ScreenContainer>
   );
 }
 
 export function AccountDetailsContainer({route}) {
-  const accountId = route.params.id;
+  const {
+    id: accountId,
+    qrCodeData,
+  } = route.params;
   const dispatch = useDispatch();
   const account = useSelector(accountSelectors.getAccountById(accountId));
 
@@ -182,16 +204,23 @@ export function AccountDetailsContainer({route}) {
 
   return (
     <AccountDetailsScreen
-      onDelete={accountId => {
-        dispatch(accountOperations.removeAccount(accountId)).then(navigateBack);
+      onDelete={() => {
+        return dispatch(accountOperations.removeAccount(accountId)).then(navigateBack);
       }}
       onEdit={() => {
         alert('edit');
       }}
       onBackup={() => {
-        dispatch(accountOperations.backupAccount(account));
+        return dispatch(accountOperations.backupAccount(account));
       }}
+      qrCodeData={qrCodeData}
       account={account}
+      onExport={method => {
+        navigate(Routes.ACCOUNT_EXPORT_SETUP_PASSWORD, {
+          method,
+          accountId
+        });
+      }}
     />
   );
 }

@@ -9,9 +9,9 @@ export function OptionList({items, postPress, ...otherProps}) {
   return (
     <Box {...otherProps}>
       {items.map(({title, onPress, icon}) => (
-        <Pressable onPress={() => {
+        <Pressable onPress={async () => {
           if (onPress) {
-            onPress();
+            await onPress();
           }
 
           if (postPress) {

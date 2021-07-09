@@ -1,4 +1,7 @@
 import React, {useEffect, useState} from 'react';
+import DocumentPicker from 'react-native-document-picker';
+import RNFS from 'react-native-fs';
+
 import {
   Header,
   Footer,
@@ -17,20 +20,14 @@ import DocumentDownloadIcon from '../../assets/icons/document-download.svg';
 import PlusCircleIcon from '../../assets/icons/plus-circle.svg';
 import PlusCircleWhiteIcon from '../../assets/icons/plus-circle-white.svg';
 import CogIcon from '../../assets/icons/cog.svg';
-import {
-  Avatar,
-  Menu,
-  Pressable,
-  Stack,
-  useToast,
-} from 'native-base';
+import {Avatar, Menu, Pressable, Stack, useToast} from 'native-base';
 import {useDispatch, useSelector} from 'react-redux';
 import {accountOperations, accountSelectors} from './account-slice';
 import {navigate} from 'src/core/navigation';
 import {Routes} from 'src/core/routes';
 import {AddAccountModal} from './AddAccountModal';
 import {ImportExistingAccountModal} from './ImportExistingAccountModal';
-import { createAccountOperations } from '../account-creation/create-account-slice';
+import {createAccountOperations} from '../account-creation/create-account-slice';
 
 export function AccountsScreen({
   accounts = [],
@@ -58,7 +55,10 @@ export function AccountsScreen({
             </Typography>
           </Box>
           <Box row>
-            <IconButton col marginRight={10} onPress={() => setShowAddAccount(true)}>
+            <IconButton
+              col
+              marginRight={10}
+              onPress={() => setShowAddAccount(true)}>
               <PlusCircleWhiteIcon />
             </IconButton>
             <IconButton col onPress={() => alert('Available soon!')}>
@@ -172,15 +172,22 @@ export function AccountsContainer() {
       onAddAccount={() => {
         dispatch(accountOperations.addAccountFlow());
       }}
-      onImportExistingAccount={(method) => {
+      onImportExistingAccount={async method => {
         if (method === 'mnemonic') {
           navigate(Routes.ACCOUNT_IMPORT_FROM_MNEMONIC);
         } else if (method === 'qrcode') {
           navigate(Routes.APP_QR_SCANNER, {
-            onData: (data) => {
+            onData: data => {
               dispatch(createAccountOperations.importFromJson(data));
-            }
-          })
+            },
+          });
+        } else if (method === 'json') {
+          const file = await DocumentPicker.pick({
+            type: [DocumentPicker.types.allFiles],
+          });
+          const fileData = await RNFS.readFile(file.fileCopyUri);
+
+          dispatch(createAccountOperations.importFromJson(fileData));
         }
       }}
     />
