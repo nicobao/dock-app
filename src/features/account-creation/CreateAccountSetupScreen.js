@@ -120,7 +120,7 @@ export function CreateAccountSetupScreen({
         <LoadingButton
           full
           testID={CreateAccountSetupTestIDs.nextBtn}
-          disabled={submitDisabled}
+          isDisabled={submitDisabled}
           onPress={onSubmit}>
           Next
         </LoadingButton>

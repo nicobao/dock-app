@@ -115,7 +115,7 @@ export function ExportAccountPasswordScreen({
         <LoadingButton
           full
           testID="next-btn"
-          disabled={submitDisabled}
+          isDisabled={submitDisabled}
           onPress={onSubmit}>
           Next
         </LoadingButton>
@@ -159,14 +159,21 @@ export function ExportAccountPasswordContainer({route}) {
       });
       return;
     }
-    return dispatch(accountOperations.exportAccountAs({
-      accountId,
-      method,
-      password: form.password
-    }));
+    return dispatch(
+      accountOperations.exportAccountAs({
+        accountId,
+        method,
+        password: form.password,
+      }),
+    );
   };
 
-  const formValid = form.password && form.passwordConfirmation;
+  const formValid =
+    form.password &&
+    form.passwordConfirmation &&
+    form.caseValidation &&
+    form.digitsValidation &&
+    form.lengthValidation;
 
   return (
     <ExportAccountPasswordScreen

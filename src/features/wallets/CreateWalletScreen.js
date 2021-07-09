@@ -101,7 +101,7 @@ export function CreateWalletScreen({navigation}) {
           full
           style={{width: '100%'}}
           primary
-          disabled={loading}
+          isDisabled={loading}
           onPress={handleCreateWallet}>
           {loading ? (
             <Spinner color="#fff" size={15} />

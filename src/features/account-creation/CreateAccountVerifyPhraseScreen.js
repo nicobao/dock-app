@@ -62,7 +62,7 @@ export function CreateAccountVerifyPhraseScreen({
         </FormControl>
       </Content>
       <Footer marginBottom={0} marginLeft={26} marginRight={26}>
-        <LoadingButton full testID="next-btn" mb={5} onPress={onSubmit} disabled={submitDisabled}>
+        <LoadingButton full testID="next-btn" mb={5} onPress={onSubmit} isDisabled={submitDisabled}>
           Next
         </LoadingButton>
       </Footer>

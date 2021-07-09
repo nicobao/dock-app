@@ -62,7 +62,7 @@ export function ImportAccountSetupScreen({
         <LoadingButton
           full
           testID="next-btn"
-          disabled={submitDisabled}
+          isDisabled={submitDisabled}
           onPress={onSubmit}>
           Next
         </LoadingButton>

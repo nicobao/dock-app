@@ -71,7 +71,7 @@ export function CredentialEditModal({items, onClose, didDoc}) {
               ))}
             </Picker>
             <View style={{marginTop: 12}}>
-              <Button full disabled={!newController} onPress={handleUpdate}>
+              <Button full isDisabled={!newController} onPress={handleUpdate}>
                 <Text style={{color: 'white'}}>Confirm Update</Text>
               </Button>
             </View>
