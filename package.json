@@ -17,7 +17,6 @@
   },
   "dependencies": {
     "@docknetwork/react-native-sdk": "file:/Users/maycon/dev/dock/dock-rn-web-bridge",
-    "@polkadot/react-identicon": "^0.83.1",
     "@polkadot/reactnative-identicon": "^0.83.1",
     "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/clipboard": "^1.5.1",
