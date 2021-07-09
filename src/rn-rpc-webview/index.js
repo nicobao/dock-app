@@ -8,7 +8,7 @@ import rpcServer from './server';
 import {Platform} from 'react-native';
 
 const WEBVIEW_URI = 'http://localhost:3000';
-const DEV_MODE = true;
+const DEV_MODE = false;
 
 export function RNRpcWebView({onReady}) {
   const webViewRef = useRef();
@@ -33,9 +33,6 @@ export function RNRpcWebView({onReady}) {
       onMessage={async event => {
         const data = JSON.parse(event.nativeEvent.data);
 
-        // console.log('message received', data);
-
-        
         if (data.type === 'json-rpc-ready') {
           initRpcClient(async jsonRPCRequest => {
             console.log('Send request to webview client', jsonRPCRequest);

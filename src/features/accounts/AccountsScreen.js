@@ -31,7 +31,7 @@ import {AddAccountModal} from './AddAccountModal';
 import {ImportExistingAccountModal} from './ImportExistingAccountModal';
 import {createAccountOperations} from '../account-creation/create-account-slice';
 import {AccountsScreenTestIDs} from './test-ids';
-import Identicon from '@polkadot/reactnative-identicon';
+import {PolkadotIcon} from '../../components/PolkadotIcon';
 
 export function AccountsScreen({
   accounts = [],
@@ -99,7 +99,7 @@ export function AccountsScreen({
                     <Stack direction="row" alignItems="center">
                       <Pressable onPress={() => onDetails(account)} flex={1}>
                         <Stack direction="row" flex={1} alignItems="center">
-                          <Identicon value={account.id} size={32} />
+                          <PolkadotIcon address={account.id} size={32} />
                           <Stack direction="row" flex={1} ml={3}>
                             <Text color="#fff" fontWeight={600}>
                               {account.meta.name}

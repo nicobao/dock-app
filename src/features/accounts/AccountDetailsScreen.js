@@ -39,7 +39,7 @@ import {navigate, navigateBack} from '../../core/navigation';
 import {AccountSettingsModal} from './AccountSettingsModal';
 import {Routes} from '../../core/routes';
 import {QRCodeModal} from './QRCodeModal';
-import Identicon from '@polkadot/reactnative-identicon';
+import {PolkadotIcon} from '../../components/PolkadotIcon';
 
 export function AccountDetailsScreen({
   account,
@@ -99,7 +99,7 @@ export function AccountDetailsScreen({
           backgroundColor="#27272A"
           p="32px"
           borderRadius={8}>
-          <Identicon value={account.id} size={48} />
+          <PolkadotIcon address={account.id} size={48} />
           <Text
             color="#fff"
             fontSize="32px"
