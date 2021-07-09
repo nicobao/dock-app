@@ -123,7 +123,9 @@ export const accountOperations = {
     method,
     password
   }) => async (dispatch, getState) => { 
-    const jsonData = JSON.stringify({"encoded":"a94pnHfOuh/27N07XBFK+g2THMhuVxOJrpVOzEF+VHgAgAAAAQAAAAgAAAAKLbYS5ZcPQFvhrr6ZdPBk0qZyqEwSbp/LnCh6x/K3E7tEszYoh2/KrDmI+J7LZFvnEv2TQucr1c6Eg/Qup5pzLu/RLn0eaoBdFQ8BgGyo3c2zLye5P1XcRePfNVhw+APJ/Uqkv5LUqMFEEEJEzBJg/Flqz6ZG6S3iOV9PEV5v6xvKvzPATR4mZCA5UljXz+j7JKUEMyg5MxoPscEp","encoding":{"content":["pkcs8","sr25519"],"type":["scrypt","xsalsa20-poly1305"],"version":"3"},"address":"3GoLUwuovRemYomjQGqD5Wo7ZEY2mTgw95iJPPaKhnPTzVVW","meta":{"genesisHash":"0xf73467c6544aa68df2ee546b135f955c46b90fa627e9b5d7935f41061bb8a5a9","name":"test","tags":[],"whenCreated":1622563948125,"meta":{"genesisHash":"0xf73467c6544aa68df2ee546b135f955c46b90fa627e9b5d7935f41061bb8a5a9"}}});
+    const encryptedAccount = await WalletRpc.exportAccount(accountId, password);
+    const jsonData = JSON.stringify(encryptedAccount);
+
     let qrCodeData;
 
     if (method === 'json') {
