@@ -15,6 +15,8 @@ import {
   DotsVerticalIcon,
   IconButton,
   AlertIcon,
+  ChevronRightIcon,
+  Button,
 } from '../../design-system';
 import DocumentDownloadIcon from '../../assets/icons/document-download.svg';
 import PlusCircleIcon from '../../assets/icons/plus-circle.svg';
@@ -28,6 +30,8 @@ import {Routes} from 'src/core/routes';
 import {AddAccountModal} from './AddAccountModal';
 import {ImportExistingAccountModal} from './ImportExistingAccountModal';
 import {createAccountOperations} from '../account-creation/create-account-slice';
+import {AccountsScreenTestIDs} from './test-ids';
+import {PolkadotIcon} from '../../components/PolkadotIcon';
 
 export function AccountsScreen({
   accounts = [],
@@ -42,7 +46,7 @@ export function AccountsScreen({
   const [showImportAccount, setShowImportAccount] = useState();
 
   return (
-    <ScreenContainer testID="accounts-screen">
+    <ScreenContainer testID={AccountsScreenTestIDs.screen}>
       <Header>
         <Box
           marginLeft={22}
@@ -57,6 +61,7 @@ export function AccountsScreen({
           <Box row>
             <IconButton
               col
+              testID={AccountsScreenTestIDs.addAccountMenuBtn}
               marginRight={10}
               onPress={() => setShowAddAccount(true)}>
               <PlusCircleWhiteIcon />
@@ -89,40 +94,68 @@ export function AccountsScreen({
                   space={2}
                   mb={4}
                   py={6}
-                  px={4}>
-                  <Avatar width="48px" height="48px" bgColor="white"></Avatar>
+                  px={6}>
                   <Stack direction="column" flex={1}>
-                    <Text color="#fff" fontWeight={600}>
-                      {account.meta.name}
-                    </Text>
-                    <Text color="#D4D4D8">
-                      {account.meta.balance.value} {account.meta.balance.symbol}
-                    </Text>
-                  </Stack>
-                  <NBox py={1} px={1}>
-                    <Stack direction="row">
-                      {account.meta.hasBackup ? null : (
-                        <NBox mr={3} mt={1}>
-                          <AlertIcon />
-                        </NBox>
-                      )}
-                      <Menu
-                        trigger={triggerProps => {
-                          return (
-                            <Pressable {...triggerProps}>
-                              <DotsVerticalIcon />
-                            </Pressable>
-                          );
-                        }}>
-                        <Menu.Item onPress={() => onDelete(account)}>
-                          Delete
-                        </Menu.Item>
-                        <Menu.Item onPress={() => onDetails(account)}>
-                          Details
-                        </Menu.Item>
-                      </Menu>
+                    <Stack direction="row" alignItems="center">
+                      <Pressable onPress={() => onDetails(account)} flex={1}>
+                        <Stack direction="row" flex={1} alignItems="center">
+                          <PolkadotIcon address={account.id} size={32} />
+                          <Stack direction="row" flex={1} ml={3}>
+                            <Text color="#fff" fontWeight={600}>
+                              {account.meta.name}
+                            </Text>
+                            <ChevronRightIcon marginTop={1} />
+                          </Stack>
+                        </Stack>
+                      </Pressable>
+                      <NBox py={1} px={1}>
+                        <Stack direction="row">
+                          {account.meta.hasBackup ? null : (
+                            <NBox mr={3} mt={1}>
+                              <AlertIcon />
+                            </NBox>
+                          )}
+                          <Menu
+                            trigger={triggerProps => {
+                              return (
+                                <Pressable {...triggerProps}>
+                                  <DotsVerticalIcon />
+                                </Pressable>
+                              );
+                            }}>
+                            <Menu.Item onPress={() => onDetails(account)}>
+                              Details
+                            </Menu.Item>
+                            <Menu.Item onPress={() => onDelete(account)}>
+                              Delete
+                            </Menu.Item>
+                          </Menu>
+                        </Stack>
+                      </NBox>
                     </Stack>
-                  </NBox>
+
+                    <Stack direction="column" mt={4}>
+                      <Text
+                        color="#FFFFFF"
+                        fontFamily="Montserrat"
+                        fontWeight={600}
+                        fontSize="20px">
+                        {account.meta.balance.value}{' '}
+                        {account.meta.balance.symbol}
+                      </Text>
+                      <Text color="#D4D4D8" fontSize="14px">
+                        {account.meta.balance.value} USD
+                      </Text>
+                    </Stack>
+                    <Stack direction="row" mt={4}>
+                      <Button width="50%" size="sm" colorScheme="dark">
+                        Send
+                      </Button>
+                      <Button width="50%" size="sm" ml={2} colorScheme="dark">
+                        Receive
+                      </Button>
+                    </Stack>
+                  </Stack>
                 </Stack>
               );
             })}

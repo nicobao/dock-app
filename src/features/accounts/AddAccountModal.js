@@ -8,6 +8,7 @@ import {
   BackIcon
 } from 'src/design-system';
 import {Modal} from '../../components/Modal';
+import {AddAccountModalTestIDs} from './test-ids';
 
 export function AddAccountModal({
   onClose,
@@ -22,7 +23,7 @@ export function AddAccountModal({
   }, [visible])
 
   const content = !importExisting ? (
-    <Stack p={8}>
+    <Stack p={8} testID="addAccountModal">
       <Text
         fontSize="24px"
         fontWeight={600}
@@ -34,6 +35,7 @@ export function AddAccountModal({
         mt={5}
         items={[
           {
+            testID: AddAccountModalTestIDs.addAccountOption,
             title: 'Create new account',
             icon: <PlusCircleIcon />,
             onPress: () => {
@@ -42,6 +44,7 @@ export function AddAccountModal({
             },
           },
           {
+            testID: AddAccountModalTestIDs.importExistingOption,
             title: 'Import existing account',
             icon: <DocumentDownloadIcon />,
             onPress: () => setImportExisting(true),
@@ -50,7 +53,7 @@ export function AddAccountModal({
       />
     </Stack>
   ) : (
-    <Stack p={8}>
+    <Stack p={8} testID="importOptionsModal">
       <Stack direction="row">
         <Pressable onPress={() => setImportExisting(false)}>
           <Box pt={1} pr={5}>

@@ -28,6 +28,7 @@ import {
   createAccountActions,
   createAccountOperations,
 } from './create-account-slice';
+import {CreateAccountSetupTestIDs} from './test-ids';
 
 export function CreateAccountSetupScreen({
   form,
@@ -36,9 +37,9 @@ export function CreateAccountSetupScreen({
   onSubmit,
 }) {
   return (
-    <ScreenContainer testID="create-wallet-screen">
+    <ScreenContainer testID={CreateAccountSetupTestIDs.screen}>
       <Header>
-        <BackButton />
+        <BackButton testID={CreateAccountSetupTestIDs.backBtn} />
       </Header>
       <Content marginLeft={26} marginRight={26}>
         <Typography
@@ -62,6 +63,7 @@ export function CreateAccountSetupScreen({
             placeholder="Account name"
             value={form.accountName}
             onChangeText={onChange('accountName')}
+            testID={CreateAccountSetupTestIDs.acountNameInput}
           />
         </Box>
 
@@ -117,8 +119,8 @@ export function CreateAccountSetupScreen({
       <Footer marginBottom={10} marginLeft={26} marginRight={26}>
         <LoadingButton
           full
-          testID="next-btn"
-          disabled={submitDisabled}
+          testID={CreateAccountSetupTestIDs.nextBtn}
+          isDisabled={submitDisabled}
           onPress={onSubmit}>
           Next
         </LoadingButton>

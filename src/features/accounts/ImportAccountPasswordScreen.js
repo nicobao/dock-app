@@ -63,7 +63,7 @@ export function ImportAccountPasswordScreen({
         <LoadingButton
           full
           testID="next-btn"
-          disabled={submitDisabled}
+          isDisabled={submitDisabled}
           onPress={onSubmit}>
           Next
         </LoadingButton>

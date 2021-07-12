@@ -166,7 +166,7 @@ export function UnlockWalletScreen() {
                 style={{width: '100%'}}
                 primary
                 onPress={handleUnlockWallet}
-                disabled={!selectedAddress || loading}>
+                isDisabled={!selectedAddress || loading}>
                 {loading ? (
                   <Spinner color="#fff" size={15} />
                 ) : (

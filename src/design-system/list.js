@@ -1,23 +1,23 @@
 import {Box, Pressable, Stack} from 'native-base';
 import React from 'react';
-import {
-  ChevronRightIcon,
-  Text,
-} from 'src/design-system';
+import {ChevronRightIcon, Text} from 'src/design-system';
 
 export function OptionList({items, postPress, ...otherProps}) {
   return (
     <Box {...otherProps}>
-      {items.map(({title, onPress, icon}) => (
-        <Pressable onPress={async () => {
-          if (onPress) {
-            await onPress();
-          }
+      {items.map(({title, onPress, icon, testID}, idx) => (
+        <Pressable
+          key={idx}
+          testID={testID}
+          onPress={async () => {
+            if (onPress) {
+              await onPress();
+            }
 
-          if (postPress) {
-            postPress();
-          }
-        }}>
+            if (postPress) {
+              postPress();
+            }
+          }}>
           <Stack direction="row" py={5}>
             {icon}
             <Box pl={5} flex={1}>

@@ -33,7 +33,7 @@ export function BackButton(props) {
   const [loading, onPress] = useAsyncCallback(props.onPress || navigateBack);
 
   return (
-    <Box flexDirection="row" onPress={onPress}>
+    <Box flexDirection="row" onPress={onPress} testID={props.testID}>
       {loading ? (
         <Spinner size={12} />
       ) : (
@@ -108,6 +108,10 @@ export function BigButton({icon, children, ...props}) {
 
 export function Button(props) {
   let {children, icon, ...otherProps} = props;
+
+  if (!otherProps.bg && otherProps.isDisabled) {
+    otherProps.bg = '#1E75C5';
+  }
 
   return (
     <NButton {...otherProps}>

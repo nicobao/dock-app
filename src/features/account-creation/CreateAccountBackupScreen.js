@@ -17,6 +17,7 @@ import {
 } from '../../design-system';
 import {BackButton} from '../../design-system/buttons';
 import {createAccountOperations} from './create-account-slice';
+import { CreateAccountBackupTestIDs } from './test-ids';
 
 export function CreateAccountBackupScreen({
   form,
@@ -26,7 +27,7 @@ export function CreateAccountBackupScreen({
   onSkip,
 }) {
   return (
-    <ScreenContainer testID="create-wallet-screen">
+    <ScreenContainer testID={CreateAccountBackupTestIDs.screen}>
       <Header>
         <BackButton />
       </Header>
@@ -52,15 +53,15 @@ export function CreateAccountBackupScreen({
       </Content>
       <Footer marginBottom={0} marginLeft={26} marginRight={26}>
         <Box alignItems="flex-start" mb={5}>
-          <Checkbox isChecked={form.agreement} onChange={onChange('agreement')}>
+          <Checkbox isChecked={form.agreement} onChange={onChange('agreement')} accessibilityLabel="Backup agreement">
             I understand that if I lose my recovery phrase, I will not be able
             to access my account
           </Checkbox>
         </Box>
-        <LoadingButton full testID="next-btn" mb={5} onPress={onSubmit} disabled={submitDisabled}>
+        <LoadingButton full testID={CreateAccountBackupTestIDs.nextBtn} mb={5} onPress={onSubmit} isDisabled={submitDisabled}>
           Next
         </LoadingButton>
-        <LoadingButton full testID="next-btn" variant="unstyled" onPress={onSkip}>
+        <LoadingButton full testID={CreateAccountBackupTestIDs.skipBtn} variant="unstyled" onPress={onSkip}>
           Skip
         </LoadingButton>
       </Footer>
