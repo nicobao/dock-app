@@ -81,6 +81,7 @@ function AppStackScreen() {
         component={SplashScreen}
         options={{
           headerShown: false,
+          gestureEnabled: false,
         }}
       />
       <AppStack.Screen
@@ -88,6 +89,7 @@ function AppStackScreen() {
         component={CreateWalletScreen}
         options={{
           headerShown: false,
+          gestureEnabled: false,
         }}
       />
       <AppStack.Screen
@@ -149,6 +151,7 @@ function AppStackScreen() {
         component={UnlockWalletContainer}
         options={{
           headerShown: false,
+          gestureEnabled: false,
         }}
       />
       <AppStack.Screen
@@ -156,6 +159,7 @@ function AppStackScreen() {
         component={AccountsContainer}
         options={{
           headerShown: false,
+          gestureEnabled: false,
         }}
       />
       <AppStack.Screen
