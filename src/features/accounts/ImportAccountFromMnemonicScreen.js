@@ -127,7 +127,7 @@ export function ImportAccountFromMnemonicScreen({
         <LoadingButton
           full
           testID="next-btn"
-          disabled={submitDisabled}
+          isDisabled={submitDisabled}
           onPress={onSubmit}>
           Next
         </LoadingButton>

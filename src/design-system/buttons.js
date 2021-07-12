@@ -109,6 +109,10 @@ export function BigButton({icon, children, ...props}) {
 export function Button(props) {
   let {children, icon, ...otherProps} = props;
 
+  if (!otherProps.bg && otherProps.isDisabled) {
+    otherProps.bg = '#1E75C5';
+  }
+
   return (
     <NButton {...otherProps}>
       {icon && <Box marginRight={15}>{icon}</Box>}

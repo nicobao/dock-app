@@ -58,7 +58,7 @@ export function CreateAccountBackupScreen({
             to access my account
           </Checkbox>
         </Box>
-        <LoadingButton full testID={CreateAccountBackupTestIDs.nextBtn} mb={5} onPress={onSubmit} disabled={submitDisabled}>
+        <LoadingButton full testID={CreateAccountBackupTestIDs.nextBtn} mb={5} onPress={onSubmit} isDisabled={submitDisabled}>
           Next
         </LoadingButton>
         <LoadingButton full testID={CreateAccountBackupTestIDs.skipBtn} variant="unstyled" onPress={onSkip}>
