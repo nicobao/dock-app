@@ -12,6 +12,7 @@ import {SetupPasscodeScreen} from '../features/create-wallet/SetupPasscodeScreen
 import {AccountsContainer} from '../features/accounts/AccountsScreen';
 import {AccountDetailsContainer} from '../features/accounts/AccountDetailsScreen';
 import {SplashScreen} from '../features/app/SplashScreen';
+import {AppSettingsContainer} from '../features/app/AppSettingsScreen';
 import {ImportAccountFromMnemonicContainer} from '../features/accounts/ImportAccountFromMnemonicScreen';
 import {ImportAccountSetupContainer} from '../features/accounts/ImportAccountSetupScreen';
 import {ImportAccountPasswordContainer} from '../features/accounts/ImportAccountPasswordScreen';
@@ -113,6 +114,15 @@ function AppStackScreen() {
       <AppStack.Screen
         name={Routes.CREATE_WALLET}
         component={CreateWalletScreen}
+        options={{
+          ...screenOptions,
+          gestureEnabled: false,
+          
+        }}
+      />
+      <AppStack.Screen
+        name={Routes.APP_SETTINGS}
+        component={AppSettingsContainer}
         options={{
           ...screenOptions,
           gestureEnabled: false,
@@ -308,16 +318,6 @@ function AppStackScreen() {
         options={{
           ...getMainOptions({
             title: 'Credentials',
-          }),
-        }}
-      />
-      <AppStack.Screen
-        name={Routes.APP_SETTINGS}
-        component={SettingsScreen}
-        options={{
-          ...getMainOptions({
-            title: 'Settings',
-            headerRight: null,
           }),
         }}
       />

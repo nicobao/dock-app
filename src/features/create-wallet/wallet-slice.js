@@ -39,6 +39,12 @@ export const walletSelectors = {
 };
 
 export const walletOperations = {
+  deleteWallet: () => async (dispatch, getState) => {
+    await AsyncStorage.removeItem('walletInfo');
+    await AsyncStorage.removeItem('wallet');
+    dispatch(walletActions.setWalletInfo(null));
+    navigate(Routes.CREATE_WALLET);
+  },
   unlockWallet:
     ({biometry, passcode } = {}) =>
     async (dispatch, getState) => {

@@ -14,7 +14,6 @@ export function ScreenSpinner() {
         height: '100%',
       }}>
       <Spinner color={Colors.darkBlue} />
-      <Text>Loading...</Text>
     </View>
   );
 }

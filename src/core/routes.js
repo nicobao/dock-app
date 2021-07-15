@@ -9,7 +9,6 @@ export const Routes = {
   CREATE_ACCOUNT_MNEMONIC: 'createAccount/mnemonic',
   CREATE_ACCOUNT_SETUP: 'createAccount/setup',
   CREATE_ACCOUNT_VERIFY_PHRASE: 'createAccount/',
-  
   ACCOUNTS: 'accounts',
   ACCOUNT_DETAILS: 'account/details',
   ACCOUNT_IMPORT_FROM_MNEMONIC: 'account/importFromMnemonic',
@@ -17,6 +16,8 @@ export const Routes = {
   ACCOUNT_IMPORT_SETUP_PASSWORD: 'account/importSetupPassword',
   ACCOUNT_EXPORT_SETUP_PASSWORD: 'account/exportSetupPassword',
   APP_QR_SCANNER: 'app/qrScanner',
+  APP_SETTINGS: 'app/settings',
+
   // POC routes
   APP_HOME: 'app/home',
   APP_DID: 'app/did',
@@ -24,7 +25,6 @@ export const Routes = {
   APP_CREDENTIAL_ISSUANCE: 'app/credentialIssuance',
   APP_PRESENTATION_EXCHANGE: 'app/presentationExchange',
   APP_SEND_TOKENS: 'app/appSendTokens',
-  APP_SETTINGS: 'app/settings',
   CREATE_WALLET_MNEMONIC: 'createWallet/mnemonic',
   BACKUP_CREATE: 'backup/create',
   BACKUP_LOAD: 'backup/load',

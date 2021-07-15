@@ -8,6 +8,9 @@ import DocumentDownloadIcon from './document-download.svg';
 import ChevronRightIcon from './chevron-right.svg';
 import BackIcon from './back.svg';
 import DockLogoIcon from './dock-logo.svg';
+import DownloadIcon from './download.svg';
+import TrashIcon from './trash.svg';
+
 
 export {
   DockLogoIcon,
@@ -20,4 +23,6 @@ export {
   AlertIcon,
   ChevronRightIcon,
   DocumentDownloadIcon,
+  DownloadIcon,
+  TrashIcon
 }

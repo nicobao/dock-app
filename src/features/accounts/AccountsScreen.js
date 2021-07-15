@@ -40,6 +40,7 @@ export function AccountsScreen({
   onDelete,
   onEdit,
   onDetails,
+  onSettings,
 }) {
   const isEmpty = accounts.length === 0;
   const [showAddAccount, setShowAddAccount] = useState();
@@ -66,7 +67,7 @@ export function AccountsScreen({
               onPress={() => setShowAddAccount(true)}>
               <PlusCircleWhiteIcon />
             </IconButton>
-            <IconButton col onPress={() => alert('Available soon!')}>
+            <IconButton col onPress={onSettings}>
               <CogIcon />
             </IconButton>
           </Box>
@@ -204,6 +205,9 @@ export function AccountsContainer() {
       accounts={accounts}
       onAddAccount={() => {
         dispatch(accountOperations.addAccountFlow());
+      }}
+      onSettings={() => {
+        navigate(Routes.APP_SETTINGS);
       }}
       onImportExistingAccount={async method => {
         if (method === 'mnemonic') {
