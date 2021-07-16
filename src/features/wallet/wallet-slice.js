@@ -44,8 +44,6 @@ export const walletSelectors = {
 export const walletOperations = {
   exportWallet: ({ password }) => async (dispatch, getState) => {
     const walletBackup = await WalletRpc.export(password);
-    
-    console.log(walletBackup);
     const jsonData = JSON.stringify(walletBackup);
     const path = `${RNFS.DocumentDirectoryPath}/walletBackup.json`;
     const mimeType = 'application/json';
