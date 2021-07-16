@@ -17,6 +17,7 @@ export const Routes = {
   ACCOUNT_EXPORT_SETUP_PASSWORD: 'account/exportSetupPassword',
   APP_QR_SCANNER: 'app/qrScanner',
   APP_SETTINGS: 'app/settings',
+  WALLET_EXPORT_BACKUP: 'wallet/exportBackup',
 
   // POC routes
   APP_HOME: 'app/home',

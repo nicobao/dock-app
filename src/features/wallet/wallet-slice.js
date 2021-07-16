@@ -6,6 +6,9 @@ import {Routes} from '../../core/routes';
 import {appSelectors, BiometryType} from '../app/app-slice';
 import AsyncStorage from '@react-native-community/async-storage';
 import {accountOperations} from '../accounts/account-slice';
+import RNFS from 'react-native-fs';
+import Share from 'react-native-share'
+import { showToast } from '../../core/toast';
 
 const initialState = {
   loading: true,
@@ -39,6 +42,31 @@ export const walletSelectors = {
 };
 
 export const walletOperations = {
+  exportWallet: ({ password }) => async (dispatch, getState) => {
+    const walletBackup = await WalletRpc.export(password);
+    
+    console.log(walletBackup);
+    const jsonData = JSON.stringify(walletBackup);
+    const path = `${RNFS.DocumentDirectoryPath}/walletBackup.json`;
+    const mimeType = 'application/json';
+    await RNFS.writeFile(path, jsonData);
+
+    try {
+      await Share.open({
+        url: "file://" + path,
+        type: mimeType,
+      })
+    } catch(err) {
+      console.error(err);
+      showToast({
+        message: 'Unable to generate backup',
+        type: 'error',
+      }) 
+    }
+    
+    RNFS.unlink(path);
+    
+  },
   deleteWallet: () => async (dispatch, getState) => {
     await AsyncStorage.removeItem('walletInfo');
     await AsyncStorage.removeItem('wallet');

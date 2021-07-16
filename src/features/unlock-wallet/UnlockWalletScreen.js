@@ -13,8 +13,8 @@ import SplashLogo from '../../assets/splash-logo.png';
 import KeyboardDeleteIcon from '../../assets/icons/keyboard-delete.svg';
 import {useDispatch, useSelector} from 'react-redux';
 import {appSelectors} from '../app/app-slice';
-import {walletOperations, walletSelectors} from '../create-wallet/wallet-slice';
-import { NumericKeyboard } from '../create-wallet/CreatePasscodeScreen';
+import {walletOperations, walletSelectors} from '../wallet/wallet-slice';
+import { NumericKeyboard } from '../wallet/CreatePasscodeScreen';
 
 const Circle = styled.View`
   width: 20px;

@@ -6,7 +6,7 @@ import {KeyringRpc} from '@docknetwork/react-native-sdk/src/client/keyring-rpc';
 import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
 import SplashScreen from 'react-native-splash-screen';
 import {Keychain} from '../../core/keychain';
-import {walletActions} from '../create-wallet/wallet-slice';
+import {walletActions} from '../wallet/wallet-slice';
 import {WalletRpc} from '@docknetwork/react-native-sdk/src/client/wallet-rpc';
 
 export const BiometryType = {

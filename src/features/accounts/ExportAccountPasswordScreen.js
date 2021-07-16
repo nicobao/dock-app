@@ -30,12 +30,15 @@ import {
   createAccountSelectors,
 } from '../account-creation/create-account-slice';
 import {accountOperations} from './account-slice';
+import { AccountsConstants } from './constants';
 
-export function ExportAccountPasswordScreen({
+export function GenericPasswordScreen({
   form,
   onChange,
   submitDisabled,
   onSubmit,
+  title,
+  description,
 }) {
   return (
     <ScreenContainer testID="create-wallet-screen">
@@ -50,14 +53,14 @@ export function ExportAccountPasswordScreen({
           fontWeight="600"
           color="#fff"
           marginTop={52}>
-          Create a password
+          {title}
         </Typography>
         <Typography
           fontSize={16}
           lineHeight={24}
           fontWeight="400"
           marginTop={12}>
-          This will be used when you import your account to a new device.
+          {description}
         </Typography>
 
         <Box mt={7}>
@@ -124,9 +127,7 @@ export function ExportAccountPasswordScreen({
   );
 }
 
-export function ExportAccountPasswordContainer({route}) {
-  const dispatch = useDispatch();
-  const {method, accountId} = route.params;
+export function GenericPasswordContainer({onSubmit, title, description}) {
   const [form, setForm] = useState({
     password: '',
     passwordConfirmation: '',
@@ -159,13 +160,8 @@ export function ExportAccountPasswordContainer({route}) {
       });
       return;
     }
-    return dispatch(
-      accountOperations.exportAccountAs({
-        accountId,
-        method,
-        password: form.password,
-      }),
-    );
+
+    return onSubmit(form);
   };
 
   const formValid =
@@ -176,11 +172,34 @@ export function ExportAccountPasswordContainer({route}) {
     form.lengthValidation;
 
   return (
-    <ExportAccountPasswordScreen
+    <GenericPasswordScreen
       form={form}
       submitDisabled={!formValid}
       onChange={handleChange}
       onSubmit={handleSubmit}
+      description={description}
+      title={title}
     />
   );
+}
+
+export function ExportAccountPasswordContainer({ route }) {
+  const dispatch = useDispatch();
+  const {method, accountId} = route.params;
+
+  return (
+    <GenericPasswordContainer
+      description={AccountsConstants.exportAccount.locales.description}
+      title={AccountsConstants.exportAccount.locales.title}
+      onSubmit={(form) => {
+        return dispatch(
+          accountOperations.exportAccountAs({
+            accountId,
+            method,
+            password: form.password,
+          }),
+        );
+      }}
+    />
+  )
 }

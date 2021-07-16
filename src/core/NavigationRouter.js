@@ -5,10 +5,10 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {navigate, navigationRef} from './navigation';
 import {Routes} from './routes';
 
-import {CreateWalletScreen} from '../features/create-wallet/CreateWalletScreen';
-import {CreatePasscodeContainer} from '../features/create-wallet/CreatePasscodeScreen';
-import {ProtectYourWalletContainer} from '../features/create-wallet/ProtectYourWalletScreen';
-import {SetupPasscodeScreen} from '../features/create-wallet/SetupPasscodeScreen';
+import {CreateWalletScreen} from '../features/wallet/CreateWalletScreen';
+import {CreatePasscodeContainer} from '../features/wallet/CreatePasscodeScreen';
+import {ProtectYourWalletContainer} from '../features/wallet/ProtectYourWalletScreen';
+import {SetupPasscodeScreen} from '../features/wallet/SetupPasscodeScreen';
 import {AccountsContainer} from '../features/accounts/AccountsScreen';
 import {AccountDetailsContainer} from '../features/accounts/AccountDetailsScreen';
 import {SplashScreen} from '../features/app/SplashScreen';
@@ -24,7 +24,7 @@ import {HomeScreen} from '../features/home/HomeScreen';
 import {PresentationExchangeScreen} from '../features/credentials/PresentationExchangeScreen';
 import {DIDListScreen} from '../features/did/DIDListScreen';
 import {Icon, View} from 'native-base';
-import {TouchableWithoutFeedback} from 'react-native';
+import {Platform, TouchableWithoutFeedback} from 'react-native';
 import {Colors} from '../theme/colors';
 import {SettingsScreen} from '../features/settings/SettingsScreen';
 import {CredentialListScreen} from '../features/credentials/CredentialListScreen';
@@ -40,6 +40,7 @@ import {CreateAccountSetupContainer} from '../features/account-creation/CreateAc
 import {CreateAccountMnemonicContainer} from '../features/account-creation/CreateAccountMnemonicScreen';
 import {CreateAccountBackupContainer} from '../features/account-creation/CreateAccountBackupScreen';
 import { ExportAccountPasswordContainer } from '../features/accounts/ExportAccountPasswordScreen';
+import {ExportWalletContainer} from '../features/wallet/ExportWalletScreen';
 
 const getMainOptions = opts => {
   return {
@@ -82,9 +83,11 @@ const forFade = ({ current, closing }) => ({
 
 const screenOptions = {
   headerShown: false,
-  cardStyleInterpolator: forFade
 }
 
+if (Platform.OS === 'android') {
+  screenOptions.cardStyleInterpolator = forFade;
+}
 
 function AppStackScreen() {
   return (
@@ -234,6 +237,15 @@ function AppStackScreen() {
       <AppStack.Screen
         name={Routes.CREATE_ACCOUNT_VERIFY_PHRASE}
         component={CreateAccountVerifyPhraseContainer}
+        options={{
+          ...screenOptions,
+        }}
+      />
+      
+      
+      <AppStack.Screen
+        name={Routes.WALLET_EXPORT_BACKUP}
+        component={ExportWalletContainer}
         options={{
           ...screenOptions,
         }}
