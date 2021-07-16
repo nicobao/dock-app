@@ -73,44 +73,71 @@ const getMainOptions = opts => {
 const AppStack = createStackNavigator();
 const RootStack = createStackNavigator();
 
+const forFade = ({ current, closing }) => ({
+  cardStyle: {
+    opacity: current.progress,
+  },
+});
+
+const screenOptions = {
+  headerShown: false,
+  cardStyleInterpolator: forFade
+}
+
+
 function AppStackScreen() {
   return (
-    <AppStack.Navigator>
+    <AppStack.Navigator
+      screenOptions={{
+        cardStyle: {
+          backgroundColor: '#222',
+        },
+        cardOverlay: () => 
+          <View
+            style={{
+            flex: 1,
+            backgroundColor: '#222',
+          }} />
+      }}
+    >
       <AppStack.Screen
         name={Routes.SPLASH_SCREEN}
         component={SplashScreen}
         options={{
-          headerShown: false,
+          ...screenOptions,
+          
           gestureEnabled: false,
+          
         }}
       />
       <AppStack.Screen
         name={Routes.CREATE_WALLET}
         component={CreateWalletScreen}
         options={{
-          headerShown: false,
+          ...screenOptions,
           gestureEnabled: false,
+          
         }}
       />
       <AppStack.Screen
         name={Routes.CREATE_WALLET_PASSCODE_SETUP}
         component={SetupPasscodeScreen}
         options={{
-          headerShown: false,
+          ...screenOptions,
         }}
       />
       <AppStack.Screen
         name={Routes.ACCOUNT_IMPORT_FROM_MNEMONIC}
         component={ImportAccountFromMnemonicContainer}
         options={{
-          headerShown: false,
+          ...screenOptions,
         }}
       />
       <AppStack.Screen
         name={Routes.ACCOUNT_IMPORT_SETUP}
         component={ImportAccountSetupContainer}
         options={{
-          headerShown: false,
+          ...screenOptions,
         }}
       />
 
@@ -118,7 +145,7 @@ function AppStackScreen() {
         name={Routes.ACCOUNT_IMPORT_SETUP_PASSWORD}
         component={ImportAccountPasswordContainer}
         options={{
-          headerShown: false,
+          ...screenOptions,
         }}
       />
       
@@ -126,7 +153,7 @@ function AppStackScreen() {
         name={Routes.ACCOUNT_EXPORT_SETUP_PASSWORD}
         component={ExportAccountPasswordContainer}
         options={{
-          headerShown: false,
+          ...screenOptions,
         }}
       />
       
@@ -136,21 +163,21 @@ function AppStackScreen() {
         name={Routes.CREATE_WALLET_PASSCODE}
         component={CreatePasscodeContainer}
         options={{
-          headerShown: false,
+          ...screenOptions,
         }}
       />
       <AppStack.Screen
         name={Routes.CREATE_WALLET_PROTECT}
         component={ProtectYourWalletContainer}
         options={{
-          headerShown: false,
+          ...screenOptions,
         }}
       />
       <AppStack.Screen
         name={Routes.UNLOCK_WALLET}
         component={UnlockWalletContainer}
         options={{
-          headerShown: false,
+          ...screenOptions,
           gestureEnabled: false,
         }}
       />
@@ -158,7 +185,7 @@ function AppStackScreen() {
         name={Routes.ACCOUNTS}
         component={AccountsContainer}
         options={{
-          headerShown: false,
+          ...screenOptions,
           gestureEnabled: false,
         }}
       />
@@ -166,7 +193,7 @@ function AppStackScreen() {
         name={Routes.ACCOUNT_DETAILS}
         component={AccountDetailsContainer}
         options={{
-          headerShown: false,
+          ...screenOptions,
         }}
       />
 
@@ -174,7 +201,7 @@ function AppStackScreen() {
         name={Routes.CREATE_ACCOUNT_SETUP}
         component={CreateAccountSetupContainer}
         options={{
-          headerShown: false,
+          ...screenOptions,
         }}
       />
 
@@ -182,7 +209,7 @@ function AppStackScreen() {
         name={Routes.CREATE_ACCOUNT_MNEMONIC}
         component={CreateAccountMnemonicContainer}
         options={{
-          headerShown: false,
+          ...screenOptions,
         }}
       />
 
@@ -190,7 +217,7 @@ function AppStackScreen() {
         name={Routes.CREATE_ACCOUNT_BACKUP}
         component={CreateAccountBackupContainer}
         options={{
-          headerShown: false,
+          ...screenOptions,
         }}
       />
 
@@ -198,7 +225,7 @@ function AppStackScreen() {
         name={Routes.CREATE_ACCOUNT_VERIFY_PHRASE}
         component={CreateAccountVerifyPhraseContainer}
         options={{
-          headerShown: false,
+          ...screenOptions,
         }}
       />
 
