@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Button,
   Header,
@@ -17,31 +17,9 @@ import FingerprintSimple from '../../assets/icons/fingerprint-simple.svg';
 import {useDispatch, useSelector} from 'react-redux';
 import {walletOperations} from './wallet-slice';
 import {appSelectors, BiometryType} from '../app/app-slice';
-
-// const BigButton = ({icon, children, ...props}) => (
-//   <Box
-//     row
-//     borderWidth={1}
-//     borderColor="#3F3F46"
-//     borderRadius={8}
-//     padding={25}
-//     marginBottom={12}
-//     alignItems="center"
-//     {...props}>
-//     <Box autoSize col>
-//       {icon}
-//     </Box>
-//     <Box>
-//       <Typography
-//         fontSize={14}
-//         fontFamily="Nunito Sans"
-//         fontWeight="600"
-//         color="#fff">
-//         {children}
-//       </Typography>
-//     </Box>
-//   </Box>
-// );
+import {ScreenSpinner} from 'src/components/ScreenSpinner';
+import {showToast} from 'src/core/toast';
+import {WalletConstants} from './constants';
 
 export function ProtectYourWalletScreen({
   onSkip,
@@ -97,6 +75,7 @@ export function ProtectYourWalletScreen({
 
 export function ProtectYourWalletContainer() {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const supportedBiometryType = useSelector(
     appSelectors.getSupportedBiometryType,
   );
@@ -105,7 +84,23 @@ export function ProtectYourWalletContainer() {
   let faceId = supportedBiometryType === BiometryType.FaceId;
 
   const handleEnable = () => {
-    runAfterInteractions(() => dispatch(walletOperations.createWallet({biometry: true})));
+    setLoading(true);
+    runAfterInteractions(() => {
+      dispatch(walletOperations.createWallet({biometry: true}))
+        .then(() => {
+          showToast({
+            message: WalletConstants.protectYourWallet.locales.biometicsEnabled,
+            type: 'success',
+          });
+        })
+        .catch(() => {
+          showToast({
+            message: WalletConstants.protectYourWallet.locales.biometicsFailed,
+            type: 'error',
+          });
+        })
+        .finally(() => setLoading(false));
+    });
   };
 
   const handleSkip = () => {
@@ -117,6 +112,10 @@ export function ProtectYourWalletContainer() {
       handleSkip();
     }
   }, [faceId, fingerprint]);
+
+  if (loading) {
+    return <ScreenSpinner />;
+  }
 
   return (
     <ProtectYourWalletScreen

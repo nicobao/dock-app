@@ -3,6 +3,15 @@ import {extendTheme, NativeBaseProvider} from 'native-base';
 import {ThemeProvider as SCThemeProvider} from 'styled-components/native';
 
 export const Theme = {
+  fontFamily: {
+    nunitoSans: 'Nunito Sans',
+    montserrat: 'Montserrat',
+  },
+  colors: {
+    white: '#FFF',
+    shark: '#27272A',
+    mariner: '#1E75C5'
+  },
   screen: {
     backgroundColor: '#18181B',
   },
@@ -26,7 +35,7 @@ const nBaseTheme = extendTheme({
       // 200: '#A2D4EC',
       // 300: '#ccc',
       
-      400: '#1E75C5',
+      400: Theme.colors.mariner,
       
       // 500: '#0088CC',
       // 600: '#007AB8',
@@ -39,14 +48,14 @@ const nBaseTheme = extendTheme({
     Input: {
       baseStyle: {
         background: 'black',
-        borderColor: '#27272A',
-        backgroundColor: "#27272A",
+        borderColor: Theme.colors.shark,
+        backgroundColor: Theme.colors.shark,
         fontSize: '19px',
         _hover: {
-          borderColor: '#27272A'
+          borderColor: Theme.colors.shark
         },
         _focus: {
-          borderColor: '#27272A'
+          borderColor: Theme.colors.shark
         },
         
       },
@@ -72,7 +81,7 @@ const nBaseTheme = extendTheme({
           my: 1
         },
         _text: {
-          color: '#fff',
+          color: Theme.colors.white,
         },
         borderRadius: 6,
       }),
