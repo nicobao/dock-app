@@ -2,6 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import {Keychain} from '../../core/keychain';
 import {navigate} from '../../core/navigation';
 import {WalletRpc} from '@docknetwork/react-native-sdk/src/client/wallet-rpc';
+import DocumentPicker from 'react-native-document-picker';
 import {Routes} from '../../core/routes';
 import {appSelectors, BiometryType} from '../app/app-slice';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -42,6 +43,30 @@ export const walletSelectors = {
 };
 
 export const walletOperations = {
+  pickWalletBackup: () => async (dispatch, getState) => {
+    const file = await DocumentPicker.pick({
+      type: [DocumentPicker.types.allFiles],
+    });
+
+    navigate(Routes.WALLET_IMPORT_BACKUP_PASSWORD, {
+      fileUri: file.fileCopyUri,
+    });
+  },
+  importWallet: ({ fileUri, password }) => async (dispatch, getState) => {
+    const fileData = await RNFS.readFile(fileUri);
+    const jsonData = JSON.parse(fileData);
+    try {
+      await AsyncStorage.removeItem('wallet');
+      await WalletRpc.importWallet(jsonData, password);
+      navigate(Routes.CREATE_WALLET_PASSCODE);
+    } catch(err) {
+      console.error(err);
+      showToast({
+        message: 'Invalid password',
+        type: 'error'
+      })
+    }
+  },
   exportWallet: ({ password }) => async (dispatch, getState) => {
     const walletBackup = await WalletRpc.export(password);
     const jsonData = JSON.stringify(walletBackup);
