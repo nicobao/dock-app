@@ -10,7 +10,9 @@ import BackIcon from './back.svg';
 import DockLogoIcon from './dock-logo.svg';
 import DownloadIcon from './download.svg';
 import TrashIcon from './trash.svg';
-
+import AlertModalIcon from './alert-modal.svg';
+import InfoModalIcon from './info-modal.svg';
+import ErrorAlert from './error-alert.svg';
 
 export {
   DockLogoIcon,
@@ -24,5 +26,8 @@ export {
   ChevronRightIcon,
   DocumentDownloadIcon,
   DownloadIcon,
-  TrashIcon
+  TrashIcon,
+  InfoModalIcon,
+  AlertModalIcon,
+  ErrorAlert
 }

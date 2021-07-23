@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {APP_RUNTIME} from '@env';
 import {Provider, useDispatch} from 'react-redux';
-import {useToast, View} from 'native-base';
+import {Box, Modal, Text, useToast, View} from 'native-base';
 import store from './core/redux-store';
 import {NavigationRouter} from './core/NavigationRouter';
 // @ts-ignore
@@ -15,6 +15,7 @@ import {ConfirmConnectionModal} from './features/wallet-connect/ConfirmConnectio
 import {appOperations} from './features/app/app-slice';
 import { ThemeProvider } from './design-system';
 import { setToast } from './core/toast';
+import {ConfirmationModal} from '../src/components/ConfirmationModal';
 
 function GlobalComponents() {
   const dispatch = useDispatch();
@@ -39,6 +40,7 @@ function GlobalComponents() {
         />
       </View>
       <ConfirmConnectionModal />
+      <ConfirmationModal />
     </View>
   );
 }

@@ -99,7 +99,8 @@ export function UnlockWalletScreen({
   );
 }
 
-export function UnlockWalletContainer() {
+export function UnlockWalletContainer({ route }) {
+  const { callback } = route.params || {};
   const [passcode, setPasscode] = useState('');
   const supportBiometry = useSelector(appSelectors.getSupportedBiometryType);
   const walletInfo = useSelector(walletSelectors.getWalletInfo);
@@ -116,13 +117,14 @@ export function UnlockWalletContainer() {
 
     if (value.length === DIGITS) {
       try {
-        await dispatch(walletOperations.unlockWallet({passcode: value}));
+        await dispatch(walletOperations.unlockWallet({passcode: value, callback }));
       } catch(err) {
         alert('Passcode doesn`t match');
-        setTimeout(() => {
-          setPasscode('');
-        }, 100);
       }
+
+      setTimeout(() => {
+        setPasscode('');
+      }, 100);
     }
   };
 
@@ -132,7 +134,7 @@ export function UnlockWalletContainer() {
 
   const handleBiometricUnlock = async () => {
     try {
-      await dispatch(walletOperations.unlockWallet({biometry: true}));
+      await dispatch(walletOperations.unlockWallet({biometry: true, callback }));
     } catch(err) {
       setPasscode('');
     }
@@ -141,6 +143,8 @@ export function UnlockWalletContainer() {
   useEffect(() => {
     if (supportBiometry && walletInfo.biometry) {
       handleBiometricUnlock();
+    } else {      
+      setPasscode('');
     }
   }, []);
 

@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {Keychain} from '../../core/keychain';
-import {navigate} from '../../core/navigation';
+import {navigate, navigateBack} from '../../core/navigation';
 import {WalletRpc} from '@docknetwork/react-native-sdk/src/client/wallet-rpc';
 import DocumentPicker from 'react-native-document-picker';
 import {Routes} from '../../core/routes';
@@ -8,12 +8,14 @@ import {appSelectors, BiometryType} from '../app/app-slice';
 import AsyncStorage from '@react-native-community/async-storage';
 import {accountOperations} from '../accounts/account-slice';
 import RNFS from 'react-native-fs';
-import Share from 'react-native-share'
-import { showToast } from '../../core/toast';
+import Share from 'react-native-share';
+import {showToast} from '../../core/toast';
+import {showConfirmationModal} from 'src/components/ConfirmationModal';
 
 const initialState = {
   loading: true,
   passcode: null,
+  creationFlags: {},
 };
 
 const wallet = createSlice({
@@ -29,6 +31,9 @@ const wallet = createSlice({
     setWalletInfo(state, action) {
       state.walletInfo = action.payload;
     },
+    setCreationFlags(state, action) {
+      state.creationFlags = action.payload;
+    },
   },
 });
 
@@ -40,6 +45,7 @@ export const walletSelectors = {
   getLoading: state => getRoot(state).loading,
   getPasscode: state => getRoot(state).passcode,
   getWalletInfo: state => getRoot(state).walletInfo,
+  getCreationFlags: state => getRoot(state).creationFlags || {},
 };
 
 export const walletOperations = {
@@ -52,55 +58,102 @@ export const walletOperations = {
       fileUri: file.fileCopyUri,
     });
   },
-  importWallet: ({ fileUri, password }) => async (dispatch, getState) => {
-    const fileData = await RNFS.readFile(fileUri);
-    const jsonData = JSON.parse(fileData);
-    try {
+  importWallet:
+    ({fileUri, password}) =>
+    async (dispatch, getState) => {
+      const fileData = await RNFS.readFile(fileUri);
+      const jsonData = JSON.parse(fileData);
       await AsyncStorage.removeItem('wallet');
       await WalletRpc.importWallet(jsonData, password);
-      navigate(Routes.CREATE_WALLET_PASSCODE);
-    } catch(err) {
-      console.error(err);
-      showToast({
-        message: 'Invalid password',
-        type: 'error'
-      })
-    }
-  },
-  exportWallet: ({ password }) => async (dispatch, getState) => {
-    const walletBackup = await WalletRpc.export(password);
-    const jsonData = JSON.stringify(walletBackup);
-    const path = `${RNFS.DocumentDirectoryPath}/walletBackup.json`;
-    const mimeType = 'application/json';
-    await RNFS.writeFile(path, jsonData);
+      
+      dispatch(walletActions.setCreationFlags({
+        importWalletFlow: true,
+      }));
+      
+      navigate(Routes.CREATE_WALLET_PASSCODE);      
+    },
+  exportWallet:
+    ({password, callback }) =>
+    async (dispatch, getState) => {
+      const walletBackup = await WalletRpc.export(password);
+      const jsonData = JSON.stringify(walletBackup);
+      const path = `${RNFS.DocumentDirectoryPath}/walletBackup.json`;
+      const mimeType = 'application/json';
+      await RNFS.writeFile(path, jsonData);
 
-    try {
-      await Share.open({
-        url: "file://" + path,
-        type: mimeType,
-      })
-    } catch(err) {
-      console.error(err);
-      showToast({
-        message: 'Unable to generate backup',
-        type: 'error',
-      }) 
-    }
-    
-    RNFS.unlink(path);
-    
-  },
+      try {
+        await Share.open({
+          url: 'file://' + path,
+          type: mimeType,
+        });
+        
+        if (callback) {
+          callback();
+        } else {
+          navigateBack()
+        }
+      } catch (err) {
+        console.error(err);
+        showToast({
+          message: 'Unable to generate backup',
+          type: 'error',
+        });
+      }
+
+      RNFS.unlink(path);
+    },
   deleteWallet: () => async (dispatch, getState) => {
     await AsyncStorage.removeItem('walletInfo');
     await AsyncStorage.removeItem('wallet');
+    await WalletRpc.create('wallet');
     dispatch(walletActions.setWalletInfo(null));
     navigate(Routes.CREATE_WALLET);
   },
+  confirmWalletDelete: () => async (dispatch, getState) => {
+    const confirmRemoval = () =>
+      showConfirmationModal({
+        type: 'alert',
+        title: 'Remove Wallet?',
+        description:
+          'This can’t be undone. You’ll loose all accounts and tokens associated with this wallet if you did not back up.',
+        confirmText: 'Delete',
+        cancelText: 'Cancel',
+        onConfirm: () => {
+          dispatch(walletOperations.deleteWallet());
+        },
+      });
+
+    const confirmWalletBackup = () =>
+      showConfirmationModal({
+        type: 'info',
+        title: 'Backup Wallet',
+        description:
+          'We highly recommend that you create a back-up file of your wallet before deleting it.',
+        confirmText: 'Back up',
+        cancelText: 'Skip',
+        onConfirm: () => {
+          navigate(Routes.WALLET_EXPORT_BACKUP, {
+            callback() {
+              navigate(Routes.APP_SETTINGS);
+              confirmRemoval();
+            },
+          });
+        },
+        onCancel: confirmRemoval,
+      });
+
+    navigate(Routes.UNLOCK_WALLET, {
+      callback() {
+        navigate(Routes.APP_SETTINGS);
+        confirmWalletBackup();
+      },
+    });
+  },
   unlockWallet:
-    ({biometry, passcode } = {}) =>
+    ({biometry, passcode, callback} = {}) =>
     async (dispatch, getState) => {
       const keychainId = 'wallet';
-      
+
       if (biometry) {
         await Keychain.getItem(`${keychainId}-biometric`, {
           authenticationPrompt: {
@@ -109,24 +162,28 @@ export const walletOperations = {
         });
       } else {
         const keychainData = await Keychain.getItem(keychainId);
-        
+
         if (keychainData.passcode !== passcode) {
           throw new Error({
             code: 401,
-            message: 'Passcode doesn\'t match, please try again'
+            message: "Passcode doesn't match, please try again",
           });
         }
       }
 
-      dispatch(accountOperations.loadAccounts())
-
-      navigate(Routes.ACCOUNTS);
+      if (callback) {
+        callback();
+      } else {
+        dispatch(accountOperations.loadAccounts());
+        navigate(Routes.ACCOUNTS);
+      }
     },
 
   createWallet:
     ({biometry = false} = {}) =>
     async (dispatch, getState) => {
       const passcode = walletSelectors.getPasscode(getState());
+      const flags = walletSelectors.getCreationFlags(getState());
       const keychainId = 'wallet';
       const keychainProps = {
         passcode: passcode.toString(),
@@ -165,7 +222,11 @@ export const walletOperations = {
 
       dispatch(walletActions.setWalletInfo(walletInfo));
 
-      WalletRpc.create(keychainId);
+      if (!flags.importWalletFlow) {
+        WalletRpc.create(keychainId);
+      }
+
+      dispatch(walletActions.setCreationFlags({}))
 
       navigate(Routes.ACCOUNTS);
     },

@@ -56,7 +56,7 @@ export const createAccountOperations = {
       navigate(Routes.ACCOUNT_IMPORT_SETUP_PASSWORD);
     }),
   unlockJson: (password) => 
-    withErrorToast(async (dispatch, getState) => {
+    async (dispatch, getState) => {
       const form = createAccountSelectors.getForm(getState());
 
       await KeyringRpc.addFromJson(form.data, password);
@@ -68,7 +68,7 @@ export const createAccountOperations = {
       }));
 
       navigate(Routes.ACCOUNT_IMPORT_SETUP);
-    }),
+    },
   importFromMnemonic: form =>
     withErrorToast(async (dispatch, getState) => {
       dispatch(accountActions.setAccountToBackup(null));

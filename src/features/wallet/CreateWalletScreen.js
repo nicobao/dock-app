@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   Image,
-  Button,
   LoadingButton,
   Header,
   Footer,
@@ -16,6 +15,7 @@ import SplashLogo from '../../assets/splash-logo.png';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import { WalletConstants } from './constants';
+import { Button } from 'native-base';
 
 export function CreateWalletScreen() {
   return (
@@ -41,7 +41,7 @@ export function CreateWalletScreen() {
         </LoadingButton>
         <LoadingButton
           full
-          variant="link"
+          variant="ghost"
           mt={4}
           testID="createWalletButton"
           onPress={() => navigate(Routes.WALLET_IMPORT_BACKUP)}>

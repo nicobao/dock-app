@@ -5,6 +5,7 @@ import BackIcon from '../assets/icons/back.svg';
 import {navigateBack} from '../core/navigation';
 import {Box} from './grid';
 import {Typography} from '.';
+import { Theme } from './theme';
 
 export const runAfterInteractions =
   Platform.OS === 'ios'
@@ -111,6 +112,13 @@ export function Button(props) {
 
   if (!otherProps.bg && otherProps.isDisabled) {
     otherProps.bg = '#1E75C5';
+  }
+  
+  if (otherProps.variant === 'ghost') {
+    otherProps._text = {
+      fontWeight: 400,
+      color: Theme.colors.white,
+    };
   }
 
   return (

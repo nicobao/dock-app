@@ -4,7 +4,8 @@ import { GenericPasswordContainer } from "../accounts/ExportAccountPasswordScree
 import { WalletConstants } from "./constants";
 import { walletOperations } from "./wallet-slice";
 
-export function ExportWalletContainer() {
+export function ExportWalletContainer({ route }) {
+  const { callback } = route.params || {};
   const dispatch = useDispatch();
 
   return (
@@ -16,6 +17,7 @@ export function ExportWalletContainer() {
         return dispatch(
           walletOperations.exportWallet({
             password: form.password,
+            callback,
           }),
         );
       }}
