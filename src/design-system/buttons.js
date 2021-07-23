@@ -6,6 +6,7 @@ import {navigateBack} from '../core/navigation';
 import {Box} from './grid';
 import {Typography} from '.';
 import { Theme } from './theme';
+import { translate } from 'src/locales';
 
 export const runAfterInteractions =
   Platform.OS === 'ios'
@@ -47,7 +48,7 @@ export function BackButton(props) {
             marginLeft={6}
             color="#fff"
             fontWeight="400">
-            Back
+            {translate('navigation.back')}
           </Typography>
         </>
       )}

@@ -1,7 +1,8 @@
 import {Button, Checkbox, FormControl, Stack} from 'native-base';
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import { navigate } from '../../core/navigation';
+import {translate} from 'src/locales';
+import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {
   Header,
@@ -17,7 +18,8 @@ import {
 } from '../../design-system';
 import {BackButton} from '../../design-system/buttons';
 import {createAccountOperations} from './create-account-slice';
-import { CreateAccountBackupTestIDs } from './test-ids';
+import {CreateAccountConstants} from './constants';
+import {GlobalConstants} from '../constants';
 
 export function CreateAccountBackupScreen({
   form,
@@ -27,7 +29,7 @@ export function CreateAccountBackupScreen({
   onSkip,
 }) {
   return (
-    <ScreenContainer testID={CreateAccountBackupTestIDs.screen}>
+    <ScreenContainer testID={CreateAccountConstants.testID.createAccountScreen.container}>
       <Header>
         <BackButton />
       </Header>
@@ -39,30 +41,39 @@ export function CreateAccountBackupScreen({
           fontWeight="600"
           color="#fff"
           marginTop={52}>
-          Back up your account
+          {translate('create_account_backup.title')}
         </Typography>
         <Typography
           fontSize={16}
           lineHeight={24}
           fontWeight="400"
           marginTop={12}>
-          In the next step you will see an account recovery phrase. This phrase
-          is the only way you can recover access to your account if your phone
-          is lost or stolen.
+          {translate('create_account_backup.description')}
         </Typography>
       </Content>
       <Footer marginBottom={0} marginLeft={26} marginRight={26}>
         <Box alignItems="flex-start" mb={5}>
-          <Checkbox isChecked={form.agreement} onChange={onChange('agreement')} accessibilityLabel="Backup agreement">
-            I understand that if I lose my recovery phrase, I will not be able
-            to access my account
+          <Checkbox
+            isChecked={form.agreement}
+            onChange={onChange('agreement')}
+            accessibilityLabel="Backup agreement">
+            {translate('create_account_backup.agreement')}
           </Checkbox>
         </Box>
-        <LoadingButton full testID={CreateAccountBackupTestIDs.nextBtn} mb={5} onPress={onSubmit} isDisabled={submitDisabled}>
-          Next
+        <LoadingButton
+          full
+          testID={GlobalConstants.navigation.testID.next}
+          mb={5}
+          onPress={onSubmit}
+          isDisabled={submitDisabled}>
+          {translate('navigation.next')}
         </LoadingButton>
-        <LoadingButton full testID={CreateAccountBackupTestIDs.skipBtn} variant="unstyled" onPress={onSkip}>
-          Skip
+        <LoadingButton
+          full
+          testID={GlobalConstants.navigation.testID.skip}
+          variant="unstyled"
+          onPress={onSkip}>
+          {translate('navigation.skip')}
         </LoadingButton>
       </Footer>
     </ScreenContainer>
@@ -93,8 +104,6 @@ export function CreateAccountBackupContainer() {
   };
 
   const submitDisabled = !form.agreement;
-
-  console.log(form);
 
   return (
     <CreateAccountBackupScreen

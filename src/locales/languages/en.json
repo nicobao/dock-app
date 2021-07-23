@@ -1,0 +1,102 @@
+{
+  "navigation": {
+    "next": "Next",
+    "back": "Back",
+    "skip": "Skip"
+  },
+  "export_account": {
+    "title": "Create a password",
+    "description": "This will be used when you import your account to a new device"
+  },
+  "unlock_wallet": {
+    "enter_passcode": "Enter your passcode",
+    "biometrics_login": "Login with biometrics",
+    "invalid_passcode": "Wrong passcode"
+  },
+  "import_wallet": {
+    "title": "Import wallet",
+    "description": "If you backed up your wallet previously, you can upload the file to import your wallet.",
+    "loadingText": "Importing wallet",
+    "successMessage": "Wallet imported",
+    "submit": "Import wallet"
+  },
+  "create_wallet": {
+    "create_new": "Create a new wallet",
+    "import_existing": "I already have a wallet",
+    "create_passcode": "Create your passcode",
+    "confirm_passcode": "Re-type your passcode"
+  },
+  "setup_passcode": {
+    "title": "Setup Passcode",
+    "description": "Add a passcode to keep your wallet safe",
+    "submit": "Setup Passcode"
+  },
+  "password_input": {
+    "title": "Enter password",
+    "submit": "Next"
+  },
+  "settings": {
+    "title": "Settings",
+    "backup_wallet": "Backup wallet",
+    "delete_wallet": "Delete wallet"
+  },
+  "account_setup": {
+    "title": "Account Name",
+    "description": "This will be used just for easy reference",
+    "account_name_input": "Account name"
+  },
+  "create_account_backup": {
+    "title": "Back up your account",
+    "description": " In the next step you will see an account recovery phrase. This phrase is the only way you can recover access to your account if your phone is lost or stolen.",
+    "agreement": "I understand that if I lose my recovery phrase, I will not be able to access my account"
+  },
+  "account_advanced_options": {
+    "advanced_options": "Advanced options",
+    "keypair_type": "Keypair crypto type",
+    "keypair_type_tip": "Determines what cryptography will be used to create this account. Note that to validate on Polkadot, the session account must use \"ed25519\".",
+    "keypair_type_sr25519": "Schnorrkel (sr25519, recommended)",
+    "keypair_type_ed25519": "Edwards (ed25519, alternative)",
+    "keypair_type_ecdsa": "ECDSA (Non BTC/ETH compatible)",
+    "secret_derivation_path": "Secret derivation path",
+    "secret_derivation_path_tip": "You can set a custom derivation path for this account using the following syntax \"/<soft-key>//<hard-key>\". The \"/<soft-key>\" and \"//<hard-key>\" may be repeated and mixed. An optional \"///<password>\" can be used with a mnemonic seed, and may only be specified once.",
+    "invalid_secret_uri": "Unable to match provided value to a secret URI."
+  },
+  "account_recovery_phrase": {
+    "title": "Account recovery phrase",
+    "description": "Write this down or copy these words in the right order and save them somewhere safe. Do not share it to anyone",
+    "copy_phrase": "Copy to clipboard",
+    "phrase_copied": "Recovery phrase copied!"
+  },
+  "import_account_modal": {
+    "title": "Import via",
+    "recovery_phrase_option": "Account recovery phrase",
+    "upload_json_option": "Upload JSON file",
+    "scan_qr_code_option": "Scan QR code"
+  },
+  "import_account": {
+    "title": "Account name",
+    "account_name_input": "Account name",
+    "import_success": "Account successfully imported"
+  },
+  "import_account_from_mnemonic": {
+    "title": "Account recovery phrase",
+    "description": "This is the 12 word phrase you were given when you created your account.",
+    "phrase_input": "Enter account recovery phrase",
+    "invalid_phrase": "Invalid recovery phrase",
+    "": "",
+    "": ""
+  },
+  "verify_recovery_phrase": {
+    "title": "Verify recovery phrase",
+    "description": "Verify that you wrote down the 12 words correctly",
+    "verify_word": "Verify word #"
+  },
+  "": {
+    "title": "",
+    "description": "",
+    "": "",
+    "": "",
+    "": "",
+    "": ""
+  }
+}

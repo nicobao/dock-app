@@ -34,7 +34,7 @@ export const WalletConstants = {
         'If you backed up your wallet previously, you can upload the file to import your wallet.',
       loadingText: 'Importing wallet',
       successMessage: 'Wallet imported',
-      submitBtn: 'Import wallet',
+      submit: 'Import wallet',
     },
     testID: {
       container: 'importWallet',

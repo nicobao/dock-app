@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SetupPasscodeScreen should render correctly 1`] = `
+<StyledNativeComponent
+  forwardedComponent={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "attrs": Array [],
+      "inlineStyle": InlineStyle {
+        "rules": Array [
+          "
+  background-color: ",
+          [Function],
+          ";
+  flex: 1;
+",
+        ],
+      },
+      "render": [Function],
+      "shouldForwardProp": undefined,
+      "styledComponentId": "StyledNativeComponent",
+      "target": Object {
+        "$$typeof": Symbol(react.forward_ref),
+        "render": [Function],
+      },
+      "withComponent": [Function],
+    }
+  }
+  forwardedRef={null}
+  testID="create-wallet-screen"
+>
+  <Styled(View)>
+    <BackButton />
+  </Styled(View)>
+  <Styled(ScrollView)
+    marginLeft={26}
+    marginRight={26}
+  >
+    <Typography
+      color="#fff"
+      fontFamily="Montserrat"
+      fontSize={24}
+      fontWeight="600"
+      lineHeight={32}
+      marginTop={52}
+    >
+      Setup Passcode
+    </Typography>
+    <Typography
+      fontSize={16}
+      fontWeight="400"
+      lineHeight={24}
+      marginTop={12}
+    >
+      Add a passcode to keep your wallet safe
+    </Typography>
+  </Styled(ScrollView)>
+  <Styled(Box)
+    marginBottom={114}
+    marginLeft={26}
+    marginRight={26}
+  >
+    <Button
+      full={true}
+      icon={<SvgLockClosed />}
+      testID="create-wallet-btn"
+    >
+      [missing "en.setup_passcoe.submit" translation]
+    </Button>
+  </Styled(Box)>
+</StyledNativeComponent>
+`;

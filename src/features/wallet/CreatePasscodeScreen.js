@@ -14,6 +14,7 @@ import {
 import styled from 'styled-components/native';
 import {BackButton} from '../../design-system/buttons';
 import KeyboardDeleteIcon from '../../assets/icons/keyboard-delete.svg';
+import { translate } from '../../locales';
 
 const Circle = styled.View`
   width: 20px;
@@ -110,7 +111,7 @@ export function NumericKeyboard({onNumber, onDelete, ...props}) {
 export function CreatePasscodeScreen({
   digits = 6,
   filled = 2,
-  text,
+  confirmation,
   onNumber,
   onDelete,
 }) {
@@ -129,7 +130,11 @@ export function CreatePasscodeScreen({
             fontWeight="600"
             color="#fff"
             marginTop={52}>
-            {text}
+            {confirmation ? (
+              translate('create_wallet.confirm_passcode')
+            ): (
+              translate('create_wallet.create_passcode')
+            )}
           </Typography>
         </Box>
         <NumericKeyboard
@@ -193,7 +198,7 @@ export function CreatePasscodeContainer() {
       filled={passcode.length}
       onNumber={handleNumber}
       onDelete={handleDelete}
-      text={confirmation ? 'Re-type your passcode' : 'Create your passcode'}
+      confirmation={confirmation}
     />
   );
 }

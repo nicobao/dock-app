@@ -9,6 +9,7 @@ import {
 } from 'src/design-system';
 import {Modal} from '../../components/Modal';
 import {AddAccountModalTestIDs} from './test-ids';
+import { ImportExistingAccount } from './ImportExistingAccount';
 
 export function AddAccountModal({
   onClose,
@@ -53,43 +54,11 @@ export function AddAccountModal({
       />
     </Stack>
   ) : (
-    <Stack p={8} testID="importOptionsModal">
-      <Stack direction="row">
-        <Pressable onPress={() => setImportExisting(false)}>
-          <Box pt={1} pr={5}>
-            <BackIcon />
-          </Box>
-        </Pressable>
-        <Text
-          fontSize="24px"
-          fontWeight={600}
-          color="#fff"
-          fontFamily="Montserrat">
-          Import via
-        </Text>
-      </Stack>
-      <OptionList
-        mt={5}
-        postPress={onClose}
-        items={[
-          {
-            title: 'Account recovery phrase',
-            icon: <PlusCircleIcon />,
-            onPress: () => onImportExistingAccount('mnemonic'),
-          },
-          {
-            title: 'Upload JSON file',
-            icon: <DocumentDownloadIcon />,
-            onPress: () => onImportExistingAccount('json'),
-          },
-          {
-            title: 'Scan QR code',
-            icon: <DocumentDownloadIcon />,
-            onPress: () => onImportExistingAccount('qrcode'),
-          },
-        ]}
-      />
-    </Stack>
+    <ImportExistingAccount
+      onClose={onClose}
+      onSelect={onImportExistingAccount}
+      onBack={() => setImportExisting(false)}
+    />
   );
   return <Modal visible={visible} onClose={onClose}>{content}</Modal>;
 }

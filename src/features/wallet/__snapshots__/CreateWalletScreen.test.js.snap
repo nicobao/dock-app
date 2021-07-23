@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateWalletScreen should render correctly 1`] = `
+<StyledNativeComponent
+  forwardedComponent={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "attrs": Array [],
+      "inlineStyle": InlineStyle {
+        "rules": Array [
+          "
+  background-color: ",
+          [Function],
+          ";
+  flex: 1;
+",
+        ],
+      },
+      "render": [Function],
+      "shouldForwardProp": undefined,
+      "styledComponentId": "StyledNativeComponent",
+      "target": Object {
+        "$$typeof": Symbol(react.forward_ref),
+        "render": [Function],
+      },
+      "withComponent": [Function],
+    }
+  }
+  forwardedRef={null}
+  testID="createWalletScreen"
+>
+  <Styled(View) />
+  <Styled(ScrollView)>
+    <Box
+      flex={1}
+      justifyContent="center"
+      marginTop="50%"
+      row={true}
+    >
+      <Styled(Image)
+        resizeMode="contain"
+        source={
+          Object {
+            "testUri": "../../../src/assets/splash-logo.png",
+          }
+        }
+        style={
+          Object {
+            "width": "57%",
+          }
+        }
+      />
+    </Box>
+  </Styled(ScrollView)>
+  <Styled(Box)
+    marginBottom={10}
+    marginLeft={26}
+    marginRight={26}
+  >
+    <LoadingButton
+      full={true}
+      onPress={[Function]}
+      testID="createWalletButton"
+    >
+      Create a new wallet
+    </LoadingButton>
+    <LoadingButton
+      full={true}
+      mt={4}
+      onPress={[Function]}
+      testID="createWalletButton"
+      variant="ghost"
+    >
+      I already have a wallet
+    </LoadingButton>
+  </Styled(Box)>
+</StyledNativeComponent>
+`;

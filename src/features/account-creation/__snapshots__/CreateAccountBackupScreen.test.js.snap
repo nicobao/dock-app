@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateAccountBackupScreen should render correctly 1`] = `
+<StyledNativeComponent
+  forwardedComponent={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "attrs": Array [],
+      "inlineStyle": InlineStyle {
+        "rules": Array [
+          "
+  background-color: ",
+          [Function],
+          ";
+  flex: 1;
+",
+        ],
+      },
+      "render": [Function],
+      "shouldForwardProp": undefined,
+      "styledComponentId": "StyledNativeComponent",
+      "target": Object {
+        "$$typeof": Symbol(react.forward_ref),
+        "render": [Function],
+      },
+      "withComponent": [Function],
+    }
+  }
+  forwardedRef={null}
+  testID="createAccountScreen.container"
+>
+  <Styled(View)>
+    <BackButton />
+  </Styled(View)>
+  <Styled(ScrollView)
+    marginLeft={26}
+    marginRight={26}
+  >
+    <Typography
+      color="#fff"
+      fontFamily="Montserrat"
+      fontSize={24}
+      fontWeight="600"
+      lineHeight={32}
+      marginTop={52}
+    >
+      Back up your account
+    </Typography>
+    <Typography
+      fontSize={16}
+      fontWeight="400"
+      lineHeight={24}
+      marginTop={12}
+    >
+       In the next step you will see an account recovery phrase. This phrase is the only way you can recover access to your account if your phone is lost or stolen.
+    </Typography>
+  </Styled(ScrollView)>
+  <Styled(Box)
+    marginBottom={0}
+    marginLeft={26}
+    marginRight={26}
+  >
+    <Memo(ForwardRef(Box))
+      alignItems="flex-start"
+      mb={5}
+    >
+      <Memo(ForwardRef(Checkbox))
+        accessibilityLabel="Backup agreement"
+      >
+        I understand that if I lose my recovery phrase, I will not be able to access my account
+      </Memo(ForwardRef(Checkbox))>
+    </Memo(ForwardRef(Box))>
+    <LoadingButton
+      full={true}
+      mb={5}
+      testID="navigation.next"
+    >
+      Next
+    </LoadingButton>
+    <LoadingButton
+      full={true}
+      testID="navigation.skip"
+      variant="unstyled"
+    >
+      Skip
+    </LoadingButton>
+  </Styled(Box)>
+</StyledNativeComponent>
+`;

@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ImportExistingAccount should render correctly 1`] = `
+<ContextProvider
+  value={Object {}}
+>
+  <NativeBaseConfigProviderProvider
+    config={Object {}}
+  >
+    <SafeAreaProvider
+      initialMetrics={null}
+    >
+      <HybridProvider>
+        <PortalProvider>
+          <ToastProvider>
+            <SSRProvider>
+              <ImportExistingAccount
+                onClose={[MockFunction]}
+                visible={true}
+              />
+            </SSRProvider>
+          </ToastProvider>
+        </PortalProvider>
+      </HybridProvider>
+    </SafeAreaProvider>
+  </NativeBaseConfigProviderProvider>
+</ContextProvider>
+`;

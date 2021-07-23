@@ -11,6 +11,7 @@ import {BackButton} from '../../design-system/buttons';
 import {useDispatch} from 'react-redux';
 import {walletOperations} from './wallet-slice';
 import {WalletConstants} from './constants';
+import {translate} from '../../locales';
 
 export function ImportWalletScreen({onSubmit}) {
   return (
@@ -26,14 +27,18 @@ export function ImportWalletScreen({onSubmit}) {
           fontWeight="600"
           color="#fff"
           marginTop={52}>
-          {WalletConstants.importWallet.locales.title}
+          {
+            translate('import_wallet.title')
+          }
         </Typography>
         <Typography
           fontSize={16}
           lineHeight={24}
           fontWeight="400"
           marginTop={12}>
-          {WalletConstants.importWallet.locales.description}
+          {
+            translate('import_wallet.description')
+          }
         </Typography>
       </Content>
       <Footer marginBottom={10} marginLeft={26} marginRight={26}>
@@ -41,7 +46,9 @@ export function ImportWalletScreen({onSubmit}) {
           onPress={onSubmit}
           full
           testID={WalletConstants.importWallet.testID.submitBtn}>
-          {WalletConstants.importWallet.locales.submitBtn}
+          {
+            translate('import_wallet.submit')
+          }
         </Button>
       </Footer>
     </ScreenContainer>

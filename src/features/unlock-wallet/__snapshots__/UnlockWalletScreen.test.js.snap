@@ -1,0 +1,92 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UnlockWalletScreen should render correctly 1`] = `
+<StyledNativeComponent
+  forwardedComponent={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "attrs": Array [],
+      "inlineStyle": InlineStyle {
+        "rules": Array [
+          "
+  background-color: ",
+          [Function],
+          ";
+  flex: 1;
+",
+        ],
+      },
+      "render": [Function],
+      "shouldForwardProp": undefined,
+      "styledComponentId": "StyledNativeComponent",
+      "target": Object {
+        "$$typeof": Symbol(react.forward_ref),
+        "render": [Function],
+      },
+      "withComponent": [Function],
+    }
+  }
+  forwardedRef={null}
+  testID="unlockWalletScreen"
+>
+  <Box
+    justifyContent="center"
+    row={true}
+  >
+    <Styled(Image)
+      resizeMode="contain"
+      source={
+        Object {
+          "testUri": "../../../src/assets/splash-logo.png",
+        }
+      }
+      style={
+        Object {
+          "width": "57%",
+        }
+      }
+    />
+  </Box>
+  <Styled(ScrollView)
+    marginLeft={26}
+    marginRight={26}
+  >
+    <PasscodeMask
+      digits={6}
+      filled={0}
+      marginTop={20}
+    />
+    <Box
+      alignItems="center"
+    >
+      <Typography
+        color="#fff"
+        fontFamily="Montserrat"
+        fontSize={20}
+        fontWeight="600"
+        lineHeight={32}
+        marginTop={52}
+      >
+        Enter your passcode
+      </Typography>
+    </Box>
+    <NumericKeyboard
+      marginTop={50}
+    />
+    <Box
+      alignItems="center"
+      marginBottom={20}
+    >
+      <Typography
+        color="#fff"
+        fontFamily="Montserrat"
+        fontSize={14}
+        fontWeight="600"
+        lineHeight={32}
+      >
+        Login with biometrics
+      </Typography>
+    </Box>
+  </Styled(ScrollView)>
+</StyledNativeComponent>
+`;

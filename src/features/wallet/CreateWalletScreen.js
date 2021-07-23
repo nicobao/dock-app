@@ -16,6 +16,7 @@ import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import { WalletConstants } from './constants';
 import { Button } from 'native-base';
+import {translate} from '../../locales';
 
 export function CreateWalletScreen() {
   return (
@@ -37,7 +38,9 @@ export function CreateWalletScreen() {
           full
           testID="createWalletButton"
           onPress={() => navigate(Routes.CREATE_WALLET_PASSCODE)}>
-          {WalletConstants.createWallet.locales.createNewWallet}
+          {
+            translate('create_wallet.create_new')
+          }
         </LoadingButton>
         <LoadingButton
           full
@@ -45,7 +48,9 @@ export function CreateWalletScreen() {
           mt={4}
           testID="createWalletButton"
           onPress={() => navigate(Routes.WALLET_IMPORT_BACKUP)}>
-          {WalletConstants.createWallet.locales.importWallet}
+          {
+            translate('create_wallet.import_existing')
+          }
         </LoadingButton>
       </Footer>
     </ScreenContainer>

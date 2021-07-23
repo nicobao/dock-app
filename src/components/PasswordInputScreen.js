@@ -26,6 +26,7 @@ import {
   InputError,
 } from '../design-system';
 import {BackButton} from '../design-system/buttons';
+import { translate } from '../locales';
 
 export function PasswordInputScreen({
   form,
@@ -46,7 +47,9 @@ export function PasswordInputScreen({
           fontWeight="600"
           color="#fff"
           marginTop={52}>
-          Enter password
+          {
+            translate('password_input.title')
+          }
         </Typography>
         <Box mt={7}>
           <Input
@@ -65,7 +68,9 @@ export function PasswordInputScreen({
           testID="next-btn"
           isDisabled={submitDisabled}
           onPress={onSubmit}>
-          Next
+          {
+            translate('password_input.submit')
+          }
         </LoadingButton>
       </Footer>
     </ScreenContainer>
