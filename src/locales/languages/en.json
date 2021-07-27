@@ -91,12 +91,31 @@
     "description": "Verify that you wrote down the 12 words correctly",
     "verify_word": "Verify word #"
   },
-  "": {
-    "title": "",
-    "description": "",
-    "": "",
-    "": "",
-    "": "",
-    "": ""
+  "account_details": {
+    "send_tokens_btn": "Send",
+    "receive_tokens_btn": "Receive",
+    "transactions": "Transactions",
+    "empty_transacions_msg": "Your transactions will appear here",
+    "pending_backup": "Account not backed up",
+    "backup_details": "This phrase allows you to recover your account if your phone is lost or you change your device.",
+    "backup_btn": "Back up now",
+    "export_account": "Export account",
+    "export_account_description": "Scan this QR code in your new device"
+  },
+  "account_settings_modal": {
+    "options_title": "Options",
+    "export_account_title": "Export account via",
+    "export_via_json": "JSON",
+    "export_via_qrcode": "QR Code"
+  },
+  "add_account_modal": {
+    "title": "Add Account",
+    "create_new": "Create new account",
+    "import_existing": "Import existing account"
+  },
+  "create_password": {
+    "include_digits": "Must include digits",
+    "include_proper_case": "Must include uppercase and lowercase letters",
+    "include_char_length": "Must include 8-12 characters"
   }
 }

@@ -1,45 +1,20 @@
-import React, {useEffect, useState} from 'react';
 import {
-  Header,
-  // Button,
-  Footer,
-  Content,
-  Text,
-  ScreenContainer,
-  Typography,
-  Box,
-  NBox,
-  BigButton,
-  DotsVerticalIcon,
-  CheckCircleIcon,
-  IconButton,
-  AlertIcon,
-  BackButton,
-  LoadingScreen,
-} from '../../design-system';
-import DocumentDownloadIcon from '../../assets/icons/document-download.svg';
-import PlusCircleIcon from '../../assets/icons/plus-circle.svg';
-import PlusCircleWhiteIcon from '../../assets/icons/plus-circle-white.svg';
-import CogIcon from '../../assets/icons/cog.svg';
-import {
-  Avatar,
-  Button,
-  ChevronLeftIcon,
-  Divider,
-  Menu,
-  Pressable,
-  Stack,
-  useToast,
+  Button, Pressable,
+  Stack
 } from 'native-base';
-import {TouchableWithoutFeedback} from 'react-native';
-import {showToast} from '../../core/toast';
-import {useDispatch, useSelector} from 'react-redux';
-import {accountOperations, accountSelectors} from './account-slice';
-import {navigate, navigateBack} from '../../core/navigation';
-import {AccountSettingsModal} from './AccountSettingsModal';
-import {Routes} from '../../core/routes';
-import {QRCodeModal} from './QRCodeModal';
-import {PolkadotIcon} from '../../components/PolkadotIcon';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { PolkadotIcon } from '../../components/PolkadotIcon';
+import { navigate, navigateBack } from '../../core/navigation';
+import { Routes } from '../../core/routes';
+import {
+  AlertIcon,
+  BackButton, Box, Content, DotsVerticalIcon, Header, LoadingScreen, NBox, ScreenContainer, Text, Typography
+} from '../../design-system';
+import { translate } from '../../locales';
+import { accountOperations, accountSelectors } from './account-slice';
+import { AccountSettingsModal } from './AccountSettingsModal';
+import { QRCodeModal } from './QRCodeModal';
 
 export function AccountDetailsScreen({
   account,
@@ -117,10 +92,10 @@ export function AccountDetailsScreen({
           </Text>
           <Stack direction="row" width="100%" mt={5}>
             <Button flex={1} size="sm">
-              Send
+              {translate('account_details.send_tokens_btn')}
             </Button>
             <Button ml={2} flex={1} size="sm">
-              Receive
+              {translate('account_details.receive_tokens_btn')}
             </Button>
           </Stack>
         </Stack>
@@ -132,12 +107,12 @@ export function AccountDetailsScreen({
               fontSize={20}
               fontWeight="600"
               color="#fff">
-              Transactions
+              {translate('account_details.transactions')}
             </Typography>
           </NBox>
           <NBox mt={8}>
             <Typography fontSize={16} fontWeight="400" color="#A1A1AA">
-              Your transactions will appear here
+              {translate('account_details.empty_transacions_msg')}
             </Typography>
           </NBox>
         </Stack>
@@ -154,13 +129,13 @@ export function AccountDetailsScreen({
                 fontSize={16}
                 fontWeight="600"
                 color="#fff">
-                Account not backed up
+              {translate('account_details.pending_backup')}
               </Typography>
             </Stack>
             <NBox mt={2}>
               <Typography color="background: rgba(254, 243, 199, 1)">
-                This phrase allows you to recover your account if your phone is
-                lost or you change your device.
+                
+              {translate('account_details.backup_details')}
               </Typography>
             </NBox>
             <Button
@@ -169,7 +144,7 @@ export function AccountDetailsScreen({
               alignSelf="flex-start"
               size="sm"
               backgroundColor="rgba(120, 53, 15, 1)">
-              Back up now
+              {translate('account_details.backup_btn')}
             </Button>
           </Stack>
         )}
@@ -182,8 +157,8 @@ export function AccountDetailsScreen({
       />
       <QRCodeModal
         data={qrCodeData}
-        title="Export account"
-        description="Scan this QR code in your new device"
+        title={translate('account_details.export_account')}
+        description={translate('account_details.export_account_description')}
         visible={qrCodeModalVisible}
         onClose={() => setQrCodeModalVisible(false)}
       />
@@ -224,14 +199,3 @@ export function AccountDetailsContainer({route}) {
     />
   );
 }
-
-// [
-//   {
-//     id: 1,
-//     name: 'cocomelon',
-//     balance: {
-//       value: 0,
-//       symbol: 'DOCK',
-//     },
-//   },
-// ]

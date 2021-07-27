@@ -10,6 +10,7 @@ import {
 import {Modal} from '../../components/Modal';
 import {AddAccountModalTestIDs} from './test-ids';
 import { ImportExistingAccount } from './ImportExistingAccount';
+import { translate } from 'src/locales';
 
 export function AddAccountModal({
   onClose,
@@ -30,14 +31,14 @@ export function AddAccountModal({
         fontWeight={600}
         color="#fff"
         fontFamily="Montserrat">
-        Add Account
+        {translate('add_account_modal.title')}
       </Text>
       <OptionList
         mt={5}
         items={[
           {
             testID: AddAccountModalTestIDs.addAccountOption,
-            title: 'Create new account',
+            title: translate('add_account_modal.create_new'),
             icon: <PlusCircleIcon />,
             onPress: () => {
               onAddAccount();
@@ -46,7 +47,7 @@ export function AddAccountModal({
           },
           {
             testID: AddAccountModalTestIDs.importExistingOption,
-            title: 'Import existing account',
+            title: translate('add_account_modal.import_existing'),
             icon: <DocumentDownloadIcon />,
             onPress: () => setImportExisting(true),
           },

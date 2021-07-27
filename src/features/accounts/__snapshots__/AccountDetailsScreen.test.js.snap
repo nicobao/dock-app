@@ -1,0 +1,208 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AccountDetailsScreen should render correctly 1`] = `
+<StyledNativeComponent
+  forwardedComponent={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "attrs": Array [],
+      "inlineStyle": InlineStyle {
+        "rules": Array [
+          "
+  background-color: ",
+          [Function],
+          ";
+  flex: 1;
+",
+        ],
+      },
+      "render": [Function],
+      "shouldForwardProp": undefined,
+      "styledComponentId": "StyledNativeComponent",
+      "target": Object {
+        "$$typeof": Symbol(react.forward_ref),
+        "render": [Function],
+      },
+      "withComponent": [Function],
+    }
+  }
+  forwardedRef={null}
+  testID="AccountDetailsScreen"
+>
+  <Styled(View)>
+    <Box
+      alignItems="center"
+      flexDirection="row"
+      marginLeft={1}
+      marginRight={22}
+    >
+      <Memo(ForwardRef(Box))
+        width="80px"
+      >
+        <BackButton />
+      </Memo(ForwardRef(Box))>
+      <Memo(ForwardRef(Box))
+        alignContent="center"
+        alignItems="center"
+        flex={1}
+        pl={15}
+        width="100%"
+      >
+        <Typography
+          color="#fff"
+          fontFamily="Montserrat"
+          fontSize={17}
+          fontWeight="600"
+        >
+          Test account
+        </Typography>
+      </Memo(ForwardRef(Box))>
+      <Memo(ForwardRef(Box))
+        alignItems="flex-end"
+        width="80px"
+      >
+        <Memo(ForwardRef(Pressable))
+          onPress={[Function]}
+        >
+          <SvgDotsVertical
+            height="22px"
+            width="22px"
+          />
+        </Memo(ForwardRef(Pressable))>
+      </Memo(ForwardRef(Box))>
+    </Box>
+  </Styled(View)>
+  <Styled(ScrollView)
+    marginLeft={26}
+    marginRight={26}
+  >
+    <Memo(ForwardRef(Stack))
+      alignItems="center"
+      backgroundColor="#27272A"
+      borderRadius={8}
+      direction="column"
+      p="32px"
+    >
+      <Memo(Identicon)
+        size={48}
+      />
+      <Memo(ForwardRef(Text))
+        color="#fff"
+        fontFamily="Montserrat"
+        fontSize="32px"
+        fontWeight={600}
+        mt={3}
+      >
+        2
+         
+      </Memo(ForwardRef(Text))>
+      <Memo(ForwardRef(Text))
+        color="#D4D4D8"
+        fontFamily="Montserrat"
+        fontSize={14}
+        fontWeight={500}
+      >
+        0.00 USD
+      </Memo(ForwardRef(Text))>
+      <Memo(ForwardRef(Stack))
+        direction="row"
+        mt={5}
+        width="100%"
+      >
+        <Memo(ForwardRef(Button))
+          flex={1}
+          size="sm"
+        >
+          Send
+        </Memo(ForwardRef(Button))>
+        <Memo(ForwardRef(Button))
+          flex={1}
+          ml={2}
+          size="sm"
+        >
+          Receive
+        </Memo(ForwardRef(Button))>
+      </Memo(ForwardRef(Stack))>
+    </Memo(ForwardRef(Stack))>
+    <Memo(ForwardRef(Stack))
+      mt={8}
+    >
+      <Memo(ForwardRef(Box))
+        borderBottomColor="#ccc"
+        borderBottomWidth={0.5}
+        pb={4}
+      >
+        <Typography
+          color="#fff"
+          fontFamily="Montserrat"
+          fontSize={20}
+          fontWeight="600"
+        >
+          Transactions
+        </Typography>
+      </Memo(ForwardRef(Box))>
+      <Memo(ForwardRef(Box))
+        mt={8}
+      >
+        <Typography
+          color="#A1A1AA"
+          fontSize={16}
+          fontWeight="400"
+        >
+          Your transactions will appear here
+        </Typography>
+      </Memo(ForwardRef(Box))>
+    </Memo(ForwardRef(Stack))>
+    <Memo(ForwardRef(Stack))
+      backgroundColor="rgba(120, 53, 15, 0.3)"
+      mt={20}
+      p="16px"
+    >
+      <Memo(ForwardRef(Stack))
+        direction="row"
+      >
+        <Memo(ForwardRef(Box))
+          mr={3}
+          mt="3px"
+        >
+          <SvgAlert />
+        </Memo(ForwardRef(Box))>
+        <Typography
+          color="#fff"
+          fontFamily="Montserrat"
+          fontSize={16}
+          fontWeight="600"
+          ml={2}
+        >
+          Account not backed up
+        </Typography>
+      </Memo(ForwardRef(Stack))>
+      <Memo(ForwardRef(Box))
+        mt={2}
+      >
+        <Typography
+          color="background: rgba(254, 243, 199, 1)"
+        >
+          This phrase allows you to recover your account if your phone is lost or you change your device.
+        </Typography>
+      </Memo(ForwardRef(Box))>
+      <Memo(ForwardRef(Button))
+        alignSelf="flex-start"
+        backgroundColor="rgba(120, 53, 15, 1)"
+        mt={4}
+        size="sm"
+      >
+        Back up now
+      </Memo(ForwardRef(Button))>
+    </Memo(ForwardRef(Stack))>
+  </Styled(ScrollView)>
+  <AccountSettingsModal
+    onClose={[Function]}
+  />
+  <QRCodeModal
+    description="[missing \\"en.account_details.export_account_description\\" translation]"
+    onClose={[Function]}
+    title="[missing \\"en.account_details.export_account\\" translation]"
+  />
+</StyledNativeComponent>
+`;
