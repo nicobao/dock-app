@@ -13,7 +13,9 @@ import {
 } from '../../design-system';
 import {useDispatch} from 'react-redux';
 import {AppConstants} from './constants';
-import {walletOperations} from '../create-wallet/wallet-slice';
+import {walletOperations} from '../wallet/wallet-slice';
+import { navigate } from '../../core/navigation';
+import { Routes } from '../../core/routes';
 
 const constants = AppConstants.settings;
 
@@ -74,7 +76,7 @@ export function AppSettingsContainer() {
         return dispatch(walletOperations.deleteWallet());
       }}
       onBackupWallet={() => {
-        alert('Available soon');
+        navigate(Routes.WALLET_EXPORT_BACKUP)
       }}
     />
   );
