@@ -76,11 +76,7 @@ export function AccountsScreen({
       <Content marginLeft={26} marginRight={26}>
         {isEmpty ? (
           <Box flex justifyContent="center" alignItems="center">
-            <Typography
-              fontSize={16}
-              lineHeight={24}
-              fontWeight="400"
-              marginTop={12}>
+            <Typography marginTop={12}>
               You don’t have any accounts yet.
             </Typography>
           </Box>
@@ -136,14 +132,10 @@ export function AccountsScreen({
                     </Stack>
 
                     <Stack direction="column" mt={4}>
-                      <Text
-                        color="#FFFFFF"
-                        fontFamily="Montserrat"
-                        fontWeight={600}
-                        fontSize="20px">
+                      <Typography variant="h2">
                         {account.meta.balance.value}{' '}
                         {account.meta.balance.symbol}
-                      </Text>
+                      </Typography>
                       <Text color="#D4D4D8" fontSize="14px">
                         {account.meta.balance.value} USD
                       </Text>

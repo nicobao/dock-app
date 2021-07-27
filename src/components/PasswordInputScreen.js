@@ -26,7 +26,7 @@ import {
   InputError,
 } from '../design-system';
 import {BackButton} from '../design-system/buttons';
-import { translate } from '../locales';
+import {translate} from '../locales';
 
 export function PasswordInputScreen({
   form,
@@ -40,16 +40,8 @@ export function PasswordInputScreen({
         <BackButton />
       </Header>
       <Content marginLeft={26} marginRight={26}>
-        <Typography
-          fontFamily="Montserrat"
-          fontSize={24}
-          lineHeight={32}
-          fontWeight="600"
-          color="#fff"
-          marginTop={52}>
-          {
-            translate('password_input.title')
-          }
+        <Typography variant="h1" marginTop={52}>
+          {translate('password_input.title')}
         </Typography>
         <Box mt={7}>
           <Input
@@ -68,9 +60,7 @@ export function PasswordInputScreen({
           testID="next-btn"
           isDisabled={submitDisabled}
           onPress={onSubmit}>
-          {
-            translate('password_input.submit')
-          }
+          {translate('password_input.submit')}
         </LoadingButton>
       </Footer>
     </ScreenContainer>
@@ -90,10 +80,11 @@ export function PasswordInputContainer({onSubmit}) {
       [key]: evt,
     }));
   };
-  
-  const clearErrors = () => setForm(f => ({
-    _errors: {},
-  }));
+
+  const clearErrors = () =>
+    setForm(f => ({
+      _errors: {},
+    }));
 
   const handleSubmit = async () => {
     try {

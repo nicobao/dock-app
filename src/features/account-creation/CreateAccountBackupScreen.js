@@ -35,18 +35,11 @@ export function CreateAccountBackupScreen({
       </Header>
       <Content marginLeft={26} marginRight={26}>
         <Typography
-          fontFamily="Montserrat"
-          fontSize={24}
-          lineHeight={32}
-          fontWeight="600"
-          color="#fff"
+          variant="h1"
           marginTop={52}>
           {translate('create_account_backup.title')}
         </Typography>
         <Typography
-          fontSize={16}
-          lineHeight={24}
-          fontWeight="400"
           marginTop={12}>
           {translate('create_account_backup.description')}
         </Typography>

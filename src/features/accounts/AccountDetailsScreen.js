@@ -1,20 +1,26 @@
-import {
-  Button, Pressable,
-  Stack
-} from 'native-base';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { PolkadotIcon } from '../../components/PolkadotIcon';
-import { navigate, navigateBack } from '../../core/navigation';
-import { Routes } from '../../core/routes';
+import {Button, Pressable, Stack} from 'native-base';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {PolkadotIcon} from '../../components/PolkadotIcon';
+import {navigate, navigateBack} from '../../core/navigation';
+import {Routes} from '../../core/routes';
 import {
   AlertIcon,
-  BackButton, Box, Content, DotsVerticalIcon, Header, LoadingScreen, NBox, ScreenContainer, Text, Typography
+  BackButton,
+  Box,
+  Content,
+  DotsVerticalIcon,
+  Header,
+  LoadingScreen,
+  NBox,
+  ScreenContainer,
+  Text,
+  Typography,
 } from '../../design-system';
-import { translate } from '../../locales';
-import { accountOperations, accountSelectors } from './account-slice';
-import { AccountSettingsModal } from './AccountSettingsModal';
-import { QRCodeModal } from './QRCodeModal';
+import {translate} from '../../locales';
+import {accountOperations, accountSelectors} from './account-slice';
+import {AccountSettingsModal} from './AccountSettingsModal';
+import {QRCodeModal} from './QRCodeModal';
 
 export function AccountDetailsScreen({
   account,
@@ -52,13 +58,7 @@ export function AccountDetailsScreen({
             alignContent="center"
             alignItems="center"
             pl={15}>
-            <Typography
-              fontFamily="Montserrat"
-              fontSize={17}
-              fontWeight="600"
-              color="#fff">
-              {account.meta.name}
-            </Typography>
+            <Typography variant="h3">{account.meta.name}</Typography>
           </NBox>
           <NBox width="80px" alignItems="flex-end">
             <Pressable onPress={() => setAccountSettingsVisible(true)}>
@@ -102,16 +102,12 @@ export function AccountDetailsScreen({
 
         <Stack mt={8}>
           <NBox borderBottomColor="#ccc" borderBottomWidth={0.5} pb={4}>
-            <Typography
-              fontFamily="Montserrat"
-              fontSize={20}
-              fontWeight="600"
-              color="#fff">
+            <Typography variant="h2">
               {translate('account_details.transactions')}
             </Typography>
           </NBox>
           <NBox mt={8}>
-            <Typography fontSize={16} fontWeight="400" color="#A1A1AA">
+            <Typography variant="list-description">
               {translate('account_details.empty_transacions_msg')}
             </Typography>
           </NBox>
@@ -125,17 +121,15 @@ export function AccountDetailsScreen({
               </NBox>
               <Typography
                 ml={2}
-                fontFamily="Montserrat"
-                fontSize={16}
-                fontWeight="600"
-                color="#fff">
-              {translate('account_details.pending_backup')}
+                variant="h3"
+                fontSize={17}
+              >
+                {translate('account_details.pending_backup')}
               </Typography>
             </Stack>
             <NBox mt={2}>
               <Typography color="background: rgba(254, 243, 199, 1)">
-                
-              {translate('account_details.backup_details')}
+                {translate('account_details.backup_details')}
               </Typography>
             </NBox>
             <Button

@@ -38,11 +38,11 @@ export function AppSettingsScreen({onDeleteWallet, onBackupWallet}) {
             alignContent="center"
             alignItems="center"
             pl={15}>
-            <Typography.ScreenTitle>
+            <Typography variant="h3">
               {
                 translate('settings.title')
               }
-            </Typography.ScreenTitle>
+            </Typography>
           </NBox>
           <NBox width="80px" alignItems="flex-end" />
         </Box>

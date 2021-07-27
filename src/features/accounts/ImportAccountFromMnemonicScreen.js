@@ -9,7 +9,7 @@ import {
 } from 'native-base';
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import { AccountAdvancedOptions } from '../../components/AccountAdvancedOptions';
+import {AccountAdvancedOptions} from '../../components/AccountAdvancedOptions';
 import {
   Header,
   Footer,
@@ -39,20 +39,10 @@ export function ImportAccountFromMnemonicScreen({
         <BackButton />
       </Header>
       <Content marginLeft={26} marginRight={26}>
-        <Typography
-          fontFamily="Montserrat"
-          fontSize={24}
-          lineHeight={32}
-          fontWeight="600"
-          color="#fff"
-          marginTop={52}>
+        <Typography variant="h1" marginTop={52}>
           {translate('import_account_from_mnemonic.title')}
         </Typography>
-        <Typography
-          fontSize={16}
-          lineHeight={24}
-          fontWeight="400"
-          marginTop={12}>
+        <Typography marginTop={12}>
           {translate('import_account_from_mnemonic.description')}
         </Typography>
         <Box>
@@ -68,7 +58,7 @@ export function ImportAccountFromMnemonicScreen({
                 autoCapitalize="none"
               />
               <FormControl.ErrorMessage>
-                {translate('import_account_from_mnemonic.invalid_phrase')} 
+                {translate('import_account_from_mnemonic.invalid_phrase')}
               </FormControl.ErrorMessage>
             </Stack>
           </FormControl>
@@ -81,7 +71,7 @@ export function ImportAccountFromMnemonicScreen({
           testID="next-btn"
           isDisabled={submitDisabled}
           onPress={onSubmit}>
-          {translate('navigation.next')} 
+          {translate('navigation.next')}
         </LoadingButton>
       </Footer>
     </ScreenContainer>

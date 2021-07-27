@@ -10,7 +10,7 @@ import {
 } from 'native-base';
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import { translate } from 'src/locales';
+import {translate} from 'src/locales';
 import {showToast} from '../../core/toast';
 import {
   Header,
@@ -31,7 +31,7 @@ import {
   createAccountSelectors,
 } from '../account-creation/create-account-slice';
 import {accountOperations} from './account-slice';
-import { AccountsConstants } from './constants';
+import {AccountsConstants} from './constants';
 
 export function GenericPasswordScreen({
   form,
@@ -47,22 +47,10 @@ export function GenericPasswordScreen({
         <BackButton />
       </Header>
       <Content marginLeft={26} marginRight={26}>
-        <Typography
-          fontFamily="Montserrat"
-          fontSize={24}
-          lineHeight={32}
-          fontWeight="600"
-          color="#fff"
-          marginTop={52}>
+        <Typography variant="h1" marginTop={52}>
           {title}
         </Typography>
-        <Typography
-          fontSize={16}
-          lineHeight={24}
-          fontWeight="400"
-          marginTop={12}>
-          {description}
-        </Typography>
+        <Typography marginTop={12}>{description}</Typography>
 
         <Box mt={7}>
           <Input
@@ -91,7 +79,9 @@ export function GenericPasswordScreen({
               height={16}
               marginRight={2}
             />
-            <Typography>{translate('create_password.include_char_length')}</Typography>
+            <Typography>
+              {translate('create_password.include_char_length')}
+            </Typography>
           </Stack>
           <Stack direction="row" marginTop={3}>
             <CheckCircleIcon
@@ -100,7 +90,9 @@ export function GenericPasswordScreen({
               height={16}
               marginRight={2}
             />
-            <Typography>{translate('create_password.include_digits')}</Typography>
+            <Typography>
+              {translate('create_password.include_digits')}
+            </Typography>
           </Stack>
           <Stack direction="row" marginTop={3}>
             <CheckCircleIcon
@@ -110,7 +102,7 @@ export function GenericPasswordScreen({
               marginRight={2}
             />
             <Typography>
-            {translate('create_password.include_proper_case')}
+              {translate('create_password.include_proper_case')}
             </Typography>
           </Stack>
         </Stack>
@@ -184,7 +176,7 @@ export function GenericPasswordContainer({onSubmit, title, description}) {
   );
 }
 
-export function ExportAccountPasswordContainer({ route }) {
+export function ExportAccountPasswordContainer({route}) {
   const dispatch = useDispatch();
   const {method, accountId} = route.params;
 
@@ -192,7 +184,7 @@ export function ExportAccountPasswordContainer({ route }) {
     <GenericPasswordContainer
       description={AccountsConstants.exportAccount.locales.description}
       title={AccountsConstants.exportAccount.locales.title}
-      onSubmit={(form) => {
+      onSubmit={form => {
         return dispatch(
           accountOperations.exportAccountAs({
             accountId,
@@ -202,5 +194,5 @@ export function ExportAccountPasswordContainer({ route }) {
         );
       }}
     />
-  )
+  );
 }

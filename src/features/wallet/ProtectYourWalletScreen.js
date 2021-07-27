@@ -33,20 +33,10 @@ export function ProtectYourWalletScreen({
         <BackButton />
       </Header>
       <Content marginLeft={26} marginRight={26}>
-        <Typography
-          fontFamily="Montserrat"
-          fontSize={24}
-          lineHeight={32}
-          fontWeight="600"
-          color="#fff"
-          marginTop={52}>
+        <Typography variant="h1" marginTop={52}>
           Protect your wallet
         </Typography>
-        <Typography
-          fontSize={16}
-          lineHeight={24}
-          fontWeight="400"
-          marginTop={12}>
+        <Typography marginTop={12}>
           Use your biometric to add extra layer of security and easier way to
           access your wallet
         </Typography>
