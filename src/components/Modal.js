@@ -1,7 +1,8 @@
 import { Box, Stack } from 'native-base';
 import React from 'react';
-import {Dimensions, View} from 'react-native';
+import { Dimensions, View } from 'react-native';
 import RNModal from 'react-native-modal';
+import { Theme } from '../design-system';
 
 export function Modal({onClose = () => {}, children, modalSize = 0.42, visible}) {
   const screenHeight = Dimensions.get('screen').height;
@@ -15,14 +16,14 @@ export function Modal({onClose = () => {}, children, modalSize = 0.42, visible})
       style={{justifyContent: 'flex-end', margin: 0}}>
       <View
         style={{
-          backgroundColor: '#18181B',
+          backgroundColor: Theme.colors.darkGray,
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
           height: screenHeight * modalSize,
           width: '100%',
         }}>
         <Stack alignItems="center" mt={6}>
-          <Box width="36px" height="4px" backgroundColor="#3F3F46" borderRadius="4px"/>
+          <Box width="36px" height="4px" backgroundColor={Theme.colors.gray} borderRadius="4px"/>
         </Stack>
         {children}
       </View>

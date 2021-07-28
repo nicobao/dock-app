@@ -36,24 +36,17 @@ exports[`ProtectYourWalletScreen should render correctly 1`] = `
     marginLeft={26}
     marginRight={26}
   >
-    <Typography
-      color="#fff"
-      fontFamily="Montserrat"
-      fontSize={24}
-      fontWeight="600"
-      lineHeight={32}
+    <Styled(Component)
       marginTop={52}
+      variant="h1"
     >
       Protect your wallet
-    </Typography>
-    <Typography
-      fontSize={16}
-      fontWeight="400"
-      lineHeight={24}
+    </Styled(Component)>
+    <Styled(Component)
       marginTop={12}
     >
       Use your biometric to add extra layer of security and easier way to access your wallet
-    </Typography>
+    </Styled(Component)>
   </Styled(ScrollView)>
   <Styled(Box)
     flex={true}

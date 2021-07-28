@@ -19,12 +19,11 @@ exports[`AccountAdvancedOptions should render correctly 1`] = `
       <Memo(ForwardRef(Box))
         flex={1}
       >
-        <Memo(ForwardRef(Text))
-          fontSize={14}
-          fontWeight={600}
+        <Styled(Component)
+          variant="label"
         >
           Advanced options
-        </Memo(ForwardRef(Text))>
+        </Styled(Component)>
       </Memo(ForwardRef(Box))>
       <Memo(ForwardRef(Box))
         mt={2}

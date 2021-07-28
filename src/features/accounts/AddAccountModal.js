@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {Box, Pressable, Stack} from 'native-base';
 import {
   DocumentDownloadIcon,
   PlusCircleIcon,
   Text,
   OptionList,
-  BackIcon
+  BackIcon,
 } from 'src/design-system';
 import {Modal} from '../../components/Modal';
 import {AddAccountModalTestIDs} from './test-ids';
-import { ImportExistingAccount } from './ImportExistingAccount';
-import { translate } from 'src/locales';
+import {ImportExistingAccount} from './ImportExistingAccount';
+import {translate} from 'src/locales';
+import {Typography} from '../../design-system';
 
 export function AddAccountModal({
   onClose,
@@ -22,17 +23,13 @@ export function AddAccountModal({
 
   useEffect(() => {
     setImportExisting(false);
-  }, [visible])
+  }, [visible]);
 
   const content = !importExisting ? (
     <Stack p={8} testID="addAccountModal">
-      <Text
-        fontSize="24px"
-        fontWeight={600}
-        color="#fff"
-        fontFamily="Montserrat">
+      <Typography variant="h1">
         {translate('add_account_modal.title')}
-      </Text>
+      </Typography>
       <OptionList
         mt={5}
         items={[
@@ -61,5 +58,9 @@ export function AddAccountModal({
       onBack={() => setImportExisting(false)}
     />
   );
-  return <Modal visible={visible} onClose={onClose}>{content}</Modal>;
+  return (
+    <Modal visible={visible} onClose={onClose}>
+      {content}
+    </Modal>
+  );
 }

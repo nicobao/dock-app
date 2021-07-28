@@ -1,37 +1,25 @@
 import {
-  Button,
-  FormControl,
-  Stack,
-  Tooltip,
-  Pressable,
-  Popover,
-  TextArea,
-  CheckCircleIcon,
+  CheckCircleIcon, Stack
 } from 'native-base';
-import React, {useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {translate} from 'src/locales';
-import {showToast} from '../../core/toast';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { translate } from 'src/locales';
+import { showToast } from '../../core/toast';
 import {
-  Header,
-  Footer,
-  Content,
-  ScreenContainer,
-  Typography,
-  SelectToggler,
-  NBox as Box,
-  Select,
-  Input,
-  InputPopover,
-  LoadingButton,
+  Content, Footer, Header, Input, LoadingButton, NBox as Box, ScreenContainer, Theme, Typography
 } from '../../design-system';
-import {BackButton} from '../../design-system/buttons';
-import {
-  createAccountOperations,
-  createAccountSelectors,
-} from '../account-creation/create-account-slice';
-import {accountOperations} from './account-slice';
-import {AccountsConstants} from './constants';
+import { BackButton } from '../../design-system/buttons';
+import { accountOperations } from './account-slice';
+import { AccountsConstants } from './constants';
+
+const CheckCircle = ({checked}) => (
+  <CheckCircleIcon
+    color={checked ? Theme.colors.green : Theme.colors.jumbo}
+    width={16}
+    height={16}
+    marginRight={2}
+  />
+);
 
 export function GenericPasswordScreen({
   form,
@@ -73,34 +61,19 @@ export function GenericPasswordScreen({
         </Box>
         <Stack marginTop={4}>
           <Stack direction="row">
-            <CheckCircleIcon
-              color={form.lengthValidation ? '#34D399' : '#71717A'}
-              width={16}
-              height={16}
-              marginRight={2}
-            />
+            <CheckCircle checked={form.lengthValidation} />
             <Typography>
               {translate('create_password.include_char_length')}
             </Typography>
           </Stack>
           <Stack direction="row" marginTop={3}>
-            <CheckCircleIcon
-              color={form.digitsValidation ? '#34D399' : '#71717A'}
-              width={16}
-              height={16}
-              marginRight={2}
-            />
+            <CheckCircle checked={form.digitsValidation} />
             <Typography>
               {translate('create_password.include_digits')}
             </Typography>
           </Stack>
           <Stack direction="row" marginTop={3}>
-            <CheckCircleIcon
-              color={form.caseValidation ? '#34D399' : '#71717A'}
-              width={16}
-              height={16}
-              marginRight={2}
-            />
+            <CheckCircle checked={form.caseValidation} />
             <Typography>
               {translate('create_password.include_proper_case')}
             </Typography>

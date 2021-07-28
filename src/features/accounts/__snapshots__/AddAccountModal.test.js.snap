@@ -77,14 +77,11 @@ exports[`AddAccountModal should render correctly 1`] = `
       p={8}
       testID="addAccountModal"
     >
-      <Memo(ForwardRef(Text))
-        color="#fff"
-        fontFamily="Montserrat"
-        fontSize="24px"
-        fontWeight={600}
+      <Styled(Component)
+        variant="h1"
       >
         Add Account
-      </Memo(ForwardRef(Text))>
+      </Styled(Component)>
       <OptionList
         items={
           Array [

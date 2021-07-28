@@ -48,14 +48,11 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
         pl={15}
         width="100%"
       >
-        <Typography
-          color="#fff"
-          fontFamily="Montserrat"
-          fontSize={17}
-          fontWeight="600"
+        <Styled(Component)
+          variant="h3"
         >
           Test account
-        </Typography>
+        </Styled(Component)>
       </Memo(ForwardRef(Box))>
       <Memo(ForwardRef(Box))
         alignItems="flex-end"
@@ -86,24 +83,21 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
       <Memo(Identicon)
         size={48}
       />
-      <Memo(ForwardRef(Text))
-        color="#fff"
-        fontFamily="Montserrat"
+      <Styled(Component)
         fontSize="32px"
-        fontWeight={600}
         mt={3}
+        variant="h1"
       >
         2
          
-      </Memo(ForwardRef(Text))>
-      <Memo(ForwardRef(Text))
-        color="#D4D4D8"
-        fontFamily="Montserrat"
+      </Styled(Component)>
+      <Styled(Component)
         fontSize={14}
         fontWeight={500}
+        variant="montserrat"
       >
         0.00 USD
-      </Memo(ForwardRef(Text))>
+      </Styled(Component)>
       <Memo(ForwardRef(Stack))
         direction="row"
         mt={5}
@@ -132,25 +126,20 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
         borderBottomWidth={0.5}
         pb={4}
       >
-        <Typography
-          color="#fff"
-          fontFamily="Montserrat"
-          fontSize={20}
-          fontWeight="600"
+        <Styled(Component)
+          variant="h2"
         >
           Transactions
-        </Typography>
+        </Styled(Component)>
       </Memo(ForwardRef(Box))>
       <Memo(ForwardRef(Box))
         mt={8}
       >
-        <Typography
-          color="#A1A1AA"
-          fontSize={16}
-          fontWeight="400"
+        <Styled(Component)
+          variant="list-description"
         >
           Your transactions will appear here
-        </Typography>
+        </Styled(Component)>
       </Memo(ForwardRef(Box))>
     </Memo(ForwardRef(Stack))>
     <Memo(ForwardRef(Stack))
@@ -167,24 +156,22 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
         >
           <SvgAlert />
         </Memo(ForwardRef(Box))>
-        <Typography
-          color="#fff"
-          fontFamily="Montserrat"
-          fontSize={16}
-          fontWeight="600"
+        <Styled(Component)
+          fontSize={17}
           ml={2}
+          variant="h3"
         >
           Account not backed up
-        </Typography>
+        </Styled(Component)>
       </Memo(ForwardRef(Stack))>
       <Memo(ForwardRef(Box))
         mt={2}
       >
-        <Typography
+        <Styled(Component)
           color="background: rgba(254, 243, 199, 1)"
         >
           This phrase allows you to recover your account if your phone is lost or you change your device.
-        </Typography>
+        </Styled(Component)>
       </Memo(ForwardRef(Box))>
       <Memo(ForwardRef(Button))
         alignSelf="flex-start"

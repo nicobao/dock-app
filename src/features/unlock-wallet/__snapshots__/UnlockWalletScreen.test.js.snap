@@ -59,16 +59,12 @@ exports[`UnlockWalletScreen should render correctly 1`] = `
     <Box
       alignItems="center"
     >
-      <Typography
-        color="#fff"
-        fontFamily="Montserrat"
-        fontSize={20}
-        fontWeight="600"
-        lineHeight={32}
+      <Styled(Component)
         marginTop={52}
+        variant="h2"
       >
         Enter your passcode
-      </Typography>
+      </Styled(Component)>
     </Box>
     <NumericKeyboard
       marginTop={50}
@@ -77,15 +73,11 @@ exports[`UnlockWalletScreen should render correctly 1`] = `
       alignItems="center"
       marginBottom={20}
     >
-      <Typography
-        color="#fff"
-        fontFamily="Montserrat"
-        fontSize={14}
-        fontWeight="600"
-        lineHeight={32}
+      <Styled(Component)
+        variant="description"
       >
         Login with biometrics
-      </Typography>
+      </Styled(Component)>
     </Box>
   </Styled(ScrollView)>
 </StyledNativeComponent>

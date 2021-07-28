@@ -15,6 +15,7 @@ import {
   Select,
   Input,
   LoadingButton,
+  Theme,
 } from '../../design-system';
 import {BackButton} from '../../design-system/buttons';
 import {createAccountSelectors} from './create-account-slice';
@@ -39,13 +40,13 @@ export function CreateAccountMnemonicScreen({phrase, onCopy, onSubmit}) {
         <Box
           flexDirection="row"
           flexWrap="wrap"
-          backgroundColor="#27272A"
+          backgroundColor={Theme.colors.shark}
           borderRadius={12}
           p={5}
           mt={8}>
           {phrase.split(' ').map((word, idx) => (
             <Box flexDirection="row" width="33%" p={3} key={word}>
-              <Text fontSize={14} mr={2} color="#A1A1AA">{`${idx + 1}`}</Text>
+              <Text fontSize={14} mr={2} color={Theme.colors.description}>{`${idx + 1}`}</Text>
               <Text fontSize={14}>{word}</Text>
             </Box>
           ))}
@@ -54,7 +55,7 @@ export function CreateAccountMnemonicScreen({phrase, onCopy, onSubmit}) {
           full
           testID="next-btn"
           variant="unstyled"
-          backgroundColor="#27272A"
+          backgroundColor={Theme.colors.shark}
           mt={5}
           onPress={onCopy}>
           {translate('account_recovery_phrase.copy_phrase')}

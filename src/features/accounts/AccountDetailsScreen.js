@@ -15,6 +15,7 @@ import {
   NBox,
   ScreenContainer,
   Text,
+  Theme,
   Typography,
 } from '../../design-system';
 import {translate} from '../../locales';
@@ -71,25 +72,23 @@ export function AccountDetailsScreen({
         <Stack
           direction="column"
           alignItems="center"
-          backgroundColor="#27272A"
+          backgroundColor={Theme.colors.shark}
           p="32px"
           borderRadius={8}>
           <PolkadotIcon address={account.id} size={48} />
-          <Text
-            color="#fff"
+          <Typography
+            variant="h1"
             fontSize="32px"
-            fontWeight={600}
-            fontFamily="Montserrat"
             mt={3}>
             {account.meta.balance.value} {account.meta.balance.symbol}
-          </Text>
-          <Text
-            color="#D4D4D8"
+          </Typography>
+          <Typography
+            variant="montserrat"
             fontSize={14}
             fontWeight={500}
-            fontFamily="Montserrat">
+          >
             0.00 USD
-          </Text>
+          </Typography>
           <Stack direction="row" width="100%" mt={5}>
             <Button flex={1} size="sm">
               {translate('account_details.send_tokens_btn')}
@@ -101,7 +100,7 @@ export function AccountDetailsScreen({
         </Stack>
 
         <Stack mt={8}>
-          <NBox borderBottomColor="#ccc" borderBottomWidth={0.5} pb={4}>
+          <NBox borderBottomColor={Theme.colors.silver} borderBottomWidth={0.5} pb={4}>
             <Typography variant="h2">
               {translate('account_details.transactions')}
             </Typography>

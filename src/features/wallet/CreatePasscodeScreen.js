@@ -10,6 +10,7 @@ import {
   Typography,
   Box,
   runAfterInteractions,
+  Theme,
 } from '../../design-system';
 import styled from 'styled-components/native';
 import {BackButton} from '../../design-system/buttons';
@@ -22,7 +23,7 @@ const Circle = styled.View`
   border-radius: 20px;
   border: 1px solid white;
   margin: 0 7px;
-  background-color: ${props => (props.filled ? '#fff' : 'transparent')};
+  background-color: ${props => (props.filled ? Theme.colors.white : 'transparent')};
 `;
 
 function PasscodeMask({digits = 6, filled = 0, ...props}) {
