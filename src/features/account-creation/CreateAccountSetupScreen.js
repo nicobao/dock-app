@@ -72,7 +72,7 @@ export function CreateAccountSetupScreen({
             <Stack mt={7}>
               <FormControl.Label>
                 Keypair crypto type
-                <InputPopover>
+                <InputPopover title="Keypair crypto type">
                   Determines what cryptography will be used to create this
                   account. Note that to validate on Polkadot, the session
                   account must use "ed25519".
@@ -100,7 +100,7 @@ export function CreateAccountSetupScreen({
             <Stack mt={7}>
               <FormControl.Label>
                 Secret derivation path
-                <InputPopover>
+                <InputPopover title="Secret derivation path">
                   {`You can set a custom derivation path for this account using the following syntax "/<soft-key>//<hard-key>". The "/<soft-key>" and "//<hard-key>" may be repeated and mixed. An optional "///<password>" can be used with a mnemonic seed, and may only be specified once.`}
                 </InputPopover>
               </FormControl.Label>

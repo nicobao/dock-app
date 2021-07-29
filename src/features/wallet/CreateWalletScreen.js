@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   Image,
-  Button,
   LoadingButton,
   Header,
   Footer,
@@ -15,6 +14,8 @@ import styled, {ThemeProvider} from 'styled-components/native';
 import SplashLogo from '../../assets/splash-logo.png';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
+import { WalletConstants } from './constants';
+import { Button } from 'native-base';
 
 export function CreateWalletScreen() {
   return (
@@ -31,12 +32,20 @@ export function CreateWalletScreen() {
           />
         </Box>
       </Content>
-      <Footer marginBottom={114} marginLeft={26} marginRight={26}>
+      <Footer marginBottom={10} marginLeft={26} marginRight={26}>
         <LoadingButton
           full
           testID="createWalletButton"
           onPress={() => navigate(Routes.CREATE_WALLET_PASSCODE)}>
-          Create a new wallet
+          {WalletConstants.createWallet.locales.createNewWallet}
+        </LoadingButton>
+        <LoadingButton
+          full
+          variant="ghost"
+          mt={4}
+          testID="createWalletButton"
+          onPress={() => navigate(Routes.WALLET_IMPORT_BACKUP)}>
+          {WalletConstants.createWallet.locales.importWallet}
         </LoadingButton>
       </Footer>
     </ScreenContainer>

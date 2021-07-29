@@ -15,24 +15,23 @@ import {
   Content,
   ScreenContainer,
   Typography,
-  SelectToggler,
   NBox as Box,
-  Select,
   Input,
-  InputPopover,
   LoadingButton,
 } from '../../design-system';
 import {BackButton} from '../../design-system/buttons';
-import {
-  createAccountOperations, createAccountSelectors,
-} from '../account-creation/create-account-slice';
+import { walletOperations } from './wallet-slice';
 import {PasswordInputContainer} from '../../components/PasswordInputScreen';
 
-export function ImportAccountPasswordContainer({ route }) {
+export function ImportWalletPasswordContainer({ route }) {
   const dispatch = useDispatch();
+  const { fileUri } = route.params;
 
   const handleSubmit = ({ password }) => {
-    return dispatch(createAccountOperations.unlockJson(password))
+    return dispatch(walletOperations.importWallet({
+      password,
+      fileUri,
+    }));
   };
 
   return (

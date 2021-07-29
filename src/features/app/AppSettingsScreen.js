@@ -73,7 +73,7 @@ export function AppSettingsContainer() {
   return (
     <AppSettingsScreen
       onDeleteWallet={() => {
-        return dispatch(walletOperations.deleteWallet());
+        return dispatch(walletOperations.confirmWalletDelete());
       }}
       onBackupWallet={() => {
         navigate(Routes.WALLET_EXPORT_BACKUP)

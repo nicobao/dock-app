@@ -13,7 +13,8 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "postinstall": "./node_modules/.bin/rn-nodeify --install --hack --yarn && patch-package && jetifier && rm -rf ./node_modules/mrklt && rm -rf ./node_modules/credentials-context &&  rm -rf ./node_modules/security-context",
     "storybook": "start-storybook -p 7007",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "release:internal:android": "cd ./android && fastlane internal"
   },
   "dependencies": {
     "@docknetwork/react-native-sdk": "file:/Users/maycon/dev/dock/dock-rn-web-bridge",

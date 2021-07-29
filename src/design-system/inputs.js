@@ -10,7 +10,10 @@ import {
   Text,
 } from 'native-base';
 import {TouchableWithoutFeedback} from 'react-native';
-import {InformationCircle} from '../assets/icons';
+import {ErrorAlert, InformationCircle} from '../assets/icons';
+import {Modal} from '../components/Modal';
+import {Button} from './buttons';
+import {Theme} from './theme';
 
 export {Select, Input, Text} from 'native-base';
 
@@ -46,22 +49,53 @@ export function SelectToggler({children, placeholder}) {
   );
 }
 
-export function InputPopover({children}) {
+export function InputError({ form, id }) {
+  const errorMessage = form._errors[id];
+
+  if (!errorMessage) {
+    return null;
+  }
+
   return (
-    <Popover
-      trigger={triggerProps => {
-        return (
-          <Pressable alignSelf="center" {...triggerProps}>
-            <Box px={2} py={0.5}>
-              <InformationCircle />
-            </Box>
-          </Pressable>
-        );
-      }}>
-      <Popover.Content>
-        <Popover.Arrow />
-        <Popover.Body>{children}</Popover.Body>
-      </Popover.Content>
-    </Popover>
+    <Stack direction="row" alignItems="center">
+      <Box mt={2} mr={2}>
+        <ErrorAlert />
+      </Box>
+      <Text mt={2} color={Theme.colors.errorText}>
+        {errorMessage}
+      </Text>
+    </Stack>
+  )
+}
+
+export function InputPopover({children, title, okText = 'Got it'}) {
+  const [visible, setVisible] = useState(false);
+  const handleClose = () => setVisible(false);
+
+  return (
+    <>
+      <Pressable alignSelf="center" onPress={() => setVisible(true)}>
+        <Box px={2} py={0.5}>
+          <InformationCircle />
+        </Box>
+      </Pressable>
+      <Modal visible={visible} onClose={handleClose}>
+        <Stack p={5}>
+          <Text
+            fontSize="24px"
+            fontWeight={600}
+            fontFamily={Theme.fontFamily.montserrat}
+            color={Theme.colors.white}>
+            {title}
+          </Text>
+          <Stack>
+            <Text mt={4}>{children}</Text>
+          </Stack>
+          <Button onPress={handleClose} mt={5}>
+            {okText}
+          </Button>
+        </Stack>
+      </Modal>
+    </>
   );
 }

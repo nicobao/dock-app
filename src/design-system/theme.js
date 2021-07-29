@@ -8,9 +8,15 @@ export const Theme = {
     montserrat: 'Montserrat',
   },
   colors: {
+    backdrop: 'rgba(0, 0, 0, 0.6)',
     white: '#FFF',
     shark: '#27272A',
-    mariner: '#1E75C5'
+    darkGray: '#18181B',
+    gray: '#3F3F46',
+    mariner: '#1E75C5',
+    lightBlue: '#0284C7',
+    error: '#DC2626',
+    errorText: '#F87171',
   },
   screen: {
     backgroundColor: '#18181B',

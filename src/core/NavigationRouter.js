@@ -41,6 +41,8 @@ import {CreateAccountMnemonicContainer} from '../features/account-creation/Creat
 import {CreateAccountBackupContainer} from '../features/account-creation/CreateAccountBackupScreen';
 import { ExportAccountPasswordContainer } from '../features/accounts/ExportAccountPasswordScreen';
 import {ExportWalletContainer} from '../features/wallet/ExportWalletScreen';
+import {ImportWalletContainer} from '../features/wallet/ImportWalletScreen';
+import {ImportWalletPasswordContainer} from '../features/wallet/ImportWalletPasswordScreen';
 
 const getMainOptions = opts => {
   return {
@@ -246,6 +248,22 @@ function AppStackScreen() {
       <AppStack.Screen
         name={Routes.WALLET_EXPORT_BACKUP}
         component={ExportWalletContainer}
+        options={{
+          ...screenOptions,
+        }}
+      />
+      
+      <AppStack.Screen
+        name={Routes.WALLET_IMPORT_BACKUP}
+        component={ImportWalletContainer}
+        options={{
+          ...screenOptions,
+        }}
+      />
+      
+      <AppStack.Screen
+        name={Routes.WALLET_IMPORT_BACKUP_PASSWORD}
+        component={ImportWalletPasswordContainer}
         options={{
           ...screenOptions,
         }}
