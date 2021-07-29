@@ -19,7 +19,7 @@
     "release:internal:android": "cd ./android && fastlane internal"
   },
   "dependencies": {
-    "@docknetwork/react-native-sdk": "file:/Users/maycon/dev/dock/dock-rn-web-bridge",
+    "@docknetwork/react-native-sdk": "https://github.com/docknetwork/react-native-sdk",
     "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/clipboard": "^1.5.1",
     "@react-native-community/masked-view": "^0.1.11",
