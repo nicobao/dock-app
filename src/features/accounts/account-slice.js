@@ -7,6 +7,7 @@ import {createAccountActions} from '../account-creation/create-account-slice';
 import Share from 'react-native-share'
 import RNFS from 'react-native-fs';
 import { translate } from 'src/locales';
+import { AsyncStorage } from 'react-native';
 
 
 const initialState = {
@@ -173,6 +174,17 @@ export const accountOperations = {
     
   },
   loadAccounts: () => async (dispatch, getState) => {
+    const cachedAccounts = await AsyncStorage.getItem('accounts-cache');
+
+    if (cachedAccounts) {
+      try {
+        dispatch(accountActions.setAccounts(JSON.parse(cachedAccounts)));
+        console.log('loaded accounts from cache', cachedAccounts);
+      } catch(err) {
+        console.error(err);
+      }
+    }
+
     try {
       await WalletRpc.load();
       await WalletRpc.sync();
@@ -183,7 +195,9 @@ export const accountOperations = {
         'content.type': 'Account'
       }
     });
-    
+
+    AsyncStorage.setItem('accounts-cache', JSON.stringify(accounts));
+
     dispatch(accountActions.setAccounts(accounts));
   },
 };
