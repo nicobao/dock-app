@@ -4,6 +4,21 @@
     "back": "Back",
     "skip": "Skip"
   },
+  "delete_wallet_confirmation": {
+    "title": "Remove Wallet?",
+    "message": "This can’t be undone. You’ll lose all accounts and tokens associated with this wallet if you did not back up.",
+    "confirm": "Delete",
+    "cancel": "Cancel"
+  },
+  "backup_wallet_confirmation": {
+    "title": "Backup Wallet",
+    "message": "We highly recommend that you create a back-up file of your wallet before deleting it.",
+    "confirm": "Back up",
+    "cancel": "Skip"
+  },
+  "backup_wallet" : {
+    "error": "Unable to generate backup"
+  },
   "export_account": {
     "title": "Create a password",
     "description": "This will be used when you import your account to a new device"
@@ -43,12 +58,14 @@
   "account_setup": {
     "title": "Account Name",
     "description": "This will be used just for easy reference",
-    "account_name_input": "Account name"
+    "account_name_input": "Account name",
+    "success": "Account successfully created"
   },
   "create_account_backup": {
     "title": "Back up your account",
     "description": " In the next step you will see an account recovery phrase. This phrase is the only way you can recover access to your account if your phone is lost or stolen.",
-    "agreement": "I understand that if I lose my recovery phrase, I will not be able to access my account"
+    "agreement": "I understand that if I lose my recovery phrase, I will not be able to access my account",
+    "success": "Backup complete!"
   },
   "account_advanced_options": {
     "advanced_options": "Advanced options",
@@ -82,14 +99,13 @@
     "title": "Account recovery phrase",
     "description": "This is the 12 word phrase you were given when you created your account.",
     "phrase_input": "Enter account recovery phrase",
-    "invalid_phrase": "Invalid recovery phrase",
-    "": "",
-    "": ""
+    "invalid_phrase": "Invalid recovery phrase"
   },
   "verify_recovery_phrase": {
     "title": "Verify recovery phrase",
     "description": "Verify that you wrote down the 12 words correctly",
-    "verify_word": "Verify word #"
+    "verify_word": "Verify word #",
+    "invalid_confirmation": "Invalid confirmation, please try again"
   },
   "account_details": {
     "send_tokens_btn": "Send",
@@ -100,7 +116,10 @@
     "backup_details": "This phrase allows you to recover your account if your phone is lost or you change your device.",
     "backup_btn": "Back up now",
     "export_account": "Export account",
-    "export_account_description": "Scan this QR code in your new device"
+    "export_account_description": "Scan this QR code in your new device",
+    "export_error": "Unable to export account",
+    "export_success": "Account exported",
+    "account_removed": "Account Removed"
   },
   "account_settings_modal": {
     "options_title": "Options",

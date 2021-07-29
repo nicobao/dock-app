@@ -152,7 +152,7 @@ export function CreateAccountVerifyPhraseContainer() {
     }
 
     showToast({
-      message: 'Invalid confirmation, please try again',
+      message: translate('verify_recovery_phrase.invalid_confirmation'),
       type: 'error',
     });
   };

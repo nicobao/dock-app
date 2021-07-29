@@ -200,9 +200,9 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
     onClose={[Function]}
   />
   <QRCodeModal
-    description="[missing \\"en.account_details.export_account_description\\" translation]"
+    description="Scan this QR code in your new device"
     onClose={[Function]}
-    title="[missing \\"en.account_details.export_account\\" translation]"
+    title="Export account"
   />
 </StyledNativeComponent>
 `;
