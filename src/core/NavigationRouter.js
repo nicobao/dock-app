@@ -18,11 +18,6 @@ import {ImportAccountSetupContainer} from '../features/accounts/ImportAccountSet
 import {ImportAccountPasswordContainer} from '../features/accounts/ImportAccountPasswordScreen';
 
 // POC Screens
-import {CreateWalletMnemonicScreen} from '../features/wallets/CreateWalletMnemonicScreen';
-import {UnlockWalletScreen} from '../features/wallets/UnlockWalletScreen';
-import {HomeScreen} from '../features/home/HomeScreen';
-import {PresentationExchangeScreen} from '../features/credentials/PresentationExchangeScreen';
-import {DIDListScreen} from '../features/did/DIDListScreen';
 import {Icon, View} from 'native-base';
 import {Platform, TouchableWithoutFeedback} from 'react-native';
 import {Colors} from '../theme/colors';
@@ -33,6 +28,11 @@ import {QRScanScreen} from '../features/qr-code-scanner/QRScanScreen';
 import {SendTokensScreen} from '../features/transactions/SendTokensScreen';
 import {CreateBackupScreen} from '../features/wallet-backup/CreateBackupScreen';
 import {LoadBackupScreen} from '../features/wallet-backup/LoadBackupScreen';
+import {CreateWalletMnemonicScreen} from '../features/wallets/CreateWalletMnemonicScreen';
+import {UnlockWalletScreen} from '../features/wallets/UnlockWalletScreen';
+import {HomeScreen} from '../features/home/HomeScreen';
+import {PresentationExchangeScreen} from '../features/credentials/PresentationExchangeScreen';
+import {DIDListScreen} from '../features/did/DIDListScreen';
 import {UnlockWalletContainer} from '../features/unlock-wallet/UnlockWalletScreen';
 
 import {CreateAccountVerifyPhraseContainer} from '../features/account-creation/CreateAccountVerifyPhraseScreen';
@@ -266,89 +266,6 @@ function AppStackScreen() {
         component={ImportWalletPasswordContainer}
         options={{
           ...screenOptions,
-        }}
-      />
-
-      {
-        // POC Routes
-      }
-
-      <AppStack.Screen
-        name={Routes.BACKUP_CREATE}
-        component={CreateBackupScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <AppStack.Screen
-        name={Routes.BACKUP_LOAD}
-        component={LoadBackupScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <AppStack.Screen
-        name={Routes.APP_SEND_TOKENS}
-        component={SendTokensScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <AppStack.Screen
-        name={Routes.APP_PRESENTATION_EXCHANGE}
-        component={PresentationExchangeScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <AppStack.Screen
-        name={Routes.APP_CREDENTIAL_ISSUANCE}
-        component={CredIssuanceScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <AppStack.Screen
-        name={Routes.APP_QR_SCANNER}
-        component={QRScanScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-
-      <AppStack.Screen
-        name={Routes.CREATE_WALLET_MNEMONIC}
-        component={CreateWalletMnemonicScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <AppStack.Screen
-        name={Routes.APP_HOME}
-        component={HomeScreen}
-        options={{
-          ...getMainOptions({
-            title: 'Welcome',
-            headerLeft: null,
-          }),
-        }}
-      />
-      <AppStack.Screen
-        name={Routes.APP_DID}
-        component={DIDListScreen}
-        options={{
-          ...getMainOptions({
-            title: 'DIDs',
-          }),
-        }}
-      />
-      <AppStack.Screen
-        name={Routes.APP_CREDENTIAL}
-        component={CredentialListScreen}
-        options={{
-          ...getMainOptions({
-            title: 'Credentials',
-          }),
         }}
       />
     </AppStack.Navigator>

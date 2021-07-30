@@ -7,10 +7,12 @@
     "ios": "react-native run-ios",
     "start": "APP_RUNTIME=default && react-native start",
     "start:storybook": "APP_RUNTIME=storybook && react-native start",
-    "test": "jest",
+    "test": "jest ./src/**",
     "test:e2e": "detox test",
     "build:e2e": "detox build",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint": "eslint './src**/*.js' --ignore-path=.prettierignore",
+    "lint:fix": "eslint './src/**/*.js' --fix --ignore-path=.prettierignore",
+    "format": "prettier './src/**/*.{js,json}' --write",
     "postinstall": "./node_modules/.bin/rn-nodeify --install --hack --yarn && patch-package && jetifier && rm -rf ./node_modules/mrklt && rm -rf ./node_modules/credentials-context &&  rm -rf ./node_modules/security-context",
     "storybook": "start-storybook -p 7007",
     "build-storybook": "build-storybook",
@@ -43,6 +45,7 @@
     "enhanced-resolve": "4.5.0",
     "events": "^1.1.1",
     "https-browserify": "^0.0.1",
+    "i18n-js": "^3.8.0",
     "json-rpc-2.0": "^0.2.16",
     "jsonpath": "^1.1.1",
     "lodash": "^4.17.21",
@@ -116,34 +119,23 @@
     "babel-jest": "^26.6.3",
     "babel-loader": "^8.2.2",
     "crypto-browserify": "^3.12.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
+    "enzyme-to-json": "^3.6.2",
     "eslint": "^7.14.0",
     "jest": "^26.6.3",
+    "jest-svg-transformer": "^1.0.0",
     "jetifier": "^1.6.6",
     "metro-react-native-babel-preset": "^0.64.0",
     "patch-package": "^6.4.7",
     "react-test-renderer": "17.0.1",
     "redux-logger": "^3.0.6",
+    "redux-mock-store": "^1.5.4",
     "rn-nodeify": "^10.2.0",
     "typescript": "^3.8.3"
   },
   "resolutions": {
     "@types/react": "^17"
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.(ts|js)$": "babel-jest"
-    },
-    "transformIgnorePatterns": [
-      "/node_modules/(?!@polkadot|@babel)"
-    ],
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ]
   },
   "react-native": {
     "zlib": "browserify-zlib",

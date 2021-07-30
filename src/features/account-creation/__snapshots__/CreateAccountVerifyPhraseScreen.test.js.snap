@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateAccountVerifyPhraseScreen should render correctly 1`] = `
+<StyledNativeComponent
+  forwardedComponent={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "attrs": Array [],
+      "inlineStyle": InlineStyle {
+        "rules": Array [
+          "
+  background-color: ",
+          [Function],
+          ";
+  flex: 1;
+",
+        ],
+      },
+      "render": [Function],
+      "shouldForwardProp": undefined,
+      "styledComponentId": "StyledNativeComponent",
+      "target": Object {
+        "$$typeof": Symbol(react.forward_ref),
+        "render": [Function],
+      },
+      "withComponent": [Function],
+    }
+  }
+  forwardedRef={null}
+  testID="createAccountVerifyPhraseScreen"
+>
+  <Styled(View)>
+    <BackButton />
+  </Styled(View)>
+  <Styled(ScrollView)
+    marginLeft={26}
+    marginRight={26}
+  >
+    <Typography
+      color="#fff"
+      fontFamily="Montserrat"
+      fontSize={24}
+      fontWeight="600"
+      lineHeight={32}
+      marginTop={52}
+    >
+      Verify recovery phrase
+    </Typography>
+    <Typography
+      fontSize={16}
+      fontWeight="400"
+      lineHeight={24}
+      marginTop={12}
+    >
+      Verify that you wrote down the 12 words correctly
+    </Typography>
+    <Memo(ForwardRef(FormControl))>
+      <Memo(ForwardRef(Stack))
+        mt={7}
+      >
+        <Memo(ForwardRef(FormControlLabel))>
+          Verify word #
+          4
+        </Memo(ForwardRef(FormControlLabel))>
+        <Memo(ForwardRef(Input))
+          autoCapitalize="none"
+          value="test"
+        />
+      </Memo(ForwardRef(Stack))>
+    </Memo(ForwardRef(FormControl))>
+    <Memo(ForwardRef(FormControl))>
+      <Memo(ForwardRef(Stack))
+        mt={7}
+      >
+        <Memo(ForwardRef(FormControlLabel))>
+          Verify word #
+          6
+        </Memo(ForwardRef(FormControlLabel))>
+        <Memo(ForwardRef(Input))
+          autoCapitalize="none"
+          value="test2"
+        />
+      </Memo(ForwardRef(Stack))>
+    </Memo(ForwardRef(FormControl))>
+  </Styled(ScrollView)>
+  <Styled(Box)
+    marginBottom={0}
+    marginLeft={26}
+    marginRight={26}
+  >
+    <LoadingButton
+      full={true}
+      mb={5}
+      testID="next-btn"
+    >
+      Next
+    </LoadingButton>
+  </Styled(Box)>
+</StyledNativeComponent>
+`;

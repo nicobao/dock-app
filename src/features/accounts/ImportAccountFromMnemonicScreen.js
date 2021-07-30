@@ -9,6 +9,7 @@ import {
 } from 'native-base';
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
+import { AccountAdvancedOptions } from '../../components/AccountAdvancedOptions';
 import {
   Header,
   Footer,
@@ -23,9 +24,8 @@ import {
   LoadingButton,
 } from '../../design-system';
 import {BackButton} from '../../design-system/buttons';
-import {
-  createAccountOperations,
-} from '../account-creation/create-account-slice';
+import {translate} from '../../locales';
+import {createAccountOperations} from '../account-creation/create-account-slice';
 
 export function ImportAccountFromMnemonicScreen({
   form,
@@ -46,20 +46,20 @@ export function ImportAccountFromMnemonicScreen({
           fontWeight="600"
           color="#fff"
           marginTop={52}>
-          Account recovery phrase
+          {translate('import_account_from_mnemonic.title')}
         </Typography>
         <Typography
           fontSize={16}
           lineHeight={24}
           fontWeight="400"
           marginTop={12}>
-          This is the 12 word phrase you were given when you created your account.
+          {translate('import_account_from_mnemonic.description')}
         </Typography>
         <Box>
           <FormControl isInvalid={form._errors.phrase}>
             <Stack mt={7}>
               <FormControl.Label>
-                Enter account recovery phrase
+                {translate('import_account_from_mnemonic.phrase_input')}
               </FormControl.Label>
               <TextArea
                 placeholder=""
@@ -68,60 +68,12 @@ export function ImportAccountFromMnemonicScreen({
                 autoCapitalize="none"
               />
               <FormControl.ErrorMessage>
-                Invalid recovery phrase
+                {translate('import_account_from_mnemonic.invalid_phrase')} 
               </FormControl.ErrorMessage>
             </Stack>
           </FormControl>
         </Box>
-
-        <SelectToggler placeholder="Advanced options">
-          <FormControl>
-            <Stack mt={7}>
-              <FormControl.Label>
-                Keypair crypto type
-                <InputPopover>
-                  Determines what cryptography will be used to create this
-                  account. Note that to validate on Polkadot, the session
-                  account must use "ed25519".
-                </InputPopover>
-              </FormControl.Label>
-              <Select
-                onValueChange={onChange('keypairType')}
-                selectedValue={form.keypairType}>
-                <Select.Item
-                  label="Schnorrkel (sr25519, recommended)"
-                  value="sr25519"
-                />
-                <Select.Item
-                  label="Edwards (ed25519, alternative)"
-                  value="ed25519"
-                />
-                <Select.Item
-                  label="ECDSA (Non BTC/ETH compatible)"
-                  value="ecdsa"
-                />
-              </Select>
-            </Stack>
-          </FormControl>
-          <FormControl isInvalid={false}>
-            <Stack mt={7}>
-              <FormControl.Label>
-                Secret derivation path
-                <InputPopover>
-                  {`You can set a custom derivation path for this account using the following syntax "/<soft-key>//<hard-key>". The "/<soft-key>" and "//<hard-key>" may be repeated and mixed. An optional "///<password>" can be used with a mnemonic seed, and may only be specified once.`}
-                </InputPopover>
-              </FormControl.Label>
-              <Input
-                placeholder="//hard/soft//password"
-                onChangeText={onChange('derivationPath')}
-                autoCapitalize="none"
-              />
-              <FormControl.ErrorMessage>
-                Unable to match provided value to a secret URI.
-              </FormControl.ErrorMessage>
-            </Stack>
-          </FormControl>
-        </SelectToggler>
+        <AccountAdvancedOptions onChange={onChange} form={form} />
       </Content>
       <Footer marginBottom={10} marginLeft={26} marginRight={26}>
         <LoadingButton
@@ -129,7 +81,7 @@ export function ImportAccountFromMnemonicScreen({
           testID="next-btn"
           isDisabled={submitDisabled}
           onPress={onSubmit}>
-          Next
+          {translate('navigation.next')} 
         </LoadingButton>
       </Footer>
     </ScreenContainer>

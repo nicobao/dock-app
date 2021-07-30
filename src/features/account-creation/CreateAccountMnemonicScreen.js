@@ -2,7 +2,7 @@ import {Button, Checkbox, FormControl, Stack} from 'native-base';
 import Clipboard from '@react-native-community/clipboard';
 
 import React from 'react';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import {
   Header,
   Footer,
@@ -17,16 +17,13 @@ import {
   LoadingButton,
 } from '../../design-system';
 import {BackButton} from '../../design-system/buttons';
-import { createAccountSelectors } from './create-account-slice';
-import { navigate } from '../../core/navigation';
-import { Routes } from '../../core/routes';
-import { showToast } from '../../core/toast';
+import {createAccountSelectors} from './create-account-slice';
+import {navigate} from '../../core/navigation';
+import {Routes} from '../../core/routes';
+import {showToast} from '../../core/toast';
+import {translate} from '../../locales';
 
-export function CreateAccountMnemonicScreen({
-  phrase,
-  onCopy,
-  onSubmit
-}) {
+export function CreateAccountMnemonicScreen({phrase, onCopy, onSubmit}) {
   return (
     <ScreenContainer testID="create-wallet-screen">
       <Header>
@@ -40,15 +37,14 @@ export function CreateAccountMnemonicScreen({
           fontWeight="600"
           color="#fff"
           marginTop={52}>
-          Account recovery phrase
+          {translate('account_recovery_phrase.title')}
         </Typography>
         <Typography
           fontSize={16}
           lineHeight={24}
           fontWeight="400"
           marginTop={12}>
-          Write this down or copy these words in the right order and save them
-          somewhere safe. Do not share it to anyone
+          {translate('account_recovery_phrase.description')}
         </Typography>
         <Box
           flexDirection="row"
@@ -58,31 +54,25 @@ export function CreateAccountMnemonicScreen({
           p={5}
           mt={8}>
           {phrase.split(' ').map((word, idx) => (
-            <Box flexDirection="row" width="33%" p={3}>
+            <Box flexDirection="row" width="33%" p={3} key={word}>
               <Text fontSize={14} mr={2} color="#A1A1AA">{`${idx + 1}`}</Text>
               <Text fontSize={14}>{word}</Text>
             </Box>
           ))}
         </Box>
-
         <Button
           full
           testID="next-btn"
           variant="unstyled"
           backgroundColor="#27272A"
-          _text={
-            {
-              // fontSize: 16
-            }
-          }
           mt={5}
           onPress={onCopy}>
-          Copy to clipboard
+          {translate('account_recovery_phrase.copy_phrase')}
         </Button>
       </Content>
       <Footer marginBottom={0} marginLeft={26} marginRight={26}>
         <LoadingButton full testID="next-btn" mb={5} onPress={onSubmit}>
-          Next
+          {translate('navigation.next')}
         </LoadingButton>
       </Footer>
     </ScreenContainer>
@@ -91,12 +81,12 @@ export function CreateAccountMnemonicScreen({
 
 export function CreateAccountMnemonicContainer() {
   const phrase = useSelector(createAccountSelectors.getMnemonicPhrase);
-  
+
   const handleCopy = () => {
     Clipboard.setString(phrase);
 
     showToast({
-      message: 'Recovery phrase copied!'
+      message: translate('account_recovery_phrase.phrase_copied'),
     });
   };
 
@@ -108,5 +98,5 @@ export function CreateAccountMnemonicContainer() {
       onSubmit={handleSubmit}
       onCopy={handleCopy}
     />
-  )
+  );
 }

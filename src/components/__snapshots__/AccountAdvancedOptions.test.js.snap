@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AccountAdvancedOptions should render correctly 1`] = `
+<Memo(ForwardRef(Box))>
+  <TouchableWithoutFeedback
+    onPress={[Function]}
+  >
+    <Memo(ForwardRef(Stack))
+      alignItems="center"
+      backgroundColor="#27272A"
+      borderRadius={6}
+      direction="row"
+      mt={8}
+      pl={5}
+      pr={2}
+      py="1px"
+      width={0.67}
+    >
+      <Memo(ForwardRef(Box))
+        flex={1}
+      >
+        <Memo(ForwardRef(Text))
+          fontSize={14}
+          fontWeight={600}
+        >
+          Advanced options
+        </Memo(ForwardRef(Text))>
+      </Memo(ForwardRef(Box))>
+      <Memo(ForwardRef(Box))
+        mt={2}
+      >
+        <Memo(ForwardRef(createdIcon)) />
+      </Memo(ForwardRef(Box))>
+    </Memo(ForwardRef(Stack))>
+  </TouchableWithoutFeedback>
+</Memo(ForwardRef(Box))>
+`;

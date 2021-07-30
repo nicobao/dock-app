@@ -16,6 +16,7 @@ import {AppConstants} from './constants';
 import {walletOperations} from '../wallet/wallet-slice';
 import { navigate } from '../../core/navigation';
 import { Routes } from '../../core/routes';
+import { translate } from 'src/locales';
 
 const constants = AppConstants.settings;
 
@@ -38,7 +39,9 @@ export function AppSettingsScreen({onDeleteWallet, onBackupWallet}) {
             alignItems="center"
             pl={15}>
             <Typography.ScreenTitle>
-              {constants.locales.title}
+              {
+                translate('settings.title')
+              }
             </Typography.ScreenTitle>
           </NBox>
           <NBox width="80px" alignItems="flex-end" />
@@ -50,13 +53,13 @@ export function AppSettingsScreen({onDeleteWallet, onBackupWallet}) {
           items={[
             {
               testID: constants.testID.backupWalletOption,
-              title: constants.locales.backupWallet,
+              title: translate('settings.backup_wallet'),
               icon: <DownloadIcon />,
               onPress: onBackupWallet,
             },
             {
               testID: constants.testID.deleteWalletOption,
-              title: constants.locales.deleteWallet,
+              title: translate('settings.delete_wallet'),
               icon: <TrashIcon />,
               onPress: onDeleteWallet,
             },

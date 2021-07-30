@@ -6,6 +6,7 @@ import { Routes } from '../../core/routes';
 import {createAccountActions} from '../account-creation/create-account-slice';
 import Share from 'react-native-share'
 import RNFS from 'react-native-fs';
+import { translate } from 'src/locales';
 
 
 const initialState = {
@@ -64,7 +65,7 @@ export const accountOperations = {
     dispatch(accountOperations.loadAccounts());
 
     showToast({
-      message: 'Account successfully created'
+      message: translate('account_setup.success')
     });
   },
 
@@ -95,8 +96,8 @@ export const accountOperations = {
     await dispatch(accountOperations.loadAccounts());
     
     showToast({
-      message: 'Backup complete!'
-    })
+      message: translate('create_account_backup.success')
+    });
   }),
   backupAccount: (account) =>
     withErrorToast(async (dispatch, getState) => {
@@ -141,7 +142,7 @@ export const accountOperations = {
       } catch(err) {
        console.error(err);
        showToast({
-         message: 'Unable to export account',
+         message: translate('account_details.export_error'),
          type: 'error',
        }) 
       }
@@ -157,7 +158,7 @@ export const accountOperations = {
     });
 
     showToast({
-      message: 'Account exported',
+      message: translate('account_details.export_success'),
     });
   },
   
@@ -167,7 +168,7 @@ export const accountOperations = {
     dispatch(accountOperations.loadAccounts());
 
     showToast({
-      message: 'Account removed'
+      message: translate('account_details.account_removed'),
     });
     
   },

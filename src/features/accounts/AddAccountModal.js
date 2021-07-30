@@ -9,6 +9,8 @@ import {
 } from 'src/design-system';
 import {Modal} from '../../components/Modal';
 import {AddAccountModalTestIDs} from './test-ids';
+import { ImportExistingAccount } from './ImportExistingAccount';
+import { translate } from 'src/locales';
 
 export function AddAccountModal({
   onClose,
@@ -29,14 +31,14 @@ export function AddAccountModal({
         fontWeight={600}
         color="#fff"
         fontFamily="Montserrat">
-        Add Account
+        {translate('add_account_modal.title')}
       </Text>
       <OptionList
         mt={5}
         items={[
           {
             testID: AddAccountModalTestIDs.addAccountOption,
-            title: 'Create new account',
+            title: translate('add_account_modal.create_new'),
             icon: <PlusCircleIcon />,
             onPress: () => {
               onAddAccount();
@@ -45,7 +47,7 @@ export function AddAccountModal({
           },
           {
             testID: AddAccountModalTestIDs.importExistingOption,
-            title: 'Import existing account',
+            title: translate('add_account_modal.import_existing'),
             icon: <DocumentDownloadIcon />,
             onPress: () => setImportExisting(true),
           },
@@ -53,43 +55,11 @@ export function AddAccountModal({
       />
     </Stack>
   ) : (
-    <Stack p={8} testID="importOptionsModal">
-      <Stack direction="row">
-        <Pressable onPress={() => setImportExisting(false)}>
-          <Box pt={1} pr={5}>
-            <BackIcon />
-          </Box>
-        </Pressable>
-        <Text
-          fontSize="24px"
-          fontWeight={600}
-          color="#fff"
-          fontFamily="Montserrat">
-          Import via
-        </Text>
-      </Stack>
-      <OptionList
-        mt={5}
-        postPress={onClose}
-        items={[
-          {
-            title: 'Account recovery phrase',
-            icon: <PlusCircleIcon />,
-            onPress: () => onImportExistingAccount('mnemonic'),
-          },
-          {
-            title: 'Upload JSON file',
-            icon: <DocumentDownloadIcon />,
-            onPress: () => onImportExistingAccount('json'),
-          },
-          {
-            title: 'Scan QR code',
-            icon: <DocumentDownloadIcon />,
-            onPress: () => onImportExistingAccount('qrcode'),
-          },
-        ]}
-      />
-    </Stack>
+    <ImportExistingAccount
+      onClose={onClose}
+      onSelect={onImportExistingAccount}
+      onBack={() => setImportExisting(false)}
+    />
   );
   return <Modal visible={visible} onClose={onClose}>{content}</Modal>;
 }

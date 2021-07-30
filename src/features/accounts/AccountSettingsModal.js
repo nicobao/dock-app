@@ -1,13 +1,11 @@
+import { Box, Pressable, Stack } from 'native-base';
 import React, { useEffect, useState } from 'react';
-import {Box, Pressable, Stack} from 'native-base';
 import {
-  DocumentDownloadIcon,
-  PlusCircleIcon,
-  Text,
-  OptionList,
-  BackIcon
+  BackIcon, DocumentDownloadIcon, OptionList, PlusCircleIcon,
+  Text
 } from 'src/design-system';
-import {Modal} from '../../components/Modal';
+import { Modal } from '../../components/Modal';
+import { translate } from '../../locales';
 
 export function AccountSettingsModal({
   onClose,
@@ -28,7 +26,7 @@ export function AccountSettingsModal({
         fontWeight={600}
         color="#fff"
         fontFamily="Montserrat">
-        Options
+        {translate('account_settings_modal.options_title')}
       </Text>
       <OptionList
         mt={5}
@@ -62,7 +60,7 @@ export function AccountSettingsModal({
           fontWeight={600}
           color="#fff"
           fontFamily="Montserrat">
-          Export account via
+          {translate('account_settings_modal.export_account_titlte')}
         </Text>
       </Stack>
       <OptionList
@@ -70,12 +68,12 @@ export function AccountSettingsModal({
         postPress={onClose}
         items={[
           {
-            title: 'JSON',
+            title: translate('account_settings_modal.export_via_json'),
             icon: <DocumentDownloadIcon />,
             onPress: () => onExport('json'),
           },
           {
-            title: 'QR code',
+            title:  translate('account_settings_modal.export_via_qrcode'),
             icon: <DocumentDownloadIcon />,
             onPress: () => onExport('qrcode'),
           },

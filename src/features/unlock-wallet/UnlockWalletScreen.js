@@ -14,7 +14,9 @@ import KeyboardDeleteIcon from '../../assets/icons/keyboard-delete.svg';
 import {useDispatch, useSelector} from 'react-redux';
 import {appSelectors} from '../app/app-slice';
 import {walletOperations, walletSelectors} from '../wallet/wallet-slice';
-import { NumericKeyboard } from '../wallet/CreatePasscodeScreen';
+import {NumericKeyboard} from '../wallet/CreatePasscodeScreen';
+import {translate} from '../../locales';
+import { showToast } from 'src/core/toast';
 
 const Circle = styled.View`
   width: 20px;
@@ -45,7 +47,7 @@ export function UnlockWalletScreen({
   onNumber,
   onDelete,
   onLoginWithBiometric,
-  text = 'Enter your passcode',
+  text = translate('unlock_wallet.enter_passcode'),
   digits = DIGITS,
   filled = 0,
   biometry = false,
@@ -90,7 +92,7 @@ export function UnlockWalletScreen({
               lineHeight={32}
               fontWeight="600"
               color="#fff">
-              Login with biometric
+              {translate('unlock_wallet.biometrics_login')}
             </Typography>
           </Box>
         ) : null}
@@ -99,14 +101,14 @@ export function UnlockWalletScreen({
   );
 }
 
-export function UnlockWalletContainer({ route }) {
-  const { callback } = route.params || {};
+export function UnlockWalletContainer({route}) {
+  const {callback} = route.params || {};
   const [passcode, setPasscode] = useState('');
   const supportBiometry = useSelector(appSelectors.getSupportedBiometryType);
   const walletInfo = useSelector(walletSelectors.getWalletInfo);
   const dispatch = useDispatch();
 
-  const handleNumber = async (num) => {
+  const handleNumber = async num => {
     const value = `${passcode}${num}`;
 
     if (value.length > DIGITS) {
@@ -117,9 +119,14 @@ export function UnlockWalletContainer({ route }) {
 
     if (value.length === DIGITS) {
       try {
-        await dispatch(walletOperations.unlockWallet({passcode: value, callback }));
-      } catch(err) {
-        alert('Passcode doesn`t match');
+        await dispatch(
+          walletOperations.unlockWallet({passcode: value, callback}),
+        );
+      } catch (err) {
+        showToast({
+          message: translate('unlock_wallet.invalid_passcode'),
+          type: 'error'
+        });
       }
 
       setTimeout(() => {
@@ -134,8 +141,8 @@ export function UnlockWalletContainer({ route }) {
 
   const handleBiometricUnlock = async () => {
     try {
-      await dispatch(walletOperations.unlockWallet({biometry: true, callback }));
-    } catch(err) {
+      await dispatch(walletOperations.unlockWallet({biometry: true, callback}));
+    } catch (err) {
       setPasscode('');
     }
   };
@@ -143,7 +150,7 @@ export function UnlockWalletContainer({ route }) {
   useEffect(() => {
     if (supportBiometry && walletInfo.biometry) {
       handleBiometricUnlock();
-    } else {      
+    } else {
       setPasscode('');
     }
   }, []);

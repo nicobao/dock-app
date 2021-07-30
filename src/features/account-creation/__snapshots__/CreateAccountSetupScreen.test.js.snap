@@ -1,0 +1,104 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateAccountSetupScreen should render correctly 1`] = `
+<StyledNativeComponent
+  forwardedComponent={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "attrs": Array [],
+      "inlineStyle": InlineStyle {
+        "rules": Array [
+          "
+  background-color: ",
+          [Function],
+          ";
+  flex: 1;
+",
+        ],
+      },
+      "render": [Function],
+      "shouldForwardProp": undefined,
+      "styledComponentId": "StyledNativeComponent",
+      "target": Object {
+        "$$typeof": Symbol(react.forward_ref),
+        "render": [Function],
+      },
+      "withComponent": [Function],
+    }
+  }
+  forwardedRef={null}
+  testID="createAccountSetupScreen"
+>
+  <Styled(View)>
+    <BackButton
+      testID="createAccountSetupScreen.backBtn"
+    />
+  </Styled(View)>
+  <Styled(ScrollView)
+    marginLeft={26}
+    marginRight={26}
+  >
+    <Typography
+      color="#fff"
+      fontFamily="Montserrat"
+      fontSize={24}
+      fontWeight="600"
+      lineHeight={32}
+      marginTop={52}
+    >
+      Account Name
+    </Typography>
+    <Typography
+      fontSize={16}
+      fontWeight="400"
+      lineHeight={24}
+      marginTop={12}
+    >
+      This will be used just for easy reference
+    </Typography>
+    <Memo(ForwardRef(Box))
+      mt={7}
+    >
+      <Memo(ForwardRef(Input))
+        placeholder="Account name"
+        testID="createAccountSetupScreen.acountNameInput"
+        value="test"
+      />
+    </Memo(ForwardRef(Box))>
+    <AccountAdvancedOptions
+      form={
+        Object {
+          "accountName": "test",
+        }
+      }
+      onChange={
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              "accountName",
+            ],
+          ],
+          "results": Array [
+            Object {
+              "type": "return",
+              "value": undefined,
+            },
+          ],
+        }
+      }
+    />
+  </Styled(ScrollView)>
+  <Styled(Box)
+    marginBottom={10}
+    marginLeft={26}
+    marginRight={26}
+  >
+    <LoadingButton
+      full={true}
+      testID="createAccountSetupScreen.nextBtn"
+    >
+      Next
+    </LoadingButton>
+  </Styled(Box)>
+</StyledNativeComponent>
+`;

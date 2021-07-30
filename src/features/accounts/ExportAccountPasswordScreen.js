@@ -10,6 +10,7 @@ import {
 } from 'native-base';
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import { translate } from 'src/locales';
 import {showToast} from '../../core/toast';
 import {
   Header,
@@ -90,7 +91,7 @@ export function GenericPasswordScreen({
               height={16}
               marginRight={2}
             />
-            <Typography>Must include 8-12 characters</Typography>
+            <Typography>{translate('create_password.include_char_length')}</Typography>
           </Stack>
           <Stack direction="row" marginTop={3}>
             <CheckCircleIcon
@@ -99,7 +100,7 @@ export function GenericPasswordScreen({
               height={16}
               marginRight={2}
             />
-            <Typography>Must include digits</Typography>
+            <Typography>{translate('create_password.include_digits')}</Typography>
           </Stack>
           <Stack direction="row" marginTop={3}>
             <CheckCircleIcon
@@ -109,7 +110,7 @@ export function GenericPasswordScreen({
               marginRight={2}
             />
             <Typography>
-              Must include uppercase and lowercase letters
+            {translate('create_password.include_proper_case')}
             </Typography>
           </Stack>
         </Stack>
@@ -120,7 +121,7 @@ export function GenericPasswordScreen({
           testID="next-btn"
           isDisabled={submitDisabled}
           onPress={onSubmit}>
-          Next
+          {translate('navigation.next')}
         </LoadingButton>
       </Footer>
     </ScreenContainer>

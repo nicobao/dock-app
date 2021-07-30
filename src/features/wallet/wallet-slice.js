@@ -11,6 +11,7 @@ import RNFS from 'react-native-fs';
 import Share from 'react-native-share';
 import {showToast} from '../../core/toast';
 import {showConfirmationModal} from 'src/components/ConfirmationModal';
+import { translate } from 'src/locales';
 
 const initialState = {
   loading: true,
@@ -95,7 +96,7 @@ export const walletOperations = {
       } catch (err) {
         console.error(err);
         showToast({
-          message: 'Unable to generate backup',
+          message: translate('backup_wallet.error'),
           type: 'error',
         });
       }
@@ -113,11 +114,10 @@ export const walletOperations = {
     const confirmRemoval = () =>
       showConfirmationModal({
         type: 'alert',
-        title: 'Remove Wallet?',
-        description:
-          'This can’t be undone. You’ll loose all accounts and tokens associated with this wallet if you did not back up.',
-        confirmText: 'Delete',
-        cancelText: 'Cancel',
+        title: translate('delete_wallet_confirmation.title'),
+        description: translate('delete_wallet_confirmation.description'),
+        confirmText: translate('delete_wallet_confirmation.confirm'),
+        cancelText: translate('delete_wallet_confirmation.cancel'),
         onConfirm: () => {
           dispatch(walletOperations.deleteWallet());
         },
@@ -126,11 +126,10 @@ export const walletOperations = {
     const confirmWalletBackup = () =>
       showConfirmationModal({
         type: 'info',
-        title: 'Backup Wallet',
-        description:
-          'We highly recommend that you create a back-up file of your wallet before deleting it.',
-        confirmText: 'Back up',
-        cancelText: 'Skip',
+        title: translate('backup_wallet_confirmation.title'),
+        description: translate('backup_wallet_confirmation.description'),
+        confirmText: translate('backup_wallet_confirmation.confirm'),
+        cancelText: translate('backup_wallet_confirmation.cancel'),
         onConfirm: () => {
           navigate(Routes.WALLET_EXPORT_BACKUP, {
             callback() {

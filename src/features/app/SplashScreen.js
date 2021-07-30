@@ -16,7 +16,6 @@ export function SplashScreen() {
             resizeMode="contain"
           />
           <Typography fontSize={16}>
-          {/* Good morning ☕️ */}
           </Typography>
         </Box>
       </Box>

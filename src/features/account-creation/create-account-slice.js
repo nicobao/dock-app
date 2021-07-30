@@ -7,6 +7,7 @@ import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {showToast, withErrorToast} from '../../core/toast';
 import {accountActions, accountOperations} from '../accounts/account-slice';
+import { translate } from 'src/locales';
 
 const initialState = {
   loading: true,
@@ -90,7 +91,7 @@ export const createAccountOperations = {
     }),
   createAccount: ({
     hasBackup = false,
-    successMessage = 'Account successfully created',
+    successMessage = translate('account_setup.success'),
     form: extraForm
   } = {}) =>
     withErrorToast(async (dispatch, getState) => {

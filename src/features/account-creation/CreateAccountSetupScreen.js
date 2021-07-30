@@ -24,11 +24,13 @@ import {
   LoadingButton,
 } from '../../design-system';
 import {BackButton} from '../../design-system/buttons';
+import {translate} from '../../locales';
 import {
   createAccountActions,
   createAccountOperations,
 } from './create-account-slice';
 import {CreateAccountSetupTestIDs} from './test-ids';
+import {AccountAdvancedOptions} from '../../components/AccountAdvancedOptions';
 
 export function CreateAccountSetupScreen({
   form,
@@ -49,72 +51,25 @@ export function CreateAccountSetupScreen({
           fontWeight="600"
           color="#fff"
           marginTop={52}>
-          Account Name
+          {translate('account_setup.title')}
         </Typography>
         <Typography
           fontSize={16}
           lineHeight={24}
           fontWeight="400"
           marginTop={12}>
-          This will be used just for easy reference
+          {translate('account_setup.description')}
         </Typography>
         <Box mt={7}>
           <Input
-            placeholder="Account name"
+            placeholder={translate('account_setup.account_name_input')}
             value={form.accountName}
             onChangeText={onChange('accountName')}
             testID={CreateAccountSetupTestIDs.acountNameInput}
           />
         </Box>
 
-        <SelectToggler placeholder="Advanced options">
-          <FormControl>
-            <Stack mt={7}>
-              <FormControl.Label>
-                Keypair crypto type
-                <InputPopover title="Keypair crypto type">
-                  Determines what cryptography will be used to create this
-                  account. Note that to validate on Polkadot, the session
-                  account must use "ed25519".
-                </InputPopover>
-              </FormControl.Label>
-              <Select
-                onValueChange={onChange('keypairType')}
-                selectedValue={form.keypairType}>
-                <Select.Item
-                  label="Schnorrkel (sr25519, recommended)"
-                  value="sr25519"
-                />
-                <Select.Item
-                  label="Edwards (ed25519, alternative)"
-                  value="ed25519"
-                />
-                <Select.Item
-                  label="ECDSA (Non BTC/ETH compatible)"
-                  value="ecdsa"
-                />
-              </Select>
-            </Stack>
-          </FormControl>
-          <FormControl isInvalid={false}>
-            <Stack mt={7}>
-              <FormControl.Label>
-                Secret derivation path
-                <InputPopover title="Secret derivation path">
-                  {`You can set a custom derivation path for this account using the following syntax "/<soft-key>//<hard-key>". The "/<soft-key>" and "//<hard-key>" may be repeated and mixed. An optional "///<password>" can be used with a mnemonic seed, and may only be specified once.`}
-                </InputPopover>
-              </FormControl.Label>
-              <Input
-                placeholder="//hard/soft//password"
-                onChangeText={onChange('derivationPath')}
-                autoCapitalize="none"
-              />
-              <FormControl.ErrorMessage>
-                Unable to match provided value to a secret URI.
-              </FormControl.ErrorMessage>
-            </Stack>
-          </FormControl>
-        </SelectToggler>
+        <AccountAdvancedOptions onChange={onChange} form={form} />
       </Content>
       <Footer marginBottom={10} marginLeft={26} marginRight={26}>
         <LoadingButton
@@ -122,7 +77,7 @@ export function CreateAccountSetupScreen({
           testID={CreateAccountSetupTestIDs.nextBtn}
           isDisabled={submitDisabled}
           onPress={onSubmit}>
-          Next
+          {translate('navigation.next')}
         </LoadingButton>
       </Footer>
     </ScreenContainer>

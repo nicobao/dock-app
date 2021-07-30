@@ -9,6 +9,7 @@ import {
 } from '../../design-system';
 import {BackButton} from '../../design-system/buttons';
 import LockClosedIcon from '../../assets/icons/lock-closed.svg';
+import {translate} from 'src/locales';
 
 export function SetupPasscodeScreen() {
   return (
@@ -24,19 +25,19 @@ export function SetupPasscodeScreen() {
           fontWeight="600"
           color="#fff"
           marginTop={52}>
-          Setup Passcode
+          {translate('setup_passcode.title')}
         </Typography>
         <Typography
           fontSize={16}
           lineHeight={24}
           fontWeight="400"
           marginTop={12}>
-          Add a passcode to keep your wallet safe
+          {translate('setup_passcode.description')}
         </Typography>
       </Content>
       <Footer marginBottom={114} marginLeft={26} marginRight={26}>
         <Button full icon={<LockClosedIcon />} testID="create-wallet-btn">
-          Setup Passcode
+          {translate('setup_passcoe.submit')}
         </Button>
       </Footer>
     </ScreenContainer>
