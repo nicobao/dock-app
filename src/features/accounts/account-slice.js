@@ -179,7 +179,6 @@ export const accountOperations = {
     if (cachedAccounts) {
       try {
         dispatch(accountActions.setAccounts(JSON.parse(cachedAccounts)));
-        console.log('loaded accounts from cache', cachedAccounts);
       } catch(err) {
         console.error(err);
       }
