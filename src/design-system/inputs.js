@@ -86,7 +86,7 @@ export function InputPopover({children, title, okText = 'Got it'}) {
             fontSize="24px"
             fontWeight={600}
             fontFamily={Theme.fontFamily.montserrat}
-            color={Theme.colors.white}>
+            color={Theme.colors.textHighlighted}>
             {title}
           </Text>
           <Stack>

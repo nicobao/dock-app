@@ -112,7 +112,7 @@ export function Button(props) {
   if (otherProps.variant === 'ghost') {
     otherProps._text = {
       fontWeight: 400,
-      color: Theme.colors.white,
+      color: Theme.colors.textHighlighted,
     };
   }
 

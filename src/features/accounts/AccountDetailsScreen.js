@@ -72,7 +72,7 @@ export function AccountDetailsScreen({
         <Stack
           direction="column"
           alignItems="center"
-          backgroundColor={Theme.colors.shark}
+          backgroundColor={Theme.colors.secondaryBackground}
           p="32px"
           borderRadius={8}>
           <PolkadotIcon address={account.id} size={48} />
@@ -100,7 +100,7 @@ export function AccountDetailsScreen({
         </Stack>
 
         <Stack mt={8}>
-          <NBox borderBottomColor={Theme.colors.silver} borderBottomWidth={0.5} pb={4}>
+          <NBox borderBottomColor={Theme.colors.dividerBackground} borderBottomWidth={0.5} pb={4}>
             <Typography variant="h2">
               {translate('account_details.transactions')}
             </Typography>
