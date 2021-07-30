@@ -5,8 +5,8 @@ import BackIcon from '../assets/icons/back.svg';
 import {navigateBack} from '../core/navigation';
 import {Box} from './grid';
 import {Typography} from '.';
-import { Theme } from './theme';
-import { translate } from 'src/locales';
+import {Theme} from './theme';
+import {translate} from 'src/locales';
 
 export const runAfterInteractions =
   Platform.OS === 'ios'
@@ -41,13 +41,7 @@ export function BackButton(props) {
       ) : (
         <>
           <BackIcon />
-          <Typography
-            fontFamily="Montserrat"
-            fontSize={17}
-            lineHeight={22}
-            marginLeft={6}
-            color="#fff"
-            fontWeight="400">
+          <Typography variant="description" marginLeft={6}>
             {translate('navigation.back')}
           </Typography>
         </>
@@ -114,7 +108,7 @@ export function Button(props) {
   if (!otherProps.bg && otherProps.isDisabled) {
     otherProps.bg = '#1E75C5';
   }
-  
+
   if (otherProps.variant === 'ghost') {
     otherProps._text = {
       fontWeight: 400,

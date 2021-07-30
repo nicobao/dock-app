@@ -17,6 +17,7 @@ import {
   AlertIcon,
   ChevronRightIcon,
   Button,
+  Theme,
 } from '../../design-system';
 import DocumentDownloadIcon from '../../assets/icons/document-download.svg';
 import PlusCircleIcon from '../../assets/icons/plus-circle.svg';
@@ -76,11 +77,7 @@ export function AccountsScreen({
       <Content marginLeft={26} marginRight={26}>
         {isEmpty ? (
           <Box flex justifyContent="center" alignItems="center">
-            <Typography
-              fontSize={16}
-              lineHeight={24}
-              fontWeight="400"
-              marginTop={12}>
+            <Typography marginTop={12}>
               You don’t have any accounts yet.
             </Typography>
           </Box>
@@ -91,7 +88,7 @@ export function AccountsScreen({
                 <Stack
                   direction="row"
                   borderRadius={12}
-                  backgroundColor="#27272A"
+                  backgroundColor={Theme.colors.shark}
                   space={2}
                   mb={4}
                   py={6}
@@ -102,9 +99,9 @@ export function AccountsScreen({
                         <Stack direction="row" flex={1} alignItems="center">
                           <PolkadotIcon address={account.id} size={32} />
                           <Stack direction="row" flex={1} ml={3}>
-                            <Text color="#fff" fontWeight={600}>
+                            <Typography color={Theme.colors.white} fontWeight={600}>
                               {account.meta.name}
-                            </Text>
+                            </Typography>
                             <ChevronRightIcon marginTop={1} />
                           </Stack>
                         </Stack>
@@ -136,17 +133,13 @@ export function AccountsScreen({
                     </Stack>
 
                     <Stack direction="column" mt={4}>
-                      <Text
-                        color="#FFFFFF"
-                        fontFamily="Montserrat"
-                        fontWeight={600}
-                        fontSize="20px">
+                      <Typography variant="h2">
                         {account.meta.balance.value}{' '}
                         {account.meta.balance.symbol}
-                      </Text>
-                      <Text color="#D4D4D8" fontSize="14px">
+                      </Typography>
+                      <Typography fontSize="14px">
                         {account.meta.balance.value} USD
-                      </Text>
+                      </Typography>
                     </Stack>
                     <Stack direction="row" mt={4}>
                       <Button width="50%" size="sm" colorScheme="dark">

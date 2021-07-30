@@ -76,14 +76,11 @@ exports[`AccountSettingsModal should render correctly 1`] = `
     <Memo(ForwardRef(Stack))
       p={8}
     >
-      <Memo(ForwardRef(Text))
-        color="#fff"
-        fontFamily="Montserrat"
-        fontSize="24px"
-        fontWeight={600}
+      <Styled(Component)
+        variant="h1"
       >
         Options
-      </Memo(ForwardRef(Text))>
+      </Styled(Component)>
       <OptionList
         items={
           Array [

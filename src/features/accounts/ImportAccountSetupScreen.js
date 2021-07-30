@@ -41,13 +41,7 @@ export function ImportAccountSetupScreen({
         <BackButton />
       </Header>
       <Content marginLeft={26} marginRight={26}>
-        <Typography
-          fontFamily="Montserrat"
-          fontSize={24}
-          lineHeight={32}
-          fontWeight="600"
-          color="#fff"
-          marginTop={52}>
+        <Typography variant="h1" marginTop={52}>
           {translate('import_account.title')}
         </Typography>
         <Box mt={7}>

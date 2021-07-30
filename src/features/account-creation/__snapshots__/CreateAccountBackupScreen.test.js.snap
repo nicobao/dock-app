@@ -36,24 +36,17 @@ exports[`CreateAccountBackupScreen should render correctly 1`] = `
     marginLeft={26}
     marginRight={26}
   >
-    <Typography
-      color="#fff"
-      fontFamily="Montserrat"
-      fontSize={24}
-      fontWeight="600"
-      lineHeight={32}
+    <Styled(Component)
       marginTop={52}
+      variant="h1"
     >
       Back up your account
-    </Typography>
-    <Typography
-      fontSize={16}
-      fontWeight="400"
-      lineHeight={24}
+    </Styled(Component)>
+    <Styled(Component)
       marginTop={12}
     >
        In the next step you will see an account recovery phrase. This phrase is the only way you can recover access to your account if your phone is lost or stolen.
-    </Typography>
+    </Styled(Component)>
   </Styled(ScrollView)>
   <Styled(Box)
     marginBottom={0}

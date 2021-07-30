@@ -36,24 +36,17 @@ exports[`CreateAccountMnemonicScreen should render correctly 1`] = `
     marginLeft={26}
     marginRight={26}
   >
-    <Typography
-      color="#fff"
-      fontFamily="Montserrat"
-      fontSize={24}
-      fontWeight="600"
-      lineHeight={32}
+    <Styled(Component)
       marginTop={52}
+      variant="h1"
     >
       Account recovery phrase
-    </Typography>
-    <Typography
-      fontSize={16}
-      fontWeight="400"
-      lineHeight={24}
+    </Styled(Component)>
+    <Styled(Component)
       marginTop={12}
     >
       Write this down or copy these words in the right order and save them somewhere safe. Do not share it to anyone
-    </Typography>
+    </Styled(Component)>
     <Memo(ForwardRef(Box))
       backgroundColor="#27272A"
       borderRadius={12}

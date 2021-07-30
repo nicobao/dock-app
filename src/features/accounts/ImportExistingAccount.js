@@ -7,13 +7,9 @@ import {
   OptionList,
 } from 'src/design-system';
 import {translate} from '../../locales';
-import { BackIcon } from '../../design-system';
+import {BackIcon, Typography} from '../../design-system';
 
-export function ImportExistingAccount({
-  onSelect,
-  onClose,
-  onBack
-}) {
+export function ImportExistingAccount({onSelect, onClose, onBack}) {
   return (
     <Stack p={8}>
       <Stack direction="row">
@@ -22,15 +18,9 @@ export function ImportExistingAccount({
             <BackIcon />
           </Box>
         </Pressable>
-        <Text
-          fontSize="24px"
-          fontWeight={600}
-          color="#fff"
-          fontFamily="Montserrat">
-          {
-            translate('import_account_modal.title')
-          }
-        </Text>
+        <Typography variant="h1">
+          {translate('import_account_modal.title')}
+        </Typography>
       </Stack>
       <OptionList
         mt={5}

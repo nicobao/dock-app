@@ -36,24 +36,17 @@ exports[`SetupPasscodeScreen should render correctly 1`] = `
     marginLeft={26}
     marginRight={26}
   >
-    <Typography
-      color="#fff"
-      fontFamily="Montserrat"
-      fontSize={24}
-      fontWeight="600"
-      lineHeight={32}
+    <Styled(Component)
       marginTop={52}
+      variant="h1"
     >
       Setup Passcode
-    </Typography>
-    <Typography
-      fontSize={16}
-      fontWeight="400"
-      lineHeight={24}
+    </Styled(Component)>
+    <Styled(Component)
       marginTop={12}
     >
       Add a passcode to keep your wallet safe
-    </Typography>
+    </Styled(Component)>
   </Styled(ScrollView)>
   <Styled(Box)
     marginBottom={114}

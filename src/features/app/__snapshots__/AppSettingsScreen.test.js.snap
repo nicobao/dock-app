@@ -48,9 +48,11 @@ exports[`AppSettingsScreen should render correctly 1`] = `
         pl={15}
         width="100%"
       >
-        <Component>
+        <Styled(Component)
+          variant="h3"
+        >
           Settings
-        </Component>
+        </Styled(Component)>
       </Memo(ForwardRef(Box))>
       <Memo(ForwardRef(Box))
         alignItems="flex-end"

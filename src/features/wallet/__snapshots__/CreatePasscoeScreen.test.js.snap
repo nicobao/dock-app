@@ -44,16 +44,12 @@ exports[`CreatePasscodeScreen should render correctly 1`] = `
     <Box
       alignItems="center"
     >
-      <Typography
-        color="#fff"
-        fontFamily="Montserrat"
-        fontSize={20}
-        fontWeight="600"
-        lineHeight={32}
+      <Styled(Component)
         marginTop={52}
+        variant="h2"
       >
         Create your passcode
-      </Typography>
+      </Styled(Component)>
     </Box>
     <NumericKeyboard
       marginTop={85}

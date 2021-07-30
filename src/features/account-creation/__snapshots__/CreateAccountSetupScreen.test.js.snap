@@ -38,24 +38,18 @@ exports[`CreateAccountSetupScreen should render correctly 1`] = `
     marginLeft={26}
     marginRight={26}
   >
-    <Typography
-      color="#fff"
-      fontFamily="Montserrat"
-      fontSize={24}
-      fontWeight="600"
-      lineHeight={32}
+    <Styled(Component)
       marginTop={52}
+      variant="h1"
     >
       Account Name
-    </Typography>
-    <Typography
-      fontSize={16}
-      fontWeight="400"
-      lineHeight={24}
+    </Styled(Component)>
+    <Styled(Component)
+      f={true}
       marginTop={12}
     >
       This will be used just for easy reference
-    </Typography>
+    </Styled(Component)>
     <Memo(ForwardRef(Box))
       mt={7}
     >

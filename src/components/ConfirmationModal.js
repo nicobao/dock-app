@@ -47,9 +47,7 @@ export function ConfirmationModal() {
           <Stack
             borderRadius={50}
             backgroundColor={
-              configs.type === 'info'
-                ? Theme.colors.lightBlue
-                : Theme.colors.error
+              configs.type === 'info' ? Theme.colors.info : Theme.colors.error
             }
             width={44}
             height={44}
@@ -73,9 +71,7 @@ export function ConfirmationModal() {
             width="100%"
             onPress={handleConfirm}
             bg={
-              configs.type === 'info'
-                ? Theme.colors.mariner
-                : Theme.colors.error
+              configs.type === 'info' ? Theme.colors.info2 : Theme.colors.error
             }>
             {configs.confirmText}
           </Button>

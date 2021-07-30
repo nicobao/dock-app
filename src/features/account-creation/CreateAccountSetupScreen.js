@@ -44,20 +44,10 @@ export function CreateAccountSetupScreen({
         <BackButton testID={CreateAccountSetupTestIDs.backBtn} />
       </Header>
       <Content marginLeft={26} marginRight={26}>
-        <Typography
-          fontFamily="Montserrat"
-          fontSize={24}
-          lineHeight={32}
-          fontWeight="600"
-          color="#fff"
-          marginTop={52}>
+        <Typography variant="h1" marginTop={52}>
           {translate('account_setup.title')}
         </Typography>
-        <Typography
-          fontSize={16}
-          lineHeight={24}
-          fontWeight="400"
-          marginTop={12}>
+        <Typography f marginTop={12}>
           {translate('account_setup.description')}
         </Typography>
         <Box mt={7}>

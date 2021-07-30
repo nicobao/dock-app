@@ -14,6 +14,7 @@ import {ErrorAlert, InformationCircle} from '../assets/icons';
 import {Modal} from '../components/Modal';
 import {Button} from './buttons';
 import {Theme} from './theme';
+import {Typography} from './typography';
 
 export {Select, Input, Text} from 'native-base';
 
@@ -35,9 +36,9 @@ export function SelectToggler({children, placeholder}) {
           py="1px"
           borderRadius={6}>
           <Box flex={1}>
-            <Text fontWeight={600} fontSize={14}>
+            <Typography variant="label">
               {placeholder}
-            </Text>
+            </Typography>
           </Box>
           <Box mt={2}>
             {contentVisible ? <ChevronUpIcon /> : <ChevronDownIcon />}
@@ -49,7 +50,7 @@ export function SelectToggler({children, placeholder}) {
   );
 }
 
-export function InputError({ form, id }) {
+export function InputError({form, id}) {
   const errorMessage = form._errors[id];
 
   if (!errorMessage) {
@@ -65,7 +66,7 @@ export function InputError({ form, id }) {
         {errorMessage}
       </Text>
     </Stack>
-  )
+  );
 }
 
 export function InputPopover({children, title, okText = 'Got it'}) {

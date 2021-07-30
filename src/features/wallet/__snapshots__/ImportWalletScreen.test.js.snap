@@ -36,24 +36,17 @@ exports[`ImportWalletScreen should render correctly 1`] = `
     marginLeft={26}
     marginRight={26}
   >
-    <Typography
-      color="#fff"
-      fontFamily="Montserrat"
-      fontSize={24}
-      fontWeight="600"
-      lineHeight={32}
+    <Styled(Component)
       marginTop={52}
+      variant="h1"
     >
       Import wallet
-    </Typography>
-    <Typography
-      fontSize={16}
-      fontWeight="400"
-      lineHeight={24}
+    </Styled(Component)>
+    <Styled(Component)
       marginTop={12}
     >
       If you backed up your wallet previously, you can upload the file to import your wallet.
-    </Typography>
+    </Styled(Component)>
   </Styled(ScrollView)>
   <Styled(Box)
     marginBottom={10}

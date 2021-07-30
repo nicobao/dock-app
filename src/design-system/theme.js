@@ -12,11 +12,16 @@ export const Theme = {
     white: '#FFF',
     shark: '#27272A',
     darkGray: '#18181B',
+    description: '#A1A1AA',
     gray: '#3F3F46',
-    mariner: '#1E75C5',
-    lightBlue: '#0284C7',
+    info2: '#1E75C5',
+    info: '#0284C7',
     error: '#DC2626',
     errorText: '#F87171',
+    text: '#D4D4D8',
+    green: '#34D399',
+    jumbo: '#71717A',
+    silver: '#ccc',
   },
   screen: {
     backgroundColor: '#18181B',
@@ -41,7 +46,7 @@ const nBaseTheme = extendTheme({
       // 200: '#A2D4EC',
       // 300: '#ccc',
       
-      400: Theme.colors.mariner,
+      400: Theme.colors.info2,
       
       // 500: '#0088CC',
       // 600: '#007AB8',

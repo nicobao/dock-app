@@ -10,11 +10,12 @@ import {
   Typography,
   Box,
   runAfterInteractions,
+  Theme,
 } from '../../design-system';
 import styled from 'styled-components/native';
 import {BackButton} from '../../design-system/buttons';
 import KeyboardDeleteIcon from '../../assets/icons/keyboard-delete.svg';
-import { translate } from '../../locales';
+import {translate} from '../../locales';
 
 const Circle = styled.View`
   width: 20px;
@@ -22,7 +23,7 @@ const Circle = styled.View`
   border-radius: 20px;
   border: 1px solid white;
   margin: 0 7px;
-  background-color: ${props => (props.filled ? '#fff' : 'transparent')};
+  background-color: ${props => (props.filled ? Theme.colors.white : 'transparent')};
 `;
 
 function PasscodeMask({digits = 6, filled = 0, ...props}) {
@@ -47,9 +48,7 @@ function KeyboardButton({onPress, value, testID}) {
       alignItems="center"
       onPress={() => value !== null && onPress(value)}>
       <Typography
-        color="white"
-        fontFamily="Montserrat"
-        fontWeight="600"
+        variant="h1"
         fontSize={30}
         lineHeight={37}>
         {value}
@@ -68,7 +67,12 @@ export function NumericKeyboard({onNumber, onDelete, ...props}) {
         autoSize
         marginBottom={24}>
         {[1, 2, 3].map(value => (
-          <KeyboardButton key={value} onPress={onNumber} value={value} testID={`keyboardNumber${value}`}/>
+          <KeyboardButton
+            key={value}
+            onPress={onNumber}
+            value={value}
+            testID={`keyboardNumber${value}`}
+          />
         ))}
       </Box>
       <Box
@@ -123,18 +127,10 @@ export function CreatePasscodeScreen({
       <Content marginLeft={26} marginRight={26}>
         <PasscodeMask marginTop={59} digits={digits} filled={filled} />
         <Box alignItems="center">
-          <Typography
-            fontFamily="Montserrat"
-            fontSize={20}
-            lineHeight={32}
-            fontWeight="600"
-            color="#fff"
-            marginTop={52}>
-            {confirmation ? (
-              translate('create_wallet.confirm_passcode')
-            ): (
-              translate('create_wallet.create_passcode')
-            )}
+          <Typography variant="h2" marginTop={52}>
+            {confirmation
+              ? translate('create_wallet.confirm_passcode')
+              : translate('create_wallet.create_passcode')}
           </Typography>
         </Box>
         <NumericKeyboard
@@ -175,7 +171,7 @@ export function CreatePasscodeContainer() {
     }
 
     setPasscode(value);
-    
+
     runAfterInteractions(() => {
       if (value.length === DIGITS) {
         if (confirmation) {

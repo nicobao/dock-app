@@ -16,7 +16,7 @@ import {appSelectors} from '../app/app-slice';
 import {walletOperations, walletSelectors} from '../wallet/wallet-slice';
 import {NumericKeyboard} from '../wallet/CreatePasscodeScreen';
 import {translate} from '../../locales';
-import { showToast } from 'src/core/toast';
+import {showToast} from 'src/core/toast';
 
 const Circle = styled.View`
   width: 20px;
@@ -66,13 +66,7 @@ export function UnlockWalletScreen({
       <Content marginLeft={26} marginRight={26}>
         <PasscodeMask marginTop={20} digits={digits} filled={filled} />
         <Box alignItems="center">
-          <Typography
-            fontFamily="Montserrat"
-            fontSize={20}
-            lineHeight={32}
-            fontWeight="600"
-            color="#fff"
-            marginTop={52}>
+          <Typography variant="h2" marginTop={52}>
             {text}
           </Typography>
         </Box>
@@ -86,12 +80,7 @@ export function UnlockWalletScreen({
             alignItems="center"
             marginBottom={20}
             onPress={onLoginWithBiometric}>
-            <Typography
-              fontFamily="Montserrat"
-              fontSize={14}
-              lineHeight={32}
-              fontWeight="600"
-              color="#fff">
+            <Typography variant="description">
               {translate('unlock_wallet.biometrics_login')}
             </Typography>
           </Box>
@@ -125,7 +114,7 @@ export function UnlockWalletContainer({route}) {
       } catch (err) {
         showToast({
           message: translate('unlock_wallet.invalid_passcode'),
-          type: 'error'
+          type: 'error',
         });
       }
 
