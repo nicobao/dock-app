@@ -14,7 +14,7 @@ import { AccountsConstants } from './constants';
 
 const CheckCircle = ({checked}) => (
   <CheckCircleIcon
-    color={checked ? Theme.colors.green : Theme.colors.jumbo}
+    color={checked ? Theme.colors.circleChecked: Theme.colors.circleUnckecked}
     width={16}
     height={16}
     marginRight={2}

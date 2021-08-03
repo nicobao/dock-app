@@ -10,7 +10,7 @@ exports[`SetupPasscodeScreen should render correctly 1`] = `
         "rules": Array [
           "
   background-color: ",
-          [Function],
+          "#18181B",
           ";
   flex: 1;
 ",

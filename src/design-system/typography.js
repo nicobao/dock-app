@@ -7,7 +7,7 @@ const headerVariantBase = {
   fontFamily: Theme.fontFamily.montserrat,
   lineHeight: 32,
   fontWeight: '600',
-  color: Theme.colors.white,
+  color: Theme.colors.headerText,
 };
 
 type TypographyProps = ITextProps & {

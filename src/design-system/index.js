@@ -1,9 +1,10 @@
 import { ScrollView } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 import { Box } from './grid';
+import { Theme } from './theme';
 
 export const ScreenContainer = styled.SafeAreaView`
-  background-color: ${props => props.theme.screen.backgroundColor};
+  background-color: ${Theme.colors.primaryBackground};
   flex: 1;
 `;
 

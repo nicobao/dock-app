@@ -23,7 +23,7 @@ const Circle = styled.View`
   border-radius: 20px;
   border: 1px solid white;
   margin: 0 7px;
-  background-color: ${props => (props.filled ? Theme.colors.white : 'transparent')};
+  background-color: ${props => (props.filled ? Theme.colors.textHighlighted : Theme.colors.transparent)};
 `;
 
 function PasscodeMask({digits = 6, filled = 0, ...props}) {

@@ -16,14 +16,14 @@ export function Modal({onClose = () => {}, children, modalSize = 0.42, visible})
       style={{justifyContent: 'flex-end', margin: 0}}>
       <View
         style={{
-          backgroundColor: Theme.colors.darkGray,
+          backgroundColor: Theme.colors.modalBackground,
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
           height: screenHeight * modalSize,
           width: '100%',
         }}>
         <Stack alignItems="center" mt={6}>
-          <Box width="36px" height="4px" backgroundColor={Theme.colors.gray} borderRadius="4px"/>
+          <Box width="36px" height="4px" backgroundColor={Theme.colors.tertiaryBackground} borderRadius="4px"/>
         </Stack>
         {children}
       </View>

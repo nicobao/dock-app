@@ -9,19 +9,22 @@ export const Theme = {
   },
   colors: {
     backdrop: 'rgba(0, 0, 0, 0.6)',
-    white: '#FFF',
-    shark: '#27272A',
-    darkGray: '#18181B',
+    transparent: 'transparent',
+    text: '#D4D4D8',
+    textHighlighted: '#ffffff',
+    modalBackground: '#18181B',
     description: '#A1A1AA',
-    gray: '#3F3F46',
     info2: '#1E75C5',
     info: '#0284C7',
     error: '#DC2626',
     errorText: '#F87171',
-    text: '#D4D4D8',
-    green: '#34D399',
-    jumbo: '#71717A',
-    silver: '#ccc',
+    dividerBackground: '#ccc',
+    headerText: '#fff',
+    primaryBackground: '#18181B',
+    secondaryBackground: '#27272A',
+    tertiaryBackground: '#3F3F46',
+    circleChecked: '#34D399',
+    circleUnckecked: '#71717A',
   },
   screen: {
     backgroundColor: '#18181B',
@@ -59,14 +62,14 @@ const nBaseTheme = extendTheme({
     Input: {
       baseStyle: {
         background: 'black',
-        borderColor: Theme.colors.shark,
-        backgroundColor: Theme.colors.shark,
+        borderColor: Theme.colors.secondaryBackground,
+        backgroundColor: Theme.colors.secondaryBackground,
         fontSize: '19px',
         _hover: {
-          borderColor: Theme.colors.shark
+          borderColor: Theme.colors.secondaryBackground
         },
         _focus: {
-          borderColor: Theme.colors.shark
+          borderColor: Theme.colors.secondaryBackground
         },
         
       },
@@ -92,7 +95,7 @@ const nBaseTheme = extendTheme({
           my: 1
         },
         _text: {
-          color: Theme.colors.white,
+          color: Theme.colors.textHighlighted,
         },
         borderRadius: 6,
       }),

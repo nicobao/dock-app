@@ -42,7 +42,7 @@ export function ConfirmationModal() {
       backgroundColor={Theme.colors.backdrop}
       isOpen={visible}
       onClose={handleCancel}>
-      <Modal.Content backgroundColor={Theme.colors.darkGray} px={5} py={7}>
+      <Modal.Content backgroundColor={Theme.colors.modalBackground} px={5} py={7}>
         <Stack alignItems="center">
           <Stack
             borderRadius={50}
@@ -81,7 +81,7 @@ export function ConfirmationModal() {
             width="100%"
             variant="solid"
             onPress={handleCancel}
-            bg={Theme.colors.gray}>
+            bg={Theme.colors.tertiaryBackground}>
             {configs.cancelText}
           </Button>
         </Stack>
