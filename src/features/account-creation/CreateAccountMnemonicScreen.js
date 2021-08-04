@@ -40,7 +40,7 @@ export function CreateAccountMnemonicScreen({phrase, onCopy, onSubmit}) {
         <Box
           flexDirection="row"
           flexWrap="wrap"
-          backgroundColor={Theme.colors.shark}
+          backgroundColor={Theme.colors.secondaryBackground}
           borderRadius={12}
           p={5}
           mt={8}>
@@ -55,7 +55,7 @@ export function CreateAccountMnemonicScreen({phrase, onCopy, onSubmit}) {
           full
           testID="next-btn"
           variant="unstyled"
-          backgroundColor={Theme.colors.shark}
+          backgroundColor={Theme.colors.secondaryBackground}
           mt={5}
           onPress={onCopy}>
           {translate('account_recovery_phrase.copy_phrase')}

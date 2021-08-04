@@ -88,7 +88,7 @@ export function AccountsScreen({
                 <Stack
                   direction="row"
                   borderRadius={12}
-                  backgroundColor={Theme.colors.shark}
+                  backgroundColor={Theme.colors.secondaryBackground}
                   space={2}
                   mb={4}
                   py={6}
@@ -99,7 +99,7 @@ export function AccountsScreen({
                         <Stack direction="row" flex={1} alignItems="center">
                           <PolkadotIcon address={account.id} size={32} />
                           <Stack direction="row" flex={1} ml={3}>
-                            <Typography color={Theme.colors.white} fontWeight={600}>
+                            <Typography color={Theme.colors.textHighlighted} fontWeight={600}>
                               {account.meta.name}
                             </Typography>
                             <ChevronRightIcon marginTop={1} />
