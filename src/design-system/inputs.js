@@ -1,22 +1,20 @@
-import React, {useState} from 'react';
 import {
   Box,
   ChevronDownIcon,
-  ChevronUpIcon,
-  Input as NBInput,
-  Popover,
-  Pressable,
+  ChevronUpIcon, Pressable,
   Stack,
-  Text,
+  Text
 } from 'native-base';
-import {TouchableWithoutFeedback} from 'react-native';
-import {ErrorAlert, InformationCircle} from '../assets/icons';
-import {Modal} from '../components/Modal';
-import {Button} from './buttons';
-import {Theme} from './theme';
-import {Typography} from './typography';
 
-export {Select, Input, Text} from 'native-base';
+import React, { useState } from 'react';
+import { TouchableWithoutFeedback } from 'react-native';
+import { ErrorAlert, InformationCircle } from '../assets/icons';
+import { Modal } from '../components/Modal';
+import { Button } from './buttons';
+import { Theme } from './theme';
+import { Typography } from './typography';
+
+export { Input, Select, Text } from 'native-base';
 
 export function SelectToggler({children, placeholder}) {
   const [contentVisible, setContentVisible] = useState();
@@ -82,13 +80,9 @@ export function InputPopover({children, title, okText = 'Got it'}) {
       </Pressable>
       <Modal visible={visible} onClose={handleClose}>
         <Stack p={5}>
-          <Text
-            fontSize="24px"
-            fontWeight={600}
-            fontFamily={Theme.fontFamily.montserrat}
-            color={Theme.colors.textHighlighted}>
+          <Typography variant="h1">
             {title}
-          </Text>
+          </Typography>
           <Stack>
             <Text mt={4}>{children}</Text>
           </Stack>
