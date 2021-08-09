@@ -1,7 +1,7 @@
-import { shallow } from 'enzyme';
+import {shallow} from 'enzyme';
 import React from 'react';
 import configureMockStore from 'redux-mock-store';
-import { AccountDetailsScreen } from './AccountDetailsScreen';
+import {AccountDetailsScreen} from './AccountDetailsScreen';
 
 const mockStore = configureMockStore();
 
@@ -18,8 +18,8 @@ describe('AccountDetailsScreen', () => {
             name: 'Test account',
             balance: {
               value: 2,
-            }
-          }
+            },
+          },
         }}
       />,
       {

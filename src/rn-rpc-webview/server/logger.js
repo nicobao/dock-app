@@ -1,12 +1,11 @@
-
 export default {
-  name: "logger",
+  name: 'logger',
   routes: {
     async log(...params) {
       console.log('====> Webview logger:');
       console.log(...params);
-      
-      return 'okkkk'
+
+      return 'okkkk';
     },
   },
 };

@@ -1,27 +1,22 @@
-import React, { useState } from 'react';
-import {
-  Image,
-  LoadingButton,
-  Header,
-  Footer,
-  Content,
-  ScreenContainer,
-  Box,
-  Theme,
-} from '../../design-system';
-import styled, {ThemeProvider} from 'styled-components/native';
-
+import React from 'react';
 import SplashLogo from '../../assets/splash-logo.png';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
-import { WalletConstants } from './constants';
-import { Button } from 'native-base';
+import {
+  Box,
+  Content,
+  Footer,
+  Header,
+  Image,
+  LoadingButton,
+  ScreenContainer,
+} from '../../design-system';
 import {translate} from '../../locales';
 
 export function CreateWalletScreen() {
   return (
     <ScreenContainer testID="createWalletScreen">
-      <Header></Header>
+      <Header />
       <Content>
         <Box flex={1} justifyContent="center" row marginTop="50%">
           <Image
@@ -38,9 +33,7 @@ export function CreateWalletScreen() {
           full
           testID="createWalletButton"
           onPress={() => navigate(Routes.CREATE_WALLET_PASSCODE)}>
-          {
-            translate('create_wallet.create_new')
-          }
+          {translate('create_wallet.create_new')}
         </LoadingButton>
         <LoadingButton
           full
@@ -48,9 +41,7 @@ export function CreateWalletScreen() {
           mt={4}
           testID="createWalletButton"
           onPress={() => navigate(Routes.WALLET_IMPORT_BACKUP)}>
-          {
-            translate('create_wallet.import_existing')
-          }
+          {translate('create_wallet.import_existing')}
         </LoadingButton>
       </Footer>
     </ScreenContainer>

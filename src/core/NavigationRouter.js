@@ -1,48 +1,33 @@
-import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-
-import {navigate, navigationRef} from './navigation';
-import {Routes} from './routes';
-
-import {CreateWalletScreen} from '../features/wallet/CreateWalletScreen';
-import {CreatePasscodeContainer} from '../features/wallet/CreatePasscodeScreen';
-import {ProtectYourWalletContainer} from '../features/wallet/ProtectYourWalletScreen';
-import {SetupPasscodeScreen} from '../features/wallet/SetupPasscodeScreen';
-import {AccountsContainer} from '../features/accounts/AccountsScreen';
-import {AccountDetailsContainer} from '../features/accounts/AccountDetailsScreen';
-import {SplashScreen} from '../features/app/SplashScreen';
-import {AppSettingsContainer} from '../features/app/AppSettingsScreen';
-import {ImportAccountFromMnemonicContainer} from '../features/accounts/ImportAccountFromMnemonicScreen';
-import {ImportAccountSetupContainer} from '../features/accounts/ImportAccountSetupScreen';
-import {ImportAccountPasswordContainer} from '../features/accounts/ImportAccountPasswordScreen';
-
 // POC Screens
 import {Icon, View} from 'native-base';
+import React from 'react';
 import {Platform, TouchableWithoutFeedback} from 'react-native';
-import {Colors} from '../theme/colors';
-import {SettingsScreen} from '../features/settings/SettingsScreen';
-import {CredentialListScreen} from '../features/credentials/CredentialListScreen';
-import {CredIssuanceScreen} from '../features/credential-issuance/CredIssuaneScreen';
-import {QRScanScreen} from '../features/qr-code-scanner/QRScanScreen';
-import {SendTokensScreen} from '../features/transactions/SendTokensScreen';
-import {CreateBackupScreen} from '../features/wallet-backup/CreateBackupScreen';
-import {LoadBackupScreen} from '../features/wallet-backup/LoadBackupScreen';
-import {CreateWalletMnemonicScreen} from '../features/wallets/CreateWalletMnemonicScreen';
-import {UnlockWalletScreen} from '../features/wallets/UnlockWalletScreen';
-import {HomeScreen} from '../features/home/HomeScreen';
-import {PresentationExchangeScreen} from '../features/credentials/PresentationExchangeScreen';
-import {DIDListScreen} from '../features/did/DIDListScreen';
-import {UnlockWalletContainer} from '../features/unlock-wallet/UnlockWalletScreen';
-
-import {CreateAccountVerifyPhraseContainer} from '../features/account-creation/CreateAccountVerifyPhraseScreen';
-import {CreateAccountSetupContainer} from '../features/account-creation/CreateAccountSetupScreen';
-import {CreateAccountMnemonicContainer} from '../features/account-creation/CreateAccountMnemonicScreen';
 import {CreateAccountBackupContainer} from '../features/account-creation/CreateAccountBackupScreen';
-import { ExportAccountPasswordContainer } from '../features/accounts/ExportAccountPasswordScreen';
+import {CreateAccountMnemonicContainer} from '../features/account-creation/CreateAccountMnemonicScreen';
+import {CreateAccountSetupContainer} from '../features/account-creation/CreateAccountSetupScreen';
+import {CreateAccountVerifyPhraseContainer} from '../features/account-creation/CreateAccountVerifyPhraseScreen';
+import {AccountDetailsContainer} from '../features/accounts/AccountDetailsScreen';
+import {AccountsContainer} from '../features/accounts/AccountsScreen';
+import {ExportAccountPasswordContainer} from '../features/accounts/ExportAccountPasswordScreen';
+import {ImportAccountFromMnemonicContainer} from '../features/accounts/ImportAccountFromMnemonicScreen';
+import {ImportAccountPasswordContainer} from '../features/accounts/ImportAccountPasswordScreen';
+import {ImportAccountSetupContainer} from '../features/accounts/ImportAccountSetupScreen';
+import {AppSettingsContainer} from '../features/app/AppSettingsScreen';
+import {SplashScreen} from '../features/app/SplashScreen';
+import {QRScanScreen} from '../features/qr-code-scanner/QRScanScreen';
+import {UnlockWalletContainer} from '../features/unlock-wallet/UnlockWalletScreen';
+import {CreatePasscodeContainer} from '../features/wallet/CreatePasscodeScreen';
+import {CreateWalletScreen} from '../features/wallet/CreateWalletScreen';
 import {ExportWalletContainer} from '../features/wallet/ExportWalletScreen';
-import {ImportWalletContainer} from '../features/wallet/ImportWalletScreen';
 import {ImportWalletPasswordContainer} from '../features/wallet/ImportWalletPasswordScreen';
+import {ImportWalletContainer} from '../features/wallet/ImportWalletScreen';
+import {ProtectYourWalletContainer} from '../features/wallet/ProtectYourWalletScreen';
+import {SetupPasscodeScreen} from '../features/wallet/SetupPasscodeScreen';
+import {Colors} from '../theme/colors';
+import {navigate, navigationRef} from './navigation';
+import {Routes} from './routes';
 
 const getMainOptions = opts => {
   return {
@@ -77,7 +62,7 @@ const getMainOptions = opts => {
 const AppStack = createStackNavigator();
 const RootStack = createStackNavigator();
 
-const forFade = ({ current, closing }) => ({
+const forFade = ({current, closing}) => ({
   cardStyle: {
     opacity: current.progress,
   },
@@ -85,7 +70,7 @@ const forFade = ({ current, closing }) => ({
 
 const screenOptions = {
   headerShown: false,
-}
+};
 
 if (Platform.OS === 'android') {
   screenOptions.cardStyleInterpolator = forFade;
@@ -98,22 +83,22 @@ function AppStackScreen() {
         cardStyle: {
           backgroundColor: '#222',
         },
-        cardOverlay: () => 
+        cardOverlay: () => (
           <View
             style={{
-            flex: 1,
-            backgroundColor: '#222',
-          }} />
-      }}
-    >
+              flex: 1,
+              backgroundColor: '#222',
+            }}
+          />
+        ),
+      }}>
       <AppStack.Screen
         name={Routes.SPLASH_SCREEN}
         component={SplashScreen}
         options={{
           ...screenOptions,
-          
+
           gestureEnabled: false,
-          
         }}
       />
       <AppStack.Screen
@@ -122,7 +107,6 @@ function AppStackScreen() {
         options={{
           ...screenOptions,
           gestureEnabled: false,
-          
         }}
       />
       <AppStack.Screen
@@ -131,7 +115,6 @@ function AppStackScreen() {
         options={{
           ...screenOptions,
           gestureEnabled: false,
-          
         }}
       />
       <AppStack.Screen
@@ -163,7 +146,7 @@ function AppStackScreen() {
           ...screenOptions,
         }}
       />
-      
+
       <AppStack.Screen
         name={Routes.ACCOUNT_EXPORT_SETUP_PASSWORD}
         component={ExportAccountPasswordContainer}
@@ -171,8 +154,6 @@ function AppStackScreen() {
           ...screenOptions,
         }}
       />
-      
-      
 
       <AppStack.Screen
         name={Routes.CREATE_WALLET_PASSCODE}
@@ -213,6 +194,14 @@ function AppStackScreen() {
       />
 
       <AppStack.Screen
+        name={Routes.APP_QR_SCANNER}
+        component={QRScanScreen}
+        options={{
+          ...screenOptions,
+        }}
+      />
+
+      <AppStack.Screen
         name={Routes.CREATE_ACCOUNT_SETUP}
         component={CreateAccountSetupContainer}
         options={{
@@ -243,8 +232,7 @@ function AppStackScreen() {
           ...screenOptions,
         }}
       />
-      
-      
+
       <AppStack.Screen
         name={Routes.WALLET_EXPORT_BACKUP}
         component={ExportWalletContainer}
@@ -252,7 +240,7 @@ function AppStackScreen() {
           ...screenOptions,
         }}
       />
-      
+
       <AppStack.Screen
         name={Routes.WALLET_IMPORT_BACKUP}
         component={ImportWalletContainer}
@@ -260,7 +248,7 @@ function AppStackScreen() {
           ...screenOptions,
         }}
       />
-      
+
       <AppStack.Screen
         name={Routes.WALLET_IMPORT_BACKUP_PASSWORD}
         component={ImportWalletPasswordContainer}

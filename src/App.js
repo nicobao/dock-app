@@ -13,15 +13,14 @@ import {ConfirmConnectionModal} from './features/wallet-connect/ConfirmConnectio
 // import {ThemeProvider} from 'styled-components/native';
 // import {Theme} from './design-system';
 import {appOperations} from './features/app/app-slice';
-import { ThemeProvider } from './design-system';
-import { setToast } from './core/toast';
+import {ThemeProvider} from './design-system';
+import {setToast} from './core/toast';
 import {ConfirmationModal} from '../src/components/ConfirmationModal';
-import * as Sentry from "@sentry/react-native";
+import * as Sentry from '@sentry/react-native';
 
 Sentry.init({
   dsn: SENTRY_DSN,
 });
-
 
 function GlobalComponents() {
   const dispatch = useDispatch();
@@ -29,7 +28,7 @@ function GlobalComponents() {
 
   useEffect(() => {
     dispatch(appOperations.initialize());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     setToast(toast);
@@ -56,8 +55,8 @@ const App = () => {
     <Provider store={store}>
       <ThemeProvider>
         {/* <StyleProvider style={getTheme(material)}> */}
-          <GlobalComponents />
-          {/* <TestScreen /> */}
+        <GlobalComponents />
+        {/* <TestScreen /> */}
         {/* </StyleProvider> */}
       </ThemeProvider>
     </Provider>

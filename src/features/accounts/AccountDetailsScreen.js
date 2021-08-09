@@ -37,7 +37,7 @@ export function AccountDetailsScreen({
   const [qrCodeModalVisible, setQrCodeModalVisible] = useState();
 
   useEffect(() => {
-    if (!!qrCodeData) {
+    if (qrCodeData) {
       setQrCodeModalVisible(true);
     }
   }, [qrCodeData]);
@@ -76,17 +76,10 @@ export function AccountDetailsScreen({
           p="32px"
           borderRadius={8}>
           <PolkadotIcon address={account.id} size={48} />
-          <Typography
-            variant="h1"
-            fontSize="32px"
-            mt={3}>
+          <Typography variant="h1" fontSize="32px" mt={3}>
             {account.meta.balance.value} {account.meta.balance.symbol}
           </Typography>
-          <Typography
-            variant="montserrat"
-            fontSize={14}
-            fontWeight={500}
-          >
+          <Typography variant="montserrat" fontSize={14} fontWeight={500}>
             0.00 USD
           </Typography>
           <Stack direction="row" width="100%" mt={5}>
@@ -100,7 +93,10 @@ export function AccountDetailsScreen({
         </Stack>
 
         <Stack mt={8}>
-          <NBox borderBottomColor={Theme.colors.dividerBackground} borderBottomWidth={0.5} pb={4}>
+          <NBox
+            borderBottomColor={Theme.colors.dividerBackground}
+            borderBottomWidth={0.5}
+            pb={4}>
             <Typography variant="h2">
               {translate('account_details.transactions')}
             </Typography>
@@ -118,11 +114,7 @@ export function AccountDetailsScreen({
               <NBox mr={3} mt={'3px'}>
                 <AlertIcon />
               </NBox>
-              <Typography
-                ml={2}
-                variant="h3"
-                fontSize={17}
-              >
+              <Typography ml={2} variant="h3" fontSize={17}>
                 {translate('account_details.pending_backup')}
               </Typography>
             </Stack>

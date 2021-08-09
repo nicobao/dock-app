@@ -5,12 +5,14 @@ import {translate} from '../locales';
 
 export function AccountAdvancedOptions({onChange, form}) {
   return (
-    <SelectToggler placeholder={translate('account_advanced_options.advanced_options')}>
+    <SelectToggler
+      placeholder={translate('account_advanced_options.advanced_options')}>
       <FormControl>
         <Stack mt={7}>
           <FormControl.Label>
             {translate('account_advanced_options.keypair_type')}
-            <InputPopover title={translate('account_advanced_options.keypair_type')}>
+            <InputPopover
+              title={translate('account_advanced_options.keypair_type')}>
               {translate('account_advanced_options.keypair_type_tip')}
             </InputPopover>
           </FormControl.Label>
@@ -37,7 +39,9 @@ export function AccountAdvancedOptions({onChange, form}) {
           <FormControl.Label>
             {translate('account_advanced_options.secret_derivation_path')}
             <InputPopover
-              title={translate('account_advanced_options.secret_derivation_path')}>
+              title={translate(
+                'account_advanced_options.secret_derivation_path',
+              )}>
               {translate('account_advanced_options.secret_derivation_path_tip')}
             </InputPopover>
           </FormControl.Label>

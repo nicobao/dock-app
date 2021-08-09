@@ -20,7 +20,7 @@ export const Routes = {
   WALLET_EXPORT_BACKUP: 'wallet/exportBackup',
   WALLET_IMPORT_BACKUP: 'wallet/importBackup',
   WALLET_IMPORT_BACKUP_PASSWORD: 'wallet/importBackupPassword',
-  
+
   // POC routes
   APP_HOME: 'app/home',
   APP_DID: 'app/did',

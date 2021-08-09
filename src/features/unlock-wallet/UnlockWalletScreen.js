@@ -1,22 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {showToast} from 'src/core/toast';
+import styled from 'styled-components/native';
+import SplashLogo from '../../assets/splash-logo.png';
 import {
-  Header,
+  Box,
   Content,
+  Image,
   ScreenContainer,
   Typography,
-  Box,
-  Image,
 } from '../../design-system';
-import styled from 'styled-components/native';
-import {BackButton} from '../../design-system/buttons';
-import SplashLogo from '../../assets/splash-logo.png';
-import KeyboardDeleteIcon from '../../assets/icons/keyboard-delete.svg';
-import {useDispatch, useSelector} from 'react-redux';
-import {appSelectors} from '../app/app-slice';
-import {walletOperations, walletSelectors} from '../wallet/wallet-slice';
-import {NumericKeyboard} from '../wallet/CreatePasscodeScreen';
 import {translate} from '../../locales';
-import {showToast} from 'src/core/toast';
+import {appSelectors} from '../app/app-slice';
+import {NumericKeyboard} from '../wallet/CreatePasscodeScreen';
+import {walletOperations, walletSelectors} from '../wallet/wallet-slice';
 
 const Circle = styled.View`
   width: 20px;
@@ -128,13 +125,13 @@ export function UnlockWalletContainer({route}) {
     setPasscode(passcode.substring(0, passcode.length - 1));
   };
 
-  const handleBiometricUnlock = async () => {
+  const handleBiometricUnlock = useCallback(async () => {
     try {
       await dispatch(walletOperations.unlockWallet({biometry: true, callback}));
     } catch (err) {
       setPasscode('');
     }
-  };
+  }, [dispatch, callback]);
 
   useEffect(() => {
     if (supportBiometry && walletInfo.biometry) {
@@ -142,7 +139,7 @@ export function UnlockWalletContainer({route}) {
     } else {
       setPasscode('');
     }
-  }, []);
+  }, [supportBiometry, walletInfo.biometry, handleBiometricUnlock]);
 
   return (
     <UnlockWalletScreen

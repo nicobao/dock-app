@@ -14,9 +14,9 @@ import {
 import {useDispatch} from 'react-redux';
 import {AppConstants} from './constants';
 import {walletOperations} from '../wallet/wallet-slice';
-import { navigate } from '../../core/navigation';
-import { Routes } from '../../core/routes';
-import { translate } from 'src/locales';
+import {navigate} from '../../core/navigation';
+import {Routes} from '../../core/routes';
+import {translate} from 'src/locales';
 
 const constants = AppConstants.settings;
 
@@ -38,11 +38,7 @@ export function AppSettingsScreen({onDeleteWallet, onBackupWallet}) {
             alignContent="center"
             alignItems="center"
             pl={15}>
-            <Typography variant="h3">
-              {
-                translate('settings.title')
-              }
-            </Typography>
+            <Typography variant="h3">{translate('settings.title')}</Typography>
           </NBox>
           <NBox width="80px" alignItems="flex-end" />
         </Box>
@@ -79,7 +75,7 @@ export function AppSettingsContainer() {
         return dispatch(walletOperations.confirmWalletDelete());
       }}
       onBackupWallet={() => {
-        navigate(Routes.WALLET_EXPORT_BACKUP)
+        navigate(Routes.WALLET_EXPORT_BACKUP);
       }}
     />
   );

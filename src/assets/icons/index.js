@@ -32,4 +32,4 @@ export {
   AlertModalIcon,
   ErrorAlert,
   XCircleIcon,
-}
+};

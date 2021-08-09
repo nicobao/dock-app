@@ -1,22 +1,24 @@
 import {
-  Footer,
-  Content,
   Button,
-  Text,
   Container,
-  View,
+  Content,
+  Footer,
+  H1,
+  Input,
   Item,
   Label,
-  Input,
-  H1,
+  Text,
+  View,
 } from 'native-base';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {ScreenSpinner} from '../../components/ScreenSpinner';
-import {Dimensions} from 'react-native';
 import styled from 'styled-components/native';
+import {ScreenSpinner} from '../../components/ScreenSpinner';
 import {walletsSelectors} from '../wallets/wallets-slice';
-import { transactionsOperations, transactionsSelectors } from './transactions-slice';
+import {
+  transactionsOperations,
+  transactionsSelectors,
+} from './transactions-slice';
 
 const DetailsWrapper = styled(View)`
   margin-top: 22px;
@@ -29,7 +31,7 @@ const DetailsWrapper = styled(View)`
 export function SendTokensScreen() {
   const dispatch = useDispatch();
   const [form, setForm] = useState({
-    addressTo: ''
+    addressTo: '',
   });
   const isLoading = useSelector(transactionsSelectors.getLoading);
   const handleFormChange = key => newValue => {
@@ -42,7 +44,7 @@ export function SendTokensScreen() {
   const balance = useSelector(walletsSelectors.getBalance);
 
   const handleSubmit = () => {
-    dispatch(transactionsOperations.sendTokens(form))
+    dispatch(transactionsOperations.sendTokens(form));
   };
 
   return (
@@ -53,21 +55,21 @@ export function SendTokensScreen() {
         ) : (
           <View style={{margin: 10}}>
             <H1>Send tokens</H1>
-            <Item floatingLabel style={{ marginTop: 20 }}>
+            <Item floatingLabel style={{marginTop: 20}}>
               <Label>Send to address</Label>
               <Input
                 onChangeText={handleFormChange('addressTo')}
                 value={form.addressTo}
               />
             </Item>
-            <Item floatingLabel style={{ marginTop: 20 }}>
+            <Item floatingLabel style={{marginTop: 20}}>
               <Label>Amount</Label>
               <Input
                 onChangeText={handleFormChange('amount')}
                 value={form.amount}
               />
             </Item>
-            <Text style={{ marginTop: 18 }}>{balance} available</Text>
+            <Text style={{marginTop: 18}}>{balance} available</Text>
           </View>
         )}
       </Content>

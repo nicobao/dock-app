@@ -36,7 +36,7 @@ export function RNRpcWebView({onReady}) {
         if (data.type === 'json-rpc-ready') {
           initRpcClient(async jsonRPCRequest => {
             console.log('Send request to webview client', jsonRPCRequest);
-            
+
             webViewRef.current.injectJavaScript(`
             (function(){
               (navigator.appVersion.includes("Android") ? document : window).dispatchEvent(new MessageEvent('message', {data: ${JSON.stringify(
@@ -48,7 +48,7 @@ export function RNRpcWebView({onReady}) {
             })();
         
             `);
-            
+
             return jsonRPCRequest;
           });
 
@@ -58,8 +58,11 @@ export function RNRpcWebView({onReady}) {
         } else if (data.type === 'json-rpc-response') {
           getRpcClient().receive(data.body);
         } else if (data.type === 'json-rpc-request') {
-          rpcServer.receive(data.body).then((response) => {
-            console.log('RN: Send json-rpc-request to webview client', response);
+          rpcServer.receive(data.body).then(response => {
+            console.log(
+              'RN: Send json-rpc-request to webview client',
+              response,
+            );
             webViewRef.current.injectJavaScript(`
             (function(){
               (navigator.appVersion.includes("Android") ? document : window).dispatchEvent(new MessageEvent('message', {data: ${JSON.stringify(
@@ -70,7 +73,7 @@ export function RNRpcWebView({onReady}) {
               )}}));
             })();
             `);
-            
+
             return response;
           });
         } else if (data.type === 'log') {

@@ -1,20 +1,17 @@
+import Clipboard from '@react-native-community/clipboard';
 import React from 'react';
-import styled from 'styled-components/native';
 import {
   Dimensions,
-  View,
-  Text,
   StyleSheet,
+  Text,
   TouchableWithoutFeedback,
+  View,
 } from 'react-native';
-import QRCodeScanner from 'react-native-qrcode-scanner';
-import Clipboard from '@react-native-community/clipboard';
 import {RNCamera} from 'react-native-camera';
+import QRCodeScanner from 'react-native-qrcode-scanner';
+import styled from 'styled-components/native';
+import {navigateBack} from '../../core/navigation';
 import {Colors} from '../../theme/colors';
-import {navigate, navigateBack} from '../../core/navigation';
-import {useDispatch} from 'react-redux';
-import {qrCodeOperations} from './qrcode-slice';
-import { Routes } from '../../core/routes';
 
 const Container = styled.View`
   flex: 1;
@@ -82,8 +79,8 @@ const QRCodeContainer = styled.View`
   height: 100%;
 `;
 
-export function QRScanScreen({ route }) {
-  const { onData } = route.params;
+export function QRScanScreen({route}) {
+  const {onData} = route.params;
 
   return (
     <Container>
@@ -112,7 +109,7 @@ export function QRScanScreen({ route }) {
             <TouchableWithoutFeedback
               onPress={navigateBack}
               style={{padding: 20}}>
-              <Text style={{ color: 'white' }}>Back</Text>
+              <Text style={{color: 'white'}}>Back</Text>
             </TouchableWithoutFeedback>
           </IconContainer>
         </Header>

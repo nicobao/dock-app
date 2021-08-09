@@ -23,7 +23,8 @@ const Circle = styled.View`
   border-radius: 20px;
   border: 1px solid white;
   margin: 0 7px;
-  background-color: ${props => (props.filled ? Theme.colors.textHighlighted : Theme.colors.transparent)};
+  background-color: ${props =>
+    props.filled ? Theme.colors.textHighlighted : Theme.colors.transparent};
 `;
 
 function PasscodeMask({digits = 6, filled = 0, ...props}) {
@@ -47,10 +48,7 @@ function KeyboardButton({onPress, value, testID}) {
       flex
       alignItems="center"
       onPress={() => value !== null && onPress(value)}>
-      <Typography
-        variant="h1"
-        fontSize={30}
-        lineHeight={37}>
+      <Typography variant="h1" fontSize={30} lineHeight={37}>
         {value}
       </Typography>
     </Box>
@@ -155,7 +153,7 @@ export function CreatePasscodeContainer() {
     setConfirmation('');
 
     if (confirmation !== value) {
-      alert(`Passcode doesn't match, try again`);
+      alert("Passcode doesn't match, try again");
       return;
     }
 

@@ -7,10 +7,10 @@ import {walletConnectReducer} from '../features/wallet-connect/wallet-connect-sl
 import {qrCodeReducer} from '../features/qr-code-scanner/qrcode-slice';
 import {transactionsReducer} from '../features/transactions/transactions-slice';
 import {backupReducer} from '../features/wallet-backup/wallet-backup-slice';
-import { appReducer } from '../features/app/app-slice';
-import { walletReducer } from '../features/wallet/wallet-slice';
-import { accountReducer } from '../features/accounts/account-slice';
-import { createAccountReducer } from '../features/account-creation/create-account-slice';
+import {appReducer} from '../features/app/app-slice';
+import {walletReducer} from '../features/wallet/wallet-slice';
+import {accountReducer} from '../features/accounts/account-slice';
+import {createAccountReducer} from '../features/account-creation/create-account-slice';
 
 export const rootReducer = combineReducers({
   app: appReducer,

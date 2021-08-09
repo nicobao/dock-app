@@ -16,9 +16,7 @@ describe('GenericPasswordScreen', () => {
         onChange={jest.fn()}
         form={{
           password: 'test',
-          _errors: {
-            
-          }
+          _errors: {},
         }}
       />,
       {

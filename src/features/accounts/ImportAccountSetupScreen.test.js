@@ -15,7 +15,7 @@ describe('ImportAccountSetupScreen', () => {
       <ImportAccountSetupScreen
         onChange={jest.fn()}
         form={{
-          accountName: 'test'
+          accountName: 'test',
         }}
       />,
       {

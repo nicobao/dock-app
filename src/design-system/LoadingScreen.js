@@ -31,11 +31,10 @@ import {TouchableWithoutFeedback} from 'react-native';
 export function LoadingScreen({}) {
   return (
     <ScreenContainer testID="LoadingScreen">
-      <Header>
-      </Header>
+      <Header />
       <Content marginLeft={26} marginRight={26}>
-          <Typography>Loading...</Typography>
-     </Content>
+        <Typography>Loading...</Typography>
+      </Content>
     </ScreenContainer>
   );
 }

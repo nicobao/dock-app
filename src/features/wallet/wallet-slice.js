@@ -11,7 +11,7 @@ import RNFS from 'react-native-fs';
 import Share from 'react-native-share';
 import {showToast} from '../../core/toast';
 import {showConfirmationModal} from 'src/components/ConfirmationModal';
-import { translate } from 'src/locales';
+import {translate} from 'src/locales';
 
 const initialState = {
   loading: true,
@@ -66,15 +66,17 @@ export const walletOperations = {
       const jsonData = JSON.parse(fileData);
       await AsyncStorage.removeItem('wallet');
       await WalletRpc.importWallet(jsonData, password);
-      
-      dispatch(walletActions.setCreationFlags({
-        importWalletFlow: true,
-      }));
-      
-      navigate(Routes.CREATE_WALLET_PASSCODE);      
+
+      dispatch(
+        walletActions.setCreationFlags({
+          importWalletFlow: true,
+        }),
+      );
+
+      navigate(Routes.CREATE_WALLET_PASSCODE);
     },
   exportWallet:
-    ({password, callback }) =>
+    ({password, callback}) =>
     async (dispatch, getState) => {
       const walletBackup = await WalletRpc.export(password);
       const jsonData = JSON.stringify(walletBackup);
@@ -87,11 +89,11 @@ export const walletOperations = {
           url: 'file://' + path,
           type: mimeType,
         });
-        
+
         if (callback) {
           callback();
         } else {
-          navigateBack()
+          navigateBack();
         }
       } catch (err) {
         console.error(err);
@@ -225,7 +227,7 @@ export const walletOperations = {
         WalletRpc.create(keychainId);
       }
 
-      dispatch(walletActions.setCreationFlags({}))
+      dispatch(walletActions.setCreationFlags({}));
 
       navigate(Routes.ACCOUNTS);
     },

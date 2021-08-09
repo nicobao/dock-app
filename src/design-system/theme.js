@@ -48,9 +48,9 @@ const nBaseTheme = extendTheme({
       // 100: '#C5E4F3',
       // 200: '#A2D4EC',
       // 300: '#ccc',
-      
+
       400: Theme.colors.info2,
-      
+
       // 500: '#0088CC',
       // 600: '#007AB8',
       // 700: '#006BA1',
@@ -66,33 +66,32 @@ const nBaseTheme = extendTheme({
         backgroundColor: Theme.colors.secondaryBackground,
         fontSize: '19px',
         _hover: {
-          borderColor: Theme.colors.secondaryBackground
+          borderColor: Theme.colors.secondaryBackground,
         },
         _focus: {
-          borderColor: Theme.colors.secondaryBackground
+          borderColor: Theme.colors.secondaryBackground,
         },
-        
       },
       defaultProps: {
-        w:"100%",
+        w: '100%',
         bg: 'red',
       },
       variants: {
         outline: () => ({
           borderWidth: 0,
-          borderColor: '#ccc'
-        })
-      }
+          borderColor: '#ccc',
+        }),
+      },
     },
     Text: {
-      baseStyle: (props) => ({
-        fontFamily: !props.montserrat ? 'Nunito Sans' : 'Montserrat'
+      baseStyle: props => ({
+        fontFamily: !props.montserrat ? 'Nunito Sans' : 'Montserrat',
       }),
     },
     Button: {
-      baseStyle: (props) => ({
+      baseStyle: props => ({
         _stack: {
-          my: 1
+          my: 1,
         },
         _text: {
           color: Theme.colors.textHighlighted,
@@ -106,13 +105,13 @@ const nBaseTheme = extendTheme({
         // _text: {
         //   color: '#fff'
         // },
-      }
-    }
+      },
+    },
   },
   config: {
     initialColorMode: 'dark',
   },
-})
+});
 
 export function ThemeProvider({children}) {
   return (

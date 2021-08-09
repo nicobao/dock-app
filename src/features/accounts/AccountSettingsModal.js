@@ -1,14 +1,14 @@
-import { Box, Pressable, Stack } from 'native-base';
-import React, { useEffect, useState } from 'react';
+import {Box, Pressable, Stack} from 'native-base';
+import React, {useEffect, useState} from 'react';
 import {
   BackIcon,
   DocumentDownloadIcon,
   OptionList,
-  PlusCircleIcon
+  PlusCircleIcon,
 } from 'src/design-system';
-import { Modal } from '../../components/Modal';
-import { Typography } from '../../design-system';
-import { translate } from '../../locales';
+import {Modal} from '../../components/Modal';
+import {Typography} from '../../design-system';
+import {translate} from '../../locales';
 
 export function AccountSettingsModal({onClose, visible, onDelete, onExport}) {
   const [view, setView] = useState('options');

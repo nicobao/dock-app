@@ -99,7 +99,9 @@ export function AccountsScreen({
                         <Stack direction="row" flex={1} alignItems="center">
                           <PolkadotIcon address={account.id} size={32} />
                           <Stack direction="row" flex={1} ml={3}>
-                            <Typography color={Theme.colors.textHighlighted} fontWeight={600}>
+                            <Typography
+                              color={Theme.colors.textHighlighted}
+                              fontWeight={600}>
                               {account.meta.name}
                             </Typography>
                             <ChevronRightIcon marginTop={1} />
@@ -183,7 +185,7 @@ export function AccountsContainer() {
   const accounts = useSelector(accountSelectors.getAccounts);
   useEffect(() => {
     dispatch(accountOperations.loadAccounts());
-  }, []);
+  }, [dispatch]);
 
   return (
     <AccountsScreen

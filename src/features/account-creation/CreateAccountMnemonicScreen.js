@@ -46,7 +46,9 @@ export function CreateAccountMnemonicScreen({phrase, onCopy, onSubmit}) {
           mt={8}>
           {phrase.split(' ').map((word, idx) => (
             <Box flexDirection="row" width="33%" p={3} key={word}>
-              <Text fontSize={14} mr={2} color={Theme.colors.description}>{`${idx + 1}`}</Text>
+              <Text fontSize={14} mr={2} color={Theme.colors.description}>{`${
+                idx + 1
+              }`}</Text>
               <Text fontSize={14}>{word}</Text>
             </Box>
           ))}

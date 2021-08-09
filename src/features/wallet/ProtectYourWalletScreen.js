@@ -1,25 +1,23 @@
-import React, {useEffect, useState} from 'react';
-import {
-  Button,
-  Header,
-  Footer,
-  Content,
-  ScreenContainer,
-  Typography,
-  Box,
-  BigButton,
-  runAfterInteractions,
-} from '../../design-system';
-import {BackButton} from '../../design-system/buttons';
-import EmojiHappyIcon from '../../assets/icons/emoji-happy.svg';
-import ArrowRight from '../../assets/icons/arrow-right.svg';
-import FingerprintSimple from '../../assets/icons/fingerprint-simple.svg';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {walletOperations} from './wallet-slice';
-import {appSelectors, BiometryType} from '../app/app-slice';
 import {ScreenSpinner} from 'src/components/ScreenSpinner';
 import {showToast} from 'src/core/toast';
+import ArrowRight from '../../assets/icons/arrow-right.svg';
+import EmojiHappyIcon from '../../assets/icons/emoji-happy.svg';
+import FingerprintSimple from '../../assets/icons/fingerprint-simple.svg';
+import {
+  BigButton,
+  Content,
+  Footer,
+  Header,
+  runAfterInteractions,
+  ScreenContainer,
+  Typography,
+} from '../../design-system';
+import {BackButton} from '../../design-system/buttons';
+import {appSelectors, BiometryType} from '../app/app-slice';
 import {WalletConstants} from './constants';
+import {walletOperations} from './wallet-slice';
 
 export function ProtectYourWalletScreen({
   onSkip,
@@ -93,15 +91,15 @@ export function ProtectYourWalletContainer() {
     });
   };
 
-  const handleSkip = () => {
+  const handleSkip = useCallback(() => {
     runAfterInteractions(() => dispatch(walletOperations.createWallet()));
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     if (!faceId && !fingerprint) {
       handleSkip();
     }
-  }, [faceId, fingerprint]);
+  }, [faceId, fingerprint, handleSkip]);
 
   if (loading) {
     return <ScreenSpinner />;

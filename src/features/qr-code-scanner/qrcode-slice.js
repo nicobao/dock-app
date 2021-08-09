@@ -1,6 +1,9 @@
 import {createSlice} from '@reduxjs/toolkit';
-import { navigateBack } from '../../core/navigation';
-import { isWalletConnectUri, walletConnectOperations } from '../wallet-connect/wallet-connect-slice';
+import {navigateBack} from '../../core/navigation';
+import {
+  isWalletConnectUri,
+  walletConnectOperations,
+} from '../wallet-connect/wallet-connect-slice';
 
 const initialState = {
   isLoading: true,
@@ -25,11 +28,11 @@ export const qrCodeSelectors = {
 };
 
 export const qrCodeOperations = {
-  handleQRCode: (data) => async (dispatch, getState) => {
+  handleQRCode: data => async (dispatch, getState) => {
     console.log('QR Code data received', data);
 
     if (isWalletConnectUri(data)) {
-      dispatch(walletConnectOperations.handleSession({ uri: data }));
+      dispatch(walletConnectOperations.handleSession({uri: data}));
       navigateBack();
     }
   },
