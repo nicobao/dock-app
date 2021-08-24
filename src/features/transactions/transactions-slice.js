@@ -1,8 +1,9 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {Toast} from 'native-base';
 import { translate } from 'src/locales';
-import {navigateBack} from '../../core/navigation';
 import {ApiRpc} from '../../rn-rpc-webview/api-rpc';
+import uuid from 'uuid';
+import {navigateBack} from '../../core/navigation';
 
 const TransactionStatus = {
   InProgress: 'pending',
@@ -24,6 +25,21 @@ const transactions = createSlice({
     setLoading(state, action) {
       state.loading = action.payload;
     },
+    setTransactions(state, action) {
+      state.transactions = action.payload;
+    },
+    addTransaction(state, action) {
+      state.transactions.push(action.payload);
+    },
+    updateTransaction(state, action) {
+      state.transactions = state.transactions.map(item => {
+        if (item.id === action.payload.id) {
+          return action.payload;
+        }
+        
+        return item;
+      });
+    }
   },
 });
 
@@ -38,6 +54,7 @@ export const transactionsSelectors = {
 const waitUntil = time => new Promise(res => setTimeout(res, time));
 
 export const transactionsOperations = {
+  
   getFeeAmount: ({
     recipientAddress,
     accountAddress,
@@ -58,26 +75,52 @@ export const transactionsOperations = {
       amount
     }) =>
     async (dispatch, getState) => {
-      // create tx and add to the queue
       Toast.show({
-        text: 'Transaction sent!',
+        text: translate('send_token.transaction_sent'),
       });
 
-      try {
-        ApiRpc.sendTokens({
-          address: addressTo,
-          accountAddress,
-          amount: amount,
-        }).then(() => {
-          
-        })
-      } catch (err) {
-        console.error(err);
+ 
+      const internalId = uuid();
+      const transaction = {
+        recipientAddress,
+        accountAddress,
+        amount,
+        internalId,
+        status: TransactionStatus.InProgress
+      }
+
+      dispatch(transactionsActions.addTransaction(transaction));
+
+      Toast.show({
+        type: 'success',
+        text: translate('confirm_transaction.transfer_initiated'),
+      });
+
+      ApiRpc.sendTokens({
+        address: recipientAddress,
+        accountAddress,
+        amount: amount,
+      }).then(() => {
+        dispatch(transactionsActions.updateTransaction({
+          ...transaction,
+          status: TransactionStatus.Complete
+        }));
+        
+        Toast.show({
+          type: 'success',
+          text: translate('confirm_transaction.transaction_complete'),
+        });
+      }).catch(err => {
         Toast.show({
           type: 'danger',
-          text: translate(''),
+          text: translate('transaction_failed.title'),
         });
-      }
+
+        dispatch(transactionsActions.updateTransaction({
+          ...transaction,
+          status: TransactionStatus.Failed
+        }));
+      });       
     },
 };
 
