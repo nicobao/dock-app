@@ -83,10 +83,25 @@ export function AccountDetailsScreen({
             0.00 USD
           </Typography>
           <Stack direction="row" width="100%" mt={5}>
-            <Button flex={1} size="sm">
+            <Button
+              flex={1}
+              size="sm"
+              onPress={() =>
+                navigate(Routes.TOKEN_SEND, {
+                  address: account.id,
+                })
+              }>
               {translate('account_details.send_tokens_btn')}
             </Button>
-            <Button ml={2} flex={1} size="sm">
+            <Button
+              ml={2}
+              flex={1}
+              size="sm"
+              onPress={() =>
+                navigate(Routes.TOKEN_RECEIVE, {
+                  address: account.id,
+                })
+              }>
               {translate('account_details.receive_tokens_btn')}
             </Button>
           </Stack>

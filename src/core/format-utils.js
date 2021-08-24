@@ -9,3 +9,8 @@ export function formatCurrency(value, currency = 'USD') {
 
   return formatter.format(value);
 }
+
+export function formatAddress(value, size = 19) {
+  const offset = size / 2;
+  return `${value.substring(0, offset)}...${value.substring(value.length - offset)}`;
+}

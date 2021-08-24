@@ -1,5 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import { NumericKeyboard } from 'src/components/NumericKeyboard';
 import {showToast} from 'src/core/toast';
 import styled from 'styled-components/native';
 import SplashLogo from '../../assets/splash-logo.png';
@@ -12,7 +13,7 @@ import {
 } from '../../design-system';
 import {translate} from '../../locales';
 import {appSelectors} from '../app/app-slice';
-import {NumericKeyboard} from '../wallet/CreatePasscodeScreen';
+// import {NumericKeyboard} from '../wallet/CreatePasscodeScreen';
 import {walletOperations, walletSelectors} from '../wallet/wallet-slice';
 
 const Circle = styled.View`
@@ -41,8 +42,8 @@ function PasscodeMask({digits = 6, filled = 0, ...props}) {
 const DIGITS = 6;
 
 export function UnlockWalletScreen({
-  onNumber,
-  onDelete,
+  onPasscodeChange,
+  passcode,
   onLoginWithBiometric,
   text = translate('unlock_wallet.enter_passcode'),
   digits = DIGITS,
@@ -69,8 +70,8 @@ export function UnlockWalletScreen({
         </Box>
         <NumericKeyboard
           marginTop={50}
-          onDelete={onDelete}
-          onNumber={onNumber}
+          onChange={onPasscodeChange}
+          value={passcode}
         />
         {biometry ? (
           <Box
@@ -94,9 +95,7 @@ export function UnlockWalletContainer({route}) {
   const walletInfo = useSelector(walletSelectors.getWalletInfo);
   const dispatch = useDispatch();
 
-  const handleNumber = async num => {
-    const value = `${passcode}${num}`;
-
+  const handlePasscodeChange = async (value) => {
     if (value.length > DIGITS) {
       return;
     }
@@ -121,10 +120,6 @@ export function UnlockWalletContainer({route}) {
     }
   };
 
-  const handleDelete = () => {
-    setPasscode(passcode.substring(0, passcode.length - 1));
-  };
-
   const handleBiometricUnlock = useCallback(async () => {
     try {
       await dispatch(walletOperations.unlockWallet({biometry: true, callback}));
@@ -145,10 +140,10 @@ export function UnlockWalletContainer({route}) {
     <UnlockWalletScreen
       digits={DIGITS}
       filled={passcode.length}
-      onNumber={handleNumber}
-      onDelete={handleDelete}
+      onPasscodeChange={handlePasscodeChange}
       onLoginWithBiometric={handleBiometricUnlock}
       biometry={supportBiometry}
+      passcode={passcode}
     />
   );
 }

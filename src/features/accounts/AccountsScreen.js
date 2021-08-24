@@ -33,6 +33,7 @@ import {ImportExistingAccountModal} from './ImportExistingAccountModal';
 import {createAccountOperations} from '../account-creation/create-account-slice';
 import {AccountsScreenTestIDs} from './test-ids';
 import {PolkadotIcon} from '../../components/PolkadotIcon';
+import {translate} from 'src/locales';
 
 export function AccountsScreen({
   accounts = [],
@@ -144,11 +145,28 @@ export function AccountsScreen({
                       </Typography>
                     </Stack>
                     <Stack direction="row" mt={4}>
-                      <Button width="50%" size="sm" colorScheme="dark">
-                        Send
+                      <Button
+                        width="50%"
+                        size="sm"
+                        colorScheme="dark"
+                        onPress={() => {
+                          navigate(Routes.TOKEN_SEND, {
+                            address: account.id,
+                          });
+                        }}>
+                        {translate('account_list.send_token')}
                       </Button>
-                      <Button width="50%" size="sm" ml={2} colorScheme="dark">
-                        Receive
+                      <Button
+                        width="50%"
+                        size="sm"
+                        ml={2}
+                        colorScheme="dark"
+                        onPress={() => {
+                          navigate(Routes.TOKEN_RECEIVE, {
+                            address: account.id,
+                          });
+                        }}>
+                        {translate('account_list.receive_token')}
                       </Button>
                     </Stack>
                   </Stack>

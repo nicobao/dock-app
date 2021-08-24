@@ -57,6 +57,12 @@ const nBaseTheme = extendTheme({
       // 800: '#005885',
       // 900: '#003F5E',
     },
+    secondary: {
+      400: Theme.colors.secondaryBackground,
+    },
+    tertiary: {
+      400: Theme.colors.tertiaryBackground,
+    }
   },
   components: {
     Input: {

@@ -51,12 +51,17 @@ const variantsMap = {
     lineHeight: 22,
     color: Theme.colors.description,
   },
+  'screen-description': {
+    fontSize: 14,
+  },
   montserrat: {
     fontFamily: Theme.fontFamily.montserrat,
   },
   label: {
     fontWeight: 600,
     fontSize: 14,
+    color: Theme.colors.description,
+    
   },
 };
 

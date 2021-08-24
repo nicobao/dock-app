@@ -1,12 +1,20 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {Toast} from 'native-base';
+import { translate } from 'src/locales';
 import {navigateBack} from '../../core/navigation';
 import {ApiRpc} from '../../rn-rpc-webview/api-rpc';
 
+const TransactionStatus = {
+  InProgress: 'pending',
+  Failed: 'falied',
+  Complete: 'complete',
+};
+
 const initialState = {
   loading: false,
-  txQueue: [],
-  txHistory: [],
+  transactions: [{
+    
+  }],
 };
 
 const transactions = createSlice({
@@ -30,38 +38,44 @@ export const transactionsSelectors = {
 const waitUntil = time => new Promise(res => setTimeout(res, time));
 
 export const transactionsOperations = {
-  /**
-   * Fetch CREDENTIALs for the current wallet
-   *
-   * @returns
-   */
-  sendTokens:
-    ({addressTo, amount}) =>
+  getFeeAmount: ({
+    recipientAddress,
+    accountAddress,
+    amount,
+  }) =>
+  async (dispatch, getState) => {
+    return ApiRpc.getFeeAmount({
+      address: addressTo,
+      accountAddress,
+      amount: amount,
+    });
+  },
+
+  sendTransaction:
+    ({
+      recipientAddress,
+      accountAddress,
+      amount
+    }) =>
     async (dispatch, getState) => {
       // create tx and add to the queue
       Toast.show({
         text: 'Transaction sent!',
       });
 
-      navigateBack();
-
       try {
-        await ApiRpc.sendTokens({
+        ApiRpc.sendTokens({
           address: addressTo,
-          // 1 token equals 25M gas. This is specified in the chain spec here https://github.com/docknetwork/dock-substrate/blob/poa-1/node/src/chain_spec.rs#L320
-          amount: parseInt(amount),
-        });
-
-        Toast.show({
-          type: 'success',
-          text: 'Transaction succeed!',
-        });
+          accountAddress,
+          amount: amount,
+        }).then(() => {
+          
+        })
       } catch (err) {
         console.error(err);
-
         Toast.show({
           type: 'danger',
-          text: 'Transaction failed',
+          text: translate(''),
         });
       }
     },

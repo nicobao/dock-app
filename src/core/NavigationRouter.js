@@ -4,6 +4,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {Icon, View} from 'native-base';
 import React from 'react';
 import {Platform, TouchableWithoutFeedback} from 'react-native';
+import { ReceiveTokenContainer } from 'src/features/tokens/ReceiveTokenScreen';
+import { SendTokenContainer } from 'src/features/tokens/SendTokenScreen';
 import {CreateAccountBackupContainer} from '../features/account-creation/CreateAccountBackupScreen';
 import {CreateAccountMnemonicContainer} from '../features/account-creation/CreateAccountMnemonicScreen';
 import {CreateAccountSetupContainer} from '../features/account-creation/CreateAccountSetupScreen';
@@ -254,6 +256,22 @@ function AppStackScreen() {
         component={ImportWalletPasswordContainer}
         options={{
           ...screenOptions,
+        }}
+      />
+      <AppStack.Screen
+        name={Routes.TOKEN_RECEIVE}
+        component={ReceiveTokenContainer}
+        options={{
+          ...screenOptions,
+          gestureEnabled: false,
+        }}
+      />
+      <AppStack.Screen
+        name={Routes.TOKEN_SEND}
+        component={SendTokenContainer}
+        options={{
+          ...screenOptions,
+          gestureEnabled: false,
         }}
       />
     </AppStack.Navigator>

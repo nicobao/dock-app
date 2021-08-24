@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReceiveTokensScreen should render correctly 1`] = `
+<StyledNativeComponent
+  forwardedComponent={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "attrs": Array [],
+      "inlineStyle": InlineStyle {
+        "rules": Array [
+          "
+  background-color: ",
+          "#18181B",
+          ";
+  flex: 1;
+",
+        ],
+      },
+      "render": [Function],
+      "shouldForwardProp": undefined,
+      "styledComponentId": "StyledNativeComponent",
+      "target": Object {
+        "$$typeof": Symbol(react.forward_ref),
+        "render": [Function],
+      },
+      "withComponent": [Function],
+    }
+  }
+  forwardedRef={null}
+  testID="unlockWalletScreen"
+>
+  <Memo(ForwardRef(Stack))
+    alignItems="center"
+  >
+    <Styled(Component)
+      mb={2}
+      variant="h1"
+    >
+      Send DOCK
+    </Styled(Component)>
+    <Styled(Component)
+      variant="screen-description"
+    >
+      Share your address
+    </Styled(Component)>
+  </Memo(ForwardRef(Stack))>
+  <Styled(ScrollView)
+    marginLeft={26}
+    marginRight={26}
+  >
+    <Memo(ForwardRef(Box))
+      alignItems="center"
+      bg="#27272A"
+      borderRadius={12}
+      my={7}
+      p={5}
+    >
+      <Memo(ForwardRef(Box))>
+        <QRCode
+          color="#27272A"
+          size={525}
+          value="3B9W5fS4ygoUVnGhzTk7sihSdhCyJQRNMQ7aJfDdsfWb16f1"
+        />
+      </Memo(ForwardRef(Box))>
+      <Memo(ForwardRef(Stack))
+        alignItems="center"
+        direction="row"
+        mt={3}
+      >
+        <Memo(ForwardRef(Box))
+          pr={2}
+        />
+        <Memo(ForwardRef(Stack))
+          alignItems="flex-start"
+          direction="column"
+        >
+          <Styled(Component)
+            variant="h3"
+          />
+          <Styled(Component)>
+            3B9W5fS4y...DdsfWb16f1
+          </Styled(Component)>
+        </Memo(ForwardRef(Stack))>
+      </Memo(ForwardRef(Stack))>
+    </Memo(ForwardRef(Box))>
+    <Button
+      colorScheme="tertiary"
+      mb={4}
+    >
+      Copy address
+    </Button>
+    <Button
+      colorScheme="tertiary"
+    >
+      Share address
+    </Button>
+  </Styled(ScrollView)>
+</StyledNativeComponent>
+`;
