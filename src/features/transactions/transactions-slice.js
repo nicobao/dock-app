@@ -50,8 +50,6 @@ export const transactionsSelectors = {
   getTransactions: state => getRoot(state).transactions,
 };
 
-const waitUntil = time => new Promise(res => setTimeout(res, time));
-
 export const transactionsOperations = {
   loadTransactions: ({
     recipientAddress,
@@ -69,7 +67,7 @@ export const transactionsOperations = {
   }) =>
   async (dispatch, getState) => {
     return ApiRpc.getFeeAmount({
-      address: addressTo,
+      address: recipientAddress,
       accountAddress,
       amount: amount,
     });
