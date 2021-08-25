@@ -51,11 +51,7 @@ export const transactionsSelectors = {
 };
 
 export const transactionsOperations = {
-  loadTransactions: ({
-    recipientAddress,
-    accountAddress,
-    amount,
-  }) =>
+  loadTransactions: () =>
   async (dispatch, getState) => {
     const items = await ApiRpc.getTransactions();
     dispatch(transactionsActions.setTransactions(items));
