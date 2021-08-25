@@ -156,7 +156,8 @@
     "paste_address": "Paste",
     "scan_qr_code": "Scan QR Code",
     "send_max": "Send Max",
-    "calculating_fee": "Calculating fee..."
+    "calculating_fee": "Calculating fee...",
+    "transaction_sent": "Transaction Sent"
   },
   "confirm_transaction": {
     "title": "Confirm",
@@ -169,9 +170,9 @@
     "transaction_complete": "Transaction complete"
   },
   "transaction_status": {
-    "status_sending": "Sending",
-    "status_in_progress": "In progress",
-    "status_completed": "Completed"
+    "in_progress": "In progress",
+    "completed": "Completed",
+    "failed": "Failed"
   },
   "transaction_history": {
     "title": "Transactions",

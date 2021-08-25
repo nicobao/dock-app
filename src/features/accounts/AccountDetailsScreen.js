@@ -1,6 +1,7 @@
 import {Button, Pressable, Stack} from 'native-base';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import {Modal} from 'src/components/Modal';
 import {PolkadotIcon} from '../../components/PolkadotIcon';
 import {navigate, navigateBack} from '../../core/navigation';
 import {Routes} from '../../core/routes';
@@ -19,9 +20,96 @@ import {
   Typography,
 } from '../../design-system';
 import {translate} from '../../locales';
+import {AmountDetails} from '../tokens/ConfirmTransactionModal';
+import {transactionsSelectors} from '../transactions/transactions-slice';
 import {accountOperations, accountSelectors} from './account-slice';
 import {AccountSettingsModal} from './AccountSettingsModal';
 import {QRCodeModal} from './QRCodeModal';
+
+function TransactionHistoryItem({transaction}) {
+  const [showDetails, setShowDetails] = useState();
+
+  return (
+    <>
+      <Modal
+        visible={showDetails}
+        onClose={() => setShowDetails(false)}
+        modalSize={0.6}>
+        <Stack p={8}>
+          <Typography variant="h1" mb={4}>
+            {translate('confirm_transaction.title')}
+          </Typography>
+          <Stack mb={2}>
+            <Typography mb={1}>
+              {translate('confirm_transaction.send')}
+            </Typography>
+            <AmountDetails amount={sentAmount} symbol={tokenSymbol} />
+          </Stack>
+          <Stack>
+            <Typography mb={1}>
+              {translate('confirm_transaction.to')}
+            </Typography>
+            <Stack direction="row">
+              {accountIcon}
+              <Typography ml={2}>{recipientAddress}</Typography>
+            </Stack>
+          </Stack>
+          <Stack mb={2}>
+            <Typography mb={1}>
+              {translate('confirm_transaction.fee')}
+            </Typography>
+            <AmountDetails amount={fee} symbol={tokenSymbol} />
+          </Stack>
+          <Stack mb={2}>
+            <Typography mb={1}>
+              {translate('confirm_transaction.total')}
+            </Typography>
+            <AmountDetails amount={sentAmount + fee} symbol={tokenSymbol} />
+          </Stack>
+        </Stack>
+      </Modal>
+      <Stack
+        p={8}
+        onPress={() => {
+          setShowDetails(true);
+        }}>
+        <AmountDetails amount={sentAmount + fee} symbol={tokenSymbol} />
+        <Stack mb={2}>
+          <Typography mb={1}>
+            {translate(`transaction_status.${item.status}`)}
+          </Typography>
+        </Stack>
+      </Stack>
+    </>
+  );
+}
+
+function TransactionHistory({accountAddress}) {
+  const allTransactions = useSelector(transactionsSelectors.getTransactions);
+  const transactions = useMemo(() => {
+    return allTransactions.filter(item => item.fromAddress === accountAddress);
+  }, [allTransactions]);
+
+  return useMemo(() => {
+    if (!transactions.length) {
+      return (
+        <NBox>
+          <Typography variant="list-description">
+            {translate('account_details.empty_transacions_msg')}
+          </Typography>
+        </NBox>
+      );
+    }
+
+    return (
+      <NBox>
+        {transactions.map(item => (
+          <TransactionHistoryItem transaction={item} />
+        ))}
+      </NBox>
+    );
+  }, [transactions]);
+}
 
 export function AccountDetailsScreen({
   account,
@@ -117,9 +205,7 @@ export function AccountDetailsScreen({
             </Typography>
           </NBox>
           <NBox mt={8}>
-            <Typography variant="list-description">
-              {translate('account_details.empty_transacions_msg')}
-            </Typography>
+            <TransactionHistory />
           </NBox>
         </Stack>
 

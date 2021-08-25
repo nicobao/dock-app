@@ -13,9 +13,7 @@ const TransactionStatus = {
 
 const initialState = {
   loading: false,
-  transactions: [{
-    
-  }],
+  transactions: [],
 };
 
 const transactions = createSlice({
@@ -49,12 +47,21 @@ const getRoot = state => state.transactions;
 
 export const transactionsSelectors = {
   getLoading: state => getRoot(state).loading,
+  getTransactions: state => getRoot(state).transactions,
 };
 
 const waitUntil = time => new Promise(res => setTimeout(res, time));
 
 export const transactionsOperations = {
-  
+  loadTransactions: ({
+    recipientAddress,
+    accountAddress,
+    amount,
+  }) =>
+  async (dispatch, getState) => {
+    const items = await ApiRpc.getTransactions();
+    dispatch(transactionsActions.setTransactions(items));
+  },
   getFeeAmount: ({
     recipientAddress,
     accountAddress,
