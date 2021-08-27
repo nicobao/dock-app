@@ -26,6 +26,8 @@ export const Theme = {
     tertiaryBackground: '#3F3F46',
     circleChecked: '#34D399',
     circleUnckecked: '#71717A',
+    warningText: 'rgba(254, 243, 199, 1)',
+    warningBackground: 'rgba(120, 53, 15, 0.3)'
   },
   screen: {
     backgroundColor: '#18181B',

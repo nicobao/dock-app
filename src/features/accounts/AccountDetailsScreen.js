@@ -216,7 +216,7 @@ export function AccountDetailsScreen({
         </Stack>
 
         {account.meta.hasBackup ? null : (
-          <Stack backgroundColor="rgba(120, 53, 15, 0.3)" p={'16px'} mt={20}>
+          <Stack backgroundColor={Theme.colors.warningBackground} p={'16px'} mt={20}>
             <Stack direction="row">
               <NBox mr={3} mt={'3px'}>
                 <AlertIcon />
@@ -226,7 +226,7 @@ export function AccountDetailsScreen({
               </Typography>
             </Stack>
             <NBox mt={2}>
-              <Typography color="rgba(254, 243, 199, 1)">
+              <Typography color={Theme.colors.warningText}>
                 {translate('account_details.backup_details')}
               </Typography>
             </NBox>
