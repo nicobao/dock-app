@@ -92,9 +92,7 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
          
       </Styled(Component)>
       <Styled(Component)
-        fontSize={14}
-        fontWeight={500}
-        variant="montserrat"
+        variant="h4"
       >
         0.00 USD
       </Styled(Component)>
@@ -105,6 +103,7 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
       >
         <Memo(ForwardRef(Button))
           flex={1}
+          onPress={[Function]}
           size="sm"
         >
           Send
@@ -112,6 +111,7 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
         <Memo(ForwardRef(Button))
           flex={1}
           ml={2}
+          onPress={[Function]}
           size="sm"
         >
           Receive
@@ -135,11 +135,7 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
       <Memo(ForwardRef(Box))
         mt={8}
       >
-        <Styled(Component)
-          variant="list-description"
-        >
-          Your transactions will appear here
-        </Styled(Component)>
+        <TransactionHistory />
       </Memo(ForwardRef(Box))>
     </Memo(ForwardRef(Stack))>
     <Memo(ForwardRef(Stack))
@@ -168,7 +164,7 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
         mt={2}
       >
         <Styled(Component)
-          color="background: rgba(254, 243, 199, 1)"
+          color="rgba(254, 243, 199, 1)"
         >
           This phrase allows you to recover your account if your phone is lost or you change your device.
         </Styled(Component)>

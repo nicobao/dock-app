@@ -29,71 +29,54 @@ exports[`SendTokenScreen should render correctly 1`] = `
   forwardedRef={null}
   testID="unlockWalletScreen"
 >
-  <Memo(ForwardRef(Stack))
-    alignItems="center"
-  >
-    <Styled(Component)
-      mb={2}
-      variant="h1"
-    >
-      Send DOCK
-    </Styled(Component)>
-    <Styled(Component)
-      variant="screen-description"
-    >
-      Share your address
-    </Styled(Component)>
-  </Memo(ForwardRef(Stack))>
+  <Styled(View)>
+    <BackButton />
+  </Styled(View)>
   <Styled(ScrollView)
     marginLeft={26}
     marginRight={26}
   >
+    <Memo(ForwardRef(Stack))>
+      <Styled(Component)
+        mb={2}
+        variant="h1"
+      >
+        Send to
+      </Styled(Component)>
+    </Memo(ForwardRef(Stack))>
     <Memo(ForwardRef(Box))
-      alignItems="center"
-      bg="#27272A"
-      borderRadius={12}
       my={7}
-      p={5}
     >
-      <Memo(ForwardRef(Box))>
-        <QRCode
-          color="#27272A"
-          size={525}
-          value="3B9W5fS4ygoUVnGhzTk7sihSdhCyJQRNMQ7aJfDdsfWb16f1"
+      <Memo(ForwardRef(Stack))>
+        <Memo(ForwardRef(Input))
+          autoCapitalize="none"
+          pasteFromClipboard={true}
+          placeholder="Recipient address"
         />
-      </Memo(ForwardRef(Box))>
+      </Memo(ForwardRef(Stack))>
       <Memo(ForwardRef(Stack))
         alignItems="center"
         direction="row"
         mt={3}
       >
-        <Memo(ForwardRef(Box))
-          pr={2}
-        />
-        <Memo(ForwardRef(Stack))
-          alignItems="flex-start"
-          direction="column"
+        <Button
+          colorScheme="secondary"
+          size="sm"
         >
-          <Styled(Component)
-            variant="h3"
-          />
-          <Styled(Component)>
-            3B9W5fS4y...DdsfWb16f1
-          </Styled(Component)>
-        </Memo(ForwardRef(Stack))>
+          Scan QR Code
+        </Button>
       </Memo(ForwardRef(Stack))>
     </Memo(ForwardRef(Box))>
-    <Button
-      colorScheme="tertiary"
-      mb={4}
+    <Memo(ForwardRef(Stack))
+      alignContent="flex-end"
+      flex={1}
     >
-      Copy address
-    </Button>
-    <Button
-      colorScheme="tertiary"
-    >
-      Share address
-    </Button>
+      <Button
+        mb={4}
+      >
+        Next
+      </Button>
+    </Memo(ForwardRef(Stack))>
   </Styled(ScrollView)>
 </StyledNativeComponent>
 `;

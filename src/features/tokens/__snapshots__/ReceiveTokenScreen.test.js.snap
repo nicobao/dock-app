@@ -29,6 +29,9 @@ exports[`ReceiveTokensScreen should render correctly 1`] = `
   forwardedRef={null}
   testID="unlockWalletScreen"
 >
+  <Styled(View)>
+    <BackButton />
+  </Styled(View)>
   <Memo(ForwardRef(Stack))
     alignItems="center"
   >
@@ -48,24 +51,24 @@ exports[`ReceiveTokensScreen should render correctly 1`] = `
     marginLeft={26}
     marginRight={26}
   >
-    <Memo(ForwardRef(Box))
+    <Memo(ForwardRef(Stack))
       alignItems="center"
       bg="#27272A"
       borderRadius={12}
       my={7}
       p={5}
     >
-      <Memo(ForwardRef(Box))>
+      <Memo(ForwardRef(Stack))>
         <QRCode
           color="#27272A"
           size={525}
           value="3B9W5fS4ygoUVnGhzTk7sihSdhCyJQRNMQ7aJfDdsfWb16f1"
         />
-      </Memo(ForwardRef(Box))>
+      </Memo(ForwardRef(Stack))>
       <Memo(ForwardRef(Stack))
-        alignItems="center"
+        alignItems="flex-start"
         direction="row"
-        mt={3}
+        flex={1}
       >
         <Memo(ForwardRef(Box))
           pr={2}
@@ -82,18 +85,20 @@ exports[`ReceiveTokensScreen should render correctly 1`] = `
           </Styled(Component)>
         </Memo(ForwardRef(Stack))>
       </Memo(ForwardRef(Stack))>
-    </Memo(ForwardRef(Box))>
-    <Button
-      colorScheme="tertiary"
-      mb={4}
-    >
-      Copy address
-    </Button>
-    <Button
-      colorScheme="tertiary"
-    >
-      Share address
-    </Button>
+    </Memo(ForwardRef(Stack))>
+    <Memo(ForwardRef(Stack))>
+      <Button
+        colorScheme="tertiary"
+        mb={4}
+      >
+        Copy address
+      </Button>
+      <Button
+        colorScheme="tertiary"
+      >
+        Share address
+      </Button>
+    </Memo(ForwardRef(Stack))>
   </Styled(ScrollView)>
 </StyledNativeComponent>
 `;
