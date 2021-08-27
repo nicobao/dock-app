@@ -1,6 +1,6 @@
-import _ from 'lodash';
+import memoize from 'lodash.memoize';
 
-const getCoinCapToken = _.memoize(tokenSymbol =>
+const getCoinCapToken = memoize(tokenSymbol =>
   fetch(`https://api.coincap.io/v2/assets/${tokenSymbol}`).then(res =>
     res.json(),
   ),
