@@ -218,7 +218,7 @@ export function SendTokenContainer({route}) {
             } else if (form.amount > accountDetails.meta.balance.value) {
               amountError = translate('send_token.insufficient_funds');
             }
-            
+
             if (amountError) {
               return setForm(v => ({
                 ...v,

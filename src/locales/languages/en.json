@@ -160,6 +160,7 @@
     "calculating_fee": "Calculating fee...",
     "transaction_sent": "Transaction Sent",
     "insufficient_funds": "Insufficient funds",
+    "invalid_amount": "The amount is not valid",
     "invalid_address": "Invalid recipient address"
   },
   "confirm_transaction": {
