@@ -158,7 +158,9 @@
     "scan_qr_code": "Scan QR Code",
     "send_max": "Send Max",
     "calculating_fee": "Calculating fee...",
-    "transaction_sent": "Transaction Sent"
+    "transaction_sent": "Transaction Sent",
+    "insufficient_funds": "Insufficient funds",
+    "invalid_address": "Invalid recipient address"
   },
   "confirm_transaction": {
     "title": "Confirm",

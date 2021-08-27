@@ -1,6 +1,6 @@
 import Clipboard from '@react-native-community/clipboard';
-import {Box, Input, Stack} from 'native-base';
-import React, {useState} from 'react';
+import {Box, FormControl, Input, Stack} from 'native-base';
+import React, {useEffect, useState} from 'react';
 import Share from 'react-native-share';
 import {useDispatch, useSelector} from 'react-redux';
 import {NumericKeyboard} from 'src/components/NumericKeyboard';
@@ -8,6 +8,9 @@ import {PolkadotIcon} from 'src/components/PolkadotIcon';
 import {navigate} from 'src/core/navigation';
 import {Routes} from 'src/core/routes';
 import {showToast} from 'src/core/toast';
+import {DockRpc} from 'src/rn-rpc-webview/dock-rpc';
+import {KeyringPairRpc} from 'src/rn-rpc-webview/keyring-rpc';
+import {UtilCryptoRpc} from 'src/rn-rpc-webview/util-crypto-rpc';
 import {
   BackButton,
   Button,
@@ -35,13 +38,18 @@ export function SendTokenScreen({form, onChange, onScanQRCode, onNext}) {
         </Stack>
         <Box my={7}>
           <Stack>
-            <Input
-              value={form.recipientAddress}
-              onChangeText={onChange('recipientAddress')}
-              autoCapitalize="none"
-              placeholder={translate('send_token.recipient_address')}
-              pasteFromClipboard
-            />
+            <FormControl isInvalid={form._errors.recipientAddress}>
+              <Input
+                value={form.recipientAddress}
+                onChangeText={onChange('recipientAddress')}
+                autoCapitalize="none"
+                placeholder={translate('send_token.recipient_address')}
+                pasteFromClipboard
+              />
+              <FormControl.ErrorMessage>
+                {form._errors.recipientAddress}
+              </FormControl.ErrorMessage>
+            </FormControl>
           </Stack>
           <Stack direction="row" alignItems="center" mt={3}>
             <Button colorScheme="secondary" size="sm" onPress={onScanQRCode}>
@@ -67,6 +75,7 @@ export function EnterTokenAmount({form, onMax, onChange, onBack, onNext}) {
       </Header>
       <Content marginLeft={26} marginRight={26}>
         <Stack>
+            
           <Stack direction="row" alignItems="center" justifyContent="center">
             <Typography
               variant="h1"
@@ -82,6 +91,12 @@ export function EnterTokenAmount({form, onMax, onChange, onBack, onNext}) {
               </Stack>
             )}
           </TokenAmount>
+          <FormControl isInvalid={form._errors.amount}>
+            <FormControl.ErrorMessage>
+              {form._errors.amount}
+            </FormControl.ErrorMessage>
+          </FormControl>
+          
         </Stack>
         <Stack>
           <Button colorScheme="secondary" mb={2} onPress={onMax}>
@@ -121,6 +136,7 @@ export function SendTokenContainer({route}) {
     amount: 0,
     tokenSymbol: 'DOCK',
     fee: 0,
+    validating: false,
     _errors: {},
     _hasError: false,
   });
@@ -158,7 +174,18 @@ export function SendTokenContainer({route}) {
         }}
         onShareAddress={handleShareAddress}
         onChange={handleChange}
-        onNext={() => {
+        onNext={async () => {
+          const addressValid = await UtilCryptoRpc.isAddressValid(form.recipientAddress);
+
+          if (!addressValid) {
+            return setForm(v => ({
+              ...v,
+              _errors: {
+                recipientAddress: translate('send_token.invalid_address'),
+              },
+            }));
+          }
+
           setStep(Steps.enterAmount);
         }}
       />
@@ -186,6 +213,17 @@ export function SendTokenContainer({route}) {
           form={form}
           onChange={handleChange}
           onNext={() => {
+            const amountValid = form.amount <= accountDetails.meta.balance.value;
+            
+            if (!amountValid) {
+              return setForm(v => ({
+                ...v,
+                _errors: {
+                  amount: translate('send_token.insufficient_funds'),
+                },
+              }));
+            }
+            
             dispatch(() => {
               transactionsOperations.getFeeAmount(form).then(fee => {
                 handleChange('fee')(fee);
