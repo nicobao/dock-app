@@ -4,6 +4,7 @@ import {Button} from 'src/design-system';
 import {translate} from 'src/locales';
 import {Modal} from '../../components/Modal';
 import {Typography} from '../../design-system';
+import {AmountDetails} from './ConfirmTransactionModal';
 
 export function TransactionHistory({
   onClose,

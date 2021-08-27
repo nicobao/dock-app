@@ -1,5 +1,5 @@
 import {Button, Pressable, Stack} from 'native-base';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Modal} from 'src/components/Modal';
 import {PolkadotIcon} from '../../components/PolkadotIcon';
@@ -20,13 +20,17 @@ import {
 } from '../../design-system';
 import {translate} from '../../locales';
 import {AmountDetails} from '../tokens/ConfirmTransactionModal';
-import {transactionsSelectors, TransactionStatus} from '../transactions/transactions-slice';
+import {
+  transactionsSelectors,
+  TransactionStatus,
+} from '../transactions/transactions-slice';
 import {accountOperations, accountSelectors} from './account-slice';
 import {AccountSettingsModal} from './AccountSettingsModal';
 import {QRCodeModal} from './QRCodeModal';
 
 function TransactionHistoryItem({transaction}) {
   const [showDetails, setShowDetails] = useState();
+  const {sentAmount, tokenSymbol, recipientAddress, fee} = transaction;
 
   return (
     <>
@@ -49,7 +53,7 @@ function TransactionHistoryItem({transaction}) {
               {translate('confirm_transaction.to')}
             </Typography>
             <Stack direction="row">
-              {accountIcon}
+              {<PolkadotIcon address={recipientAddress} />}
               <Typography ml={2}>{recipientAddress}</Typography>
             </Stack>
           </Stack>
@@ -75,14 +79,14 @@ function TransactionHistoryItem({transaction}) {
         <AmountDetails amount={sentAmount + fee} symbol={tokenSymbol} />
         <Stack mb={2}>
           <Typography mb={1}>
-            {translate(`transaction_status.${item.status}`)}
+            {translate(`transaction_status.${transaction.status}`)}
           </Typography>
         </Stack>
-        {
-          item.status === TransactionStatus.Failed ? (
-            <Button onPress={}>{translate(`transaction_history.try_again`)}</Button>
-          ) : null
-        }
+        {transaction.status === TransactionStatus.Failed ? (
+          <Button onPress={() => setShowDetails(true)}>
+            {translate('transaction_history.try_again')}
+          </Button>
+        ) : null}
       </Stack>
     </>
   );
@@ -92,7 +96,7 @@ function TransactionHistory({accountAddress}) {
   const allTransactions = useSelector(transactionsSelectors.getTransactions);
   const transactions = useMemo(() => {
     return allTransactions.filter(item => item.fromAddress === accountAddress);
-  }, [allTransactions]);
+  }, [allTransactions, accountAddress]);
 
   return useMemo(() => {
     if (!transactions.length) {
@@ -171,9 +175,7 @@ export function AccountDetailsScreen({
           <Typography variant="h1" fontSize="32px" mt={3}>
             {account.meta.balance.value} {account.meta.balance.symbol}
           </Typography>
-          <Typography variant="h4">
-            0.00 USD
-          </Typography>
+          <Typography variant="h4">0.00 USD</Typography>
           <Stack direction="row" width="100%" mt={5}>
             <Button
               flex={1}

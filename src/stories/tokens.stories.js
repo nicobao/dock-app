@@ -2,6 +2,7 @@ import {storiesOf} from '@storybook/react-native';
 import React from 'react';
 import {AccountIcon} from 'src/design-system';
 import {ConfirmTransactionModal} from 'src/features/tokens/ConfirmTransactionModal';
+import {TransactionHistory} from 'src/features/tokens/TransactionHistory';
 import {ReceiveTokenScreen} from '../features/tokens/ReceiveTokenScreen';
 import {
   EnterTokenAmount,
@@ -26,7 +27,6 @@ storiesOf('Tokens', module)
   .add('3. Enter Token Amount', () => (
     <EnterTokenAmount
       amount={223}
-      onChange={200}
       fiatAmount={130}
       fiatSymbol="USD"
       tokenSymbol="DOCK"

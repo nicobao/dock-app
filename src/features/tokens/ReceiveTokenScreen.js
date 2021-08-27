@@ -1,22 +1,22 @@
 import Clipboard from '@react-native-community/clipboard';
-import { Box, Stack } from 'native-base';
+import {Box, Stack} from 'native-base';
 import React from 'react';
-import { Dimensions } from 'react-native';
+import {Dimensions} from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import Share from 'react-native-share';
-import { useSelector } from 'react-redux';
-import { PolkadotIcon } from 'src/components/PolkadotIcon';
-import { formatAddress } from 'src/core/format-utils';
-import { showToast } from 'src/core/toast';
+import {useSelector} from 'react-redux';
+import {PolkadotIcon} from 'src/components/PolkadotIcon';
+import {formatAddress} from 'src/core/format-utils';
+import {showToast} from 'src/core/toast';
 import {
   Button,
-  Content, ScreenContainer,
+  Content,
+  ScreenContainer,
   Theme,
-  Typography
+  Typography,
 } from '../../design-system';
-import { translate } from '../../locales';
-import { accountSelectors } from '../accounts/account-slice';
-
+import {translate} from '../../locales';
+import {accountSelectors} from '../accounts/account-slice';
 
 export function ReceiveTokenScreen({
   address,

@@ -63,7 +63,7 @@ const nBaseTheme = extendTheme({
     },
     tertiary: {
       400: Theme.colors.tertiaryBackground,
-    }
+    },
   },
   components: {
     Input: {

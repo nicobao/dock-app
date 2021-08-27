@@ -1,5 +1,5 @@
 import * as RNKeychain from 'react-native-keychain';
-import { translate } from 'src/locales';
+import {translate} from 'src/locales';
 
 export const Keychain = {
   ...RNKeychain,

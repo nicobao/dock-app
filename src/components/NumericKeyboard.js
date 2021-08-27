@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, KeyboardDeleteIcon, Typography } from 'src/design-system';
+import {Box, KeyboardDeleteIcon, Typography} from 'src/design-system';
 
 function KeyboardButton({onPress, value, testID}) {
   return (
@@ -20,25 +20,25 @@ export function NumericKeyboard({onChange, value, allowDecimal, ...props}) {
     if (!value) {
       return;
     }
-    
+
     const strValue = `${value}`;
 
     onChange(strValue.substring(0, strValue.length - 1));
   };
-  
-  const handleDigit = (digit) => {
+
+  const handleDigit = digit => {
     const strValue = value ? `${value}` : '';
-    
+
     if (digit === '.' && strValue.indexOf('.') > -1) {
       return;
     }
 
-    const newValue = `${strValue}${digit}`
-     
-    onChange(allowDecimal ? parseFloat(newValue) : newValue);    
-  }
+    const newValue = `${strValue}${digit}`;
 
-  const renderDigit = (v) => (
+    onChange(allowDecimal ? parseFloat(newValue) : newValue);
+  };
+
+  const renderDigit = v => (
     <KeyboardButton
       key={v}
       onPress={handleDigit}

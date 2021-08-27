@@ -188,7 +188,7 @@ export function SendTokenContainer({route}) {
           onNext={() => {
             dispatch(() => {
               transactionsOperations.getFeeAmount(form).then(fee => {
-                onChange('fee')(fee);
+                handleChange('fee')(fee);
                 setShowConfirmation(true);
               });
             });

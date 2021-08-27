@@ -27,7 +27,7 @@ import {
   useToast,
 } from 'native-base';
 import {TouchableWithoutFeedback} from 'react-native';
-import { translate } from 'src/locales';
+import {translate} from 'src/locales';
 
 export function LoadingScreen({}) {
   return (

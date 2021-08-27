@@ -15,8 +15,8 @@ import {
 import styled from 'styled-components/native';
 import {BackButton} from '../../design-system/buttons';
 import {translate} from '../../locales';
-import { NumericKeyboard } from 'src/components/NumericKeyboard';
-import { showToast } from 'src/core/toast';
+import {NumericKeyboard} from 'src/components/NumericKeyboard';
+import {showToast} from 'src/core/toast';
 
 const Circle = styled.View`
   width: 20px;
@@ -62,10 +62,7 @@ export function CreatePasscodeScreen({
               : translate('create_wallet.create_passcode')}
           </Typography>
         </Box>
-        <NumericKeyboard
-          marginTop={85}
-          onChange={onPasscodeChange}
-        />
+        <NumericKeyboard marginTop={85} onChange={onPasscodeChange} />
       </Content>
     </ScreenContainer>
   );
@@ -86,8 +83,8 @@ export function CreatePasscodeContainer() {
       alert("Passcode doesn't match, try again");
       showToast({
         message: translate('setup_passcode.match_error'),
-        type: 'error'
-      })
+        type: 'error',
+      });
       return;
     }
 
@@ -96,7 +93,6 @@ export function CreatePasscodeContainer() {
   };
 
   const handlePasscodeChange = value => {
-
     if (value.length > DIGITS) {
       return;
     }

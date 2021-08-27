@@ -11,7 +11,7 @@ import {
 import {Modal} from '../../components/Modal';
 import {translate} from 'src/locales';
 import {Typography} from '../../design-system';
-import { getDockTokenPrice } from './price-service';
+import {getDockTokenPrice} from './price-service';
 
 export function TokenAmount({amount, symbol, children}) {
   const [fiatAmount, setFiatAmount] = useState(0);
@@ -19,7 +19,7 @@ export function TokenAmount({amount, symbol, children}) {
 
   useEffect(() => {
     getDockTokenPrice().then(price => setFiatAmount(amount * price));
-  }, [amount])
+  }, [amount]);
 
   return children({
     fiatAmount,

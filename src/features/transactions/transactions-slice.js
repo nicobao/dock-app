@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {Toast} from 'native-base';
-import { translate } from 'src/locales';
+import {translate} from 'src/locales';
 import {ApiRpc} from '../../rn-rpc-webview/api-rpc';
 import uuid from 'uuid';
 import {navigateBack} from '../../core/navigation';
@@ -34,10 +34,10 @@ const transactions = createSlice({
         if (item.id === action.payload.id) {
           return action.payload;
         }
-        
+
         return item;
       });
-    }
+    },
   },
 });
 
@@ -51,44 +51,35 @@ export const transactionsSelectors = {
 };
 
 export const transactionsOperations = {
-  loadTransactions: () =>
-  async (dispatch, getState) => {
+  loadTransactions: () => async (dispatch, getState) => {
     const items = await ApiRpc.getTransactions();
     dispatch(transactionsActions.setTransactions(items));
   },
-  getFeeAmount: ({
-    recipientAddress,
-    accountAddress,
-    amount,
-  }) =>
-  async (dispatch, getState) => {
-    return ApiRpc.getFeeAmount({
-      address: recipientAddress,
-      accountAddress,
-      amount: amount,
-    });
-  },
+  getFeeAmount:
+    ({recipientAddress, accountAddress, amount}) =>
+    async (dispatch, getState) => {
+      return ApiRpc.getFeeAmount({
+        address: recipientAddress,
+        accountAddress,
+        amount: amount,
+      });
+    },
 
   sendTransaction:
-    ({
-      recipientAddress,
-      accountAddress,
-      amount
-    }) =>
+    ({recipientAddress, accountAddress, amount}) =>
     async (dispatch, getState) => {
       Toast.show({
         text: translate('send_token.transaction_sent'),
       });
 
- 
       const internalId = uuid();
       const transaction = {
         recipientAddress,
         accountAddress,
         amount,
         internalId,
-        status: TransactionStatus.InProgress
-      }
+        status: TransactionStatus.InProgress,
+      };
 
       dispatch(transactionsActions.addTransaction(transaction));
 
@@ -101,27 +92,33 @@ export const transactionsOperations = {
         address: recipientAddress,
         accountAddress,
         amount: amount,
-      }).then(() => {
-        dispatch(transactionsActions.updateTransaction({
-          ...transaction,
-          status: TransactionStatus.Complete
-        }));
-        
-        Toast.show({
-          type: 'success',
-          text: translate('confirm_transaction.transaction_complete'),
-        });
-      }).catch(err => {
-        Toast.show({
-          type: 'danger',
-          text: translate('transaction_failed.title'),
-        });
+      })
+        .then(() => {
+          dispatch(
+            transactionsActions.updateTransaction({
+              ...transaction,
+              status: TransactionStatus.Complete,
+            }),
+          );
 
-        dispatch(transactionsActions.updateTransaction({
-          ...transaction,
-          status: TransactionStatus.Failed
-        }));
-      });       
+          Toast.show({
+            type: 'success',
+            text: translate('confirm_transaction.transaction_complete'),
+          });
+        })
+        .catch(err => {
+          Toast.show({
+            type: 'danger',
+            text: translate('transaction_failed.title'),
+          });
+
+          dispatch(
+            transactionsActions.updateTransaction({
+              ...transaction,
+              status: TransactionStatus.Failed,
+            }),
+          );
+        });
     },
 };
 

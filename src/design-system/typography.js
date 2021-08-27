@@ -61,7 +61,6 @@ const variantsMap = {
     fontWeight: 600,
     fontSize: 14,
     color: Theme.colors.description,
-    
   },
 };
 

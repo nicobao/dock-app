@@ -35,5 +35,5 @@ export {
   ErrorAlert,
   XCircleIcon,
   AccountIcon,
-  KeyboardDeleteIcon
+  KeyboardDeleteIcon,
 };

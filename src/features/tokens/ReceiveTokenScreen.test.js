@@ -11,9 +11,14 @@ describe('ReceiveTokensScreen', () => {
       // placeholder for redux store
     };
 
-    const wrapper = shallow(<ReceiveTokenScreen address={'3B9W5fS4ygoUVnGhzTk7sihSdhCyJQRNMQ7aJfDdsfWb16f1'} />, {
-      context: {store: mockStore(initialState)},
-    });
+    const wrapper = shallow(
+      <ReceiveTokenScreen
+        address={'3B9W5fS4ygoUVnGhzTk7sihSdhCyJQRNMQ7aJfDdsfWb16f1'}
+      />,
+      {
+        context: {store: mockStore(initialState)},
+      },
+    );
     expect(wrapper.dive()).toMatchSnapshot();
   });
 });

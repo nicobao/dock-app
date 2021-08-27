@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import { NumericKeyboard } from 'src/components/NumericKeyboard';
+import {NumericKeyboard} from 'src/components/NumericKeyboard';
 import {showToast} from 'src/core/toast';
 import styled from 'styled-components/native';
 import SplashLogo from '../../assets/splash-logo.png';
@@ -95,7 +95,7 @@ export function UnlockWalletContainer({route}) {
   const walletInfo = useSelector(walletSelectors.getWalletInfo);
   const dispatch = useDispatch();
 
-  const handlePasscodeChange = async (value) => {
+  const handlePasscodeChange = async value => {
     if (value.length > DIGITS) {
       return;
     }
