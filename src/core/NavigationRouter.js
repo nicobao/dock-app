@@ -4,6 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {Icon, View} from 'native-base';
 import React from 'react';
 import {Platform, TouchableWithoutFeedback} from 'react-native';
+import { Theme } from 'src/design-system';
 import { ReceiveTokenContainer } from 'src/features/tokens/ReceiveTokenScreen';
 import { SendTokenContainer } from 'src/features/tokens/SendTokenScreen';
 import {CreateAccountBackupContainer} from '../features/account-creation/CreateAccountBackupScreen';
@@ -83,13 +84,13 @@ function AppStackScreen() {
     <AppStack.Navigator
       screenOptions={{
         cardStyle: {
-          backgroundColor: '#222',
+          backgroundColor: Theme.colors.primaryBackground
         },
         cardOverlay: () => (
           <View
             style={{
               flex: 1,
-              backgroundColor: '#222',
+              backgroundColor: Theme.colors.primaryBackground,
             }}
           />
         ),

@@ -32,7 +32,7 @@ export function Modal({
             width="36px"
             height="4px"
             backgroundColor={Theme.colors.tertiaryBackground}
-            borderRadius="4px"
+            borderRadius={Theme.borderRadius}
           />
         </Stack>
         {children}

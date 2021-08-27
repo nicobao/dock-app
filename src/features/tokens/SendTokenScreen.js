@@ -37,7 +37,7 @@ export function SendTokenScreen({form, onChange, onScanQRCode, onNext}) {
           <Stack>
             <Input
               value={form.recipientAddress}
-              onChangeText={onChange('address')}
+              onChangeText={onChange('recipientAddress')}
               autoCapitalize="none"
               placeholder={translate('send_token.recipient_address')}
               pasteFromClipboard

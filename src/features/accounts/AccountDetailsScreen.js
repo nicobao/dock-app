@@ -15,13 +15,12 @@ import {
   LoadingScreen,
   NBox,
   ScreenContainer,
-  Text,
   Theme,
   Typography,
 } from '../../design-system';
 import {translate} from '../../locales';
 import {AmountDetails} from '../tokens/ConfirmTransactionModal';
-import {transactionsSelectors} from '../transactions/transactions-slice';
+import {transactionsSelectors, TransactionStatus} from '../transactions/transactions-slice';
 import {accountOperations, accountSelectors} from './account-slice';
 import {AccountSettingsModal} from './AccountSettingsModal';
 import {QRCodeModal} from './QRCodeModal';
@@ -79,6 +78,11 @@ function TransactionHistoryItem({transaction}) {
             {translate(`transaction_status.${item.status}`)}
           </Typography>
         </Stack>
+        {
+          item.status === TransactionStatus.Failed ? (
+            <Button onPress={}>{translate(`transaction_history.try_again`)}</Button>
+          ) : null
+        }
       </Stack>
     </>
   );

@@ -11,6 +11,10 @@ export function formatCurrency(value, currency = 'USD') {
 }
 
 export function formatAddress(value, size = 19) {
+  if (!value || size > value.length) {
+    return value;
+  }
+
   const offset = size / 2;
   return `${value.substring(0, offset)}...${value.substring(value.length - offset)}`;
 }

@@ -7,6 +7,7 @@ export const Theme = {
     nunitoSans: 'Nunito Sans',
     montserrat: 'Montserrat',
   },
+  borderRadius: 6,
   colors: {
     backdrop: 'rgba(0, 0, 0, 0.6)',
     transparent: 'transparent',

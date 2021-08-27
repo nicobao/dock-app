@@ -6,7 +6,7 @@ const getCoinCapToken = _.memoize(tokenSymbol =>
   ),
 );
 
-export function getDockTokenPrice() {
+export async function getDockTokenPrice() {
   try {
     const {data} = await getCoinCapToken('dock');
     return parseFloat(data.priceUsd);

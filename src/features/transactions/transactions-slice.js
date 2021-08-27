@@ -5,7 +5,7 @@ import {ApiRpc} from '../../rn-rpc-webview/api-rpc';
 import uuid from 'uuid';
 import {navigateBack} from '../../core/navigation';
 
-const TransactionStatus = {
+export const TransactionStatus = {
   InProgress: 'pending',
   Failed: 'falied',
   Complete: 'complete',
