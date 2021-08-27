@@ -211,14 +211,19 @@ export function SendTokenContainer({route}) {
           form={form}
           onChange={handleChange}
           onNext={() => {
-            const amountValid =
-              form.amount <= accountDetails.meta.balance.value;
+            let amountError;
 
-            if (!amountValid) {
+            if (form.amount <= 0) {
+              amountError = translate('send_token.invalid_amount');
+            } else if (form.amount > accountDetails.meta.balance.value) {
+              amountError = translate('send_token.insufficient_funds');
+            }
+            
+            if (amountError) {
               return setForm(v => ({
                 ...v,
                 _errors: {
-                  amount: translate('send_token.insufficient_funds'),
+                  amount: amountError,
                 },
               }));
             }

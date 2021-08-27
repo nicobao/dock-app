@@ -7,7 +7,7 @@ import {navigateBack} from '../../core/navigation';
 
 export const TransactionStatus = {
   InProgress: 'pending',
-  Failed: 'falied',
+  Failed: 'failed',
   Complete: 'complete',
 };
 
