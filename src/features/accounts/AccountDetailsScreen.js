@@ -171,7 +171,7 @@ export function AccountDetailsScreen({
           <Typography variant="h1" fontSize="32px" mt={3}>
             {account.meta.balance.value} {account.meta.balance.symbol}
           </Typography>
-          <Typography variant="montserrat" fontSize={14} fontWeight={500}>
+          <Typography variant="h4">
             0.00 USD
           </Typography>
           <Stack direction="row" width="100%" mt={5}>

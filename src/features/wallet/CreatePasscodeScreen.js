@@ -16,6 +16,7 @@ import styled from 'styled-components/native';
 import {BackButton} from '../../design-system/buttons';
 import {translate} from '../../locales';
 import { NumericKeyboard } from 'src/components/NumericKeyboard';
+import { showToast } from 'src/core/toast';
 
 const Circle = styled.View`
   width: 20px;
@@ -83,6 +84,10 @@ export function CreatePasscodeContainer() {
 
     if (confirmation !== value) {
       alert("Passcode doesn't match, try again");
+      showToast({
+        message: translate('setup_passcode.match_error'),
+        type: 'error'
+      })
       return;
     }
 

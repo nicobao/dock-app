@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import QRCodeScanner from 'react-native-qrcode-scanner';
+import { Theme } from 'src/design-system';
 import styled from 'styled-components/native';
 import {navigateBack} from '../../core/navigation';
 import {Colors} from '../../theme/colors';
@@ -109,7 +110,7 @@ export function QRScanScreen({route}) {
             <TouchableWithoutFeedback
               onPress={navigateBack}
               style={{padding: 20}}>
-              <Text style={{color: 'white'}}>Back</Text>
+              <Text style={{color: Theme.colors.textHighlighted}}>Back</Text>
             </TouchableWithoutFeedback>
           </IconContainer>
         </Header>

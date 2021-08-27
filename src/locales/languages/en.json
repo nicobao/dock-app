@@ -44,7 +44,8 @@
   "setup_passcode": {
     "title": "Setup Passcode",
     "description": "Add a passcode to keep your wallet safe",
-    "submit": "Setup Passcode"
+    "submit": "Setup Passcode",
+    "match_error": "Passcode doesn't match, try again"
   },
   "password_input": {
     "title": "Enter password",
