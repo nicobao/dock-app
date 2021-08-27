@@ -194,5 +194,11 @@
     "view_transaction": "View transaction",
     "network_error": "Transaction failed due to network failure",
     "insufficient_fund_error": "Transaction failed due to insufficient fund for network fees"
+  },
+  "loading_screen": {
+    "message": "Loading..."
+  },
+  "keychain": {
+    "password": "password"
   }
 }

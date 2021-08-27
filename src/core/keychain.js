@@ -1,4 +1,5 @@
 import * as RNKeychain from 'react-native-keychain';
+import { translate } from 'src/locales';
 
 export const Keychain = {
   ...RNKeychain,
@@ -9,7 +10,7 @@ export const Keychain = {
 
     return RNKeychain.setGenericPassword(
       jsonData,
-      data.password || 'password',
+      data.password || translate('keychain.password'),
       options,
     );
   },
