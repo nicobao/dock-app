@@ -1,20 +1,26 @@
+import {CheckCircleIcon, Stack} from 'native-base';
+import React, {useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {translate} from 'src/locales';
+import {showToast} from '../../core/toast';
 import {
-  CheckCircleIcon, Stack
-} from 'native-base';
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { translate } from 'src/locales';
-import { showToast } from '../../core/toast';
-import {
-  Content, Footer, Header, Input, LoadingButton, NBox as Box, ScreenContainer, Theme, Typography
+  Content,
+  Footer,
+  Header,
+  Input,
+  LoadingButton,
+  NBox as Box,
+  ScreenContainer,
+  Theme,
+  Typography,
 } from '../../design-system';
-import { BackButton } from '../../design-system/buttons';
-import { accountOperations } from './account-slice';
-import { AccountsConstants } from './constants';
+import {BackButton} from '../../design-system/buttons';
+import {accountOperations} from './account-slice';
+import {AccountsConstants} from './constants';
 
 const CheckCircle = ({checked}) => (
   <CheckCircleIcon
-    color={checked ? Theme.colors.circleChecked: Theme.colors.circleUnckecked}
+    color={checked ? Theme.colors.circleChecked : Theme.colors.circleUnckecked}
     width={16}
     height={16}
     marginRight={2}

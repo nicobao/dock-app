@@ -1,7 +1,7 @@
-import { ITextProps, Text } from 'native-base';
-import { ComponentType } from 'react';
+import {ITextProps, Text} from 'native-base';
+import {ComponentType} from 'react';
 import styled from 'styled-components/native';
-import { Theme } from './theme';
+import {Theme} from './theme';
 
 const headerVariantBase = {
   fontFamily: Theme.fontFamily.montserrat,
@@ -11,7 +11,14 @@ const headerVariantBase = {
 };
 
 type TypographyProps = ITextProps & {
-  variant: 'h1' | 'h2' | 'h3' | 'h4' | 'description' | 'list-description' | 'montserrat',
+  variant:
+    | 'h1'
+    | 'h2'
+    | 'h3'
+    | 'h4'
+    | 'description'
+    | 'list-description'
+    | 'montserrat',
 };
 
 const variantsMap = {
@@ -44,13 +51,17 @@ const variantsMap = {
     lineHeight: 22,
     color: Theme.colors.description,
   },
-  'montserrat': {
+  'screen-description': {
+    fontSize: 14,
+  },
+  montserrat: {
     fontFamily: Theme.fontFamily.montserrat,
   },
-  'label': {
+  label: {
     fontWeight: 600,
-    fontSize: 14
-  }
+    fontSize: 14,
+    color: Theme.colors.description,
+  },
 };
 
 export const Typography: ComponentType<TypographyProps> = styled(Text)`
@@ -61,4 +72,3 @@ export const Typography: ComponentType<TypographyProps> = styled(Text)`
     return variantsMap[variant] || {};
   }}
 `;
-

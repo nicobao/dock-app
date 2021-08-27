@@ -24,18 +24,17 @@ import {
 } from '../../design-system';
 import {BackButton} from '../../design-system/buttons';
 import {
-  createAccountOperations, createAccountSelectors,
+  createAccountOperations,
+  createAccountSelectors,
 } from '../account-creation/create-account-slice';
 import {PasswordInputContainer} from '../../components/PasswordInputScreen';
 
-export function ImportAccountPasswordContainer({ route }) {
+export function ImportAccountPasswordContainer({route}) {
   const dispatch = useDispatch();
 
-  const handleSubmit = ({ password }) => {
-    return dispatch(createAccountOperations.unlockJson(password))
+  const handleSubmit = ({password}) => {
+    return dispatch(createAccountOperations.unlockJson(password));
   };
 
-  return (
-    <PasswordInputContainer onSubmit={handleSubmit} />
-  );
+  return <PasswordInputContainer onSubmit={handleSubmit} />;
 }

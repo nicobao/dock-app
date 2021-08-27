@@ -1,22 +1,20 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {NumericKeyboard} from 'src/components/NumericKeyboard';
+import {showToast} from 'src/core/toast';
+import styled from 'styled-components/native';
+import SplashLogo from '../../assets/splash-logo.png';
 import {
-  Header,
+  Box,
   Content,
+  Image,
   ScreenContainer,
   Typography,
-  Box,
-  Image,
 } from '../../design-system';
-import styled from 'styled-components/native';
-import {BackButton} from '../../design-system/buttons';
-import SplashLogo from '../../assets/splash-logo.png';
-import KeyboardDeleteIcon from '../../assets/icons/keyboard-delete.svg';
-import {useDispatch, useSelector} from 'react-redux';
-import {appSelectors} from '../app/app-slice';
-import {walletOperations, walletSelectors} from '../wallet/wallet-slice';
-import {NumericKeyboard} from '../wallet/CreatePasscodeScreen';
 import {translate} from '../../locales';
-import {showToast} from 'src/core/toast';
+import {appSelectors} from '../app/app-slice';
+// import {NumericKeyboard} from '../wallet/CreatePasscodeScreen';
+import {walletOperations, walletSelectors} from '../wallet/wallet-slice';
 
 const Circle = styled.View`
   width: 20px;
@@ -44,8 +42,8 @@ function PasscodeMask({digits = 6, filled = 0, ...props}) {
 const DIGITS = 6;
 
 export function UnlockWalletScreen({
-  onNumber,
-  onDelete,
+  onPasscodeChange,
+  passcode,
   onLoginWithBiometric,
   text = translate('unlock_wallet.enter_passcode'),
   digits = DIGITS,
@@ -72,8 +70,8 @@ export function UnlockWalletScreen({
         </Box>
         <NumericKeyboard
           marginTop={50}
-          onDelete={onDelete}
-          onNumber={onNumber}
+          onChange={onPasscodeChange}
+          value={passcode}
         />
         {biometry ? (
           <Box
@@ -97,9 +95,7 @@ export function UnlockWalletContainer({route}) {
   const walletInfo = useSelector(walletSelectors.getWalletInfo);
   const dispatch = useDispatch();
 
-  const handleNumber = async num => {
-    const value = `${passcode}${num}`;
-
+  const handlePasscodeChange = async value => {
     if (value.length > DIGITS) {
       return;
     }
@@ -124,17 +120,13 @@ export function UnlockWalletContainer({route}) {
     }
   };
 
-  const handleDelete = () => {
-    setPasscode(passcode.substring(0, passcode.length - 1));
-  };
-
-  const handleBiometricUnlock = async () => {
+  const handleBiometricUnlock = useCallback(async () => {
     try {
       await dispatch(walletOperations.unlockWallet({biometry: true, callback}));
     } catch (err) {
       setPasscode('');
     }
-  };
+  }, [dispatch, callback]);
 
   useEffect(() => {
     if (supportBiometry && walletInfo.biometry) {
@@ -142,16 +134,16 @@ export function UnlockWalletContainer({route}) {
     } else {
       setPasscode('');
     }
-  }, []);
+  }, [supportBiometry, walletInfo.biometry, handleBiometricUnlock]);
 
   return (
     <UnlockWalletScreen
       digits={DIGITS}
       filled={passcode.length}
-      onNumber={handleNumber}
-      onDelete={handleDelete}
+      onPasscodeChange={handlePasscodeChange}
       onLoginWithBiometric={handleBiometricUnlock}
       biometry={supportBiometry}
+      passcode={passcode}
     />
   );
 }

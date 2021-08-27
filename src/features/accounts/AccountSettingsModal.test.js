@@ -1,7 +1,7 @@
-import { shallow } from 'enzyme';
+import {shallow} from 'enzyme';
 import React from 'react';
 import configureMockStore from 'redux-mock-store';
-import { AccountSettingsModal } from './AccountSettingsModal';
+import {AccountSettingsModal} from './AccountSettingsModal';
 
 const mockStore = configureMockStore();
 
@@ -11,14 +11,9 @@ describe('AccountSettingsModal', () => {
       // placeholder for redux store
     };
 
-    const wrapper = shallow(
-      <AccountSettingsModal
-        visible={true}
-      />,
-      {
-        context: {store: mockStore(initialState)},
-      },
-    );
+    const wrapper = shallow(<AccountSettingsModal visible={true} />, {
+      context: {store: mockStore(initialState)},
+    });
     expect(wrapper.dive()).toMatchSnapshot();
   });
 });

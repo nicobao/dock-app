@@ -1,7 +1,7 @@
-import { ScrollView } from 'react-native-gesture-handler';
+import {ScrollView} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
-import { Box } from './grid';
-import { Theme } from './theme';
+import {Box} from './grid';
+import {Theme} from './theme';
 
 export const ScreenContainer = styled.SafeAreaView`
   background-color: ${Theme.colors.primaryBackground};
@@ -26,4 +26,3 @@ export * from './list';
 export * from './LoadingScreen';
 export * from './theme';
 export * from './typography';
-

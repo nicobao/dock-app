@@ -12,9 +12,7 @@ describe('CreateAccountMnemonicScreen', () => {
     };
 
     const wrapper = shallow(
-      <CreateAccountMnemonicScreen
-        phrase="test phrase"
-      />,
+      <CreateAccountMnemonicScreen phrase="test phrase" />,
       {
         context: {store: mockStore(initialState)},
       },

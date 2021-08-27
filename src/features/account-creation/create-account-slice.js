@@ -7,7 +7,7 @@ import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {showToast, withErrorToast} from '../../core/toast';
 import {accountActions, accountOperations} from '../accounts/account-slice';
-import { translate } from 'src/locales';
+import {translate} from 'src/locales';
 
 const initialState = {
   loading: true,
@@ -46,30 +46,33 @@ export const createAccountOperations = {
   initFlow: () => async (dispatch, getState) => {
     navigate(Routes.CREATE_ACCOUNT_SETUP);
   },
-  importFromJson: (data) => 
+  importFromJson: data =>
     withErrorToast(async (dispatch, getState) => {
       const jsonData = JSON.parse(data);
-      
-      dispatch(createAccountActions.setForm({
-        data: jsonData,
-        json: true,
-      }));
+
+      dispatch(
+        createAccountActions.setForm({
+          data: jsonData,
+          json: true,
+        }),
+      );
       navigate(Routes.ACCOUNT_IMPORT_SETUP_PASSWORD);
     }),
-  unlockJson: (password) => 
-    async (dispatch, getState) => {
-      const form = createAccountSelectors.getForm(getState());
+  unlockJson: password => async (dispatch, getState) => {
+    const form = createAccountSelectors.getForm(getState());
 
-      await KeyringRpc.addFromJson(form.data, password);
+    await KeyringRpc.addFromJson(form.data, password);
 
-      dispatch(createAccountActions.setForm({
+    dispatch(
+      createAccountActions.setForm({
         ...form,
         password,
         accountName: form.data.meta && form.data.meta.name,
-      }));
+      }),
+    );
 
-      navigate(Routes.ACCOUNT_IMPORT_SETUP);
-    },
+    navigate(Routes.ACCOUNT_IMPORT_SETUP);
+  },
   importFromMnemonic: form =>
     withErrorToast(async (dispatch, getState) => {
       dispatch(accountActions.setAccountToBackup(null));
@@ -92,7 +95,7 @@ export const createAccountOperations = {
   createAccount: ({
     hasBackup = false,
     successMessage = translate('account_setup.success'),
-    form: extraForm
+    form: extraForm,
   } = {}) =>
     withErrorToast(async (dispatch, getState) => {
       const state = getState();
@@ -100,7 +103,7 @@ export const createAccountOperations = {
       const form = {
         ...createAccountSelectors.getForm(state),
         ...extraForm,
-      }
+      };
 
       const secretId = uuid();
       let {accountName, keypairType, derivationPath} = form;
@@ -112,7 +115,7 @@ export const createAccountOperations = {
           type: keypairType || 'sr25519',
           derivePath: derivationPath || '',
         });
-        
+
         // Create mnemonic phrase
         await WalletRpc.add({
           '@context': ['https://w3id.org/wallet/v1'],
@@ -131,7 +134,7 @@ export const createAccountOperations = {
           type: 'Password',
           value: form.password,
         });
-      }  
+      }
 
       // Create account
       await WalletRpc.add({

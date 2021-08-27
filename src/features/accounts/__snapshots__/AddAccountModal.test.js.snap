@@ -68,7 +68,7 @@ exports[`AddAccountModal should render correctly 1`] = `
     >
       <Memo(ForwardRef(Box))
         backgroundColor="#3F3F46"
-        borderRadius="4px"
+        borderRadius={6}
         height="4px"
         width="36px"
       />

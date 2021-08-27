@@ -1,9 +1,7 @@
-
-
 export const CreateAccountConstants = {
   testID: {
     createAccountScreen: {
-      container: 'createAccountScreen.container'
+      container: 'createAccountScreen.container',
     },
-  }
-}
+  },
+};

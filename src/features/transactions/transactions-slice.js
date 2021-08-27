@@ -1,13 +1,19 @@
 import {createSlice} from '@reduxjs/toolkit';
-import { Toast } from 'native-base';
-import { navigate, navigateBack } from '../../core/navigation';
-import { Routes } from '../../core/routes';
-import { ApiRpc } from '../../rn-rpc-webview/api-rpc';
+import {Toast} from 'native-base';
+import {translate} from 'src/locales';
+import {ApiRpc} from '../../rn-rpc-webview/api-rpc';
+import uuid from 'uuid';
+import {navigateBack} from '../../core/navigation';
+
+export const TransactionStatus = {
+  InProgress: 'pending',
+  Failed: 'failed',
+  Complete: 'complete',
+};
 
 const initialState = {
   loading: false,
-  txQueue: [],
-  txHistory: [] 
+  transactions: [],
 };
 
 const transactions = createSlice({
@@ -16,6 +22,21 @@ const transactions = createSlice({
   reducers: {
     setLoading(state, action) {
       state.loading = action.payload;
+    },
+    setTransactions(state, action) {
+      state.transactions = action.payload;
+    },
+    addTransaction(state, action) {
+      state.transactions.push(action.payload);
+    },
+    updateTransaction(state, action) {
+      state.transactions = state.transactions.map(item => {
+        if (item.id === action.payload.id) {
+          return action.payload;
+        }
+
+        return item;
+      });
     },
   },
 });
@@ -26,44 +47,79 @@ const getRoot = state => state.transactions;
 
 export const transactionsSelectors = {
   getLoading: state => getRoot(state).loading,
+  getTransactions: state => getRoot(state).transactions,
 };
 
-const waitUntil = time => new Promise(res => setTimeout(res, time));
-
 export const transactionsOperations = {
-  /**
-   * Fetch CREDENTIALs for the current wallet
-   *
-   * @returns
-   */
-  sendTokens: ({ addressTo, amount }) => async (dispatch, getState) => {
-    // create tx and add to the queue
-    Toast.show({
-      text: 'Transaction sent!',
-    });
-
-    navigateBack();
-    
-    try {
-      await ApiRpc.sendTokens({
-        address: addressTo,
-        // 1 token equals 25M gas. This is specified in the chain spec here https://github.com/docknetwork/dock-substrate/blob/poa-1/node/src/chain_spec.rs#L320
-        amount: parseInt(amount),
+  loadTransactions: () => async (dispatch, getState) => {
+    const items = await ApiRpc.getTransactions();
+    dispatch(transactionsActions.setTransactions(items));
+  },
+  getFeeAmount:
+    ({recipientAddress, accountAddress, amount}) =>
+    async (dispatch, getState) => {
+      return ApiRpc.getFeeAmount({
+        address: recipientAddress,
+        accountAddress,
+        amount: amount,
       });
+    },
+
+  sendTransaction:
+    ({recipientAddress, accountAddress, amount}) =>
+    async (dispatch, getState) => {
+      Toast.show({
+        text: translate('send_token.transaction_sent'),
+      });
+
+      const internalId = uuid();
+      const transaction = {
+        recipientAddress,
+        accountAddress,
+        amount,
+        internalId,
+        status: TransactionStatus.InProgress,
+      };
+
+      dispatch(transactionsActions.addTransaction(transaction));
 
       Toast.show({
         type: 'success',
-        text: 'Transaction succeed!'
-      })
-    } catch(err) {
-      console.error(err);
-
-      Toast.show({
-        type: 'danger',
-        text: 'Transaction failed'
+        text: translate('confirm_transaction.transfer_initiated'),
       });
-    }
-  },
+
+      ApiRpc.sendTokens({
+        address: recipientAddress,
+        accountAddress,
+        amount: amount,
+      })
+        .then(() => {
+          dispatch(
+            transactionsActions.updateTransaction({
+              ...transaction,
+              status: TransactionStatus.Complete,
+            }),
+          );
+
+          Toast.show({
+            type: 'success',
+            text: translate('confirm_transaction.transaction_complete'),
+          });
+        })
+        .catch(err => {
+          Toast.show({
+            type: 'danger',
+            text: translate('transaction_failed.title'),
+          });
+
+          dispatch(
+            transactionsActions.updateTransaction({
+              ...transaction,
+              status: TransactionStatus.Failed,
+            }),
+          );
+        });
+    },
 };
 
 export const transactionsReducer = transactions.reducer;

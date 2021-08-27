@@ -29,18 +29,16 @@ export function CreateAccountBackupScreen({
   onSkip,
 }) {
   return (
-    <ScreenContainer testID={CreateAccountConstants.testID.createAccountScreen.container}>
+    <ScreenContainer
+      testID={CreateAccountConstants.testID.createAccountScreen.container}>
       <Header>
         <BackButton />
       </Header>
       <Content marginLeft={26} marginRight={26}>
-        <Typography
-          variant="h1"
-          marginTop={52}>
+        <Typography variant="h1" marginTop={52}>
           {translate('create_account_backup.title')}
         </Typography>
-        <Typography
-          marginTop={12}>
+        <Typography marginTop={12}>
           {translate('create_account_backup.description')}
         </Typography>
       </Content>

@@ -4,9 +4,9 @@ let client;
 
 export const getRpcClient = () => client;
 export const rpcRequest = (name, ...params) => client.request(name, ...params);
-export const setRpcClient = (c) => {
+export const setRpcClient = c => {
   client = c;
-}
+};
 
 export function initRpcClient(webView) {
   client = new JSONRPCClient(async jsonRPCRequest => {

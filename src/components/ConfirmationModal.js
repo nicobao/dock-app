@@ -42,7 +42,10 @@ export function ConfirmationModal() {
       backgroundColor={Theme.colors.backdrop}
       isOpen={visible}
       onClose={handleCancel}>
-      <Modal.Content backgroundColor={Theme.colors.modalBackground} px={5} py={7}>
+      <Modal.Content
+        backgroundColor={Theme.colors.modalBackground}
+        px={5}
+        py={7}>
         <Stack alignItems="center">
           <Stack
             borderRadius={50}

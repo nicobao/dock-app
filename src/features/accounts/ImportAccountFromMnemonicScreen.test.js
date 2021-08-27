@@ -16,9 +16,7 @@ describe('ImportAccountFromMnemonicScreen', () => {
         onChange={jest.fn()}
         form={{
           phrase: 'test',
-          _errors: {
-            
-          }
+          _errors: {},
         }}
       />,
       {

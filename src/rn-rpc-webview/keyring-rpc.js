@@ -8,7 +8,7 @@ export class KeyringRpc {
   static addFromMnemonic(...options) {
     return rpcRequest('keyring.addFromMnemonic', ...options);
   }
-  
+
   static addFromJson(...params) {
     return rpcRequest('keyring.addFromJson', ...params);
   }
@@ -34,7 +34,7 @@ export class KeyringPairRpc {
   static lock() {
     return rpcRequest('pair.lock');
   }
-  
+
   static toJson(password) {
     return rpcRequest('pair.toJson', password);
   }

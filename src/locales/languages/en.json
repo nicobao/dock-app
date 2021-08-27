@@ -44,7 +44,8 @@
   "setup_passcode": {
     "title": "Setup Passcode",
     "description": "Add a passcode to keep your wallet safe",
-    "submit": "Setup Passcode"
+    "submit": "Setup Passcode",
+    "match_error": "Passcode doesn't match, try again"
   },
   "password_input": {
     "title": "Enter password",
@@ -107,6 +108,12 @@
     "verify_word": "Verify word #",
     "invalid_confirmation": "Invalid confirmation, please try again"
   },
+  "account_list": {
+    "send_token": "Send",
+    "receive_token": "Receive",
+    "delete_account": "Delete",
+    "account_details": "Details"
+  },
   "account_details": {
     "send_tokens_btn": "Send",
     "receive_tokens_btn": "Receive",
@@ -136,5 +143,66 @@
     "include_digits": "Must include digits",
     "include_proper_case": "Must include uppercase and lowercase letters",
     "include_char_length": "Must include 8-12 characters"
+  },
+  "receive_token": {
+    "title": "Send DOCK",
+    "description": "Share your address",
+    "address_copied": "Copied",
+    "copy_address": "Copy address",
+    "share_address": "Share address"
+  },
+  "send_token": {
+    "title": "Send to",
+    "recipient_address": "Recipient address",
+    "paste_address": "Paste",
+    "scan_qr_code": "Scan QR Code",
+    "send_max": "Send Max",
+    "calculating_fee": "Calculating fee...",
+    "transaction_sent": "Transaction Sent",
+    "insufficient_funds": "Insufficient funds",
+    "invalid_amount": "The amount is not valid",
+    "invalid_address": "Invalid recipient address"
+  },
+  "confirm_transaction": {
+    "title": "Confirm",
+    "send": "Send",
+    "to": "To",
+    "fee": "Transaction Fee",
+    "total": "Total",
+    "submit": "Confirm",
+    "transfer_initiated": "Transfer initiated",
+    "transaction_complete": "Transaction complete"
+  },
+  "transaction_status": {
+    "in_progress": "In progress",
+    "completed": "Completed",
+    "failed": "Failed"
+  },
+  "transaction_history": {
+    "title": "Transactions",
+    "failed": "Failed",
+    "try_again": "Try again"
+  },
+  "transaction_details": {
+    "title": "Sent",
+    "status": "Status",
+    "sent": "Sent",
+    "to": "To",
+    "date": "Date",
+    "nonce": "Nonce",
+    "view_on_subscan": "View on Subscan"
+  },
+  "transaction_failed": {
+    "title": "Transaction failed",
+    "description": "View your transaction and try again.",
+    "view_transaction": "View transaction",
+    "network_error": "Transaction failed due to network failure",
+    "insufficient_fund_error": "Transaction failed due to insufficient fund for network fees"
+  },
+  "loading_screen": {
+    "message": "Loading..."
+  },
+  "keychain": {
+    "password": "password"
   }
 }

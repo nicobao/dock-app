@@ -7,6 +7,7 @@ export const Theme = {
     nunitoSans: 'Nunito Sans',
     montserrat: 'Montserrat',
   },
+  borderRadius: 6,
   colors: {
     backdrop: 'rgba(0, 0, 0, 0.6)',
     transparent: 'transparent',
@@ -25,6 +26,8 @@ export const Theme = {
     tertiaryBackground: '#3F3F46',
     circleChecked: '#34D399',
     circleUnckecked: '#71717A',
+    warningText: 'rgba(254, 243, 199, 1)',
+    warningBackground: 'rgba(120, 53, 15, 0.3)',
   },
   screen: {
     backgroundColor: '#18181B',
@@ -48,14 +51,20 @@ const nBaseTheme = extendTheme({
       // 100: '#C5E4F3',
       // 200: '#A2D4EC',
       // 300: '#ccc',
-      
+
       400: Theme.colors.info2,
-      
+
       // 500: '#0088CC',
       // 600: '#007AB8',
       // 700: '#006BA1',
       // 800: '#005885',
       // 900: '#003F5E',
+    },
+    secondary: {
+      400: Theme.colors.secondaryBackground,
+    },
+    tertiary: {
+      400: Theme.colors.tertiaryBackground,
     },
   },
   components: {
@@ -66,33 +75,32 @@ const nBaseTheme = extendTheme({
         backgroundColor: Theme.colors.secondaryBackground,
         fontSize: '19px',
         _hover: {
-          borderColor: Theme.colors.secondaryBackground
+          borderColor: Theme.colors.secondaryBackground,
         },
         _focus: {
-          borderColor: Theme.colors.secondaryBackground
+          borderColor: Theme.colors.secondaryBackground,
         },
-        
       },
       defaultProps: {
-        w:"100%",
+        w: '100%',
         bg: 'red',
       },
       variants: {
         outline: () => ({
           borderWidth: 0,
-          borderColor: '#ccc'
-        })
-      }
+          borderColor: '#ccc',
+        }),
+      },
     },
     Text: {
-      baseStyle: (props) => ({
-        fontFamily: !props.montserrat ? 'Nunito Sans' : 'Montserrat'
+      baseStyle: props => ({
+        fontFamily: !props.montserrat ? 'Nunito Sans' : 'Montserrat',
       }),
     },
     Button: {
-      baseStyle: (props) => ({
+      baseStyle: props => ({
         _stack: {
-          my: 1
+          my: 1,
         },
         _text: {
           color: Theme.colors.textHighlighted,
@@ -106,13 +114,13 @@ const nBaseTheme = extendTheme({
         // _text: {
         //   color: '#fff'
         // },
-      }
-    }
+      },
+    },
   },
   config: {
     initialColorMode: 'dark',
   },
-})
+});
 
 export function ThemeProvider({children}) {
   return (

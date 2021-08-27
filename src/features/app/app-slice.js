@@ -1,13 +1,13 @@
-import {createSlice} from '@reduxjs/toolkit';
-import {navigate} from '../../core/navigation';
-import {Routes} from '../../core/routes';
-import AsyncStorage from '@react-native-community/async-storage';
 import {KeyringRpc} from '@docknetwork/react-native-sdk/src/client/keyring-rpc';
 import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
+import {WalletRpc} from '@docknetwork/react-native-sdk/src/client/wallet-rpc';
+import AsyncStorage from '@react-native-community/async-storage';
+import {createSlice} from '@reduxjs/toolkit';
 import SplashScreen from 'react-native-splash-screen';
 import {Keychain} from '../../core/keychain';
+import {navigate} from '../../core/navigation';
+import {Routes} from '../../core/routes';
 import {walletActions} from '../wallet/wallet-slice';
-import {WalletRpc} from '@docknetwork/react-native-sdk/src/client/wallet-rpc';
 
 export const BiometryType = {
   FaceId: Keychain.BIOMETRY_TYPE.FACE_ID,

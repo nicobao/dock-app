@@ -14,6 +14,8 @@ import AlertModalIcon from './alert-modal.svg';
 import InfoModalIcon from './info-modal.svg';
 import ErrorAlert from './error-alert.svg';
 import XCircleIcon from './x-circle.svg';
+import AccountIcon from './account-icon.svg';
+import KeyboardDeleteIcon from './keyboard-delete.svg';
 
 export {
   DockLogoIcon,
@@ -32,4 +34,6 @@ export {
   AlertModalIcon,
   ErrorAlert,
   XCircleIcon,
-}
+  AccountIcon,
+  KeyboardDeleteIcon,
+};

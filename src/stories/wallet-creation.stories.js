@@ -8,5 +8,7 @@ import {ProtectYourWalletScreen} from '../features/wallet/ProtectYourWalletScree
 storiesOf('Wallet creation', module)
   .add('Create Wallet', () => <CreateWalletScreen />)
   .add('Setup Passcode', () => <SetupPasscodeScreen />)
-  .add('Create Passcode', () => <CreatePasscodeScreen text="Create your passcode" />)
+  .add('Create Passcode', () => (
+    <CreatePasscodeScreen text="Create your passcode" />
+  ))
   .add('Protect your wallet', () => <ProtectYourWalletScreen />);

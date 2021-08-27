@@ -1,24 +1,24 @@
 import {
-  Content,
-  Text,
   Container,
-  View,
+  Content,
+  Icon,
+  Left,
   List,
   ListItem,
-  Left,
   Right,
-  Icon,
+  Text,
   Toast,
+  View,
 } from 'native-base';
 import React from 'react';
+import ExitApp from 'react-native-exit-app';
 import {useDispatch} from 'react-redux';
 import styled from 'styled-components/native';
-import {Colors} from '../../theme/colors';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
+import {Colors} from '../../theme/colors';
+import {walletConnectOperations} from '../wallet-connect/wallet-connect-slice';
 import {walletsOperations} from '../wallets/wallets-slice';
-import ExitApp from 'react-native-exit-app';
-import { walletConnectOperations } from '../wallet-connect/wallet-connect-slice';
 
 const Divier = styled(View)`
   margin: 20px 0;
@@ -66,7 +66,8 @@ export function SettingsScreen({navigation}) {
               <Icon name="arrow-forward" />
             </Right>
           </ListItem>
-          <ListItem onPress={() => dispatch(walletConnectOperations.clearSessions())}>
+          <ListItem
+            onPress={() => dispatch(walletConnectOperations.clearSessions())}>
             <Left>
               <Icon
                 name="save-outline"

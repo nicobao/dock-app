@@ -33,6 +33,7 @@ import {ImportExistingAccountModal} from './ImportExistingAccountModal';
 import {createAccountOperations} from '../account-creation/create-account-slice';
 import {AccountsScreenTestIDs} from './test-ids';
 import {PolkadotIcon} from '../../components/PolkadotIcon';
+import {translate} from 'src/locales';
 
 export function AccountsScreen({
   accounts = [],
@@ -99,7 +100,9 @@ export function AccountsScreen({
                         <Stack direction="row" flex={1} alignItems="center">
                           <PolkadotIcon address={account.id} size={32} />
                           <Stack direction="row" flex={1} ml={3}>
-                            <Typography color={Theme.colors.textHighlighted} fontWeight={600}>
+                            <Typography
+                              color={Theme.colors.textHighlighted}
+                              fontWeight={600}>
                               {account.meta.name}
                             </Typography>
                             <ChevronRightIcon marginTop={1} />
@@ -142,11 +145,28 @@ export function AccountsScreen({
                       </Typography>
                     </Stack>
                     <Stack direction="row" mt={4}>
-                      <Button width="50%" size="sm" colorScheme="dark">
-                        Send
+                      <Button
+                        width="50%"
+                        size="sm"
+                        colorScheme="dark"
+                        onPress={() => {
+                          navigate(Routes.TOKEN_SEND, {
+                            address: account.id,
+                          });
+                        }}>
+                        {translate('account_list.send_token')}
                       </Button>
-                      <Button width="50%" size="sm" ml={2} colorScheme="dark">
-                        Receive
+                      <Button
+                        width="50%"
+                        size="sm"
+                        ml={2}
+                        colorScheme="dark"
+                        onPress={() => {
+                          navigate(Routes.TOKEN_RECEIVE, {
+                            address: account.id,
+                          });
+                        }}>
+                        {translate('account_list.receive_token')}
                       </Button>
                     </Stack>
                   </Stack>
@@ -162,7 +182,7 @@ export function AccountsScreen({
             Create new account
           </BigButton>
           <BigButton
-            onPress={() => alert('Available soon')}
+            onPress={onImportExistingAccount}
             icon={<DocumentDownloadIcon />}>
             Import existing account
           </BigButton>
@@ -183,7 +203,7 @@ export function AccountsContainer() {
   const accounts = useSelector(accountSelectors.getAccounts);
   useEffect(() => {
     dispatch(accountOperations.loadAccounts());
-  }, []);
+  }, [dispatch]);
 
   return (
     <AccountsScreen

@@ -1,9 +1,9 @@
-import { Box, Stack } from 'native-base';
+import {Box, Stack} from 'native-base';
 import React from 'react';
-import { Dimensions } from 'react-native';
+import {Dimensions} from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
-import { Modal } from '../../components/Modal';
-import { DockLogoIcon, Typography } from '../../design-system';
+import {Modal} from '../../components/Modal';
+import {DockLogoIcon, Typography} from '../../design-system';
 
 export function QRCodeModal({onClose, visible, data, title, description}) {
   const qrSize = Dimensions.get('window').width * 0.8;

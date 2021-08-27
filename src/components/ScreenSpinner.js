@@ -1,7 +1,7 @@
 import React from 'react';
-import { Spinner, Text } from "native-base";
-import { View } from "react-native";
-import { Colors } from '../theme/colors';
+import {Spinner, Text} from 'native-base';
+import {View} from 'react-native';
+import {Colors} from '../theme/colors';
 
 export function ScreenSpinner() {
   return (

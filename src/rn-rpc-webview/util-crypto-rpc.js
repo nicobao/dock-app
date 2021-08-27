@@ -1,4 +1,4 @@
-import { rpcRequest } from "./rpc-client";
+import {rpcRequest} from './rpc-client';
 
 export class UtilCryptoRpc {
   static cryptoWaitReady() {

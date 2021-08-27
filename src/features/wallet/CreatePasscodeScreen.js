@@ -14,8 +14,9 @@ import {
 } from '../../design-system';
 import styled from 'styled-components/native';
 import {BackButton} from '../../design-system/buttons';
-import KeyboardDeleteIcon from '../../assets/icons/keyboard-delete.svg';
 import {translate} from '../../locales';
+import {NumericKeyboard} from 'src/components/NumericKeyboard';
+import {showToast} from 'src/core/toast';
 
 const Circle = styled.View`
   width: 20px;
@@ -23,7 +24,8 @@ const Circle = styled.View`
   border-radius: 20px;
   border: 1px solid white;
   margin: 0 7px;
-  background-color: ${props => (props.filled ? Theme.colors.textHighlighted : Theme.colors.transparent)};
+  background-color: ${props =>
+    props.filled ? Theme.colors.textHighlighted : Theme.colors.transparent};
 `;
 
 function PasscodeMask({digits = 6, filled = 0, ...props}) {
@@ -40,84 +42,11 @@ function PasscodeMask({digits = 6, filled = 0, ...props}) {
   );
 }
 
-function KeyboardButton({onPress, value, testID}) {
-  return (
-    <Box
-      testID={testID}
-      flex
-      alignItems="center"
-      onPress={() => value !== null && onPress(value)}>
-      <Typography
-        variant="h1"
-        fontSize={30}
-        lineHeight={37}>
-        {value}
-      </Typography>
-    </Box>
-  );
-}
-
-export function NumericKeyboard({onNumber, onDelete, ...props}) {
-  return (
-    <Box {...props} flex>
-      <Box
-        justifyContent="center"
-        flexDirection="row"
-        row
-        autoSize
-        marginBottom={24}>
-        {[1, 2, 3].map(value => (
-          <KeyboardButton
-            key={value}
-            onPress={onNumber}
-            value={value}
-            testID={`keyboardNumber${value}`}
-          />
-        ))}
-      </Box>
-      <Box
-        justifyContent="center"
-        flexDirection="row"
-        row
-        autoSize
-        marginBottom={24}>
-        {[4, 5, 6].map(value => (
-          <KeyboardButton key={value} onPress={onNumber} value={value} />
-        ))}
-      </Box>
-      <Box
-        justifyContent="center"
-        flexDirection="row"
-        row
-        autoSize
-        marginBottom={24}>
-        {[7, 8, 9].map(value => (
-          <KeyboardButton key={value} onPress={onNumber} value={value} />
-        ))}
-      </Box>
-      <Box
-        justifyContent="center"
-        flexDirection="row"
-        row
-        autoSize
-        marginBottom={24}>
-        {[null, 0].map(value => (
-          <KeyboardButton key={value} onPress={onNumber} value={value} />
-        ))}
-        <Box flex alignItems="center" paddingTop={5} onPress={onDelete}>
-          <KeyboardDeleteIcon />
-        </Box>
-      </Box>
-    </Box>
-  );
-}
-
 export function CreatePasscodeScreen({
   digits = 6,
   filled = 2,
   confirmation,
-  onNumber,
-  onDelete,
+  onPasscodeChange,
 }) {
   return (
     <ScreenContainer testID="createPasscodeScreen">
@@ -133,11 +62,7 @@ export function CreatePasscodeScreen({
               : translate('create_wallet.create_passcode')}
           </Typography>
         </Box>
-        <NumericKeyboard
-          marginTop={85}
-          onDelete={onDelete}
-          onNumber={onNumber}
-        />
+        <NumericKeyboard marginTop={85} onChange={onPasscodeChange} />
       </Content>
     </ScreenContainer>
   );
@@ -155,7 +80,10 @@ export function CreatePasscodeContainer() {
     setConfirmation('');
 
     if (confirmation !== value) {
-      alert(`Passcode doesn't match, try again`);
+      showToast({
+        message: translate('setup_passcode.match_error'),
+        type: 'error',
+      });
       return;
     }
 
@@ -163,9 +91,7 @@ export function CreatePasscodeContainer() {
     navigate(Routes.CREATE_WALLET_PROTECT);
   };
 
-  const handleNumber = num => {
-    const value = `${passcode}${num}`;
-
+  const handlePasscodeChange = value => {
     if (value.length > DIGITS) {
       return;
     }
@@ -184,16 +110,11 @@ export function CreatePasscodeContainer() {
     });
   };
 
-  const handleDelete = () => {
-    setPasscode(passcode.substring(0, passcode.length - 1));
-  };
-
   return (
     <CreatePasscodeScreen
       digits={DIGITS}
       filled={passcode.length}
-      onNumber={handleNumber}
-      onDelete={handleDelete}
+      onPasscodeChange={handlePasscodeChange}
       confirmation={confirmation}
     />
   );

@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SendTokenScreen should render correctly 1`] = `
+<StyledNativeComponent
+  forwardedComponent={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "attrs": Array [],
+      "inlineStyle": InlineStyle {
+        "rules": Array [
+          "
+  background-color: ",
+          "#18181B",
+          ";
+  flex: 1;
+",
+        ],
+      },
+      "render": [Function],
+      "shouldForwardProp": undefined,
+      "styledComponentId": "StyledNativeComponent",
+      "target": Object {
+        "$$typeof": Symbol(react.forward_ref),
+        "render": [Function],
+      },
+      "withComponent": [Function],
+    }
+  }
+  forwardedRef={null}
+  testID="unlockWalletScreen"
+>
+  <Styled(View)>
+    <BackButton />
+  </Styled(View)>
+  <Styled(ScrollView)
+    marginLeft={26}
+    marginRight={26}
+  >
+    <Memo(ForwardRef(Stack))>
+      <Styled(Component)
+        mb={2}
+        variant="h1"
+      >
+        Send to
+      </Styled(Component)>
+    </Memo(ForwardRef(Stack))>
+    <Memo(ForwardRef(Box))
+      my={7}
+    >
+      <Memo(ForwardRef(Stack))>
+        <Memo(ForwardRef(FormControl))>
+          <Memo(ForwardRef(Input))
+            autoCapitalize="none"
+            pasteFromClipboard={true}
+            placeholder="Recipient address"
+          />
+          <Memo(ForwardRef(FormControlErrorMessage)) />
+        </Memo(ForwardRef(FormControl))>
+      </Memo(ForwardRef(Stack))>
+      <Memo(ForwardRef(Stack))
+        alignItems="center"
+        direction="row"
+        mt={3}
+      >
+        <Button
+          colorScheme="secondary"
+          size="sm"
+        >
+          Scan QR Code
+        </Button>
+      </Memo(ForwardRef(Stack))>
+    </Memo(ForwardRef(Box))>
+    <Memo(ForwardRef(Stack))
+      alignContent="flex-end"
+      flex={1}
+    >
+      <Button
+        mb={4}
+      >
+        Next
+      </Button>
+    </Memo(ForwardRef(Stack))>
+  </Styled(ScrollView)>
+</StyledNativeComponent>
+`;

@@ -1,13 +1,18 @@
 import * as RNKeychain from 'react-native-keychain';
+import {translate} from 'src/locales';
 
 export const Keychain = {
   ...RNKeychain,
   setItem(id, data, options = {}) {
     const jsonData = JSON.stringify(data);
-  
+
     options.service = id;
-  
-    return RNKeychain.setGenericPassword(jsonData, data.password || 'password', options);
+
+    return RNKeychain.setGenericPassword(
+      jsonData,
+      data.password || translate('keychain.password'),
+      options,
+    );
   },
   removeItem(id) {
     return RNKeychain.resetGenericPassword({
@@ -15,15 +20,17 @@ export const Keychain = {
     });
   },
   async getItem(id, options = {}) {
-    const result = await RNKeychain.getGenericPassword({ service: id, ...options });
-  
+    const result = await RNKeychain.getGenericPassword({
+      service: id,
+      ...options,
+    });
+
     if (!result) {
       return;
     }
-  
-    const data = JSON.parse(result.username);
-  
-    return data;
-  }
-}
 
+    const data = JSON.parse(result.username);
+
+    return data;
+  },
+};

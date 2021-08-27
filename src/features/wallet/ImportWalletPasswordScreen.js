@@ -1,40 +1,20 @@
-import {
-  Button,
-  FormControl,
-  Stack,
-  Tooltip,
-  Pressable,
-  Popover,
-  TextArea,
-} from 'native-base';
-import React, {useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {
-  Header,
-  Footer,
-  Content,
-  ScreenContainer,
-  Typography,
-  NBox as Box,
-  Input,
-  LoadingButton,
-} from '../../design-system';
-import {BackButton} from '../../design-system/buttons';
-import { walletOperations } from './wallet-slice';
+import React from 'react';
+import {useDispatch} from 'react-redux';
 import {PasswordInputContainer} from '../../components/PasswordInputScreen';
+import {walletOperations} from './wallet-slice';
 
-export function ImportWalletPasswordContainer({ route }) {
+export function ImportWalletPasswordContainer({route}) {
   const dispatch = useDispatch();
-  const { fileUri } = route.params;
+  const {fileUri} = route.params;
 
-  const handleSubmit = ({ password }) => {
-    return dispatch(walletOperations.importWallet({
-      password,
-      fileUri,
-    }));
+  const handleSubmit = ({password}) => {
+    return dispatch(
+      walletOperations.importWallet({
+        password,
+        fileUri,
+      }),
+    );
   };
 
-  return (
-    <PasswordInputContainer onSubmit={handleSubmit} />
-  );
+  return <PasswordInputContainer onSubmit={handleSubmit} />;
 }
