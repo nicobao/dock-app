@@ -27,7 +27,7 @@ export const Theme = {
     circleChecked: '#34D399',
     circleUnckecked: '#71717A',
     warningText: 'rgba(254, 243, 199, 1)',
-    warningBackground: 'rgba(120, 53, 15, 0.3)'
+    warningBackground: 'rgba(120, 53, 15, 0.3)',
   },
   screen: {
     backgroundColor: '#18181B',

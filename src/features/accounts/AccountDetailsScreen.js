@@ -216,7 +216,10 @@ export function AccountDetailsScreen({
         </Stack>
 
         {account.meta.hasBackup ? null : (
-          <Stack backgroundColor={Theme.colors.warningBackground} p={'16px'} mt={20}>
+          <Stack
+            backgroundColor={Theme.colors.warningBackground}
+            p={'16px'}
+            mt={20}>
             <Stack direction="row">
               <NBox mr={3} mt={'3px'}>
                 <AlertIcon />

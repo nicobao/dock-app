@@ -9,8 +9,10 @@ import {PolkadotIcon} from 'src/components/PolkadotIcon';
 import {formatAddress} from 'src/core/format-utils';
 import {showToast} from 'src/core/toast';
 import {
+  BackButton,
   Button,
   Content,
+  Header,
   ScreenContainer,
   Theme,
   Typography,
@@ -29,6 +31,9 @@ export function ReceiveTokenScreen({
 
   return (
     <ScreenContainer testID="unlockWalletScreen">
+      <Header>
+        <BackButton />
+      </Header>
       <Stack alignItems="center">
         <Typography variant="h1" mb={2}>
           {translate('receive_token.title')}
@@ -38,33 +43,35 @@ export function ReceiveTokenScreen({
         </Typography>
       </Stack>
       <Content marginLeft={26} marginRight={26}>
-        <Box
+        <Stack
           bg={Theme.colors.secondaryBackground}
           p={5}
           alignItems="center"
           borderRadius={12}
           my={7}>
-          <Box>
+          <Stack>
             <QRCode
               value={address}
               size={qrSize}
               color={Theme.colors.secondaryBackground}
             />
-          </Box>
-          <Stack direction="row" alignItems="center" mt={3}>
+          </Stack>
+          <Stack direction="row" alignItems="flex-start" flex={1}>
             <Box pr={2}>{accountIcon}</Box>
             <Stack direction="column" alignItems="flex-start">
               <Typography variant="h3">{accountName}</Typography>
               <Typography>{formatAddress(address)}</Typography>
             </Stack>
           </Stack>
-        </Box>
-        <Button onPress={onCopyAddress} colorScheme="tertiary" mb={4}>
-          {translate('receive_token.copy_address')}
-        </Button>
-        <Button onPress={onShareAddress} colorScheme="tertiary">
-          {translate('receive_token.share_address')}
-        </Button>
+        </Stack>
+        <Stack>
+          <Button onPress={onCopyAddress} colorScheme="tertiary" mb={4}>
+            {translate('receive_token.copy_address')}
+          </Button>
+          <Button onPress={onShareAddress} colorScheme="tertiary">
+            {translate('receive_token.share_address')}
+          </Button>
+        </Stack>
       </Content>
     </ScreenContainer>
   );

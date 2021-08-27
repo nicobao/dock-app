@@ -51,7 +51,7 @@ export function AccountSettingsModal({onClose, visible, onDelete, onExport}) {
             </Box>
           </Pressable>
           <Typography variant="h1">
-            {translate('account_settings_modal.export_account_titlte')}
+            {translate('account_settings_modal.export_account_title')}
           </Typography>
         </Stack>
         <OptionList
