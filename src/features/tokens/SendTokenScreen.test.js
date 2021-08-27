@@ -14,7 +14,11 @@ describe('SendTokenScreen', () => {
     const wrapper = shallow(
       <SendTokenScreen
         address={'3B9W5fS4ygoUVnGhzTk7sihSdhCyJQRNMQ7aJfDdsfWb16f1'}
-        form={{}}
+        form={{
+          _errors: {
+            
+          }
+        }}
         onChange={() => {}}
       />,
       {

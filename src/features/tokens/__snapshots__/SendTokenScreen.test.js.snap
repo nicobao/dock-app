@@ -48,11 +48,14 @@ exports[`SendTokenScreen should render correctly 1`] = `
       my={7}
     >
       <Memo(ForwardRef(Stack))>
-        <Memo(ForwardRef(Input))
-          autoCapitalize="none"
-          pasteFromClipboard={true}
-          placeholder="Recipient address"
-        />
+        <Memo(ForwardRef(FormControl))>
+          <Memo(ForwardRef(Input))
+            autoCapitalize="none"
+            pasteFromClipboard={true}
+            placeholder="Recipient address"
+          />
+          <Memo(ForwardRef(FormControlErrorMessage)) />
+        </Memo(ForwardRef(FormControl))>
       </Memo(ForwardRef(Stack))>
       <Memo(ForwardRef(Stack))
         alignItems="center"
