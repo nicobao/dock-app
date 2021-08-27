@@ -1,6 +1,6 @@
 import Clipboard from '@react-native-community/clipboard';
 import {Box, FormControl, Input, Stack} from 'native-base';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Share from 'react-native-share';
 import {useDispatch, useSelector} from 'react-redux';
 import {NumericKeyboard} from 'src/components/NumericKeyboard';
@@ -8,8 +8,6 @@ import {PolkadotIcon} from 'src/components/PolkadotIcon';
 import {navigate} from 'src/core/navigation';
 import {Routes} from 'src/core/routes';
 import {showToast} from 'src/core/toast';
-import {DockRpc} from 'src/rn-rpc-webview/dock-rpc';
-import {KeyringPairRpc} from 'src/rn-rpc-webview/keyring-rpc';
 import {UtilCryptoRpc} from 'src/rn-rpc-webview/util-crypto-rpc';
 import {
   BackButton,
@@ -75,7 +73,6 @@ export function EnterTokenAmount({form, onMax, onChange, onBack, onNext}) {
       </Header>
       <Content marginLeft={26} marginRight={26}>
         <Stack>
-            
           <Stack direction="row" alignItems="center" justifyContent="center">
             <Typography
               variant="h1"
@@ -96,7 +93,6 @@ export function EnterTokenAmount({form, onMax, onChange, onBack, onNext}) {
               {form._errors.amount}
             </FormControl.ErrorMessage>
           </FormControl>
-          
         </Stack>
         <Stack>
           <Button colorScheme="secondary" mb={2} onPress={onMax}>
@@ -175,7 +171,9 @@ export function SendTokenContainer({route}) {
         onShareAddress={handleShareAddress}
         onChange={handleChange}
         onNext={async () => {
-          const addressValid = await UtilCryptoRpc.isAddressValid(form.recipientAddress);
+          const addressValid = await UtilCryptoRpc.isAddressValid(
+            form.recipientAddress,
+          );
 
           if (!addressValid) {
             return setForm(v => ({
@@ -213,8 +211,9 @@ export function SendTokenContainer({route}) {
           form={form}
           onChange={handleChange}
           onNext={() => {
-            const amountValid = form.amount <= accountDetails.meta.balance.value;
-            
+            const amountValid =
+              form.amount <= accountDetails.meta.balance.value;
+
             if (!amountValid) {
               return setForm(v => ({
                 ...v,
@@ -223,7 +222,7 @@ export function SendTokenContainer({route}) {
                 },
               }));
             }
-            
+
             dispatch(() => {
               transactionsOperations.getFeeAmount(form).then(fee => {
                 handleChange('fee')(fee);
