@@ -226,7 +226,7 @@ export function AccountDetailsScreen({
               </Typography>
             </Stack>
             <NBox mt={2}>
-              <Typography color="background: rgba(254, 243, 199, 1)">
+              <Typography color="rgba(254, 243, 199, 1)">
                 {translate('account_details.backup_details')}
               </Typography>
             </NBox>
