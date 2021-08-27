@@ -182,7 +182,7 @@ export function AccountsScreen({
             Create new account
           </BigButton>
           <BigButton
-            onPress={() => alert('Available soon')}
+            onPress={onImportExistingAccount}
             icon={<DocumentDownloadIcon />}>
             Import existing account
           </BigButton>

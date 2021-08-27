@@ -80,7 +80,6 @@ export function CreatePasscodeContainer() {
     setConfirmation('');
 
     if (confirmation !== value) {
-      alert("Passcode doesn't match, try again");
       showToast({
         message: translate('setup_passcode.match_error'),
         type: 'error',
