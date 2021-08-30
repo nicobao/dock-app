@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import DocumentPicker from 'react-native-document-picker';
 import RNFS from 'react-native-fs';
+import RNExitApp from 'react-native-exit-app';
 
 import {
   Header,
@@ -34,6 +35,7 @@ import {createAccountOperations} from '../account-creation/create-account-slice'
 import {AccountsScreenTestIDs} from './test-ids';
 import {PolkadotIcon} from '../../components/PolkadotIcon';
 import {translate} from 'src/locales';
+import {Platform} from 'react-native';
 
 export function AccountsScreen({
   accounts = [],
@@ -198,12 +200,21 @@ export function AccountsScreen({
   );
 }
 
-export function AccountsContainer() {
+export function AccountsContainer({navigation}) {
   const dispatch = useDispatch();
   const accounts = useSelector(accountSelectors.getAccounts);
   useEffect(() => {
     dispatch(accountOperations.loadAccounts());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      navigation.addListener('beforeRemove', e => {
+        RNExitApp.exitApp();
+        e.preventDefault();
+      });
+    }
+  }, [navigation]);
 
   return (
     <AccountsScreen
