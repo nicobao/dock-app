@@ -1,4 +1,5 @@
 import {KeyringRpc} from '@docknetwork/react-native-sdk/src/client/keyring-rpc';
+import {DockRpc} from '@docknetwork/react-native-sdk/src/client/dock-rpc';
 import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
 import {WalletRpc} from '@docknetwork/react-native-sdk/src/client/wallet-rpc';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -39,15 +40,46 @@ const getRoot = state => state.app;
 export const appSelectors = {
   getLoading: state => getRoot(state).loading,
   getSupportedBiometryType: state => getRoot(state).supportedBiometryType,
+  getRpcReady: state => getRoot(state).rpcReady,
+  getDockReady: state => getRoot(state).dockReady,
 };
 
 export const appOperations = {
+  waitRpcReady: () => async (dispatch, getState) => {
+    return new Promise((res) => {
+      const checkRpc = () => {
+        if (appSelectors.getRpcReady(getState())) {
+          return res();
+        }
+
+        setTimeout(checkRpc, 500);
+      }
+      
+      checkRpc();
+    })
+  },
+  waitDockReady: () => async (dispatch, getState) => {
+    return new Promise((res) => {
+      const checkDock = () => {
+        if (appSelectors.getDockReady(getState())) {
+          return res();
+        }
+
+        setTimeout(checkDock, 500);
+      }
+
+      checkDock();
+    })
+  },
   rpcReady: () => async (dispatch, getState) => {
     await UtilCryptoRpc.cryptoWaitReady();
     await KeyringRpc.initialize();
     await WalletRpc.create('wallet');
     await WalletRpc.load();
     await WalletRpc.sync();
+    await DockRpc.init({
+      address: SUBSTRATE_URL,
+    });
   },
   initialize: () => async (dispatch, getState) => {
     SplashScreen.hide();
