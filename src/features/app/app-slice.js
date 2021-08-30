@@ -9,6 +9,7 @@ import {Keychain} from '../../core/keychain';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {walletActions} from '../wallet/wallet-slice';
+import {SUBSTRATE_URL} from '@env';
 
 export const BiometryType = {
   FaceId: Keychain.BIOMETRY_TYPE.FACE_ID,
@@ -45,32 +46,6 @@ export const appSelectors = {
 };
 
 export const appOperations = {
-  waitRpcReady: () => async (dispatch, getState) => {
-    return new Promise((res) => {
-      const checkRpc = () => {
-        if (appSelectors.getRpcReady(getState())) {
-          return res();
-        }
-
-        setTimeout(checkRpc, 500);
-      }
-      
-      checkRpc();
-    })
-  },
-  waitDockReady: () => async (dispatch, getState) => {
-    return new Promise((res) => {
-      const checkDock = () => {
-        if (appSelectors.getDockReady(getState())) {
-          return res();
-        }
-
-        setTimeout(checkDock, 500);
-      }
-
-      checkDock();
-    })
-  },
   rpcReady: () => async (dispatch, getState) => {
     await UtilCryptoRpc.cryptoWaitReady();
     await KeyringRpc.initialize();
