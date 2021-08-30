@@ -46,6 +46,7 @@ export function CreatePasscodeScreen({
   digits = 6,
   filled = 2,
   confirmation,
+  passcode,
   onPasscodeChange,
 }) {
   return (
@@ -62,7 +63,7 @@ export function CreatePasscodeScreen({
               : translate('create_wallet.create_passcode')}
           </Typography>
         </Box>
-        <NumericKeyboard marginTop={85} onChange={onPasscodeChange} />
+        <NumericKeyboard marginTop={85} onChange={onPasscodeChange} value={passcode} />
       </Content>
     </ScreenContainer>
   );
@@ -96,6 +97,7 @@ export function CreatePasscodeContainer() {
       return;
     }
 
+    console.log('set value', value);
     setPasscode(value);
 
     runAfterInteractions(() => {
@@ -114,6 +116,7 @@ export function CreatePasscodeContainer() {
     <CreatePasscodeScreen
       digits={DIGITS}
       filled={passcode.length}
+      passcode={passcode}
       onPasscodeChange={handlePasscodeChange}
       confirmation={confirmation}
     />

@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {jsx as _jsx} from 'react/jsx-runtime';
-import {PolkadotUIRpc} from '@docknetwork/react-native-sdk/src/client/polkadot-ui-rpc';
 import {Circle, Svg} from 'react-native-svg';
+import { useDispatch } from 'react-redux';
+import { accountOperations } from 'src/features/accounts/account-slice';
 
 function renderCircle({cx, cy, fill, r}, key) {
   return <Circle cx={cx} cy={cy} fill={fill} r={r} key={key} />;
@@ -14,10 +15,15 @@ function Identicon({
   size,
   style,
 }) {
+  const dispatch = useDispatch();
   const [svgData, setSvgData] = useState();
 
   useEffect(() => {
-    PolkadotUIRpc.getPolkadotSvgIcon(address, isAlternative).then(setSvgData);
+    if (!address) {
+      return;
+    }
+
+    dispatch(accountOperations.getPolkadotSvgIcon(address, isAlternative)).then(setSvgData);
   }, [address, isAlternative]);
 
   if (!svgData) {

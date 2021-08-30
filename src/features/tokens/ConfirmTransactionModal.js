@@ -12,19 +12,20 @@ import {Modal} from '../../components/Modal';
 import {translate} from 'src/locales';
 import {Typography} from '../../design-system';
 import {getDockTokenPrice} from './price-service';
+import { formatCurrency, formatDockAmount } from 'src/core/format-utils';
 
-export function TokenAmount({amount, symbol, children}) {
+export function TokenAmount({amount, symbol = 'DOCK', children}) {
   const [fiatAmount, setFiatAmount] = useState(0);
   const fiatSymbol = 'USD';
 
   useEffect(() => {
-    getDockTokenPrice().then(price => setFiatAmount(amount * price));
+    getDockTokenPrice().then(price => setFiatAmount(formatDockAmount(amount) * price));
   }, [amount]);
 
   return children({
     fiatAmount,
     fiatSymbol,
-    tokenAmount: amount,
+    tokenAmount: formatDockAmount(amount),
     tokenSymbol: symbol,
   });
 }
@@ -38,7 +39,7 @@ export function AmountDetails(props) {
             {tokenAmount} {tokenSymbol}
           </Typography>
           <Typography>
-            {fiatAmount} {fiatSymbol}
+            {formatCurrency(fiatAmount)} {fiatSymbol}
           </Typography>
         </Stack>
       )}

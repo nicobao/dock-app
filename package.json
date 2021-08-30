@@ -40,6 +40,7 @@
     "buffer": "^4.9.2",
     "console-browserify": "^1.2.0",
     "constants-browserify": "^1.0.0",
+    "date-fns": "^2.23.0",
     "detox": "^18.17.0",
     "dns.js": "^1.0.1",
     "domain-browser": "^1.2.0",
@@ -47,6 +48,7 @@
     "events": "^1.1.1",
     "https-browserify": "^0.0.1",
     "i18n-js": "^3.8.0",
+    "intl": "^1.2.5",
     "json-rpc-2.0": "^0.2.16",
     "jsonpath": "^1.1.1",
     "lodash.flatten": "^4.4.0",
@@ -89,6 +91,7 @@
     "react-native-webview": "^11.4.3",
     "react-redux": "^7.2.3",
     "readable-stream": "^1.0.33",
+    "realm": "^10.6.1",
     "redux": "^4.0.5",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
@@ -102,7 +105,8 @@
     "url": "^0.10.3",
     "util": "^0.10.4",
     "vm-browserify": "^0.0.4",
-    "webassemblyjs": "^1.11.0"
+    "webassemblyjs": "^1.11.0",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

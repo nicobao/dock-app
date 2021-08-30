@@ -4,6 +4,7 @@ import {translate} from 'src/locales';
 import {ApiRpc} from '../../rn-rpc-webview/api-rpc';
 import uuid from 'uuid';
 import {navigateBack} from '../../core/navigation';
+import { getRealm } from 'src/core/realm';
 
 export const TransactionStatus = {
   InProgress: 'pending',
@@ -52,14 +53,15 @@ export const transactionsSelectors = {
 
 export const transactionsOperations = {
   loadTransactions: () => async (dispatch, getState) => {
-    const items = await ApiRpc.getTransactions();
+    const realm = getRealm();
+    const items = realm.objects('Transaction').toJSON();
     dispatch(transactionsActions.setTransactions(items));
   },
   getFeeAmount:
     ({recipientAddress, accountAddress, amount}) =>
     async (dispatch, getState) => {
       return ApiRpc.getFeeAmount({
-        address: recipientAddress,
+        recipientAddress: recipientAddress,
         accountAddress,
         amount: amount,
       });

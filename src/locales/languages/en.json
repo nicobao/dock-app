@@ -174,7 +174,7 @@
     "transaction_complete": "Transaction complete"
   },
   "transaction_status": {
-    "in_progress": "In progress",
+    "pending": "In progress",
     "completed": "Completed",
     "failed": "Failed"
   },

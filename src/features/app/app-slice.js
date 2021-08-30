@@ -9,6 +9,7 @@ import {Keychain} from '../../core/keychain';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {walletActions} from '../wallet/wallet-slice';
+import { initRealm } from 'src/core/realm';
 import {SUBSTRATE_URL} from '@env';
 
 export const BiometryType = {
@@ -19,6 +20,8 @@ export const BiometryType = {
 const initialState = {
   loading: true,
   supportedBiometryType: null,
+  rpcReady: false,
+  dockReady: false,
 };
 
 const app = createSlice({
@@ -27,6 +30,12 @@ const app = createSlice({
   reducers: {
     setLoading(state, action) {
       state.loading = action.payload;
+    },
+    setRpcReady(state, action) {
+      state.rpcReady = action.payload;
+    },
+    setDockReady(state, action) {
+      state.dockReady = action.payload;
     },
     setSupportedBiometryType(state, action) {
       state.supportedBiometryType = action.payload;
@@ -46,17 +55,57 @@ export const appSelectors = {
 };
 
 export const appOperations = {
+  waitRpcReady: () => async (dispatch, getState) => {
+    return new Promise((res) => {
+      const checkRpc = () => {
+        if (appSelectors.getRpcReady(getState())) {
+          return res();
+        }
+
+        setTimeout(checkRpc, 500);
+      }
+      
+      checkRpc();
+    })
+  },
+  waitDockReady: () => async (dispatch, getState) => {
+    return new Promise((res) => {
+      const checkDock = () => {
+        if (appSelectors.getDockReady(getState())) {
+          return res();
+        }
+
+        setTimeout(checkDock, 500);
+      }
+
+      checkDock();
+    })
+  },
   rpcReady: () => async (dispatch, getState) => {
     await UtilCryptoRpc.cryptoWaitReady();
     await KeyringRpc.initialize();
     await WalletRpc.create('wallet');
     await WalletRpc.load();
     await WalletRpc.sync();
-    await DockRpc.init({
-      address: SUBSTRATE_URL,
-    });
+
+    dispatch(appActions.setRpcReady(true));
+
+    try {
+      await DockRpc.init({
+        address: SUBSTRATE_URL,
+      });
+
+      dispatch(appActions.setDockReady(true));
+
+      console.log('Dock initialized');
+    } catch (err) {
+      console.error("Unable to initialize dock", err);
+    }
   },
   initialize: () => async (dispatch, getState) => {
+    await initRealm();
+    
+    console.log('Realm initialized');
     SplashScreen.hide();
 
     await Keychain.getSupportedBiometryType().then(value => {

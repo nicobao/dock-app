@@ -147,10 +147,7 @@ export const createAccountOperations = {
           keypairType,
           derivationPath,
           hasBackup,
-          balance: {
-            value: 0,
-            symbol: 'DOCK',
-          },
+          balance: 0,
         },
       });
 

@@ -8,7 +8,8 @@ import {PolkadotIcon} from 'src/components/PolkadotIcon';
 import {navigate} from 'src/core/navigation';
 import {Routes} from 'src/core/routes';
 import {showToast} from 'src/core/toast';
-import {UtilCryptoRpc} from 'src/rn-rpc-webview/util-crypto-rpc';
+import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
+
 import {
   BackButton,
   Button,
@@ -21,6 +22,7 @@ import {translate} from '../../locales';
 import {accountSelectors} from '../accounts/account-slice';
 import {transactionsOperations} from '../transactions/transactions-slice';
 import {ConfirmTransactionModal, TokenAmount} from './ConfirmTransactionModal';
+import {formatCurrency, formatDockAmount} from 'src/core/format-utils';
 
 export function SendTokenScreen({form, onChange, onScanQRCode, onNext}) {
   return (
@@ -77,13 +79,15 @@ export function EnterTokenAmount({form, onMax, onChange, onBack, onNext}) {
             <Typography
               variant="h1"
               style={{fontSize: 48, lineHeight: 60}}
-              mr={2}>{`${form.amount}`}</Typography>
+              mr={2}>{`${form.amount || 0}`}</Typography>
             <Typography variant="h1">{form.tokenSymbol}</Typography>
           </Stack>
-          <TokenAmount amount={form.amount} symbol={form.tokenSymbol}>
+          <TokenAmount
+            amount={parseInt(form.amount || 0) * 1000000}
+            symbol={form.tokenSymbol}>
             {({fiatSymbol, fiatAmount}) => (
               <Stack direction="row" justifyContent="center">
-                <Typography>{fiatAmount}</Typography>
+                <Typography>{formatCurrency(fiatAmount)} </Typography>
                 <Typography>{fiatSymbol}</Typography>
               </Stack>
             )}
@@ -103,7 +107,7 @@ export function EnterTokenAmount({form, onMax, onChange, onBack, onNext}) {
           <NumericKeyboard
             allowDecimal
             onChange={onChange('amount')}
-            value={form.amont}
+            value={form.amount}
           />
         </Box>
         <Stack flex={1} alignContent="flex-end">
@@ -215,7 +219,7 @@ export function SendTokenContainer({route}) {
 
             if (form.amount <= 0) {
               amountError = translate('send_token.invalid_amount');
-            } else if (form.amount > accountDetails.meta.balance.value) {
+            } else if (form.amount > formatDockAmount(accountDetails.balance)) {
               amountError = translate('send_token.insufficient_funds');
             }
 
@@ -228,18 +232,16 @@ export function SendTokenContainer({route}) {
               }));
             }
 
-            dispatch(() => {
-              transactionsOperations.getFeeAmount(form).then(fee => {
-                handleChange('fee')(fee);
-                setShowConfirmation(true);
-              });
+            dispatch(transactionsOperations.getFeeAmount(form)).then(fee => {
+              handleChange('fee')(fee);
+              setShowConfirmation(true);
             });
           }}
           onBack={() => {
             setStep(Steps.sendTo);
           }}
           onMax={() => {
-            handleChange('amount')(accountDetails.meta.balance.value);
+            handleChange('amount')(formatDockAmount(accountDetails.balance));
           }}
           tokenSymbol="DOCK"
         />

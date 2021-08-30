@@ -35,6 +35,8 @@ import {createAccountOperations} from '../account-creation/create-account-slice'
 import {AccountsScreenTestIDs} from './test-ids';
 import {PolkadotIcon} from '../../components/PolkadotIcon';
 import {translate} from 'src/locales';
+import {formatCurrency} from 'src/core/format-utils';
+import {TokenAmount} from '../tokens/ConfirmTransactionModal';
 import {Platform} from 'react-native';
 
 export function AccountsScreen({
@@ -105,7 +107,7 @@ export function AccountsScreen({
                             <Typography
                               color={Theme.colors.textHighlighted}
                               fontWeight={600}>
-                              {account.meta.name}
+                              {account.name}
                             </Typography>
                             <ChevronRightIcon marginTop={1} />
                           </Stack>
@@ -113,7 +115,7 @@ export function AccountsScreen({
                       </Pressable>
                       <NBox py={1} px={1}>
                         <Stack direction="row">
-                          {account.meta.hasBackup ? null : (
+                          {account.hasBackup ? null : (
                             <NBox mr={3} mt={1}>
                               <AlertIcon />
                             </NBox>
@@ -137,15 +139,21 @@ export function AccountsScreen({
                       </NBox>
                     </Stack>
 
-                    <Stack direction="column" mt={4}>
-                      <Typography variant="h2">
-                        {account.meta.balance.value}{' '}
-                        {account.meta.balance.symbol}
-                      </Typography>
-                      <Typography fontSize="14px">
-                        {account.meta.balance.value} USD
-                      </Typography>
-                    </Stack>
+                    <TokenAmount amount={account.balance}>
+                      {({fiatAmount, fiatSymbol, tokenAmount, tokenSymbol}) => (
+                        <>
+                          <Stack direction="column" mt={4}>
+                            <Typography variant="h2">
+                              {tokenAmount} {tokenSymbol}
+                            </Typography>
+                            <Typography fontSize="14px">
+                              {formatCurrency(fiatAmount)}
+                            </Typography>
+                          </Stack>
+                        </>
+                      )}
+                    </TokenAmount>
+
                     <Stack direction="row" mt={4}>
                       <Button
                         width="50%"
