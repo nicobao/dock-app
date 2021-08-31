@@ -13,6 +13,7 @@ import {
 } from '../../design-system';
 import {translate} from '../../locales';
 import {appSelectors} from '../app/app-slice';
+import { BuildIdentifier } from '../app/BuildIdentifier';
 // import {NumericKeyboard} from '../wallet/CreatePasscodeScreen';
 import {walletOperations, walletSelectors} from '../wallet/wallet-slice';
 
@@ -83,6 +84,7 @@ export function UnlockWalletScreen({
             </Typography>
           </Box>
         ) : null}
+        <BuildIdentifier />
       </Content>
     </ScreenContainer>
   );
