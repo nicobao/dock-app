@@ -80,7 +80,7 @@ export const transactionsOperations = {
       const internalId = uuid();
       const transaction = {
         id: internalId,
-        date: new Date().toString(),
+        date: new Date().toISOString(),
         fromAddress: accountAddress,
         recipientAddress: recipientAddress,
         amount: `${parsedAmount}`,
