@@ -20,7 +20,7 @@ function getTokenPrice(symbol) {
 
   const fetchFromNetwork = async () => {
     const {priceUsd} = await getCoinCapToken('dock');
-    const price = parseFloat(priceUsd);
+    const price = parseFloat(priceUsd) || 0;
 
     tokenPrices[symbol] = price;
 
