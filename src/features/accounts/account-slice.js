@@ -257,20 +257,6 @@ export const accountOperations = {
           },
           'modified',
         );
-
-        realm.create(
-          'Transaction',
-          {
-            id: account.id,
-            date: new Date().toString(),
-            fromAddress: account.id,
-            recipientAddress: account.id,
-            amount: '10000000',
-            feeAmount: '1000',
-            status: 'pending',
-          },
-          'modified',
-        );
       });
 
       dispatch(

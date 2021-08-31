@@ -26,7 +26,7 @@ function Identicon({
     dispatch(accountOperations.getPolkadotSvgIcon(address, isAlternative)).then(
       setSvgData,
     );
-  }, [address, isAlternative]);
+  }, [address, isAlternative, dispatch]);
 
   if (!svgData) {
     return null;

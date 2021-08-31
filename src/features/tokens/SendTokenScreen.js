@@ -202,12 +202,22 @@ export function SendTokenContainer({route}) {
             setShowConfirmation(false);
           }}
           onConfirm={() => {
-            dispatch(transactionsOperations.sendTransaction(form));
+            dispatch(
+              transactionsOperations.sendTransaction({
+                ...form,
+                accountAddress: accountDetails.id,
+              }),
+            ).finally(() => {
+              setShowConfirmation(false);
+              navigate(Routes.ACCOUNT_DETAILS, {
+                id: accountDetails.id,
+              });
+            });
           }}
           visible={showConfirmation}
           accountIcon={<PolkadotIcon address={form.recipientAddress} />}
           tokenSymbol={form.tokenSymbol}
-          sentAmount={form.amount}
+          sentAmount={parseFloat(form.amount) * 1000000}
           fee={form.fee}
           recipientAddress={form.recipientAddress}
         />

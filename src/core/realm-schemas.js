@@ -12,6 +12,7 @@ export const Transaction = {
   name: 'Transaction',
   properties: {
     id: 'string',
+    hash: 'string?',
     date: 'date',
     fromAddress: 'string',
     recipientAddress: 'string',

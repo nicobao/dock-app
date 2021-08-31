@@ -28,5 +28,8 @@ export function formatDockAmount(value) {
 }
 
 export function formatDate(date) {
-  return format(date, 'MMM dd, yyyy HH:mm');
+  return format(
+    typeof date === 'string' ? new Date(date) : date,
+    'MMM dd, yyyy HH:mm',
+  );
 }

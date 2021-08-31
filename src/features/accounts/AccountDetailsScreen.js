@@ -329,13 +329,13 @@ export function AccountDetailsContainer({route}) {
   const dispatch = useDispatch();
   const account = useSelector(accountSelectors.getAccountById(accountId));
 
+  useEffect(() => {
+    dispatch(transactionsOperations.loadTransactions());
+  }, [dispatch]);
+
   if (!account) {
     return <LoadingScreen />;
   }
-
-  useEffect(() => {
-    dispatch(transactionsOperations.loadTransactions());
-  }, []);
 
   return (
     <AccountDetailsScreen
