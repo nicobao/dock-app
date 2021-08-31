@@ -203,7 +203,7 @@ export const accountOperations = {
       throw new Error('Invalid accounts data');
     }
 
-    accounts = accounts.map((account) => {
+    accounts = accounts.map(account => {
       const cachedAccount = cachedAccounts.find(item => item.id === account.id);
       const cachedBalance = cachedAccount && cachedAccount.balance;
 

@@ -1,6 +1,6 @@
 import Realm from 'realm';
 import {Logger} from './logger';
-import { Account, TokenPrice, Transaction } from './realm-schemas';
+import {Account, TokenPrice, Transaction} from './realm-schemas';
 import {showToast} from './toast';
 
 let realm;

@@ -12,7 +12,7 @@ import {
   ScreenContainer,
 } from '../../design-system';
 import {translate} from '../../locales';
-import { BuildIdentifier } from '../app/BuildIdentifier';
+import {BuildIdentifier} from '../app/BuildIdentifier';
 
 export function CreateWalletScreen() {
   return (

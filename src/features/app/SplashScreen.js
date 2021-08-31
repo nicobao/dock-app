@@ -2,7 +2,7 @@ import React from 'react';
 import {Image, ScreenContainer, Box, Typography} from '../../design-system';
 
 import SplashLogo from '../../assets/splash-logo.png';
-import { BuildIdentifier } from './BuildIdentifier';
+import {BuildIdentifier} from './BuildIdentifier';
 
 export function SplashScreen() {
   return (

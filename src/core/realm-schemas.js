@@ -1,4 +1,3 @@
-
 export const TokenPrice = {
   name: 'TokenPrice',
   properties: {
