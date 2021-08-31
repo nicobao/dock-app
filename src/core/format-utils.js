@@ -1,5 +1,3 @@
-import {format} from 'date-fns';
-
 export function formatCurrency(value, currency = 'USD') {
   var formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -27,9 +25,11 @@ export function formatDockAmount(value) {
   return parseInt(value) / 1000000;
 }
 
+const dateFormat = new Intl.DateTimeFormat(['en-US'], {
+  dateStyle: 'medium',
+  timeStyle: 'short',
+});
+
 export function formatDate(date) {
-  return format(
-    typeof date === 'string' ? new Date(date) : date,
-    'MMM dd, yyyy HH:mm',
-  );
+  return dateFormat.format(typeof date === 'string' ? new Date(date) : date);
 }
