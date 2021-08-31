@@ -9,7 +9,7 @@ import {Platform} from 'react-native';
 import {showToast} from 'src/core/toast';
 
 const WEBVIEW_URI = 'http://localhost:3000';
-const DEV_MODE = true;
+const DEV_MODE = false;
 
 export function RNRpcWebView({onReady}) {
   const webViewRef = useRef();
