@@ -38,8 +38,9 @@ import {translate} from 'src/locales';
 import {formatCurrency} from 'src/core/format-utils';
 import {TokenAmount} from '../tokens/ConfirmTransactionModal';
 import {Platform} from 'react-native';
+import { withErrorBoundary } from 'src/core/error-handler';
 
-export function AccountsScreen({
+export const AccountsScreen = withErrorBoundary(({
   accounts = [],
   onAddAccount,
   onImportExistingAccount,
@@ -47,7 +48,7 @@ export function AccountsScreen({
   onEdit,
   onDetails,
   onSettings,
-}) {
+}) => {
   const isEmpty = accounts.length === 0;
   const [showAddAccount, setShowAddAccount] = useState();
   const [showImportAccount, setShowImportAccount] = useState();
@@ -206,9 +207,9 @@ export function AccountsScreen({
       />
     </ScreenContainer>
   );
-}
+})
 
-export function AccountsContainer({navigation}) {
+export const AccountsContainer = withErrorBoundary(({navigation}) => {
   const dispatch = useDispatch();
   const accounts = useSelector(accountSelectors.getAccounts);
   useEffect(() => {
@@ -261,4 +262,4 @@ export function AccountsContainer({navigation}) {
       }}
     />
   );
-}
+})

@@ -4,6 +4,9 @@
     "back": "Back",
     "skip": "Skip"
   },
+  "global": {
+    "rendering_error": "Something went wrong."
+  },
   "delete_wallet_confirmation": {
     "title": "Remove Wallet?",
     "message": "This can’t be undone. You’ll lose all accounts and tokens associated with this wallet if you did not back up.",

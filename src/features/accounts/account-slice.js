@@ -189,8 +189,6 @@ export const accountOperations = {
     const cachedAccounts = realm.objects('Account').toJSON();
     dispatch(accountActions.setAccounts(cachedAccounts));
 
-    console.log('Wait rpc ready');
-
     await dispatch(appOperations.waitRpcReady());
 
     console.log('Rpc done');
@@ -205,10 +203,16 @@ export const accountOperations = {
       throw new Error('Invalid accounts data');
     }
 
-    accounts = accounts.map(account => ({
-      ...account,
-      ...(account.meta || {}),
-    }));
+    accounts = accounts.map((account) => {
+      const cachedAccount = cachedAccounts.find(item => item.id === account.id);
+      const cachedBalance = cachedAccount && cachedAccount.balance;
+
+      return {
+        ...account,
+        ...(account.meta || {}),
+        balance: cachedBalance || account.balance,
+      };
+    });
 
     realm.write(() => {
       accounts.forEach((account: any) => {
@@ -217,7 +221,6 @@ export const accountOperations = {
           {
             id: account.id,
             name: account.name,
-            balance: '0',
           },
           'modified',
         );

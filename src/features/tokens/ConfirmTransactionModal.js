@@ -13,26 +13,29 @@ import {translate} from 'src/locales';
 import {Typography} from '../../design-system';
 import {getDockTokenPrice} from './price-service';
 import {formatCurrency, formatDockAmount} from 'src/core/format-utils';
+import {withErrorBoundary} from 'src/core/error-handler';
 
-export function TokenAmount({amount, symbol = 'DOCK', children}) {
-  const [fiatAmount, setFiatAmount] = useState(0);
-  const fiatSymbol = 'USD';
+export const TokenAmount = withErrorBoundary(
+  ({amount, symbol = 'DOCK', children}) => {
+    const [fiatAmount, setFiatAmount] = useState(0);
+    const fiatSymbol = 'USD';
 
-  useEffect(() => {
-    getDockTokenPrice().then(price =>
-      setFiatAmount(formatDockAmount(amount) * price),
-    );
-  }, [amount]);
+    useEffect(() => {
+      getDockTokenPrice().then(price =>
+        setFiatAmount(formatDockAmount(amount) * price),
+      );
+    }, [amount]);
 
-  return children({
-    fiatAmount,
-    fiatSymbol,
-    tokenAmount: formatDockAmount(amount),
-    tokenSymbol: symbol,
-  });
-}
+    return children({
+      fiatAmount,
+      fiatSymbol,
+      tokenAmount: formatDockAmount(amount),
+      tokenSymbol: symbol,
+    });
+  },
+);
 
-export function AmountDetails(props) {
+export const AmountDetails = withErrorBoundary(props => {
   return (
     <TokenAmount {...props}>
       {({fiatAmount, fiatSymbol, tokenAmount, tokenSymbol}) => (
@@ -47,51 +50,57 @@ export function AmountDetails(props) {
       )}
     </TokenAmount>
   );
-}
+});
 
-export function ConfirmTransactionModal({
-  onClose,
-  onConfirm,
-  visible,
-  accountIcon,
-  tokenSymbol,
-  sentAmount,
-  fee,
-  recipientAddress,
-}) {
-  return (
-    <Modal visible={visible} onClose={onClose} modalSize={0.6}>
-      <Stack p={8}>
-        <Typography variant="h1" mb={4}>
-          {translate('confirm_transaction.title')}
-        </Typography>
-        <Stack mb={2}>
-          <Typography mb={1}>
-            {translate('confirm_transaction.send')}
+export const ConfirmTransactionModal = withErrorBoundary(
+  ({
+    onClose,
+    onConfirm,
+    visible,
+    accountIcon,
+    tokenSymbol,
+    sentAmount,
+    fee,
+    recipientAddress,
+  }) => {
+    return (
+      <Modal visible={visible} onClose={onClose} modalSize={0.6}>
+        <Stack p={8}>
+          <Typography variant="h1" mb={4}>
+            {translate('confirm_transaction.title')}
           </Typography>
-          <AmountDetails amount={sentAmount} symbol={tokenSymbol} />
-        </Stack>
-        <Stack>
-          <Typography mb={1}>{translate('confirm_transaction.to')}</Typography>
-          <Stack direction="row">
-            {accountIcon}
-            <Typography ml={2}>{recipientAddress}</Typography>
+          <Stack mb={2}>
+            <Typography mb={1}>
+              {translate('confirm_transaction.send')}
+            </Typography>
+            <AmountDetails amount={sentAmount} symbol={tokenSymbol} />
+          </Stack>
+          <Stack>
+            <Typography mb={1}>
+              {translate('confirm_transaction.to')}
+            </Typography>
+            <Stack direction="row">
+              {accountIcon}
+              <Typography ml={2}>{recipientAddress}</Typography>
+            </Stack>
+          </Stack>
+          <Stack mb={2}>
+            <Typography mb={1}>
+              {translate('confirm_transaction.fee')}
+            </Typography>
+            <AmountDetails amount={fee} symbol={tokenSymbol} />
+          </Stack>
+          <Stack mb={2}>
+            <Typography mb={1}>
+              {translate('confirm_transaction.total')}
+            </Typography>
+            <AmountDetails amount={sentAmount + fee} symbol={tokenSymbol} />
           </Stack>
         </Stack>
-        <Stack mb={2}>
-          <Typography mb={1}>{translate('confirm_transaction.fee')}</Typography>
-          <AmountDetails amount={fee} symbol={tokenSymbol} />
-        </Stack>
-        <Stack mb={2}>
-          <Typography mb={1}>
-            {translate('confirm_transaction.total')}
-          </Typography>
-          <AmountDetails amount={sentAmount + fee} symbol={tokenSymbol} />
-        </Stack>
-      </Stack>
-      <Button onPress={onConfirm}>
-        {translate('confirm_transaction.submit')}
-      </Button>
-    </Modal>
-  );
-}
+        <Button onPress={onConfirm}>
+          {translate('confirm_transaction.submit')}
+        </Button>
+      </Modal>
+    );
+  },
+);
