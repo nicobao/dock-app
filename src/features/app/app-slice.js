@@ -1,4 +1,5 @@
 import {KeyringRpc} from '@docknetwork/react-native-sdk/src/client/keyring-rpc';
+import {DockRpc} from '@docknetwork/react-native-sdk/src/client/dock-rpc';
 import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
 import {WalletRpc} from '@docknetwork/react-native-sdk/src/client/wallet-rpc';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -8,6 +9,7 @@ import {Keychain} from '../../core/keychain';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {walletActions} from '../wallet/wallet-slice';
+import {SUBSTRATE_URL} from '@env';
 
 export const BiometryType = {
   FaceId: Keychain.BIOMETRY_TYPE.FACE_ID,
@@ -39,6 +41,8 @@ const getRoot = state => state.app;
 export const appSelectors = {
   getLoading: state => getRoot(state).loading,
   getSupportedBiometryType: state => getRoot(state).supportedBiometryType,
+  getRpcReady: state => getRoot(state).rpcReady,
+  getDockReady: state => getRoot(state).dockReady,
 };
 
 export const appOperations = {
@@ -48,6 +52,9 @@ export const appOperations = {
     await WalletRpc.create('wallet');
     await WalletRpc.load();
     await WalletRpc.sync();
+    await DockRpc.init({
+      address: SUBSTRATE_URL,
+    });
   },
   initialize: () => async (dispatch, getState) => {
     SplashScreen.hide();
