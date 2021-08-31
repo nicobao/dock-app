@@ -1,6 +1,6 @@
 import Realm from 'realm';
-import { Logger } from './logger';
-import { showToast } from './toast';
+import {Logger} from './logger';
+import {showToast} from './toast';
 
 const TokenPrice = {
   name: 'TokenPrice',
@@ -21,7 +21,6 @@ const Transaction = {
     amount: 'string',
     feeAmount: 'string',
     status: 'string',
-    
   },
   primaryKey: 'id',
 };
@@ -40,7 +39,7 @@ let realm;
 
 export async function initRealm() {
   realm = await Realm.open({
-    path: "dock",
+    path: 'dock',
     schema: [TokenPrice, Transaction, Account],
     schemaVersion: 1,
     deleteRealmIfMigrationNeeded: true,

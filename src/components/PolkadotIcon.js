@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {jsx as _jsx} from 'react/jsx-runtime';
 import {Circle, Svg} from 'react-native-svg';
-import { useDispatch } from 'react-redux';
-import { accountOperations } from 'src/features/accounts/account-slice';
+import {useDispatch} from 'react-redux';
+import {accountOperations} from 'src/features/accounts/account-slice';
 
 function renderCircle({cx, cy, fill, r}, key) {
   return <Circle cx={cx} cy={cy} fill={fill} r={r} key={key} />;
@@ -23,7 +23,9 @@ function Identicon({
       return;
     }
 
-    dispatch(accountOperations.getPolkadotSvgIcon(address, isAlternative)).then(setSvgData);
+    dispatch(accountOperations.getPolkadotSvgIcon(address, isAlternative)).then(
+      setSvgData,
+    );
   }, [address, isAlternative]);
 
   if (!svgData) {

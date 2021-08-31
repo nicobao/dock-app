@@ -81,7 +81,7 @@ export function ProtectYourWalletContainer() {
             type: 'success',
           });
         })
-        .catch((err) => {
+        .catch(err => {
           console.error(err);
           showToast({
             message: WalletConstants.protectYourWallet.locales.biometicsFailed,

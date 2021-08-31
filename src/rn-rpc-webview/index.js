@@ -6,7 +6,7 @@ import {
 } from '@docknetwork/react-native-sdk/src/rpc-client';
 import rpcServer from './server';
 import {Platform} from 'react-native';
-import { showToast } from 'src/core/toast';
+import {showToast} from 'src/core/toast';
 
 const WEBVIEW_URI = 'http://localhost:3000';
 const DEV_MODE = false;
@@ -34,10 +34,11 @@ export function RNRpcWebView({onReady}) {
       onMessage={async event => {
         const data = JSON.parse(event.nativeEvent.data);
 
+        console.log('onMessage', data);
         if (data.type === 'json-rpc-ready') {
           if (DEV_MODE) {
             showToast({
-              message: 'RPC client connected'
+              message: 'RPC client connected',
             });
           }
           initRpcClient(async jsonRPCRequest => {

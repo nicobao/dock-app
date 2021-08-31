@@ -229,16 +229,14 @@ export const accountOperations = {
   },
 
   fetchBalances: () => async (dispatch, getState) => {
-    
     console.log('Fetching balances');
     await dispatch(appOperations.waitDockReady());
     console.log('Fetching balances ok');
 
-    
     const accounts = accountSelectors.getAccounts(getState());
 
     const realm = getRealm();
-    
+
     accounts.forEach(async (account: any) => {
       const balance = await ApiRpc.getAccountBalance(account.id);
 
@@ -256,7 +254,7 @@ export const accountOperations = {
           },
           'modified',
         );
-        
+
         realm.create(
           'Transaction',
           {
@@ -266,7 +264,7 @@ export const accountOperations = {
             recipientAddress: account.id,
             amount: '10000000',
             feeAmount: '1000',
-            status: 'pending'
+            status: 'pending',
           },
           'modified',
         );

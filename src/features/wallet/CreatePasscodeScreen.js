@@ -63,7 +63,11 @@ export function CreatePasscodeScreen({
               : translate('create_wallet.create_passcode')}
           </Typography>
         </Box>
-        <NumericKeyboard marginTop={85} onChange={onPasscodeChange} value={passcode} />
+        <NumericKeyboard
+          marginTop={85}
+          onChange={onPasscodeChange}
+          value={passcode}
+        />
       </Content>
     </ScreenContainer>
   );

@@ -4,7 +4,7 @@ import {translate} from 'src/locales';
 import {ApiRpc} from '../../rn-rpc-webview/api-rpc';
 import uuid from 'uuid';
 import {navigateBack} from '../../core/navigation';
-import { getRealm } from 'src/core/realm';
+import {getRealm} from 'src/core/realm';
 
 export const TransactionStatus = {
   InProgress: 'pending',

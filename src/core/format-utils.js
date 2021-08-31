@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import {format} from 'date-fns';
 
 export function formatCurrency(value, currency = 'USD') {
   var formatter = new Intl.NumberFormat('en-US', {
@@ -28,5 +28,5 @@ export function formatDockAmount(value) {
 }
 
 export function formatDate(date) {
-  return format(date, "MMM dd, yyyy HH:mm")
+  return format(date, 'MMM dd, yyyy HH:mm');
 }

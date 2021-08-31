@@ -9,7 +9,7 @@ import {Keychain} from '../../core/keychain';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {walletActions} from '../wallet/wallet-slice';
-import { initRealm } from 'src/core/realm';
+import {initRealm} from 'src/core/realm';
 import {SUBSTRATE_URL} from '@env';
 
 export const BiometryType = {
@@ -56,32 +56,33 @@ export const appSelectors = {
 
 export const appOperations = {
   waitRpcReady: () => async (dispatch, getState) => {
-    return new Promise((res) => {
+    return new Promise(res => {
       const checkRpc = () => {
         if (appSelectors.getRpcReady(getState())) {
           return res();
         }
 
         setTimeout(checkRpc, 500);
-      }
-      
+      };
+
       checkRpc();
-    })
+    });
   },
   waitDockReady: () => async (dispatch, getState) => {
-    return new Promise((res) => {
+    return new Promise(res => {
       const checkDock = () => {
         if (appSelectors.getDockReady(getState())) {
           return res();
         }
 
         setTimeout(checkDock, 500);
-      }
+      };
 
       checkDock();
-    })
+    });
   },
   rpcReady: () => async (dispatch, getState) => {
+    console.log('Rpc ready');
     await UtilCryptoRpc.cryptoWaitReady();
     await KeyringRpc.initialize();
     await WalletRpc.create('wallet');
@@ -99,12 +100,12 @@ export const appOperations = {
 
       console.log('Dock initialized');
     } catch (err) {
-      console.error("Unable to initialize dock", err);
+      console.error('Unable to initialize dock', err);
     }
   },
   initialize: () => async (dispatch, getState) => {
     await initRealm();
-    
+
     console.log('Realm initialized');
     SplashScreen.hide();
 
