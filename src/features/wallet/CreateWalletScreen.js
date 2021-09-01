@@ -12,6 +12,7 @@ import {
   ScreenContainer,
 } from '../../design-system';
 import {translate} from '../../locales';
+import {BuildIdentifier} from '../app/BuildIdentifier';
 
 export function CreateWalletScreen() {
   return (
@@ -43,6 +44,7 @@ export function CreateWalletScreen() {
           onPress={() => navigate(Routes.WALLET_IMPORT_BACKUP)}>
           {translate('create_wallet.import_existing')}
         </LoadingButton>
+        <BuildIdentifier />
       </Footer>
     </ScreenContainer>
   );

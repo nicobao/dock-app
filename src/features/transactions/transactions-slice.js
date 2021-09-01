@@ -1,9 +1,11 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {Toast} from 'native-base';
 import {translate} from 'src/locales';
-import {ApiRpc} from '../../rn-rpc-webview/api-rpc';
+import {ApiRpc} from '@docknetwork/react-native-sdk/src/client/api-rpc';
 import uuid from 'uuid';
 import {navigateBack} from '../../core/navigation';
+import {getRealm} from 'src/core/realm';
+import {showToast} from 'src/core/toast';
 
 export const TransactionStatus = {
   InProgress: 'pending',
@@ -52,48 +54,60 @@ export const transactionsSelectors = {
 
 export const transactionsOperations = {
   loadTransactions: () => async (dispatch, getState) => {
-    const items = await ApiRpc.getTransactions();
+    const realm = getRealm();
+    const items = realm.objects('Transaction').toJSON();
     dispatch(transactionsActions.setTransactions(items));
   },
   getFeeAmount:
     ({recipientAddress, accountAddress, amount}) =>
     async (dispatch, getState) => {
       return ApiRpc.getFeeAmount({
-        address: recipientAddress,
+        recipientAddress: recipientAddress,
         accountAddress,
         amount: amount,
       });
     },
 
   sendTransaction:
-    ({recipientAddress, accountAddress, amount}) =>
+    ({recipientAddress, accountAddress, amount, fee}) =>
     async (dispatch, getState) => {
-      Toast.show({
-        text: translate('send_token.transaction_sent'),
+      showToast({
+        message: translate('send_token.transaction_sent'),
       });
+
+      const parsedAmount = parseFloat(amount) * 1000000;
 
       const internalId = uuid();
       const transaction = {
-        recipientAddress,
-        accountAddress,
-        amount,
-        internalId,
+        id: internalId,
+        date: new Date().toISOString(),
+        fromAddress: accountAddress,
+        recipientAddress: recipientAddress,
+        amount: `${parsedAmount}`,
+        feeAmount: `${fee}`,
         status: TransactionStatus.InProgress,
       };
 
+      const realm = getRealm();
+
+      realm.write(() => {
+        realm.create('Transaction', transaction, 'modified');
+      });
+
       dispatch(transactionsActions.addTransaction(transaction));
 
-      Toast.show({
+      showToast({
         type: 'success',
-        text: translate('confirm_transaction.transfer_initiated'),
+        message: translate('confirm_transaction.transfer_initiated'),
       });
 
       ApiRpc.sendTokens({
         address: recipientAddress,
         accountAddress,
-        amount: amount,
+        amount: parsedAmount,
       })
-        .then(() => {
+        .then(res => {
+          debugger;
           dispatch(
             transactionsActions.updateTransaction({
               ...transaction,
@@ -101,23 +115,27 @@ export const transactionsOperations = {
             }),
           );
 
-          Toast.show({
+          showToast({
             type: 'success',
-            text: translate('confirm_transaction.transaction_complete'),
+            message: translate('confirm_transaction.transaction_complete'),
           });
         })
         .catch(err => {
-          Toast.show({
-            type: 'danger',
-            text: translate('transaction_failed.title'),
+          showToast({
+            type: 'error',
+            message: translate('transaction_failed.title'),
           });
 
-          dispatch(
-            transactionsActions.updateTransaction({
-              ...transaction,
-              status: TransactionStatus.Failed,
-            }),
-          );
+          const updatedTransation = {
+            ...transaction,
+            status: TransactionStatus.Failed,
+          };
+
+          realm.write(() => {
+            realm.create('Transaction', updatedTransation, 'modified');
+          });
+
+          dispatch(transactionsActions.updateTransaction(updatedTransation));
         });
     },
 };

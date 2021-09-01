@@ -1,5 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {WalletRpc} from '@docknetwork/react-native-sdk/src/client/wallet-rpc';
+import {PolkadotUIRpc} from '@docknetwork/react-native-sdk/src/client/polkadot-ui-rpc';
+import {ApiRpc} from '@docknetwork/react-native-sdk/src/client/api-rpc';
 import {showToast, withErrorToast} from '../../core/toast';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
@@ -7,7 +9,10 @@ import {createAccountActions} from '../account-creation/create-account-slice';
 import Share from 'react-native-share';
 import RNFS from 'react-native-fs';
 import {translate} from 'src/locales';
-import {AsyncStorage} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {getRealm} from 'src/core/realm';
+import {appOperations} from '../app/app-slice';
+import uuid from 'uuid/v4';
 
 const initialState = {
   loading: true,
@@ -24,6 +29,15 @@ const account = createSlice({
     },
     setAccounts(state, action) {
       state.accounts = action.payload;
+    },
+    setAccount(state, action) {
+      state.accounts = state.accounts.map(account => {
+        if (account.id === action.payload.id) {
+          return action.payload;
+        }
+
+        return account;
+      });
     },
     setAccountToBackup(state, action) {
       state.accountToBackup = action.payload;
@@ -50,10 +64,7 @@ export const accountOperations = {
       id: '0x774477c4cd54718d32d4df393415796b9bfcb63c',
       type: 'Account',
       name: 'cocomelon',
-      balance: {
-        value: 0,
-        symbol: 'DOCK',
-      },
+      balance: 0,
     });
 
     dispatch(accountOperations.loadAccounts());
@@ -94,6 +105,7 @@ export const accountOperations = {
         message: translate('create_account_backup.success'),
       });
     }),
+
   backupAccount: account =>
     withErrorToast(async (dispatch, getState) => {
       dispatch(accountActions.setAccountToBackup(account));
@@ -167,31 +179,93 @@ export const accountOperations = {
       message: translate('account_details.account_removed'),
     });
   },
+  getPolkadotSvgIcon:
+    (address, isAlternative) => async (dispatch, getState) => {
+      await dispatch(appOperations.waitRpcReady());
+      return PolkadotUIRpc.getPolkadotSvgIcon(address, isAlternative);
+    },
   loadAccounts: () => async (dispatch, getState) => {
-    const cachedAccounts = await AsyncStorage.getItem('accounts-cache');
+    const realm = getRealm();
+    const cachedAccounts = realm.objects('Account').toJSON();
+    dispatch(accountActions.setAccounts(cachedAccounts));
 
-    if (cachedAccounts) {
-      try {
-        dispatch(accountActions.setAccounts(JSON.parse(cachedAccounts)));
-      } catch (err) {
-        console.error(err);
-      }
-    }
+    await dispatch(appOperations.waitRpcReady());
 
-    try {
-      await WalletRpc.load();
-      await WalletRpc.sync();
-    } catch (err) {}
+    console.log('Rpc done');
 
-    const accounts = await WalletRpc.query({
+    let accounts = await WalletRpc.query({
       equals: {
         'content.type': 'Account',
       },
     });
 
-    AsyncStorage.setItem('accounts-cache', JSON.stringify(accounts));
+    if (!Array.isArray(accounts)) {
+      throw new Error('Invalid accounts data');
+    }
+
+    accounts = accounts.map(account => {
+      const cachedAccount = cachedAccounts.find(item => item.id === account.id);
+      const cachedBalance = cachedAccount && cachedAccount.balance;
+
+      return {
+        ...account,
+        ...(account.meta || {}),
+        balance: cachedBalance || account.balance,
+      };
+    });
+
+    realm.write(() => {
+      accounts.forEach((account: any) => {
+        realm.create(
+          'Account',
+          {
+            id: account.id,
+            name: account.name,
+          },
+          'modified',
+        );
+      });
+    });
 
     dispatch(accountActions.setAccounts(accounts));
+    dispatch(accountOperations.fetchBalances());
+  },
+
+  fetchBalances: () => async (dispatch, getState) => {
+    console.log('Fetching balances');
+    await dispatch(appOperations.waitDockReady());
+    console.log('Fetching balances ok');
+
+    const accounts = accountSelectors.getAccounts(getState());
+
+    const realm = getRealm();
+
+    accounts.forEach(async (account: any) => {
+      const balance = await ApiRpc.getAccountBalance(account.id);
+
+      console.log('Balance for account', {
+        account,
+        balance,
+      });
+
+      realm.write(() => {
+        realm.create(
+          'Account',
+          {
+            id: account.id,
+            balance: `${balance}`,
+          },
+          'modified',
+        );
+      });
+
+      dispatch(
+        accountActions.setAccount({
+          ...account,
+          balance,
+        }),
+      );
+    });
   },
 };
 

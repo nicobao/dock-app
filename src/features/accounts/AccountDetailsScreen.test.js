@@ -16,9 +16,7 @@ describe('AccountDetailsScreen', () => {
         account={{
           meta: {
             name: 'Test account',
-            balance: {
-              value: 2,
-            },
+            balance: 0,
           },
         }}
       />,

@@ -17,6 +17,8 @@ import {walletOperations} from '../wallet/wallet-slice';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {translate} from 'src/locales';
+import {BuildIdentifier} from './BuildIdentifier';
+import {Stack} from 'native-base';
 
 const constants = AppConstants.settings;
 
@@ -44,23 +46,28 @@ export function AppSettingsScreen({onDeleteWallet, onBackupWallet}) {
         </Box>
       </Header>
       <Content>
-        <OptionList
-          mx={5}
-          items={[
-            {
-              testID: constants.testID.backupWalletOption,
-              title: translate('settings.backup_wallet'),
-              icon: <DownloadIcon />,
-              onPress: onBackupWallet,
-            },
-            {
-              testID: constants.testID.deleteWalletOption,
-              title: translate('settings.delete_wallet'),
-              icon: <TrashIcon />,
-              onPress: onDeleteWallet,
-            },
-          ]}
-        />
+        <Stack flex={1}>
+          <OptionList
+            mx={5}
+            items={[
+              {
+                testID: constants.testID.backupWalletOption,
+                title: translate('settings.backup_wallet'),
+                icon: <DownloadIcon />,
+                onPress: onBackupWallet,
+              },
+              {
+                testID: constants.testID.deleteWalletOption,
+                title: translate('settings.delete_wallet'),
+                icon: <TrashIcon />,
+                onPress: onDeleteWallet,
+              },
+            ]}
+          />
+        </Stack>
+        <Stack p={5}>
+          <BuildIdentifier />
+        </Stack>
       </Content>
     </ScreenContainer>
   );

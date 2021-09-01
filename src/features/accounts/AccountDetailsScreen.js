@@ -2,6 +2,7 @@ import {Button, Pressable, Stack} from 'native-base';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Modal} from 'src/components/Modal';
+import {formatCurrency, formatDate} from 'src/core/format-utils';
 import {PolkadotIcon} from '../../components/PolkadotIcon';
 import {navigate, navigateBack} from '../../core/navigation';
 import {Routes} from '../../core/routes';
@@ -19,8 +20,9 @@ import {
   Typography,
 } from '../../design-system';
 import {translate} from '../../locales';
-import {AmountDetails} from '../tokens/ConfirmTransactionModal';
+import {AmountDetails, TokenAmount} from '../tokens/ConfirmTransactionModal';
 import {
+  transactionsOperations,
   transactionsSelectors,
   TransactionStatus,
 } from '../transactions/transactions-slice';
@@ -28,9 +30,20 @@ import {accountOperations, accountSelectors} from './account-slice';
 import {AccountSettingsModal} from './AccountSettingsModal';
 import {QRCodeModal} from './QRCodeModal';
 
+const TransactionStatusColor = {
+  pending: Theme.colors.transactionPending,
+  failed: Theme.colors.transactionFailed,
+  complete: Theme.colors.transactionCompleted,
+};
+
 function TransactionHistoryItem({transaction}) {
   const [showDetails, setShowDetails] = useState();
-  const {sentAmount, tokenSymbol, recipientAddress, fee} = transaction;
+  const {
+    amount,
+    tokenSymbol = 'DOCK',
+    recipientAddress,
+    feeAmount,
+  } = transaction;
 
   return (
     <>
@@ -46,7 +59,7 @@ function TransactionHistoryItem({transaction}) {
             <Typography mb={1}>
               {translate('confirm_transaction.send')}
             </Typography>
-            <AmountDetails amount={sentAmount} symbol={tokenSymbol} />
+            <AmountDetails amount={amount} symbol={tokenSymbol} />
           </Stack>
           <Stack>
             <Typography mb={1}>
@@ -61,26 +74,56 @@ function TransactionHistoryItem({transaction}) {
             <Typography mb={1}>
               {translate('confirm_transaction.fee')}
             </Typography>
-            <AmountDetails amount={fee} symbol={tokenSymbol} />
+            <AmountDetails amount={feeAmount} symbol={tokenSymbol} />
           </Stack>
           <Stack mb={2}>
             <Typography mb={1}>
               {translate('confirm_transaction.total')}
             </Typography>
-            <AmountDetails amount={sentAmount + fee} symbol={tokenSymbol} />
+            <AmountDetails amount={amount} symbol={tokenSymbol} />
           </Stack>
         </Stack>
       </Modal>
       <Stack
-        p={8}
+        pb={2}
+        borderBottomWidth={1}
+        borderBottomColor={Theme.colors.tertiaryBackground}
         onPress={() => {
           setShowDetails(true);
         }}>
-        <AmountDetails amount={sentAmount + fee} symbol={tokenSymbol} />
-        <Stack mb={2}>
-          <Typography mb={1}>
-            {translate(`transaction_status.${transaction.status}`)}
-          </Typography>
+        {/* <AmountDetails amount={amount} symbol={tokenSymbol} /> */}
+        <TokenAmount amount={amount}>
+          {({tokenAmount, tokenSymbol}) => (
+            <Typography variant="h3">
+              Sent {tokenAmount} {tokenSymbol}
+            </Typography>
+          )}
+        </TokenAmount>
+        <Typography>{formatDate(transaction.date)}</Typography>
+
+        <Stack direction="row">
+          <Stack
+            my={2}
+            direction="row"
+            bg={Theme.colors.secondaryBackground}
+            borderRadius={Theme.borderRadius * 2}
+            px={3}
+            w="auto">
+            <Stack
+              bg={TransactionStatusColor[transaction.status]}
+              w={2}
+              h={2}
+              borderRadius={10}
+              mt={2}
+              mr={2}
+            />
+            <Typography>
+              {translate(
+                `transaction_status.${transaction.status || 'pending'}`,
+              )}
+            </Typography>
+          </Stack>
+          <Stack flex={1} />
         </Stack>
         {transaction.status === TransactionStatus.Failed ? (
           <Button onPress={() => setShowDetails(true)}>
@@ -95,8 +138,19 @@ function TransactionHistoryItem({transaction}) {
 function TransactionHistory({accountAddress}) {
   const allTransactions = useSelector(transactionsSelectors.getTransactions);
   const transactions = useMemo(() => {
-    return allTransactions.filter(item => item.fromAddress === accountAddress);
+    return allTransactions
+      .filter(
+        item =>
+          item.fromAddress === accountAddress ||
+          item.recipientAddress === accountAddress,
+      )
+      .map(item => ({
+        ...item,
+        sent: item.fromAddress === accountAddress,
+      }));
   }, [allTransactions, accountAddress]);
+
+  console.log(`Transactions for ${accountAddress}`, transactions);
 
   return useMemo(() => {
     if (!transactions.length) {
@@ -155,7 +209,7 @@ export function AccountDetailsScreen({
             alignContent="center"
             alignItems="center"
             pl={15}>
-            <Typography variant="h3">{account.meta.name}</Typography>
+            <Typography variant="h3">{account.name}</Typography>
           </NBox>
           <NBox width="80px" alignItems="flex-end">
             <Pressable onPress={() => setAccountSettingsVisible(true)}>
@@ -172,10 +226,19 @@ export function AccountDetailsScreen({
           p="32px"
           borderRadius={8}>
           <PolkadotIcon address={account.id} size={48} />
-          <Typography variant="h1" fontSize="32px" mt={3}>
-            {account.meta.balance.value} {account.meta.balance.symbol}
-          </Typography>
-          <Typography variant="h4">0.00 USD</Typography>
+          <TokenAmount amount={account.balance}>
+            {({fiatAmount, fiatSymbol, tokenAmount, tokenSymbol}) => (
+              <>
+                <Typography variant="h1" fontSize="32px" mt={3}>
+                  {tokenAmount} {tokenSymbol}
+                </Typography>
+                <Typography variant="h4">
+                  {formatCurrency(fiatAmount)}
+                </Typography>
+              </>
+            )}
+          </TokenAmount>
+
           <Stack direction="row" width="100%" mt={5}>
             <Button
               flex={1}
@@ -203,19 +266,19 @@ export function AccountDetailsScreen({
 
         <Stack mt={8}>
           <NBox
-            borderBottomColor={Theme.colors.dividerBackground}
+            borderBottomColor={Theme.colors.tertiaryBackground}
             borderBottomWidth={0.5}
             pb={4}>
             <Typography variant="h2">
               {translate('account_details.transactions')}
             </Typography>
           </NBox>
-          <NBox mt={8}>
-            <TransactionHistory />
+          <NBox mt={3}>
+            <TransactionHistory accountAddress={account.id} />
           </NBox>
         </Stack>
 
-        {account.meta.hasBackup ? null : (
+        {account.hasBackup ? null : (
           <Stack
             backgroundColor={Theme.colors.warningBackground}
             p={'16px'}
@@ -265,6 +328,10 @@ export function AccountDetailsContainer({route}) {
   const {id: accountId, qrCodeData} = route.params;
   const dispatch = useDispatch();
   const account = useSelector(accountSelectors.getAccountById(accountId));
+
+  useEffect(() => {
+    dispatch(transactionsOperations.loadTransactions());
+  }, [dispatch]);
 
   if (!account) {
     return <LoadingScreen />;

@@ -28,6 +28,9 @@ export const Theme = {
     circleUnckecked: '#71717A',
     warningText: 'rgba(254, 243, 199, 1)',
     warningBackground: 'rgba(120, 53, 15, 0.3)',
+    transactionCompleted: '#6EE7B7',
+    transactionFailed: '#F87171',
+    transactionPending: '#FBBF24',
   },
   screen: {
     backgroundColor: '#18181B',

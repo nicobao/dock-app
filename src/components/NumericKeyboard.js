@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Box, KeyboardDeleteIcon, Typography} from 'src/design-system';
 
 function KeyboardButton({onPress, value, testID}) {
@@ -15,7 +15,7 @@ function KeyboardButton({onPress, value, testID}) {
   );
 }
 
-export function NumericKeyboard({onChange, value, allowDecimal, ...props}) {
+export function NumericKeyboard({onChange, value = 0, allowDecimal, ...props}) {
   const handleDelete = () => {
     if (!value) {
       return;
@@ -30,6 +30,11 @@ export function NumericKeyboard({onChange, value, allowDecimal, ...props}) {
     const strValue = value ? `${value}` : '';
 
     if (digit === '.' && strValue.indexOf('.') > -1) {
+      return;
+    }
+
+    if (digit === '.') {
+      onChange(`${value}.`);
       return;
     }
 

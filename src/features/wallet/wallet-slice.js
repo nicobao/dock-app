@@ -156,11 +156,15 @@ export const walletOperations = {
       const keychainId = 'wallet';
 
       if (biometry) {
-        await Keychain.getItem(`${keychainId}-biometric`, {
+        console.log('Biometry: attempt to unlock');
+        const result = await Keychain.getItem(`${keychainId}-biometric`, {
           authenticationPrompt: {
             title: 'Allow dock wallet to use your biometry',
           },
         });
+
+        console.log('Biometry unlock succeed');
+        console.log(JSON.stringify(result));
       } else {
         const keychainData = await Keychain.getItem(keychainId);
 
@@ -205,6 +209,8 @@ export const walletOperations = {
               Keychain.ACCESS_CONTROL.BIOMETRY_ANY_OR_DEVICE_PASSCODE,
           });
         }
+
+        console.log('Biometry created');
 
         await Keychain.getItem(`${keychainId}-biometric`, {
           authenticationPrompt: {
