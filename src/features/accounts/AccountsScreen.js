@@ -24,7 +24,7 @@ import DocumentDownloadIcon from '../../assets/icons/document-download.svg';
 import PlusCircleIcon from '../../assets/icons/plus-circle.svg';
 import PlusCircleWhiteIcon from '../../assets/icons/plus-circle-white.svg';
 import CogIcon from '../../assets/icons/cog.svg';
-import {Avatar, Menu, Pressable, Stack, useToast} from 'native-base';
+import {Avatar, Menu, Pressable, ScrollView, Stack, useToast} from 'native-base';
 import {useDispatch, useSelector} from 'react-redux';
 import {accountOperations, accountSelectors} from './account-slice';
 import {navigate} from 'src/core/navigation';
@@ -86,8 +86,7 @@ export const AccountsScreen = withErrorBoundary(
             </Box>
           </Box>
         </Header>
-        <Content
-          
+        <ScrollView
           refreshControl={
             <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
           }>
@@ -205,7 +204,7 @@ export const AccountsScreen = withErrorBoundary(
               </NBox>
             )}
           </Stack>
-        </Content>
+        </ScrollView>
         {isEmpty ? (
           <Footer marginBottom={114} marginLeft={26} marginRight={26} flex>
             <BigButton onPress={onAddAccount} icon={<PlusCircleIcon />}>

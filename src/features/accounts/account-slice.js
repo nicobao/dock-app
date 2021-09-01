@@ -239,14 +239,6 @@ export const accountOperations = {
     dispatch(accountOperations.fetchBalances());
   },
 
-  schedulefetchBalances: () => async (dispatch, getState) => {
-    clearTimeout(fetchBalanceTimeout);
-
-    fetchBalanceTimeout = setTimeout(() => {
-      dispatch(accountOperations.fetchBalances());
-    }, 1000 * BALANCE_FETCH_PERIOD);
-  },
-
   fetchAccountBalance: accountId => async (dispatch, getState) => {
     const realm = getRealm();
     const balance = await ApiRpc.getAccountBalance(accountId);
@@ -282,7 +274,11 @@ export const accountOperations = {
       console.error(err);
     }
 
-    dispatch(accountOperations.schedulefetchBalances());
+    clearTimeout(fetchBalanceTimeout);
+
+    fetchBalanceTimeout = setTimeout(() => {
+      dispatch(accountOperations.fetchBalances());
+    }, 1000 * BALANCE_FETCH_PERIOD);
   },
 };
 
