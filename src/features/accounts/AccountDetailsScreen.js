@@ -1,5 +1,6 @@
-import {Button, Pressable, Stack} from 'native-base';
+import {Button, Pressable, ScrollView, Stack} from 'native-base';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import {RefreshControl} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Modal} from 'src/components/Modal';
 import {formatCurrency, formatDate} from 'src/core/format-utils';
@@ -182,6 +183,8 @@ export function AccountDetailsScreen({
   onEdit,
   onExport,
   qrCodeData,
+  onRefresh,
+  isRefreshing,
 }) {
   const [accountSettingsVisible, setAccountSettingsVisible] = useState();
   const [qrCodeModalVisible, setQrCodeModalVisible] = useState();
@@ -218,95 +221,100 @@ export function AccountDetailsScreen({
           </NBox>
         </Box>
       </Header>
-      <Content marginLeft={26} marginRight={26}>
-        <Stack
-          direction="column"
-          alignItems="center"
-          backgroundColor={Theme.colors.secondaryBackground}
-          p="32px"
-          borderRadius={8}>
-          <PolkadotIcon address={account.id} size={48} />
-          <TokenAmount amount={account.balance}>
-            {({fiatAmount, fiatSymbol, tokenAmount, tokenSymbol}) => (
-              <>
-                <Typography variant="h1" fontSize="32px" mt={3}>
-                  {tokenAmount} {tokenSymbol}
-                </Typography>
-                <Typography variant="h4">
-                  {formatCurrency(fiatAmount)}
-                </Typography>
-              </>
-            )}
-          </TokenAmount>
-
-          <Stack direction="row" width="100%" mt={5}>
-            <Button
-              flex={1}
-              size="sm"
-              onPress={() =>
-                navigate(Routes.TOKEN_SEND, {
-                  address: account.id,
-                })
-              }>
-              {translate('account_details.send_tokens_btn')}
-            </Button>
-            <Button
-              ml={2}
-              flex={1}
-              size="sm"
-              onPress={() =>
-                navigate(Routes.TOKEN_RECEIVE, {
-                  address: account.id,
-                })
-              }>
-              {translate('account_details.receive_tokens_btn')}
-            </Button>
-          </Stack>
-        </Stack>
-
-        <Stack mt={8}>
-          <NBox
-            borderBottomColor={Theme.colors.tertiaryBackground}
-            borderBottomWidth={0.5}
-            pb={4}>
-            <Typography variant="h2">
-              {translate('account_details.transactions')}
-            </Typography>
-          </NBox>
-          <NBox mt={3}>
-            <TransactionHistory accountAddress={account.id} />
-          </NBox>
-        </Stack>
-
-        {account.hasBackup ? null : (
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+        }>
+        <Stack mx={26} flex={1}>
           <Stack
-            backgroundColor={Theme.colors.warningBackground}
-            p={'16px'}
-            mt={20}>
-            <Stack direction="row">
-              <NBox mr={3} mt={'3px'}>
-                <AlertIcon />
-              </NBox>
-              <Typography ml={2} variant="h3" fontSize={17}>
-                {translate('account_details.pending_backup')}
-              </Typography>
+            direction="column"
+            alignItems="center"
+            backgroundColor={Theme.colors.secondaryBackground}
+            p="32px"
+            borderRadius={8}>
+            <PolkadotIcon address={account.id} size={48} />
+            <TokenAmount amount={account.balance}>
+              {({fiatAmount, fiatSymbol, tokenAmount, tokenSymbol}) => (
+                <>
+                  <Typography variant="h1" fontSize="32px" mt={3}>
+                    {tokenAmount} {tokenSymbol}
+                  </Typography>
+                  <Typography variant="h4">
+                    {formatCurrency(fiatAmount)}
+                  </Typography>
+                </>
+              )}
+            </TokenAmount>
+
+            <Stack direction="row" width="100%" mt={5}>
+              <Button
+                flex={1}
+                size="sm"
+                onPress={() =>
+                  navigate(Routes.TOKEN_SEND, {
+                    address: account.id,
+                  })
+                }>
+                {translate('account_details.send_tokens_btn')}
+              </Button>
+              <Button
+                ml={2}
+                flex={1}
+                size="sm"
+                onPress={() =>
+                  navigate(Routes.TOKEN_RECEIVE, {
+                    address: account.id,
+                  })
+                }>
+                {translate('account_details.receive_tokens_btn')}
+              </Button>
             </Stack>
-            <NBox mt={2}>
-              <Typography color={Theme.colors.warningText}>
-                {translate('account_details.backup_details')}
+          </Stack>
+
+          <Stack mt={8}>
+            <NBox
+              borderBottomColor={Theme.colors.tertiaryBackground}
+              borderBottomWidth={0.5}
+              pb={4}>
+              <Typography variant="h2">
+                {translate('account_details.transactions')}
               </Typography>
             </NBox>
-            <Button
-              onPress={onBackup}
-              mt={4}
-              alignSelf="flex-start"
-              size="sm"
-              backgroundColor="rgba(120, 53, 15, 1)">
-              {translate('account_details.backup_btn')}
-            </Button>
+            <NBox mt={3}>
+              <TransactionHistory accountAddress={account.id} />
+            </NBox>
           </Stack>
-        )}
-      </Content>
+
+          {account.hasBackup ? null : (
+            <Stack
+              backgroundColor={Theme.colors.warningBackground}
+              p={'16px'}
+              mt={20}>
+              <Stack direction="row">
+                <NBox mr={3} mt={'3px'}>
+                  <AlertIcon />
+                </NBox>
+                <Typography ml={2} variant="h3" fontSize={17}>
+                  {translate('account_details.pending_backup')}
+                </Typography>
+              </Stack>
+              <NBox mt={2}>
+                <Typography color={Theme.colors.warningText}>
+                  {translate('account_details.backup_details')}
+                </Typography>
+              </NBox>
+              <Button
+                onPress={onBackup}
+                mt={4}
+                alignSelf="flex-start"
+                size="sm"
+                backgroundColor="rgba(120, 53, 15, 1)">
+                {translate('account_details.backup_btn')}
+              </Button>
+            </Stack>
+          )}
+        </Stack>
+      </ScrollView>
       <AccountSettingsModal
         visible={accountSettingsVisible}
         onClose={() => setAccountSettingsVisible(false)}
@@ -328,6 +336,14 @@ export function AccountDetailsContainer({route}) {
   const {id: accountId, qrCodeData} = route.params;
   const dispatch = useDispatch();
   const account = useSelector(accountSelectors.getAccountById(accountId));
+  const [isRefreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    dispatch(accountOperations.fetchAccountBalance(account.id)).finally(() => {
+      setRefreshing(false);
+    });
+  };
 
   useEffect(() => {
     dispatch(transactionsOperations.loadTransactions());
@@ -344,6 +360,8 @@ export function AccountDetailsContainer({route}) {
           navigateBack,
         );
       }}
+      isRefreshing={isRefreshing}
+      onRefresh={onRefresh}
       onEdit={() => {
         alert('edit');
       }}

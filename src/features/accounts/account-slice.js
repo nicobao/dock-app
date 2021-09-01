@@ -14,6 +14,9 @@ import {getRealm} from 'src/core/realm';
 import {appOperations} from '../app/app-slice';
 import uuid from 'uuid/v4';
 
+// Period in seconds
+const BALANCE_FETCH_PERIOD = 30;
+
 const initialState = {
   loading: true,
   accounts: [],
@@ -33,7 +36,10 @@ const account = createSlice({
     setAccount(state, action) {
       state.accounts = state.accounts.map(account => {
         if (account.id === action.payload.id) {
-          return action.payload;
+          return {
+            ...account,
+            ...action.payload,
+          };
         }
 
         return account;
@@ -56,6 +62,8 @@ export const accountSelectors = {
     getRoot(state).accounts.find(account => account.id === id),
   getAccountToBackup: state => getRoot(state).accountToBackup,
 };
+
+let fetchBalanceTimeout;
 
 export const accountOperations = {
   addTestAccount: () => async (dispatch, getState) => {
@@ -231,41 +239,46 @@ export const accountOperations = {
     dispatch(accountOperations.fetchBalances());
   },
 
-  fetchBalances: () => async (dispatch, getState) => {
-    console.log('Fetching balances');
-    await dispatch(appOperations.waitDockReady());
-    console.log('Fetching balances ok');
-
-    const accounts = accountSelectors.getAccounts(getState());
-
+  fetchAccountBalance: accountId => async (dispatch, getState) => {
     const realm = getRealm();
+    const balance = await ApiRpc.getAccountBalance(accountId);
 
-    accounts.forEach(async (account: any) => {
-      const balance = await ApiRpc.getAccountBalance(account.id);
-
-      console.log('Balance for account', {
-        account,
-        balance,
-      });
-
-      realm.write(() => {
-        realm.create(
-          'Account',
-          {
-            id: account.id,
-            balance: `${balance}`,
-          },
-          'modified',
-        );
-      });
-
-      dispatch(
-        accountActions.setAccount({
-          ...account,
-          balance,
-        }),
+    realm.write(() => {
+      realm.create(
+        'Account',
+        {
+          id: accountId,
+          balance: `${balance}`,
+        },
+        'modified',
       );
     });
+
+    dispatch(
+      accountActions.setAccount({
+        id: accountId,
+        balance,
+      }),
+    );
+  },
+  fetchBalances: () => async (dispatch, getState) => {
+    try {
+      await dispatch(appOperations.waitDockReady());
+
+      const accounts = accountSelectors.getAccounts(getState());
+
+      accounts.forEach(async (account: any) => {
+        await dispatch(accountOperations.fetchAccountBalance(account.id));
+      });
+    } catch (err) {
+      console.error(err);
+    }
+
+    clearTimeout(fetchBalanceTimeout);
+
+    fetchBalanceTimeout = setTimeout(() => {
+      dispatch(accountOperations.fetchBalances());
+    }, 1000 * BALANCE_FETCH_PERIOD);
   },
 };
 

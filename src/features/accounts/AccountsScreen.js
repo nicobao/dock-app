@@ -1,44 +1,40 @@
-import React, {useEffect, useState} from 'react';
+import {Menu, Pressable, ScrollView, Stack} from 'native-base';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Platform, RefreshControl} from 'react-native';
 import DocumentPicker from 'react-native-document-picker';
-import RNFS from 'react-native-fs';
 import RNExitApp from 'react-native-exit-app';
-
-import {
-  Header,
-  Footer,
-  Content,
-  Text,
-  ScreenContainer,
-  Typography,
-  Box,
-  NBox,
-  BigButton,
-  DotsVerticalIcon,
-  IconButton,
-  AlertIcon,
-  ChevronRightIcon,
-  Button,
-  Theme,
-} from '../../design-system';
-import DocumentDownloadIcon from '../../assets/icons/document-download.svg';
-import PlusCircleIcon from '../../assets/icons/plus-circle.svg';
-import PlusCircleWhiteIcon from '../../assets/icons/plus-circle-white.svg';
-import CogIcon from '../../assets/icons/cog.svg';
-import {Avatar, Menu, Pressable, Stack, useToast} from 'native-base';
+import RNFS from 'react-native-fs';
 import {useDispatch, useSelector} from 'react-redux';
-import {accountOperations, accountSelectors} from './account-slice';
+import {withErrorBoundary} from 'src/core/error-handler';
+import {formatCurrency} from 'src/core/format-utils';
 import {navigate} from 'src/core/navigation';
 import {Routes} from 'src/core/routes';
-import {AddAccountModal} from './AddAccountModal';
-import {ImportExistingAccountModal} from './ImportExistingAccountModal';
-import {createAccountOperations} from '../account-creation/create-account-slice';
-import {AccountsScreenTestIDs} from './test-ids';
-import {PolkadotIcon} from '../../components/PolkadotIcon';
 import {translate} from 'src/locales';
-import {formatCurrency} from 'src/core/format-utils';
+import CogIcon from '../../assets/icons/cog.svg';
+import DocumentDownloadIcon from '../../assets/icons/document-download.svg';
+import PlusCircleWhiteIcon from '../../assets/icons/plus-circle-white.svg';
+import PlusCircleIcon from '../../assets/icons/plus-circle.svg';
+import {PolkadotIcon} from '../../components/PolkadotIcon';
+import {
+  AlertIcon,
+  BigButton,
+  Box,
+  Button,
+  ChevronRightIcon,
+  DotsVerticalIcon,
+  Footer,
+  Header,
+  IconButton,
+  NBox,
+  ScreenContainer,
+  Theme,
+  Typography,
+} from '../../design-system';
+import {createAccountOperations} from '../account-creation/create-account-slice';
 import {TokenAmount} from '../tokens/ConfirmTransactionModal';
-import {Platform} from 'react-native';
-import {withErrorBoundary} from 'src/core/error-handler';
+import {accountOperations, accountSelectors} from './account-slice';
+import {AddAccountModal} from './AddAccountModal';
+import {AccountsScreenTestIDs} from './test-ids';
 
 export const AccountsScreen = withErrorBoundary(
   ({
@@ -49,6 +45,8 @@ export const AccountsScreen = withErrorBoundary(
     onEdit,
     onDetails,
     onSettings,
+    onRefresh,
+    isRefreshing,
   }) => {
     const isEmpty = accounts.length === 0;
     const [showAddAccount, setShowAddAccount] = useState();
@@ -67,7 +65,7 @@ export const AccountsScreen = withErrorBoundary(
                 fontFamily="Montserrat"
                 fontSize={24}
                 fontWeight="600">
-                Accounts
+                {translate('account_list.title')}
               </Typography>
             </Box>
             <Box row>
@@ -84,118 +82,125 @@ export const AccountsScreen = withErrorBoundary(
             </Box>
           </Box>
         </Header>
-        <Content marginLeft={26} marginRight={26}>
-          {isEmpty ? (
-            <Box flex justifyContent="center" alignItems="center">
-              <Typography marginTop={12}>
-                You don’t have any accounts yet.
-              </Typography>
-            </Box>
-          ) : (
-            <NBox>
-              {accounts.map(account => {
-                return (
-                  <Stack
-                    direction="row"
-                    borderRadius={12}
-                    backgroundColor={Theme.colors.secondaryBackground}
-                    space={2}
-                    mb={4}
-                    py={6}
-                    px={6}>
-                    <Stack direction="column" flex={1}>
-                      <Stack direction="row" alignItems="center">
-                        <Pressable onPress={() => onDetails(account)} flex={1}>
-                          <Stack direction="row" flex={1} alignItems="center">
-                            <PolkadotIcon address={account.id} size={32} />
-                            <Stack direction="row" flex={1} ml={3}>
-                              <Typography
-                                color={Theme.colors.textHighlighted}
-                                fontWeight={600}>
-                                {account.name}
-                              </Typography>
-                              <ChevronRightIcon marginTop={1} />
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+          }>
+          <Stack mx={26} flex={1}>
+            {isEmpty ? (
+              <Box flex justifyContent="center" alignItems="center">
+                <Typography marginTop={12}>
+                  {translate('account_list.empty_accounts')}
+                </Typography>
+              </Box>
+            ) : (
+              <NBox>
+                {accounts.map(account => {
+                  return (
+                    <Stack
+                      direction="row"
+                      borderRadius={12}
+                      backgroundColor={Theme.colors.secondaryBackground}
+                      space={2}
+                      mb={4}
+                      py={6}
+                      px={6}>
+                      <Stack direction="column" flex={1}>
+                        <Stack direction="row" alignItems="center">
+                          <Pressable
+                            onPress={() => onDetails(account)}
+                            flex={1}>
+                            <Stack direction="row" flex={1} alignItems="center">
+                              <PolkadotIcon address={account.id} size={32} />
+                              <Stack direction="row" flex={1} ml={3}>
+                                <Typography
+                                  color={Theme.colors.textHighlighted}
+                                  fontWeight={600}>
+                                  {account.name}
+                                </Typography>
+                                <ChevronRightIcon marginTop={1} />
+                              </Stack>
                             </Stack>
-                          </Stack>
-                        </Pressable>
-                        <NBox py={1} px={1}>
-                          <Stack direction="row">
-                            {account.hasBackup ? null : (
-                              <NBox mr={3} mt={1}>
-                                <AlertIcon />
-                              </NBox>
-                            )}
-                            <Menu
-                              trigger={triggerProps => {
-                                return (
-                                  <Pressable {...triggerProps}>
-                                    <DotsVerticalIcon />
-                                  </Pressable>
-                                );
-                              }}>
-                              <Menu.Item onPress={() => onDetails(account)}>
-                                Details
-                              </Menu.Item>
-                              <Menu.Item onPress={() => onDelete(account)}>
-                                Delete
-                              </Menu.Item>
-                            </Menu>
-                          </Stack>
-                        </NBox>
-                      </Stack>
-
-                      <TokenAmount amount={account.balance}>
-                        {({
-                          fiatAmount,
-                          fiatSymbol,
-                          tokenAmount,
-                          tokenSymbol,
-                        }) => (
-                          <>
-                            <Stack direction="column" mt={4}>
-                              <Typography variant="h2">
-                                {tokenAmount} {tokenSymbol}
-                              </Typography>
-                              <Typography fontSize="14px">
-                                {formatCurrency(fiatAmount)}
-                              </Typography>
+                          </Pressable>
+                          <NBox py={1} px={1}>
+                            <Stack direction="row">
+                              {account.hasBackup ? null : (
+                                <NBox mr={3} mt={1}>
+                                  <AlertIcon />
+                                </NBox>
+                              )}
+                              <Menu
+                                trigger={triggerProps => {
+                                  return (
+                                    <Pressable {...triggerProps}>
+                                      <DotsVerticalIcon />
+                                    </Pressable>
+                                  );
+                                }}>
+                                <Menu.Item onPress={() => onDetails(account)}>
+                                  {translate('account_list.account_details')}
+                                </Menu.Item>
+                                <Menu.Item onPress={() => onDelete(account)}>
+                                  {translate('account_list.delete_account')}
+                                </Menu.Item>
+                              </Menu>
                             </Stack>
-                          </>
-                        )}
-                      </TokenAmount>
+                          </NBox>
+                        </Stack>
 
-                      <Stack direction="row" mt={4}>
-                        <Button
-                          width="50%"
-                          size="sm"
-                          colorScheme="dark"
-                          onPress={() => {
-                            navigate(Routes.TOKEN_SEND, {
-                              address: account.id,
-                            });
-                          }}>
-                          {translate('account_list.send_token')}
-                        </Button>
-                        <Button
-                          width="50%"
-                          size="sm"
-                          ml={2}
-                          colorScheme="dark"
-                          onPress={() => {
-                            navigate(Routes.TOKEN_RECEIVE, {
-                              address: account.id,
-                            });
-                          }}>
-                          {translate('account_list.receive_token')}
-                        </Button>
+                        <TokenAmount amount={account.balance}>
+                          {({
+                            fiatAmount,
+                            fiatSymbol,
+                            tokenAmount,
+                            tokenSymbol,
+                          }) => (
+                            <>
+                              <Stack direction="column" mt={4}>
+                                <Typography variant="h2">
+                                  {tokenAmount} {tokenSymbol}
+                                </Typography>
+                                <Typography fontSize="14px">
+                                  {formatCurrency(fiatAmount)}
+                                </Typography>
+                              </Stack>
+                            </>
+                          )}
+                        </TokenAmount>
+
+                        <Stack direction="row" mt={4}>
+                          <Button
+                            width="50%"
+                            size="sm"
+                            colorScheme="dark"
+                            onPress={() => {
+                              navigate(Routes.TOKEN_SEND, {
+                                address: account.id,
+                              });
+                            }}>
+                            {translate('account_list.send_token')}
+                          </Button>
+                          <Button
+                            width="50%"
+                            size="sm"
+                            ml={2}
+                            colorScheme="dark"
+                            onPress={() => {
+                              navigate(Routes.TOKEN_RECEIVE, {
+                                address: account.id,
+                              });
+                            }}>
+                            {translate('account_list.receive_token')}
+                          </Button>
+                        </Stack>
                       </Stack>
                     </Stack>
-                  </Stack>
-                );
-              })}
-            </NBox>
-          )}
-        </Content>
+                  );
+                })}
+              </NBox>
+            )}
+          </Stack>
+        </ScrollView>
         {isEmpty ? (
           <Footer marginBottom={114} marginLeft={26} marginRight={26} flex>
             <BigButton onPress={onAddAccount} icon={<PlusCircleIcon />}>
@@ -222,6 +227,15 @@ export const AccountsScreen = withErrorBoundary(
 export const AccountsContainer = withErrorBoundary(({navigation}) => {
   const dispatch = useDispatch();
   const accounts = useSelector(accountSelectors.getAccounts);
+  const [isRefreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    dispatch(accountOperations.fetchBalances()).finally(() => {
+      setRefreshing(false);
+    });
+  }, [dispatch]);
+
   useEffect(() => {
     dispatch(accountOperations.loadAccounts());
   }, [dispatch]);
@@ -245,6 +259,8 @@ export const AccountsContainer = withErrorBoundary(({navigation}) => {
           id: account.id,
         });
       }}
+      isRefreshing={isRefreshing}
+      onRefresh={onRefresh}
       accounts={accounts}
       onAddAccount={() => {
         dispatch(accountOperations.addAccountFlow());
