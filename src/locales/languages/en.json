@@ -115,7 +115,8 @@
     "send_token": "Send",
     "receive_token": "Receive",
     "delete_account": "Delete",
-    "account_details": "Details"
+    "account_details": "Details",
+    "empty_accounts": "You don’t have any accounts yet"
   },
   "account_details": {
     "send_tokens_btn": "Send",
