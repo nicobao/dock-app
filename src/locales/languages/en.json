@@ -112,6 +112,7 @@
     "invalid_confirmation": "Invalid confirmation, please try again"
   },
   "account_list": {
+    "title": "Accounts",
     "send_token": "Send",
     "receive_token": "Receive",
     "delete_account": "Delete",

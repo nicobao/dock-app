@@ -1,44 +1,40 @@
+import {Menu, Pressable, ScrollView, Stack} from 'native-base';
 import React, {useEffect, useState} from 'react';
+import {Platform, RefreshControl} from 'react-native';
 import DocumentPicker from 'react-native-document-picker';
-import RNFS from 'react-native-fs';
 import RNExitApp from 'react-native-exit-app';
-
-import {
-  Header,
-  Footer,
-  Content,
-  Text,
-  ScreenContainer,
-  Typography,
-  Box,
-  NBox,
-  BigButton,
-  DotsVerticalIcon,
-  IconButton,
-  AlertIcon,
-  ChevronRightIcon,
-  Button,
-  Theme,
-} from '../../design-system';
-import DocumentDownloadIcon from '../../assets/icons/document-download.svg';
-import PlusCircleIcon from '../../assets/icons/plus-circle.svg';
-import PlusCircleWhiteIcon from '../../assets/icons/plus-circle-white.svg';
-import CogIcon from '../../assets/icons/cog.svg';
-import {Avatar, Menu, Pressable, ScrollView, Stack, useToast} from 'native-base';
+import RNFS from 'react-native-fs';
 import {useDispatch, useSelector} from 'react-redux';
-import {accountOperations, accountSelectors} from './account-slice';
+import {withErrorBoundary} from 'src/core/error-handler';
+import {formatCurrency} from 'src/core/format-utils';
 import {navigate} from 'src/core/navigation';
 import {Routes} from 'src/core/routes';
-import {AddAccountModal} from './AddAccountModal';
-import {ImportExistingAccountModal} from './ImportExistingAccountModal';
-import {createAccountOperations} from '../account-creation/create-account-slice';
-import {AccountsScreenTestIDs} from './test-ids';
-import {PolkadotIcon} from '../../components/PolkadotIcon';
 import {translate} from 'src/locales';
-import {formatCurrency} from 'src/core/format-utils';
+import CogIcon from '../../assets/icons/cog.svg';
+import DocumentDownloadIcon from '../../assets/icons/document-download.svg';
+import PlusCircleWhiteIcon from '../../assets/icons/plus-circle-white.svg';
+import PlusCircleIcon from '../../assets/icons/plus-circle.svg';
+import {PolkadotIcon} from '../../components/PolkadotIcon';
+import {
+  AlertIcon,
+  BigButton,
+  Box,
+  Button,
+  ChevronRightIcon,
+  DotsVerticalIcon,
+  Footer,
+  Header,
+  IconButton,
+  NBox,
+  ScreenContainer,
+  Theme,
+  Typography,
+} from '../../design-system';
+import {createAccountOperations} from '../account-creation/create-account-slice';
 import {TokenAmount} from '../tokens/ConfirmTransactionModal';
-import {Platform, RefreshControl} from 'react-native';
-import {withErrorBoundary} from 'src/core/error-handler';
+import {accountOperations, accountSelectors} from './account-slice';
+import {AddAccountModal} from './AddAccountModal';
+import {AccountsScreenTestIDs} from './test-ids';
 
 export const AccountsScreen = withErrorBoundary(
   ({
@@ -69,7 +65,7 @@ export const AccountsScreen = withErrorBoundary(
                 fontFamily="Montserrat"
                 fontSize={24}
                 fontWeight="600">
-                Accounts
+                {translate('account_list.title')}
               </Typography>
             </Box>
             <Box row>
@@ -142,10 +138,10 @@ export const AccountsScreen = withErrorBoundary(
                                   );
                                 }}>
                                 <Menu.Item onPress={() => onDetails(account)}>
-                                  Details
+                                  {translate('account_list.account_details')}
                                 </Menu.Item>
                                 <Menu.Item onPress={() => onDelete(account)}>
-                                  Delete
+                                  {translate('account_list.delete_account')}
                                 </Menu.Item>
                               </Menu>
                             </Stack>
