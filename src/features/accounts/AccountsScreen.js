@@ -1,5 +1,5 @@
 import {Menu, Pressable, ScrollView, Stack} from 'native-base';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Platform, RefreshControl} from 'react-native';
 import DocumentPicker from 'react-native-document-picker';
 import RNExitApp from 'react-native-exit-app';
@@ -229,12 +229,12 @@ export const AccountsContainer = withErrorBoundary(({navigation}) => {
   const accounts = useSelector(accountSelectors.getAccounts);
   const [isRefreshing, setRefreshing] = useState(false);
 
-  const onRefresh = React.useCallback(() => {
+  const onRefresh = useCallback(() => {
     setRefreshing(true);
     dispatch(accountOperations.fetchBalances()).finally(() => {
       setRefreshing(false);
     });
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(accountOperations.loadAccounts());

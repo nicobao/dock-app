@@ -223,10 +223,7 @@ export function AccountDetailsScreen({
       </Header>
       <ScrollView
         refreshControl={
-          <RefreshControl
-            refreshing={isRefreshing}
-            onRefresh={onRefresh}
-          />
+          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
         }>
         <Stack mx={26} flex={1}>
           <Stack
