@@ -26,7 +26,7 @@ import {translate} from '../../locales';
 
 export function CreateAccountMnemonicScreen({phrase, onCopy, onSubmit}) {
   return (
-    <ScreenContainer testID="create-wallet-screen">
+    <ScreenContainer testID="create-wallet-screen" hideGlobalHeader>
       <Header>
         <BackButton />
       </Header>

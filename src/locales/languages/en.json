@@ -5,7 +5,10 @@
     "skip": "Skip"
   },
   "global": {
-    "rendering_error": "Something went wrong."
+    "rendering_error": "Something went wrong",
+    "webview_connection_error": "Unable to initialize polkadot, please try again later",
+    "substrate_connection_error": "Failed to connect to remote API",
+    "substrate_connection_loading": "Connecting to the remote API..."
   },
   "delete_wallet_confirmation": {
     "title": "Remove Wallet?",
@@ -180,7 +183,7 @@
   },
   "transaction_status": {
     "pending": "In progress",
-    "completed": "Completed",
+    "complete": "Completed",
     "failed": "Failed"
   },
   "transaction_history": {

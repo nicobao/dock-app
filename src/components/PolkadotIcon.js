@@ -3,6 +3,7 @@ import {jsx as _jsx} from 'react/jsx-runtime';
 import {Circle, Svg} from 'react-native-svg';
 import {useDispatch} from 'react-redux';
 import {accountOperations} from 'src/features/accounts/account-slice';
+import {withErrorBoundary} from 'src/core/error-handler';
 
 function renderCircle({cx, cy, fill, r}, key) {
   return <Circle cx={cx} cy={cy} fill={fill} r={r} key={key} />;
@@ -28,7 +29,7 @@ function Identicon({
     );
   }, [address, isAlternative, dispatch]);
 
-  if (!svgData) {
+  if (!svgData || !svgData.map) {
     return null;
   }
 
@@ -46,4 +47,4 @@ function Identicon({
   );
 }
 
-export const PolkadotIcon = React.memo(Identicon);
+export const PolkadotIcon = React.memo(withErrorBoundary(Identicon));

@@ -83,13 +83,21 @@ export const appOperations = {
   },
   rpcReady: () => async (dispatch, getState) => {
     console.log('Rpc ready');
-    await UtilCryptoRpc.cryptoWaitReady();
-    await KeyringRpc.initialize();
-    await WalletRpc.create('wallet');
-    await WalletRpc.load();
-    await WalletRpc.sync();
-
-    dispatch(appActions.setRpcReady(true));
+    try {
+      await UtilCryptoRpc.cryptoWaitReady();
+      await KeyringRpc.initialize();
+      await WalletRpc.create('wallet');
+      await WalletRpc.load();
+      await WalletRpc.sync();
+      dispatch(appActions.setRpcReady(true));
+    } catch (err) {
+      dispatch(
+        appActions.setRpcReady(
+          new Error('Unable to initialize the wallet sdk'),
+        ),
+      );
+      console.error(err);
+    }
 
     try {
       await DockRpc.init({
@@ -100,7 +108,10 @@ export const appOperations = {
 
       console.log('Dock initialized');
     } catch (err) {
-      console.error('Unable to initialize dock', err);
+      dispatch(
+        appActions.setDockReady(new Error('Unable to initialize dock api')),
+      );
+      console.error(err);
     }
   },
   initialize: () => async (dispatch, getState) => {
