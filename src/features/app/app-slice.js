@@ -11,6 +11,7 @@ import {Routes} from '../../core/routes';
 import {walletActions} from '../wallet/wallet-slice';
 import {initRealm} from 'src/core/realm';
 import {SUBSTRATE_URL} from '@env';
+import {translate} from 'src/locales';
 
 export const BiometryType = {
   FaceId: Keychain.BIOMETRY_TYPE.FACE_ID,
@@ -93,7 +94,7 @@ export const appOperations = {
     } catch (err) {
       dispatch(
         appActions.setRpcReady(
-          new Error('Unable to initialize the wallet sdk'),
+          new Error(translate('global.webview_connection_error')),
         ),
       );
       console.error(err);

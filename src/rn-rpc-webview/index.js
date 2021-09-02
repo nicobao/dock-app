@@ -9,6 +9,7 @@ import {Platform} from 'react-native';
 import {showToast} from 'src/core/toast';
 import {useDispatch} from 'react-redux';
 import {appActions} from 'src/features/app/app-slice';
+import {translate} from 'src/locales';
 
 const WEBVIEW_URI = 'http://localhost:3000';
 const DEV_MODE = false;
@@ -37,7 +38,7 @@ export function RNRpcWebView({onReady}) {
       onError={() => {
         dispatch(
           appActions.setRpcReady(
-            new Error('Unable to initialize the wallet sdk'),
+            new Error(translate('global.webview_connection_error')),
           ),
         );
       }}
