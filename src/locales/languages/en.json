@@ -6,8 +6,8 @@
   },
   "global": {
     "rendering_error": "Something went wrong",
-    "webview_connection_error": "Unable to initialize polkadot, please try again later",
-    "substrate_connection_error": "Failed to connect to remote API",
+    "webview_connection_error": "Unable to connect with the API. (Error: 101)",
+    "substrate_connection_error": "Unable to connect with the API. (Error: 104)",
     "substrate_connection_loading": "Connecting to the remote API..."
   },
   "delete_wallet_confirmation": {
