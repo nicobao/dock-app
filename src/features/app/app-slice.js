@@ -11,6 +11,7 @@ import {Routes} from '../../core/routes';
 import {walletActions} from '../wallet/wallet-slice';
 import {initRealm} from 'src/core/realm';
 import {SUBSTRATE_URL} from '@env';
+import {translate} from 'src/locales';
 
 export const BiometryType = {
   FaceId: Keychain.BIOMETRY_TYPE.FACE_ID,
@@ -83,13 +84,21 @@ export const appOperations = {
   },
   rpcReady: () => async (dispatch, getState) => {
     console.log('Rpc ready');
-    await UtilCryptoRpc.cryptoWaitReady();
-    await KeyringRpc.initialize();
-    await WalletRpc.create('wallet');
-    await WalletRpc.load();
-    await WalletRpc.sync();
-
-    dispatch(appActions.setRpcReady(true));
+    try {
+      await UtilCryptoRpc.cryptoWaitReady();
+      await KeyringRpc.initialize();
+      await WalletRpc.create('wallet');
+      await WalletRpc.load();
+      await WalletRpc.sync();
+      dispatch(appActions.setRpcReady(true));
+    } catch (err) {
+      dispatch(
+        appActions.setRpcReady(
+          new Error(translate('global.webview_connection_error')),
+        ),
+      );
+      console.error(err);
+    }
 
     try {
       await DockRpc.init({
@@ -100,7 +109,10 @@ export const appOperations = {
 
       console.log('Dock initialized');
     } catch (err) {
-      console.error('Unable to initialize dock', err);
+      dispatch(
+        appActions.setDockReady(new Error('Unable to initialize dock api')),
+      );
+      console.error(err);
     }
   },
   initialize: () => async (dispatch, getState) => {

@@ -7,12 +7,16 @@ import {
 import rpcServer from './server';
 import {Platform} from 'react-native';
 import {showToast} from 'src/core/toast';
+import {useDispatch} from 'react-redux';
+import {appActions} from 'src/features/app/app-slice';
+import {translate} from 'src/locales';
 
 const WEBVIEW_URI = 'http://localhost:3000';
 const DEV_MODE = false;
 
 export function RNRpcWebView({onReady}) {
   const webViewRef = useRef();
+  const dispatch = useDispatch();
   const baseUrl =
     Platform.OS === 'ios' ? 'app-html' : 'file:///android_asset/app-html';
 
@@ -31,6 +35,13 @@ export function RNRpcWebView({onReady}) {
               baseUrl: baseUrl,
             }
       }
+      onError={() => {
+        dispatch(
+          appActions.setRpcReady(
+            new Error(translate('global.webview_connection_error')),
+          ),
+        );
+      }}
       onMessage={async event => {
         const data = JSON.parse(event.nativeEvent.data);
 

@@ -37,6 +37,64 @@ const TransactionStatusColor = {
   complete: Theme.colors.transactionCompleted,
 };
 
+function TransactionDetailsModal({visible, onClose, transaction}) {
+  const {
+    amount,
+    tokenSymbol = 'DOCK',
+    recipientAddress,
+    feeAmount,
+    fromAddress,
+  } = transaction;
+
+  const dispatch = useDispatch();
+
+  return (
+    <Modal visible={visible} onClose={onClose} modalSize={0.6}>
+      <Stack p={8}>
+        <Typography variant="h1" mb={4}>
+          {translate('confirm_transaction.title')}
+        </Typography>
+        <Stack mb={2}>
+          <Typography mb={1}>
+            {translate('confirm_transaction.send')}
+          </Typography>
+          <AmountDetails amount={amount} symbol={tokenSymbol} />
+        </Stack>
+        <Stack>
+          <Typography mb={1}>{translate('confirm_transaction.to')}</Typography>
+          <Stack direction="row">
+            {<PolkadotIcon address={recipientAddress} />}
+            <Typography ml={2}>{recipientAddress}</Typography>
+          </Stack>
+        </Stack>
+        <Stack mb={2}>
+          <Typography mb={1}>{translate('confirm_transaction.fee')}</Typography>
+          <AmountDetails amount={feeAmount} symbol={tokenSymbol} />
+        </Stack>
+        <Stack mb={2}>
+          <Typography mb={1}>
+            {translate('confirm_transaction.total')}
+          </Typography>
+          <AmountDetails amount={amount} symbol={tokenSymbol} />
+        </Stack>
+        <Button
+          onPress={() => {
+            dispatch(
+              transactionsOperations.sendTransaction({
+                recipientAddress,
+                accountAddress: fromAddress,
+                fee: feeAmount,
+                amount: parseFloat(amount) / 1000000,
+              }),
+            ).finally(onClose);
+          }}>
+          {translate('confirm_transaction.submit')}
+        </Button>
+      </Stack>
+    </Modal>
+  );
+}
+
 function TransactionHistoryItem({transaction}) {
   const [showDetails, setShowDetails] = useState();
   const {
@@ -48,43 +106,11 @@ function TransactionHistoryItem({transaction}) {
 
   return (
     <>
-      <Modal
+      <TransactionDetailsModal
         visible={showDetails}
         onClose={() => setShowDetails(false)}
-        modalSize={0.6}>
-        <Stack p={8}>
-          <Typography variant="h1" mb={4}>
-            {translate('confirm_transaction.title')}
-          </Typography>
-          <Stack mb={2}>
-            <Typography mb={1}>
-              {translate('confirm_transaction.send')}
-            </Typography>
-            <AmountDetails amount={amount} symbol={tokenSymbol} />
-          </Stack>
-          <Stack>
-            <Typography mb={1}>
-              {translate('confirm_transaction.to')}
-            </Typography>
-            <Stack direction="row">
-              {<PolkadotIcon address={recipientAddress} />}
-              <Typography ml={2}>{recipientAddress}</Typography>
-            </Stack>
-          </Stack>
-          <Stack mb={2}>
-            <Typography mb={1}>
-              {translate('confirm_transaction.fee')}
-            </Typography>
-            <AmountDetails amount={feeAmount} symbol={tokenSymbol} />
-          </Stack>
-          <Stack mb={2}>
-            <Typography mb={1}>
-              {translate('confirm_transaction.total')}
-            </Typography>
-            <AmountDetails amount={amount} symbol={tokenSymbol} />
-          </Stack>
-        </Stack>
-      </Modal>
+        transaction={transaction}
+      />
       <Stack
         pb={2}
         borderBottomWidth={1}
@@ -127,9 +153,15 @@ function TransactionHistoryItem({transaction}) {
           <Stack flex={1} />
         </Stack>
         {transaction.status === TransactionStatus.Failed ? (
-          <Button onPress={() => setShowDetails(true)}>
-            {translate('transaction_history.try_again')}
-          </Button>
+          <Stack alignItems="flex-start">
+            <Button
+              colorScheme="dark"
+              variant="solid"
+              size="sm"
+              onPress={() => setShowDetails(true)}>
+              {translate('transaction_history.try_again')}
+            </Button>
+          </Stack>
         ) : null}
       </Stack>
     </>

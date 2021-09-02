@@ -107,13 +107,15 @@ export const transactionsOperations = {
         amount: parsedAmount,
       })
         .then(res => {
-          debugger;
-          dispatch(
-            transactionsActions.updateTransaction({
-              ...transaction,
-              status: TransactionStatus.Complete,
-            }),
-          );
+          const updatedTransation = {
+            ...transaction,
+            status: TransactionStatus.Complete,
+          };
+          dispatch(transactionsActions.updateTransaction(updatedTransation));
+
+          realm.write(() => {
+            realm.create('Transaction', updatedTransation, 'modified');
+          });
 
           showToast({
             type: 'success',

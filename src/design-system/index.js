@@ -1,12 +1,23 @@
+import React from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {AppGlobalHeader} from 'src/App';
 import styled from 'styled-components/native';
 import {Box} from './grid';
 import {Theme} from './theme';
 
-export const ScreenContainer = styled.SafeAreaView`
-  background-color: ${Theme.colors.primaryBackground};
-  flex: 1;
-`;
+export function ScreenContainer({children, hideGlobalHeader}) {
+  return (
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: Theme.colors.primaryBackground,
+      }}>
+      {hideGlobalHeader ? null : <AppGlobalHeader />}
+      {children}
+    </SafeAreaView>
+  );
+}
 
 export const Header = styled.View`
   padding: 22px 6px;
