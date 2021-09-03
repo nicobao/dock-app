@@ -1074,9 +1074,9 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@docknetwork/react-native-sdk@https://github.com/docknetwork/react-native-sdk":
+"@docknetwork/react-native-sdk@https://github.com/docknetwork/react-native-sdk#f0ed63339158cc202eab5c14cc215d073a286334":
   version "0.1.0"
-  resolved "https://github.com/docknetwork/react-native-sdk#d538dcbc7fcaac0e6a889ae2e24b463dbcbb37c2"
+  resolved "https://github.com/docknetwork/react-native-sdk#f0ed63339158cc202eab5c14cc215d073a286334"
 
 "@egjs/hammerjs@^2.0.17":
   version "2.0.17"
