@@ -19,7 +19,7 @@
     "release:internal:android": "cd ./android && fastlane internal"
   },
   "dependencies": {
-    "@docknetwork/react-native-sdk": "https://github.com/docknetwork/react-native-sdk",
+    "@docknetwork/react-native-sdk": "https://github.com/docknetwork/react-native-sdk#f0ed63339158cc202eab5c14cc215d073a286334",
     "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/clipboard": "^1.5.1",
     "@react-native-community/masked-view": "^0.1.11",
