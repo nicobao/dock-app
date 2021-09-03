@@ -6,10 +6,10 @@ import {Modal} from '../../components/Modal';
 import {DockLogoIcon, Typography} from '../../design-system';
 
 export function QRCodeModal({onClose, visible, data, title, description}) {
-  const qrSize = Dimensions.get('window').width * 0.8;
+  const qrSize = Dimensions.get('window').width * 1;
 
   return (
-    <Modal visible={visible} onClose={onClose} modalSize={0.6}>
+    <Modal visible={visible} onClose={onClose} modalSize={0.7}>
       <Stack p={8}>
         <Typography variant="h1">{title}</Typography>
         <Typography>{description}</Typography>
