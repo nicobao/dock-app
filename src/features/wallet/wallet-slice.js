@@ -117,7 +117,7 @@ export const walletOperations = {
       showConfirmationModal({
         type: 'alert',
         title: translate('delete_wallet_confirmation.title'),
-        description: translate('delete_wallet_confirmation.description'),
+        description: translate('delete_wallet_confirmation.message'),
         confirmText: translate('delete_wallet_confirmation.confirm'),
         cancelText: translate('delete_wallet_confirmation.cancel'),
         onConfirm: () => {
@@ -129,7 +129,7 @@ export const walletOperations = {
       showConfirmationModal({
         type: 'info',
         title: translate('backup_wallet_confirmation.title'),
-        description: translate('backup_wallet_confirmation.description'),
+        description: translate('backup_wallet_confirmation.message'),
         confirmText: translate('backup_wallet_confirmation.confirm'),
         cancelText: translate('backup_wallet_confirmation.cancel'),
         onConfirm: () => {
