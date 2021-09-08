@@ -95,6 +95,8 @@ export function UnlockWalletContainer({route}) {
   const [passcode, setPasscode] = useState('');
   const supportBiometry = useSelector(appSelectors.getSupportedBiometryType);
   const walletInfo = useSelector(walletSelectors.getWalletInfo);
+  const biometryEnabled = walletInfo && walletInfo.biometry;
+
   const dispatch = useDispatch();
 
   const handlePasscodeChange = async value => {
@@ -131,12 +133,12 @@ export function UnlockWalletContainer({route}) {
   }, [dispatch, callback]);
 
   useEffect(() => {
-    if (supportBiometry && walletInfo.biometry) {
+    if (supportBiometry && biometryEnabled) {
       handleBiometricUnlock();
     } else {
       setPasscode('');
     }
-  }, [supportBiometry, walletInfo.biometry, handleBiometricUnlock]);
+  }, [supportBiometry, biometryEnabled, handleBiometricUnlock]);
 
   return (
     <UnlockWalletScreen

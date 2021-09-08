@@ -1,6 +1,12 @@
 import React, {useState} from 'react';
 import {InteractionManager, Platform} from 'react-native';
-import {Button as NButton, Text, Box as NBox, Spinner} from 'native-base';
+import {
+  Button as NButton,
+  Text,
+  Box as NBox,
+  Spinner,
+  Stack,
+} from 'native-base';
 import BackIcon from '../assets/icons/back.svg';
 import {navigateBack} from '../core/navigation';
 import {Box} from './grid';
@@ -118,8 +124,10 @@ export function Button(props) {
 
   return (
     <NButton {...otherProps}>
-      {icon && <Box marginRight={15}>{icon}</Box>}
-      {children}
+      <Stack direction="row">
+        {icon && <Box marginRight={15}>{icon}</Box>}
+        <Text>{children}</Text>
+      </Stack>
     </NButton>
   );
 }
