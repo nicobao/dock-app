@@ -70,7 +70,7 @@
   },
   "create_account_backup": {
     "title": "Back up your account",
-    "description": " In the next step you will see an account recovery phrase. This phrase is the only way you can recover access to your account if your phone is lost or stolen.",
+    "description": "In the next step you will see an account recovery phrase. This phrase is the only way you can recover access to your account if your phone is lost or stolen.",
     "agreement": "I understand that if I lose my recovery phrase, I will not be able to access my account",
     "success": "Backup complete!"
   },
