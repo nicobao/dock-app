@@ -13,7 +13,7 @@
   "delete_wallet_confirmation": {
     "title": "Remove Wallet?",
     "message": "This can’t be undone. You’ll lose all accounts and tokens associated with this wallet if you did not back up.",
-    "confirm": "Delete",
+    "confirm": "Remove",
     "cancel": "Cancel"
   },
   "backup_wallet_confirmation": {
@@ -60,7 +60,7 @@
   "settings": {
     "title": "Settings",
     "backup_wallet": "Backup wallet",
-    "delete_wallet": "Delete wallet"
+    "delete_wallet": "Remove wallet"
   },
   "account_setup": {
     "title": "Account Name",
@@ -118,7 +118,7 @@
     "title": "Accounts",
     "send_token": "Send",
     "receive_token": "Receive",
-    "delete_account": "Delete",
+    "delete_account": "Remove",
     "account_details": "Details",
     "empty_accounts": "You don’t have any accounts yet"
   },
