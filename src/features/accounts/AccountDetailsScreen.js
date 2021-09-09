@@ -102,6 +102,7 @@ function TransactionHistoryItem({transaction}) {
     tokenSymbol = 'DOCK',
     recipientAddress,
     feeAmount,
+    sent,
   } = transaction;
 
   return (
@@ -122,7 +123,7 @@ function TransactionHistoryItem({transaction}) {
         <TokenAmount amount={amount}>
           {({tokenAmount, tokenSymbol}) => (
             <Typography variant="h3">
-              Sent {tokenAmount} {tokenSymbol}
+              {translate(`transaction_details.${sent ? 'sent' : 'received'}`)} {tokenAmount} {tokenSymbol}
             </Typography>
           )}
         </TokenAmount>

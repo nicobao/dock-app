@@ -195,6 +195,7 @@
     "title": "Sent",
     "status": "Status",
     "sent": "Sent",
+    "received": "Received",
     "to": "To",
     "date": "Date",
     "nonce": "Nonce",
