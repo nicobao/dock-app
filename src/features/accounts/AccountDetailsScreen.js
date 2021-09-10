@@ -123,7 +123,8 @@ function TransactionHistoryItem({transaction}) {
         <TokenAmount amount={amount}>
           {({tokenAmount, tokenSymbol}) => (
             <Typography variant="h3">
-              {translate(`transaction_details.${sent ? 'sent' : 'received'}`)} {tokenAmount} {tokenSymbol}
+              {translate(`transaction_details.${sent ? 'sent' : 'received'}`)}{' '}
+              {tokenAmount} {tokenSymbol}
             </Typography>
           )}
         </TokenAmount>

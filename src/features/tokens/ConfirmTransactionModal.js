@@ -100,7 +100,10 @@ export const ConfirmTransactionModal = withErrorBoundary(
             <Typography mb={1}>
               {translate('confirm_transaction.total')}
             </Typography>
-            <AmountDetails amount={parseFloat(sentAmount) + parseFloat(fee)} symbol={tokenSymbol} />
+            <AmountDetails
+              amount={parseFloat(sentAmount) + parseFloat(fee)}
+              symbol={tokenSymbol}
+            />
           </Stack>
         </Stack>
         <Button onPress={onConfirm}>

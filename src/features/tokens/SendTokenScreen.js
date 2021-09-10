@@ -243,10 +243,12 @@ export function SendTokenContainer({route}) {
               }));
             }
 
-            return dispatch(transactionsOperations.getFeeAmount({
-              ...form,
-              accountAddress: accountDetails.id,
-            })).then(fee => {
+            return dispatch(
+              transactionsOperations.getFeeAmount({
+                ...form,
+                accountAddress: accountDetails.id,
+              }),
+            ).then(fee => {
               handleChange('fee')(fee);
               setShowConfirmation(true);
             });
