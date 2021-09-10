@@ -102,7 +102,7 @@ export const transactionsOperations = {
       });
 
       ApiRpc.sendTokens({
-        address: recipientAddress,
+        recipientAddress,
         accountAddress,
         amount: parsedAmount,
       })

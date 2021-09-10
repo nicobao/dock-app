@@ -15,6 +15,7 @@ import {
   Button,
   Content,
   Header,
+  LoadingButton,
   ScreenContainer,
   Typography,
 } from '../../design-system';
@@ -58,9 +59,9 @@ export function SendTokenScreen({form, onChange, onScanQRCode, onNext}) {
           </Stack>
         </Box>
         <Stack flex={1} alignContent="flex-end">
-          <Button onPress={onNext} mb={4}>
+          <LoadingButton onPress={onNext} mb={4}>
             {translate('navigation.next')}
-          </Button>
+          </LoadingButton>
         </Stack>
       </Content>
     </ScreenContainer>
@@ -111,9 +112,9 @@ export function EnterTokenAmount({form, onMax, onChange, onBack, onNext}) {
           />
         </Box>
         <Stack flex={1} alignContent="flex-end">
-          <Button onPress={onNext} mb={4}>
+          <LoadingButton onPress={onNext} mb={4}>
             {translate('navigation.next')}
-          </Button>
+          </LoadingButton>
         </Stack>
       </Content>
     </ScreenContainer>
@@ -242,7 +243,12 @@ export function SendTokenContainer({route}) {
               }));
             }
 
-            dispatch(transactionsOperations.getFeeAmount(form)).then(fee => {
+            return dispatch(
+              transactionsOperations.getFeeAmount({
+                ...form,
+                accountAddress: accountDetails.id,
+              }),
+            ).then(fee => {
               handleChange('fee')(fee);
               setShowConfirmation(true);
             });
