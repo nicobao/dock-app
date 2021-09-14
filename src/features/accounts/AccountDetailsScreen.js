@@ -238,7 +238,7 @@ export function AccountDetailsScreen({
           flexDirection="row"
           alignItems="center">
           <NBox width={'80px'}>
-            <BackButton />
+            <BackButton onPress={() => navigate(Routes.ACCOUNTS)} />
           </NBox>
           <NBox
             flex={1}
