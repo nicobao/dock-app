@@ -5,7 +5,7 @@ import Share from 'react-native-share';
 import {useDispatch, useSelector} from 'react-redux';
 import {NumericKeyboard} from 'src/components/NumericKeyboard';
 import {PolkadotIcon} from 'src/components/PolkadotIcon';
-import {navigate} from 'src/core/navigation';
+import {navigate, navigateBack} from 'src/core/navigation';
 import {Routes} from 'src/core/routes';
 import {showToast} from 'src/core/toast';
 import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
@@ -169,6 +169,7 @@ export function SendTokenContainer({route}) {
         onScanQRCode={() => {
           navigate(Routes.APP_QR_SCANNER, {
             onData: data => {
+              navigateBack();
               handleChange('recipientAddress')(data);
             },
           });
