@@ -14,11 +14,11 @@ import {
 } from './design-system';
 import {setToast} from './core/toast';
 import {ConfirmationModal} from '../src/components/ConfirmationModal';
-import * as Sentry from '@sentry/react-native';
+import { init as sentryInit} from '@sentry/react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {translate} from './locales';
 
-Sentry.init({
+sentryInit({
   dsn: SENTRY_DSN,
 });
 

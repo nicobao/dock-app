@@ -1,0 +1,44 @@
+name: Android Release
+on:
+  push:
+    branches:
+      - master
+jobs:
+  internal_release_android:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '2.x'
+
+      - name: Install and lint
+        run: |
+          echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+          yarn install
+          yarn postinstall
+          rm -rf ./certs
+          git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/dock-app-certs.git" ./certs
+          mv ./certs/google-play.json ./
+          rm -rf ./android/gradle.properties
+          cp -rf ./certs/gradle.properties ./android/gradle.properties
+          cp -rf ./certs/gradle.properties ./android/gradle.properties
+          cp -rf ./certs/.env ./
+          rm -rf /tmp/google-play-cert
+          cp -rf ./certs/google-play-cert /tmp/google-play-cert
+
+      - name: Install Fastlane
+        run: gem install fastlane
+
+      - name: Release
+        run: |
+          sudo yarn release:internal:android

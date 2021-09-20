@@ -10,7 +10,7 @@ export function Modal({
   modalSize = 0.42,
   visible,
 }) {
-  const screenHeight = Dimensions.get('screen').height;
+  const screenHeight = Dimensions.get('window').height;
 
   return (
     <RNModal

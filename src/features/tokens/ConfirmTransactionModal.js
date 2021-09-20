@@ -64,7 +64,7 @@ export const ConfirmTransactionModal = withErrorBoundary(
     recipientAddress,
   }) => {
     return (
-      <Modal visible={visible} onClose={onClose} modalSize={0.6}>
+      <Modal visible={visible} onClose={onClose} modalSize={0.75}>
         <Stack p={8}>
           <Typography variant="h1" mb={4}>
             {translate('confirm_transaction.title')}
@@ -106,9 +106,11 @@ export const ConfirmTransactionModal = withErrorBoundary(
             />
           </Stack>
         </Stack>
-        <Button onPress={onConfirm}>
-          {translate('confirm_transaction.submit')}
-        </Button>
+        <Stack p={3}>
+          <Button onPress={onConfirm}>
+            {translate('confirm_transaction.submit')}
+          </Button>
+        </Stack>
       </Modal>
     );
   },
