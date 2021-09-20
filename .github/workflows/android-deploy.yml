@@ -31,6 +31,8 @@ jobs:
           mv ./certs/google-play.json ./
           rm -rf ./android/gradle.properties
           cp -rf ./certs/gradle.properties ./android/gradle.properties
+          cp -rf ./certs/gradle.properties ./android/gradle.properties
+          cp -rf ./certs/.env ./
           rm -rf /tmp/google-play-cert
           cp -rf ./certs/google-play-cert /tmp/google-play-cert
 

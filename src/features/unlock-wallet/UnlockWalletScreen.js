@@ -134,8 +134,10 @@ export function UnlockWalletContainer({route}) {
       setPasscode('');
     }
   }, [dispatch, callback]);
-  
+
   const handleLogoPress = () => {
+    console.log(logoPressCount);
+
     if (logoPressCount === 5) {
       Sentry.captureException(new Error('Testing sentry'));
       return;
