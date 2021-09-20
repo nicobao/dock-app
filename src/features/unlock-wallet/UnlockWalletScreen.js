@@ -16,6 +16,7 @@ import {appSelectors} from '../app/app-slice';
 import {BuildIdentifier} from '../app/BuildIdentifier';
 // import {NumericKeyboard} from '../wallet/CreatePasscodeScreen';
 import {walletOperations, walletSelectors} from '../wallet/wallet-slice';
+import * as Sentry from '@sentry/react-native';
 
 const Circle = styled.View`
   width: 20px;
@@ -50,10 +51,11 @@ export function UnlockWalletScreen({
   digits = DIGITS,
   filled = 0,
   biometry = false,
+  onLogoPress,
 }) {
   return (
     <ScreenContainer testID="unlockWalletScreen">
-      <Box justifyContent="center" row>
+      <Box justifyContent="center" row onPress={onLogoPress}>
         <Image
           source={SplashLogo}
           style={{
@@ -96,6 +98,7 @@ export function UnlockWalletContainer({route}) {
   const supportBiometry = useSelector(appSelectors.getSupportedBiometryType);
   const walletInfo = useSelector(walletSelectors.getWalletInfo);
   const biometryEnabled = walletInfo && walletInfo.biometry;
+  const [logoPressCount, setLogoPressCount] = useState(1);
 
   const dispatch = useDispatch();
 
@@ -131,6 +134,15 @@ export function UnlockWalletContainer({route}) {
       setPasscode('');
     }
   }, [dispatch, callback]);
+  
+  const handleLogoPress = () => {
+    if (logoPressCount === 5) {
+      Sentry.captureException(new Error('Testing sentry'));
+      return;
+    }
+
+    setLogoPressCount(v => v + 1);
+  }
 
   useEffect(() => {
     if (supportBiometry && biometryEnabled) {
@@ -148,6 +160,7 @@ export function UnlockWalletContainer({route}) {
       onLoginWithBiometric={handleBiometricUnlock}
       biometry={supportBiometry}
       passcode={passcode}
+      onLogoPress={handleLogoPress}
     />
   );
 }
