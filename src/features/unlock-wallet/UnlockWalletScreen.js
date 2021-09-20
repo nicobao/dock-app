@@ -144,7 +144,7 @@ export function UnlockWalletContainer({route}) {
     }
 
     setLogoPressCount(v => v + 1);
-  }
+  };
 
   useEffect(() => {
     if (supportBiometry && biometryEnabled) {
