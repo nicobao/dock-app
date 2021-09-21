@@ -1,5 +1,8 @@
 name: TestFlight Release (iOS)
-on: [push]
+on:
+  push:
+    branches:
+      - master
 jobs:
   internal_release_ios:
     runs-on: macOS-latest
