@@ -9,9 +9,11 @@ export async function initRealm() {
   realm = await Realm.open({
     path: 'dock',
     schema: [TokenPrice, Transaction, Account],
-    schemaVersion: 1,
-    // TODO: Remove before internal beta
-    deleteRealmIfMigrationNeeded: true,
+    schemaVersion: 2,
+    deleteRealmIfMigrationNeeded: false,
+    migration: () => {
+      // No migration required so far
+    }
   });
 }
 
