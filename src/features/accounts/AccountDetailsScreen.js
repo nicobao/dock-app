@@ -106,8 +106,6 @@ function TransactionHistoryItem({transaction}) {
     sent,
   } = transaction;
 
-  console.log('transaction', transaction);
-
   return (
     <>
       <TransactionDetailsModal
