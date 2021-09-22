@@ -13,7 +13,7 @@ export async function initRealm() {
     deleteRealmIfMigrationNeeded: false,
     migration: () => {
       // No migration required so far
-    }
+    },
   });
 }
 

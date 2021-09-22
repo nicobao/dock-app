@@ -30,8 +30,8 @@ jobs:
         run: |
           xcodebuild -version
           yarn install
-          # git clone "${{ secrets.CERTS_REPO_URL }}" ./certs
-          # cp -rf ./certs/.env ./
+          git clone "${{ secrets.CERTS_REPO_URL }}" ./certs
+          cp -rf ./certs/.env ./
           cd ./ios
           pod install
           fastlane setup --verbose

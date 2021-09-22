@@ -58,7 +58,7 @@ export const transactionsOperations = {
     const items = realm.objects('Transaction').toJSON();
     dispatch(transactionsActions.setTransactions(items));
   },
-  updateTransaction: (transaction) => async (dispatch, getState) => {
+  updateTransaction: transaction => async (dispatch, getState) => {
     const realm = getRealm();
 
     realm.write(() => {
@@ -67,7 +67,7 @@ export const transactionsOperations = {
 
     dispatch(transactionsActions.updateTransaction(transaction));
   },
-  
+
   getFeeAmount:
     ({recipientAddress, accountAddress, amount}) =>
     async (dispatch, getState) => {
@@ -79,8 +79,8 @@ export const transactionsOperations = {
     },
 
   sendTransaction:
-    ({recipientAddress, accountAddress, amount, fee, prevTransaction }) =>
-    async (dispatch, getState) => {      
+    ({recipientAddress, accountAddress, amount, fee, prevTransaction}) =>
+    async (dispatch, getState) => {
       showToast({
         message: translate('send_token.transaction_sent'),
       });
@@ -132,11 +132,16 @@ export const transactionsOperations = {
             message: translate('confirm_transaction.transaction_complete'),
           });
 
-          if (prevTransaction && prevTransaction.status === TransactionStatus.Failed) {
-            dispatch(transactionsOperations.updateTransaction({
-              ...prevTransaction,
-              retrySucceed: true,
-            }));
+          if (
+            prevTransaction &&
+            prevTransaction.status === TransactionStatus.Failed
+          ) {
+            dispatch(
+              transactionsOperations.updateTransaction({
+                ...prevTransaction,
+                retrySucceed: true,
+              }),
+            );
           }
         })
         .catch(err => {

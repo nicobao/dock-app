@@ -86,9 +86,8 @@ function TransactionDetailsModal({visible, onClose, transaction}) {
                 fee: feeAmount,
                 amount: parseFloat(amount) / 1000000,
                 prevTransaction: transaction,
-              })
-            )
-            .finally(onClose);
+              }),
+            ).finally(onClose);
           }}>
           {translate('confirm_transaction.submit')}
         </Button>
@@ -106,6 +105,8 @@ function TransactionHistoryItem({transaction}) {
     feeAmount,
     sent,
   } = transaction;
+
+  console.log('transaction', transaction);
 
   return (
     <>
@@ -156,7 +157,8 @@ function TransactionHistoryItem({transaction}) {
           </Stack>
           <Stack flex={1} />
         </Stack>
-        {transaction.status === TransactionStatus.Failed && !transaction.retrySucceed ? (
+        {transaction.status === TransactionStatus.Failed &&
+        !transaction.retrySucceed ? (
           <Stack alignItems="flex-start">
             <Button
               colorScheme="dark"
