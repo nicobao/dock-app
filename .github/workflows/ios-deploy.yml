@@ -31,6 +31,8 @@ jobs:
           xcodebuild -version
           yarn install
           git clone "${{ secrets.CERTS_REPO_URL }}" ./certs
+          # Pull env variables from certs repo
+          # It will inject sentry token in the JS thread
           cp -rf ./certs/.env ./
           cd ./ios
           pod install
