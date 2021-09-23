@@ -19,6 +19,10 @@ export const Transaction = {
     amount: 'string',
     feeAmount: 'string',
     status: 'string',
+    retrySucceed: {
+      type: 'bool',
+      default: false,
+    },
   },
   primaryKey: 'id',
 };

@@ -85,6 +85,7 @@ function TransactionDetailsModal({visible, onClose, transaction}) {
                 accountAddress: fromAddress,
                 fee: feeAmount,
                 amount: parseFloat(amount) / 1000000,
+                prevTransaction: transaction,
               }),
             ).finally(onClose);
           }}>
@@ -154,7 +155,8 @@ function TransactionHistoryItem({transaction}) {
           </Stack>
           <Stack flex={1} />
         </Stack>
-        {transaction.status === TransactionStatus.Failed ? (
+        {transaction.status === TransactionStatus.Failed &&
+        !transaction.retrySucceed ? (
           <Stack alignItems="flex-start">
             <Button
               colorScheme="dark"
