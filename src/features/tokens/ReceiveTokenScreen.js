@@ -49,16 +49,17 @@ export function ReceiveTokenScreen({
           alignItems="center"
           borderRadius={12}
           my={7}>
-          <Stack>
+          <Stack p={2} bg={Theme.colors.qrCodeBackground}>
             <QRCode
               value={address}
               size={qrSize}
-              color={Theme.colors.secondaryBackground}
             />
           </Stack>
-          <Stack direction="row" alignItems="flex-start" flex={1}>
-            <Box pr={2}>{accountIcon}</Box>
-            <Stack direction="column" alignItems="flex-start">
+          <Stack direction="row" alignItems="center" flex={1} pt={5}>
+            <Box pr={2}>
+              {accountIcon}
+            </Box>
+            <Stack direction="column" alignItems="flex-start" flex={1}>
               <Typography variant="h3">{accountName}</Typography>
               <Typography>{formatAddress(address)}</Typography>
             </Stack>
@@ -99,7 +100,7 @@ export function ReceiveTokenContainer({route}) {
       onShareAddress={handleShareAddress}
       address={address}
       accountName={accountDetails.name}
-      accountIcon={<PolkadotIcon address={address} />}
+      accountIcon={<PolkadotIcon address={address} size={32} />}
     />
   );
 }
