@@ -10,13 +10,18 @@ import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {walletActions} from '../wallet/wallet-slice';
 import {initRealm} from 'src/core/realm';
-import {SUBSTRATE_URL} from '@env';
+import {SUBSTRATE_URL, NETWORK} from '@env';
 import {translate} from 'src/locales';
 
 export const BiometryType = {
   FaceId: Keychain.BIOMETRY_TYPE.FACE_ID,
   Fingerprint: Keychain.BIOMETRY_TYPE.FINGERPRINT,
 };
+
+const TESTNET_ADDR_PREFIX = 21;
+const MAINNET_ADDR_PREFIX = 22;
+
+const addressPrefix = NETWORK === 'testnet' ? TESTNET_ADDR_PREFIX : MAINNET_ADDR_PREFIX;
 
 const initialState = {
   loading: true,
@@ -86,7 +91,9 @@ export const appOperations = {
     console.log('Rpc ready');
     try {
       await UtilCryptoRpc.cryptoWaitReady();
-      await KeyringRpc.initialize();
+      await KeyringRpc.initialize({
+        ss58Format: addressPrefix,
+      });
       await WalletRpc.create('wallet');
       await WalletRpc.load();
       await WalletRpc.sync();
