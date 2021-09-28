@@ -177,6 +177,15 @@ export function SendTokenContainer({route}) {
         onShareAddress={handleShareAddress}
         onChange={handleChange}
         onNext={async () => {
+          if (form.recipientAddress === accountDetails.id) {
+            return setForm(v => ({
+              ...v,
+              _errors: {
+                recipientAddress: translate('send_token.same_address'),
+              },
+            }));
+          }
+
           const addressValid = await UtilCryptoRpc.isAddressValid(
             form.recipientAddress,
           );

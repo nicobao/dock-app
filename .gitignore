@@ -8,6 +8,7 @@ google-play.json
 android/app/src/main/assets/app-html/bundle.js
 assets/app-html/bundle.js
 build/
+.env
 *.pbxuser
 !default.pbxuser
 *.mode1v3

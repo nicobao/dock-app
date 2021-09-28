@@ -90,7 +90,7 @@ export function QRScanScreen({route}) {
           style={{flex: 1}}
           reactivate={true}
           reactivateTimeout={10000}
-          flashMode={RNCamera.Constants.FlashMode.torch}
+          flashMode={RNCamera.Constants.FlashMode.off}
           cameraStyle={{height: Dimensions.get('window').height}}
           topViewStyle={{
             height: 0,

@@ -31,6 +31,7 @@ export const Theme = {
     transactionCompleted: '#6EE7B7',
     transactionFailed: '#F87171',
     transactionPending: '#FBBF24',
+    qrCodeBackground: '#fff',
   },
   screen: {
     backgroundColor: '#18181B',
