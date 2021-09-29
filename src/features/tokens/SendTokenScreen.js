@@ -261,14 +261,12 @@ export function SendTokenContainer({route}) {
               }),
             ).then(fee => {
               const accountBalance = formatDockAmount(accountDetails.balance);
-              const isAllTokens = accountBalance === form.amount;
 
-              if (isAllTokens) {
+              if (accountBalance === form.amount) {
                 const newAmount = formatDockAmount(getPlainDockAmount(form.amount).minus(fee));
                 handleChange('amount')(newAmount);
               }
-              
-              
+
               handleChange('fee')(fee);
               setShowConfirmation(true);
             });
