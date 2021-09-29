@@ -9,6 +9,7 @@ import {navigate, navigateBack} from 'src/core/navigation';
 import {Routes} from 'src/core/routes';
 import {showToast} from 'src/core/toast';
 import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
+import BigNumber from 'bignumber.js';
 
 import {
   BackButton,
@@ -23,7 +24,7 @@ import {translate} from '../../locales';
 import {accountSelectors} from '../accounts/account-slice';
 import {transactionsOperations} from '../transactions/transactions-slice';
 import {ConfirmTransactionModal, TokenAmount} from './ConfirmTransactionModal';
-import {formatCurrency, formatDockAmount} from 'src/core/format-utils';
+import {formatCurrency, formatDockAmount, getPlainDockAmount} from 'src/core/format-utils';
 
 export function SendTokenScreen({form, onChange, onScanQRCode, onNext}) {
   return (
@@ -259,6 +260,15 @@ export function SendTokenContainer({route}) {
                 accountAddress: accountDetails.id,
               }),
             ).then(fee => {
+              const accountBalance = formatDockAmount(accountDetails.balance);
+              const isAllTokens = accountBalance === form.amount;
+
+              if (isAllTokens) {
+                const newAmount = formatDockAmount(getPlainDockAmount(form.amount).minus(fee));
+                handleChange('amount')(newAmount);
+              }
+              
+              
               handleChange('fee')(fee);
               setShowConfirmation(true);
             });

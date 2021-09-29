@@ -18,9 +18,13 @@ import {init as sentryInit} from '@sentry/react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {translate} from './locales';
 
-sentryInit({
-  dsn: SENTRY_DSN,
-});
+try {
+  sentryInit({
+    dsn: SENTRY_DSN,
+  });
+} catch(err) {
+  throw err;
+}
 
 function ConnectionStatus({status, loadingText, errorText}) {
   if (!status && loadingText) {
