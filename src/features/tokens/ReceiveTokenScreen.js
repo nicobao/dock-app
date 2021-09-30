@@ -50,15 +50,10 @@ export function ReceiveTokenScreen({
           borderRadius={12}
           my={7}>
           <Stack p={2} bg={Theme.colors.qrCodeBackground}>
-            <QRCode
-              value={address}
-              size={qrSize}
-            />
+            <QRCode value={address} size={qrSize} />
           </Stack>
           <Stack direction="row" alignItems="center" flex={1} pt={5}>
-            <Box pr={2}>
-              {accountIcon}
-            </Box>
+            <Box pr={2}>{accountIcon}</Box>
             <Stack direction="column" alignItems="flex-start" flex={1}>
               <Typography variant="h3">{accountName}</Typography>
               <Typography>{formatAddress(address)}</Typography>

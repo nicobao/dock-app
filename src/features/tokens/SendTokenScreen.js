@@ -24,7 +24,12 @@ import {translate} from '../../locales';
 import {accountSelectors} from '../accounts/account-slice';
 import {transactionsOperations} from '../transactions/transactions-slice';
 import {ConfirmTransactionModal, TokenAmount} from './ConfirmTransactionModal';
-import {DOCK_TOKEN_UNIT, formatCurrency, formatDockAmount, getPlainDockAmount} from 'src/core/format-utils';
+import {
+  DOCK_TOKEN_UNIT,
+  formatCurrency,
+  formatDockAmount,
+  getPlainDockAmount,
+} from 'src/core/format-utils';
 
 export function SendTokenScreen({form, onChange, onScanQRCode, onNext}) {
   return (
@@ -155,12 +160,17 @@ export function SendTokenContainer({route}) {
       message: address,
     });
 
-  const handleChange = key => evt => {
+  const handleChange = key => evt =>
+    updateForm({
+      sendMax: false,
+      [key]: evt,
+    });
+
+  const updateForm = newValues =>
     setForm(v => ({
       ...v,
-      [key]: evt,
+      ...newValues,
     }));
-  };
 
   if (step === Steps.sendTo) {
     return (
@@ -169,9 +179,11 @@ export function SendTokenContainer({route}) {
         onCopyAddress={handleCopyAddress}
         onScanQRCode={() => {
           navigate(Routes.APP_QR_SCANNER, {
-            onData: data => {
+            onData: recipientAddress => {
               navigateBack();
-              handleChange('recipientAddress')(data);
+              updateForm({
+                recipientAddress,
+              });
             },
           });
         }}
@@ -226,6 +238,7 @@ export function SendTokenContainer({route}) {
               });
             });
           }}
+          amountMessage={form.amountMessage}
           visible={showConfirmation}
           accountIcon={<PolkadotIcon address={form.recipientAddress} />}
           tokenSymbol={form.tokenSymbol}
@@ -261,14 +274,32 @@ export function SendTokenContainer({route}) {
               }),
             ).then(fee => {
               const accountBalance = formatDockAmount(accountDetails.balance);
-              const amountAndFees = formatDockAmount(getPlainDockAmount(form.amount).plus(fee));
+              const amountAndFees = formatDockAmount(
+                getPlainDockAmount(form.amount).plus(fee),
+              );
+              const formUpdates = {
+                amountMessage: null,
+              };
 
               if (amountAndFees > accountBalance) {
-                const newAmount = formatDockAmount(BigNumber(accountDetails.balance).minus(fee));
-                handleChange('amount')(newAmount);
+                const newAmount = formatDockAmount(
+                  BigNumber(accountDetails.balance).minus(fee),
+                );
+
+                formUpdates.amount = newAmount;
+
+                if (!form.sendMax) {
+                  formUpdates.amountMessage = translate(
+                    'send_token.amount_minus_fees_msg',
+                  );
+                }
               }
 
-              handleChange('fee')(fee);
+              updateForm({
+                ...formUpdates,
+                fee,
+              });
+
               setShowConfirmation(true);
             });
           }}
@@ -276,7 +307,10 @@ export function SendTokenContainer({route}) {
             setStep(Steps.sendTo);
           }}
           onMax={() => {
-            handleChange('amount')(formatDockAmount(accountDetails.balance));
+            updateForm({
+              amount: formatDockAmount(accountDetails.balance),
+              sendMax: true,
+            });
           }}
           tokenSymbol="DOCK"
         />

@@ -21,7 +21,8 @@ export const BiometryType = {
 const TESTNET_ADDR_PREFIX = 21;
 const MAINNET_ADDR_PREFIX = 22;
 
-const addressPrefix = NETWORK === 'testnet' ? TESTNET_ADDR_PREFIX : MAINNET_ADDR_PREFIX;
+const addressPrefix =
+  NETWORK === 'testnet' ? TESTNET_ADDR_PREFIX : MAINNET_ADDR_PREFIX;
 
 const initialState = {
   loading: true,

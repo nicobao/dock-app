@@ -7,6 +7,7 @@ import {
   OptionList,
   BackIcon,
   Button,
+  Theme,
 } from 'src/design-system';
 import {Modal} from '../../components/Modal';
 import {translate} from 'src/locales';
@@ -62,6 +63,7 @@ export const ConfirmTransactionModal = withErrorBoundary(
     sentAmount,
     fee,
     recipientAddress,
+    amountMessage,
   }) => {
     return (
       <Modal visible={visible} onClose={onClose} modalSize={0.75}>
@@ -74,6 +76,16 @@ export const ConfirmTransactionModal = withErrorBoundary(
               {translate('confirm_transaction.send')}
             </Typography>
             <AmountDetails amount={sentAmount} symbol={tokenSymbol} />
+            {amountMessage ? (
+              <Stack
+                bg={Theme.colors.warningBackground}
+                mt={2}
+                px={2}
+                py={1}
+                borderRadius={Theme.borderRadius}>
+                <Typography variant="warning">{amountMessage}</Typography>
+              </Stack>
+            ) : null}
           </Stack>
           <Stack mb={8}>
             <Box>
