@@ -1,5 +1,7 @@
 import BigNumber from 'bignumber.js';
 
+export const DOCK_TOKEN_UNIT = 1000000;
+
 export function formatCurrency(value, currency = 'USD') {
   var formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -24,11 +26,11 @@ export function formatAddress(value, size = 19) {
 }
 
 export function formatDockAmount(value) {
-  return BigNumber(value).dividedBy(1000000).toNumber();
+  return BigNumber(value).dividedBy(DOCK_TOKEN_UNIT).toNumber();
 }
 
 export function getPlainDockAmount(value) {
-  return BigNumber(value).times(1000000);
+  return BigNumber(value).times(DOCK_TOKEN_UNIT);
 }
 
 const dateFormat = new Intl.DateTimeFormat(['en-US'], {

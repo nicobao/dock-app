@@ -24,7 +24,7 @@ import {translate} from '../../locales';
 import {accountSelectors} from '../accounts/account-slice';
 import {transactionsOperations} from '../transactions/transactions-slice';
 import {ConfirmTransactionModal, TokenAmount} from './ConfirmTransactionModal';
-import {formatCurrency, formatDockAmount, getPlainDockAmount} from 'src/core/format-utils';
+import {DOCK_TOKEN_UNIT, formatCurrency, formatDockAmount, getPlainDockAmount} from 'src/core/format-utils';
 
 export function SendTokenScreen({form, onChange, onScanQRCode, onNext}) {
   return (
@@ -85,7 +85,7 @@ export function EnterTokenAmount({form, onMax, onChange, onBack, onNext}) {
             <Typography variant="h1">{form.tokenSymbol}</Typography>
           </Stack>
           <TokenAmount
-            amount={parseInt(form.amount || 0) * 1000000}
+            amount={parseInt(form.amount || 0) * DOCK_TOKEN_UNIT}
             symbol={form.tokenSymbol}>
             {({fiatSymbol, fiatAmount}) => (
               <Stack direction="row" justifyContent="center">
@@ -229,7 +229,7 @@ export function SendTokenContainer({route}) {
           visible={showConfirmation}
           accountIcon={<PolkadotIcon address={form.recipientAddress} />}
           tokenSymbol={form.tokenSymbol}
-          sentAmount={parseFloat(form.amount) * 1000000}
+          sentAmount={parseFloat(form.amount) * DOCK_TOKEN_UNIT}
           fee={form.fee}
           recipientAddress={form.recipientAddress}
         />
