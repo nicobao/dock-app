@@ -261,9 +261,10 @@ export function SendTokenContainer({route}) {
               }),
             ).then(fee => {
               const accountBalance = formatDockAmount(accountDetails.balance);
+              const amountAndFees = formatDockAmount(getPlainDockAmount(form.amount).plus(fee));
 
-              if (accountBalance === form.amount) {
-                const newAmount = formatDockAmount(getPlainDockAmount(form.amount).minus(fee));
+              if (amountAndFees > accountBalance) {
+                const newAmount = formatDockAmount(BigNumber(accountDetails.balance).minus(fee));
                 handleChange('amount')(newAmount);
               }
 
