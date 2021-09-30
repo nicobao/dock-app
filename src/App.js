@@ -23,7 +23,7 @@ try {
     dsn: SENTRY_DSN,
   });
 } catch(err) {
-  throw err;
+  console.error(err);
 }
 
 function ConnectionStatus({status, loadingText, errorText}) {
