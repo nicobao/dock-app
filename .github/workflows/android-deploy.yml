@@ -31,7 +31,6 @@ jobs:
           mv ./certs/google-play.json ./
           rm -rf ./android/gradle.properties
           cp -rf ./certs/gradle.properties ./android/gradle.properties
-          cp -rf ./certs/gradle.properties ./android/gradle.properties
           # Pull env variables from certs repo
           # It will inject sentry token in the JS thread
           cp -rf ./certs/.env ./
