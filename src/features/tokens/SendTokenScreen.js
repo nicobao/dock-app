@@ -9,6 +9,7 @@ import {navigate, navigateBack} from 'src/core/navigation';
 import {Routes} from 'src/core/routes';
 import {showToast} from 'src/core/toast';
 import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
+import BigNumber from 'bignumber.js';
 
 import {
   BackButton,
@@ -23,7 +24,12 @@ import {translate} from '../../locales';
 import {accountSelectors} from '../accounts/account-slice';
 import {transactionsOperations} from '../transactions/transactions-slice';
 import {ConfirmTransactionModal, TokenAmount} from './ConfirmTransactionModal';
-import {formatCurrency, formatDockAmount} from 'src/core/format-utils';
+import {
+  DOCK_TOKEN_UNIT,
+  formatCurrency,
+  formatDockAmount,
+  getPlainDockAmount,
+} from 'src/core/format-utils';
 
 export function SendTokenScreen({form, onChange, onScanQRCode, onNext}) {
   return (
@@ -84,7 +90,7 @@ export function EnterTokenAmount({form, onMax, onChange, onBack, onNext}) {
             <Typography variant="h1">{form.tokenSymbol}</Typography>
           </Stack>
           <TokenAmount
-            amount={parseInt(form.amount || 0) * 1000000}
+            amount={parseInt(form.amount || 0) * DOCK_TOKEN_UNIT}
             symbol={form.tokenSymbol}>
             {({fiatSymbol, fiatAmount}) => (
               <Stack direction="row" justifyContent="center">
@@ -154,12 +160,17 @@ export function SendTokenContainer({route}) {
       message: address,
     });
 
-  const handleChange = key => evt => {
+  const handleChange = key => evt =>
+    updateForm({
+      sendMax: false,
+      [key]: evt,
+    });
+
+  const updateForm = newValues =>
     setForm(v => ({
       ...v,
-      [key]: evt,
+      ...newValues,
     }));
-  };
 
   if (step === Steps.sendTo) {
     return (
@@ -168,9 +179,11 @@ export function SendTokenContainer({route}) {
         onCopyAddress={handleCopyAddress}
         onScanQRCode={() => {
           navigate(Routes.APP_QR_SCANNER, {
-            onData: data => {
+            onData: recipientAddress => {
               navigateBack();
-              handleChange('recipientAddress')(data);
+              updateForm({
+                recipientAddress,
+              });
             },
           });
         }}
@@ -225,10 +238,11 @@ export function SendTokenContainer({route}) {
               });
             });
           }}
+          amountMessage={form.amountMessage}
           visible={showConfirmation}
           accountIcon={<PolkadotIcon address={form.recipientAddress} />}
           tokenSymbol={form.tokenSymbol}
-          sentAmount={parseFloat(form.amount) * 1000000}
+          sentAmount={parseFloat(form.amount) * DOCK_TOKEN_UNIT}
           fee={form.fee}
           recipientAddress={form.recipientAddress}
         />
@@ -259,7 +273,33 @@ export function SendTokenContainer({route}) {
                 accountAddress: accountDetails.id,
               }),
             ).then(fee => {
-              handleChange('fee')(fee);
+              const accountBalance = formatDockAmount(accountDetails.balance);
+              const amountAndFees = formatDockAmount(
+                getPlainDockAmount(form.amount).plus(fee),
+              );
+              const formUpdates = {
+                amountMessage: null,
+              };
+
+              if (amountAndFees > accountBalance) {
+                const newAmount = formatDockAmount(
+                  BigNumber(accountDetails.balance).minus(fee),
+                );
+
+                formUpdates.amount = newAmount;
+
+                if (!form.sendMax) {
+                  formUpdates.amountMessage = translate(
+                    'send_token.amount_minus_fees_msg',
+                  );
+                }
+              }
+
+              updateForm({
+                ...formUpdates,
+                fee,
+              });
+
               setShowConfirmation(true);
             });
           }}
@@ -267,7 +307,10 @@ export function SendTokenContainer({route}) {
             setStep(Steps.sendTo);
           }}
           onMax={() => {
-            handleChange('amount')(formatDockAmount(accountDetails.balance));
+            updateForm({
+              amount: formatDockAmount(accountDetails.balance),
+              sendMax: true,
+            });
           }}
           tokenSymbol="DOCK"
         />

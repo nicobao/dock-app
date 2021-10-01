@@ -170,7 +170,8 @@
     "insufficient_funds": "Insufficient funds",
     "invalid_amount": "The amount is not valid",
     "invalid_address": "Invalid recipient address",
-    "same_address": "You can't send tokens to the same address"
+    "same_address": "You can't send tokens to the same address",
+    "amount_minus_fees_msg": "Amount updated to maximum available minus fees"
   },
   "confirm_transaction": {
     "title": "Confirm",

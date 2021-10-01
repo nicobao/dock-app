@@ -3,7 +3,11 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {RefreshControl} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Modal} from 'src/components/Modal';
-import {formatCurrency, formatDate} from 'src/core/format-utils';
+import {
+  DOCK_TOKEN_UNIT,
+  formatCurrency,
+  formatDate,
+} from 'src/core/format-utils';
 import {PolkadotIcon} from '../../components/PolkadotIcon';
 import {navigate, navigateBack} from '../../core/navigation';
 import {Routes} from '../../core/routes';
@@ -84,7 +88,7 @@ function TransactionDetailsModal({visible, onClose, transaction}) {
                 recipientAddress,
                 accountAddress: fromAddress,
                 fee: feeAmount,
-                amount: parseFloat(amount) / 1000000,
+                amount: parseFloat(amount) / DOCK_TOKEN_UNIT,
                 prevTransaction: transaction,
               }),
             ).finally(onClose);

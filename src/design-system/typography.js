@@ -62,6 +62,9 @@ const variantsMap = {
     fontSize: 14,
     color: Theme.colors.description,
   },
+  warning: {
+    color: Theme.colors.warningText,
+  },
 };
 
 export const Typography: ComponentType<TypographyProps> = styled(Text)`

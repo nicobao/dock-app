@@ -6,6 +6,7 @@ import uuid from 'uuid';
 import {navigateBack} from '../../core/navigation';
 import {getRealm} from 'src/core/realm';
 import {showToast} from 'src/core/toast';
+import {DOCK_TOKEN_UNIT} from 'src/core/format-utils';
 
 export const TransactionStatus = {
   InProgress: 'pending',
@@ -85,7 +86,7 @@ export const transactionsOperations = {
         message: translate('send_token.transaction_sent'),
       });
 
-      const parsedAmount = parseFloat(amount) * 1000000;
+      const parsedAmount = parseFloat(amount) * DOCK_TOKEN_UNIT;
 
       const internalId = uuid();
       const transaction = {
