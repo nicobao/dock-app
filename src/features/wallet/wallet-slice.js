@@ -143,7 +143,7 @@ export const walletOperations = {
         onCancel: confirmRemoval,
       });
 
-    navigate(Routes.UNLOCK_WALLET, {
+    navigate(Routes.CONFIRM_WALLET_ACCESS, {
       callback() {
         navigate(Routes.APP_SETTINGS);
         confirmWalletBackup();
