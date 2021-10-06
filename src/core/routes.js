@@ -9,6 +9,7 @@ export const Routes = {
   CREATE_ACCOUNT_MNEMONIC: 'createAccount/mnemonic',
   CREATE_ACCOUNT_SETUP: 'createAccount/setup',
   CREATE_ACCOUNT_VERIFY_PHRASE: 'createAccount/',
+  CONFIRM_WALLET_ACCESS: 'confirmWalletAccess',
   ACCOUNTS: 'accounts',
   ACCOUNT_DETAILS: 'account/details',
   ACCOUNT_IMPORT_FROM_MNEMONIC: 'account/importFromMnemonic',

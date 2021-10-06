@@ -275,6 +275,13 @@ function AppStackScreen() {
           gestureEnabled: false,
         }}
       />
+      <AppStack.Screen
+        name={Routes.CONFIRM_WALLET_ACCESS}
+        component={UnlockWalletContainer}
+        options={{
+          ...screenOptions,
+        }}
+      />
     </AppStack.Navigator>
   );
 }

@@ -181,10 +181,12 @@ export const accountOperations = {
   removeAccount: (account: any) => async (dispatch, getState) => {
     await WalletRpc.remove(account.id);
 
-    const realm = getRealm();    
+    const realm = getRealm();
 
     realm.write(() => {
-      const cachedAccount = realm.objects('Account').filtered('id = $0', account.id)[0];
+      const cachedAccount = realm
+        .objects('Account')
+        .filtered('id = $0', account.id)[0];
 
       if (!cachedAccount) {
         return;
