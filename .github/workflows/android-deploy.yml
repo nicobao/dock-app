@@ -2,7 +2,7 @@ name: Android Release
 on:
   push:
     branches:
-      - v0.*
+      - 'v0.*'
 jobs:
   internal_release_android:
     runs-on: ubuntu-latest
