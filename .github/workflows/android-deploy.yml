@@ -1,8 +1,8 @@
 name: Android Release
 on:
   push:
-    tags:
-      - '*'
+    branches:
+      - v0.*
 jobs:
   internal_release_android:
     runs-on: ubuntu-latest
