@@ -2,7 +2,7 @@ name: TestFlight Release (iOS)
 on:
   push:
     tags:
-      - v*
+      - '*'
 jobs:
   internal_release_ios:
     runs-on: macOS-latest
