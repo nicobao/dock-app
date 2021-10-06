@@ -188,7 +188,12 @@ function TransactionHistory({accountAddress}) {
       .map(item => ({
         ...item,
         sent: item.fromAddress === accountAddress,
-      }));
+      }))
+      .filter(item => {
+        const receivedFailed =
+          !item.sent && item.status === TransactionStatus.Failed;
+        return !receivedFailed;
+      });
   }, [allTransactions, accountAddress]);
 
   console.log(`Transactions for ${accountAddress}`, transactions);
