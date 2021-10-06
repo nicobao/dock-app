@@ -1,7 +1,5 @@
 name: Code check
-on:
-  push: [tag]
-
+on: [push]
 jobs:
   lint:
     runs-on: ubuntu-latest
