@@ -1,6 +1,6 @@
 import {Box, Pressable, Stack} from 'native-base';
 import React from 'react';
-import {ChevronRightIcon, Text} from 'src/design-system';
+import {ChevronRightIcon, Text, Theme} from 'src/design-system';
 
 export function OptionList({items, postPress, ...otherProps}) {
   return (
@@ -8,6 +8,9 @@ export function OptionList({items, postPress, ...otherProps}) {
       {items.map(({title, onPress, icon, testID}, idx) => (
         <Pressable
           key={idx}
+          _pressed={{
+            opacity: Theme.touchOpacity,
+          }}
           testID={testID}
           onPress={async () => {
             if (onPress) {

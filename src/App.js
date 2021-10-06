@@ -22,7 +22,7 @@ try {
   sentryInit({
     dsn: SENTRY_DSN,
   });
-} catch(err) {
+} catch (err) {
   console.error(err);
 }
 

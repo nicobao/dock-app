@@ -255,7 +255,11 @@ export function AccountDetailsScreen({
             <Typography variant="h3">{account.name}</Typography>
           </NBox>
           <NBox width="80px" alignItems="flex-end">
-            <Pressable onPress={() => setAccountSettingsVisible(true)}>
+            <Pressable
+              onPress={() => setAccountSettingsVisible(true)}
+              _pressed={{
+                opacity: Theme.touchOpacity,
+              }}>
               <DotsVerticalIcon width="22px" height="22px" />
             </Pressable>
           </NBox>

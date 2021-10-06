@@ -1,16 +1,19 @@
 import React, {useState} from 'react';
+import {TouchableOpacity} from 'react-native';
 import {Box, KeyboardDeleteIcon, Typography} from 'src/design-system';
 
 function KeyboardButton({onPress, value, testID}) {
   return (
-    <Box
-      testID={testID}
-      flex
-      alignItems="center"
-      onPress={() => value !== null && onPress(value)}>
-      <Typography variant="h1" fontSize={30} lineHeight={37}>
-        {value}
-      </Typography>
+    <Box flex alignItems="center">
+      <TouchableOpacity
+        onPress={() => value !== null && onPress(value)}
+        testID={testID}>
+        <Box>
+          <Typography variant="h1" fontSize={30} lineHeight={37}>
+            {value}
+          </Typography>
+        </Box>
+      </TouchableOpacity>
     </Box>
   );
 }
@@ -85,8 +88,10 @@ export function NumericKeyboard({onChange, value = 0, allowDecimal, ...props}) {
         autoSize
         marginBottom={24}>
         {[allowDecimal ? '.' : null, 0].map(renderDigit)}
-        <Box flex alignItems="center" paddingTop={5} onPress={handleDelete}>
-          <KeyboardDeleteIcon />
+        <Box flex alignItems="center" paddingTop={5}>
+          <TouchableOpacity onPress={handleDelete}>
+            <KeyboardDeleteIcon />
+          </TouchableOpacity>
         </Box>
       </Box>
     </Box>
