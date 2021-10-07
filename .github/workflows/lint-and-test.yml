@@ -16,7 +16,7 @@ jobs:
 
       - name: Install and lint
         run: |
-          yarn install --frozen-lockfile --ignore-scripts
+          yarn install
           yarn lint
           
       - name: Unit tests
