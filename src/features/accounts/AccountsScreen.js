@@ -208,15 +208,22 @@ export const AccountsScreen = withErrorBoundary(
               Create new account
             </BigButton>
             <BigButton
-              onPress={onImportExistingAccount}
+              onPress={() => {
+                setShowImportAccount(true);
+                setShowAddAccount(true);
+              }}
               icon={<DocumentDownloadIcon />}>
-              Import existing account
+              {translate('add_account_modal.import_existing')}
             </BigButton>
           </Footer>
         ) : null}
         <AddAccountModal
           visible={showAddAccount}
-          onClose={() => setShowAddAccount(false)}
+          showImportAccount={showImportAccount}
+          onClose={() => {
+            setShowImportAccount(false);
+            setShowAddAccount(false);
+          }}
           onAddAccount={onAddAccount}
           onImportExistingAccount={onImportExistingAccount}
         />

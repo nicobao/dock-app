@@ -18,11 +18,12 @@ export function AddAccountModal({
   visible,
   onAddAccount,
   onImportExistingAccount,
+  showImportAccount,
 }) {
-  const [importExisting, setImportExisting] = useState();
+  const [importExisting, setImportExisting] = useState(showImportAccount);
 
   useEffect(() => {
-    setImportExisting(false);
+    setImportExisting(showImportAccount);
   }, [visible]);
 
   const content = !importExisting ? (
