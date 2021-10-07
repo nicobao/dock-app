@@ -1,33 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CreateAccountMnemonicScreen should render correctly 1`] = `
-<StyledNativeComponent
-  forwardedComponent={
+<RNCSafeAreaView
+  style={
     Object {
-      "$$typeof": Symbol(react.forward_ref),
-      "attrs": Array [],
-      "inlineStyle": InlineStyle {
-        "rules": Array [
-          "
-  background-color: ",
-          "#18181B",
-          ";
-  flex: 1;
-",
-        ],
-      },
-      "render": [Function],
-      "shouldForwardProp": undefined,
-      "styledComponentId": "StyledNativeComponent",
-      "target": Object {
-        "$$typeof": Symbol(react.forward_ref),
-        "render": [Function],
-      },
-      "withComponent": [Function],
+      "backgroundColor": "#18181B",
+      "flex": 1,
     }
   }
-  forwardedRef={null}
-  testID="create-wallet-screen"
 >
   <Styled(View)>
     <BackButton />
@@ -117,5 +97,5 @@ exports[`CreateAccountMnemonicScreen should render correctly 1`] = `
       Next
     </LoadingButton>
   </Styled(Box)>
-</StyledNativeComponent>
+</RNCSafeAreaView>
 `;

@@ -1,10 +1,30 @@
 import React from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {AppGlobalHeader} from 'src/App';
+import { useSelector } from 'react-redux';
+import { appSelectors } from 'src/features/app/app-slice';
 import styled from 'styled-components/native';
 import {Box} from './grid';
 import {Theme} from './theme';
+
+export function AppGlobalHeader() {
+  const dockApiReady = useSelector(appSelectors.getDockReady);
+  const rpcReady = useSelector(appSelectors.getRpcReady);
+
+  return (
+    <>
+      <ConnectionStatus
+        status={rpcReady}
+        errorText={translate('global.webview_connection_error')}
+      />
+      <ConnectionStatus
+        status={dockApiReady}
+        loadingText={translate('global.substrate_connection_loading')}
+        errorText={translate('global.substrate_connection_error')}
+      />
+    </>
+  );
+}
 
 export function ScreenContainer({children, hideGlobalHeader}) {
   return (

@@ -9,10 +9,8 @@ import {createAccountActions} from '../account-creation/create-account-slice';
 import Share from 'react-native-share';
 import RNFS from 'react-native-fs';
 import {translate} from 'src/locales';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getRealm} from 'src/core/realm';
 import {appOperations} from '../app/app-slice';
-import uuid from 'uuid/v4';
 
 // Period in seconds
 const BALANCE_FETCH_PERIOD = 30;

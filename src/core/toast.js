@@ -1,7 +1,8 @@
 import {Stack} from 'native-base';
 import React from 'react';
 import {Pressable} from 'react-native';
-import {CheckCircleIcon, Text, Theme, XCircleIcon} from '../design-system';
+import {CheckCircleIcon, Text, XCircleIcon} from '../design-system';
+import {Theme} from '../design-system/theme';
 
 let toast;
 

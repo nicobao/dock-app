@@ -46,25 +46,6 @@ function ConnectionStatus({status, loadingText, errorText}) {
   return null;
 }
 
-export function AppGlobalHeader() {
-  const dockApiReady = useSelector(appSelectors.getDockReady);
-  const rpcReady = useSelector(appSelectors.getRpcReady);
-
-  return (
-    <>
-      <ConnectionStatus
-        status={rpcReady}
-        errorText={translate('global.webview_connection_error')}
-      />
-      <ConnectionStatus
-        status={dockApiReady}
-        loadingText={translate('global.substrate_connection_loading')}
-        errorText={translate('global.substrate_connection_error')}
-      />
-    </>
-  );
-}
-
 function GlobalComponents() {
   const dispatch = useDispatch();
   const toast = useToast();
