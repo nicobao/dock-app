@@ -90,7 +90,7 @@ export function EnterTokenAmount({form, onMax, onChange, onBack, onNext}) {
             <Typography variant="h1">{form.tokenSymbol}</Typography>
           </Stack>
           <TokenAmount
-            amount={parseInt(form.amount || 0) * DOCK_TOKEN_UNIT}
+            amount={parseInt(form.amount || 0, 10) * DOCK_TOKEN_UNIT}
             symbol={form.tokenSymbol}>
             {({fiatSymbol, fiatAmount}) => (
               <Stack direction="row" justifyContent="center">

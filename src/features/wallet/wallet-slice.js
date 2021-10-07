@@ -225,7 +225,7 @@ export const walletOperations = {
       };
       await AsyncStorage.setItem('walletInfo', JSON.stringify(walletInfo));
 
-      const keychainData = await Keychain.getItem(keychainId);
+      await Keychain.getItem(keychainId);
 
       dispatch(walletActions.setWalletInfo(walletInfo));
 
@@ -238,7 +238,5 @@ export const walletOperations = {
       navigate(Routes.ACCOUNTS);
     },
 };
-
-const waitUntil = time => new Promise(res => setTimeout(res, time));
 
 export const walletReducer = wallet.reducer;

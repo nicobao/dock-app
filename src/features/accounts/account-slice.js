@@ -21,7 +21,7 @@ const initialState = {
   accountToBackup: null,
 };
 
-const account = createSlice({
+const accountSlice = createSlice({
   name: 'account',
   initialState,
   reducers: {
@@ -49,7 +49,7 @@ const account = createSlice({
   },
 });
 
-export const accountActions = account.actions;
+export const accountActions = accountSlice.actions;
 
 const getRoot = state => state.account;
 
@@ -296,4 +296,4 @@ export const accountOperations = {
 
 const waitUntil = time => new Promise(res => setTimeout(res, time));
 
-export const accountReducer = account.reducer;
+export const accountReducer = accountSlice.reducer;

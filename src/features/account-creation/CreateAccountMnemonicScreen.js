@@ -1,28 +1,24 @@
-import {Button, Checkbox, FormControl, Stack} from 'native-base';
 import Clipboard from '@react-native-community/clipboard';
-
+import {Button} from 'native-base';
 import React from 'react';
 import {useSelector} from 'react-redux';
-import {
-  Header,
-  Footer,
-  Content,
-  ScreenContainer,
-  Typography,
-  SelectToggler,
-  Text,
-  NBox as Box,
-  Select,
-  Input,
-  LoadingButton,
-  Theme,
-} from '../../design-system';
-import {BackButton} from '../../design-system/buttons';
-import {createAccountSelectors} from './create-account-slice';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {showToast} from '../../core/toast';
+import {
+  Content,
+  Footer,
+  Header,
+  LoadingButton,
+  NBox as Box,
+  ScreenContainer,
+  Text,
+  Theme,
+  Typography,
+} from '../../design-system';
+import {BackButton} from '../../design-system/buttons';
 import {translate} from '../../locales';
+import {createAccountSelectors} from './create-account-slice';
 
 export function CreateAccountMnemonicScreen({phrase, onCopy, onSubmit}) {
   return (

@@ -3,7 +3,6 @@ import {Box, Pressable, Stack} from 'native-base';
 import {
   DocumentDownloadIcon,
   PlusCircleIcon,
-  Text,
   OptionList,
 } from 'src/design-system';
 import {translate} from '../../locales';

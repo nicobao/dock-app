@@ -1,17 +1,15 @@
+import {Stack} from 'native-base';
 import React, {useEffect, useState} from 'react';
-import {Box, Pressable, Stack} from 'native-base';
 import {
   DocumentDownloadIcon,
-  PlusCircleIcon,
-  Text,
   OptionList,
-  BackIcon,
+  PlusCircleIcon,
 } from 'src/design-system';
-import {Modal} from '../../components/Modal';
-import {AddAccountModalTestIDs} from './test-ids';
-import {ImportExistingAccount} from './ImportExistingAccount';
 import {translate} from 'src/locales';
+import {Modal} from '../../components/Modal';
 import {Typography} from '../../design-system';
+import {ImportExistingAccount} from './ImportExistingAccount';
+import {AddAccountModalTestIDs} from './test-ids';
 
 export function AddAccountModal({
   onClose,

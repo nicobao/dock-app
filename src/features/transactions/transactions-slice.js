@@ -1,9 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {Toast} from 'native-base';
 import {translate} from 'src/locales';
 import {ApiRpc} from '@docknetwork/react-native-sdk/src/client/api-rpc';
 import uuid from 'uuid';
-import {navigateBack} from '../../core/navigation';
 import {getRealm} from 'src/core/realm';
 import {showToast} from 'src/core/toast';
 import {DOCK_TOKEN_UNIT} from 'src/core/format-utils';
@@ -146,6 +144,8 @@ export const transactionsOperations = {
           }
         })
         .catch(err => {
+          console.error(err);
+
           showToast({
             type: 'error',
             message: translate('transaction_failed.title'),

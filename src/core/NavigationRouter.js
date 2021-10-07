@@ -1,9 +1,8 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-// POC Screens
-import {Icon, View} from 'native-base';
+import {View} from 'native-base';
 import React from 'react';
-import {Platform, TouchableWithoutFeedback} from 'react-native';
+import {Platform} from 'react-native';
 import {Theme} from 'src/design-system';
 import {ReceiveTokenContainer} from 'src/features/tokens/ReceiveTokenScreen';
 import {SendTokenContainer} from 'src/features/tokens/SendTokenScreen';
@@ -28,39 +27,8 @@ import {ImportWalletPasswordContainer} from '../features/wallet/ImportWalletPass
 import {ImportWalletContainer} from '../features/wallet/ImportWalletScreen';
 import {ProtectYourWalletContainer} from '../features/wallet/ProtectYourWalletScreen';
 import {SetupPasscodeScreen} from '../features/wallet/SetupPasscodeScreen';
-import {Colors} from '../theme/colors';
-import {navigate, navigationRef} from './navigation';
+import {navigationRef} from './navigation';
 import {Routes} from './routes';
-
-const getMainOptions = opts => {
-  return {
-    headerStyle: {
-      backgroundColor: Colors.darkBlue,
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
-    headerBackTitle: 'Back',
-    headerRight: () => (
-      <React.Fragment>
-        <View style={{flexDirection: 'row', paddingRight: 10}}>
-          <View style={{marginRight: 12}}>
-            <TouchableWithoutFeedback
-              onPress={() => navigate(Routes.APP_QR_SCANNER)}>
-              <Icon size={30} name="scan-outline" style={{color: '#fff'}} />
-            </TouchableWithoutFeedback>
-          </View>
-          <TouchableWithoutFeedback
-            onPress={() => navigate(Routes.APP_SETTINGS)}>
-            <Icon size={30} name="settings" style={{color: '#fff'}} />
-          </TouchableWithoutFeedback>
-        </View>
-      </React.Fragment>
-    ),
-    ...opts,
-  };
-};
 
 const AppStack = createStackNavigator();
 const RootStack = createStackNavigator();

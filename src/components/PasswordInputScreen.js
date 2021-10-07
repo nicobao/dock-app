@@ -1,29 +1,14 @@
-import {
-  Button,
-  FormControl,
-  Stack,
-  Tooltip,
-  Pressable,
-  Popover,
-  TextArea,
-  Text,
-} from 'native-base';
 import React, {useState} from 'react';
 import {
-  Header,
-  Footer,
   Content,
+  Footer,
+  Header,
+  Input,
+  InputError,
+  LoadingButton,
+  NBox as Box,
   ScreenContainer,
   Typography,
-  SelectToggler,
-  NBox as Box,
-  Select,
-  Input,
-  InputPopover,
-  LoadingButton,
-  Theme,
-  ErrorAlert,
-  InputError,
 } from '../design-system';
 import {BackButton} from '../design-system/buttons';
 import {translate} from '../locales';

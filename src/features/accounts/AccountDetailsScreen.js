@@ -1,5 +1,5 @@
 import {Button, Pressable, ScrollView, Stack} from 'native-base';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {RefreshControl} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Modal} from 'src/components/Modal';
@@ -15,7 +15,6 @@ import {
   AlertIcon,
   BackButton,
   Box,
-  Content,
   DotsVerticalIcon,
   Header,
   LoadingScreen,
