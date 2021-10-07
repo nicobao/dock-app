@@ -1,11 +1,34 @@
+import {Stack} from 'native-base';
 import React from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import { useSelector } from 'react-redux';
-import { appSelectors } from 'src/features/app/app-slice';
+import {useSelector} from 'react-redux';
+import {appSelectors} from 'src/features/app/app-slice';
+import {translate} from 'src/locales';
 import styled from 'styled-components/native';
 import {Box} from './grid';
 import {Theme} from './theme';
+import {Typography} from './typography';
+
+function ConnectionStatus({status, loadingText, errorText}) {
+  if (!status && loadingText) {
+    return (
+      <Stack bg={Theme.colors.info} p={2}>
+        <Typography color={Theme.colors.info2}>{loadingText}</Typography>
+      </Stack>
+    );
+  }
+
+  if (status instanceof Error && errorText) {
+    return (
+      <Stack bg={Theme.colors.error} p={2}>
+        <Typography color={Theme.colors.errorText}>{errorText}</Typography>
+      </Stack>
+    );
+  }
+
+  return null;
+}
 
 export function AppGlobalHeader() {
   const dockApiReady = useSelector(appSelectors.getDockReady);

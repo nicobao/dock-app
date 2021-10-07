@@ -24,7 +24,7 @@ export function AddAccountModal({
 
   useEffect(() => {
     setImportExisting(showImportAccount);
-  }, [visible]);
+  }, [visible, showImportAccount]);
 
   const content = !importExisting ? (
     <Stack p={8} testID="addAccountModal">
