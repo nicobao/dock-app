@@ -72,7 +72,12 @@ export function InputPopover({children, title, okText = 'Got it'}) {
 
   return (
     <>
-      <Pressable alignSelf="center" onPress={() => setVisible(true)}>
+      <Pressable
+        alignSelf="center"
+        onPress={() => setVisible(true)}
+        _pressed={{
+          opacity: Theme.touchOpacity,
+        }}>
         <Box px={2} py={0.5}>
           <InformationCircle />
         </Box>

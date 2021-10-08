@@ -109,6 +109,9 @@ export const AccountsScreen = withErrorBoundary(
                       <Stack direction="column" flex={1}>
                         <Stack direction="row" alignItems="center">
                           <Pressable
+                            _pressed={{
+                              opacity: Theme.touchOpacity,
+                            }}
                             onPress={() => onDetails(account)}
                             flex={1}>
                             <Stack direction="row" flex={1} alignItems="center">
@@ -133,7 +136,11 @@ export const AccountsScreen = withErrorBoundary(
                               <Menu
                                 trigger={triggerProps => {
                                   return (
-                                    <Pressable {...triggerProps}>
+                                    <Pressable
+                                      {...triggerProps}
+                                      _pressed={{
+                                        opacity: Theme.touchOpacity,
+                                      }}>
                                       <DotsVerticalIcon />
                                     </Pressable>
                                   );
