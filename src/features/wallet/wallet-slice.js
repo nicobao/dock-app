@@ -5,7 +5,7 @@ import {WalletRpc} from '@docknetwork/react-native-sdk/src/client/wallet-rpc';
 import DocumentPicker from 'react-native-document-picker';
 import {Routes} from '../../core/routes';
 import {appSelectors, BiometryType} from '../app/app-slice';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {accountOperations} from '../accounts/account-slice';
 import RNFS from 'react-native-fs';
 import Share from 'react-native-share';
@@ -225,7 +225,7 @@ export const walletOperations = {
       };
       await AsyncStorage.setItem('walletInfo', JSON.stringify(walletInfo));
 
-      const keychainData = await Keychain.getItem(keychainId);
+      await Keychain.getItem(keychainId);
 
       dispatch(walletActions.setWalletInfo(walletInfo));
 
@@ -238,7 +238,5 @@ export const walletOperations = {
       navigate(Routes.ACCOUNTS);
     },
 };
-
-const waitUntil = time => new Promise(res => setTimeout(res, time));
 
 export const walletReducer = wallet.reducer;

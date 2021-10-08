@@ -1,36 +1,20 @@
-import {
-  Button,
-  FormControl,
-  Stack,
-  Tooltip,
-  Pressable,
-  Popover,
-} from 'native-base';
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {navigate} from '../../core/navigation';
-import {Routes} from '../../core/routes';
+import {AccountAdvancedOptions} from '../../components/AccountAdvancedOptions';
 import {
-  Header,
-  Footer,
   Content,
+  Footer,
+  Header,
+  Input,
+  LoadingButton,
+  NBox as Box,
   ScreenContainer,
   Typography,
-  SelectToggler,
-  NBox as Box,
-  Select,
-  Input,
-  InputPopover,
-  LoadingButton,
 } from '../../design-system';
 import {BackButton} from '../../design-system/buttons';
 import {translate} from '../../locales';
-import {
-  createAccountActions,
-  createAccountOperations,
-} from './create-account-slice';
+import {createAccountOperations} from './create-account-slice';
 import {CreateAccountSetupTestIDs} from './test-ids';
-import {AccountAdvancedOptions} from '../../components/AccountAdvancedOptions';
 
 export function CreateAccountSetupScreen({
   form,

@@ -1,18 +1,12 @@
+import {Button as NButton, Spinner, Stack, Text} from 'native-base';
 import React, {useState} from 'react';
 import {InteractionManager, Platform} from 'react-native';
-import {
-  Button as NButton,
-  Text,
-  Box as NBox,
-  Spinner,
-  Stack,
-} from 'native-base';
+import {translate} from 'src/locales';
+import {Typography} from '.';
 import BackIcon from '../assets/icons/back.svg';
 import {navigateBack} from '../core/navigation';
 import {Box} from './grid';
-import {Typography} from '.';
 import {Theme} from './theme';
-import {translate} from 'src/locales';
 
 export const runAfterInteractions =
   Platform.OS === 'ios'

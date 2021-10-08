@@ -1,27 +1,23 @@
-import {Button, Checkbox, FormControl, Stack} from 'native-base';
+import {FormControl, Stack} from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {showToast} from '../../core/toast';
 import {
-  Header,
-  Footer,
   Content,
-  ScreenContainer,
-  Typography,
-  SelectToggler,
-  Text,
-  NBox as Box,
-  Select,
+  Footer,
+  Header,
   Input,
   LoadingButton,
+  ScreenContainer,
+  Typography,
 } from '../../design-system';
 import {BackButton} from '../../design-system/buttons';
+import {translate} from '../../locales';
 import {accountOperations, accountSelectors} from '../accounts/account-slice';
 import {
   createAccountOperations,
   createAccountSelectors,
 } from './create-account-slice';
-import {translate} from '../../locales';
 
 export function CreateAccountVerifyPhraseScreen({
   form,

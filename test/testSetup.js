@@ -1,7 +1,14 @@
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme from 'enzyme';
 import {NativeModules} from 'react-native';
-import mockAsyncStorage from '../node_modules/@react-native-community/async-storage/jest/async-storage-mock';
+import mockAsyncStorage from '../node_modules/@react-native-async-storage/async-storage/jest/async-storage-mock';
+import mockRNPermissions from '../node_modules/react-native-permissions/mock';
+
+jest.mock('@react-native-async-storage/async-storage', () => mockAsyncStorage);
+jest.mock('react-native-device-info', () => 'DeviceInfo');
+jest.mock('react-native-permissions', () => mockRNPermissions);
+
+jest.mock('react-native-share', () => 'RNShare');
 
 Enzyme.configure({adapter: new Adapter()});
 
@@ -60,8 +67,7 @@ jest.mock('react-native-keychain', () => ({
 	}
 }));
 
-jest.mock('@react-native-community/async-storage', () => mockAsyncStorage);
-jest.mock('react-native-share', () => 'RNShare');
+
 
 NativeModules.RNGestureHandlerModule = {
   attachGestureHandler: jest.fn(),

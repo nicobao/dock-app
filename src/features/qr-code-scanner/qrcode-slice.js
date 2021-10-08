@@ -1,5 +1,4 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {navigateBack} from '../../core/navigation';
 
 const initialState = {
   isLoading: true,

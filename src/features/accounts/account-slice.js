@@ -9,10 +9,8 @@ import {createAccountActions} from '../account-creation/create-account-slice';
 import Share from 'react-native-share';
 import RNFS from 'react-native-fs';
 import {translate} from 'src/locales';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getRealm} from 'src/core/realm';
 import {appOperations} from '../app/app-slice';
-import uuid from 'uuid/v4';
 
 // Period in seconds
 const BALANCE_FETCH_PERIOD = 30;
@@ -23,7 +21,7 @@ const initialState = {
   accountToBackup: null,
 };
 
-const account = createSlice({
+const accountSlice = createSlice({
   name: 'account',
   initialState,
   reducers: {
@@ -51,7 +49,7 @@ const account = createSlice({
   },
 });
 
-export const accountActions = account.actions;
+export const accountActions = accountSlice.actions;
 
 const getRoot = state => state.account;
 
@@ -298,4 +296,4 @@ export const accountOperations = {
 
 const waitUntil = time => new Promise(res => setTimeout(res, time));
 
-export const accountReducer = account.reducer;
+export const accountReducer = accountSlice.reducer;

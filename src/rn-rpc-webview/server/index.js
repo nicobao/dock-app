@@ -5,22 +5,24 @@ import logger from './logger';
 
 const rpcServer = new JSONRPCServer();
 
-[storageService, logger].forEach(service => {
-  const rpcService = createRpcService(service);
+if (process.env.NODE_ENV !== 'test') {
+  [storageService, logger].forEach(service => {
+    const rpcService = createRpcService(service);
 
-  rpcService.forEach(method => {
-    console.log('RN: Register register method', method);
+    rpcService.forEach(method => {
+      console.log('RN: Register register method', method);
 
-    rpcServer.addMethod(method.name, async params => {
-      const result = await method.resolver(params);
+      rpcServer.addMethod(method.name, async params => {
+        const result = await method.resolver(params);
 
-      console.log('Resolving rpc request', {
-        method,
-        result,
+        console.log('Resolving rpc request', {
+          method,
+          result,
+        });
+        return result || {};
       });
-      return result || {};
     });
   });
-});
+}
 
 export default rpcServer;

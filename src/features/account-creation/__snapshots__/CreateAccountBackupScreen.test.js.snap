@@ -1,34 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CreateAccountBackupScreen should render correctly 1`] = `
-<StyledNativeComponent
-  forwardedComponent={
+<RNCSafeAreaView
+  style={
     Object {
-      "$$typeof": Symbol(react.forward_ref),
-      "attrs": Array [],
-      "inlineStyle": InlineStyle {
-        "rules": Array [
-          "
-  background-color: ",
-          "#18181B",
-          ";
-  flex: 1;
-",
-        ],
-      },
-      "render": [Function],
-      "shouldForwardProp": undefined,
-      "styledComponentId": "StyledNativeComponent",
-      "target": Object {
-        "$$typeof": Symbol(react.forward_ref),
-        "render": [Function],
-      },
-      "withComponent": [Function],
+      "backgroundColor": "#18181B",
+      "flex": 1,
     }
   }
-  forwardedRef={null}
-  testID="createAccountScreen.container"
 >
+  <AppGlobalHeader />
   <Styled(View)>
     <BackButton />
   </Styled(View)>
@@ -45,7 +26,7 @@ exports[`CreateAccountBackupScreen should render correctly 1`] = `
     <Styled(Component)
       marginTop={12}
     >
-       In the next step you will see an account recovery phrase. This phrase is the only way you can recover access to your account if your phone is lost or stolen.
+      In the next step you will see an account recovery phrase. This phrase is the only way you can recover access to your account if your phone is lost or stolen.
     </Styled(Component)>
   </Styled(ScrollView)>
   <Styled(Box)
@@ -78,5 +59,5 @@ exports[`CreateAccountBackupScreen should render correctly 1`] = `
       Skip
     </LoadingButton>
   </Styled(Box)>
-</StyledNativeComponent>
+</RNCSafeAreaView>
 `;

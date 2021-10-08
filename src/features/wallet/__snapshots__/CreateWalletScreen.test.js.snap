@@ -1,34 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CreateWalletScreen should render correctly 1`] = `
-<StyledNativeComponent
-  forwardedComponent={
+<RNCSafeAreaView
+  style={
     Object {
-      "$$typeof": Symbol(react.forward_ref),
-      "attrs": Array [],
-      "inlineStyle": InlineStyle {
-        "rules": Array [
-          "
-  background-color: ",
-          "#18181B",
-          ";
-  flex: 1;
-",
-        ],
-      },
-      "render": [Function],
-      "shouldForwardProp": undefined,
-      "styledComponentId": "StyledNativeComponent",
-      "target": Object {
-        "$$typeof": Symbol(react.forward_ref),
-        "render": [Function],
-      },
-      "withComponent": [Function],
+      "backgroundColor": "#18181B",
+      "flex": 1,
     }
   }
-  forwardedRef={null}
-  testID="createWalletScreen"
 >
+  <AppGlobalHeader />
   <Styled(View) />
   <Styled(ScrollView)>
     <Box
@@ -73,6 +54,7 @@ exports[`CreateWalletScreen should render correctly 1`] = `
     >
       I already have a wallet
     </LoadingButton>
+    <BuildIdentifier />
   </Styled(Box)>
-</StyledNativeComponent>
+</RNCSafeAreaView>
 `;

@@ -1,20 +1,12 @@
+import {Box, Stack} from 'native-base';
 import React, {useEffect, useState} from 'react';
-import {Box, Pressable, Stack} from 'native-base';
-import {
-  DocumentDownloadIcon,
-  PlusCircleIcon,
-  Text,
-  OptionList,
-  BackIcon,
-  Button,
-  Theme,
-} from 'src/design-system';
-import {Modal} from '../../components/Modal';
+import {withErrorBoundary} from 'src/core/error-handler';
+import {formatCurrency, formatDockAmount} from 'src/core/format-utils';
+import {Button, Theme} from 'src/design-system';
 import {translate} from 'src/locales';
+import {Modal} from '../../components/Modal';
 import {Typography} from '../../design-system';
 import {getDockTokenPrice} from './price-service';
-import {formatCurrency, formatDockAmount} from 'src/core/format-utils';
-import {withErrorBoundary} from 'src/core/error-handler';
 
 export const TokenAmount = withErrorBoundary(
   ({amount, symbol = 'DOCK', children}) => {

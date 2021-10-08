@@ -1,34 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AppSettingsScreen should render correctly 1`] = `
-<StyledNativeComponent
-  forwardedComponent={
+<RNCSafeAreaView
+  style={
     Object {
-      "$$typeof": Symbol(react.forward_ref),
-      "attrs": Array [],
-      "inlineStyle": InlineStyle {
-        "rules": Array [
-          "
-  background-color: ",
-          "#18181B",
-          ";
-  flex: 1;
-",
-        ],
-      },
-      "render": [Function],
-      "shouldForwardProp": undefined,
-      "styledComponentId": "StyledNativeComponent",
-      "target": Object {
-        "$$typeof": Symbol(react.forward_ref),
-        "render": [Function],
-      },
-      "withComponent": [Function],
+      "backgroundColor": "#18181B",
+      "flex": 1,
     }
   }
-  forwardedRef={null}
-  testID="AccountDetailsScreen"
 >
+  <AppGlobalHeader />
   <Styled(View)>
     <Box
       alignItems="center"
@@ -39,7 +20,9 @@ exports[`AppSettingsScreen should render correctly 1`] = `
       <Memo(ForwardRef(Box))
         width="80px"
       >
-        <BackButton />
+        <BackButton
+          onPress={[Function]}
+        />
       </Memo(ForwardRef(Box))>
       <Memo(ForwardRef(Box))
         alignContent="center"
@@ -61,25 +44,34 @@ exports[`AppSettingsScreen should render correctly 1`] = `
     </Box>
   </Styled(View)>
   <Styled(ScrollView)>
-    <OptionList
-      items={
-        Array [
-          Object {
-            "icon": <SvgDownload />,
-            "onPress": undefined,
-            "testID": "backupWallet",
-            "title": "Backup wallet",
-          },
-          Object {
-            "icon": <SvgTrash />,
-            "onPress": undefined,
-            "testID": "deleteWallet",
-            "title": "Delete wallet",
-          },
-        ]
-      }
-      mx={5}
-    />
+    <Memo(ForwardRef(Stack))
+      flex={1}
+    >
+      <OptionList
+        items={
+          Array [
+            Object {
+              "icon": <SvgDownload />,
+              "onPress": undefined,
+              "testID": "backupWallet",
+              "title": "Backup wallet",
+            },
+            Object {
+              "icon": <SvgTrash />,
+              "onPress": undefined,
+              "testID": "deleteWallet",
+              "title": "Remove wallet",
+            },
+          ]
+        }
+        mx={5}
+      />
+    </Memo(ForwardRef(Stack))>
+    <Memo(ForwardRef(Stack))
+      p={5}
+    >
+      <BuildIdentifier />
+    </Memo(ForwardRef(Stack))>
   </Styled(ScrollView)>
-</StyledNativeComponent>
+</RNCSafeAreaView>
 `;
