@@ -3,8 +3,8 @@ import {Box, Pressable, Stack} from 'native-base';
 import {
   DocumentDownloadIcon,
   PlusCircleIcon,
-  Text,
   OptionList,
+  Theme,
 } from 'src/design-system';
 import {translate} from '../../locales';
 import {BackIcon, Typography} from '../../design-system';
@@ -13,7 +13,11 @@ export function ImportExistingAccount({onSelect, onClose, onBack}) {
   return (
     <Stack p={8}>
       <Stack direction="row">
-        <Pressable onPress={onBack}>
+        <Pressable
+          onPress={onBack}
+          _pressed={{
+            opacity: Theme.touchOpacity,
+          }}>
           <Box pt={1} pr={5}>
             <BackIcon />
           </Box>

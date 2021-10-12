@@ -1,5 +1,5 @@
+import {Spinner} from 'native-base';
 import React from 'react';
-import {Spinner, Text} from 'native-base';
 import {View} from 'react-native';
 import {Colors} from '../theme/colors';
 

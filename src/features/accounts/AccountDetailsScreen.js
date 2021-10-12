@@ -1,5 +1,5 @@
 import {Button, Pressable, ScrollView, Stack} from 'native-base';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {RefreshControl} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Modal} from 'src/components/Modal';
@@ -15,7 +15,6 @@ import {
   AlertIcon,
   BackButton,
   Box,
-  Content,
   DotsVerticalIcon,
   Header,
   LoadingScreen,
@@ -260,7 +259,11 @@ export function AccountDetailsScreen({
             <Typography variant="h3">{account.name}</Typography>
           </NBox>
           <NBox width="80px" alignItems="flex-end">
-            <Pressable onPress={() => setAccountSettingsVisible(true)}>
+            <Pressable
+              onPress={() => setAccountSettingsVisible(true)}
+              _pressed={{
+                opacity: Theme.touchOpacity,
+              }}>
               <DotsVerticalIcon width="22px" height="22px" />
             </Pressable>
           </NBox>

@@ -1,4 +1,3 @@
-import memoize from 'lodash.memoize';
 import {getRealm} from 'src/core/realm';
 
 const tokenPrices = {};
@@ -7,9 +6,13 @@ const getCoinCapToken = tokenSymbol =>
   fetch(`https://api.coincap.io/v2/assets/${tokenSymbol}`)
     .then(res => res.json())
     .then(res => res.data)
-    .catch(err => ({
-      priceUsd: 0,
-    }));
+    .catch(err => {
+      console.error(err);
+
+      return {
+        priceUsd: 0,
+      };
+    });
 
 function getTokenPrice(symbol) {
   const realm = getRealm();

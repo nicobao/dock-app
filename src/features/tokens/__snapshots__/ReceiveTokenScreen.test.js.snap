@@ -1,34 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ReceiveTokensScreen should render correctly 1`] = `
-<StyledNativeComponent
-  forwardedComponent={
+<RNCSafeAreaView
+  style={
     Object {
-      "$$typeof": Symbol(react.forward_ref),
-      "attrs": Array [],
-      "inlineStyle": InlineStyle {
-        "rules": Array [
-          "
-  background-color: ",
-          "#18181B",
-          ";
-  flex: 1;
-",
-        ],
-      },
-      "render": [Function],
-      "shouldForwardProp": undefined,
-      "styledComponentId": "StyledNativeComponent",
-      "target": Object {
-        "$$typeof": Symbol(react.forward_ref),
-        "render": [Function],
-      },
-      "withComponent": [Function],
+      "backgroundColor": "#18181B",
+      "flex": 1,
     }
   }
-  forwardedRef={null}
-  testID="unlockWalletScreen"
 >
+  <AppGlobalHeader />
   <Styled(View)>
     <BackButton />
   </Styled(View)>
@@ -58,17 +39,20 @@ exports[`ReceiveTokensScreen should render correctly 1`] = `
       my={7}
       p={5}
     >
-      <Memo(ForwardRef(Stack))>
+      <Memo(ForwardRef(Stack))
+        bg="#fff"
+        p={2}
+      >
         <QRCode
-          color="#27272A"
           size={525}
           value="3B9W5fS4ygoUVnGhzTk7sihSdhCyJQRNMQ7aJfDdsfWb16f1"
         />
       </Memo(ForwardRef(Stack))>
       <Memo(ForwardRef(Stack))
-        alignItems="flex-start"
+        alignItems="center"
         direction="row"
         flex={1}
+        pt={5}
       >
         <Memo(ForwardRef(Box))
           pr={2}
@@ -76,6 +60,7 @@ exports[`ReceiveTokensScreen should render correctly 1`] = `
         <Memo(ForwardRef(Stack))
           alignItems="flex-start"
           direction="column"
+          flex={1}
         >
           <Styled(Component)
             variant="h3"
@@ -100,5 +85,5 @@ exports[`ReceiveTokensScreen should render correctly 1`] = `
       </Button>
     </Memo(ForwardRef(Stack))>
   </Styled(ScrollView)>
-</StyledNativeComponent>
+</RNCSafeAreaView>
 `;

@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {jsx as _jsx} from 'react/jsx-runtime';
 import {Circle, Svg} from 'react-native-svg';
 import {useDispatch} from 'react-redux';
-import {accountOperations} from 'src/features/accounts/account-slice';
 import {withErrorBoundary} from 'src/core/error-handler';
+import {accountOperations} from 'src/features/accounts/account-slice';
 
 function renderCircle({cx, cy, fill, r}, key) {
   return <Circle cx={cx} cy={cy} fill={fill} r={r} key={key} />;

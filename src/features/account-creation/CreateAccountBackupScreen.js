@@ -1,25 +1,22 @@
-import {Button, Checkbox, FormControl, Stack} from 'native-base';
+import {Checkbox} from 'native-base';
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {translate} from 'src/locales';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {
-  Header,
-  Footer,
   Content,
+  Footer,
+  Header,
+  LoadingButton,
+  NBox as Box,
   ScreenContainer,
   Typography,
-  SelectToggler,
-  NBox as Box,
-  Select,
-  Input,
-  LoadingButton,
 } from '../../design-system';
 import {BackButton} from '../../design-system/buttons';
-import {createAccountOperations} from './create-account-slice';
-import {CreateAccountConstants} from './constants';
 import {GlobalConstants} from '../constants';
+import {CreateAccountConstants} from './constants';
+import {createAccountOperations} from './create-account-slice';
 
 export function CreateAccountBackupScreen({
   form,

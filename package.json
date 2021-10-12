@@ -19,8 +19,9 @@
     "release:internal:android": "cd ./android && fastlane internal"
   },
   "dependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.15.4",
     "@docknetwork/react-native-sdk": "https://github.com/docknetwork/react-native-sdk#9c8c85715350aeac6e7c6c66200f8474ced0c345",
-    "@react-native-community/async-storage": "^1.12.1",
+    "@react-native-async-storage/async-storage": "^1.15.9",
     "@react-native-community/clipboard": "^1.5.1",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-community/picker": "^1.8.1",

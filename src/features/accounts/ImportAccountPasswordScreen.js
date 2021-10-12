@@ -1,33 +1,7 @@
-import {
-  Button,
-  FormControl,
-  Stack,
-  Tooltip,
-  Pressable,
-  Popover,
-  TextArea,
-} from 'native-base';
-import React, {useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {
-  Header,
-  Footer,
-  Content,
-  ScreenContainer,
-  Typography,
-  SelectToggler,
-  NBox as Box,
-  Select,
-  Input,
-  InputPopover,
-  LoadingButton,
-} from '../../design-system';
-import {BackButton} from '../../design-system/buttons';
-import {
-  createAccountOperations,
-  createAccountSelectors,
-} from '../account-creation/create-account-slice';
+import React from 'react';
+import {useDispatch} from 'react-redux';
 import {PasswordInputContainer} from '../../components/PasswordInputScreen';
+import {createAccountOperations} from '../account-creation/create-account-slice';
 
 export function ImportAccountPasswordContainer({route}) {
   const dispatch = useDispatch();

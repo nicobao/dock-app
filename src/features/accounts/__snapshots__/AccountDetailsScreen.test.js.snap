@@ -1,34 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AccountDetailsScreen should render correctly 1`] = `
-<StyledNativeComponent
-  forwardedComponent={
+<RNCSafeAreaView
+  style={
     Object {
-      "$$typeof": Symbol(react.forward_ref),
-      "attrs": Array [],
-      "inlineStyle": InlineStyle {
-        "rules": Array [
-          "
-  background-color: ",
-          "#18181B",
-          ";
-  flex: 1;
-",
-        ],
-      },
-      "render": [Function],
-      "shouldForwardProp": undefined,
-      "styledComponentId": "StyledNativeComponent",
-      "target": Object {
-        "$$typeof": Symbol(react.forward_ref),
-        "render": [Function],
-      },
-      "withComponent": [Function],
+      "backgroundColor": "#18181B",
+      "flex": 1,
     }
   }
-  forwardedRef={null}
-  testID="AccountDetailsScreen"
 >
+  <AppGlobalHeader />
   <Styled(View)>
     <Box
       alignItems="center"
@@ -39,7 +20,9 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
       <Memo(ForwardRef(Box))
         width="80px"
       >
-        <BackButton />
+        <BackButton
+          onPress={[Function]}
+        />
       </Memo(ForwardRef(Box))>
       <Memo(ForwardRef(Box))
         alignContent="center"
@@ -50,9 +33,7 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
       >
         <Styled(Component)
           variant="h3"
-        >
-          Test account
-        </Styled(Component)>
+        />
       </Memo(ForwardRef(Box))>
       <Memo(ForwardRef(Box))
         alignItems="flex-end"
@@ -69,116 +50,110 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
       </Memo(ForwardRef(Box))>
     </Box>
   </Styled(View)>
-  <Styled(ScrollView)
-    marginLeft={26}
-    marginRight={26}
+  <ForwardRef
+    refreshControl={<RefreshControlMock />}
   >
     <Memo(ForwardRef(Stack))
-      alignItems="center"
-      backgroundColor="#27272A"
-      borderRadius={8}
-      direction="column"
-      p="32px"
+      flex={1}
+      mx={26}
     >
-      <Memo(Identicon)
-        size={48}
-      />
-      <Styled(Component)
-        fontSize="32px"
-        mt={3}
-        variant="h1"
-      >
-        2
-         
-      </Styled(Component)>
-      <Styled(Component)
-        variant="h4"
-      >
-        0.00 USD
-      </Styled(Component)>
       <Memo(ForwardRef(Stack))
-        direction="row"
-        mt={5}
-        width="100%"
+        alignItems="center"
+        backgroundColor="#27272A"
+        borderRadius={8}
+        direction="column"
+        p="32px"
       >
-        <Memo(ForwardRef(Button))
-          flex={1}
-          onPress={[Function]}
-          size="sm"
+        <Memo()
+          size={48}
+        />
+        <Component>
+          <Component />
+        </Component>
+        <Memo(ForwardRef(Stack))
+          direction="row"
+          mt={5}
+          width="100%"
         >
-          Send
-        </Memo(ForwardRef(Button))>
-        <Memo(ForwardRef(Button))
-          flex={1}
-          ml={2}
-          onPress={[Function]}
-          size="sm"
-        >
-          Receive
-        </Memo(ForwardRef(Button))>
+          <Memo(ForwardRef(Button))
+            flex={1}
+            onPress={[Function]}
+            size="sm"
+          >
+            Send
+          </Memo(ForwardRef(Button))>
+          <Memo(ForwardRef(Button))
+            flex={1}
+            ml={2}
+            onPress={[Function]}
+            size="sm"
+          >
+            Receive
+          </Memo(ForwardRef(Button))>
+        </Memo(ForwardRef(Stack))>
       </Memo(ForwardRef(Stack))>
-    </Memo(ForwardRef(Stack))>
-    <Memo(ForwardRef(Stack))
-      mt={8}
-    >
-      <Memo(ForwardRef(Box))
-        borderBottomColor="#ccc"
-        borderBottomWidth={0.5}
-        pb={4}
-      >
-        <Styled(Component)
-          variant="h2"
-        >
-          Transactions
-        </Styled(Component)>
-      </Memo(ForwardRef(Box))>
-      <Memo(ForwardRef(Box))
+      <Memo(ForwardRef(Stack))
         mt={8}
       >
-        <TransactionHistory />
-      </Memo(ForwardRef(Box))>
-    </Memo(ForwardRef(Stack))>
-    <Memo(ForwardRef(Stack))
-      backgroundColor="rgba(120, 53, 15, 0.3)"
-      mt={20}
-      p="16px"
-    >
-      <Memo(ForwardRef(Stack))
-        direction="row"
-      >
         <Memo(ForwardRef(Box))
-          mr={3}
-          mt="3px"
+          borderBottomColor="#3F3F46"
+          borderBottomWidth={0.5}
+          pb={4}
         >
-          <SvgAlert />
+          <Styled(Component)
+            variant="h2"
+          >
+            Transactions
+          </Styled(Component)>
         </Memo(ForwardRef(Box))>
-        <Styled(Component)
-          fontSize={17}
-          ml={2}
-          variant="h3"
+        <Memo(ForwardRef(Box))
+          mt={3}
         >
-          Account not backed up
-        </Styled(Component)>
+          <TransactionHistory />
+        </Memo(ForwardRef(Box))>
       </Memo(ForwardRef(Stack))>
-      <Memo(ForwardRef(Box))
-        mt={2}
+      <Memo(ForwardRef(Stack))
+        backgroundColor="rgba(120, 53, 15, 0.3)"
+        mt={20}
+        p="16px"
       >
-        <Styled(Component)
-          color="rgba(254, 243, 199, 1)"
+        <Memo(ForwardRef(Stack))
+          direction="row"
         >
-          This phrase allows you to recover your account if your phone is lost or you change your device.
-        </Styled(Component)>
-      </Memo(ForwardRef(Box))>
-      <Memo(ForwardRef(Button))
-        alignSelf="flex-start"
-        backgroundColor="rgba(120, 53, 15, 1)"
-        mt={4}
-        size="sm"
-      >
-        Back up now
-      </Memo(ForwardRef(Button))>
+          <Memo(ForwardRef(Box))
+            mr={3}
+            mt="3px"
+          >
+            <SvgAlert />
+          </Memo(ForwardRef(Box))>
+          <Styled(Component)
+            fontSize={17}
+            ml={2}
+            variant="h3"
+          >
+            Account not backed up
+          </Styled(Component)>
+        </Memo(ForwardRef(Stack))>
+        <Memo(ForwardRef(Box))
+          mt={2}
+        >
+          <Styled(Component)
+            color="rgba(254, 243, 199, 1)"
+          >
+            This phrase allows you to recover your account if your phone is lost or you change your device.
+          </Styled(Component)>
+        </Memo(ForwardRef(Box))>
+        <Memo(ForwardRef(Button))
+          alignSelf="flex-start"
+          backgroundColor="rgba(120, 53, 15, 1)"
+          mt={4}
+          size="sm"
+        >
+          Back up now
+        </Memo(ForwardRef(Button))>
+      </Memo(ForwardRef(Stack))>
     </Memo(ForwardRef(Stack))>
-  </Styled(ScrollView)>
+  </ForwardRef>
   <AccountSettingsModal
     onClose={[Function]}
   />
@@ -187,5 +162,5 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
     onClose={[Function]}
     title="Export account"
   />
-</StyledNativeComponent>
+</RNCSafeAreaView>
 `;

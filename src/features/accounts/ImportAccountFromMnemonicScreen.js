@@ -1,27 +1,15 @@
-import {
-  Button,
-  FormControl,
-  Stack,
-  Tooltip,
-  Pressable,
-  Popover,
-  TextArea,
-} from 'native-base';
+import {FormControl, Stack, TextArea} from 'native-base';
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {AccountAdvancedOptions} from '../../components/AccountAdvancedOptions';
 import {
-  Header,
-  Footer,
   Content,
+  Footer,
+  Header,
+  LoadingButton,
+  NBox as Box,
   ScreenContainer,
   Typography,
-  SelectToggler,
-  NBox as Box,
-  Select,
-  Input,
-  InputPopover,
-  LoadingButton,
 } from '../../design-system';
 import {BackButton} from '../../design-system/buttons';
 import {translate} from '../../locales';

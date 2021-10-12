@@ -109,6 +109,9 @@ export const AccountsScreen = withErrorBoundary(
                       <Stack direction="column" flex={1}>
                         <Stack direction="row" alignItems="center">
                           <Pressable
+                            _pressed={{
+                              opacity: Theme.touchOpacity,
+                            }}
                             onPress={() => onDetails(account)}
                             flex={1}>
                             <Stack direction="row" flex={1} alignItems="center">
@@ -133,7 +136,11 @@ export const AccountsScreen = withErrorBoundary(
                               <Menu
                                 trigger={triggerProps => {
                                   return (
-                                    <Pressable {...triggerProps}>
+                                    <Pressable
+                                      {...triggerProps}
+                                      _pressed={{
+                                        opacity: Theme.touchOpacity,
+                                      }}>
                                       <DotsVerticalIcon />
                                     </Pressable>
                                   );
@@ -208,15 +215,22 @@ export const AccountsScreen = withErrorBoundary(
               Create new account
             </BigButton>
             <BigButton
-              onPress={onImportExistingAccount}
+              onPress={() => {
+                setShowImportAccount(true);
+                setShowAddAccount(true);
+              }}
               icon={<DocumentDownloadIcon />}>
-              Import existing account
+              {translate('add_account_modal.import_existing')}
             </BigButton>
           </Footer>
         ) : null}
         <AddAccountModal
           visible={showAddAccount}
-          onClose={() => setShowAddAccount(false)}
+          showImportAccount={showImportAccount}
+          onClose={() => {
+            setShowImportAccount(false);
+            setShowAddAccount(false);
+          }}
           onAddAccount={onAddAccount}
           onImportExistingAccount={onImportExistingAccount}
         />

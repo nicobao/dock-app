@@ -1,34 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SendTokenScreen should render correctly 1`] = `
-<StyledNativeComponent
-  forwardedComponent={
+<RNCSafeAreaView
+  style={
     Object {
-      "$$typeof": Symbol(react.forward_ref),
-      "attrs": Array [],
-      "inlineStyle": InlineStyle {
-        "rules": Array [
-          "
-  background-color: ",
-          "#18181B",
-          ";
-  flex: 1;
-",
-        ],
-      },
-      "render": [Function],
-      "shouldForwardProp": undefined,
-      "styledComponentId": "StyledNativeComponent",
-      "target": Object {
-        "$$typeof": Symbol(react.forward_ref),
-        "render": [Function],
-      },
-      "withComponent": [Function],
+      "backgroundColor": "#18181B",
+      "flex": 1,
     }
   }
-  forwardedRef={null}
-  testID="unlockWalletScreen"
 >
+  <AppGlobalHeader />
   <Styled(View)>
     <BackButton />
   </Styled(View)>
@@ -74,12 +55,12 @@ exports[`SendTokenScreen should render correctly 1`] = `
       alignContent="flex-end"
       flex={1}
     >
-      <Button
+      <LoadingButton
         mb={4}
       >
         Next
-      </Button>
+      </LoadingButton>
     </Memo(ForwardRef(Stack))>
   </Styled(ScrollView)>
-</StyledNativeComponent>
+</RNCSafeAreaView>
 `;

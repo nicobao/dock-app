@@ -40,6 +40,7 @@ export const Theme = {
     backgroundColor: '#1E75C5',
     textColor: '#fff',
   },
+  touchOpacity: 0.2,
 };
 
 export function useTheme() {

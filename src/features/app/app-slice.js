@@ -2,7 +2,7 @@ import {KeyringRpc} from '@docknetwork/react-native-sdk/src/client/keyring-rpc';
 import {DockRpc} from '@docknetwork/react-native-sdk/src/client/dock-rpc';
 import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
 import {WalletRpc} from '@docknetwork/react-native-sdk/src/client/wallet-rpc';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createSlice} from '@reduxjs/toolkit';
 import SplashScreen from 'react-native-splash-screen';
 import {Keychain} from '../../core/keychain';

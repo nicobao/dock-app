@@ -1,7 +1,8 @@
 import {Stack} from 'native-base';
 import React from 'react';
 import {Pressable} from 'react-native';
-import {CheckCircleIcon, Text, Theme, XCircleIcon} from '../design-system';
+import {CheckCircleIcon, Text, XCircleIcon} from '../design-system';
+import {Theme} from '../design-system/theme';
 
 let toast;
 
@@ -46,7 +47,11 @@ export function showToast({message, type = 'success'}) {
     render: props => {
       const typeProps = typeMap[type] || typeMap.success;
       return (
-        <Pressable onPress={toast.closeAll}>
+        <Pressable
+          onPress={toast.closeAll}
+          _pressed={{
+            opacity: Theme.touchOpacity,
+          }}>
           <Stack
             bg={typeProps.bg}
             px={6}
