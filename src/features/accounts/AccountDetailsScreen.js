@@ -190,7 +190,7 @@ export function filterTransactionHistory(transactions, accountAddress) {
       const receivedFailed =
         !item.sent && item.status === TransactionStatus.Failed;
       return !receivedFailed;
-    });   
+    });
 }
 
 function TransactionHistory({accountAddress}) {
