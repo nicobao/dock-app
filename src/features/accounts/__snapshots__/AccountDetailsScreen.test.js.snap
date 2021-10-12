@@ -40,6 +40,11 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
         width="80px"
       >
         <Memo(ForwardRef(Pressable))
+          _pressed={
+            Object {
+              "opacity": 0.2,
+            }
+          }
           onPress={[Function]}
         >
           <SvgDotsVertical

@@ -175,22 +175,29 @@ function TransactionHistoryItem({transaction}) {
   );
 }
 
+export function filterTransactionHistory(transactions, accountAddress) {
+  return transactions
+    .filter(
+      item =>
+        item.fromAddress === accountAddress ||
+        item.recipientAddress === accountAddress,
+    )
+    .map(item => ({
+      ...item,
+      sent: item.fromAddress === accountAddress,
+    }))
+    .filter(item => {
+      const receivedFailed =
+        !item.sent && item.status === TransactionStatus.Failed;
+      return !receivedFailed;
+    });
+}
+
 function TransactionHistory({accountAddress}) {
   const allTransactions = useSelector(transactionsSelectors.getTransactions);
   const transactions = useMemo(() => {
-    return allTransactions
-      .filter(
-        item =>
-          item.fromAddress === accountAddress ||
-          item.recipientAddress === accountAddress,
-      )
-      .map(item => ({
-        ...item,
-        sent: item.fromAddress === accountAddress,
-      }));
+    return filterTransactionHistory(allTransactions, accountAddress);
   }, [allTransactions, accountAddress]);
-
-  console.log(`Transactions for ${accountAddress}`, transactions);
 
   return useMemo(() => {
     if (!transactions.length) {
