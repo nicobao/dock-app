@@ -196,11 +196,8 @@ export function filterTransactionHistory(transactions, accountAddress) {
 function TransactionHistory({accountAddress}) {
   const allTransactions = useSelector(transactionsSelectors.getTransactions);
   const transactions = useMemo(() => {
-    console.log(allTransactions);
     return filterTransactionHistory(allTransactions, accountAddress);
   }, [allTransactions, accountAddress]);
-
-  console.log(`Transactions for ${accountAddress}`, transactions);
 
   return useMemo(() => {
     if (!transactions.length) {
