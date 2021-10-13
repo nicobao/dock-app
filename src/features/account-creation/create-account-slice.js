@@ -75,6 +75,17 @@ export const createAccountOperations = {
   },
   importFromMnemonic: form =>
     withErrorToast(async (dispatch, getState) => {
+      const isValidPhrase = await UtilCryptoRpc.mnemonicValidate(form.phrase);
+
+      if (!isValidPhrase) {
+        showToast({
+          message: 'import_account_from_mnemonic.invalid_phrase',
+          type: 'error',
+        });
+
+        return;
+      }
+
       dispatch(accountActions.setAccountToBackup(null));
       dispatch(
         createAccountActions.setForm({
