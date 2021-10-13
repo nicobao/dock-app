@@ -118,7 +118,7 @@ export const transactionsOperations = {
         .then(res => {
           const updatedTransation = {
             ...transaction,
-            status: TransactionStatus.Failed,
+            status: TransactionStatus.Complete,
           };
           dispatch(transactionsActions.updateTransaction(updatedTransation));
 
