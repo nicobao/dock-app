@@ -75,11 +75,12 @@ export const createAccountOperations = {
   },
   importFromMnemonic: form =>
     withErrorToast(async (dispatch, getState) => {
-      const isValidPhrase = await UtilCryptoRpc.mnemonicValidate(form.phrase);
+      const phrase = form.phrase.trim();
+      const isValidPhrase = await UtilCryptoRpc.mnemonicValidate(phrase);
 
       if (!isValidPhrase) {
         showToast({
-          message: 'import_account_from_mnemonic.invalid_phrase',
+          message: translate('import_account_from_mnemonic.invalid_phrase'),
           type: 'error',
         });
 
@@ -92,7 +93,7 @@ export const createAccountOperations = {
           ...form,
         }),
       );
-      dispatch(createAccountActions.setMnemonicPhrase(form.phrase));
+      dispatch(createAccountActions.setMnemonicPhrase(phrase));
       navigate(Routes.ACCOUNT_IMPORT_SETUP);
     }),
   submitAccountForm: form =>
