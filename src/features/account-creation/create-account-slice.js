@@ -42,6 +42,34 @@ export const createAccountSelectors = {
   getMnemonicPhrase: state => getRoot(state).mnemonicPhrase,
 };
 
+function validateDerivationPath({phrase, type = 'sr25519', derivePath = ''}) {
+  return KeyringRpc.addressFromUri({
+    phrase,
+    type,
+    derivePath,
+  })
+
+    .then(() => true)
+    .catch(() => false);
+}
+
+async function validateAdvancedOptionsForm({phrase, form}) {
+  const isDerivationPathValid = await validateDerivationPath({
+    phrase,
+    type: form.keypairType || 'sr25519',
+    derivePath: form.derivationPath || '',
+  });
+
+  if (!isDerivationPathValid) {
+    showToast({
+      type: 'error',
+      message: translate('account_advanced_options.invalid_derivation_path'),
+    });
+  }
+
+  return isDerivationPathValid;
+}
+
 export const createAccountOperations = {
   initFlow: () => async (dispatch, getState) => {
     navigate(Routes.CREATE_ACCOUNT_SETUP);
@@ -87,6 +115,15 @@ export const createAccountOperations = {
         return;
       }
 
+      const isAdvancedOptionsValid = await validateAdvancedOptionsForm({
+        phrase,
+        form,
+      });
+
+      if (!isAdvancedOptionsValid) {
+        return;
+      }
+
       dispatch(accountActions.setAccountToBackup(null));
       dispatch(
         createAccountActions.setForm({
@@ -98,9 +135,18 @@ export const createAccountOperations = {
     }),
   submitAccountForm: form =>
     withErrorToast(async (dispatch, getState) => {
+      const phrase = await UtilCryptoRpc.mnemonicGenerate(12);
+      const isAdvancedOptionsValid = await validateAdvancedOptionsForm({
+        phrase,
+        form,
+      });
+
+      if (!isAdvancedOptionsValid) {
+        return;
+      }
+
       dispatch(accountActions.setAccountToBackup(null));
       dispatch(createAccountActions.setForm(form));
-      const phrase = await UtilCryptoRpc.mnemonicGenerate(12);
       dispatch(createAccountActions.setMnemonicPhrase(phrase));
       navigate(Routes.CREATE_ACCOUNT_BACKUP);
     }),
