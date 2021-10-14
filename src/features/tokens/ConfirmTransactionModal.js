@@ -58,7 +58,7 @@ export const ConfirmTransactionModal = withErrorBoundary(
     amountMessage,
   }) => {
     return (
-      <Modal visible={visible} onClose={onClose} modalSize={0.80}>
+      <Modal visible={visible} onClose={onClose} modalSize={0.8}>
         <Stack p={8}>
           <Typography variant="h1" mb={4}>
             {translate('confirm_transaction.title')}
