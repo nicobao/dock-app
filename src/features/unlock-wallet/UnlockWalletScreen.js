@@ -53,7 +53,7 @@ export function UnlockWalletScreen({
   onLogoPress,
 }) {
   return (
-    <ScreenContainer testID="unlockWalletScreen">
+    <ScreenContainer testID="unlockWalletScreen" hideGlobalHeader={true}>
       <Box justifyContent="center" row onPress={onLogoPress}>
         <Image
           source={SplashLogo}
