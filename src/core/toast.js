@@ -47,7 +47,6 @@ export function showToast({message, type = 'success'}) {
     render: props => {
       const typeProps = typeMap[type] || typeMap.success;
 
-      console.log('bg', typeProps.bg);
       return (
         <Pressable
           onPress={toast.closeAll}
