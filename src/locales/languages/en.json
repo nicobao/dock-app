@@ -83,7 +83,8 @@
     "keypair_type_ecdsa": "ECDSA (Non BTC/ETH compatible)",
     "secret_derivation_path": "Secret derivation path",
     "secret_derivation_path_tip": "You can set a custom derivation path for this account using the following syntax \"/<soft-key>//<hard-key>\". The \"/<soft-key>\" and \"//<hard-key>\" may be repeated and mixed. An optional \"///<password>\" can be used with a mnemonic seed, and may only be specified once.",
-    "invalid_secret_uri": "Unable to match provided value to a secret URI."
+    "invalid_secret_uri": "Unable to match provided value to a secret URI.",
+    "invalid_derivation_path": "Invalid derivation path"
   },
   "account_recovery_phrase": {
     "title": "Account recovery phrase",

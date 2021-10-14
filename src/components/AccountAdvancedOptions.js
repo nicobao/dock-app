@@ -35,7 +35,7 @@ export function AccountAdvancedOptions({onChange, form}) {
         </Stack>
       </FormControl>
       <FormControl isInvalid={false}>
-        <Stack mt={7}>
+        <Stack my={7}>
           <FormControl.Label>
             {translate('account_advanced_options.secret_derivation_path')}
             <InputPopover

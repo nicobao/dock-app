@@ -17,7 +17,7 @@ const typeMap = {
   },
   error: {
     icon: () => <XCircleIcon />,
-    bg: Theme.colors.gray,
+    bg: Theme.colors.primaryBackground,
   },
 };
 
@@ -46,6 +46,8 @@ export function showToast({message, type = 'success'}) {
     isClosable: true,
     render: props => {
       const typeProps = typeMap[type] || typeMap.success;
+
+      console.log('bg', typeProps.bg);
       return (
         <Pressable
           onPress={toast.closeAll}
