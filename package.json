@@ -17,8 +17,8 @@
     "storybook": "start-storybook -p 7007",
     "build-storybook": "build-storybook",
     "release:internal:android": "cd ./android && fastlane internal",
-    "increment_version:ios": "cd ./ios && fastlane increment_version && cd..",
-    "increment_version:android": "cd ./android && fastlane increment_version && cd..",
+    "increment_version:ios": "cd ./ios && fastlane increment_version && cd ..",
+    "increment_version:android": "cd ./android && fastlane increment_version && cd ..",
     "increment_version": "yarn increment_version:ios && yarn increment_version:android"
   },
   "dependencies": {
