@@ -9,7 +9,6 @@ exports[`CreateWalletScreen should render correctly 1`] = `
     }
   }
 >
-  <AppGlobalHeader />
   <Styled(View) />
   <Styled(ScrollView)>
     <Box

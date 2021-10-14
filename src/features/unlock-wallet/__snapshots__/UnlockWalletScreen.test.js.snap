@@ -9,7 +9,6 @@ exports[`UnlockWalletScreen should render correctly 1`] = `
     }
   }
 >
-  <AppGlobalHeader />
   <Box
     justifyContent="center"
     row={true}
