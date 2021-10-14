@@ -25,7 +25,7 @@ Setup keychain for ci
 ```
 fastlane ios increment_version
 ```
-Increment android version
+Increment ios version
 ### ios beta
 ```
 fastlane ios beta

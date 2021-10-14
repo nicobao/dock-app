@@ -32,7 +32,7 @@ platform :ios do
     )
   end
 
-  desc "Increment android version"
+  desc "Increment ios version"
   lane :increment_version do
     increment_build_number(xcodeproj: "DockApp.xcodeproj")
   end
