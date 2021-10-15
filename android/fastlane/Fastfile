@@ -16,12 +16,14 @@
 default_platform(:android)
 
 platform :android do
-  
-  
+
+  desc "Increment android version"
+  lane :increment_version do
+    increment_version_code
+  end
+
   desc "Submit a new Beta Build to Google Play"
   lane :internal do
-    increment_version_code
-
     gradle(
       task: 'assemble',
       build_type: 'Release'

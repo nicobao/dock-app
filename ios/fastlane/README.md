@@ -16,6 +16,16 @@ or alternatively using `brew install fastlane`
 
 # Available Actions
 ## iOS
+### ios setup
+```
+fastlane ios setup
+```
+Setup keychain for ci
+### ios increment_version
+```
+fastlane ios increment_version
+```
+Increment ios version
 ### ios beta
 ```
 fastlane ios beta

@@ -35,3 +35,25 @@ yarn ios
 
 
 ```
+
+
+## Create new build tag
+
+```
+# Run the script to increment the app build
+yarn increment_version
+
+# Commit your updates
+git add .
+git commit -S -m "update build number"
+
+# Create the build tag
+git tag -a v0.1-build-42 -m "build 42"
+
+# Push the tag
+git push origin v0.1-build-42
+
+# Check github actions, it will trigger the release for iOS and Android
+https://github.com/docknetwork/dock-app/actions
+
+```

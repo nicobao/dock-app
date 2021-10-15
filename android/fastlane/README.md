@@ -16,6 +16,11 @@ or alternatively using `brew install fastlane`
 
 # Available Actions
 ## Android
+### android increment_version
+```
+fastlane android increment_version
+```
+Increment android version
 ### android internal
 ```
 fastlane android internal
