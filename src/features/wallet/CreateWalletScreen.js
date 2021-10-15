@@ -16,7 +16,7 @@ import {BuildIdentifier} from '../app/BuildIdentifier';
 
 export function CreateWalletScreen() {
   return (
-    <ScreenContainer testID="createWalletScreen">
+    <ScreenContainer testID="createWalletScreen" hideGlobalHeader={true}>
       <Header />
       <Content>
         <Box flex={1} justifyContent="center" row marginTop="50%">
