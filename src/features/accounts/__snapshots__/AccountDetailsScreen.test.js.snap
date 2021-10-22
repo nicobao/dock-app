@@ -8,6 +8,7 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
       "flex": 1,
     }
   }
+  testID="AccountDetailsScreen"
 >
   <AppGlobalHeader />
   <Styled(View)>

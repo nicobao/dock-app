@@ -7,25 +7,34 @@ import {
   CreateAccountSetupTestIDs,
 } from '../src/features/account-creation/test-ids';
 
+const sleep = (delay) => new Promise(res => setTimeout(res, delay));
+
 async function tapPasscode() {
   for (let i = 0; i < 6; i++) {
-    await element(by.id('keyboardNumber1')).tap();
+    (await element(by.id('keyboardNumber1'))).tap();
+    await sleep(1000);
   }
 }
 
 export async function createWallet() {
   await waitFor(element(by.id('createWalletScreen')))
     .toBeVisible()
-    .withTimeout(5000);
-  await element(by.id('createWalletButton')).tap();
+    .withTimeout(50000);
+
+  (await element(by.id('createWalletButton'))).tap();
+
+  await waitFor(element(by.id('setupPasscodeScreen')))
+    .toBeVisible()
+    .withTimeout(50000);
+
+  (await element(by.id('create-wallet-btn'))).tap();
+
+
   await waitFor(element(by.id('createPasscodeScreen')))
     .toBeVisible()
     .withTimeout(5000);
 
-  for (let i = 0; i < 6; i++) {
-    await element(by.id('keyboardNumber1')).tap();
-  }
-
+  await tapPasscode();
   await tapPasscode();
 
   await waitFor(element(by.id('accountsScreen')))
@@ -42,7 +51,7 @@ export async function unlockWallet() {
 }
 
 describe('Wallet and accounts', () => {
-  it('Expect to create wallet button', async () => {
+  it('Expect to create wallet', async () => {
     await device.launchApp({newInstance: true});
     await createWallet();
   });
@@ -82,3 +91,4 @@ describe('Wallet and accounts', () => {
       .withTimeout(5000);
   });
 });
+

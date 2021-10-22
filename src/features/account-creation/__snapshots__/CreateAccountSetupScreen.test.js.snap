@@ -8,6 +8,7 @@ exports[`CreateAccountSetupScreen should render correctly 1`] = `
       "flex": 1,
     }
   }
+  testID="createAccountSetupScreen"
 >
   <AppGlobalHeader />
   <Styled(View)>

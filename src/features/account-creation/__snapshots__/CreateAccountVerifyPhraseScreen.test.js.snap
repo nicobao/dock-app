@@ -8,6 +8,7 @@ exports[`CreateAccountVerifyPhraseScreen should render correctly 1`] = `
       "flex": 1,
     }
   }
+  testID="createAccountVerifyPhraseScreen"
 >
   <AppGlobalHeader />
   <Styled(View)>

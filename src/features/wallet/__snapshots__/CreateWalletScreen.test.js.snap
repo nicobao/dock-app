@@ -8,6 +8,7 @@ exports[`CreateWalletScreen should render correctly 1`] = `
       "flex": 1,
     }
   }
+  testID="createWalletScreen"
 >
   <Styled(View) />
   <Styled(ScrollView)>
@@ -48,7 +49,7 @@ exports[`CreateWalletScreen should render correctly 1`] = `
       full={true}
       mt={4}
       onPress={[Function]}
-      testID="createWalletButton"
+      testID="import_existing"
       variant="ghost"
     >
       I already have a wallet
