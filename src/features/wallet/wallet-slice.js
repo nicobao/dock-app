@@ -59,48 +59,52 @@ export const walletOperations = {
       fileUri: file.fileCopyUri,
     });
   },
-  importWallet: ({fileUri, password}) => async (dispatch, getState) => {
-    const fileData = await RNFS.readFile(fileUri);
-    const jsonData = JSON.parse(fileData);
-    await AsyncStorage.removeItem('wallet');
-    await WalletRpc.importWallet(jsonData, password);
+  importWallet:
+    ({fileUri, password}) =>
+    async (dispatch, getState) => {
+      const fileData = await RNFS.readFile(fileUri);
+      const jsonData = JSON.parse(fileData);
+      await AsyncStorage.removeItem('wallet');
+      await WalletRpc.importWallet(jsonData, password);
 
-    dispatch(
-      walletActions.setCreationFlags({
-        importWalletFlow: true,
-      }),
-    );
+      dispatch(
+        walletActions.setCreationFlags({
+          importWalletFlow: true,
+        }),
+      );
 
-    navigate(Routes.CREATE_WALLET_PASSCODE);
-  },
-  exportWallet: ({password, callback}) => async (dispatch, getState) => {
-    const walletBackup = await WalletRpc.export(password);
-    const jsonData = JSON.stringify(walletBackup);
-    const path = `${RNFS.DocumentDirectoryPath}/walletBackup.json`;
-    const mimeType = 'application/json';
-    await RNFS.writeFile(path, jsonData);
+      navigate(Routes.CREATE_WALLET_PASSCODE);
+    },
+  exportWallet:
+    ({password, callback}) =>
+    async (dispatch, getState) => {
+      const walletBackup = await WalletRpc.export(password);
+      const jsonData = JSON.stringify(walletBackup);
+      const path = `${RNFS.DocumentDirectoryPath}/walletBackup.json`;
+      const mimeType = 'application/json';
+      await RNFS.writeFile(path, jsonData);
 
-    try {
-      await Share.open({
-        url: 'file://' + path,
-        type: mimeType,
-      });
+      try {
+        await Share.open({
+          url: 'file://' + path,
+          type: mimeType,
+        });
 
-      if (callback) {
-        callback();
-      } else {
-        navigateBack();
+        if (callback) {
+          callback();
+        } else {
+          navigateBack();
+        }
+      } catch (err) {
+        console.error(err);
+        showToast({
+          message: translate('backup_wallet.error'),
+          type: 'error',
+        });
       }
-    } catch (err) {
-      console.error(err);
-      showToast({
-        message: translate('backup_wallet.error'),
-        type: 'error',
-      });
-    }
 
-    RNFS.unlink(path);
-  },
+      RNFS.unlink(path);
+    },
   deleteWallet: () => async (dispatch, getState) => {
     await AsyncStorage.removeItem('walletInfo');
     await AsyncStorage.removeItem('wallet');
@@ -146,92 +150,93 @@ export const walletOperations = {
       },
     });
   },
-  unlockWallet: ({biometry, passcode, callback} = {}) => async (
-    dispatch,
-    getState,
-  ) => {
-    const keychainId = 'wallet';
+  unlockWallet:
+    ({biometry, passcode, callback} = {}) =>
+    async (dispatch, getState) => {
+      const keychainId = 'wallet';
 
-    if (biometry) {
-      console.log('Biometry: attempt to unlock');
-      const result = await Keychain.getItem(`${keychainId}-biometric`, {
-        authenticationPrompt: {
-          title: 'Allow dock wallet to use your biometry',
-        },
-      });
-
-      console.log('Biometry unlock succeed');
-      console.log(JSON.stringify(result));
-    } else {
-      const keychainData = await Keychain.getItem(keychainId);
-
-      if (keychainData.passcode !== passcode) {
-        throw new Error({
-          code: 401,
-          message: "Passcode doesn't match, please try again",
+      if (biometry) {
+        console.log('Biometry: attempt to unlock');
+        const result = await Keychain.getItem(`${keychainId}-biometric`, {
+          authenticationPrompt: {
+            title: 'Allow dock wallet to use your biometry',
+          },
         });
-      }
-    }
 
-    if (callback) {
-      callback();
-    } else {
-      dispatch(accountOperations.loadAccounts());
-      navigate(Routes.ACCOUNTS);
-    }
-  },
-
-  createWallet: ({biometry = false} = {}) => async (dispatch, getState) => {
-    const passcode = walletSelectors.getPasscode(getState());
-    const flags = walletSelectors.getCreationFlags(getState());
-    const keychainId = 'wallet';
-    const keychainProps = {
-      passcode: passcode.toString(),
-    };
-
-    if (biometry) {
-      const biometryType = appSelectors.getSupportedBiometryType(getState());
-
-      if (biometryType === BiometryType.Fingerprint) {
-        await Keychain.setItem(`${keychainId}-biometric`, keychainProps, {
-          accessControl: Keychain.ACCESS_CONTROL.BIOMETRY_ANY,
-          authenticationType: Keychain.BIOMETRY_TYPE.FINGERPRINT,
-          storage: Keychain.STORAGE_TYPE.RSA,
-        });
+        console.log('Biometry unlock succeed');
+        console.log(JSON.stringify(result));
       } else {
-        await Keychain.setItem(`${keychainId}-biometric`, keychainProps, {
-          accessControl:
-            Keychain.ACCESS_CONTROL.BIOMETRY_ANY_OR_DEVICE_PASSCODE,
+        const keychainData = await Keychain.getItem(keychainId);
+
+        if (keychainData.passcode !== passcode) {
+          throw new Error({
+            code: 401,
+            message: "Passcode doesn't match, please try again",
+          });
+        }
+      }
+
+      if (callback) {
+        callback();
+      } else {
+        dispatch(accountOperations.loadAccounts());
+        navigate(Routes.ACCOUNTS);
+      }
+    },
+
+  createWallet:
+    ({biometry = false} = {}) =>
+    async (dispatch, getState) => {
+      const passcode = walletSelectors.getPasscode(getState());
+      const flags = walletSelectors.getCreationFlags(getState());
+      const keychainId = 'wallet';
+      const keychainProps = {
+        passcode: passcode.toString(),
+      };
+
+      if (biometry) {
+        const biometryType = appSelectors.getSupportedBiometryType(getState());
+
+        if (biometryType === BiometryType.Fingerprint) {
+          await Keychain.setItem(`${keychainId}-biometric`, keychainProps, {
+            accessControl: Keychain.ACCESS_CONTROL.BIOMETRY_ANY,
+            authenticationType: Keychain.BIOMETRY_TYPE.FINGERPRINT,
+            storage: Keychain.STORAGE_TYPE.RSA,
+          });
+        } else {
+          await Keychain.setItem(`${keychainId}-biometric`, keychainProps, {
+            accessControl:
+              Keychain.ACCESS_CONTROL.BIOMETRY_ANY_OR_DEVICE_PASSCODE,
+          });
+        }
+
+        console.log('Biometry created');
+
+        await Keychain.getItem(`${keychainId}-biometric`, {
+          authenticationPrompt: {
+            title: 'Allow dock wallet to use your biometry',
+          },
         });
       }
 
-      console.log('Biometry created');
+      await Keychain.setItem(keychainId, keychainProps, {});
+      const walletInfo = {
+        biometry,
+      };
+      await AsyncStorage.setItem('walletInfo', JSON.stringify(walletInfo));
 
-      await Keychain.getItem(`${keychainId}-biometric`, {
-        authenticationPrompt: {
-          title: 'Allow dock wallet to use your biometry',
-        },
-      });
-    }
+      await Keychain.getItem(keychainId);
 
-    await Keychain.setItem(keychainId, keychainProps, {});
-    const walletInfo = {
-      biometry,
-    };
-    await AsyncStorage.setItem('walletInfo', JSON.stringify(walletInfo));
+      dispatch(walletActions.setWalletInfo(walletInfo));
 
-    await Keychain.getItem(keychainId);
+      if (!flags.importWalletFlow) {
+        WalletRpc.create(keychainId);
+      }
 
-    dispatch(walletActions.setWalletInfo(walletInfo));
+      dispatch(walletActions.setCreationFlags({}));
 
-    if (!flags.importWalletFlow) {
-      WalletRpc.create(keychainId);
-    }
-
-    dispatch(walletActions.setCreationFlags({}));
-
-    navigate(Routes.ACCOUNTS);
-  },
+      navigate(Routes.ACCOUNTS);
+    },
 };
 
 export const walletReducer = wallet.reducer;
