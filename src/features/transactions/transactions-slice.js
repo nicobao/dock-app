@@ -67,102 +67,107 @@ export const transactionsOperations = {
     dispatch(transactionsActions.updateTransaction(transaction));
   },
 
-  getFeeAmount:
-    ({recipientAddress, accountAddress, amount}) =>
-    async (dispatch, getState) => {
-      return ApiRpc.getFeeAmount({
-        recipientAddress: recipientAddress,
-        accountAddress,
-        amount: amount,
-      });
-    },
+  getFeeAmount: ({recipientAddress, accountAddress, amount}) => async (
+    dispatch,
+    getState,
+  ) => {
+    return ApiRpc.getFeeAmount({
+      recipientAddress: recipientAddress,
+      accountAddress,
+      amount: amount,
+    });
+  },
 
-  sendTransaction:
-    ({recipientAddress, accountAddress, amount, fee, prevTransaction}) =>
-    async (dispatch, getState) => {
-      showToast({
-        message: translate('send_token.transaction_sent'),
-      });
+  sendTransaction: ({
+    recipientAddress,
+    accountAddress,
+    amount,
+    fee,
+    prevTransaction,
+  }) => async (dispatch, getState) => {
+    showToast({
+      message: translate('send_token.transaction_sent'),
+    });
 
-      const parsedAmount = parseFloat(amount) * DOCK_TOKEN_UNIT;
+    const parsedAmount = parseFloat(amount) * DOCK_TOKEN_UNIT;
 
-      const internalId = uuid();
-      const transaction = {
-        id: internalId,
-        date: new Date().toISOString(),
-        fromAddress: accountAddress,
-        recipientAddress: recipientAddress,
-        amount: `${parsedAmount}`,
-        feeAmount: `${fee}`,
-        status: TransactionStatus.InProgress,
-      };
+    const internalId = uuid();
+    const transaction = {
+      id: internalId,
+      date: new Date().toISOString(),
+      fromAddress: accountAddress,
+      recipientAddress: recipientAddress,
+      amount: `${parsedAmount}`,
+      feeAmount: `${fee}`,
+      status: TransactionStatus.InProgress,
+    };
 
-      const realm = getRealm();
+    const realm = getRealm();
 
-      realm.write(() => {
-        realm.create('Transaction', transaction, 'modified');
-      });
+    realm.write(() => {
+      realm.create('Transaction', transaction, 'modified');
+    });
 
-      dispatch(transactionsActions.addTransaction(transaction));
+    dispatch(transactionsActions.addTransaction(transaction));
 
-      showToast({
-        type: 'success',
-        message: translate('confirm_transaction.transfer_initiated'),
-      });
+    showToast({
+      type: 'success',
+      message: translate('confirm_transaction.transfer_initiated'),
+    });
 
-      ApiRpc.sendTokens({
-        recipientAddress,
-        accountAddress,
-        amount: parsedAmount,
-      })
-        .then(res => {
-          const updatedTransation = {
-            ...transaction,
-            status: TransactionStatus.Complete,
-          };
-          dispatch(transactionsActions.updateTransaction(updatedTransation));
+    ApiRpc.sendTokens({
+      recipientAddress,
+      accountAddress,
+      amount: parsedAmount,
+    })
+      .then(res => {
+        const updatedTransation = {
+          ...transaction,
+          status: TransactionStatus.Complete,
+        };
+        dispatch(transactionsActions.updateTransaction(updatedTransation));
 
-          realm.write(() => {
-            realm.create('Transaction', updatedTransation, 'modified');
-          });
-
-          showToast({
-            type: 'success',
-            message: translate('confirm_transaction.transaction_complete'),
-          });
-
-          if (
-            prevTransaction &&
-            prevTransaction.status === TransactionStatus.Failed
-          ) {
-            dispatch(
-              transactionsOperations.updateTransaction({
-                ...prevTransaction,
-                retrySucceed: true,
-              }),
-            );
-          }
-        })
-        .catch(err => {
-          console.error(err);
-
-          showToast({
-            type: 'error',
-            message: translate('transaction_failed.title'),
-          });
-
-          const updatedTransation = {
-            ...transaction,
-            status: TransactionStatus.Failed,
-          };
-
-          realm.write(() => {
-            realm.create('Transaction', updatedTransation, 'modified');
-          });
-
-          dispatch(transactionsActions.updateTransaction(updatedTransation));
+        realm.write(() => {
+          realm.create('Transaction', updatedTransation, 'modified');
         });
-    },
+
+        showToast({
+          type: 'success',
+          message: translate('confirm_transaction.transaction_complete'),
+        });
+
+        if (
+          prevTransaction &&
+          prevTransaction.status === TransactionStatus.Failed
+        ) {
+          dispatch(
+            transactionsOperations.updateTransaction({
+              ...prevTransaction,
+              retrySucceed: true,
+            }),
+          );
+        }
+      })
+      .catch(err => {
+        console.error(err);
+
+        showToast({
+          type: 'error',
+          message: translate('transaction_failed.title'),
+        });
+
+        const updatedTransation = {
+          ...transaction,
+          status: TransactionStatus.Failed,
+        };
+
+        realm.write(() => {
+          realm.create('Transaction', updatedTransation, 'modified');
+        });
+
+        dispatch(transactionsActions.updateTransaction(updatedTransation));
+      });
+  },
 };
 
 export const transactionsReducer = transactions.reducer;

@@ -21,16 +21,14 @@ const typeMap = {
   },
 };
 
-export const withErrorToast =
-  fn =>
-  async (...params) => {
-    try {
-      await fn(...params);
-    } catch (err) {
-      showUnexpectedErrorToast();
-      throw err;
-    }
-  };
+export const withErrorToast = fn => async (...params) => {
+  try {
+    await fn(...params);
+  } catch (err) {
+    showUnexpectedErrorToast();
+    throw err;
+  }
+};
 
 export function showUnexpectedErrorToast() {
   showToast({

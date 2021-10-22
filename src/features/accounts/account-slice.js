@@ -132,49 +132,47 @@ export const accountOperations = {
     navigate(Routes.CREATE_ACCOUNT_SETUP);
   },
 
-  exportAccountAs:
-    ({accountId, method, password}) =>
-    async (dispatch, getState) => {
-      const encryptedAccount = await WalletRpc.exportAccount(
-        accountId,
-        password,
-      );
-      const jsonData = JSON.stringify(encryptedAccount);
+  exportAccountAs: ({accountId, method, password}) => async (
+    dispatch,
+    getState,
+  ) => {
+    const encryptedAccount = await WalletRpc.exportAccount(accountId, password);
+    const jsonData = JSON.stringify(encryptedAccount);
 
-      let qrCodeData;
+    let qrCodeData;
 
-      if (method === 'json') {
-        const path = `${RNFS.DocumentDirectoryPath}/${accountId}.json`;
-        const mimeType = 'application/json';
-        await RNFS.writeFile(path, jsonData);
+    if (method === 'json') {
+      const path = `${RNFS.DocumentDirectoryPath}/${accountId}.json`;
+      const mimeType = 'application/json';
+      await RNFS.writeFile(path, jsonData);
 
-        try {
-          await Share.open({
-            url: 'file://' + path,
-            type: mimeType,
-          });
-        } catch (err) {
-          console.error(err);
-          showToast({
-            message: translate('account_details.export_error'),
-            type: 'error',
-          });
-        }
-
-        RNFS.unlink(path);
-      } else {
-        qrCodeData = jsonData;
+      try {
+        await Share.open({
+          url: 'file://' + path,
+          type: mimeType,
+        });
+      } catch (err) {
+        console.error(err);
+        showToast({
+          message: translate('account_details.export_error'),
+          type: 'error',
+        });
       }
 
-      navigate(Routes.ACCOUNT_DETAILS, {
-        accountId,
-        qrCodeData,
-      });
+      RNFS.unlink(path);
+    } else {
+      qrCodeData = jsonData;
+    }
 
-      showToast({
-        message: translate('account_details.export_success'),
-      });
-    },
+    navigate(Routes.ACCOUNT_DETAILS, {
+      accountId,
+      qrCodeData,
+    });
+
+    showToast({
+      message: translate('account_details.export_success'),
+    });
+  },
 
   removeAccount: (account: any) => async (dispatch, getState) => {
     await WalletRpc.remove(account.id);
@@ -199,11 +197,13 @@ export const accountOperations = {
       message: translate('account_details.account_removed'),
     });
   },
-  getPolkadotSvgIcon:
-    (address, isAlternative) => async (dispatch, getState) => {
-      await dispatch(appOperations.waitRpcReady());
-      return PolkadotUIRpc.getPolkadotSvgIcon(address, isAlternative);
-    },
+  getPolkadotSvgIcon: (address, isAlternative) => async (
+    dispatch,
+    getState,
+  ) => {
+    await dispatch(appOperations.waitRpcReady());
+    return PolkadotUIRpc.getPolkadotSvgIcon(address, isAlternative);
+  },
   loadAccounts: () => async (dispatch, getState) => {
     const realm = getRealm();
     const cachedAccounts = realm.objects('Account').toJSON();
