@@ -20,7 +20,7 @@ export async function createWallet() {
   await waitFor(element(by.id('createWalletScreen')))
     .toBeVisible()
     .withTimeout(50000);
-  console.log('Wallet screen found');
+
   (await element(by.id('createWalletButton'))).tap();
 
   await waitFor(element(by.id('setupPasscodeScreen')))
@@ -29,12 +29,10 @@ export async function createWallet() {
 
   (await element(by.id('create-wallet-btn'))).tap();
 
-  console.log('Wait for createPasscodeScreen');
+
   await waitFor(element(by.id('createPasscodeScreen')))
     .toBeVisible()
     .withTimeout(5000);
-
-  console.log('Tap on keyboard buttons');
 
   await tapPasscode();
   await tapPasscode();

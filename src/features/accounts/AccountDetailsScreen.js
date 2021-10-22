@@ -3,12 +3,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {RefreshControl} from 'react-native';
 import {TouchableHighlight} from 'react-native-gesture-handler';
 import {useDispatch, useSelector} from 'react-redux';
-import {Modal} from 'src/components/Modal';
-import {
-  DOCK_TOKEN_UNIT,
-  formatCurrency,
-  formatDate,
-} from 'src/core/format-utils';
+import {formatCurrency, formatDate} from 'src/core/format-utils';
 import {PolkadotIcon} from '../../components/PolkadotIcon';
 import {navigate, navigateBack} from '../../core/navigation';
 import {Routes} from '../../core/routes';
@@ -25,7 +20,9 @@ import {
   Typography,
 } from '../../design-system';
 import {translate} from '../../locales';
-import {AmountDetails, TokenAmount} from '../tokens/ConfirmTransactionModal';
+import {TokenAmount} from '../tokens/ConfirmTransactionModal';
+import {TransactionConfirmationModal} from '../transactions/TransactionConfirmationModal';
+import {TransactionDetailsModal} from '../transactions/TransactionDetailsModal';
 import {
   transactionsOperations,
   transactionsSelectors,
@@ -34,8 +31,6 @@ import {
 import {accountOperations, accountSelectors} from './account-slice';
 import {AccountSettingsModal} from './AccountSettingsModal';
 import {QRCodeModal} from './QRCodeModal';
-import {TransactionDetailsModal} from '../transactions/TransactionDetailsModal';
-import {TransactionConfirmationModal} from '../transactions/TransactionConfirmationModal';
 
 const TransactionStatusColor = {
   pending: Theme.colors.transactionPending,

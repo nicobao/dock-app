@@ -1,37 +1,13 @@
-import {Button, Pressable, ScrollView, Stack} from 'native-base';
-import React, {useEffect, useMemo, useState} from 'react';
-import {RefreshControl} from 'react-native';
-import {TouchableHighlight} from 'react-native-gesture-handler';
-import {useDispatch, useSelector} from 'react-redux';
+import {Button, Stack} from 'native-base';
+import React from 'react';
+import {useDispatch} from 'react-redux';
 import {Modal} from 'src/components/Modal';
-import {
-  DOCK_TOKEN_UNIT,
-  formatCurrency,
-  formatDate,
-} from 'src/core/format-utils';
+import {DOCK_TOKEN_UNIT} from 'src/core/format-utils';
 import {PolkadotIcon} from '../../components/PolkadotIcon';
-import {navigate, navigateBack} from '../../core/navigation';
-import {Routes} from '../../core/routes';
-
-import {
-  AlertIcon,
-  BackButton,
-  Box,
-  DotsVerticalIcon,
-  Header,
-  LoadingScreen,
-  NBox,
-  ScreenContainer,
-  Theme,
-  Typography,
-} from '../../design-system';
+import {Box, Typography} from '../../design-system';
 import {translate} from '../../locales';
-import {AmountDetails, TokenAmount} from '../tokens/ConfirmTransactionModal';
-import {
-  transactionsOperations,
-  transactionsSelectors,
-  TransactionStatus,
-} from './transactions-slice';
+import {AmountDetails} from '../tokens/ConfirmTransactionModal';
+import {transactionsOperations} from './transactions-slice';
 
 export function TransactionConfirmationModal({visible, onClose, transaction}) {
   const {
