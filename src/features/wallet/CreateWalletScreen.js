@@ -40,7 +40,7 @@ export function CreateWalletScreen() {
           full
           variant="ghost"
           mt={4}
-          testID="createWalletButton"
+          testID="import_existing"
           onPress={() => navigate(Routes.WALLET_IMPORT_BACKUP)}>
           {translate('create_wallet.import_existing')}
         </LoadingButton>

@@ -8,6 +8,7 @@ exports[`SetupPasscodeScreen should render correctly 1`] = `
       "flex": 1,
     }
   }
+  testID="setupPasscodeScreen"
 >
   <AppGlobalHeader />
   <Styled(View)>

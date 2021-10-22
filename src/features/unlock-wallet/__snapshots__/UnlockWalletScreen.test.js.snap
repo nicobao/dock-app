@@ -8,6 +8,7 @@ exports[`UnlockWalletScreen should render correctly 1`] = `
       "flex": 1,
     }
   }
+  testID="unlockWalletScreen"
 >
   <Box
     justifyContent="center"

@@ -49,13 +49,15 @@ export function AppGlobalHeader() {
   );
 }
 
-export function ScreenContainer({children, hideGlobalHeader}) {
+export function ScreenContainer({children, hideGlobalHeader, ...props}) {
   return (
     <SafeAreaView
+      {...props}
       style={{
         flex: 1,
         backgroundColor: Theme.colors.primaryBackground,
-      }}>
+      }}
+      >
       {hideGlobalHeader ? null : <AppGlobalHeader />}
       {children}
     </SafeAreaView>

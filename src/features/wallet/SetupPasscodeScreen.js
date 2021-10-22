@@ -15,7 +15,7 @@ import {Routes} from 'src/core/routes';
 
 export function SetupPasscodeScreen() {
   return (
-    <ScreenContainer testID="create-wallet-screen">
+    <ScreenContainer testID="setupPasscodeScreen">
       <Header>
         <BackButton />
       </Header>

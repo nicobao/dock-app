@@ -8,6 +8,7 @@ exports[`CreateAccountMnemonicScreen should render correctly 1`] = `
       "flex": 1,
     }
   }
+  testID="create-wallet-screen"
 >
   <Styled(View)>
     <BackButton />
