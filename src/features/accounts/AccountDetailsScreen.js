@@ -1,6 +1,7 @@
 import {Button, Pressable, ScrollView, Stack} from 'native-base';
 import React, {useEffect, useMemo, useState} from 'react';
 import {RefreshControl} from 'react-native';
+import {TouchableHighlight} from 'react-native-gesture-handler';
 import {useDispatch, useSelector} from 'react-redux';
 import {Modal} from 'src/components/Modal';
 import {
@@ -33,6 +34,8 @@ import {
 import {accountOperations, accountSelectors} from './account-slice';
 import {AccountSettingsModal} from './AccountSettingsModal';
 import {QRCodeModal} from './QRCodeModal';
+import {TransactionDetailsModal} from '../transactions/TransactionDetailsModal';
+import {TransactionConfirmationModal} from '../transactions/TransactionConfirmationModal';
 
 const TransactionStatusColor = {
   pending: Theme.colors.transactionPending,
@@ -40,75 +43,10 @@ const TransactionStatusColor = {
   complete: Theme.colors.transactionCompleted,
 };
 
-function TransactionDetailsModal({visible, onClose, transaction}) {
-  const {
-    amount,
-    tokenSymbol = 'DOCK',
-    recipientAddress,
-    feeAmount,
-    fromAddress,
-  } = transaction;
-
-  const dispatch = useDispatch();
-
-  return (
-    <Modal visible={visible} onClose={onClose} modalSize={0.75}>
-      <Stack p={8}>
-        <Typography variant="h1" mb={4}>
-          {translate('confirm_transaction.title')}
-        </Typography>
-        <Stack mb={2}>
-          <Typography mb={1}>
-            {translate('confirm_transaction.send')}
-          </Typography>
-          <AmountDetails amount={amount} symbol={tokenSymbol} />
-        </Stack>
-        <Stack mb={2}>
-          <Box>
-            <Typography mb={1}>
-              {translate('confirm_transaction.to')}
-            </Typography>
-          </Box>
-          <Stack direction="row">
-            <Box pl={5}>
-              <PolkadotIcon size={30} address={recipientAddress} />
-            </Box>
-            <Box pr={15}>
-              <Typography ml={2}>{recipientAddress}</Typography>
-            </Box>
-          </Stack>
-        </Stack>
-        <Stack mb={2}>
-          <Typography mb={1}>{translate('confirm_transaction.fee')}</Typography>
-          <AmountDetails amount={feeAmount} symbol={tokenSymbol} />
-        </Stack>
-        <Stack mb={5}>
-          <Typography mb={1}>
-            {translate('confirm_transaction.total')}
-          </Typography>
-          <AmountDetails amount={amount} symbol={tokenSymbol} />
-        </Stack>
-        <Button
-          onPress={() => {
-            dispatch(
-              transactionsOperations.sendTransaction({
-                recipientAddress,
-                accountAddress: fromAddress,
-                fee: feeAmount,
-                amount: parseFloat(amount) / DOCK_TOKEN_UNIT,
-                prevTransaction: transaction,
-              }),
-            ).finally(onClose);
-          }}>
-          {translate('confirm_transaction.submit')}
-        </Button>
-      </Stack>
-    </Modal>
-  );
-}
-
 function TransactionHistoryItem({transaction}) {
   const [showDetails, setShowDetails] = useState();
+  const [showConfirmation, setShowConfirmation] = useState();
+
   const {
     amount,
     tokenSymbol = 'DOCK',
@@ -119,66 +57,73 @@ function TransactionHistoryItem({transaction}) {
 
   return (
     <>
+      <TransactionConfirmationModal
+        visible={showConfirmation}
+        onClose={() => setShowConfirmation(false)}
+        transaction={transaction}
+      />
       <TransactionDetailsModal
         visible={showDetails}
         onClose={() => setShowDetails(false)}
         transaction={transaction}
       />
-      <Stack
-        pb={2}
-        borderBottomWidth={1}
-        borderBottomColor={Theme.colors.tertiaryBackground}
+      <TouchableHighlight
         onPress={() => {
           setShowDetails(true);
         }}>
-        {/* <AmountDetails amount={amount} symbol={tokenSymbol} /> */}
-        <TokenAmount amount={amount}>
-          {({tokenAmount, tokenSymbol}) => (
-            <Typography variant="h3">
-              {translate(`transaction_details.${sent ? 'sent' : 'received'}`)}{' '}
-              {tokenAmount} {tokenSymbol}
-            </Typography>
-          )}
-        </TokenAmount>
-        <Typography>{formatDate(transaction.date)}</Typography>
+        <Stack
+          pb={2}
+          borderBottomWidth={1}
+          borderBottomColor={Theme.colors.tertiaryBackground}>
+          {/* <AmountDetails amount={amount} symbol={tokenSymbol} /> */}
+          <TokenAmount amount={amount}>
+            {({tokenAmount, tokenSymbol}) => (
+              <Typography variant="h3">
+                {translate(`transaction_details.${sent ? 'sent' : 'received'}`)}{' '}
+                {tokenAmount} {tokenSymbol}
+              </Typography>
+            )}
+          </TokenAmount>
+          <Typography>{formatDate(transaction.date)}</Typography>
 
-        <Stack direction="row">
-          <Stack
-            my={2}
-            direction="row"
-            bg={Theme.colors.secondaryBackground}
-            borderRadius={Theme.borderRadius * 2}
-            px={3}
-            w="auto">
+          <Stack direction="row">
             <Stack
-              bg={TransactionStatusColor[transaction.status]}
-              w={2}
-              h={2}
-              borderRadius={10}
-              mt={2}
-              mr={2}
-            />
-            <Typography>
-              {translate(
-                `transaction_status.${transaction.status || 'pending'}`,
-              )}
-            </Typography>
+              my={2}
+              direction="row"
+              bg={Theme.colors.secondaryBackground}
+              borderRadius={Theme.borderRadius * 2}
+              px={3}
+              w="auto">
+              <Stack
+                bg={TransactionStatusColor[transaction.status]}
+                w={2}
+                h={2}
+                borderRadius={10}
+                mt={2}
+                mr={2}
+              />
+              <Typography>
+                {translate(
+                  `transaction_status.${transaction.status || 'pending'}`,
+                )}
+              </Typography>
+            </Stack>
+            <Stack flex={1} />
           </Stack>
-          <Stack flex={1} />
+          {transaction.status === TransactionStatus.Failed &&
+          !transaction.retrySucceed ? (
+            <Stack alignItems="flex-start">
+              <Button
+                colorScheme="dark"
+                variant="solid"
+                size="sm"
+                onPress={() => setShowConfirmation(true)}>
+                {translate('transaction_history.try_again')}
+              </Button>
+            </Stack>
+          ) : null}
         </Stack>
-        {transaction.status === TransactionStatus.Failed &&
-        !transaction.retrySucceed ? (
-          <Stack alignItems="flex-start">
-            <Button
-              colorScheme="dark"
-              variant="solid"
-              size="sm"
-              onPress={() => setShowDetails(true)}>
-              {translate('transaction_history.try_again')}
-            </Button>
-          </Stack>
-        ) : null}
-      </Stack>
+      </TouchableHighlight>
     </>
   );
 }

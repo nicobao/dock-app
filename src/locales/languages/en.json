@@ -195,9 +195,11 @@
     "try_again": "Try again"
   },
   "transaction_details": {
-    "title": "Sent",
+    "title": "Transaction",
     "status": "Status",
     "sent": "Sent",
+    "fee": "Transaction Fee",
+    "total": "Total",
     "received": "Received",
     "to": "To",
     "date": "Date",
