@@ -92,14 +92,8 @@ export function QRScanScreen({route}) {
           reactivateTimeout={10000}
           flashMode={RNCamera.Constants.FlashMode.off}
           cameraStyle={{height: Dimensions.get('window').height}}
-          topViewStyle={{
-            height: 0,
-            flex: 0,
-          }}
-          bottomViewStyle={{
-            height: 0,
-            flex: 0,
-          }}
+          topViewStyle={styles.scannerTopView}
+          bottomViewStyle={styles.scannerBottomView}
           onRead={event => onData(event.data)}
         />
       </QRCodeContainer>
@@ -109,8 +103,8 @@ export function QRScanScreen({route}) {
           <IconContainer>
             <TouchableWithoutFeedback
               onPress={navigateBack}
-              style={{padding: 20}}>
-              <Text style={{color: Theme.colors.textHighlighted}}>Back</Text>
+              style={styles.headerIcon}>
+              <Text style={styles.headerText}>Back</Text>
             </TouchableWithoutFeedback>
           </IconContainer>
         </Header>
@@ -158,6 +152,14 @@ const styles = StyleSheet.create({
   scanner: {
     flex: 1,
   },
+  scannerTopView: {
+    height: 0,
+    flex: 0,
+  },
+  scannerBottomView: {
+    height: 0,
+    flex: 0,
+  },
   frame: {
     width: 60,
     height: 60,
@@ -182,5 +184,11 @@ const styles = StyleSheet.create({
   frameRightBottom: {
     right: 0,
     bottom: 0,
+  },
+  headerIcon: {
+    padding: 20,
+  },
+  headerText: {
+    color: Theme.colors.textHighlighted,
   },
 });
