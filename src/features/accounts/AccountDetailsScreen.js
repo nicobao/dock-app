@@ -42,13 +42,7 @@ function TransactionHistoryItem({transaction, accountAddress}) {
   const [showDetails, setShowDetails] = useState();
   const [showConfirmation, setShowConfirmation] = useState();
 
-  const {
-    amount,
-    tokenSymbol = 'DOCK',
-    recipientAddress,
-    feeAmount,
-    sent,
-  } = transaction;
+  const {amount, feeAmount, sent} = transaction;
 
   return (
     <>

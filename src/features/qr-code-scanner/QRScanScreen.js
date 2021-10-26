@@ -87,7 +87,7 @@ export function QRScanScreen({route}) {
     <Container>
       <QRCodeContainer>
         <QRCodeScanner
-          style={{flex: 1}}
+          style={styles.scanner}
           reactivate={true}
           reactivateTimeout={10000}
           flashMode={RNCamera.Constants.FlashMode.off}
@@ -116,58 +116,10 @@ export function QRScanScreen({route}) {
         </Header>
         <Body>
           <View style={{width: 240, height: 230}}>
-            <View
-              style={{
-                width: 60,
-                height: 60,
-                borderStyle: 'solid',
-                borderColor: '#00C0D9',
-                borderLeftWidth: 12,
-                borderTopWidth: 12,
-                position: 'absolute',
-                left: 0,
-                top: 0,
-              }}
-            />
-            <View
-              style={{
-                width: 60,
-                height: 60,
-                borderStyle: 'solid',
-                borderColor: '#00C0D9',
-                borderRightWidth: 12,
-                borderTopWidth: 12,
-                position: 'absolute',
-                right: 0,
-                top: 0,
-              }}
-            />
-            <View
-              style={{
-                width: 60,
-                height: 60,
-                borderStyle: 'solid',
-                borderColor: '#00C0D9',
-                borderRightWidth: 12,
-                borderBottomWidth: 12,
-                position: 'absolute',
-                right: 0,
-                bottom: 0,
-              }}
-            />
-            <View
-              style={{
-                width: 60,
-                height: 60,
-                borderStyle: 'solid',
-                borderColor: '#00C0D9',
-                borderLeftWidth: 12,
-                borderBottomWidth: 12,
-                position: 'absolute',
-                left: 0,
-                bottom: 0,
-              }}
-            />
+            <View style={[styles.frame, styles.frameLeftTop]} />
+            <View style={[styles.frame, styles.frameRightTop]} />
+            <View style={[styles.frame, styles.frameLeftBottom]} />
+            <View style={[styles.frame, styles.frameRightBottom]} />
           </View>
         </Body>
         <TouchableWithoutFeedback
@@ -202,5 +154,33 @@ const styles = StyleSheet.create({
   },
   buttonTouchable: {
     padding: 16,
+  },
+  scanner: {
+    flex: 1,
+  },
+  frame: {
+    width: 60,
+    height: 60,
+    borderStyle: 'solid',
+    borderColor: '#00C0D9',
+    borderLeftWidth: 12,
+    borderTopWidth: 12,
+    position: 'absolute',
+  },
+  frameLeftTop: {
+    left: 0,
+    top: 0,
+  },
+  frameRightTop: {
+    right: 0,
+    top: 0,
+  },
+  frameLeftBottom: {
+    left: 0,
+    bottom: 0,
+  },
+  frameRightBottom: {
+    right: 0,
+    bottom: 0,
   },
 });

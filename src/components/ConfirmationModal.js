@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Modal, Stack, Text, View} from 'native-base';
+import {Button, Modal, Stack, Text} from 'native-base';
 import {AlertModalIcon, InfoModalIcon, Theme} from 'src/design-system';
 
 let globalController;
