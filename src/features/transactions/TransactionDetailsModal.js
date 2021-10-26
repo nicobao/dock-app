@@ -7,7 +7,12 @@ import {Box, Typography} from '../../design-system';
 import {translate} from '../../locales';
 import {AmountDetails} from '../tokens/ConfirmTransactionModal';
 
-export function TransactionDetailsModal({visible, onClose, transaction, accountAddress}) {
+export function TransactionDetailsModal({
+  visible,
+  onClose,
+  transaction,
+  accountAddress,
+}) {
   const {
     amount,
     tokenSymbol = 'DOCK',
@@ -18,15 +23,17 @@ export function TransactionDetailsModal({visible, onClose, transaction, accountA
 
   const dispatch = useDispatch();
   const isReceived = recipientAddress === accountAddress;
-  const details = isReceived ?{
-    action: translate('transaction_details.received'),
-    direction: translate('transaction_details.from'),
-    address: fromAddress,
-  } : {
-    action: translate('transaction_details.sent'),
-    direction: translate('transaction_details.to'),
-    address: recipientAddress,
-  }
+  const details = isReceived
+    ? {
+        action: translate('transaction_details.received'),
+        direction: translate('transaction_details.from'),
+        address: fromAddress,
+      }
+    : {
+        action: translate('transaction_details.sent'),
+        direction: translate('transaction_details.to'),
+        address: recipientAddress,
+      };
 
   return (
     <Modal visible={visible} onClose={onClose} modalSize={0.75}>
@@ -35,16 +42,12 @@ export function TransactionDetailsModal({visible, onClose, transaction, accountA
           {translate('transaction_details.title')}
         </Typography>
         <Stack mb={2}>
-          <Typography mb={1}>
-            {details.action}
-          </Typography>
+          <Typography mb={1}>{details.action}</Typography>
           <AmountDetails amount={amount} symbol={tokenSymbol} />
         </Stack>
         <Stack mb={2}>
           <Box>
-            <Typography mb={1}>
-            {details.direction}
-            </Typography>
+            <Typography mb={1}>{details.direction}</Typography>
           </Box>
           <Stack direction="row" pr={8}>
             <Box pl={5}>

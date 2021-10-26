@@ -162,11 +162,14 @@ function TransactionHistory({accountAddress}) {
     return (
       <NBox>
         {transactions.map(item => (
-          <TransactionHistoryItem transaction={item} accountAddress={accountAddress}/>
+          <TransactionHistoryItem
+            transaction={item}
+            accountAddress={accountAddress}
+          />
         ))}
       </NBox>
     );
-  }, [transactions]);
+  }, [transactions, accountAddress]);
 }
 
 export function AccountDetailsScreen({
