@@ -7,7 +7,7 @@ import {Box, Typography} from '../../design-system';
 import {translate} from '../../locales';
 import {AmountDetails} from '../tokens/ConfirmTransactionModal';
 
-export function TransactionDetailsModal({visible, onClose, transaction}) {
+export function TransactionDetailsModal({visible, onClose, transaction, accountAddress}) {
   const {
     amount,
     tokenSymbol = 'DOCK',
@@ -17,6 +17,16 @@ export function TransactionDetailsModal({visible, onClose, transaction}) {
   } = transaction;
 
   const dispatch = useDispatch();
+  const isReceived = recipientAddress === accountAddress;
+  const details = isReceived ?{
+    action: translate('transaction_details.received'),
+    direction: translate('transaction_details.from'),
+    address: fromAddress,
+  } : {
+    action: translate('transaction_details.sent'),
+    direction: translate('transaction_details.to'),
+    address: recipientAddress,
+  }
 
   return (
     <Modal visible={visible} onClose={onClose} modalSize={0.75}>
@@ -26,22 +36,22 @@ export function TransactionDetailsModal({visible, onClose, transaction}) {
         </Typography>
         <Stack mb={2}>
           <Typography mb={1}>
-            {translate('transaction_details.sent')}
+            {details.action}
           </Typography>
           <AmountDetails amount={amount} symbol={tokenSymbol} />
         </Stack>
         <Stack mb={2}>
           <Box>
             <Typography mb={1}>
-              {translate('transaction_details.to')}
+            {details.direction}
             </Typography>
           </Box>
-          <Stack direction="row">
+          <Stack direction="row" pr={8}>
             <Box pl={5}>
-              <PolkadotIcon size={30} address={recipientAddress} />
+              <PolkadotIcon size={30} address={details.address} />
             </Box>
-            <Box pr={15}>
-              <Typography ml={2}>{recipientAddress}</Typography>
+            <Box>
+              <Typography ml={2}>{details.address}</Typography>
             </Box>
           </Stack>
         </Stack>

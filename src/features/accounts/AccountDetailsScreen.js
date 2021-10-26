@@ -38,7 +38,7 @@ const TransactionStatusColor = {
   complete: Theme.colors.transactionCompleted,
 };
 
-function TransactionHistoryItem({transaction}) {
+function TransactionHistoryItem({transaction, accountAddress}) {
   const [showDetails, setShowDetails] = useState();
   const [showConfirmation, setShowConfirmation] = useState();
 
@@ -61,6 +61,7 @@ function TransactionHistoryItem({transaction}) {
         visible={showDetails}
         onClose={() => setShowDetails(false)}
         transaction={transaction}
+        accountAddress={accountAddress}
       />
       <TouchableHighlight
         onPress={() => {
@@ -161,7 +162,7 @@ function TransactionHistory({accountAddress}) {
     return (
       <NBox>
         {transactions.map(item => (
-          <TransactionHistoryItem transaction={item} />
+          <TransactionHistoryItem transaction={item} accountAddress={accountAddress}/>
         ))}
       </NBox>
     );
