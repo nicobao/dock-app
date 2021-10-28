@@ -164,6 +164,4 @@ export const appOperations = {
   },
 };
 
-const waitUntil = time => new Promise(res => setTimeout(res, time));
-
 export const appReducer = app.reducer;

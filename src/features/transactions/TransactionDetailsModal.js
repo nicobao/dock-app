@@ -1,6 +1,5 @@
 import {Stack} from 'native-base';
 import React from 'react';
-import {useDispatch} from 'react-redux';
 import {Modal} from 'src/components/Modal';
 import {PolkadotIcon} from '../../components/PolkadotIcon';
 import {Box, Typography} from '../../design-system';
@@ -21,7 +20,6 @@ export function TransactionDetailsModal({
     fromAddress,
   } = transaction;
 
-  const dispatch = useDispatch();
   const isReceived = recipientAddress === accountAddress;
   const details = isReceived
     ? {

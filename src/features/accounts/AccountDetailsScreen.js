@@ -42,7 +42,7 @@ function TransactionHistoryItem({transaction, accountAddress}) {
   const [showDetails, setShowDetails] = useState();
   const [showConfirmation, setShowConfirmation] = useState();
 
-  const {amount, feeAmount, sent} = transaction;
+  const {amount, sent} = transaction;
 
   return (
     <>
@@ -358,9 +358,6 @@ export function AccountDetailsContainer({route}) {
       }}
       isRefreshing={isRefreshing}
       onRefresh={onRefresh}
-      onEdit={() => {
-        alert('edit');
-      }}
       onBackup={() => {
         return dispatch(accountOperations.backupAccount(account));
       }}
