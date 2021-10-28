@@ -16,6 +16,7 @@ import {appSelectors} from '../app/app-slice';
 import {BuildIdentifier} from '../app/BuildIdentifier';
 import {walletOperations, walletSelectors} from '../wallet/wallet-slice';
 import {captureException} from '@sentry/react-native';
+import {StyleSheet} from 'react-native';
 
 const Circle = styled.View`
   width: 20px;
@@ -42,6 +43,12 @@ function PasscodeMask({digits = 6, filled = 0, ...props}) {
 
 const DIGITS = 6;
 
+const styles = StyleSheet.create({
+  logo: {
+    width: '57%',
+  },
+});
+
 export function UnlockWalletScreen({
   onPasscodeChange,
   passcode,
@@ -55,13 +62,7 @@ export function UnlockWalletScreen({
   return (
     <ScreenContainer testID="unlockWalletScreen" hideGlobalHeader={true}>
       <Box justifyContent="center" row onPress={onLogoPress}>
-        <Image
-          source={SplashLogo}
-          style={{
-            width: '57%',
-          }}
-          resizeMode="contain"
-        />
+        <Image source={SplashLogo} style={styles.logo} resizeMode="contain" />
       </Box>
       <Content marginLeft={26} marginRight={26}>
         <PasscodeMask marginTop={20} digits={digits} filled={filled} />

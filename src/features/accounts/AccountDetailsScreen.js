@@ -38,17 +38,11 @@ const TransactionStatusColor = {
   complete: Theme.colors.transactionCompleted,
 };
 
-function TransactionHistoryItem({transaction}) {
+function TransactionHistoryItem({transaction, accountAddress}) {
   const [showDetails, setShowDetails] = useState();
   const [showConfirmation, setShowConfirmation] = useState();
 
-  const {
-    amount,
-    tokenSymbol = 'DOCK',
-    recipientAddress,
-    feeAmount,
-    sent,
-  } = transaction;
+  const {amount, sent} = transaction;
 
   return (
     <>
@@ -61,6 +55,7 @@ function TransactionHistoryItem({transaction}) {
         visible={showDetails}
         onClose={() => setShowDetails(false)}
         transaction={transaction}
+        accountAddress={accountAddress}
       />
       <TouchableHighlight
         onPress={() => {
@@ -161,11 +156,14 @@ function TransactionHistory({accountAddress}) {
     return (
       <NBox>
         {transactions.map(item => (
-          <TransactionHistoryItem transaction={item} />
+          <TransactionHistoryItem
+            transaction={item}
+            accountAddress={accountAddress}
+          />
         ))}
       </NBox>
     );
-  }, [transactions]);
+  }, [transactions, accountAddress]);
 }
 
 export function AccountDetailsScreen({
@@ -360,9 +358,6 @@ export function AccountDetailsContainer({route}) {
       }}
       isRefreshing={isRefreshing}
       onRefresh={onRefresh}
-      onEdit={() => {
-        alert('edit');
-      }}
       onBackup={() => {
         return dispatch(accountOperations.backupAccount(account));
       }}
