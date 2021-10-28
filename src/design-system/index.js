@@ -1,5 +1,6 @@
 import {Stack} from 'native-base';
 import React from 'react';
+import {StyleSheet} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useSelector} from 'react-redux';
@@ -49,14 +50,16 @@ export function AppGlobalHeader() {
   );
 }
 
+const styles = StyleSheet.create({
+  screenContainer: {
+    flex: 1,
+    backgroundColor: Theme.colors.primaryBackground,
+  },
+});
+
 export function ScreenContainer({children, hideGlobalHeader, ...props}) {
   return (
-    <SafeAreaView
-      {...props}
-      style={{
-        flex: 1,
-        backgroundColor: Theme.colors.primaryBackground,
-      }}>
+    <SafeAreaView {...props} style={styles.screenContainer}>
       {hideGlobalHeader ? null : <AppGlobalHeader />}
       {children}
     </SafeAreaView>

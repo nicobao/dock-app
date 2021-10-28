@@ -39,12 +39,6 @@ describe('AccountDetailsScreen', () => {
       recipientAddress: address2,
       status: 'complete',
     };
-    const txSentFailed = {
-      amount: '1',
-      fromAddress: address1,
-      recipientAddress: address2,
-      status: 'failed',
-    };
     const txReceived = {
       amount: '1',
       fromAddress: address2,

@@ -294,6 +294,4 @@ export const accountOperations = {
   },
 };
 
-const waitUntil = time => new Promise(res => setTimeout(res, time));
-
 export const accountReducer = accountSlice.reducer;

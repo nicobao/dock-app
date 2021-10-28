@@ -31,7 +31,6 @@ import {
   Typography,
 } from '../../design-system';
 import {createAccountOperations} from '../account-creation/create-account-slice';
-import {appSelectors} from '../app/app-slice';
 import {TokenAmount} from '../tokens/ConfirmTransactionModal';
 import {accountOperations, accountSelectors} from './account-slice';
 import {AddAccountModal} from './AddAccountModal';

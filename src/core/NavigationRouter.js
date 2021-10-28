@@ -2,7 +2,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {View} from 'native-base';
 import React from 'react';
-import {Platform} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {Theme} from 'src/design-system';
 import {ReceiveTokenContainer} from 'src/features/tokens/ReceiveTokenScreen';
 import {SendTokenContainer} from 'src/features/tokens/SendTokenScreen';
@@ -47,6 +47,13 @@ if (Platform.OS === 'android') {
   screenOptions.cardStyleInterpolator = forFade;
 }
 
+const styles = StyleSheet.create({
+  cardOverlay: {
+    flex: 1,
+    backgroundColor: Theme.colors.primaryBackground,
+  },
+});
+
 function AppStackScreen() {
   return (
     <AppStack.Navigator
@@ -54,14 +61,7 @@ function AppStackScreen() {
         cardStyle: {
           backgroundColor: Theme.colors.primaryBackground,
         },
-        cardOverlay: () => (
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: Theme.colors.primaryBackground,
-            }}
-          />
-        ),
+        cardOverlay: () => <View style={styles.cardOverlay} />,
       }}>
       <AppStack.Screen
         name={Routes.SPLASH_SCREEN}

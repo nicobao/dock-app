@@ -202,6 +202,7 @@
     "total": "Total",
     "received": "Received",
     "to": "To",
+    "from": "From",
     "date": "Date",
     "nonce": "Nonce",
     "view_on_subscan": "View on Subscan"

@@ -2,6 +2,7 @@ import {SENTRY_DSN} from '@env';
 import {init as sentryInit} from '@sentry/react-native';
 import {useToast, View} from 'native-base';
 import React, {useEffect} from 'react';
+import {StyleSheet} from 'react-native';
 import {Provider, useDispatch} from 'react-redux';
 import {ConfirmationModal} from '../src/components/ConfirmationModal';
 import {NavigationRouter} from './core/NavigationRouter';
@@ -19,6 +20,15 @@ try {
   console.error(err);
 }
 
+const styles = StyleSheet.create({
+  globalComponents: {
+    flex: 1,
+  },
+  globalComponentsInner: {
+    height: 0,
+  },
+});
+
 function GlobalComponents() {
   const dispatch = useDispatch();
   const toast = useToast();
@@ -32,9 +42,9 @@ function GlobalComponents() {
   }, [toast]);
 
   return (
-    <View style={{flex: 1}}>
+    <View style={styles.globalComponents}>
       <NavigationRouter />
-      <View style={{height: 0}}>
+      <View style={styles.globalComponentsInner}>
         <RNRpcWebView
           onReady={() => {
             dispatch(appOperations.rpcReady());

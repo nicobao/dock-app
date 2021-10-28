@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import {Box, KeyboardDeleteIcon, Typography} from 'src/design-system';
 
