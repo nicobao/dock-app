@@ -165,25 +165,32 @@ const styles = StyleSheet.create({
     height: 60,
     borderStyle: 'solid',
     borderColor: '#00C0D9',
-    borderLeftWidth: 12,
-    borderTopWidth: 12,
+
     position: 'absolute',
   },
   frameLeftTop: {
     left: 0,
     top: 0,
+    borderLeftWidth: 12,
+    borderTopWidth: 12,
   },
   frameRightTop: {
     right: 0,
     top: 0,
+    borderRightWidth: 12,
+    borderTopWidth: 12,
   },
   frameLeftBottom: {
     left: 0,
     bottom: 0,
+    borderLeftWidth: 12,
+    borderBottomWidth: 12,
   },
   frameRightBottom: {
     right: 0,
     bottom: 0,
+    borderRightWidth: 12,
+    borderBottomWidth: 12,
   },
   headerIcon: {
     padding: 20,
