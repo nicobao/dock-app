@@ -1,20 +1,28 @@
-import { Input, Select, Stack } from 'native-base';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { translate } from 'src/locales';
-import { Modal } from '../../components/Modal';
-import { navigate } from '../../core/navigation';
-import { Routes } from '../../core/routes';
-import { showToast } from '../../core/toast';
+import {Input, Select, Stack} from 'native-base';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {translate} from 'src/locales';
+import {Modal} from '../../components/Modal';
+import {navigate} from '../../core/navigation';
+import {Routes} from '../../core/routes';
+import {showToast} from '../../core/toast';
 import {
-    BackButton, Box, Button, ChevronRightIcon, Content, Header, NBox, OptionList, ScreenContainer,
-    Typography
+  BackButton,
+  Box,
+  Button,
+  ChevronRightIcon,
+  Content,
+  Header,
+  NBox,
+  OptionList,
+  ScreenContainer,
+  Typography,
 } from '../../design-system';
-import { accountOperations } from '../accounts/account-slice';
+import {accountOperations} from '../accounts/account-slice';
 import {
-    appOperations,
-    appSelectors,
-    SUBSTRATE_NETWORKS
+  appOperations,
+  appSelectors,
+  SUBSTRATE_NETWORKS,
 } from '../app/app-slice';
 
 export function DevSettingsScreen({onAddAccount, onNetworkChange}) {
@@ -135,7 +143,7 @@ export function DevSettingsScreen({onAddAccount, onNetworkChange}) {
           </Button>
         </Modal>
 
-        <Stack p={5}></Stack>
+        <Stack p={5} />
       </Content>
     </ScreenContainer>
   );

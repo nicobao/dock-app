@@ -293,22 +293,24 @@ export const accountOperations = {
     }, 1000 * BALANCE_FETCH_PERIOD);
   },
 
-  watchAccount: ({ name, address }) => async (dispatch, getState) => {
-    console.log('add account', { name, address });
-    await WalletRpc.add({
-      '@context': ['https://w3id.org/wallet/v1'],
-      id: address,
-      type: 'Account',
-      correlation: [],
-      meta: {
-        name: name,
-        readOnly: true,
-        balance: 0,
-      },
-    });
+  watchAccount:
+    ({name, address}) =>
+    async (dispatch, getState) => {
+      console.log('add account', {name, address});
+      await WalletRpc.add({
+        '@context': ['https://w3id.org/wallet/v1'],
+        id: address,
+        type: 'Account',
+        correlation: [],
+        meta: {
+          name: name,
+          readOnly: true,
+          balance: 0,
+        },
+      });
 
-    dispatch(accountOperations.loadAccounts());
-  }, 
+      dispatch(accountOperations.loadAccounts());
+    },
 };
 
 export const accountReducer = accountSlice.reducer;

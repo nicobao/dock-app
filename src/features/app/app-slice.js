@@ -34,7 +34,7 @@ export const SUBSTRATE_NETWORKS = {
     url: 'ws://127.0.0.1:9944',
     addressPrefix: 21,
   },
-}
+};
 
 function getNetworkInfo(networkId) {
   const networkInfo = SUBSTRATE_NETWORKS[networkId];
@@ -45,7 +45,6 @@ function getNetworkInfo(networkId) {
 
   return networkInfo;
 }
-
 
 function initKeyring(networkId) {
   console.log('init keyring for network', networkId);
@@ -135,7 +134,7 @@ export const appOperations = {
     const networkId = appSelectors.getNetworkId(getState());
     try {
       await UtilCryptoRpc.cryptoWaitReady();
-      await initKeyring(networkId)
+      await initKeyring(networkId);
       await WalletRpc.create('wallet');
       await WalletRpc.load();
       await WalletRpc.sync();
@@ -204,8 +203,8 @@ export const appOperations = {
     }
   },
 
-  setNetwork: (networkId) => async (dispatch, getState) => {
-    await initKeyring({ networkId });
+  setNetwork: networkId => async (dispatch, getState) => {
+    await initKeyring({networkId});
     const substrateUrl = getNetworkInfo(networkId).url;
 
     console.log('Init dock with url', substrateUrl);
@@ -215,7 +214,7 @@ export const appOperations = {
     });
 
     dispatch(appActions.setNetwork(networkId));
-  }
+  },
 };
 
 export const appReducer = app.reducer;
