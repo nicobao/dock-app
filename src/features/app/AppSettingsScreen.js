@@ -28,10 +28,9 @@ export function AppSettingsScreen({
   onDeleteWallet,
   onBackupWallet,
   onDevSettings,
+  dispatch,
+  devSettingsEnabled,
 }) {
-  const dispatch = useDispatch();
-  const devSettingsEnabled = useSelector(appSelectors.getDevSettingsEnabled);
-
   return (
     <ScreenContainer testID="AccountDetailsScreen">
       <Header>
@@ -96,9 +95,12 @@ export function AppSettingsScreen({
 
 export function AppSettingsContainer() {
   const dispatch = useDispatch();
+  const devSettingsEnabled = useSelector(appSelectors.getDevSettingsEnabled);
 
   return (
     <AppSettingsScreen
+      devSettingsEnabled={devSettingsEnabled}
+      dispatch={dispatch}
       onDeleteWallet={() => {
         return dispatch(walletOperations.confirmWalletDelete());
       }}
