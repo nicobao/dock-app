@@ -27,6 +27,8 @@ import {ImportWalletPasswordContainer} from '../features/wallet/ImportWalletPass
 import {ImportWalletContainer} from '../features/wallet/ImportWalletScreen';
 import {ProtectYourWalletContainer} from '../features/wallet/ProtectYourWalletScreen';
 import {SetupPasscodeScreen} from '../features/wallet/SetupPasscodeScreen';
+import {DevSettingsContainer} from '../features/dev-settings/DevSettingsScreen';
+
 import {navigationRef} from './navigation';
 import {Routes} from './routes';
 
@@ -175,6 +177,14 @@ function AppStackScreen() {
       <AppStack.Screen
         name={Routes.CREATE_ACCOUNT_SETUP}
         component={CreateAccountSetupContainer}
+        options={{
+          ...screenOptions,
+        }}
+      />
+
+      <AppStack.Screen
+        name={Routes.DEV_SETTINGS}
+        component={DevSettingsContainer}
         options={{
           ...screenOptions,
         }}
