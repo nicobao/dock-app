@@ -151,7 +151,6 @@ export function DevSettingsScreen({onAddAccount, onNetworkChange}) {
 
 export function DevSettingsContainer() {
   const dispatch = useDispatch();
-  // get possible networks
 
   const handleNetworkChange = networkId => {
     dispatch(appOperations.setNetwork(networkId));
