@@ -23,7 +23,7 @@ if (NODE_ENV === 'test') {
   const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
-    whitelist: ['did', 'credential', 'wallets', 'walletConnect'],
+    whitelist: ['did', 'credential', 'wallets', 'walletConnect', 'app'],
   };
 
   const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -60,7 +60,18 @@
   "settings": {
     "title": "Settings",
     "backup_wallet": "Backup wallet",
-    "delete_wallet": "Remove wallet"
+    "delete_wallet": "Remove wallet",
+    "dev_settings": "Dev settings"
+  },
+  "dev_settings": {
+    "title": "Settings",
+    "switch_network": "Switch network",
+    "update_network": "Apply",
+    "watch_account": "Watch Account",
+    "account_name": "Account name",
+    "account_address": "Account address",
+    "invalid_account_name": "Invalid account name",
+    "invalid_account_address": "Invalid account address"
   },
   "account_setup": {
     "title": "Account Name",

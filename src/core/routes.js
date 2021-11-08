@@ -18,6 +18,7 @@ export const Routes = {
   ACCOUNT_EXPORT_SETUP_PASSWORD: 'account/exportSetupPassword',
   APP_QR_SCANNER: 'app/qrScanner',
   APP_SETTINGS: 'app/settings',
+  DEV_SETTINGS: 'app/devSettings',
   WALLET_EXPORT_BACKUP: 'wallet/exportBackup',
   WALLET_IMPORT_BACKUP: 'wallet/importBackup',
   WALLET_IMPORT_BACKUP_PASSWORD: 'wallet/importBackupPassword',

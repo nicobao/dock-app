@@ -18,17 +18,50 @@ export const BiometryType = {
   Fingerprint: Keychain.BIOMETRY_TYPE.FINGERPRINT,
 };
 
-const TESTNET_ADDR_PREFIX = 21;
-const MAINNET_ADDR_PREFIX = 22;
+export const SUBSTRATE_NETWORKS = {
+  mainnet: {
+    name: 'Dock PoS Mainnet',
+    url: 'wss://mainnet-node.dock.io',
+    addressPrefix: 22,
+  },
+  testnet: {
+    name: 'Dock PoS Testnet',
+    url: 'wss://knox-1.dock.io',
+    addressPrefix: 21,
+  },
+  local: {
+    name: 'Local Node',
+    url: 'ws://127.0.0.1:9944',
+    addressPrefix: 21,
+  },
+};
 
-const addressPrefix =
-  NETWORK === 'testnet' ? TESTNET_ADDR_PREFIX : MAINNET_ADDR_PREFIX;
+function getNetworkInfo(networkId) {
+  const networkInfo = SUBSTRATE_NETWORKS[networkId];
+
+  if (!networkInfo) {
+    throw new Error(`Network ${networkId} not found`);
+  }
+
+  return networkInfo;
+}
+
+function initKeyring(networkId) {
+  console.log('init keyring for network', networkId);
+  const addressPrefix = getNetworkInfo(networkId).addressPrefix;
+
+  return KeyringRpc.initialize({
+    ss58Format: addressPrefix,
+  });
+}
 
 const initialState = {
   loading: true,
   supportedBiometryType: null,
   rpcReady: false,
   dockReady: false,
+  networkId: NETWORK,
+  devSettingsEnabled: false,
 };
 
 const app = createSlice({
@@ -47,6 +80,12 @@ const app = createSlice({
     setSupportedBiometryType(state, action) {
       state.supportedBiometryType = action.payload;
     },
+    setNetworkId(state, action) {
+      state.networkId = action.payload;
+    },
+    setDevSettingsEnabled(state, action) {
+      state.devSettingsEnabled = action.payload;
+    },
   },
 });
 
@@ -59,6 +98,8 @@ export const appSelectors = {
   getSupportedBiometryType: state => getRoot(state).supportedBiometryType,
   getRpcReady: state => getRoot(state).rpcReady,
   getDockReady: state => getRoot(state).dockReady,
+  getNetworkId: state => getRoot(state).networkId,
+  getDevSettingsEnabled: state => getRoot(state).devSettingsEnabled,
 };
 
 export const appOperations = {
@@ -90,11 +131,10 @@ export const appOperations = {
   },
   rpcReady: () => async (dispatch, getState) => {
     console.log('Rpc ready');
+    const networkId = appSelectors.getNetworkId(getState());
     try {
       await UtilCryptoRpc.cryptoWaitReady();
-      await KeyringRpc.initialize({
-        ss58Format: addressPrefix,
-      });
+      await initKeyring(networkId);
       await WalletRpc.create('wallet');
       await WalletRpc.load();
       await WalletRpc.sync();
@@ -161,6 +201,19 @@ export const appOperations = {
     } else {
       navigate(Routes.CREATE_WALLET);
     }
+  },
+
+  setNetwork: networkId => async (dispatch, getState) => {
+    await initKeyring(networkId);
+    const substrateUrl = getNetworkInfo(networkId).url;
+
+    console.log('Init dock with url', substrateUrl);
+
+    await DockRpc.init({
+      address: substrateUrl,
+    });
+
+    dispatch(appActions.setNetwork(networkId));
   },
 };
 

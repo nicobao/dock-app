@@ -20,6 +20,7 @@ export const AppConstants = {
     testID: {
       backupWalletOption: 'backupWallet',
       deleteWalletOption: 'deleteWallet',
+      devSettings: 'devSettings',
     },
   },
 };

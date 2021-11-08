@@ -18,6 +18,10 @@ export const Transaction = {
     recipientAddress: 'string',
     amount: 'string',
     feeAmount: 'string',
+    network: {
+      type: 'string',
+      default: 'testnet',
+    },
     status: 'string',
     retrySucceed: {
       type: 'bool',
@@ -33,6 +37,14 @@ export const Account = {
     id: 'string',
     name: 'string',
     balance: 'string?',
+  },
+  network: {
+    type: 'string',
+    default: 'testnet',
+  },
+  readyOnly: {
+    type: 'bool',
+    default: false,
   },
   primaryKey: 'id',
 };

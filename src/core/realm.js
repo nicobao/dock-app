@@ -7,7 +7,7 @@ export async function initRealm() {
   realm = await Realm.open({
     path: 'dock',
     schema: [TokenPrice, Transaction, Account],
-    schemaVersion: 2,
+    schemaVersion: 3,
     deleteRealmIfMigrationNeeded: false,
     migration: () => {
       // No migration required so far
