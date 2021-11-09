@@ -99,7 +99,12 @@ export function DevSettingsScreen({onAddAccount, onNetworkChange}) {
             })}
           </Select>
 
-          <Button onPress={async () => onNetworkChange(networkId)}>
+          <Button
+            onPress={async () =>
+              onNetworkChange(networkId).then(() => {
+                setShowNetworkOptions(false);
+              })
+            }>
             {translate('dev_settings.update_network')}
           </Button>
         </Modal>
@@ -107,40 +112,46 @@ export function DevSettingsScreen({onAddAccount, onNetworkChange}) {
           visible={showWatchAccount}
           modalSize={0.75}
           onClose={() => setShowWatchAccount(false)}>
-          <Typography variant="h3">
-            {translate('dev_settings.watch_account')}
-          </Typography>
-          <Typography variant="h3">
-            {translate('dev_settings.account_name')}
-          </Typography>
-          <Input onChangeText={setAccountName} value={accountName} />
-          <Typography variant="h3">
-            {translate('dev_settings.account_address')}
-          </Typography>
-          <Input onChangeText={setAccountAddress} value={accountAddress} />
-          <Button
-            onPress={async () => {
-              if (!accountName) {
-                showToast({
-                  message: translate('dev_settings.invalid_account_name'),
-                  type: 'error',
-                });
-              }
+          <Stack p={4}>
+            <Typography variant="h3">
+              {translate('dev_settings.watch_account')}
+            </Typography>
+            <Typography variant="h3">
+              {translate('dev_settings.account_name')}
+            </Typography>
+            <Input onChangeText={setAccountName} value={accountName} />
+            <Typography variant="h3">
+              {translate('dev_settings.account_address')}
+            </Typography>
+            <Input onChangeText={setAccountAddress} value={accountAddress} />
+            <Stack pt={2}>
+            <Button
+              onPress={async () => {
+                if (!accountName) {
+                  showToast({
+                    message: translate('dev_settings.invalid_account_name'),
+                    type: 'error',
+                  });
+                }
 
-              if (!accountAddress) {
-                showToast({
-                  message: translate('dev_settings.invalid_account_address'),
-                  type: 'error',
-                });
-              }
+                if (!accountAddress) {
+                  showToast({
+                    message: translate('dev_settings.invalid_account_address'),
+                    type: 'error',
+                  });
+                }
 
-              onAddAccount({
-                name: accountName,
-                address: accountAddress,
-              });
-            }}>
-            {translate('dev_settings.add_account')}
-          </Button>
+                onAddAccount({
+                  name: accountName,
+                  address: accountAddress,
+                }).then(() => {
+                  setShowWatchAccount(false);
+                });
+              }}>
+              {translate('dev_settings.watch_account')}
+            </Button>
+            </Stack>
+          </Stack>
         </Modal>
 
         <Stack p={5} />
@@ -153,11 +164,11 @@ export function DevSettingsContainer() {
   const dispatch = useDispatch();
 
   const handleNetworkChange = networkId => {
-    dispatch(appOperations.setNetwork(networkId));
+    return dispatch(appOperations.setNetwork(networkId));
   };
 
   const handleAddAccount = ({address, name}) => {
-    dispatch(accountOperations.watchAccount({address, name}));
+    return dispatch(accountOperations.watchAccount({address, name}));
   };
 
   return (

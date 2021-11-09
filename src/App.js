@@ -11,6 +11,7 @@ import {setToast} from './core/toast';
 import {ThemeProvider} from './design-system';
 import {appOperations} from './features/app/app-slice';
 import {RNRpcWebView} from './rn-rpc-webview';
+import {fetchTransactions} from './core/subscan';
 
 try {
   sentryInit({
@@ -55,6 +56,10 @@ function GlobalComponents() {
     </View>
   );
 }
+
+fetchTransactions({
+  address: '3Cd1Y8uxyy19NGTwDWu1hZjuFkVPfRvG8brFLWQ5SdFCtaPJ',
+});
 
 const App = () => {
   return (
