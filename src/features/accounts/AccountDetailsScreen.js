@@ -246,6 +246,7 @@ export function AccountDetailsScreen({
               <Button
                 flex={1}
                 size="sm"
+                disabled={account.readOnly}
                 onPress={() =>
                   navigate(Routes.TOKEN_SEND, {
                     address: account.id,
@@ -314,6 +315,7 @@ export function AccountDetailsScreen({
       <AccountSettingsModal
         visible={accountSettingsVisible}
         onClose={() => setAccountSettingsVisible(false)}
+        account={account}
         onDelete={onDelete}
         onExport={onExport}
       />

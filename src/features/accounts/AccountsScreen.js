@@ -176,17 +176,20 @@ export const AccountsScreen = withErrorBoundary(
                         </TokenAmount>
 
                         <Stack direction="row" mt={4}>
-                          <Button
-                            width="50%"
-                            size="sm"
-                            colorScheme="dark"
-                            onPress={() => {
-                              navigate(Routes.TOKEN_SEND, {
-                                address: account.id,
-                              });
-                            }}>
-                            {translate('account_list.send_token')}
-                          </Button>
+                          {
+                            <Button
+                              width="50%"
+                              size="sm"
+                              disabled={account.readOnly}
+                              colorScheme="dark"
+                              onPress={() => {
+                                navigate(Routes.TOKEN_SEND, {
+                                  address: account.id,
+                                });
+                              }}>
+                              {translate('account_list.send_token')}
+                            </Button>
+                          }
                           <Button
                             width="50%"
                             size="sm"

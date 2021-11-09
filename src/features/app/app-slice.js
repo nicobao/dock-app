@@ -204,16 +204,16 @@ export const appOperations = {
   },
 
   setNetwork: networkId => async (dispatch, getState) => {
+    dispatch(appActions.setNetworkId(networkId));
+
     await initKeyring(networkId);
     const substrateUrl = getNetworkInfo(networkId).url;
 
     console.log('Init dock with url', substrateUrl);
 
-    await DockRpc.init({
+    DockRpc.init({
       address: substrateUrl,
     });
-
-    dispatch(appActions.setNetwork(networkId));
   },
 };
 
