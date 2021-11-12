@@ -12,7 +12,7 @@ import {walletActions} from '../wallet/wallet-slice';
 import {initRealm} from 'src/core/realm';
 import {NETWORK} from '@env';
 import {translate} from 'src/locales';
-import { Logger } from 'src/core/logger';
+import {Logger} from 'src/core/logger';
 
 export const BiometryType = {
   FaceId: Keychain.BIOMETRY_TYPE.FACE_ID,

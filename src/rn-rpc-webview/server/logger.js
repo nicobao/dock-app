@@ -1,4 +1,4 @@
-import { Logger } from "src/core/logger";
+import {Logger} from 'src/core/logger';
 
 export default {
   name: 'logger',

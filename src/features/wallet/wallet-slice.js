@@ -12,7 +12,7 @@ import Share from 'react-native-share';
 import {showToast} from '../../core/toast';
 import {showConfirmationModal} from 'src/components/ConfirmationModal';
 import {translate} from 'src/locales';
-import { Logger } from 'src/core/logger';
+import {Logger} from 'src/core/logger';
 
 const initialState = {
   loading: true,

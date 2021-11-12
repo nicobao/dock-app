@@ -11,7 +11,7 @@ import RNFS from 'react-native-fs';
 import {translate} from 'src/locales';
 import {getRealm} from 'src/core/realm';
 import {appOperations} from '../app/app-slice';
-import { Logger } from 'src/core/logger';
+import {Logger} from 'src/core/logger';
 
 // Period in seconds
 const BALANCE_FETCH_PERIOD = 30;

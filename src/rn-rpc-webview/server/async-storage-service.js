@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Logger } from 'src/core/logger';
+import {Logger} from 'src/core/logger';
 
 export default {
   name: 'storage',

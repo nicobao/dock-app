@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import { Logger } from 'src/core/logger';
+import {Logger} from 'src/core/logger';
 
 const initialState = {
   isLoading: true,

@@ -17,7 +17,7 @@ import {BuildIdentifier} from '../app/BuildIdentifier';
 import {walletOperations, walletSelectors} from '../wallet/wallet-slice';
 import {captureException} from '@sentry/react-native';
 import {StyleSheet} from 'react-native';
-import { Logger } from 'src/core/logger';
+import {Logger} from 'src/core/logger';
 
 const Circle = styled.View`
   width: 20px;

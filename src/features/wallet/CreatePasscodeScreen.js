@@ -17,6 +17,7 @@ import {BackButton} from '../../design-system/buttons';
 import {translate} from '../../locales';
 import {NumericKeyboard} from 'src/components/NumericKeyboard';
 import {showToast} from 'src/core/toast';
+import {Logger} from 'src/core/logger';
 
 const Circle = styled.View`
   width: 20px;
