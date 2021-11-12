@@ -10,7 +10,13 @@ import {Modal} from '../../components/Modal';
 import {Typography} from '../../design-system';
 import {translate} from '../../locales';
 
-export function AccountSettingsModal({onClose, visible, onDelete, onExport, account}) {
+export function AccountSettingsModal({
+  onClose,
+  visible,
+  onDelete,
+  onExport,
+  account,
+}) {
   const [view, setView] = useState('options');
 
   useEffect(() => {
@@ -26,11 +32,13 @@ export function AccountSettingsModal({onClose, visible, onDelete, onExport, acco
         <OptionList
           mt={5}
           items={[
-            account.readOnly ? null : {
-              title: 'Export account',
-              icon: <PlusCircleIcon />,
-              onPress: () => setView('export'),
-            },
+            account.readOnly
+              ? null
+              : {
+                  title: 'Export account',
+                  icon: <PlusCircleIcon />,
+                  onPress: () => setView('export'),
+                },
             {
               title: 'Delete account',
               icon: <DocumentDownloadIcon />,

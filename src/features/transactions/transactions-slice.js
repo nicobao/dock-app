@@ -5,9 +5,9 @@ import uuid from 'uuid';
 import {getRealm} from 'src/core/realm';
 import {showToast} from 'src/core/toast';
 import {DOCK_TOKEN_UNIT} from 'src/core/format-utils';
-import { appSelectors } from '../app/app-slice';
+import {appSelectors} from '../app/app-slice';
 import {fetchTransactions} from '../../core/subscan';
-import { accountSelectors } from '../accounts/account-slice';
+import {accountSelectors} from '../accounts/account-slice';
 
 export const TransactionStatus = {
   InProgress: 'pending',
@@ -66,8 +66,7 @@ export const transactionsOperations = {
       const accounts = accountSelectors.getAccounts(getState());
 
       for (const account of accounts) {
-        const data = await fetchTransactions({ address: account.id });
-        const txList = [];
+        const data = await fetchTransactions({address: account.id});
         data.data.transfers.forEach(tx => {
           if (tx.from !== account.id && tx.to !== account.id) {
             return;
@@ -78,17 +77,21 @@ export const transactionsOperations = {
           }
 
           realm.write(() => {
-            realm.create('Transaction', {
-              amount: tx.amount,
-              feeAmount: tx.fee,
-              recipientAddress: tx.to,
-              fromAddress: tx.from,
-              id: tx.hash,
-              hash: tx.hash, 
-              network: 'mainnet',
-              status: 'complete',
-              date: new Date(parseInt(tx.block_timestamp + '000')),
-            }, 'modified');
+            realm.create(
+              'Transaction',
+              {
+                amount: tx.amount,
+                feeAmount: tx.fee,
+                recipientAddress: tx.to,
+                fromAddress: tx.from,
+                id: tx.hash,
+                hash: tx.hash,
+                network: 'mainnet',
+                status: 'complete',
+                date: new Date(parseInt(tx.block_timestamp + '000', 10)),
+              },
+              'modified',
+            );
           });
         });
       }
