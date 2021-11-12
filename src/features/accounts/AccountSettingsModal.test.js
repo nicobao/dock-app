@@ -11,9 +11,12 @@ describe('AccountSettingsModal', () => {
       // placeholder for redux store
     };
 
-    const wrapper = shallow(<AccountSettingsModal visible={true} account={{}} />, {
-      context: {store: mockStore(initialState)},
-    });
+    const wrapper = shallow(
+      <AccountSettingsModal visible={true} account={{}} />,
+      {
+        context: {store: mockStore(initialState)},
+      },
+    );
     expect(wrapper.dive()).toMatchSnapshot();
   });
 });

@@ -10,7 +10,7 @@ import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {walletActions} from '../wallet/wallet-slice';
 import {initRealm} from 'src/core/realm';
-import {SUBSTRATE_URL, NETWORK} from '@env';
+import {NETWORK} from '@env';
 import {translate} from 'src/locales';
 
 export const BiometryType = {

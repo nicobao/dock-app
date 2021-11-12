@@ -67,7 +67,6 @@ export const transactionsOperations = {
 
       for (const account of accounts) {
         const data = await fetchTransactions({address: account.id});
-        const txList = [];
         data.data.transfers.forEach(tx => {
           if (tx.from !== account.id && tx.to !== account.id) {
             return;
@@ -89,7 +88,7 @@ export const transactionsOperations = {
                 hash: tx.hash,
                 network: 'mainnet',
                 status: 'complete',
-                date: new Date(parseInt(tx.block_timestamp + '000')),
+                date: new Date(parseInt(tx.block_timestamp + '000', 10)),
               },
               'modified',
             );

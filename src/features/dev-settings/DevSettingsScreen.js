@@ -2,7 +2,6 @@ import {Input, Select, Stack} from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {translate} from 'src/locales';
-import {Modal} from '../../components/Modal';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {showToast} from '../../core/toast';
