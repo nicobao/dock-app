@@ -11,6 +11,7 @@ import RNFS from 'react-native-fs';
 import {translate} from 'src/locales';
 import {getRealm} from 'src/core/realm';
 import {appOperations} from '../app/app-slice';
+import { Logger } from 'src/core/logger';
 
 // Period in seconds
 const BALANCE_FETCH_PERIOD = 30;
@@ -211,7 +212,7 @@ export const accountOperations = {
 
     await dispatch(appOperations.waitRpcReady());
 
-    console.log('Rpc done');
+    Logger.debug('Rpc done');
 
     let accounts = await WalletRpc.query({
       equals: {
@@ -297,7 +298,7 @@ export const accountOperations = {
   watchAccount:
     ({name, address}) =>
     async (dispatch, getState) => {
-      console.log('add account', {name, address});
+      Logger.debug('add account', {name, address});
       await WalletRpc.add({
         '@context': ['https://w3id.org/wallet/v1'],
         id: address,

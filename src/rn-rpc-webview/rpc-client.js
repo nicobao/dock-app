@@ -1,4 +1,5 @@
 import {JSONRPCClient} from 'json-rpc-2.0';
+import { Logger } from 'src/core/logger';
 
 let client;
 
@@ -25,7 +26,7 @@ export function initRpcClient(webView) {
 
   client.__request = client.request;
   client.request = (name, ...params) => {
-    console.log('rpc request', {name, params});
+    Logger.debug('rpc request', {name, params});
     const reqParams =
       params.length === 0
         ? params[0]

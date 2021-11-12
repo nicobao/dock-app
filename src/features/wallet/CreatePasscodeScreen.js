@@ -101,7 +101,7 @@ export function CreatePasscodeContainer() {
       return;
     }
 
-    console.log('set value', value);
+    Logger.debug('set value', value);
     setPasscode(value);
 
     runAfterInteractions(() => {

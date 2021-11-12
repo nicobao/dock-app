@@ -12,6 +12,7 @@ import Share from 'react-native-share';
 import {showToast} from '../../core/toast';
 import {showConfirmationModal} from 'src/components/ConfirmationModal';
 import {translate} from 'src/locales';
+import { Logger } from 'src/core/logger';
 
 const initialState = {
   loading: true,
@@ -156,15 +157,15 @@ export const walletOperations = {
       const keychainId = 'wallet';
 
       if (biometry) {
-        console.log('Biometry: attempt to unlock');
+        Logger.debug('Biometry: attempt to unlock');
         const result = await Keychain.getItem(`${keychainId}-biometric`, {
           authenticationPrompt: {
             title: 'Allow dock wallet to use your biometry',
           },
         });
 
-        console.log('Biometry unlock succeed');
-        console.log(JSON.stringify(result));
+        Logger.debug('Biometry unlock succeed');
+        Logger.debug(JSON.stringify(result));
       } else {
         const keychainData = await Keychain.getItem(keychainId);
 
@@ -210,7 +211,7 @@ export const walletOperations = {
           });
         }
 
-        console.log('Biometry created');
+        Logger.debug('Biometry created');
 
         await Keychain.getItem(`${keychainId}-biometric`, {
           authenticationPrompt: {
