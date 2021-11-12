@@ -132,6 +132,8 @@ export const appOperations = {
   rpcReady: () => async (dispatch, getState) => {
     console.log('Rpc ready');
     const networkId = appSelectors.getNetworkId(getState());
+    const networkInfo = getNetworkInfo(networkId);
+
     try {
       await UtilCryptoRpc.cryptoWaitReady();
       await initKeyring(networkId);
@@ -150,7 +152,7 @@ export const appOperations = {
 
     try {
       await DockRpc.init({
-        address: SUBSTRATE_URL,
+        address: networkInfo.url,
       });
 
       dispatch(appActions.setDockReady(true));

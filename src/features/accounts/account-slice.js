@@ -241,7 +241,7 @@ export const accountOperations = {
           {
             id: account.id,
             name: account.name,
-            readyOnly: account.meta.readOnly
+            readyOnly: account.meta.readOnly,
           },
           'modified',
         );

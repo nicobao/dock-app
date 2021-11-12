@@ -83,35 +83,41 @@ export function DevSettingsScreen({onAddAccount, onNetworkChange}) {
             ]}
           />
         </Stack>
-        <Modal
-          visible={showNetworkOptions}
-          modalSize={0.75}
-          onClose={() => setShowNetworkOptions(false)}>
-          <Typography variant="h3">
-            {translate('dev_settings.switch_network')}
-          </Typography>
+        {showNetworkOptions ? (
+          <Stack p={4}>
+            <Typography variant="h3">
+              {translate('dev_settings.switch_network')}
+            </Typography>
 
-          <Select onValueChange={setNetworkId} selectedValue={networkId}>
-            {Object.keys(SUBSTRATE_NETWORKS).map(key => {
-              const networkInfo = SUBSTRATE_NETWORKS[key];
+            <Stack pb={2}>
+              <Select onValueChange={setNetworkId} selectedValue={networkId}>
+                {Object.keys(SUBSTRATE_NETWORKS).map(key => {
+                  const networkInfo = SUBSTRATE_NETWORKS[key];
 
-              return <Select.Item label={networkInfo.name} value={key} />;
-            })}
-          </Select>
+                  return <Select.Item label={networkInfo.name} value={key} />;
+                })}
+              </Select>
+            </Stack>
 
-          <Button
-            onPress={async () =>
-              onNetworkChange(networkId).then(() => {
-                setShowNetworkOptions(false);
-              })
-            }>
-            {translate('dev_settings.update_network')}
-          </Button>
-        </Modal>
-        <Modal
-          visible={showWatchAccount}
-          modalSize={0.75}
-          onClose={() => setShowWatchAccount(false)}>
+            <Button
+              onPress={async () =>
+                onNetworkChange(networkId).then(() => {
+                  setShowNetworkOptions(false);
+                })
+              }>
+              {translate('dev_settings.update_network')}
+            </Button>
+            <Stack pt={3}>
+              <Button
+                onPress={() => setShowNetworkOptions(false)}
+                colorScheme="tertiary">
+                Cancel
+              </Button>
+            </Stack>
+          </Stack>
+        ) : null}
+
+        {showWatchAccount ? (
           <Stack p={4}>
             <Typography variant="h3">
               {translate('dev_settings.watch_account')}
@@ -125,34 +131,43 @@ export function DevSettingsScreen({onAddAccount, onNetworkChange}) {
             </Typography>
             <Input onChangeText={setAccountAddress} value={accountAddress} />
             <Stack pt={2}>
-            <Button
-              onPress={async () => {
-                if (!accountName) {
-                  showToast({
-                    message: translate('dev_settings.invalid_account_name'),
-                    type: 'error',
-                  });
-                }
+              <Button
+                onPress={async () => {
+                  if (!accountName) {
+                    showToast({
+                      message: translate('dev_settings.invalid_account_name'),
+                      type: 'error',
+                    });
+                  }
 
-                if (!accountAddress) {
-                  showToast({
-                    message: translate('dev_settings.invalid_account_address'),
-                    type: 'error',
-                  });
-                }
+                  if (!accountAddress) {
+                    showToast({
+                      message: translate(
+                        'dev_settings.invalid_account_address',
+                      ),
+                      type: 'error',
+                    });
+                  }
 
-                onAddAccount({
-                  name: accountName,
-                  address: accountAddress,
-                }).then(() => {
-                  setShowWatchAccount(false);
-                });
-              }}>
-              {translate('dev_settings.watch_account')}
-            </Button>
+                  onAddAccount({
+                    name: accountName,
+                    address: accountAddress,
+                  }).then(() => {
+                    setShowWatchAccount(false);
+                  });
+                }}>
+                {translate('dev_settings.watch_account')}
+              </Button>
+              <Stack pt={3}>
+                <Button
+                  onPress={() => setShowWatchAccount(false)}
+                  colorScheme="tertiary">
+                  Cancel
+                </Button>
+              </Stack>
             </Stack>
           </Stack>
-        </Modal>
+        ) : null}
 
         <Stack p={5} />
       </Content>
