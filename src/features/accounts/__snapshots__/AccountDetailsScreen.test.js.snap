@@ -161,6 +161,14 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
     </Memo(ForwardRef(Stack))>
   </ForwardRef>
   <AccountSettingsModal
+    account={
+      Object {
+        "meta": Object {
+          "balance": 0,
+          "name": "Test account",
+        },
+      }
+    }
     onClose={[Function]}
   />
   <QRCodeModal
