@@ -2,6 +2,7 @@ import {Stack} from 'native-base';
 import React from 'react';
 import {Typography} from 'src/design-system';
 import {translate} from 'src/locales';
+import {captureException} from '@sentry/react-native';
 
 export class ErrorBoundary extends React.Component<any, any> {
   constructor(props: any) {
@@ -14,8 +15,7 @@ export class ErrorBoundary extends React.Component<any, any> {
   }
 
   componentDidCatch(error: any, errorInfo: any) {
-    // TODO: log the error in sentry
-    console.error(error);
+    captureException(error);
   }
 
   render() {
