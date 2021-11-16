@@ -84,6 +84,12 @@ export function GenericPasswordScreen({
               {translate('create_password.include_proper_case')}
             </Typography>
           </Stack>
+          <Stack direction="row" marginTop={3}>
+            <CheckCircle checked={form.specialCharactersValidation} />
+            <Typography>
+              {translate('create_password.include_special_characters')}
+            </Typography>
+          </Stack>
         </Stack>
       </Content>
       <Footer marginBottom={10} marginLeft={26} marginRight={26}>
@@ -116,6 +122,7 @@ export function GenericPasswordContainer({onSubmit, title, description}) {
       updatedForm.lengthValidation = value.length >= 8 && value.length <= 12;
       updatedForm.digitsValidation = /\d/.test(value);
       updatedForm.caseValidation = /[A-Z]/.test(value) && /[a-z]/.test(value);
+      updatedForm.specialCharactersValidation = /\W/.test(value);
     }
 
     setForm(v => ({
@@ -140,6 +147,7 @@ export function GenericPasswordContainer({onSubmit, title, description}) {
     form.password &&
     form.passwordConfirmation &&
     form.caseValidation &&
+    form.specialCharactersValidation &&
     form.digitsValidation &&
     form.lengthValidation;
 
