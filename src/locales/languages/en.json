@@ -32,7 +32,10 @@
   "unlock_wallet": {
     "enter_passcode": "Enter your passcode",
     "biometrics_login": "Login with biometrics",
-    "invalid_passcode": "Wrong passcode"
+    "invalid_passcode": "Wrong passcode",
+    "app_locked_title": "App locked",
+    "app_locked_description": "Please try again later",
+    "close_app": "Close app"
   },
   "import_wallet": {
     "title": "Import wallet",
