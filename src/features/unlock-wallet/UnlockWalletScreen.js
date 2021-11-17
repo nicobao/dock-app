@@ -143,7 +143,7 @@ export function UnlockWalletContainer({route}) {
           type: 'error',
         });
 
-        if (failedAttempts  >= 4) {
+        if (failedAttempts >= 4) {
           setFailedAttempts(0);
           dispatch(appActions.setLockedTime(Date.now() + 1000 * 60));
         } else {

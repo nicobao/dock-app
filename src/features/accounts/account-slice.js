@@ -199,7 +199,7 @@ export const accountOperations = {
       showToast({
         message: translate('account_details.account_removed'),
       });
-    } catch(err) {
+    } catch (err) {
       console.error(err);
       showToast({
         message: translate('account_details.unable_to_remove_account'),

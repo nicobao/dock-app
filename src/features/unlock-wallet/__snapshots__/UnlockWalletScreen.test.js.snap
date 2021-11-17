@@ -61,6 +61,31 @@ exports[`UnlockWalletScreen should render correctly 1`] = `
       </Styled(Component)>
     </Box>
     <BuildIdentifier />
+    <Modal>
+      <Memo(ForwardRef(Stack))
+        alignItems="center"
+        m={5}
+        p={5}
+      >
+        <Styled(Component)
+          variant="h2"
+        >
+          App locked
+        </Styled(Component)>
+        <Styled(Component)
+          variant="h4"
+        >
+          Please try again later
+        </Styled(Component)>
+        <Memo(ForwardRef(Stack))
+          mt={4}
+        >
+          <Button>
+            Close app
+          </Button>
+        </Memo(ForwardRef(Stack))>
+      </Memo(ForwardRef(Stack))>
+    </Modal>
   </Styled(ScrollView)>
 </RNCSafeAreaView>
 `;
