@@ -96,8 +96,6 @@ export function GenericPasswordScreen({
               {translate('create_password.passwords_match')}
             </Typography>
           </Stack>
-          
-          
         </Stack>
       </Content>
       <Footer marginBottom={10} marginLeft={26} marginRight={26}>
@@ -134,7 +132,8 @@ export function GenericPasswordContainer({onSubmit, title, description}) {
       updatedForm.specialCharactersValidation = /\W/.test(value);
     }
 
-    updatedForm.passwordMatchValidation = updatedForm.password === updatedForm.passwordConfirmation;
+    updatedForm.passwordMatchValidation =
+      updatedForm.password === updatedForm.passwordConfirmation;
 
     setForm(v => ({
       ...v,
