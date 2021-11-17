@@ -163,7 +163,8 @@
     "include_digits": "Must include digits",
     "include_proper_case": "Must include uppercase and lowercase letters",
     "include_char_length": "Must include 8-12 characters",
-    "include_special_characters": "Must include special characters"
+    "include_special_characters": "Must include special characters",
+    "passwords_match": "Password confirmation match"
   },
   "receive_token": {
     "title": "Send DOCK",
