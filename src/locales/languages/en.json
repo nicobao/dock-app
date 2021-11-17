@@ -146,7 +146,8 @@
     "export_account_description": "Scan this QR code in your new device",
     "export_error": "Unable to export account",
     "export_success": "Account exported",
-    "account_removed": "Account Removed"
+    "account_removed": "Account Removed",
+    "unable_to_remove_account": "Unable to remove the account"
   },
   "account_settings_modal": {
     "options_title": "Options",

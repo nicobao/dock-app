@@ -177,27 +177,35 @@ export const accountOperations = {
     },
 
   removeAccount: (account: any) => async (dispatch, getState) => {
-    await WalletRpc.remove(account.id);
+    try {
+      await WalletRpc.remove(account.id);
 
-    const realm = getRealm();
+      const realm = getRealm();
 
-    realm.write(() => {
-      const cachedAccount = realm
-        .objects('Account')
-        .filtered('id = $0', account.id)[0];
+      realm.write(() => {
+        const cachedAccount = realm
+          .objects('Account')
+          .filtered('id = $0', account.id)[0];
 
-      if (!cachedAccount) {
-        return;
-      }
+        if (!cachedAccount) {
+          return;
+        }
 
-      realm.delete(cachedAccount);
-    });
+        realm.delete(cachedAccount);
+      });
 
-    dispatch(accountOperations.loadAccounts());
+      dispatch(accountOperations.loadAccounts());
 
-    showToast({
-      message: translate('account_details.account_removed'),
-    });
+      showToast({
+        message: translate('account_details.account_removed'),
+      });
+    } catch (err) {
+      console.error(err);
+      showToast({
+        message: translate('account_details.unable_to_remove_account'),
+        type: 'error',
+      });
+    }
   },
   getPolkadotSvgIcon:
     (address, isAlternative) => async (dispatch, getState) => {
