@@ -6,6 +6,7 @@ import RNExitApp from 'react-native-exit-app';
 import {useDispatch, useSelector} from 'react-redux';
 import {Modal} from 'src/components/Modal';
 import {NumericKeyboard} from 'src/components/NumericKeyboard';
+import {Logger} from 'src/core/logger';
 import {showToast} from 'src/core/toast';
 import styled from 'styled-components/native';
 import SplashLogo from '../../assets/splash-logo.png';
@@ -21,9 +22,6 @@ import {translate} from '../../locales';
 import {appActions, appSelectors} from '../app/app-slice';
 import {BuildIdentifier} from '../app/BuildIdentifier';
 import {walletOperations, walletSelectors} from '../wallet/wallet-slice';
-import {captureException} from '@sentry/react-native';
-import {StyleSheet} from 'react-native';
-import {Logger} from 'src/core/logger';
 
 const Circle = styled.View`
   width: 20px;
