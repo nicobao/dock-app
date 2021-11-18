@@ -36,7 +36,7 @@ export class ErrorBoundary extends React.Component<any, any> {
 }
 
 export const withErrorBoundary =
-  (WrapperComponent: any, {disableLogs}) =>
+  (WrapperComponent: any, {disableLogs} = {}) =>
   (props: any) => {
     return (
       <ErrorBoundary disableLogs={disableLogs}>
