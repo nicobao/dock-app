@@ -72,6 +72,9 @@ const app = createSlice({
     setLoading(state, action) {
       state.loading = action.payload;
     },
+    setLockedTime(state, action) {
+      state.lockedTime = action.payload;
+    },
     setRpcReady(state, action) {
       state.rpcReady = action.payload;
     },
@@ -101,6 +104,7 @@ export const appSelectors = {
   getDockReady: state => getRoot(state).dockReady,
   getNetworkId: state => getRoot(state).networkId,
   getDevSettingsEnabled: state => getRoot(state).devSettingsEnabled,
+  getAppLocked: state => getRoot(state).lockedTime > Date.now(),
 };
 
 export const appOperations = {

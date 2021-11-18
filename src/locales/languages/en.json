@@ -32,7 +32,10 @@
   "unlock_wallet": {
     "enter_passcode": "Enter your passcode",
     "biometrics_login": "Login with biometrics",
-    "invalid_passcode": "Wrong passcode"
+    "invalid_passcode": "Wrong passcode",
+    "app_locked_title": "App locked",
+    "app_locked_description": "Please try again later",
+    "close_app": "Close app"
   },
   "import_wallet": {
     "title": "Import wallet",
@@ -146,7 +149,8 @@
     "export_account_description": "Scan this QR code in your new device",
     "export_error": "Unable to export account",
     "export_success": "Account exported",
-    "account_removed": "Account Removed"
+    "account_removed": "Account Removed",
+    "unable_to_remove_account": "Unable to remove the account"
   },
   "account_settings_modal": {
     "options_title": "Options",
@@ -162,7 +166,9 @@
   "create_password": {
     "include_digits": "Must include digits",
     "include_proper_case": "Must include uppercase and lowercase letters",
-    "include_char_length": "Must include 8-12 characters"
+    "include_char_length": "Must include 8-12 characters",
+    "include_special_characters": "Must include special characters",
+    "passwords_match": "Password confirmation match"
   },
   "receive_token": {
     "title": "Send DOCK",

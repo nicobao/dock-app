@@ -84,6 +84,18 @@ export function GenericPasswordScreen({
               {translate('create_password.include_proper_case')}
             </Typography>
           </Stack>
+          <Stack direction="row" marginTop={3}>
+            <CheckCircle checked={form.specialCharactersValidation} />
+            <Typography>
+              {translate('create_password.include_special_characters')}
+            </Typography>
+          </Stack>
+          <Stack direction="row" marginTop={3}>
+            <CheckCircle checked={form.passwordMatchValidation} />
+            <Typography>
+              {translate('create_password.passwords_match')}
+            </Typography>
+          </Stack>
         </Stack>
       </Content>
       <Footer marginBottom={10} marginLeft={26} marginRight={26}>
@@ -109,6 +121,7 @@ export function GenericPasswordContainer({onSubmit, title, description}) {
 
   const handleChange = key => value => {
     const updatedForm = {
+      ...form,
       [key]: value,
     };
 
@@ -116,7 +129,11 @@ export function GenericPasswordContainer({onSubmit, title, description}) {
       updatedForm.lengthValidation = value.length >= 8 && value.length <= 12;
       updatedForm.digitsValidation = /\d/.test(value);
       updatedForm.caseValidation = /[A-Z]/.test(value) && /[a-z]/.test(value);
+      updatedForm.specialCharactersValidation = /\W/.test(value);
     }
+
+    updatedForm.passwordMatchValidation =
+      updatedForm.password === updatedForm.passwordConfirmation;
 
     setForm(v => ({
       ...v,
@@ -140,7 +157,9 @@ export function GenericPasswordContainer({onSubmit, title, description}) {
     form.password &&
     form.passwordConfirmation &&
     form.caseValidation &&
+    form.specialCharactersValidation &&
     form.digitsValidation &&
+    form.passwordMatchValidation &&
     form.lengthValidation;
 
   return (
