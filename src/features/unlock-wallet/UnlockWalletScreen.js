@@ -21,6 +21,9 @@ import {translate} from '../../locales';
 import {appActions, appSelectors} from '../app/app-slice';
 import {BuildIdentifier} from '../app/BuildIdentifier';
 import {walletOperations, walletSelectors} from '../wallet/wallet-slice';
+import {captureException} from '@sentry/react-native';
+import {StyleSheet} from 'react-native';
+import {Logger} from 'src/core/logger';
 
 const Circle = styled.View`
   width: 20px;
@@ -166,7 +169,7 @@ export function UnlockWalletContainer({route}) {
   }, [dispatch, callback]);
 
   const handleLogoPress = () => {
-    console.log(logoPressCount);
+    Logger.debug(logoPressCount);
 
     if (logoPressCount === 5) {
       captureException(new Error('Testing sentry'));

@@ -10,6 +10,7 @@ import {showToast} from 'src/core/toast';
 import {useDispatch} from 'react-redux';
 import {appActions} from 'src/features/app/app-slice';
 import {translate} from 'src/locales';
+import {Logger} from '../core/logger';
 
 const WEBVIEW_URI = 'http://localhost:3000';
 const DEV_MODE = false;
@@ -45,7 +46,7 @@ export function RNRpcWebView({onReady}) {
       onMessage={async event => {
         const data = JSON.parse(event.nativeEvent.data);
 
-        console.log('onMessage', data);
+        Logger.debug('onMessage', data);
         if (data.type === 'json-rpc-ready') {
           if (DEV_MODE) {
             showToast({
@@ -53,7 +54,7 @@ export function RNRpcWebView({onReady}) {
             });
           }
           initRpcClient(async jsonRPCRequest => {
-            console.log('Send request to webview client', jsonRPCRequest);
+            Logger.debug('Send request to webview client', jsonRPCRequest);
 
             webViewRef.current.injectJavaScript(`
             (function(){
@@ -77,7 +78,7 @@ export function RNRpcWebView({onReady}) {
           getRpcClient().receive(data.body);
         } else if (data.type === 'json-rpc-request') {
           rpcServer.receive(data.body).then(response => {
-            console.log(
+            Logger.debug(
               'RN: Send json-rpc-request to webview client',
               response,
             );
@@ -95,8 +96,7 @@ export function RNRpcWebView({onReady}) {
             return response;
           });
         } else if (data.type === 'log') {
-          console.log('====> Webview log:');
-          console.log(...JSON.parse(data.body));
+          Logger.debug('====> Webview log:', ...JSON.parse(data.body));
         }
       }}
     />

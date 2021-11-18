@@ -12,6 +12,7 @@ import {walletActions} from '../wallet/wallet-slice';
 import {initRealm} from 'src/core/realm';
 import {NETWORK} from '@env';
 import {translate} from 'src/locales';
+import {Logger} from 'src/core/logger';
 
 export const BiometryType = {
   FaceId: Keychain.BIOMETRY_TYPE.FACE_ID,
@@ -47,7 +48,7 @@ function getNetworkInfo(networkId) {
 }
 
 function initKeyring(networkId) {
-  console.log('init keyring for network', networkId);
+  Logger.debug('init keyring for network', networkId);
   const addressPrefix = getNetworkInfo(networkId).addressPrefix;
 
   return KeyringRpc.initialize({
@@ -134,7 +135,7 @@ export const appOperations = {
     });
   },
   rpcReady: () => async (dispatch, getState) => {
-    console.log('Rpc ready');
+    Logger.debug('Rpc ready');
     const networkId = appSelectors.getNetworkId(getState());
     const networkInfo = getNetworkInfo(networkId);
 
@@ -161,7 +162,7 @@ export const appOperations = {
 
       dispatch(appActions.setDockReady(true));
 
-      console.log('Dock initialized');
+      Logger.debug('Dock initialized');
     } catch (err) {
       dispatch(
         appActions.setDockReady(new Error('Unable to initialize dock api')),
@@ -172,7 +173,7 @@ export const appOperations = {
   initialize: () => async (dispatch, getState) => {
     await initRealm();
 
-    console.log('Realm initialized');
+    Logger.debug('Realm initialized');
     SplashScreen.hide();
 
     await Keychain.getSupportedBiometryType().then(value => {
@@ -215,7 +216,7 @@ export const appOperations = {
     await initKeyring(networkId);
     const substrateUrl = getNetworkInfo(networkId).url;
 
-    console.log('Init dock with url', substrateUrl);
+    Logger.debug('Init dock with url', substrateUrl);
 
     DockRpc.init({
       address: substrateUrl,
