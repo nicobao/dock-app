@@ -19,6 +19,7 @@ import {
 import {BackButton} from '../../design-system/buttons';
 import {translate} from '../../locales';
 import {createAccountSelectors} from './create-account-slice';
+import {withErrorBoundary} from '../../core/error-handler';
 
 export function CreateAccountMnemonicScreen({phrase, onCopy, onSubmit}) {
   return (
@@ -68,7 +69,7 @@ export function CreateAccountMnemonicScreen({phrase, onCopy, onSubmit}) {
   );
 }
 
-export function CreateAccountMnemonicContainer() {
+export const CreateAccountMnemonicContainer = withErrorBoundary(() => {
   const phrase = useSelector(createAccountSelectors.getMnemonicPhrase);
 
   const handleCopy = () => {
@@ -88,4 +89,4 @@ export function CreateAccountMnemonicContainer() {
       onCopy={handleCopy}
     />
   );
-}
+}, { disableLogs: true });

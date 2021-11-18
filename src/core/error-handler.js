@@ -15,6 +15,10 @@ export class ErrorBoundary extends React.Component<any, any> {
   }
 
   componentDidCatch(error: any, errorInfo: any) {
+    if (this.props.disableLogs) {
+      return;
+    }
+
     captureException(error);
   }
 
@@ -31,9 +35,11 @@ export class ErrorBoundary extends React.Component<any, any> {
   }
 }
 
-export const withErrorBoundary = (WrapperComponent: any) => (props: any) => {
+export const withErrorBoundary = (WrapperComponent: any, { 
+  disableLogs
+}) => (props: any) => {
   return (
-    <ErrorBoundary>
+    <ErrorBoundary disableLogs={disableLogs}>
       <WrapperComponent {...props} />
     </ErrorBoundary>
   );
