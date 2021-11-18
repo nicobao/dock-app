@@ -35,12 +35,12 @@ export class ErrorBoundary extends React.Component<any, any> {
   }
 }
 
-export const withErrorBoundary = (WrapperComponent: any, { 
-  disableLogs
-}) => (props: any) => {
-  return (
-    <ErrorBoundary disableLogs={disableLogs}>
-      <WrapperComponent {...props} />
-    </ErrorBoundary>
-  );
-};
+export const withErrorBoundary =
+  (WrapperComponent: any, {disableLogs}) =>
+  (props: any) => {
+    return (
+      <ErrorBoundary disableLogs={disableLogs}>
+        <WrapperComponent {...props} />
+      </ErrorBoundary>
+    );
+  };
