@@ -48,7 +48,7 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
           }
           onPress={[Function]}
         >
-          <SvgDotsVertical
+          <SvgFile
             height="22px"
             width="22px"
           />
@@ -130,7 +130,7 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
             mr={3}
             mt="3px"
           >
-            <SvgAlert />
+            <SvgFile />
           </Memo(ForwardRef(Box))>
           <Styled(Component)
             fontSize={17}

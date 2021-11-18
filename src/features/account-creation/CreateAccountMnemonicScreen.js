@@ -19,6 +19,7 @@ import {
 import {BackButton} from '../../design-system/buttons';
 import {translate} from '../../locales';
 import {createAccountSelectors} from './create-account-slice';
+import {withErrorBoundary} from '../../core/error-handler';
 
 export function CreateAccountMnemonicScreen({phrase, onCopy, onSubmit}) {
   return (
@@ -68,24 +69,27 @@ export function CreateAccountMnemonicScreen({phrase, onCopy, onSubmit}) {
   );
 }
 
-export function CreateAccountMnemonicContainer() {
-  const phrase = useSelector(createAccountSelectors.getMnemonicPhrase);
+export const CreateAccountMnemonicContainer = withErrorBoundary(
+  () => {
+    const phrase = useSelector(createAccountSelectors.getMnemonicPhrase);
 
-  const handleCopy = () => {
-    Clipboard.setString(phrase);
+    const handleCopy = () => {
+      Clipboard.setString(phrase);
 
-    showToast({
-      message: translate('account_recovery_phrase.phrase_copied'),
-    });
-  };
+      showToast({
+        message: translate('account_recovery_phrase.phrase_copied'),
+      });
+    };
 
-  const handleSubmit = () => navigate(Routes.CREATE_ACCOUNT_VERIFY_PHRASE);
+    const handleSubmit = () => navigate(Routes.CREATE_ACCOUNT_VERIFY_PHRASE);
 
-  return (
-    <CreateAccountMnemonicScreen
-      phrase={phrase}
-      onSubmit={handleSubmit}
-      onCopy={handleCopy}
-    />
-  );
-}
+    return (
+      <CreateAccountMnemonicScreen
+        phrase={phrase}
+        onSubmit={handleSubmit}
+        onCopy={handleCopy}
+      />
+    );
+  },
+  {disableLogs: true},
+);

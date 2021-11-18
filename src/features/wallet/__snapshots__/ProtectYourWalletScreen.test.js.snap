@@ -37,7 +37,7 @@ exports[`ProtectYourWalletScreen should render correctly 1`] = `
     marginRight={26}
   >
     <BigButton
-      icon={<SvgArrowRight />}
+      icon={<SvgFile />}
     >
       Do this later
     </BigButton>
