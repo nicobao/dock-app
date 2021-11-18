@@ -11,6 +11,7 @@ import RNFS from 'react-native-fs';
 import {translate} from 'src/locales';
 import {getRealm} from 'src/core/realm';
 import {appOperations} from '../app/app-slice';
+import {Logger} from 'src/core/logger';
 
 // Period in seconds
 const BALANCE_FETCH_PERIOD = 30;
@@ -177,27 +178,35 @@ export const accountOperations = {
     },
 
   removeAccount: (account: any) => async (dispatch, getState) => {
-    await WalletRpc.remove(account.id);
+    try {
+      await WalletRpc.remove(account.id);
 
-    const realm = getRealm();
+      const realm = getRealm();
 
-    realm.write(() => {
-      const cachedAccount = realm
-        .objects('Account')
-        .filtered('id = $0', account.id)[0];
+      realm.write(() => {
+        const cachedAccount = realm
+          .objects('Account')
+          .filtered('id = $0', account.id)[0];
 
-      if (!cachedAccount) {
-        return;
-      }
+        if (!cachedAccount) {
+          return;
+        }
 
-      realm.delete(cachedAccount);
-    });
+        realm.delete(cachedAccount);
+      });
 
-    dispatch(accountOperations.loadAccounts());
+      dispatch(accountOperations.loadAccounts());
 
-    showToast({
-      message: translate('account_details.account_removed'),
-    });
+      showToast({
+        message: translate('account_details.account_removed'),
+      });
+    } catch (err) {
+      console.error(err);
+      showToast({
+        message: translate('account_details.unable_to_remove_account'),
+        type: 'error',
+      });
+    }
   },
   getPolkadotSvgIcon:
     (address, isAlternative) => async (dispatch, getState) => {
@@ -211,7 +220,7 @@ export const accountOperations = {
 
     await dispatch(appOperations.waitRpcReady());
 
-    console.log('Rpc done');
+    Logger.debug('Rpc done');
 
     let accounts = await WalletRpc.query({
       equals: {
@@ -297,7 +306,7 @@ export const accountOperations = {
   watchAccount:
     ({name, address}) =>
     async (dispatch, getState) => {
-      console.log('add account', {name, address});
+      Logger.debug('add account', {name, address});
       await WalletRpc.add({
         '@context': ['https://w3id.org/wallet/v1'],
         id: address,

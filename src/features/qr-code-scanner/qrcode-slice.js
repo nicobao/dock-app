@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
+import {Logger} from 'src/core/logger';
 
 const initialState = {
   isLoading: true,
@@ -24,7 +25,7 @@ export const qrCodeSelectors = {
 
 export const qrCodeOperations = {
   handleQRCode: data => async (dispatch, getState) => {
-    console.log('QR Code data received', data);
+    Logger.debug('QR Code data received', data);
   },
 };
 
