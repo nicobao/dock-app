@@ -52,13 +52,13 @@ exports[`AppSettingsScreen should render correctly 1`] = `
         items={
           Array [
             Object {
-              "icon": <SvgDownload />,
+              "icon": <SvgFile />,
               "onPress": undefined,
               "testID": "backupWallet",
               "title": "Backup wallet",
             },
             Object {
-              "icon": <SvgTrash />,
+              "icon": <SvgFile />,
               "onPress": undefined,
               "testID": "deleteWallet",
               "title": "Remove wallet",

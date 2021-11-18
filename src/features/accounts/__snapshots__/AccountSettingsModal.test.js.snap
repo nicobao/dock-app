@@ -85,12 +85,12 @@ exports[`AccountSettingsModal should render correctly 1`] = `
         items={
           Array [
             Object {
-              "icon": <SvgPlusCircle />,
+              "icon": <SvgFile />,
               "onPress": [Function],
               "title": "Export account",
             },
             Object {
-              "icon": <SvgDocumentDownload />,
+              "icon": <SvgFile />,
               "onPress": [Function],
               "title": "Delete account",
             },

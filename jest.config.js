@@ -7,7 +7,7 @@ const config = {
 	],
   "transform": {
     "^.+\\.(ts|js)$": '<rootDir>/node_modules/react-native/jest/preprocessor.js',
-    "^.+\\.svg$": "jest-svg-transformer",
+    "^.+\\.svg$": "<rootDir>/test/svg-transformer.js",
   },
   "moduleNameMapper": {
     "^src(.*)$": "<rootDir>/src$1"

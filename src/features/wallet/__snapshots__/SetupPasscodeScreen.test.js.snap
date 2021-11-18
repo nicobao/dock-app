@@ -37,7 +37,7 @@ exports[`SetupPasscodeScreen should render correctly 1`] = `
   >
     <Button
       full={true}
-      icon={<SvgLockClosed />}
+      icon={<SvgFile />}
       onPress={[Function]}
       testID="create-wallet-btn"
     >
