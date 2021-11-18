@@ -1,22 +1,26 @@
+import {captureException} from '@sentry/react-native';
+import {Stack} from 'native-base';
 import React, {useCallback, useEffect, useState} from 'react';
+import {StyleSheet} from 'react-native';
+import RNExitApp from 'react-native-exit-app';
 import {useDispatch, useSelector} from 'react-redux';
+import {Modal} from 'src/components/Modal';
 import {NumericKeyboard} from 'src/components/NumericKeyboard';
 import {showToast} from 'src/core/toast';
 import styled from 'styled-components/native';
 import SplashLogo from '../../assets/splash-logo.png';
 import {
   Box,
+  Button,
   Content,
   Image,
   ScreenContainer,
   Typography,
 } from '../../design-system';
 import {translate} from '../../locales';
-import {appSelectors} from '../app/app-slice';
+import {appActions, appSelectors} from '../app/app-slice';
 import {BuildIdentifier} from '../app/BuildIdentifier';
 import {walletOperations, walletSelectors} from '../wallet/wallet-slice';
-import {captureException} from '@sentry/react-native';
-import {StyleSheet} from 'react-native';
 
 const Circle = styled.View`
   width: 20px;
@@ -58,6 +62,8 @@ export function UnlockWalletScreen({
   filled = 0,
   biometry = false,
   onLogoPress,
+  locked,
+  onCloseApp,
 }) {
   return (
     <ScreenContainer testID="unlockWalletScreen" hideGlobalHeader={true}>
@@ -87,6 +93,21 @@ export function UnlockWalletScreen({
           </Box>
         ) : null}
         <BuildIdentifier />
+        <Modal visible={locked}>
+          <Stack m={5} p={5} alignItems="center">
+            <Typography variant="h2">
+              {translate('unlock_wallet.app_locked_title')}
+            </Typography>
+            <Typography variant="h4">
+              {translate('unlock_wallet.app_locked_description')}
+            </Typography>
+            <Stack mt={4}>
+              <Button onPress={onCloseApp}>
+                {translate('unlock_wallet.close_app')}
+              </Button>
+            </Stack>
+          </Stack>
+        </Modal>
       </Content>
     </ScreenContainer>
   );
@@ -99,6 +120,8 @@ export function UnlockWalletContainer({route}) {
   const walletInfo = useSelector(walletSelectors.getWalletInfo);
   const biometryEnabled = walletInfo && walletInfo.biometry;
   const [logoPressCount, setLogoPressCount] = useState(1);
+  const isAppLocked = useSelector(appSelectors.getAppLocked);
+  const [failedAttempts, setFailedAttempts] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -119,6 +142,13 @@ export function UnlockWalletContainer({route}) {
           message: translate('unlock_wallet.invalid_passcode'),
           type: 'error',
         });
+
+        if (failedAttempts >= 4) {
+          setFailedAttempts(0);
+          dispatch(appActions.setLockedTime(Date.now() + 1000 * 60));
+        } else {
+          setFailedAttempts(v => v + 1);
+        }
       }
 
       setTimeout(() => {
@@ -156,6 +186,7 @@ export function UnlockWalletContainer({route}) {
 
   return (
     <UnlockWalletScreen
+      locked={isAppLocked}
       digits={DIGITS}
       filled={passcode.length}
       onPasscodeChange={handlePasscodeChange}
@@ -163,6 +194,9 @@ export function UnlockWalletContainer({route}) {
       biometry={supportBiometry}
       passcode={passcode}
       onLogoPress={handleLogoPress}
+      onCloseApp={() => {
+        RNExitApp.exitApp();
+      }}
     />
   );
 }
