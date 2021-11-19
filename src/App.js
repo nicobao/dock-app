@@ -4,14 +4,15 @@ import {useToast, View} from 'native-base';
 import React, {useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import {Provider, useDispatch} from 'react-redux';
+import './core/setup-env';
 import {ConfirmationModal} from '../src/components/ConfirmationModal';
 import {NavigationRouter} from './core/NavigationRouter';
 import store from './core/redux-store';
+import {fetchTransactions} from './core/subscan';
 import {setToast} from './core/toast';
 import {ThemeProvider} from './design-system';
 import {appOperations} from './features/app/app-slice';
 import {RNRpcWebView} from './rn-rpc-webview';
-import {fetchTransactions} from './core/subscan';
 
 try {
   sentryInit({

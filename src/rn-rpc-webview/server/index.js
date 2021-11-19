@@ -1,10 +1,15 @@
 import {JSONRPCServer} from 'json-rpc-2.0';
-import {createRpcService} from '@docknetwork/react-native-sdk/src/rpc-util';
+import {
+  createRpcService,
+  patchRpcServer,
+} from '@docknetwork/react-native-sdk/src/rpc-util';
 import storageService from './async-storage-service';
 import logger from './logger';
 import {Logger} from 'src/core/logger';
 
 const rpcServer = new JSONRPCServer();
+
+patchRpcServer(rpcServer);
 
 if (process.env.NODE_ENV !== 'test') {
   [storageService, logger].forEach(service => {
