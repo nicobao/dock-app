@@ -57,63 +57,67 @@ function TransactionHistoryItem({transaction, accountAddress}) {
         transaction={transaction}
         accountAddress={accountAddress}
       />
-      <TouchableHighlight
-        onPress={() => {
-          setShowDetails(true);
-        }}>
-        <Stack
-          pb={2}
-          borderBottomWidth={1}
-          borderBottomColor={Theme.colors.tertiaryBackground}>
-          {/* <AmountDetails amount={amount} symbol={tokenSymbol} /> */}
-          <TokenAmount amount={amount}>
-            {({tokenAmount, tokenSymbol}) => (
-              <Typography variant="h3">
-                {translate(`transaction_details.${sent ? 'sent' : 'received'}`)}{' '}
-                {tokenAmount} {tokenSymbol}
-              </Typography>
-            )}
-          </TokenAmount>
-          <Typography>{formatDate(transaction.date)}</Typography>
 
-          <Stack direction="row">
-            <Stack
-              my={2}
-              direction="row"
-              bg={Theme.colors.secondaryBackground}
-              borderRadius={Theme.borderRadius * 2}
-              px={3}
-              w="auto">
+      <Stack
+        pb={2}
+        borderBottomWidth={1}
+        borderBottomColor={Theme.colors.tertiaryBackground}>
+        <TouchableHighlight
+          onPress={() => {
+            setShowDetails(true);
+          }}>
+          <Stack>
+            <TokenAmount amount={amount}>
+              {({tokenAmount, tokenSymbol}) => (
+                <Typography variant="h3">
+                  {translate(
+                    `transaction_details.${sent ? 'sent' : 'received'}`,
+                  )}{' '}
+                  {tokenAmount} {tokenSymbol}
+                </Typography>
+              )}
+            </TokenAmount>
+            <Typography>{formatDate(transaction.date)}</Typography>
+
+            <Stack direction="row">
               <Stack
-                bg={TransactionStatusColor[transaction.status]}
-                w={2}
-                h={2}
-                borderRadius={10}
-                mt={2}
-                mr={2}
-              />
-              <Typography>
-                {translate(
-                  `transaction_status.${transaction.status || 'pending'}`,
-                )}
-              </Typography>
+                my={2}
+                direction="row"
+                bg={Theme.colors.secondaryBackground}
+                borderRadius={Theme.borderRadius * 2}
+                px={3}
+                w="auto">
+                <Stack
+                  bg={TransactionStatusColor[transaction.status]}
+                  w={2}
+                  h={2}
+                  borderRadius={10}
+                  mt={2}
+                  mr={2}
+                />
+                <Typography>
+                  {translate(
+                    `transaction_status.${transaction.status || 'pending'}`,
+                  )}
+                </Typography>
+              </Stack>
+              <Stack flex={1} />
             </Stack>
-            <Stack flex={1} />
           </Stack>
-          {transaction.status === TransactionStatus.Failed &&
-          !transaction.retrySucceed ? (
-            <Stack alignItems="flex-start">
-              <Button
-                colorScheme="dark"
-                variant="solid"
-                size="sm"
-                onPress={() => setShowConfirmation(true)}>
-                {translate('transaction_history.try_again')}
-              </Button>
-            </Stack>
-          ) : null}
-        </Stack>
-      </TouchableHighlight>
+        </TouchableHighlight>
+        {transaction.status === TransactionStatus.Failed &&
+        !transaction.retrySucceed ? (
+          <Stack alignItems="flex-start">
+            <Button
+              colorScheme="dark"
+              variant="solid"
+              size="sm"
+              onPress={() => setShowConfirmation(true)}>
+              {translate('transaction_history.try_again')}
+            </Button>
+          </Stack>
+        ) : null}
+      </Stack>
     </>
   );
 }

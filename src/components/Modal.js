@@ -7,7 +7,7 @@ import {Theme} from '../design-system';
 export function Modal({
   onClose = () => {},
   children,
-  modalSize = 0.42,
+  modalSize = 0.5,
   visible,
 }) {
   const screenHeight = Dimensions.get('window').height;
