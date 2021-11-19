@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.15.4",
-    "@docknetwork/react-native-sdk": "https://github.com/docknetwork/react-native-sdk#48b7f77e110f4ac7ae08486c98e7cf992bffb9ca",
+    "@docknetwork/react-native-sdk": "https://github.com/docknetwork/react-native-sdk#9b006cb5cbb3cf142bf6c9f2f512149132dccb03",
     "@react-native-async-storage/async-storage": "^1.15.9",
     "@react-native-community/clipboard": "^1.5.1",
     "@react-native-community/masked-view": "^0.1.11",
