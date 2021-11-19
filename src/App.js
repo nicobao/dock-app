@@ -4,6 +4,7 @@ import {useToast, View} from 'native-base';
 import React, {useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import {Provider, useDispatch} from 'react-redux';
+import './core/setup-env';
 import {ConfirmationModal} from '../src/components/ConfirmationModal';
 import {NavigationRouter} from './core/NavigationRouter';
 import store from './core/redux-store';
@@ -20,6 +21,9 @@ try {
 } catch (err) {
   console.error(err);
 }
+
+const encryptionKey = process.env.ENCRYPTION_KEY;
+console.log('encryptionKey', encryptionKey);
 
 const styles = StyleSheet.create({
   globalComponents: {
