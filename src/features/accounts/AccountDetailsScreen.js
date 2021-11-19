@@ -67,7 +67,6 @@ function TransactionHistoryItem({transaction, accountAddress}) {
             setShowDetails(true);
           }}>
           <Stack>
-            {/* <AmountDetails amount={amount} symbol={tokenSymbol} /> */}
             <TokenAmount amount={amount}>
               {({tokenAmount, tokenSymbol}) => (
                 <Typography variant="h3">
