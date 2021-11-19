@@ -22,9 +22,6 @@ try {
   console.error(err);
 }
 
-const encryptionKey = process.env.ENCRYPTION_KEY;
-console.log('encryptionKey', encryptionKey);
-
 const styles = StyleSheet.create({
   globalComponents: {
     flex: 1,
