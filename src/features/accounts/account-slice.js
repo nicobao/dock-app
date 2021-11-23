@@ -32,6 +32,11 @@ const accountSlice = createSlice({
     setAccounts(state, action) {
       state.accounts = action.payload;
     },
+    removeAccount(state, action) {
+      state.accounts = state.accounts.filter(
+        item => item.id !== action.payload,
+      );
+    },
     setAccount(state, action) {
       state.accounts = state.accounts.map(account => {
         if (account.id === action.payload.id) {
@@ -179,6 +184,8 @@ export const accountOperations = {
 
   removeAccount: (account: any) => async (dispatch, getState) => {
     try {
+      dispatch(accountActions.removeAccount(account.id));
+
       await WalletRpc.remove(account.id);
 
       const realm = getRealm();

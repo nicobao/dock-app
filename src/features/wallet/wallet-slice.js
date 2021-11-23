@@ -52,12 +52,12 @@ export const walletSelectors = {
 
 export const walletOperations = {
   pickWalletBackup: () => async (dispatch, getState) => {
-    const file = await DocumentPicker.pick({
+    const files = await DocumentPicker.pick({
       type: [DocumentPicker.types.allFiles],
     });
 
     navigate(Routes.WALLET_IMPORT_BACKUP_PASSWORD, {
-      fileUri: file.fileCopyUri,
+      fileUri: files[0].fileCopyUri,
     });
   },
   importWallet:
