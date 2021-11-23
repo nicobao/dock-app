@@ -33,7 +33,9 @@ const accountSlice = createSlice({
       state.accounts = action.payload;
     },
     removeAccount(state, action) {
-      state.accounts = state.accounts.filter(item => item.id !== action.payload);
+      state.accounts = state.accounts.filter(
+        item => item.id !== action.payload,
+      );
     },
     setAccount(state, action) {
       state.accounts = state.accounts.map(account => {
