@@ -1,11 +1,12 @@
 import React from 'react';
 import {useDispatch} from 'react-redux';
+import {navigateBack} from 'src/core/navigation';
 import {GenericPasswordContainer} from '../accounts/ExportAccountPasswordScreen';
 import {WalletConstants} from './constants';
 import {walletOperations} from './wallet-slice';
 
 export function ExportWalletContainer({route}) {
-  const {callback} = route.params || {};
+  const {callback = navigateBack} = route.params || {};
   const dispatch = useDispatch();
 
   return (

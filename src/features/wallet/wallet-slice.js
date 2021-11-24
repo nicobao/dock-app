@@ -86,10 +86,16 @@ export const walletOperations = {
       await RNFS.writeFile(path, jsonData);
 
       try {
-        await Share.open({
-          url: 'file://' + path,
-          type: mimeType,
-        });
+        async function exportFile() {
+          await Share.open({
+            url: 'file://' + path,
+            type: mimeType,
+          });
+
+          RNFS.unlink(path);
+        }
+
+        exportFile();
 
         if (callback) {
           callback();
@@ -103,8 +109,6 @@ export const walletOperations = {
           type: 'error',
         });
       }
-
-      RNFS.unlink(path);
     },
   deleteWallet: () => async (dispatch, getState) => {
     await AsyncStorage.removeItem('walletInfo');

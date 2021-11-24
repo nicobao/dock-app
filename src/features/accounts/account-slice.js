@@ -154,20 +154,24 @@ export const accountOperations = {
         const mimeType = 'application/json';
         await RNFS.writeFile(path, jsonData);
 
-        try {
-          await Share.open({
-            url: 'file://' + path,
-            type: mimeType,
-          });
-        } catch (err) {
-          console.error(err);
-          showToast({
-            message: translate('account_details.export_error'),
-            type: 'error',
-          });
+        async function exportFile() {
+          try {
+            await Share.open({
+              url: 'file://' + path,
+              type: mimeType,
+            });
+          } catch (err) {
+            console.error(err);
+            showToast({
+              message: translate('account_details.export_error'),
+              type: 'error',
+            });
+          }
+
+          RNFS.unlink(path);
         }
 
-        RNFS.unlink(path);
+        exportFile();
       } else {
         qrCodeData = jsonData;
       }
