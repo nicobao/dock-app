@@ -6,10 +6,8 @@ import DocumentPicker from 'react-native-document-picker';
 import {Routes} from '../../core/routes';
 import {appSelectors, BiometryType} from '../app/app-slice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {accountOperations} from '../accounts/account-slice';
+import {accountOperations, exportFile} from '../accounts/account-slice';
 import RNFS from 'react-native-fs';
-import Share from 'react-native-share';
-import {showToast} from '../../core/toast';
 import {showConfirmationModal} from 'src/components/ConfirmationModal';
 import {translate} from 'src/locales';
 import {Logger} from 'src/core/logger';
@@ -85,29 +83,16 @@ export const walletOperations = {
       const mimeType = 'application/json';
       await RNFS.writeFile(path, jsonData);
 
-      try {
-        async function exportFile() {
-          await Share.open({
-            url: 'file://' + path,
-            type: mimeType,
-          });
+      exportFile({
+        path,
+        mimeType,
+        errorMessage: translate('backup_wallet.error'),
+      });
 
-          RNFS.unlink(path);
-        }
-
-        exportFile();
-
-        if (callback) {
-          callback();
-        } else {
-          navigateBack();
-        }
-      } catch (err) {
-        console.error(err);
-        showToast({
-          message: translate('backup_wallet.error'),
-          type: 'error',
-        });
+      if (callback) {
+        callback();
+      } else {
+        navigateBack();
       }
     },
   deleteWallet: () => async (dispatch, getState) => {

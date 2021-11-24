@@ -59,6 +59,23 @@ export const accountActions = accountSlice.actions;
 
 const getRoot = state => state.account;
 
+export function exportFile({path, mimeType, errorMessage}) {
+  return Share.open({
+    url: 'file://' + path,
+    type: mimeType,
+  })
+    .catch(err => {
+      console.error(err);
+      showToast({
+        message: errorMessage,
+        type: 'error',
+      });
+    })
+    .finally(() => {
+      RNFS.unlink(path);
+    });
+}
+
 export const accountSelectors = {
   getLoading: state => getRoot(state).loading,
   getAccounts: state => getRoot(state).accounts,
@@ -154,24 +171,11 @@ export const accountOperations = {
         const mimeType = 'application/json';
         await RNFS.writeFile(path, jsonData);
 
-        async function exportFile() {
-          try {
-            await Share.open({
-              url: 'file://' + path,
-              type: mimeType,
-            });
-          } catch (err) {
-            console.error(err);
-            showToast({
-              message: translate('account_details.export_error'),
-              type: 'error',
-            });
-          }
-
-          RNFS.unlink(path);
-        }
-
-        exportFile();
+        exportFile({
+          path,
+          mimeType,
+          errorMessage: translate('account_details.export_error'),
+        });
       } else {
         qrCodeData = jsonData;
       }
