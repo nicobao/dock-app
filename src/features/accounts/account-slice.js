@@ -22,37 +22,37 @@ const initialState = {
   accountToBackup: null,
 };
 
+export const accountReducers = {
+  setLoading(state, action) {
+    state.loading = action.payload;
+  },
+  setAccounts(state, action) {
+    state.accounts = action.payload;
+  },
+  removeAccount(state, action) {
+    state.accounts = state.accounts.filter(item => item.id !== action.payload);
+  },
+  setAccount(state, action) {
+    state.accounts = state.accounts.map(account => {
+      if (account.id === action.payload.id) {
+        return {
+          ...account,
+          ...action.payload,
+        };
+      }
+
+      return account;
+    });
+  },
+  setAccountToBackup(state, action) {
+    state.accountToBackup = action.payload;
+  },
+};
+
 const accountSlice = createSlice({
   name: 'account',
   initialState,
-  reducers: {
-    setLoading(state, action) {
-      state.loading = action.payload;
-    },
-    setAccounts(state, action) {
-      state.accounts = action.payload;
-    },
-    removeAccount(state, action) {
-      state.accounts = state.accounts.filter(
-        item => item.id !== action.payload,
-      );
-    },
-    setAccount(state, action) {
-      state.accounts = state.accounts.map(account => {
-        if (account.id === action.payload.id) {
-          return {
-            ...account,
-            ...action.payload,
-          };
-        }
-
-        return account;
-      });
-    },
-    setAccountToBackup(state, action) {
-      state.accountToBackup = action.payload;
-    },
-  },
+  reducers: accountReducers,
 });
 
 export const accountActions = accountSlice.actions;
