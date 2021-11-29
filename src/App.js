@@ -58,10 +58,6 @@ function GlobalComponents() {
   );
 }
 
-fetchTransactions({
-  address: '3Cd1Y8uxyy19NGTwDWu1hZjuFkVPfRvG8brFLWQ5SdFCtaPJ',
-});
-
 const App = () => {
   return (
     <Provider store={store}>
