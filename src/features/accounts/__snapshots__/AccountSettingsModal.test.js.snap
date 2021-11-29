@@ -57,7 +57,7 @@ exports[`AccountSettingsModal should render correctly 1`] = `
         "backgroundColor": "#18181B",
         "borderTopLeftRadius": 20,
         "borderTopRightRadius": 20,
-        "height": 560.28,
+        "height": 667,
         "width": "100%",
       }
     }

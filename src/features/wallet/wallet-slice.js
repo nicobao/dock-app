@@ -6,10 +6,8 @@ import DocumentPicker from 'react-native-document-picker';
 import {Routes} from '../../core/routes';
 import {appSelectors, BiometryType} from '../app/app-slice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {accountOperations} from '../accounts/account-slice';
+import {accountOperations, exportFile} from '../accounts/account-slice';
 import RNFS from 'react-native-fs';
-import Share from 'react-native-share';
-import {showToast} from '../../core/toast';
 import {showConfirmationModal} from 'src/components/ConfirmationModal';
 import {translate} from 'src/locales';
 import {Logger} from 'src/core/logger';
@@ -52,12 +50,12 @@ export const walletSelectors = {
 
 export const walletOperations = {
   pickWalletBackup: () => async (dispatch, getState) => {
-    const file = await DocumentPicker.pick({
+    const files = await DocumentPicker.pick({
       type: [DocumentPicker.types.allFiles],
     });
 
     navigate(Routes.WALLET_IMPORT_BACKUP_PASSWORD, {
-      fileUri: file.fileCopyUri,
+      fileUri: files[0].fileCopyUri,
     });
   },
   importWallet:
@@ -85,26 +83,17 @@ export const walletOperations = {
       const mimeType = 'application/json';
       await RNFS.writeFile(path, jsonData);
 
-      try {
-        await Share.open({
-          url: 'file://' + path,
-          type: mimeType,
-        });
+      exportFile({
+        path,
+        mimeType,
+        errorMessage: translate('backup_wallet.error'),
+      });
 
-        if (callback) {
-          callback();
-        } else {
-          navigateBack();
-        }
-      } catch (err) {
-        console.error(err);
-        showToast({
-          message: translate('backup_wallet.error'),
-          type: 'error',
-        });
+      if (callback) {
+        callback();
+      } else {
+        navigateBack();
       }
-
-      RNFS.unlink(path);
     },
   deleteWallet: () => async (dispatch, getState) => {
     await AsyncStorage.removeItem('walletInfo');

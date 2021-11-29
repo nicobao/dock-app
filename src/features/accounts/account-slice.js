@@ -22,37 +22,59 @@ const initialState = {
   accountToBackup: null,
 };
 
+export const accountReducers = {
+  setLoading(state, action) {
+    state.loading = action.payload;
+  },
+  setAccounts(state, action) {
+    state.accounts = action.payload;
+  },
+  removeAccount(state, action) {
+    state.accounts = state.accounts.filter(item => item.id !== action.payload);
+  },
+  setAccount(state, action) {
+    state.accounts = state.accounts.map(account => {
+      if (account.id === action.payload.id) {
+        return {
+          ...account,
+          ...action.payload,
+        };
+      }
+
+      return account;
+    });
+  },
+  setAccountToBackup(state, action) {
+    state.accountToBackup = action.payload;
+  },
+};
+
 const accountSlice = createSlice({
   name: 'account',
   initialState,
-  reducers: {
-    setLoading(state, action) {
-      state.loading = action.payload;
-    },
-    setAccounts(state, action) {
-      state.accounts = action.payload;
-    },
-    setAccount(state, action) {
-      state.accounts = state.accounts.map(account => {
-        if (account.id === action.payload.id) {
-          return {
-            ...account,
-            ...action.payload,
-          };
-        }
-
-        return account;
-      });
-    },
-    setAccountToBackup(state, action) {
-      state.accountToBackup = action.payload;
-    },
-  },
+  reducers: accountReducers,
 });
 
 export const accountActions = accountSlice.actions;
 
 const getRoot = state => state.account;
+
+export function exportFile({path, mimeType, errorMessage}) {
+  return Share.open({
+    url: 'file://' + path,
+    type: mimeType,
+  })
+    .catch(err => {
+      console.error(err);
+      showToast({
+        message: errorMessage,
+        type: 'error',
+      });
+    })
+    .finally(() => {
+      RNFS.unlink(path);
+    });
+}
 
 export const accountSelectors = {
   getLoading: state => getRoot(state).loading,
@@ -149,20 +171,11 @@ export const accountOperations = {
         const mimeType = 'application/json';
         await RNFS.writeFile(path, jsonData);
 
-        try {
-          await Share.open({
-            url: 'file://' + path,
-            type: mimeType,
-          });
-        } catch (err) {
-          console.error(err);
-          showToast({
-            message: translate('account_details.export_error'),
-            type: 'error',
-          });
-        }
-
-        RNFS.unlink(path);
+        exportFile({
+          path,
+          mimeType,
+          errorMessage: translate('account_details.export_error'),
+        });
       } else {
         qrCodeData = jsonData;
       }
@@ -179,6 +192,8 @@ export const accountOperations = {
 
   removeAccount: (account: any) => async (dispatch, getState) => {
     try {
+      dispatch(accountActions.removeAccount(account.id));
+
       await WalletRpc.remove(account.id);
 
       const realm = getRealm();

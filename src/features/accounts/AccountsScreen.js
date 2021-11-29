@@ -295,10 +295,11 @@ export const AccountsContainer = withErrorBoundary(({navigation}) => {
             },
           });
         } else if (method === 'json') {
-          const file = await DocumentPicker.pick({
+          const files = await DocumentPicker.pick({
             type: [DocumentPicker.types.allFiles],
           });
-          const fileData = await RNFS.readFile(file.fileCopyUri);
+
+          const fileData = await RNFS.readFile(files[0].fileCopyUri);
 
           dispatch(createAccountOperations.importFromJson(fileData));
         }
