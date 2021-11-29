@@ -21,6 +21,8 @@ function KeyboardButton({onPress, value, testID}) {
 export function NumericKeyboard({
   value: defaultValue = 0,
   allowDecimal,
+  onChange,
+  marginTop,
   ...props
 }) {
   const [value, setValue] = useState(defaultValue);
@@ -55,7 +57,7 @@ export function NumericKeyboard({
         return allowDecimal ? parseFloat(newValue) : newValue;
       });
     },
-    [setValue],
+    [setValue, allowDecimal],
   );
 
   useEffect(() => {
@@ -63,8 +65,8 @@ export function NumericKeyboard({
   }, [defaultValue, setValue]);
 
   useEffect(() => {
-    props.onChange(value);
-  }, [value]);
+    onChange(value);
+  }, [value, onChange]);
 
   const renderDigit = useCallback(
     v => (
@@ -80,7 +82,7 @@ export function NumericKeyboard({
 
   const layout = useMemo(() => {
     return (
-      <Box {...props} flex>
+      <Box flex marginTop={marginTop}>
         <Box
           justifyContent="center"
           flexDirection="row"
@@ -120,7 +122,7 @@ export function NumericKeyboard({
         </Box>
       </Box>
     );
-  }, [renderDigit, handleDelete]);
+  }, [renderDigit, handleDelete, allowDecimal, marginTop]);
 
   return layout;
 }
