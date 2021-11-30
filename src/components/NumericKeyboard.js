@@ -28,12 +28,12 @@ export function NumericKeyboard({
   const [value, setValue] = useState(defaultValue);
 
   const handleDelete = useCallback(() => {
-    setValue(value => {
-      if (!value) {
-        return value;
+    setValue(nextValue => {
+      if (!nextValue) {
+        return nextValue;
       }
 
-      const strValue = `${value}`;
+      const strValue = `${nextValue}`;
 
       return strValue.substring(0, strValue.length - 1);
     });
@@ -41,15 +41,15 @@ export function NumericKeyboard({
 
   const handleDigit = useCallback(
     digit => {
-      setValue(value => {
-        const strValue = value ? `${value}` : '';
+      setValue(nextValue => {
+        const strValue = nextValue ? `${nextValue}` : '';
 
         if (digit === '.' && strValue.indexOf('.') > -1) {
-          return value;
+          return nextValue;
         }
 
         if (digit === '.') {
-          return `${value}.`;
+          return `${nextValue}.`;
         }
 
         const newValue = `${strValue}${digit}`;
