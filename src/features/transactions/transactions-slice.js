@@ -8,6 +8,7 @@ import {DOCK_TOKEN_UNIT} from 'src/core/format-utils';
 import {appSelectors} from '../app/app-slice';
 import {fetchTransactions} from '../../core/subscan';
 import {accountSelectors} from '../accounts/account-slice';
+import BigNumber from 'bignumber.js';
 
 export const TransactionStatus = {
   InProgress: 'pending',
@@ -55,45 +56,63 @@ export const transactionsSelectors = {
 };
 
 export const transactionsOperations = {
+  loadExternalTransactions: account => async (dispatch, getState) => {
+    const realm = getRealm();
+    const dbTransactions = realm.objects('Transaction').toJSON();
+
+    const handleTransaction = tx => {
+      if (tx.from !== account && tx.to !== account) {
+        return;
+      }
+
+      if (dbTransactions.find(item => item.hash === tx.hash)) {
+        return;
+      }
+
+      const newTx = {
+        amount: BigNumber(tx.amount).times(DOCK_TOKEN_UNIT).toString(),
+        feeAmount: tx.fee,
+        recipientAddress: tx.to,
+        fromAddress: tx.from,
+        id: tx.hash,
+        hash: tx.hash,
+        network: 'mainnet',
+        status: 'complete',
+        date: new Date(parseInt(tx.block_timestamp + '000', 10)),
+      };
+
+      realm.write(() => {
+        realm.create('Transaction', newTx, 'modified');
+      });
+    };
+
+    let data;
+    let page = 0;
+
+    do {
+      data = await fetchTransactions({address: account, page});
+      data.transfers.forEach(handleTransaction);
+      page++;
+    } while (data.hasNextPage);
+  },
   loadTransactions: () => async (dispatch, getState) => {
     const realm = getRealm();
     const networkId = appSelectors.getNetworkId(getState());
     let items = realm.objects('Transaction').toJSON();
 
-    // fetch transactions from subscan
+    dispatch(transactionsActions.setTransactions(items));
 
     if (networkId === 'mainnet') {
       const accounts = accountSelectors.getAccounts(getState());
 
       for (const account of accounts) {
-        const data = await fetchTransactions({address: account.id});
-        data.data.transfers.forEach(tx => {
-          if (tx.from !== account.id && tx.to !== account.id) {
-            return;
-          }
-
-          if (items.find(item => item.hash === tx.hash)) {
-            return;
-          }
-
-          realm.write(() => {
-            realm.create(
-              'Transaction',
-              {
-                amount: tx.amount,
-                feeAmount: tx.fee,
-                recipientAddress: tx.to,
-                fromAddress: tx.from,
-                id: tx.hash,
-                hash: tx.hash,
-                network: 'mainnet',
-                status: 'complete',
-                date: new Date(parseInt(tx.block_timestamp + '000', 10)),
-              },
-              'modified',
-            );
-          });
-        });
+        try {
+          await dispatch(
+            transactionsOperations.loadExternalTransactions(account.id),
+          );
+        } catch (err) {
+          console.error(err);
+        }
       }
     }
 
