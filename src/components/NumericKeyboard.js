@@ -66,7 +66,7 @@ export function NumericKeyboard({
 
   useEffect(() => {
     onChange(value);
-  }, [value, onChange]);
+  }, [value]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const renderDigit = useCallback(
     v => (
