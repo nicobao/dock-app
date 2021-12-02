@@ -13,6 +13,5 @@ export function fetchTransactions({address, page = 1, row = 50}) {
       page: page,
       address: address,
     },
-  })
-    .then(res => res.json());
+  }).then(res => res.json());
 }
