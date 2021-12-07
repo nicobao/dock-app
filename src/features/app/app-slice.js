@@ -103,11 +103,11 @@ export const appSelectors = {
   getRpcReady: state => getRoot(state).rpcReady,
   getDockReady: state => getRoot(state).dockReady,
   getNetworkId: state => {
-    if (state.devSettingsEnabled ) {
-      return state.networkId;
+    if (!getRoot(state).devSettingsEnabled) {
+      return 'mainnet';
     }
 
-    return 'mainnet';
+    return getRoot(state).networkId;
   },
   getDevSettingsEnabled: state => getRoot(state).devSettingsEnabled,
   getAppLocked: state => getRoot(state).lockedTime > Date.now(),
