@@ -85,11 +85,7 @@ const app = createSlice({
       state.supportedBiometryType = action.payload;
     },
     setNetworkId(state, action) {
-      if (state.devSettingsEnabled ) {
-        return state.networkId;
-      }
-
-      return 'mainnet';
+      state.networkId = action.payload;
     },
     setDevSettingsEnabled(state, action) {
       state.devSettingsEnabled = action.payload;
@@ -106,7 +102,13 @@ export const appSelectors = {
   getSupportedBiometryType: state => getRoot(state).supportedBiometryType,
   getRpcReady: state => getRoot(state).rpcReady,
   getDockReady: state => getRoot(state).dockReady,
-  getNetworkId: state => getRoot(state).networkId,
+  getNetworkId: state => {
+    if (state.devSettingsEnabled ) {
+      return state.networkId;
+    }
+
+    return 'mainnet';
+  },
   getDevSettingsEnabled: state => getRoot(state).devSettingsEnabled,
   getAppLocked: state => getRoot(state).lockedTime > Date.now(),
 };
