@@ -103,7 +103,7 @@ export const appSelectors = {
   getRpcReady: state => getRoot(state).rpcReady,
   getDockReady: state => getRoot(state).dockReady,
   getNetworkId: state => {
-    if (!getRoot(state).devSettingsEnabled) {
+    if (!appSelectors.getDevSettingsEnabled(state)) {
       return 'mainnet';
     }
 
