@@ -61,7 +61,7 @@ const initialState = {
   supportedBiometryType: null,
   rpcReady: false,
   dockReady: false,
-  networkId: NETWORK,
+  networkId: 'mainnet',
   devSettingsEnabled: false,
 };
 
@@ -85,7 +85,11 @@ const app = createSlice({
       state.supportedBiometryType = action.payload;
     },
     setNetworkId(state, action) {
-      state.networkId = action.payload;
+      if (state.devSettingsEnabled ) {
+        return state.networkId;
+      }
+
+      return 'mainnet';
     },
     setDevSettingsEnabled(state, action) {
       state.devSettingsEnabled = action.payload;
