@@ -1,3 +1,4 @@
+import {captureException} from '@sentry/react-native';
 import {Stack} from 'native-base';
 import React from 'react';
 import {Pressable} from 'react-native';
@@ -27,6 +28,7 @@ export const withErrorToast =
     try {
       await fn(...params);
     } catch (err) {
+      captureException(err);
       showUnexpectedErrorToast();
       throw err;
     }
