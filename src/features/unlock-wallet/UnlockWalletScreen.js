@@ -81,7 +81,7 @@ export function UnlockWalletScreen({
         <NumericKeyboard
           marginTop={50}
           onChange={onPasscodeChange}
-          defaultValue={passcode}
+          value={passcode}
         />
         {biometry ? (
           <Box

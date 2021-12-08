@@ -117,6 +117,11 @@ export const transactionsOperations = {
     }
 
     items = realm.objects('Transaction').toJSON();
+
+    if (networkId === 'mainnet') {
+      items = items.filter(item => !(item.status === 'complete' && !item.hash));
+    }
+
     dispatch(transactionsActions.setTransactions(items));
   },
   updateTransaction: transaction => async (dispatch, getState) => {
