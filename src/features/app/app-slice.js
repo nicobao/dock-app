@@ -61,7 +61,7 @@ const initialState = {
   supportedBiometryType: null,
   rpcReady: false,
   dockReady: false,
-  networkId: NETWORK,
+  networkId: 'mainnet',
   devSettingsEnabled: false,
 };
 
@@ -102,7 +102,13 @@ export const appSelectors = {
   getSupportedBiometryType: state => getRoot(state).supportedBiometryType,
   getRpcReady: state => getRoot(state).rpcReady,
   getDockReady: state => getRoot(state).dockReady,
-  getNetworkId: state => getRoot(state).networkId,
+  getNetworkId: state => {
+    if (!appSelectors.getDevSettingsEnabled(state)) {
+      return 'mainnet';
+    }
+
+    return getRoot(state).networkId;
+  },
   getDevSettingsEnabled: state => getRoot(state).devSettingsEnabled,
   getAppLocked: state => getRoot(state).lockedTime > Date.now(),
 };

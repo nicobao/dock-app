@@ -79,7 +79,8 @@ export function CreateAccountVerifyPhraseScreen({
   );
 }
 
-function getRandomNumbers(maxNum = 1, resultSize = 0) {
+// UI only, do NOT use for data encryption
+function getRandomNumbersUnsafe(maxNum = 1, resultSize = 0) {
   let result = [];
 
   for (let i = 0; i < resultSize; i++) {
@@ -144,7 +145,7 @@ export function CreateAccountVerifyPhraseContainer() {
   };
 
   useEffect(() => {
-    setConfirmationIndexes(getRandomNumbers(12, 2));
+    setConfirmationIndexes(getRandomNumbersUnsafe(12, 2));
   }, []);
 
   const submitDisabled = !(form.word1 && form.word2);
