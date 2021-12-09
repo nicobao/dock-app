@@ -11,6 +11,7 @@ import RNFS from 'react-native-fs';
 import {showConfirmationModal} from 'src/components/ConfirmationModal';
 import {translate} from 'src/locales';
 import {Logger} from 'src/core/logger';
+import {withErrorToast} from 'src/core/toast';
 
 const initialState = {
   loading: true,
@@ -49,18 +50,18 @@ export const walletSelectors = {
 };
 
 export const walletOperations = {
-  pickWalletBackup: () => async (dispatch, getState) => {
-    const files = await DocumentPicker.pick({
-      type: [DocumentPicker.types.allFiles],
-    });
+  pickWalletBackup: () =>
+    withErrorToast(async (dispatch, getState) => {
+      const files = await DocumentPicker.pick({
+        type: [DocumentPicker.types.allFiles],
+      });
 
-    navigate(Routes.WALLET_IMPORT_BACKUP_PASSWORD, {
-      fileUri: files[0].fileCopyUri,
-    });
-  },
-  importWallet:
-    ({fileUri, password}) =>
-    async (dispatch, getState) => {
+      navigate(Routes.WALLET_IMPORT_BACKUP_PASSWORD, {
+        fileUri: files[0].fileCopyUri,
+      });
+    }),
+  importWallet: ({fileUri, password}) =>
+    withErrorToast(async (dispatch, getState) => {
       const fileData = await RNFS.readFile(fileUri);
       const jsonData = JSON.parse(fileData);
       await AsyncStorage.removeItem('wallet');
@@ -73,10 +74,9 @@ export const walletOperations = {
       );
 
       navigate(Routes.CREATE_WALLET_PASSCODE);
-    },
-  exportWallet:
-    ({password, callback}) =>
-    async (dispatch, getState) => {
+    }),
+  exportWallet: ({password, callback}) =>
+    withErrorToast(async (dispatch, getState) => {
       const walletBackup = await WalletRpc.export(password);
       const jsonData = JSON.stringify(walletBackup);
       const path = `${RNFS.DocumentDirectoryPath}/walletBackup.json`;
@@ -94,14 +94,15 @@ export const walletOperations = {
       } else {
         navigateBack();
       }
-    },
-  deleteWallet: () => async (dispatch, getState) => {
-    await AsyncStorage.removeItem('walletInfo');
-    await AsyncStorage.removeItem('wallet');
-    await WalletRpc.create('wallet');
-    dispatch(walletActions.setWalletInfo(null));
-    navigate(Routes.CREATE_WALLET);
-  },
+    }),
+  deleteWallet: () =>
+    withErrorToast(async (dispatch, getState) => {
+      await AsyncStorage.removeItem('walletInfo');
+      await AsyncStorage.removeItem('wallet');
+      await WalletRpc.create('wallet');
+      dispatch(walletActions.setWalletInfo(null));
+      navigate(Routes.CREATE_WALLET);
+    }),
   confirmWalletDelete: () => async (dispatch, getState) => {
     const confirmRemoval = () =>
       showConfirmationModal({
