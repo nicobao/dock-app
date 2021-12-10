@@ -1,6 +1,6 @@
 const SUBSCAN_URL = 'https://dock.api.subscan.io';
 
-export function fetchTransactions({address, page = 1, row = 50}) {
+export function fetchTransactions({address, page = 0, row = 50}) {
   const url = `${SUBSCAN_URL}/api/scan/transfers`;
 
   return fetch(url, {
@@ -8,10 +8,17 @@ export function fetchTransactions({address, page = 1, row = 50}) {
     headers: {
       'content-type': 'application/json',
     },
-    body: {
-      row: row,
-      page: page,
+    body: JSON.stringify({
+      row,
+      page,
       address: address,
-    },
-  }).then(res => res.json());
+    }),
+  })
+    .then(res => res.json())
+    .then(res => {
+      return {
+        ...res.data,
+        hasNextPage: (page + 1) * row < res.data.count,
+      };
+    });
 }

@@ -8,7 +8,6 @@ import './core/setup-env';
 import {ConfirmationModal} from '../src/components/ConfirmationModal';
 import {NavigationRouter} from './core/NavigationRouter';
 import store from './core/redux-store';
-import {fetchTransactions} from './core/subscan';
 import {setToast} from './core/toast';
 import {ThemeProvider} from './design-system';
 import {appOperations} from './features/app/app-slice';
