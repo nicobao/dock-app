@@ -78,7 +78,6 @@ export const createAccountOperations = {
   initFlow: () => async (dispatch, getState) => {
     navigate(Routes.CREATE_ACCOUNT_SETUP);
   },
-
   checkExistingAccount: address => (dispatch, getState) => {
     const accounts = accountSelectors.getAccounts(getState());
     const accountExists = accounts.find(ac => ac.id === address);
