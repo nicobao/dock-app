@@ -6,7 +6,11 @@ import uuid from 'uuid/v4';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {showToast, withErrorToast} from '../../core/toast';
-import {accountActions, accountOperations, accountSelectors} from '../accounts/account-slice';
+import {
+  accountActions,
+  accountOperations,
+  accountSelectors,
+} from '../accounts/account-slice';
 import {translate} from 'src/locales';
 
 const initialState = {
@@ -74,17 +78,17 @@ export const createAccountOperations = {
   initFlow: () => async (dispatch, getState) => {
     navigate(Routes.CREATE_ACCOUNT_SETUP);
   },
-  
-  checkExistingAccount: (address) => (dispatch, getState) => {
+
+  checkExistingAccount: address => (dispatch, getState) => {
     const accounts = accountSelectors.getAccounts(getState());
-      const accountExists = accounts.find(ac => ac.id === address);
-      
+    const accountExists = accounts.find(ac => ac.id === address);
+
     if (accountExists) {
       showToast({
         message: translate('import_account.existing_account'),
         type: 'error',
-      })
-      
+      });
+
       return true;
     }
 
@@ -94,7 +98,11 @@ export const createAccountOperations = {
     withErrorToast(async (dispatch, getState) => {
       const jsonData = JSON.parse(data);
 
-      if (await dispatch(createAccountOperations.checkExistingAccount(jsonData.address))) {
+      if (
+        await dispatch(
+          createAccountOperations.checkExistingAccount(jsonData.address),
+        )
+      ) {
         return;
       }
 
