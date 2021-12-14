@@ -237,6 +237,8 @@ export const accountOperations = {
 
     Logger.debug('Rpc done');
 
+    await WalletRpc.sync();
+
     let accounts = await WalletRpc.query({
       equals: {
         'content.type': 'Account',

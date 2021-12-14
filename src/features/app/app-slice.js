@@ -12,6 +12,7 @@ import {walletActions} from '../wallet/wallet-slice';
 import {initRealm} from 'src/core/realm';
 import {translate} from 'src/locales';
 import {Logger} from 'src/core/logger';
+import { captureException } from '@sentry/react-native';
 
 export const BiometryType = {
   FaceId: Keychain.BIOMETRY_TYPE.FACE_ID,
@@ -158,6 +159,7 @@ export const appOperations = {
         ),
       );
       console.error(err);
+      captureException(err);
     }
 
     try {
@@ -173,6 +175,7 @@ export const appOperations = {
         appActions.setDockReady(new Error('Unable to initialize dock api')),
       );
       console.error(err);
+      captureException(err);
     }
   },
   initialize: () => async (dispatch, getState) => {
@@ -209,6 +212,7 @@ export const appOperations = {
         walletCreated = true;
       } catch (err) {
         console.error(err);
+        captureException(err);
       }
     }
 
