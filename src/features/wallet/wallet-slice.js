@@ -64,7 +64,11 @@ export const walletOperations = {
     withErrorToast(async (dispatch, getState) => {
       const fileData = await RNFS.readFile(fileUri);
       const jsonData = JSON.parse(fileData);
+      await WalletRpc.remove('wallet');
       await AsyncStorage.removeItem('wallet');
+      await WalletRpc.create('wallet');
+      await WalletRpc.load();
+      await WalletRpc.sync();
       await WalletRpc.importWallet(jsonData, password);
 
       dispatch(
