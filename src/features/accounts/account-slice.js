@@ -235,7 +235,9 @@ export const accountOperations = {
 
     await dispatch(appOperations.waitRpcReady());
 
-    Logger.debug('Rpc done');
+    Logger.debug('waitRpcReady done');
+
+    await WalletRpc.sync();
 
     let accounts = await WalletRpc.query({
       equals: {
