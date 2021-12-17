@@ -21,10 +21,13 @@ const initialState = {
   transactions: [],
 };
 
-export const parseTransaction = (transaction) => transaction.date instanceof Date ? transaction : ({
-  ...transaction,
-  date: new Date(transaction.date),
-});
+export const parseTransaction = transaction =>
+  transaction.date instanceof Date
+    ? transaction
+    : {
+        ...transaction,
+        date: new Date(transaction.date),
+      };
 
 export const sortTransactions = (a, b) => b.date.getTime() - a.date.getTime();
 
