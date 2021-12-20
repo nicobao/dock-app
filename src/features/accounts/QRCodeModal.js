@@ -3,7 +3,8 @@ import React from 'react';
 import {Dimensions} from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import {Modal} from '../../components/Modal';
-import {DockLogoIcon, Typography, Theme} from '../../design-system';
+import {DockLogoIcon, Typography, Theme, Button} from '../../design-system';
+import {translate} from '../../locales';
 
 export function QRCodeModal({onClose, visible, data, title, description}) {
   const windowWidth = Dimensions.get('window').width;
@@ -20,6 +21,11 @@ export function QRCodeModal({onClose, visible, data, title, description}) {
           bg={Theme.colors.qrCodeBackground}>
           <QRCode value={data} logo={DockLogoIcon} size={windowWidth * 0.8} />
         </Box>
+        <Stack mt={5}>
+          <Button variant="solid" size="sm" onPress={onClose}>
+            {translate('navigation.close')}
+          </Button>
+        </Stack>
       </Stack>
     </Modal>
   );

@@ -41,7 +41,7 @@ export function BackButton(props) {
       ) : (
         <>
           <BackIcon />
-          <Typography variant="description" marginLeft={6}>
+          <Typography variant="description" marginLeft={2}>
             {translate('navigation.back')}
           </Typography>
         </>
