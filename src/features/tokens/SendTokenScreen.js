@@ -179,11 +179,11 @@ export function SendTokenContainer({route}) {
         onCopyAddress={handleCopyAddress}
         onScanQRCode={() => {
           navigate(Routes.APP_QR_SCANNER, {
-            onData: async (recipientAddress) => {
+            onData: async recipientAddress => {
               const addressValid = await UtilCryptoRpc.isAddressValid(
                 recipientAddress,
               );
-              
+
               navigateBack();
 
               if (addressValid) {
@@ -193,8 +193,8 @@ export function SendTokenContainer({route}) {
               } else {
                 showToast({
                   message: translate('global.not_valid_address'),
-                  type: 'error'
-                })
+                  type: 'error',
+                });
               }
             },
           });
