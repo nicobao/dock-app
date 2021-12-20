@@ -11,7 +11,8 @@
     "rendering_error": "Something went wrong",
     "webview_connection_error": "Unable to connect with the API. (Error: 101)",
     "substrate_connection_error": "Unable to connect with the API. (Error: 104)",
-    "substrate_connection_loading": "Connecting to the remote API..."
+    "substrate_connection_loading": "Connecting to the remote API...",
+    "not_valid_address": "The address is not valid"
   },
   "delete_wallet_confirmation": {
     "title": "Remove Wallet?",
