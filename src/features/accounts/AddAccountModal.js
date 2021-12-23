@@ -19,6 +19,13 @@ export function AddAccountModal({
   showImportAccount,
 }) {
   const [importExisting, setImportExisting] = useState(showImportAccount);
+  const handleBack = () => {
+    if (importExisting) {
+      setImportExisting(false);
+    } else {
+      onClose();
+    }
+  }
 
   useEffect(() => {
     setImportExisting(showImportAccount);
@@ -54,11 +61,11 @@ export function AddAccountModal({
     <ImportExistingAccount
       onClose={onClose}
       onSelect={onImportExistingAccount}
-      onBack={() => setImportExisting(false)}
+      onBack={handleBack}
     />
   );
   return (
-    <Modal visible={visible} onClose={onClose}>
+    <Modal visible={visible} onClose={onClose} onBackButtonPress={handleBack}>
       {content}
     </Modal>
   );

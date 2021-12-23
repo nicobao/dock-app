@@ -6,6 +6,7 @@ import {Theme} from '../design-system';
 
 export function Modal({
   onClose = () => {},
+  onBackButtonPress,
   children,
   modalSize = 0.5,
   visible,
@@ -15,9 +16,10 @@ export function Modal({
   return (
     <RNModal
       isVisible={visible}
-      onSwipeComplete={() => onClose(null)}
+      onSwipeComplete={onClose}
       swipeDirection={['down']}
-      onBackdropPress={() => onClose(null)}
+      onBackdropPress={onClose}
+      onBackButtonPress={onBackButtonPress || onClose}
       style={{justifyContent: 'flex-end', margin: 0}}>
       <View
         style={{
