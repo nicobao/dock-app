@@ -12,7 +12,7 @@ import {walletActions} from '../wallet/wallet-slice';
 import {initRealm} from 'src/core/realm';
 import {translate} from 'src/locales';
 import {Logger} from 'src/core/logger';
-import { captureException } from '@sentry/react-native';
+import {captureException} from '@sentry/react-native';
 
 export const BiometryType = {
   FaceId: Keychain.BIOMETRY_TYPE.FACE_ID,
@@ -185,7 +185,7 @@ export const appOperations = {
     SplashScreen.hide();
 
     if (!appSelectors.getDevSettingsEnabled(getState())) {
-      dispatch(appActions.setNetworkId('mainnet'));      
+      dispatch(appActions.setNetworkId('mainnet'));
     }
 
     await Keychain.getSupportedBiometryType().then(value => {

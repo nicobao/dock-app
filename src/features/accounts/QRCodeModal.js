@@ -3,14 +3,8 @@ import React from 'react';
 import {Dimensions} from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import {Modal} from '../../components/Modal';
-import {
-  DockLogoIcon,
-  Typography,
-  Theme,
-  BackButton,
-  Button,
-} from '../../design-system';
-import { translate } from '../../locales';
+import {DockLogoIcon, Typography, Theme, Button} from '../../design-system';
+import {translate} from '../../locales';
 
 export function QRCodeModal({onClose, visible, data, title, description}) {
   const windowWidth = Dimensions.get('window').width;
