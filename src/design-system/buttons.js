@@ -1,6 +1,6 @@
 import {Button as NButton, Spinner, Stack, Text} from 'native-base';
-import React, {useState} from 'react';
-import {InteractionManager, Platform} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {BackHandler, InteractionManager, Platform, TouchableHighlight} from 'react-native';
 import {translate} from 'src/locales';
 import {Typography} from '.';
 import BackIcon from '../assets/icons/back.svg';
@@ -34,6 +34,11 @@ export const useAsyncCallback = func => {
 export function BackButton(props) {
   const [loading, onPress] = useAsyncCallback(props.onPress || navigateBack);
 
+  // useEffect(() => {
+  //   BackHandler.addEventListener('hardwareBackPress', onPress);
+  //   return () => BackHandler.removeEventListener('hardwareBackPress', onPress);
+  // }, [onPress]);
+
   return (
     <Box flexDirection="row" onPress={onPress} testID={props.testID}>
       {loading ? (
@@ -54,8 +59,10 @@ export function IconButton(props) {
   const [loading, onPress] = useAsyncCallback(props.onPress);
 
   return (
-    <Box col {...props} onPress={onPress}>
-      {loading ? <Spinner size={12} /> : props.children}
+    <Box col {...props} >
+      <TouchableHighlight onPress={onPress}>
+        {loading ? <Spinner size={12} /> : props.children}
+      </TouchableHighlight>
     </Box>
   );
 }
