@@ -3,7 +3,9 @@
     "next": "Next",
     "back": "Back",
     "skip": "Skip",
-    "close": "Close"
+    "close": "Close",
+    "cancel": "Cancel",
+    "ok": "Ok"
   },
   "global": {
     "rendering_error": "Something went wrong",

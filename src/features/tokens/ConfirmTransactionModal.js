@@ -111,9 +111,12 @@ export const ConfirmTransactionModal = withErrorBoundary(
           </Stack>
         </Stack>
         <Stack p={3}>
-          <Button onPress={onConfirm}>
-            {translate('confirm_transaction.submit')}
-          </Button>
+          <Stack>
+            <Button onPress={onConfirm}>{translate('navigation.ok')}</Button>
+          </Stack>
+          <Stack pt={2}>
+            <Button onPress={onClose}>{translate('navigation.cancel')}</Button>
+          </Stack>
         </Stack>
       </Modal>
     );
