@@ -1,6 +1,11 @@
 import {Button as NButton, Spinner, Stack, Text} from 'native-base';
 import React, {useEffect, useState} from 'react';
-import {BackHandler, InteractionManager, Platform, TouchableHighlight} from 'react-native';
+import {
+  BackHandler,
+  InteractionManager,
+  Platform,
+  TouchableHighlight,
+} from 'react-native';
 import {translate} from 'src/locales';
 import {Typography} from '.';
 import BackIcon from '../assets/icons/back.svg';
@@ -59,7 +64,7 @@ export function IconButton(props) {
   const [loading, onPress] = useAsyncCallback(props.onPress);
 
   return (
-    <Box col {...props} >
+    <Box col {...props}>
       <TouchableHighlight onPress={onPress}>
         {loading ? <Spinner size={12} /> : props.children}
       </TouchableHighlight>
