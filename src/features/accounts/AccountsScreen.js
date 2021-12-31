@@ -76,6 +76,7 @@ export const AccountsScreen = withErrorBoundary(
                 onPress={() => setShowAddAccount(true)}>
                 <PlusCircleWhiteIcon />
               </IconButton>
+
               <IconButton col onPress={onSettings}>
                 <CogIcon />
               </IconButton>
