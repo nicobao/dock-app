@@ -10,7 +10,7 @@
     "test": "jest ./src/**",
     "test:e2e": "detox test",
     "build:e2e": "detox build",
-    "lint": "eslint './src/**/*.js' --ignore-path=.prettierignore",
+    "lint": "eslint './src/**/*.js' --max-warnings=0 --ignore-path=.prettierignore",
     "lint:fix": "eslint './src/**/*.js' --fix --ignore-path=.prettierignore",
     "format": "prettier './src/**/*.{js,json}' --write",
     "postinstall": "./node_modules/.bin/rn-nodeify --install --hack --yarn && patch-package && jetifier",

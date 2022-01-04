@@ -14,7 +14,7 @@ import {
 import {BackButton} from '../../design-system/buttons';
 import {translate} from '../../locales';
 import {createAccountOperations} from '../account-creation/create-account-slice';
-import {Keyboard} from 'react-native'
+import {Keyboard} from 'react-native';
 import Clipboard from '@react-native-community/clipboard';
 
 export function ImportAccountFromMnemonicScreen({
@@ -87,7 +87,7 @@ export function ImportAccountFromMnemonicContainer() {
             Keyboard.dismiss();
           }
         });
-      }    
+      }
     }
 
     setForm(v => ({
