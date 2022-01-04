@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import {Box as HBox} from 'native-base';
 import {Box, KeyboardDeleteIcon, Typography} from 'src/design-system';
 

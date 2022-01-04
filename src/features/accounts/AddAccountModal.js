@@ -25,7 +25,7 @@ export function AddAccountModal({
     } else {
       onClose();
     }
-  }
+  };
 
   useEffect(() => {
     setImportExisting(showImportAccount);

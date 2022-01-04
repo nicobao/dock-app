@@ -1,3 +1,4 @@
+import 'intl';
 import BigNumber from 'bignumber.js';
 
 export const DOCK_TOKEN_UNIT = 1000000;

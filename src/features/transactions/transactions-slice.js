@@ -21,6 +21,16 @@ const initialState = {
   transactions: [],
 };
 
+export const parseTransaction = transaction =>
+  transaction.date instanceof Date
+    ? transaction
+    : {
+        ...transaction,
+        date: new Date(transaction.date),
+      };
+
+export const sortTransactions = (a, b) => b.date.getTime() - a.date.getTime();
+
 const transactions = createSlice({
   name: 'transactions',
   initialState,
@@ -29,15 +39,18 @@ const transactions = createSlice({
       state.loading = action.payload;
     },
     setTransactions(state, action) {
-      state.transactions = action.payload;
+      state.transactions = action.payload
+        .map(parseTransaction)
+        .sort(sortTransactions);
     },
     addTransaction(state, action) {
-      state.transactions.push(action.payload);
+      state.transactions.push(parseTransaction(action.payload));
+      state.transactions = state.transactions.sort(sortTransactions);
     },
     updateTransaction(state, action) {
       state.transactions = state.transactions.map(item => {
         if (item.id === action.payload.id) {
-          return action.payload;
+          return parseTransaction(action.payload);
         }
 
         return item;
