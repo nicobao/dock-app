@@ -1,5 +1,6 @@
 import Clipboard from '@react-native-community/clipboard';
 import {Box, FormControl, Input, Stack} from 'native-base';
+import {Keyboard} from 'react-native';
 import React, {useState} from 'react';
 import Share from 'react-native-share';
 import {useDispatch, useSelector} from 'react-redux';
@@ -32,6 +33,18 @@ import {
 } from 'src/core/format-utils';
 
 export function SendTokenScreen({form, onChange, onScanQRCode, onNext}) {
+  const onChangeAddressMethod = onChange('recipientAddress');
+
+  async function onChangeAddress(v) {
+    onChangeAddressMethod(v);
+    if (v) {
+      const copiedContent = await Clipboard.getString();
+      if (copiedContent && v.includes(copiedContent)) {
+        Keyboard.dismiss();
+      }
+    }
+  }
+
   return (
     <ScreenContainer testID="unlockWalletScreen">
       <Header>
@@ -48,7 +61,7 @@ export function SendTokenScreen({form, onChange, onScanQRCode, onNext}) {
             <FormControl isInvalid={form._errors.recipientAddress}>
               <Input
                 value={form.recipientAddress}
-                onChangeText={onChange('recipientAddress')}
+                onChangeText={onChangeAddress}
                 autoCapitalize="none"
                 placeholder={translate('send_token.recipient_address')}
                 pasteFromClipboard
