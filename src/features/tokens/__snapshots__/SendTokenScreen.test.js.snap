@@ -33,6 +33,7 @@ exports[`SendTokenScreen should render correctly 1`] = `
         <Memo(ForwardRef(FormControl))>
           <Memo(ForwardRef(Input))
             autoCapitalize="none"
+            onChangeText={[Function]}
             pasteFromClipboard={true}
             placeholder="Recipient address"
           />
