@@ -10,6 +10,7 @@ import {accountOperations, exportFile} from '../accounts/account-slice';
 import RNFS from 'react-native-fs';
 import {showConfirmationModal} from 'src/components/ConfirmationModal';
 import {translate} from 'src/locales';
+import {showToast} from 'src/core/toast';
 import {Logger} from 'src/core/logger';
 import {withErrorToast} from 'src/core/toast';
 
@@ -62,6 +63,7 @@ export const walletOperations = {
     }),
   importWallet: ({fileUri, password}) =>
     withErrorToast(async (dispatch, getState) => {
+      fileUri = fileUri.replace(/%20/gi, ' ');
       const fileData = await RNFS.readFile(fileUri);
       const jsonData = JSON.parse(fileData);
       await WalletRpc.remove('wallet');
@@ -70,6 +72,22 @@ export const walletOperations = {
       await WalletRpc.load();
       await WalletRpc.sync();
       await WalletRpc.importWallet(jsonData, password);
+
+      const accounts = await WalletRpc.query({
+        equals: {
+          'content.type': 'Account',
+        },
+      });
+
+      if (!accounts || !accounts.length) {
+        showToast({
+          message: translate('import_wallet.invalid_file'),
+          type: 'error',
+        });
+
+        navigate(Routes.CREATE_WALLET);
+        return;
+      }
 
       dispatch(
         walletActions.setCreationFlags({
@@ -225,7 +243,7 @@ export const walletOperations = {
       dispatch(walletActions.setWalletInfo(walletInfo));
 
       if (!flags.importWalletFlow) {
-        WalletRpc.create(keychainId);
+        await WalletRpc.create(keychainId);
       }
 
       dispatch(walletActions.setCreationFlags({}));

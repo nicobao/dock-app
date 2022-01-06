@@ -151,6 +151,7 @@ export const appOperations = {
       await WalletRpc.create('wallet');
       await WalletRpc.load();
       await WalletRpc.sync();
+
       dispatch(appActions.setRpcReady(true));
     } catch (err) {
       dispatch(

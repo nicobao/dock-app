@@ -243,8 +243,6 @@ export const accountOperations = {
 
     await WalletRpc.sync();
 
-    await WalletRpc.sync();
-
     let accounts = await WalletRpc.query({
       equals: {
         'content.type': 'Account',
@@ -252,7 +250,7 @@ export const accountOperations = {
     });
 
     if (!Array.isArray(accounts)) {
-      throw new Error('Invalid accounts data');
+      return;
     }
 
     accounts = accounts.map(account => {
@@ -272,8 +270,8 @@ export const accountOperations = {
           'Account',
           {
             id: account.id,
-            name: account.name,
-            readyOnly: account.meta.readOnly,
+            name: account.name || '',
+            readyOnly: account.meta && account.meta.readOnly,
           },
           'modified',
         );
