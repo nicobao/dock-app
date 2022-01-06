@@ -1,20 +1,22 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {TouchableOpacity} from 'react-native';
+import {Box as HBox} from 'native-base';
 import {Box, KeyboardDeleteIcon, Typography} from 'src/design-system';
 
 function KeyboardButton({onPress, value, testID}) {
   return (
-    <Box flex alignItems="center">
-      <TouchableOpacity
-        onPress={() => value !== null && onPress(value)}
-        testID={testID}>
+    <TouchableOpacity
+      onPress={() => value !== null && onPress(value)}
+      style={{flex: 1}}
+      testID={testID}>
+      <HBox flex={1} alignItems="center">
         <Box>
           <Typography variant="h1" fontSize={30} lineHeight={37}>
             {value}
           </Typography>
         </Box>
-      </TouchableOpacity>
-    </Box>
+      </HBox>
+    </TouchableOpacity>
   );
 }
 

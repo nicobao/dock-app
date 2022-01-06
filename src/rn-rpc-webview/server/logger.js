@@ -6,8 +6,7 @@ export default {
     async log(...params) {
       Logger.debug('====> Webview logger:');
       Logger.debug(...params);
-
-      return 'okkkk';
+      return 'ok';
     },
   },
 };

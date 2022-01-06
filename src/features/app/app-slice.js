@@ -184,6 +184,10 @@ export const appOperations = {
     Logger.debug('Realm initialized');
     SplashScreen.hide();
 
+    if (!appSelectors.getDevSettingsEnabled(getState())) {
+      dispatch(appActions.setNetworkId('mainnet'));
+    }
+
     await Keychain.getSupportedBiometryType().then(value => {
       let type;
 

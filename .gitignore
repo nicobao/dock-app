@@ -9,8 +9,8 @@ android/app/src/main/assets/app-html/bundle.js
 assets/app-html/bundle.js
 build/
 .env
-.env.local
-.env.prod
+env.local
+env.prod
 *.pbxuser
 !default.pbxuser
 *.mode1v3

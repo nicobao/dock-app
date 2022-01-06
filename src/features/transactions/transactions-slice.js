@@ -39,10 +39,13 @@ const transactions = createSlice({
       state.loading = action.payload;
     },
     setTransactions(state, action) {
-      state.transactions = action.payload.map(parseTransaction);
+      state.transactions = action.payload
+        .map(parseTransaction)
+        .sort(sortTransactions);
     },
     addTransaction(state, action) {
       state.transactions.push(parseTransaction(action.payload));
+      state.transactions = state.transactions.sort(sortTransactions);
     },
     updateTransaction(state, action) {
       state.transactions = state.transactions.map(item => {
@@ -127,6 +130,11 @@ export const transactionsOperations = {
     }
 
     items = realm.objects('Transaction').toJSON();
+
+    if (networkId === 'mainnet') {
+      items = items.filter(item => !(item.status === 'complete' && !item.hash));
+    }
+
     dispatch(transactionsActions.setTransactions(items));
   },
   updateTransaction: transaction => async (dispatch, getState) => {

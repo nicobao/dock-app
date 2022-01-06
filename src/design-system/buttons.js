@@ -34,6 +34,11 @@ export const useAsyncCallback = func => {
 export function BackButton(props) {
   const [loading, onPress] = useAsyncCallback(props.onPress || navigateBack);
 
+  // useEffect(() => {
+  //   BackHandler.addEventListener('hardwareBackPress', onPress);
+  //   return () => BackHandler.removeEventListener('hardwareBackPress', onPress);
+  // }, [onPress]);
+
   return (
     <Box flexDirection="row" onPress={onPress} testID={props.testID}>
       {loading ? (

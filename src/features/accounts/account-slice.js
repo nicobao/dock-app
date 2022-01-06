@@ -65,6 +65,10 @@ export function exportFile({path, mimeType, errorMessage}) {
     type: mimeType,
   })
     .catch(err => {
+      if (err.message === 'User did not share') {
+        return;
+      }
+
       console.error(err);
       showToast({
         message: errorMessage,
@@ -236,6 +240,8 @@ export const accountOperations = {
     await dispatch(appOperations.waitRpcReady());
 
     Logger.debug('waitRpcReady done');
+
+    await WalletRpc.sync();
 
     await WalletRpc.sync();
 

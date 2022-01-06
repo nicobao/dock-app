@@ -14,6 +14,8 @@ import {
 import {BackButton} from '../../design-system/buttons';
 import {translate} from '../../locales';
 import {createAccountOperations} from '../account-creation/create-account-slice';
+import {Keyboard} from 'react-native';
+import Clipboard from '@react-native-community/clipboard';
 
 export function ImportAccountFromMnemonicScreen({
   form,
@@ -77,6 +79,17 @@ export function ImportAccountFromMnemonicContainer() {
   });
 
   const handleChange = key => evt => {
+    if (key === 'phrase') {
+      const value = evt.trim();
+      if (value.split(' ').length === 12) {
+        Clipboard.getString().then(cValue => {
+          if (cValue === evt) {
+            Keyboard.dismiss();
+          }
+        });
+      }
+    }
+
     setForm(v => ({
       ...v,
       [key]: evt,
