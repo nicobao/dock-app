@@ -250,6 +250,7 @@ export const accountOperations = {
     });
 
     if (!Array.isArray(accounts)) {
+      // accounts = [];
       return;
     }
 
@@ -270,8 +271,8 @@ export const accountOperations = {
           'Account',
           {
             id: account.id,
-            name: account.name,
-            readyOnly: account.meta.readOnly,
+            name: account.name || '',
+            readyOnly: account.meta && account.meta.readOnly,
           },
           'modified',
         );

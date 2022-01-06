@@ -5,6 +5,11 @@ export default {
   name: 'storage',
   routes: {
     async getItem(...params) {
+      // const result = await AsyncStorage.getItem(...params);
+      
+      
+      // debugger;
+      
       return AsyncStorage.getItem(...params);
     },
     async setItem(...params) {

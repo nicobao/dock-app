@@ -45,7 +45,8 @@
     "description": "If you backed up your wallet previously, you can upload the file to import your wallet.",
     "loadingText": "Importing wallet",
     "successMessage": "Wallet imported",
-    "submit": "Import wallet"
+    "submit": "Import wallet",
+    "invalid_file": "Invalid backup file, please try again"
   },
   "create_wallet": {
     "create_new": "Create a new wallet",
