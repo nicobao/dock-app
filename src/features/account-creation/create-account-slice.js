@@ -115,12 +115,12 @@ export const createAccountOperations = {
     }),
   unlockJson: password => async (dispatch, getState) => {
     const form = createAccountSelectors.getForm(getState());
-
-    await KeyringRpc.addFromJson(form.data, password);
+    const keyPairJson = await KeyringRpc.addFromJson(form.data, password);
 
     dispatch(
       createAccountActions.setForm({
         ...form,
+        keyPairJson,
         password,
         accountName: form.data.meta && form.data.meta.name,
       }),
@@ -228,8 +228,8 @@ export const createAccountOperations = {
           '@context': ['https://w3id.org/wallet/v1'],
           id: secretId,
           name: accountName,
-          type: 'Password',
-          value: form.password,
+          type: 'KeyPair',
+          value: form.keyPairJson,
         });
       }
 
