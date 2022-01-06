@@ -63,7 +63,7 @@ export const walletOperations = {
     }),
   importWallet: ({fileUri, password}) =>
     withErrorToast(async (dispatch, getState) => {
-      fileUri = fileUri.replace(/\%20/gi, ' ');
+      fileUri = fileUri.replace(/%20/gi, ' ');
       const fileData = await RNFS.readFile(fileUri);
       const jsonData = JSON.parse(fileData);
       await WalletRpc.remove('wallet');
