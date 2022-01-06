@@ -250,7 +250,6 @@ export const accountOperations = {
     });
 
     if (!Array.isArray(accounts)) {
-      // accounts = [];
       return;
     }
 
