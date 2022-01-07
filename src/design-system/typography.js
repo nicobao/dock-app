@@ -5,7 +5,7 @@ import {Theme} from './theme';
 
 const headerVariantBase = {
   fontFamily: Theme.fontFamily.montserrat,
-  lineHeight: 32,
+  lineHeight: '32px',
   fontWeight: '600',
   color: Theme.colors.headerText,
 };
@@ -42,13 +42,13 @@ const variantsMap = {
     ...headerVariantBase,
     fontSize: 17,
     fontWeight: 400,
-    lineHeight: 22,
+    lineHeight: '22px',
   },
   'list-description': {
     fontFamily: Theme.fontFamily.montserrat,
     fontSize: 16,
     fontWeight: 400,
-    lineHeight: 22,
+    lineHeight: '22px',
     color: Theme.colors.description,
   },
   'screen-description': {
