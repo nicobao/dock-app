@@ -13,7 +13,8 @@
     "substrate_connection_error": "Unable to connect with the API. (Error: 104)",
     "substrate_connection_loading": "Connecting to the remote API...",
     "not_valid_address": "The address is not valid",
-    "subscan_unable_to_fetch": "Unable to fetch transaction history"
+    "subscan_unable_to_fetch": "Unable to fetch transaction history",
+    "unexpected_error": "Unexpected error, please try again"
   },
   "delete_wallet_confirmation": {
     "title": "Remove Wallet?",
@@ -122,7 +123,8 @@
     "title": "Account name",
     "account_name_input": "Account name",
     "import_success": "Account successfully imported",
-    "existing_account": "This accounts already exists in the wallet"
+    "existing_account": "This accounts already exists in the wallet",
+    "invalid_account_data": "Invalid account data"
   },
   "import_account_from_mnemonic": {
     "title": "Account recovery phrase",
