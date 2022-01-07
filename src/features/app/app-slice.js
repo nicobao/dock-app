@@ -230,9 +230,11 @@ export const appOperations = {
     await initKeyring(networkId);
     const substrateUrl = getNetworkInfo(networkId).url;
 
+    await DockRpc.disconnect();
+
     Logger.debug('Init dock with url', substrateUrl);
 
-    DockRpc.init({
+    await DockRpc.init({
       address: substrateUrl,
     });
   },
