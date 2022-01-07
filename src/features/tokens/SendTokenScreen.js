@@ -98,7 +98,7 @@ export function EnterTokenAmount({form, onMax, onChange, onBack, onNext}) {
           <Stack direction="row" alignItems="center" justifyContent="center">
             <Typography
               variant="h1"
-              style={{fontSize: 48, lineHeight: 60}}
+              style={{fontSize: 48, lineHeight: '60px'}}
               mr={2}>{`${form.amount || 0}`}</Typography>
             <Typography variant="h1">{form.tokenSymbol}</Typography>
           </Stack>

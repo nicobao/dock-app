@@ -2,6 +2,7 @@ import {captureException} from '@sentry/react-native';
 import {Stack} from 'native-base';
 import React from 'react';
 import {Pressable} from 'react-native';
+import {translate} from 'src/locales';
 import {CheckCircleIcon, Text, XCircleIcon} from '../design-system';
 import {Theme} from '../design-system/theme';
 
@@ -23,20 +24,22 @@ const typeMap = {
 };
 
 export const withErrorToast =
-  fn =>
+  (fn, message) =>
   async (...params) => {
     try {
       await fn(...params);
     } catch (err) {
       captureException(err);
-      showUnexpectedErrorToast();
+      showUnexpectedErrorToast(message);
       throw err;
     }
   };
 
-export function showUnexpectedErrorToast() {
+export function showUnexpectedErrorToast(
+  message = translate('global.unexpected_error'),
+) {
   showToast({
-    message: 'Unexpected error, please try again',
+    message,
     type: 'error',
   });
 }

@@ -11,7 +11,7 @@ function KeyboardButton({onPress, value, testID}) {
       testID={testID}>
       <HBox flex={1} alignItems="center">
         <Box>
-          <Typography variant="h1" fontSize={30} lineHeight={37}>
+          <Typography variant="h1" fontSize={30} lineHeight="37px">
             {value}
           </Typography>
         </Box>
