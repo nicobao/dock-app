@@ -233,9 +233,9 @@ export default {
 
   // Line Height
   buttonLineHeight: '19px',
-  lineHeightH1: 32,
-  lineHeightH2: 27,
-  lineHeightH3: 25,
+  lineHeightH1: '32px',
+  lineHeightH2: '27px',
+  lineHeightH3: '25px',
   lineHeight: platform === PLATFORM.IOS ? '20px' : '24px',
   listItemSelected: platform === PLATFORM.IOS ? '#007aff' : '#3F51B5',
 
