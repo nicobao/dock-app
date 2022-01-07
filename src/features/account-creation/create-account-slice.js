@@ -112,7 +112,7 @@ export const createAccountOperations = {
         }),
       );
       navigate(Routes.ACCOUNT_IMPORT_SETUP_PASSWORD);
-    }),
+    }, translate('import_account.invalid_account_data')),
   unlockJson: password => async (dispatch, getState) => {
     const form = createAccountSelectors.getForm(getState());
     const keyPairJson = await KeyringRpc.addFromJson(form.data, password);
