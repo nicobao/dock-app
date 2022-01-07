@@ -1094,9 +1094,9 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@docknetwork/react-native-sdk@https://github.com/docknetwork/react-native-sdk#9b006cb5cbb3cf142bf6c9f2f512149132dccb03":
+"@docknetwork/react-native-sdk@https://github.com/docknetwork/react-native-sdk#9d13731a9e1dfdb6fb30eeeb38803c7ab7f460ba":
   version "0.1.0"
-  resolved "https://github.com/docknetwork/react-native-sdk#9b006cb5cbb3cf142bf6c9f2f512149132dccb03"
+  resolved "https://github.com/docknetwork/react-native-sdk#9d13731a9e1dfdb6fb30eeeb38803c7ab7f460ba"
   dependencies:
     "@babel/node" "^7.16.0"
     babel-node "^0.0.1-security"
