@@ -34,6 +34,7 @@ export function CreateWalletScreen() {
         <LoadingButton
           full
           testID="createWalletButton"
+          accessibilityLabel="createWalletButton"
           onPress={() => navigate(Routes.CREATE_WALLET_PASSCODE_SETUP)}>
           {translate('create_wallet.create_new')}
         </LoadingButton>

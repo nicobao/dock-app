@@ -32,6 +32,7 @@ export function SetupPasscodeScreen() {
           full
           icon={<LockClosedIcon />}
           testID="create-wallet-btn"
+          accessibilityLabel="create-wallet-btn"
           onPress={() => {
             navigate(Routes.CREATE_WALLET_PASSCODE);
           }}>
