@@ -131,9 +131,9 @@ export function EnterTokenAmount({form, onMax, onChange, onBack, onNext}) {
           />
         </Box>
         <Stack flex={1} alignContent="flex-end">
-          <LoadingButton onPress={onNext} mb={4}>
+          <Button onPress={onNext} mb={4}>
             {translate('navigation.next')}
-          </LoadingButton>
+          </Button>
         </Stack>
       </Content>
     </ScreenContainer>
