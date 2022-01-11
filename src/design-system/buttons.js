@@ -1,5 +1,5 @@
 import {Button as NButton, Spinner, Stack, Text} from 'native-base';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {InteractionManager, Platform, TouchableHighlight} from 'react-native';
 import {translate} from 'src/locales';
 import {Typography} from '.';
@@ -20,13 +20,13 @@ export const runAfterInteractions =
       };
 
 export const useAsyncCallback = func => {
-  let isActive = true;
+  const isActive = useRef(true);
   const [loading, setLoading] = useState();
   const callback = () => {
     setLoading(true);
     runAfterInteractions(() => {
       Promise.resolve(func()).finally(() => {
-        if (isActive) {
+        if (isActive.currentsActive) {
           setLoading(false);
         }
       });
@@ -34,7 +34,9 @@ export const useAsyncCallback = func => {
   };
 
   useEffect(() => {
-    return () => { isActive = false };
+    return () => {
+      isActive.current = false;
+    };
   }, [func]);
 
   return [loading, callback];

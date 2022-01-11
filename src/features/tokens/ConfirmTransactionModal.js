@@ -1,4 +1,4 @@
-import {Box, Stack, HStack} from 'native-base';
+import {Box, Stack} from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {withErrorBoundary} from 'src/core/error-handler';
 import {formatCurrency, formatDockAmount} from 'src/core/format-utils';
@@ -113,13 +113,16 @@ export const ConfirmTransactionModal = withErrorBoundary(
         <Stack px={8}>
           <Button.Group
             mx={{
-              base: "auto",
+              base: 'auto',
               md: 0,
             }}
-            size="md"
-          >
-            <Button colorScheme="dark" onPress={onClose} width="50%">{translate('navigation.cancel')}</Button>
-            <Button onPress={onConfirm} width="50%">{translate('navigation.ok')}</Button>
+            size="md">
+            <Button colorScheme="dark" onPress={onClose} width="50%">
+              {translate('navigation.cancel')}
+            </Button>
+            <Button onPress={onConfirm} width="50%">
+              {translate('navigation.ok')}
+            </Button>
           </Button.Group>
         </Stack>
       </Modal>
