@@ -43,6 +43,7 @@ export function CreateWalletScreen() {
           variant="ghost"
           mt={4}
           testID="import_existing"
+          accessibilityLabel="import_existing"
           onPress={() => navigate(Routes.WALLET_IMPORT_BACKUP)}>
           {translate('create_wallet.import_existing')}
         </LoadingButton>

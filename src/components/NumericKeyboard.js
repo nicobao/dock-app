@@ -8,6 +8,7 @@ function KeyboardButton({onPress, value, testID}) {
     <TouchableOpacity
       onPress={() => value !== null && onPress(value)}
       style={{flex: 1}}
+      accessibilityLabel={testID}
       testID={testID}>
       <HBox flex={1} alignItems="center">
         <Box>

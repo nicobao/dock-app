@@ -19,7 +19,10 @@ export function ImportWalletScreen({onSubmit, onImportFromClipboard}) {
   return (
     <ScreenContainer testID="create-wallet-screen">
       <Header>
-        <BackButton />
+        <BackButton
+          testID="BackButton.importWallet"
+          accessibilityLabel="BackButton.importWallet"
+        />
       </Header>
       <Content marginLeft={26} marginRight={26}>
         <Typography
@@ -42,7 +45,8 @@ export function ImportWalletScreen({onSubmit, onImportFromClipboard}) {
         <Button
           onPress={onSubmit}
           full
-          testID={WalletConstants.importWallet.testID.submitBtn}>
+          testID="importWallet.submitBtn"
+          accessibilityLabel="importWallet.submitBtn">
           {translate('import_wallet.submit')}
         </Button>
       </Footer>
