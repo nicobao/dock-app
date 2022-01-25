@@ -10,7 +10,6 @@ import {
 import {BackButton} from '../../design-system/buttons';
 import {useDispatch} from 'react-redux';
 import {walletOperations} from './wallet-slice';
-import {WalletConstants} from './constants';
 import {translate} from '../../locales';
 
 export function ImportWalletScreen({onSubmit, onImportFromClipboard}) {
