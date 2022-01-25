@@ -36,6 +36,7 @@ exports[`SetupPasscodeScreen should render correctly 1`] = `
     marginRight={26}
   >
     <Button
+      accessibilityLabel="create-wallet-btn"
       full={true}
       icon={<SvgFile />}
       onPress={[Function]}
