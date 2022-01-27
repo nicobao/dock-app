@@ -102,11 +102,15 @@ export const transactionsOperations = {
     let data;
     let page = 0;
 
-    do {
-      data = await fetchTransactions({address: account, page});
-      data.transfers.forEach(handleTransaction);
-      page++;
-    } while (data.hasNextPage);
+    try {
+      do {
+        data = await fetchTransactions({address: account, page});
+        data.transfers.forEach(handleTransaction);
+        page++;
+      } while (data.hasNextPage);
+    } catch(err) {
+      console.log(err);
+    }
   },
   loadTransactions: () => async (dispatch, getState) => {
     const realm = getRealm();

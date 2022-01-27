@@ -25,10 +25,10 @@ export function fetchTransactions({address, page = 0, row = 50}) {
       };
     })
     .catch(err => {
-      showToast({
-        message: translate('global.subscan_unable_to_fetch'),
-        type: 'error',
-      });
+      // showToast({
+      //   message: translate('global.subscan_unable_to_fetch'),
+      //   type: 'error',
+      // });
       throw err;
     });
 }

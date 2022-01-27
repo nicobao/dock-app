@@ -53,7 +53,7 @@ function getTokenPrice(symbol) {
     .toJSON()[0];
   const networkResult = fetchFromNetwork();
 
-  if (cachedPrice) {
+  if (cachedPrice && cachedPrice.price > 0) {
     return cachedPrice.price;
   }
 

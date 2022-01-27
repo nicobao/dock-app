@@ -132,9 +132,9 @@ export function EnterTokenAmount({form, onMax, onChange, onBack, onNext}) {
           />
         </Box> 
         <Stack flex={1} alignContent="flex-end">
-          <LoadingButton onPress={onNext} mb={4}>
+          <Button onPress={onNext} mb={4}>
             {translate('navigation.next')}
-          </LoadingButton>
+          </Button>
         </Stack>
       </Content>
     </ScreenContainer>
@@ -192,21 +192,23 @@ export function handleFeeUpdate({
   return true;
 }
 
+const defaultFormState = {
+  recipientAddress: '',
+  amount: 0,
+  tokenSymbol: 'DOCK',
+  fee: 0,
+  validating: false,
+  _errors: {},
+  _hasError: false,
+};
+
 export function SendTokenContainer({route}) {
   const dispatch = useDispatch();
   const {address} = route.params || {};
   const accountDetails = useSelector(accountSelectors.getAccountById(address));
   const [showConfirmation, setShowConfirmation] = useState();
   const [step, setStep] = useState(Steps.sendTo);
-  const [form, setForm] = useState({
-    recipientAddress: '',
-    amount: 0,
-    tokenSymbol: 'DOCK',
-    fee: 0,
-    validating: false,
-    _errors: {},
-    _hasError: false,
-  });
+  const [form, setForm] = useState(defaultFormState);
 
   const handleCopyAddress = () => {
     Clipboard.setString(address);
@@ -308,6 +310,8 @@ export function SendTokenContainer({route}) {
               navigate(Routes.ACCOUNT_DETAILS, {
                 id: accountDetails.id,
               });
+              setForm(defaultFormState);
+              setStep(Steps.sendTo);
             });
           }}
           amountMessage={form.amountMessage}

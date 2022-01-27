@@ -50,7 +50,7 @@ export function RNRpcWebView({onReady}) {
           data = JSON.parse(event.nativeEvent.data);
         } catch (err) {
           console.log('error to prcess message', event.nativeEvent.data);
-          console.error(err);
+          return;
         }
 
         Logger.debug('onMessage', data);
