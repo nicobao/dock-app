@@ -98,7 +98,7 @@ export function EnterTokenAmount({form, onMax, onChange, onBack, onNext}) {
           <Stack direction="row" alignItems="center" justifyContent="center">
             <Typography
               variant="h1"
-              style={{fontSize: 48, lineHeight: '60px'}}
+              style={{fontSize: 48, lineHeight: 60}}
               mr={2}>{`${form.amount || 0}`}</Typography>
             <Typography variant="h1">{form.tokenSymbol}</Typography>
           </Stack>
@@ -131,9 +131,9 @@ export function EnterTokenAmount({form, onMax, onChange, onBack, onNext}) {
           />
         </Box>
         <Stack flex={1} alignContent="flex-end">
-          <LoadingButton onPress={onNext} mb={4}>
+          <Button onPress={onNext} mb={4}>
             {translate('navigation.next')}
-          </LoadingButton>
+          </Button>
         </Stack>
       </Content>
     </ScreenContainer>
@@ -145,21 +145,23 @@ const Steps = {
   enterAmount: 2,
 };
 
+const defaultFormState = {
+  recipientAddress: '',
+  amount: 0,
+  tokenSymbol: 'DOCK',
+  fee: 0,
+  validating: false,
+  _errors: {},
+  _hasError: false,
+};
+
 export function SendTokenContainer({route}) {
   const dispatch = useDispatch();
   const {address} = route.params || {};
   const accountDetails = useSelector(accountSelectors.getAccountById(address));
   const [showConfirmation, setShowConfirmation] = useState();
   const [step, setStep] = useState(Steps.sendTo);
-  const [form, setForm] = useState({
-    recipientAddress: '',
-    amount: 0,
-    tokenSymbol: 'DOCK',
-    fee: 0,
-    validating: false,
-    _errors: {},
-    _hasError: false,
-  });
+  const [form, setForm] = useState(defaultFormState);
 
   const handleCopyAddress = () => {
     Clipboard.setString(address);
@@ -261,6 +263,8 @@ export function SendTokenContainer({route}) {
               navigate(Routes.ACCOUNT_DETAILS, {
                 id: accountDetails.id,
               });
+              setForm(defaultFormState);
+              setStep(Steps.sendTo);
             });
           }}
           amountMessage={form.amountMessage}
