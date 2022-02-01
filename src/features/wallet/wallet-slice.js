@@ -119,6 +119,8 @@ export const walletOperations = {
     }),
   deleteWallet: () =>
     withErrorToast(async (dispatch, getState) => {
+      await clearCacheData();
+      dispatch(accountActions.clearAccounts());
       await AsyncStorage.removeItem('walletInfo');
       await AsyncStorage.removeItem('wallet');
       await WalletRpc.create('wallet');

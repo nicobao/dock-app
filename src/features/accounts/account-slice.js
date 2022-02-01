@@ -26,6 +26,9 @@ export const accountReducers = {
   setLoading(state, action) {
     state.loading = action.payload;
   },
+  clearAccounts(state, action) {
+    state.accounts = [];
+  },
   setAccounts(state, action) {
     state.accounts = action.payload;
   },
@@ -198,7 +201,11 @@ export const accountOperations = {
     try {
       dispatch(accountActions.removeAccount(account.id));
 
-      await WalletRpc.remove(account.id);
+      try {
+        await WalletRpc.remove(account.id);
+      } catch(err) {
+        console.error(err); 
+      }
 
       const realm = getRealm();
 
@@ -207,14 +214,13 @@ export const accountOperations = {
           .objects('Account')
           .filtered('id = $0', account.id)[0];
 
+          console.log('Cached account', cachedAccount);
         if (!cachedAccount) {
           return;
         }
 
         realm.delete(cachedAccount);
       });
-
-      dispatch(accountOperations.loadAccounts());
 
       showToast({
         message: translate('account_details.account_removed'),
@@ -266,15 +272,19 @@ export const accountOperations = {
 
     realm.write(() => {
       accounts.forEach((account: any) => {
-        realm.create(
-          'Account',
-          {
-            id: account.id,
-            name: account.name || '',
-            readyOnly: account.meta && account.meta.readOnly,
-          },
-          'modified',
-        );
+        try {
+          realm.create(
+            'Account',
+            {
+              id: account.id,
+              name: account.name || '',
+              readyOnly: account.meta && account.meta.readOnly,
+            },
+            'modified',
+          );
+        } catch(err) {
+          console.log(err);
+        }
       });
     });
 

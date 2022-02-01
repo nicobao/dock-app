@@ -49,7 +49,7 @@
     "loadingText": "Importing wallet",
     "successMessage": "Wallet imported",
     "submit": "Import wallet",
-    "invalid_file": "Invalid backup file, please try again"
+    "invalid_file": "Invalid backup file"
   },
   "create_wallet": {
     "create_new": "Create a new wallet",
@@ -80,6 +80,8 @@
     "watch_account": "Watch Account",
     "account_name": "Account name",
     "account_address": "Account address",
+    "clear_cache": "Clear cache",
+    "clear_cache_success": "Clear cache succeeded",
     "invalid_account_name": "Invalid account name",
     "invalid_account_address": "Invalid account address"
   },
@@ -180,7 +182,7 @@
     "passwords_match": "Password confirmation match"
   },
   "receive_token": {
-    "title": "Send DOCK",
+    "title": "Receive DOCK",
     "description": "Share your address",
     "address_copied": "Copied",
     "copy_address": "Copy address",
