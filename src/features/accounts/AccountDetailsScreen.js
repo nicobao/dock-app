@@ -271,26 +271,11 @@ export function AccountDetailsScreen({
               </Button>
             </Stack>
           </Stack>
-
-          <Stack mt={8}>
-            <NBox
-              borderBottomColor={Theme.colors.tertiaryBackground}
-              borderBottomWidth={0.5}
-              pb={4}>
-              <Typography variant="h2">
-                {translate('account_details.transactions')}
-              </Typography>
-            </NBox>
-            <NBox mt={3}>
-              <TransactionHistory accountAddress={account.id} />
-            </NBox>
-          </Stack>
-
           {account.hasBackup ? null : (
             <Stack
               backgroundColor={Theme.colors.warningBackground}
               p={'16px'}
-              mt={20}>
+              mt={5}>
               <Stack direction="row">
                 <NBox mr={3} mt={'3px'}>
                   <AlertIcon />
@@ -314,6 +299,39 @@ export function AccountDetailsScreen({
               </Button>
             </Stack>
           )}
+          {(account.meta && account.meta.keypairNotFoundWarning) ? (
+            <Stack
+              backgroundColor={Theme.colors.warningBackground}
+              p={'16px'}
+              mt={5}>
+              <Stack direction="row">
+                <NBox mr={3} mt={'3px'}>
+                  <AlertIcon />
+                </NBox>
+                <Typography ml={2} variant="h3" fontSize={17}>
+                  Keypair not found
+                </Typography>
+              </Stack>
+              <NBox mt={2}>
+                <Typography color={Theme.colors.warningText}>
+                  Please remove this account and import it from a json file or QR Code
+                </Typography>
+              </NBox>
+            </Stack>
+          ) : null}
+          <Stack mt={8}>
+            <NBox
+              borderBottomColor={Theme.colors.tertiaryBackground}
+              borderBottomWidth={0.5}
+              pb={4}>
+              <Typography variant="h2">
+                {translate('account_details.transactions')}
+              </Typography>
+            </NBox>
+            <NBox mt={3}>
+              <TransactionHistory accountAddress={account.id} />
+            </NBox>
+          </Stack>
         </Stack>
       </ScrollView>
       <AccountSettingsModal
@@ -358,7 +376,7 @@ export function AccountDetailsContainer({route}) {
   return (
     <AccountDetailsScreen
       onDelete={() => {
-        return dispatch(accountOperations.removeAccount(accountId)).then(
+        return dispatch(accountOperations.removeAccount({ id: accountId})).then(
           navigateBack,
         );
       }}

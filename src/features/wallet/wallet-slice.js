@@ -6,13 +6,15 @@ import DocumentPicker from 'react-native-document-picker';
 import {Routes} from '../../core/routes';
 import {appSelectors, BiometryType} from '../app/app-slice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {accountOperations, exportFile} from '../accounts/account-slice';
+import {accountActions, accountOperations, exportFile} from '../accounts/account-slice';
 import RNFS from 'react-native-fs';
 import {showConfirmationModal} from 'src/components/ConfirmationModal';
 import {translate} from 'src/locales';
 import {showToast} from 'src/core/toast';
 import {Logger} from 'src/core/logger';
 import {withErrorToast} from 'src/core/toast';
+import {clearCacheData, getRealm} from '../../core/realm';
+import Clipboard from '@react-native-community/clipboard';
 
 const initialState = {
   loading: true,
@@ -50,39 +52,112 @@ export const walletSelectors = {
   getCreationFlags: state => getRoot(state).creationFlags || {},
 };
 
+async function validateAndImport(fileData, password) {
+  let jsonData;
+
+  try {
+    jsonData = JSON.parse(fileData);
+  } catch (err) {
+    console.error(err);
+    throw new Error(translate('import_wallet.invalid_file'));
+  }
+
+  await WalletRpc.remove('wallet');
+  await clearCacheData();
+  await AsyncStorage.removeItem('wallet');
+  await WalletRpc.create('wallet');
+  await WalletRpc.load();
+  await WalletRpc.sync();
+
+  try {
+    await WalletRpc.importWallet(jsonData, password);
+  } catch(err) {
+    console.error(err);
+    throw new Error(translate('import_wallet.invalid_file'));
+  }
+
+  const docs = await WalletRpc.query({});
+
+  console.log(docs);
+
+  if (docs.length === 0) {
+    throw new Error(translate('import_wallet.invalid_file'));
+  }
+
+  const accounts = docs.filter(doc => doc.type === 'Account');
+
+  if (accounts.length === 0) {
+    throw new Error(translate('import_wallet.invalid_file'));
+  }
+
+  const warnings = [];
+
+  for (let account of accounts) {
+    const correlationDocs = account.correlation.map(docId => docs.find(doc => doc.id === docId));
+    const hasMnemonic = correlationDocs.find(doc => doc.type === 'Mnemonic');
+    const hasKeyPair = correlationDocs.find(doc => doc.type === 'KeyPair');
+          
+    if (!hasMnemonic && !hasKeyPair) {
+      warnings.push(`keypair not found for account ${account.id}`);
+      
+      await WalletRpc.update({
+        ...account,
+        meta: {
+          ...account.meta,
+          readOnly: true,
+          keypairNotFoundWarning: true,
+        }
+      });
+    }
+  }
+  
+}
+
 export const walletOperations = {
   pickWalletBackup: () =>
     withErrorToast(async (dispatch, getState) => {
       const files = await DocumentPicker.pick({
         type: [DocumentPicker.types.allFiles],
-      });
+      }).catch(err => []);
+
+      if (!files.length) {
+        return;
+      }
 
       navigate(Routes.WALLET_IMPORT_BACKUP_PASSWORD, {
         fileUri: files[0].fileCopyUri,
       });
     }),
-  importWallet: ({fileUri, password}) =>
+    
+  importFromClipboard: () =>
     withErrorToast(async (dispatch, getState) => {
-      fileUri = fileUri.replace(/%20/gi, ' ');
-      const fileData = await RNFS.readFile(fileUri);
-      const jsonData = JSON.parse(fileData);
-      await WalletRpc.remove('wallet');
-      await AsyncStorage.removeItem('wallet');
-      await WalletRpc.create('wallet');
-      await WalletRpc.load();
-      await WalletRpc.sync();
-      await WalletRpc.importWallet(jsonData, password);
+      const fileData = await Clipboard.getString();
 
-      const accounts = await WalletRpc.query({
-        equals: {
-          'content.type': 'Account',
-        },
+      navigate(Routes.WALLET_IMPORT_BACKUP_PASSWORD, {
+        fileData,
       });
-
-      if (!accounts || !accounts.length) {
+    }),
+  importWallet: ({fileUri, password, fileData}) =>
+    withErrorToast(async (dispatch, getState) => {
+      try {
+        if (fileUri) {
+          try {
+            fileUri = fileUri.replace(/%20/gi, ' ');
+            fileData = await RNFS.readFile(fileUri);
+          } catch(err) {
+            console.error(err);
+            
+            throw new Error('Unable to read file');
+          }
+        }
+        const jsonData = JSON.parse(fileData);
+        await validateAndImport(fileData, password);
+      } catch(err) {
+        console.error(err);
         showToast({
-          message: translate('import_wallet.invalid_file'),
+          message: err.message,
           type: 'error',
+          duration: 5000,
         });
 
         navigate(Routes.CREATE_WALLET);
@@ -99,6 +174,7 @@ export const walletOperations = {
     }),
   exportWallet: ({password, callback}) =>
     withErrorToast(async (dispatch, getState) => {
+      await WalletRpc.load();
       const walletBackup = await WalletRpc.export(password);
       const jsonData = JSON.stringify(walletBackup);
       const path = `${RNFS.DocumentDirectoryPath}/walletBackup.json`;

@@ -26,9 +26,9 @@ export const useAsyncCallback = func => {
     setLoading(true);
     runAfterInteractions(() => {
       Promise.resolve(func()).finally(() => {
-        if (isActive.current) {
+        // if (isActive.current) {
           setLoading(false);
-        }
+        // }
       });
     });
   };

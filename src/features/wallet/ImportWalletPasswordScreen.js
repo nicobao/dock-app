@@ -5,13 +5,14 @@ import {walletOperations} from './wallet-slice';
 
 export function ImportWalletPasswordContainer({route}) {
   const dispatch = useDispatch();
-  const {fileUri} = route.params;
+  const {fileUri, fileData} = route.params;
 
   const handleSubmit = ({password}) => {
     return dispatch(
       walletOperations.importWallet({
-        password,
+        password: fileData ? '12345678Qw!' : password,
         fileUri,
+        fileData,
       }),
     );
   };

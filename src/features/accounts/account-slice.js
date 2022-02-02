@@ -293,14 +293,36 @@ export const accountOperations = {
   },
 
   fetchAccountBalance: accountId => async (dispatch, getState) => {
+    if (!accountId) {
+      return;
+    }
+
     const realm = getRealm();
     const balance = await ApiRpc.getAccountBalance(accountId);
+    console.log('Fetch balance for', accountId);
+
+    const accounts = await WalletRpc.query({
+      equals: {
+        'content.type': 'Account',
+      },
+    });
+    
+    const account = accounts.find(acc => acc.id === accountId);
+
+    if (!account) {
+      console.log(accounts);
+      console.log('Account not found for id', accountId);
+      return;
+    }
+
+    console.log('account', account);
 
     realm.write(() => {
       realm.create(
         'Account',
         {
           id: accountId,
+          name: account.meta && account.meta.name,
           balance: `${balance}`,
         },
         'modified',

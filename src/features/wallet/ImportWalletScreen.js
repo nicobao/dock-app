@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   Header,
@@ -13,14 +13,22 @@ import {walletOperations} from './wallet-slice';
 import {WalletConstants} from './constants';
 import {translate} from '../../locales';
 
-export function ImportWalletScreen({onSubmit}) {
+export function ImportWalletScreen({onSubmit, onImportFromClipboard}) {
+  const [pressCount, setPressCount] = useState(0);
+
   return (
     <ScreenContainer testID="create-wallet-screen">
       <Header>
         <BackButton />
       </Header>
       <Content marginLeft={26} marginRight={26}>
-        <Typography variant="h1" marginTop={52}>
+        <Typography variant="h1" marginTop={52} onPress={() => {
+        if (pressCount >= 10 && onImportFromClipboard) {
+          return onImportFromClipboard();
+        }
+
+        setPressCount(p => p + 1);
+      }}>
           {translate('import_wallet.title')}
         </Typography>
         <Typography marginTop={12}>
@@ -45,6 +53,10 @@ export function ImportWalletContainer() {
   const handleSubmit = () => {
     dispatch(walletOperations.pickWalletBackup());
   };
+  
+  const handleImportFromClipboard = () => {
+    dispatch(walletOperations.importFromClipboard());
+  }
 
-  return <ImportWalletScreen onSubmit={handleSubmit} />;
+  return <ImportWalletScreen onSubmit={handleSubmit} onImportFromClipboard={handleImportFromClipboard}/>;
 }

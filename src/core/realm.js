@@ -1,7 +1,7 @@
 import Realm from 'realm';
 import {Account, TokenPrice, Transaction} from './realm-schemas';
 
-let realm;
+let realm: Realm;
 
 export async function initRealm() {
   try {

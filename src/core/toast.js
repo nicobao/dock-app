@@ -44,9 +44,9 @@ export function showUnexpectedErrorToast(
   });
 }
 
-export function showToast({message, type = 'success'}) {
+export function showToast({message, type = 'success', duration = 2000}) {
   toast.show({
-    duration: 2000,
+    duration,
     placement: 'top',
     isClosable: true,
     render: props => {

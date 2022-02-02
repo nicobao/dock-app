@@ -127,11 +127,11 @@ export const AccountsScreen = withErrorBoundary(
                           </Pressable>
                           <NBox py={1} px={1}>
                             <Stack direction="row">
-                              {account.hasBackup ? null : (
+                              {(!account.hasBackup || (account.meta && account.meta.keypairNotFoundWarning)) ? (
                                 <NBox mr={3} mt={1}>
                                   <AlertIcon />
                                 </NBox>
-                              )}
+                              ) : null}
                               <Menu
                                 trigger={triggerProps => {
                                   return (
