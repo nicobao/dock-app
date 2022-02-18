@@ -15,9 +15,11 @@ import {Routes} from 'src/core/routes';
 
 export function SetupPasscodeScreen() {
   return (
-    <ScreenContainer testID="setupPasscodeScreen">
+    <ScreenContainer
+      testID="setupPasscodeScreen"
+      accessibilityID="setupPasscodeScreen">
       <Header>
-        <BackButton />
+        <BackButton testID="BackButton" accessibilityID="BackButton" />
       </Header>
       <Content marginLeft={26} marginRight={26}>
         <Typography variant="h1" marginTop={52}>

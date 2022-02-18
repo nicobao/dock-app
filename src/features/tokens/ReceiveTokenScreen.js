@@ -30,9 +30,11 @@ export function ReceiveTokenScreen({
   const qrSize = Dimensions.get('window').width * 0.7;
 
   return (
-    <ScreenContainer testID="unlockWalletScreen">
+    <ScreenContainer
+      testID="unlockWalletScreen"
+      accessibilityID="unlockWalletScreen">
       <Header>
-        <BackButton />
+        <BackButton testID="BackButton" accessibilityID="BackButton" />
       </Header>
       <Stack alignItems="center">
         <Typography variant="h1" mb={2}>
@@ -65,6 +67,8 @@ export function ReceiveTokenScreen({
             {translate('receive_token.copy_address')}
           </Button>
           <Button onPress={onShareAddress} colorScheme="tertiary">
+            testID="receive_token.share_address"
+            accessibilityID="receive_token.share_address"
             {translate('receive_token.share_address')}
           </Button>
         </Stack>

@@ -36,9 +36,11 @@ export function GenericPasswordScreen({
   description,
 }) {
   return (
-    <ScreenContainer testID="create-wallet-screen">
+    <ScreenContainer
+      testID="create-wallet-screen"
+      accessibilityID="create-wallet-screen">
       <Header>
-        <BackButton />
+        <BackButton testID="backButton" accessibilityID="backButton" />
       </Header>
       <Content marginLeft={26} marginRight={26}>
         <Typography variant="h1" marginTop={52}>
@@ -49,6 +51,8 @@ export function GenericPasswordScreen({
         <Box mt={7}>
           <Input
             placeholder="Password"
+            testID="Password"
+            accessibilityID="Password"
             value={form.password}
             onChangeText={onChange('password')}
             autoCapitalize="none"
@@ -59,6 +63,8 @@ export function GenericPasswordScreen({
         <Box mt={7}>
           <Input
             placeholder="Confirm password"
+            testID="ConfirmPassword"
+            accessibilityID="ConfirmPassword"
             value={form.passwordConfirmation}
             onChangeText={onChange('passwordConfirmation')}
             autoCapitalize="none"
@@ -102,6 +108,7 @@ export function GenericPasswordScreen({
         <LoadingButton
           full
           testID="next-btn"
+          accessibilityID="next-btn"
           isDisabled={submitDisabled}
           onPress={onSubmit}>
           {translate('navigation.next')}

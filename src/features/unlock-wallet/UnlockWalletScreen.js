@@ -67,7 +67,10 @@ export function UnlockWalletScreen({
   onCloseApp,
 }) {
   return (
-    <ScreenContainer testID="unlockWalletScreen" hideGlobalHeader={true}>
+    <ScreenContainer
+      testID="unlockWalletScreen"
+      accessibilityID="unlockWalletScreen"
+      hideGlobalHeader={true}>
       <Box justifyContent="center" row onPress={onLogoPress}>
         <Image source={SplashLogo} style={styles.logo} resizeMode="contain" />
       </Box>

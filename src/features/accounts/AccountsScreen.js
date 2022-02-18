@@ -72,6 +72,7 @@ export const AccountsScreen = withErrorBoundary(
               <IconButton
                 col
                 testID={AccountsScreenTestIDs.addAccountMenuBtn}
+                accessibilityID={AccountsScreenTestIDs.addAccountMenuBtn}
                 marginRight={10}
                 onPress={() => setShowAddAccount(true)}>
                 <PlusCircleWhiteIcon />
@@ -184,6 +185,8 @@ export const AccountsScreen = withErrorBoundary(
                               size="sm"
                               disabled={account.readOnly}
                               colorScheme="dark"
+                              testID="tokenSend"
+                              accessibilityID="tokenSend"
                               onPress={() => {
                                 navigate(Routes.TOKEN_SEND, {
                                   address: account.id,
@@ -197,6 +200,8 @@ export const AccountsScreen = withErrorBoundary(
                             size="sm"
                             ml={2}
                             colorScheme="dark"
+                            testID="tokenReceive"
+                            accessibilityID="tokenReceive"
                             onPress={() => {
                               navigate(Routes.TOKEN_RECEIVE, {
                                 address: account.id,
@@ -215,10 +220,16 @@ export const AccountsScreen = withErrorBoundary(
         </ScrollView>
         {isEmpty ? (
           <Footer marginBottom={114} marginLeft={26} marginRight={26} flex>
-            <BigButton onPress={onAddAccount} icon={<PlusCircleIcon />}>
+            <BigButton
+              testID="CreateNewAccount"
+              accessibilityID="CreateNewAccount"
+              onPress={onAddAccount}
+              icon={<PlusCircleIcon />}>
               Create new account
             </BigButton>
             <BigButton
+              testID="add_account_modal.import_existing"
+              accessibilityID="add_account_modal.import_existing"
               onPress={() => {
                 setShowImportAccount(true);
                 setShowAddAccount(true);

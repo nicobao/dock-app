@@ -24,9 +24,11 @@ export function ImportAccountFromMnemonicScreen({
   onSubmit,
 }) {
   return (
-    <ScreenContainer testID="create-wallet-screen">
+    <ScreenContainer
+      testID="create-wallet-screen"
+      accessibilityID="create-wallet-screen">
       <Header>
-        <BackButton />
+        <BackButton testID="backButton" accessibilityID="backButton" />
       </Header>
       <Content marginLeft={26} marginRight={26}>
         <Typography variant="h1" marginTop={52}>
@@ -42,12 +44,15 @@ export function ImportAccountFromMnemonicScreen({
                 {translate('import_account_from_mnemonic.phrase_input')}
               </FormControl.Label>
               <TextArea
+                testID="enterText"
+                accessibilityID="enterText"
                 placeholder=""
                 value={form.phrase}
                 onChangeText={onChange('phrase')}
                 autoCapitalize="none"
               />
               <FormControl.ErrorMessage>
+                testID="errorMessage" accessibilityID="errorMessage"
                 {translate('import_account_from_mnemonic.invalid_phrase')}
               </FormControl.ErrorMessage>
             </Stack>
@@ -59,6 +64,7 @@ export function ImportAccountFromMnemonicScreen({
         <LoadingButton
           full
           testID="next-btn"
+          accessibilityID="next-btn"
           isDisabled={submitDisabled}
           onPress={onSubmit}>
           {translate('navigation.next')}

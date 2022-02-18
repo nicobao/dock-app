@@ -53,7 +53,11 @@ export function ProtectYourWalletScreen({
             Use Fingerprint identification
           </BigButton>
         ) : null}
-        <BigButton onPress={onSkip} icon={<ArrowRight />}>
+        <BigButton
+          testID="DoThisLater"
+          accessibilityID="DoThisLater"
+          onPress={onSkip}
+          icon={<ArrowRight />}>
           Do this later
         </BigButton>
       </Footer>

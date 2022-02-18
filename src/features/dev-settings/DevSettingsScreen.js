@@ -119,6 +119,8 @@ export function DevSettingsScreen({onAddAccount, onNetworkChange}) {
             </Stack>
 
             <Button
+              testID="dev_settings.update_network"
+              accessibilityID="dev_settings.update_network"
               onPress={async () =>
                 onNetworkChange(networkId).then(() => {
                   setShowNetworkOptions(false);
@@ -128,6 +130,8 @@ export function DevSettingsScreen({onAddAccount, onNetworkChange}) {
             </Button>
             <Stack pt={3}>
               <Button
+                testID="cancel"
+                accessibilityID="cancel"
                 onPress={() => setShowNetworkOptions(false)}
                 colorScheme="tertiary">
                 Cancel

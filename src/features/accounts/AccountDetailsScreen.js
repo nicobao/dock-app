@@ -250,6 +250,8 @@ export function AccountDetailsScreen({
               <Button
                 flex={1}
                 size="sm"
+                testID="send_tokens_btn"
+                accessibilityID="send_tokens_btn"
                 disabled={account.readOnly}
                 onPress={() =>
                   navigate(Routes.TOKEN_SEND, {
@@ -262,6 +264,8 @@ export function AccountDetailsScreen({
                 ml={2}
                 flex={1}
                 size="sm"
+                testID="receive_tokens_btn"
+                accessibilityID="receive_tokens_btn"
                 onPress={() =>
                   navigate(Routes.TOKEN_RECEIVE, {
                     address: account.id,
@@ -291,6 +295,8 @@ export function AccountDetailsScreen({
               </NBox>
               <Button
                 onPress={onBackup}
+                testID="account_details.backup_btn"
+                accessibilityID="account_details.backup_btn"
                 mt={4}
                 alignSelf="flex-start"
                 size="sm"
@@ -346,6 +352,8 @@ export function AccountDetailsScreen({
         data={qrCodeData}
         title={translate('account_details.export_account')}
         description={translate('account_details.export_account_description')}
+        testID="account_details.export_account_description"
+        accessibilityID="account_details.export_account_description"
         visible={qrCodeModalVisible}
         onClose={() => setQrCodeModalVisible(false)}
       />
