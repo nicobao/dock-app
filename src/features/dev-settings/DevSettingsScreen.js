@@ -119,11 +119,10 @@ export function DevSettingsScreen({onAddAccount, onNetworkChange}) {
             </Stack>
 
             <Button
-              onPress={async () =>
-                onNetworkChange(networkId).then(() => {
-                  setShowNetworkOptions(false);
-                })
-              }>
+              onPress={async () =>{
+                setShowNetworkOptions(false);
+                onNetworkChange(networkId).then(() => {})
+              }}>
               {translate('dev_settings.update_network')}
             </Button>
             <Stack pt={3}>
