@@ -6,6 +6,7 @@ import QRCode from 'react-native-qrcode-svg';
 import Share from 'react-native-share';
 import {useSelector} from 'react-redux';
 import {PolkadotIcon} from 'src/components/PolkadotIcon';
+import {addTestId} from 'src/core/automation-utils';
 import {formatAddress} from 'src/core/format-utils';
 import {showToast} from 'src/core/toast';
 import {
@@ -30,11 +31,9 @@ export function ReceiveTokenScreen({
   const qrSize = Dimensions.get('window').width * 0.7;
 
   return (
-    <ScreenContainer
-      testID="unlockWalletScreen"
-      accessibilityID="unlockWalletScreen">
+    <ScreenContainer {...addTestId('unlockWalletScreen')}>
       <Header>
-        <BackButton testID="BackButton" accessibilityID="BackButton" />
+        <BackButton {...addTestId('backButton')} />
       </Header>
       <Stack alignItems="center">
         <Typography variant="h1" mb={2}>
@@ -66,9 +65,10 @@ export function ReceiveTokenScreen({
           <Button onPress={onCopyAddress} colorScheme="tertiary" mb={4}>
             {translate('receive_token.copy_address')}
           </Button>
-          <Button onPress={onShareAddress} colorScheme="tertiary">
-            testID="receive_token.share_address"
-            accessibilityID="receive_token.share_address"
+          <Button
+            onPress={onShareAddress}
+            colorScheme="tertiary"
+            {...addTestId('receive_token.share_address')}>
             {translate('receive_token.share_address')}
           </Button>
         </Stack>

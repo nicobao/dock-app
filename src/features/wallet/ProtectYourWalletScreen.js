@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {ScreenSpinner} from 'src/components/ScreenSpinner';
+import {addTestId} from 'src/core/automation-utils';
 import {showToast} from 'src/core/toast';
 import ArrowRight from '../../assets/icons/arrow-right.svg';
 import EmojiHappyIcon from '../../assets/icons/emoji-happy.svg';
@@ -54,8 +55,7 @@ export function ProtectYourWalletScreen({
           </BigButton>
         ) : null}
         <BigButton
-          testID="DoThisLater"
-          accessibilityID="DoThisLater"
+          {...addTestId('DoThisLater')}
           onPress={onSkip}
           icon={<ArrowRight />}>
           Do this later

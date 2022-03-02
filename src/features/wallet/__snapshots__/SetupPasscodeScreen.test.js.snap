@@ -2,7 +2,7 @@
 
 exports[`SetupPasscodeScreen should render correctly 1`] = `
 <RNCSafeAreaView
-  accessibilityID="setupPasscodeScreen"
+  accessibilityLabel="setupPasscodeScreen"
   style={
     Object {
       "backgroundColor": "#18181B",
@@ -14,8 +14,8 @@ exports[`SetupPasscodeScreen should render correctly 1`] = `
   <AppGlobalHeader />
   <Styled(View)>
     <BackButton
-      accessibilityID="BackButton"
-      testID="BackButton"
+      accessibilityLabel="backButton"
+      testID="backButton"
     />
   </Styled(View)>
   <Styled(ScrollView)

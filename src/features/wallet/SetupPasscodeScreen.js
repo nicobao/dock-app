@@ -16,11 +16,9 @@ import {addTestId} from 'src/core/automation-utils';
 
 export function SetupPasscodeScreen() {
   return (
-    <ScreenContainer
-      testID="setupPasscodeScreen"
-      accessibilityID="setupPasscodeScreen">
+    <ScreenContainer {...addTestId('setupPasscodeScreen')}>
       <Header>
-        <BackButton testID="BackButton" accessibilityID="BackButton" />
+        <BackButton {...addTestId('backButton')} />
       </Header>
       <Content marginLeft={26} marginRight={26}>
         <Typography variant="h1" marginTop={52}>

@@ -1,6 +1,7 @@
 import {Input, Select, Stack} from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import {addTestId} from 'src/core/automation-utils';
 import {translate} from 'src/locales';
 import {navigate} from '../../core/navigation';
 import {getRealm} from '../../core/realm';
@@ -119,8 +120,7 @@ export function DevSettingsScreen({onAddAccount, onNetworkChange}) {
             </Stack>
 
             <Button
-              testID="dev_settings.update_network"
-              accessibilityID="dev_settings.update_network"
+              {...addTestId('dev_settings.update_network')}
               onPress={async () =>
                 onNetworkChange(networkId).then(() => {
                   setShowNetworkOptions(false);
@@ -130,8 +130,7 @@ export function DevSettingsScreen({onAddAccount, onNetworkChange}) {
             </Button>
             <Stack pt={3}>
               <Button
-                testID="cancel"
-                accessibilityID="cancel"
+                {...addTestId('cancel')}
                 onPress={() => setShowNetworkOptions(false)}
                 colorScheme="tertiary">
                 Cancel
