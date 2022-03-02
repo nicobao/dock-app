@@ -299,7 +299,7 @@ export function AccountDetailsScreen({
               </Button>
             </Stack>
           )}
-          {(account.meta && account.meta.keypairNotFoundWarning) ? (
+          {account.meta && account.meta.keypairNotFoundWarning ? (
             <Stack
               backgroundColor={Theme.colors.warningBackground}
               p={'16px'}
@@ -314,7 +314,8 @@ export function AccountDetailsScreen({
               </Stack>
               <NBox mt={2}>
                 <Typography color={Theme.colors.warningText}>
-                  Please remove this account and import it from a json file or QR Code
+                  Please remove this account and import it from a json file or
+                  QR Code
                 </Typography>
               </NBox>
             </Stack>
@@ -376,7 +377,7 @@ export function AccountDetailsContainer({route}) {
   return (
     <AccountDetailsScreen
       onDelete={() => {
-        return dispatch(accountOperations.removeAccount({ id: accountId})).then(
+        return dispatch(accountOperations.removeAccount({id: accountId})).then(
           navigateBack,
         );
       }}
