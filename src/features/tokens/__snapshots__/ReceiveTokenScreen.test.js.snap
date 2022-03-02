@@ -21,7 +21,7 @@ exports[`ReceiveTokensScreen should render correctly 1`] = `
       mb={2}
       variant="h1"
     >
-      Send DOCK
+      Receive DOCK
     </Styled(Component)>
     <Styled(Component)
       variant="screen-description"

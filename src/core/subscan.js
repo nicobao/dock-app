@@ -1,6 +1,3 @@
-import {translate} from '../locales';
-import {showToast} from './toast';
-
 const SUBSCAN_URL = 'https://dock.api.subscan.io';
 
 export function fetchTransactions({address, page = 0, row = 50}) {
@@ -25,10 +22,6 @@ export function fetchTransactions({address, page = 0, row = 50}) {
       };
     })
     .catch(err => {
-      // showToast({
-      //   message: translate('global.subscan_unable_to_fetch'),
-      //   type: 'error',
-      // });
       throw err;
     });
 }

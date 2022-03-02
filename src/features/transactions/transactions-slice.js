@@ -108,7 +108,7 @@ export const transactionsOperations = {
         data.transfers.forEach(handleTransaction);
         page++;
       } while (data.hasNextPage);
-    } catch(err) {
+    } catch (err) {
       console.log(err);
     }
   },

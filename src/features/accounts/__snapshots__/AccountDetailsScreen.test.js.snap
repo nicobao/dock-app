@@ -99,28 +99,8 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
         </Memo(ForwardRef(Stack))>
       </Memo(ForwardRef(Stack))>
       <Memo(ForwardRef(Stack))
-        mt={8}
-      >
-        <Memo(ForwardRef(Box))
-          borderBottomColor="#3F3F46"
-          borderBottomWidth={0.5}
-          pb={4}
-        >
-          <Styled(Component)
-            variant="h2"
-          >
-            Transactions
-          </Styled(Component)>
-        </Memo(ForwardRef(Box))>
-        <Memo(ForwardRef(Box))
-          mt={3}
-        >
-          <TransactionHistory />
-        </Memo(ForwardRef(Box))>
-      </Memo(ForwardRef(Stack))>
-      <Memo(ForwardRef(Stack))
         backgroundColor="rgba(120, 53, 15, 0.3)"
-        mt={20}
+        mt={5}
         p="16px"
       >
         <Memo(ForwardRef(Stack))
@@ -157,6 +137,26 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
         >
           Back up now
         </Memo(ForwardRef(Button))>
+      </Memo(ForwardRef(Stack))>
+      <Memo(ForwardRef(Stack))
+        mt={8}
+      >
+        <Memo(ForwardRef(Box))
+          borderBottomColor="#3F3F46"
+          borderBottomWidth={0.5}
+          pb={4}
+        >
+          <Styled(Component)
+            variant="h2"
+          >
+            Transactions
+          </Styled(Component)>
+        </Memo(ForwardRef(Box))>
+        <Memo(ForwardRef(Box))
+          mt={3}
+        >
+          <TransactionHistory />
+        </Memo(ForwardRef(Box))>
       </Memo(ForwardRef(Stack))>
     </Memo(ForwardRef(Stack))>
   </ForwardRef>

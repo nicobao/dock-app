@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   Button,
   Header,
@@ -22,13 +22,16 @@ export function ImportWalletScreen({onSubmit, onImportFromClipboard}) {
         <BackButton />
       </Header>
       <Content marginLeft={26} marginRight={26}>
-        <Typography variant="h1" marginTop={52} onPress={() => {
-        if (pressCount >= 10 && onImportFromClipboard) {
-          return onImportFromClipboard();
-        }
+        <Typography
+          variant="h1"
+          marginTop={52}
+          onPress={() => {
+            if (pressCount >= 10 && onImportFromClipboard) {
+              return onImportFromClipboard();
+            }
 
-        setPressCount(p => p + 1);
-      }}>
+            setPressCount(p => p + 1);
+          }}>
           {translate('import_wallet.title')}
         </Typography>
         <Typography marginTop={12}>
@@ -53,10 +56,15 @@ export function ImportWalletContainer() {
   const handleSubmit = () => {
     dispatch(walletOperations.pickWalletBackup());
   };
-  
+
   const handleImportFromClipboard = () => {
     dispatch(walletOperations.importFromClipboard());
-  }
+  };
 
-  return <ImportWalletScreen onSubmit={handleSubmit} onImportFromClipboard={handleImportFromClipboard}/>;
+  return (
+    <ImportWalletScreen
+      onSubmit={handleSubmit}
+      onImportFromClipboard={handleImportFromClipboard}
+    />
+  );
 }

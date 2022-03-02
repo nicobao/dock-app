@@ -37,24 +37,5 @@ describe('Subscan integration', () => {
       expect(transactions.items).toBe(data.items);
       expect(transactions.hasNextPage).toBe(false);
     });
-
-    it('expect to handle api error', async () => {
-      const mockError = new Error('test error');
-      response.json = () => {
-        throw mockError;
-      };
-      toastMock.show.mockReset();
-
-      let error;
-
-      try {
-        await fetchTransactions({address: '123', page: 2});
-      } catch (err) {
-        error = err;
-      }
-
-      expect(error).toBe(mockError);
-      expect(toastMock.show).toBeCalled();
-    });
   });
 });
