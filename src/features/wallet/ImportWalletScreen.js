@@ -11,6 +11,7 @@ import {BackButton} from '../../design-system/buttons';
 import {useDispatch} from 'react-redux';
 import {walletOperations} from './wallet-slice';
 import {translate} from '../../locales';
+import { addTestId } from 'src/core/automation-utils';
 
 export function ImportWalletScreen({onSubmit, onImportFromClipboard}) {
   const [pressCount, setPressCount] = useState(0);
@@ -44,8 +45,7 @@ export function ImportWalletScreen({onSubmit, onImportFromClipboard}) {
         <Button
           onPress={onSubmit}
           full
-          testID="importWallet.submitBtn"
-          accessibilityLabel="importWallet.submitBtn">
+          {...addTestId('importWallet.submitBtn')}>
           {translate('import_wallet.submit')}
         </Button>
       </Footer>

@@ -12,6 +12,7 @@ import LockClosedIcon from '../../assets/icons/lock-closed.svg';
 import {translate} from 'src/locales';
 import {navigate} from 'src/core/navigation';
 import {Routes} from 'src/core/routes';
+import { addTestId } from 'src/core/automation-utils';
 
 export function SetupPasscodeScreen() {
   return (
@@ -33,8 +34,7 @@ export function SetupPasscodeScreen() {
         <Button
           full
           icon={<LockClosedIcon />}
-          testID="create-wallet-btn"
-          accessibilityLabel="create-wallet-btn"
+          {...addTestId('create-wallet-btn')}
           onPress={() => {
             navigate(Routes.CREATE_WALLET_PASSCODE);
           }}>

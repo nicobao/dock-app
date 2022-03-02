@@ -3,6 +3,7 @@ import {StyleSheet} from 'react-native';
 import SplashLogo from '../../assets/splash-logo.png';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
+import {addTestId} from '../../core/automation-utils';
 import {
   Box,
   Content,
@@ -33,8 +34,7 @@ export function CreateWalletScreen() {
       <Footer marginBottom={10} marginLeft={26} marginRight={26}>
         <LoadingButton
           full
-          testID="createWalletButton"
-          accessibilityLabel="createWalletButton"
+          {...addTestId('createWalletButton')}
           onPress={() => navigate(Routes.CREATE_WALLET_PASSCODE_SETUP)}>
           {translate('create_wallet.create_new')}
         </LoadingButton>
@@ -42,8 +42,7 @@ export function CreateWalletScreen() {
           full
           variant="ghost"
           mt={4}
-          testID="import_existing"
-          accessibilityLabel="import_existing"
+          {...addTestId('import_existing')}
           onPress={() => navigate(Routes.WALLET_IMPORT_BACKUP)}>
           {translate('create_wallet.import_existing')}
         </LoadingButton>
