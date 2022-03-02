@@ -12,7 +12,7 @@ import LockClosedIcon from '../../assets/icons/lock-closed.svg';
 import {translate} from 'src/locales';
 import {navigate} from 'src/core/navigation';
 import {Routes} from 'src/core/routes';
-import { addTestId } from 'src/core/automation-utils';
+import {addTestId} from 'src/core/automation-utils';
 
 export function SetupPasscodeScreen() {
   return (
