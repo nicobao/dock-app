@@ -2,6 +2,7 @@
 
 exports[`UnlockWalletScreen should render correctly 1`] = `
 <RNCSafeAreaView
+  accessibilityLabel="unlockWalletScreen"
   style={
     Object {
       "backgroundColor": "#18181B",

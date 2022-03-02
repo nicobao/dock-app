@@ -8,12 +8,12 @@ exports[`CreateAccountSetupScreen should render correctly 1`] = `
       "flex": 1,
     }
   }
-  testID="createAccountSetupScreen"
+  testID="createAccount"
 >
   <AppGlobalHeader />
   <Styled(View)>
     <BackButton
-      testID="createAccountSetupScreen.backBtn"
+      testID="createAccount.backBtn"
     />
   </Styled(View)>
   <Styled(ScrollView)

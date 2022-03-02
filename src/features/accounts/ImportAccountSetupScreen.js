@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import {addTestId} from 'src/core/automation-utils';
 import {
   Content,
   Footer,
@@ -24,9 +25,9 @@ export function ImportAccountSetupScreen({
   onSubmit,
 }) {
   return (
-    <ScreenContainer testID="create-wallet-screen">
+    <ScreenContainer {...addTestId('ImportAccountSetupScreen')}>
       <Header>
-        <BackButton />
+        <BackButton {...addTestId('BackButton')} />
       </Header>
       <Content marginLeft={26} marginRight={26}>
         <Typography variant="h1" marginTop={52}>
@@ -38,13 +39,14 @@ export function ImportAccountSetupScreen({
             value={form.accountName}
             onChangeText={onChange('accountName')}
             autoCapitalize="none"
+            {...addTestId('ImportAccountNameInput')}
           />
         </Box>
       </Content>
       <Footer marginBottom={10} marginLeft={26} marginRight={26}>
         <LoadingButton
+          {...addTestId('NextBtn')}
           full
-          testID="next-btn"
           isDisabled={submitDisabled}
           onPress={onSubmit}>
           {translate('navigation.next')}

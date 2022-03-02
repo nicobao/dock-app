@@ -31,6 +31,7 @@ import {
 import {accountOperations, accountSelectors} from './account-slice';
 import {AccountSettingsModal} from './AccountSettingsModal';
 import {QRCodeModal} from './QRCodeModal';
+import {addTestId} from '../../core/automation-utils';
 
 const TransactionStatusColor = {
   pending: Theme.colors.transactionPending,
@@ -250,6 +251,7 @@ export function AccountDetailsScreen({
               <Button
                 flex={1}
                 size="sm"
+                {...addTestId('SendTokensBtn')}
                 disabled={account.readOnly}
                 onPress={() =>
                   navigate(Routes.TOKEN_SEND, {
@@ -262,6 +264,7 @@ export function AccountDetailsScreen({
                 ml={2}
                 flex={1}
                 size="sm"
+                {...addTestId('ReceiveTokensBtn')}
                 onPress={() =>
                   navigate(Routes.TOKEN_RECEIVE, {
                     address: account.id,
@@ -291,6 +294,7 @@ export function AccountDetailsScreen({
               </NBox>
               <Button
                 onPress={onBackup}
+                {...addTestId('BackupBtn')}
                 mt={4}
                 alignSelf="flex-start"
                 size="sm"
@@ -346,6 +350,7 @@ export function AccountDetailsScreen({
         data={qrCodeData}
         title={translate('account_details.export_account')}
         description={translate('account_details.export_account_description')}
+        {...addTestId('ExportAccountDescription')}
         visible={qrCodeModalVisible}
         onClose={() => setQrCodeModalVisible(false)}
       />

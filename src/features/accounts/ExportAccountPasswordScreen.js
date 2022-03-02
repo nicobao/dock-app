@@ -1,6 +1,7 @@
 import {CheckCircleIcon, Stack} from 'native-base';
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
+import {addTestId} from 'src/core/automation-utils';
 import {translate} from 'src/locales';
 import {showToast} from '../../core/toast';
 import {
@@ -36,9 +37,9 @@ export function GenericPasswordScreen({
   description,
 }) {
   return (
-    <ScreenContainer testID="create-wallet-screen">
+    <ScreenContainer {...addTestId('CreateWalletScreen')}>
       <Header>
-        <BackButton />
+        <BackButton {...addTestId('BackButton')} />
       </Header>
       <Content marginLeft={26} marginRight={26}>
         <Typography variant="h1" marginTop={52}>
@@ -49,6 +50,7 @@ export function GenericPasswordScreen({
         <Box mt={7}>
           <Input
             placeholder="Password"
+            {...addTestId('Password')}
             value={form.password}
             onChangeText={onChange('password')}
             autoCapitalize="none"
@@ -59,6 +61,7 @@ export function GenericPasswordScreen({
         <Box mt={7}>
           <Input
             placeholder="Confirm password"
+            {...addTestId('ConfirmPassword')}
             value={form.passwordConfirmation}
             onChangeText={onChange('passwordConfirmation')}
             autoCapitalize="none"
@@ -101,7 +104,7 @@ export function GenericPasswordScreen({
       <Footer marginBottom={10} marginLeft={26} marginRight={26}>
         <LoadingButton
           full
-          testID="next-btn"
+          {...addTestId('NextBtn')}
           isDisabled={submitDisabled}
           onPress={onSubmit}>
           {translate('navigation.next')}

@@ -23,9 +23,9 @@ export function CreateAccountSetupScreen({
   onSubmit,
 }) {
   return (
-    <ScreenContainer testID={CreateAccountSetupTestIDs.screen}>
+    <ScreenContainer testID="createAccount">
       <Header>
-        <BackButton testID={CreateAccountSetupTestIDs.backBtn} />
+        <BackButton testID="createAccount.backBtn" />
       </Header>
       <Content marginLeft={26} marginRight={26}>
         <Typography variant="h1" marginTop={52}>

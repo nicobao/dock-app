@@ -11,7 +11,8 @@ export function ExportWalletContainer({route}) {
 
   return (
     <GenericPasswordContainer
-      testID={WalletConstants.exportWallet.testID.container}
+      testID="exportWallet"
+      accessibilityLabel="exportWallet"
       description={WalletConstants.exportWallet.locales.description}
       title={WalletConstants.exportWallet.locales.title}
       onSubmit={form => {

@@ -5,6 +5,7 @@ import DocumentPicker from 'react-native-document-picker';
 import RNExitApp from 'react-native-exit-app';
 import RNFS from 'react-native-fs';
 import {useDispatch, useSelector} from 'react-redux';
+import {addTestId} from 'src/core/automation-utils';
 import {withErrorBoundary} from 'src/core/error-handler';
 import {formatCurrency} from 'src/core/format-utils';
 import {navigate} from 'src/core/navigation';
@@ -71,7 +72,7 @@ export const AccountsScreen = withErrorBoundary(
             <Box row>
               <IconButton
                 col
-                testID={AccountsScreenTestIDs.addAccountMenuBtn}
+                {...addTestId(AccountsScreenTestIDs.addAccountMenuBtn)}
                 marginRight={10}
                 onPress={() => setShowAddAccount(true)}>
                 <PlusCircleWhiteIcon />
@@ -184,6 +185,7 @@ export const AccountsScreen = withErrorBoundary(
                               size="sm"
                               disabled={account.readOnly}
                               colorScheme="dark"
+                              {...addTestId('TokenSend')}
                               onPress={() => {
                                 navigate(Routes.TOKEN_SEND, {
                                   address: account.id,
@@ -197,6 +199,7 @@ export const AccountsScreen = withErrorBoundary(
                             size="sm"
                             ml={2}
                             colorScheme="dark"
+                            {...addTestId('TokenReceive')}
                             onPress={() => {
                               navigate(Routes.TOKEN_RECEIVE, {
                                 address: account.id,
@@ -215,10 +218,14 @@ export const AccountsScreen = withErrorBoundary(
         </ScrollView>
         {isEmpty ? (
           <Footer marginBottom={114} marginLeft={26} marginRight={26} flex>
-            <BigButton onPress={onAddAccount} icon={<PlusCircleIcon />}>
+            <BigButton
+              {...addTestId('CreateNewAccount')}
+              onPress={onAddAccount}
+              icon={<PlusCircleIcon />}>
               Create new account
             </BigButton>
             <BigButton
+              {...addTestId('ImportExistingBtn')}
               onPress={() => {
                 setShowImportAccount(true);
                 setShowAddAccount(true);

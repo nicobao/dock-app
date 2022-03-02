@@ -12,12 +12,13 @@ import LockClosedIcon from '../../assets/icons/lock-closed.svg';
 import {translate} from 'src/locales';
 import {navigate} from 'src/core/navigation';
 import {Routes} from 'src/core/routes';
+import {addTestId} from 'src/core/automation-utils';
 
 export function SetupPasscodeScreen() {
   return (
-    <ScreenContainer testID="setupPasscodeScreen">
+    <ScreenContainer {...addTestId('SetupPasscodeScreen')}>
       <Header>
-        <BackButton />
+        <BackButton {...addTestId('BackButton')} />
       </Header>
       <Content marginLeft={26} marginRight={26}>
         <Typography variant="h1" marginTop={52}>
@@ -31,7 +32,7 @@ export function SetupPasscodeScreen() {
         <Button
           full
           icon={<LockClosedIcon />}
-          testID="create-wallet-btn"
+          {...addTestId('CreateWalletBtn')}
           onPress={() => {
             navigate(Routes.CREATE_WALLET_PASSCODE);
           }}>

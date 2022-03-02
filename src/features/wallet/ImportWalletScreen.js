@@ -10,8 +10,8 @@ import {
 import {BackButton} from '../../design-system/buttons';
 import {useDispatch} from 'react-redux';
 import {walletOperations} from './wallet-slice';
-import {WalletConstants} from './constants';
 import {translate} from '../../locales';
+import {addTestId} from 'src/core/automation-utils';
 
 export function ImportWalletScreen({onSubmit, onImportFromClipboard}) {
   const [pressCount, setPressCount] = useState(0);
@@ -19,7 +19,10 @@ export function ImportWalletScreen({onSubmit, onImportFromClipboard}) {
   return (
     <ScreenContainer testID="create-wallet-screen">
       <Header>
-        <BackButton />
+        <BackButton
+          testID="BackButton.importWallet"
+          accessibilityLabel="BackButton.importWallet"
+        />
       </Header>
       <Content marginLeft={26} marginRight={26}>
         <Typography
@@ -42,7 +45,7 @@ export function ImportWalletScreen({onSubmit, onImportFromClipboard}) {
         <Button
           onPress={onSubmit}
           full
-          testID={WalletConstants.importWallet.testID.submitBtn}>
+          {...addTestId('importWallet.submitBtn')}>
           {translate('import_wallet.submit')}
         </Button>
       </Footer>
