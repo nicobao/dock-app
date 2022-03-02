@@ -16,9 +16,9 @@ import {addTestId} from 'src/core/automation-utils';
 
 export function SetupPasscodeScreen() {
   return (
-    <ScreenContainer {...addTestId('setupPasscodeScreen')}>
+    <ScreenContainer {...addTestId('SetupPasscodeScreen')}>
       <Header>
-        <BackButton {...addTestId('backButton')} />
+        <BackButton {...addTestId('BackButton')} />
       </Header>
       <Content marginLeft={26} marginRight={26}>
         <Typography variant="h1" marginTop={52}>
@@ -32,7 +32,7 @@ export function SetupPasscodeScreen() {
         <Button
           full
           icon={<LockClosedIcon />}
-          {...addTestId('create-wallet-btn')}
+          {...addTestId('CreateWalletBtn')}
           onPress={() => {
             navigate(Routes.CREATE_WALLET_PASSCODE);
           }}>

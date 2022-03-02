@@ -185,7 +185,7 @@ export const AccountsScreen = withErrorBoundary(
                               size="sm"
                               disabled={account.readOnly}
                               colorScheme="dark"
-                              {...addTestId('tokenSend')}
+                              {...addTestId('TokenSend')}
                               onPress={() => {
                                 navigate(Routes.TOKEN_SEND, {
                                   address: account.id,
@@ -199,7 +199,7 @@ export const AccountsScreen = withErrorBoundary(
                             size="sm"
                             ml={2}
                             colorScheme="dark"
-                            {...addTestId('tokenReceive')}
+                            {...addTestId('TokenReceive')}
                             onPress={() => {
                               navigate(Routes.TOKEN_RECEIVE, {
                                 address: account.id,
@@ -225,7 +225,7 @@ export const AccountsScreen = withErrorBoundary(
               Create new account
             </BigButton>
             <BigButton
-              {...addTestId('add_account_modal.import_existing')}
+              {...addTestId('ImportExistingBtn')}
               onPress={() => {
                 setShowImportAccount(true);
                 setShowAddAccount(true);

@@ -37,9 +37,9 @@ export function GenericPasswordScreen({
   description,
 }) {
   return (
-    <ScreenContainer {...addTestId('create-wallet-screen')}>
+    <ScreenContainer {...addTestId('CreateWalletScreen')}>
       <Header>
-        <BackButton {...addTestId('backButton')} />
+        <BackButton {...addTestId('BackButton')} />
       </Header>
       <Content marginLeft={26} marginRight={26}>
         <Typography variant="h1" marginTop={52}>
@@ -104,7 +104,7 @@ export function GenericPasswordScreen({
       <Footer marginBottom={10} marginLeft={26} marginRight={26}>
         <LoadingButton
           full
-          {...addTestId('next-btn')}
+          {...addTestId('NextBtn')}
           isDisabled={submitDisabled}
           onPress={onSubmit}>
           {translate('navigation.next')}

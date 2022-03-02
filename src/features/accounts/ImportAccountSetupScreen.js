@@ -25,9 +25,9 @@ export function ImportAccountSetupScreen({
   onSubmit,
 }) {
   return (
-    <ScreenContainer {...addTestId('create-wallet-screen')}>
+    <ScreenContainer {...addTestId('ImportAccountSetupScreen')}>
       <Header>
-        <BackButton {...addTestId('backButton')} />
+        <BackButton {...addTestId('BackButton')} />
       </Header>
       <Content marginLeft={26} marginRight={26}>
         <Typography variant="h1" marginTop={52}>
@@ -39,13 +39,13 @@ export function ImportAccountSetupScreen({
             value={form.accountName}
             onChangeText={onChange('accountName')}
             autoCapitalize="none"
-            {...addTestId('import_account.account_name_input')}
+            {...addTestId('ImportAccountNameInput')}
           />
         </Box>
       </Content>
       <Footer marginBottom={10} marginLeft={26} marginRight={26}>
         <LoadingButton
-          {...addTestId('next-btn')}
+          {...addTestId('NextBtn')}
           full
           isDisabled={submitDisabled}
           onPress={onSubmit}>

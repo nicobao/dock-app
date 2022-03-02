@@ -2,20 +2,20 @@
 
 exports[`ReceiveTokensScreen should render correctly 1`] = `
 <RNCSafeAreaView
-  accessibilityLabel="unlockWalletScreen"
+  accessibilityLabel="ReceiveTokenScreen"
   style={
     Object {
       "backgroundColor": "#18181B",
       "flex": 1,
     }
   }
-  testID="unlockWalletScreen"
+  testID="ReceiveTokenScreen"
 >
   <AppGlobalHeader />
   <Styled(View)>
     <BackButton
-      accessibilityLabel="backButton"
-      testID="backButton"
+      accessibilityLabel="BackButton"
+      testID="BackButton"
     />
   </Styled(View)>
   <Memo(ForwardRef(Stack))
@@ -84,9 +84,9 @@ exports[`ReceiveTokensScreen should render correctly 1`] = `
         Copy address
       </Button>
       <Button
-        accessibilityLabel="receive_token.share_address"
+        accessibilityLabel="ReceiveTokenShareAddress"
         colorScheme="tertiary"
-        testID="receive_token.share_address"
+        testID="ReceiveTokenShareAddress"
       >
         Share address
       </Button>

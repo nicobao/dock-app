@@ -39,19 +39,19 @@ exports[`CreateWalletScreen should render correctly 1`] = `
     marginRight={26}
   >
     <LoadingButton
-      accessibilityLabel="createWalletButton"
+      accessibilityLabel="CreateWalletBtn"
       full={true}
       onPress={[Function]}
-      testID="createWalletButton"
+      testID="CreateWalletBtn"
     >
       Create a new wallet
     </LoadingButton>
     <LoadingButton
-      accessibilityLabel="import_existing"
+      accessibilityLabel="ImportExistingBtn"
       full={true}
       mt={4}
       onPress={[Function]}
-      testID="import_existing"
+      testID="ImportExistingBtn"
       variant="ghost"
     >
       I already have a wallet

@@ -31,9 +31,9 @@ export function ReceiveTokenScreen({
   const qrSize = Dimensions.get('window').width * 0.7;
 
   return (
-    <ScreenContainer {...addTestId('unlockWalletScreen')}>
+    <ScreenContainer {...addTestId('ReceiveTokenScreen')}>
       <Header>
-        <BackButton {...addTestId('backButton')} />
+        <BackButton {...addTestId('BackButton')} />
       </Header>
       <Stack alignItems="center">
         <Typography variant="h1" mb={2}>
@@ -68,7 +68,7 @@ export function ReceiveTokenScreen({
           <Button
             onPress={onShareAddress}
             colorScheme="tertiary"
-            {...addTestId('receive_token.share_address')}>
+            {...addTestId('ReceiveTokenShareAddress')}>
             {translate('receive_token.share_address')}
           </Button>
         </Stack>

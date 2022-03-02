@@ -2,20 +2,20 @@
 
 exports[`SetupPasscodeScreen should render correctly 1`] = `
 <RNCSafeAreaView
-  accessibilityLabel="setupPasscodeScreen"
+  accessibilityLabel="SetupPasscodeScreen"
   style={
     Object {
       "backgroundColor": "#18181B",
       "flex": 1,
     }
   }
-  testID="setupPasscodeScreen"
+  testID="SetupPasscodeScreen"
 >
   <AppGlobalHeader />
   <Styled(View)>
     <BackButton
-      accessibilityLabel="backButton"
-      testID="backButton"
+      accessibilityLabel="BackButton"
+      testID="BackButton"
     />
   </Styled(View)>
   <Styled(ScrollView)
@@ -40,11 +40,11 @@ exports[`SetupPasscodeScreen should render correctly 1`] = `
     marginRight={26}
   >
     <Button
-      accessibilityLabel="create-wallet-btn"
+      accessibilityLabel="CreateWalletBtn"
       full={true}
       icon={<SvgFile />}
       onPress={[Function]}
-      testID="create-wallet-btn"
+      testID="CreateWalletBtn"
     >
       Setup Passcode
     </Button>

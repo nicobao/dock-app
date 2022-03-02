@@ -120,7 +120,7 @@ export function DevSettingsScreen({onAddAccount, onNetworkChange}) {
             </Stack>
 
             <Button
-              {...addTestId('dev_settings.update_network')}
+              {...addTestId('DevSettingsUpdateNetwork')}
               onPress={async () =>
                 onNetworkChange(networkId).then(() => {
                   setShowNetworkOptions(false);
@@ -130,7 +130,7 @@ export function DevSettingsScreen({onAddAccount, onNetworkChange}) {
             </Button>
             <Stack pt={3}>
               <Button
-                {...addTestId('cancel')}
+                {...addTestId('CancelBtn')}
                 onPress={() => setShowNetworkOptions(false)}
                 colorScheme="tertiary">
                 Cancel

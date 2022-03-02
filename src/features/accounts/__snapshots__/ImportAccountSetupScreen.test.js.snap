@@ -2,20 +2,20 @@
 
 exports[`ImportAccountSetupScreen should render correctly 1`] = `
 <RNCSafeAreaView
-  accessibilityLabel="create-wallet-screen"
+  accessibilityLabel="ImportAccountSetupScreen"
   style={
     Object {
       "backgroundColor": "#18181B",
       "flex": 1,
     }
   }
-  testID="create-wallet-screen"
+  testID="ImportAccountSetupScreen"
 >
   <AppGlobalHeader />
   <Styled(View)>
     <BackButton
-      accessibilityLabel="backButton"
-      testID="backButton"
+      accessibilityLabel="BackButton"
+      testID="BackButton"
     />
   </Styled(View)>
   <Styled(ScrollView)
@@ -32,10 +32,10 @@ exports[`ImportAccountSetupScreen should render correctly 1`] = `
       mt={7}
     >
       <Memo(ForwardRef(Input))
-        accessibilityLabel="import_account.account_name_input"
+        accessibilityLabel="ImportAccountNameInput"
         autoCapitalize="none"
         placeholder="Account name"
-        testID="import_account.account_name_input"
+        testID="ImportAccountNameInput"
         value="test"
       />
     </Memo(ForwardRef(Box))>
@@ -46,9 +46,9 @@ exports[`ImportAccountSetupScreen should render correctly 1`] = `
     marginRight={26}
   >
     <LoadingButton
-      accessibilityLabel="next-btn"
+      accessibilityLabel="NextBtn"
       full={true}
-      testID="next-btn"
+      testID="NextBtn"
     >
       Next
     </LoadingButton>

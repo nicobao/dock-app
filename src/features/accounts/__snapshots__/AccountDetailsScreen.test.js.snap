@@ -82,21 +82,21 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
           width="100%"
         >
           <Memo(ForwardRef(Button))
-            accessibilityLabel="send_tokens_btn"
+            accessibilityLabel="SendTokensBtn"
             flex={1}
             onPress={[Function]}
             size="sm"
-            testID="send_tokens_btn"
+            testID="SendTokensBtn"
           >
             Send
           </Memo(ForwardRef(Button))>
           <Memo(ForwardRef(Button))
-            accessibilityLabel="receive_tokens_btn"
+            accessibilityLabel="ReceiveTokensBtn"
             flex={1}
             ml={2}
             onPress={[Function]}
             size="sm"
-            testID="receive_tokens_btn"
+            testID="ReceiveTokensBtn"
           >
             Receive
           </Memo(ForwardRef(Button))>
@@ -134,12 +134,12 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
           </Styled(Component)>
         </Memo(ForwardRef(Box))>
         <Memo(ForwardRef(Button))
-          accessibilityLabel="account_details.backup_btn"
+          accessibilityLabel="BackupBtn"
           alignSelf="flex-start"
           backgroundColor="rgba(120, 53, 15, 1)"
           mt={4}
           size="sm"
-          testID="account_details.backup_btn"
+          testID="BackupBtn"
         >
           Back up now
         </Memo(ForwardRef(Button))>
@@ -178,10 +178,10 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
     onClose={[Function]}
   />
   <QRCodeModal
-    accessibilityLabel="account_details.export_account_description"
+    accessibilityLabel="ExportAccountDescription"
     description="Scan this QR code in your new device"
     onClose={[Function]}
-    testID="account_details.export_account_description"
+    testID="ExportAccountDescription"
     title="Export account"
   />
 </RNCSafeAreaView>
