@@ -82,17 +82,21 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
           width="100%"
         >
           <Memo(ForwardRef(Button))
+            accessibilityLabel="SendTokensBtn"
             flex={1}
             onPress={[Function]}
             size="sm"
+            testID="SendTokensBtn"
           >
             Send
           </Memo(ForwardRef(Button))>
           <Memo(ForwardRef(Button))
+            accessibilityLabel="ReceiveTokensBtn"
             flex={1}
             ml={2}
             onPress={[Function]}
             size="sm"
+            testID="ReceiveTokensBtn"
           >
             Receive
           </Memo(ForwardRef(Button))>
@@ -130,10 +134,12 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
           </Styled(Component)>
         </Memo(ForwardRef(Box))>
         <Memo(ForwardRef(Button))
+          accessibilityLabel="BackupBtn"
           alignSelf="flex-start"
           backgroundColor="rgba(120, 53, 15, 1)"
           mt={4}
           size="sm"
+          testID="BackupBtn"
         >
           Back up now
         </Memo(ForwardRef(Button))>
@@ -172,8 +178,10 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
     onClose={[Function]}
   />
   <QRCodeModal
+    accessibilityLabel="ExportAccountDescription"
     description="Scan this QR code in your new device"
     onClose={[Function]}
+    testID="ExportAccountDescription"
     title="Export account"
   />
 </RNCSafeAreaView>

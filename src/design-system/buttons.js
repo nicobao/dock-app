@@ -7,6 +7,7 @@ import BackIcon from '../assets/icons/back.svg';
 import {navigateBack} from '../core/navigation';
 import {Box} from './grid';
 import {Theme} from './theme';
+import {addTestId} from '../core/automation-utils';
 
 export const Group = NButton.Group;
 
@@ -51,7 +52,10 @@ export function BackButton(props) {
   // }, [onPress]);
 
   return (
-    <Box flexDirection="row" onPress={onPress} testID={props.testID}>
+    <Box
+      flexDirection="row"
+      onPress={onPress}
+      {...(props.testID ? addTestId(props.testID) : {})}>
       {loading ? (
         <Spinner size={12} />
       ) : (

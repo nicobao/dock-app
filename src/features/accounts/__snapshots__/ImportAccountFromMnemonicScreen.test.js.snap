@@ -2,17 +2,21 @@
 
 exports[`ImportAccountFromMnemonicScreen should render correctly 1`] = `
 <RNCSafeAreaView
+  accessibilityLabel="ImportAccountScreen"
   style={
     Object {
       "backgroundColor": "#18181B",
       "flex": 1,
     }
   }
-  testID="create-wallet-screen"
+  testID="ImportAccountScreen"
 >
   <AppGlobalHeader />
   <Styled(View)>
-    <BackButton />
+    <BackButton
+      accessibilityLabel="BackButton"
+      testID="BackButton"
+    />
   </Styled(View)>
   <Styled(ScrollView)
     marginLeft={26}
@@ -38,11 +42,16 @@ exports[`ImportAccountFromMnemonicScreen should render correctly 1`] = `
             Enter account recovery phrase
           </Memo(ForwardRef(FormControlLabel))>
           <Memo(ForwardRef(TextArea))
+            accessibilityLabel="EnterText"
             autoCapitalize="none"
             placeholder=""
+            testID="EnterText"
             value="test"
           />
-          <Memo(ForwardRef(FormControlErrorMessage))>
+          <Memo(ForwardRef(FormControlErrorMessage))
+            accessibilityLabel="ErrorMessage"
+            testID="ErrorMessage"
+          >
             Invalid recovery phrase
           </Memo(ForwardRef(FormControlErrorMessage))>
         </Memo(ForwardRef(Stack))>
@@ -78,8 +87,9 @@ exports[`ImportAccountFromMnemonicScreen should render correctly 1`] = `
     marginRight={26}
   >
     <LoadingButton
+      accessibilityLabel="NextBtn"
       full={true}
-      testID="next-btn"
+      testID="NextBtn"
     >
       Next
     </LoadingButton>

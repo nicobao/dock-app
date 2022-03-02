@@ -6,6 +6,7 @@ import RNExitApp from 'react-native-exit-app';
 import {useDispatch, useSelector} from 'react-redux';
 import {Modal} from 'src/components/Modal';
 import {NumericKeyboard} from 'src/components/NumericKeyboard';
+import {addTestId} from 'src/core/automation-utils';
 import {Logger} from 'src/core/logger';
 import {showToast} from 'src/core/toast';
 import styled from 'styled-components/native';
@@ -67,7 +68,9 @@ export function UnlockWalletScreen({
   onCloseApp,
 }) {
   return (
-    <ScreenContainer testID="unlockWalletScreen" hideGlobalHeader={true}>
+    <ScreenContainer
+      {...addTestId('unlockWalletScreen')}
+      hideGlobalHeader={true}>
       <Box justifyContent="center" row onPress={onLogoPress}>
         <Image source={SplashLogo} style={styles.logo} resizeMode="contain" />
       </Box>

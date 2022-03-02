@@ -2,13 +2,14 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {TouchableOpacity} from 'react-native';
 import {Box as HBox} from 'native-base';
 import {Box, KeyboardDeleteIcon, Typography} from 'src/design-system';
+import {addTestId} from 'src/core/automation-utils';
 
 function KeyboardButton({onPress, value, testID}) {
   return (
     <TouchableOpacity
       onPress={() => value !== null && onPress(value)}
       style={{flex: 1}}
-      testID={testID}>
+      {...addTestId(testID)}>
       <HBox flex={1} alignItems="center">
         <Box>
           <Typography variant="h1" fontSize={30} lineHeight="37px">
@@ -76,7 +77,7 @@ export function NumericKeyboard({
         key={v}
         onPress={handleDigit}
         value={v}
-        testID={`keyboardNumber${v}`}
+        {...addTestId(`keyboardNumber${v}`)}
       />
     ),
     [handleDigit],
