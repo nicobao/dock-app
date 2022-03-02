@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {translate} from 'src/locales';
 import {navigate} from '../../core/navigation';
-import { getRealm } from '../../core/realm';
+import {getRealm} from '../../core/realm';
 import {Routes} from '../../core/routes';
 import {showToast} from '../../core/toast';
 import {
@@ -91,8 +91,8 @@ export function DevSettingsScreen({onAddAccount, onNetworkChange}) {
                       realm.delete(realm.objects('Account'));
                       showToast({
                         message: translate('dev_settings.clear_cache_success'),
-                        type: 'success'
-                      })
+                        type: 'success',
+                      });
                     });
                   } catch (err) {
                     console.error(err);
@@ -119,9 +119,21 @@ export function DevSettingsScreen({onAddAccount, onNetworkChange}) {
             </Stack>
 
             <Button
-              onPress={async () =>{
+              onPress={async () => {
                 setShowNetworkOptions(false);
-                onNetworkChange(networkId).then(() => {})
+                onNetworkChange(networkId)
+                  .then(() => {
+                    showToast({
+                      message: translate('dev_settings.switch_network_success'),
+                      type: 'success',
+                    });
+                  })
+                  .catch(() => {
+                    showToast({
+                      message: translate('dev_settings.switch_network_error'),
+                      type: 'error',
+                    });
+                  });
               }}>
               {translate('dev_settings.update_network')}
             </Button>
