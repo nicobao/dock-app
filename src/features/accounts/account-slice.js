@@ -203,8 +203,8 @@ export const accountOperations = {
 
       try {
         await WalletRpc.remove(account.id);
-      } catch(err) {
-        console.error(err); 
+      } catch (err) {
+        console.error(err);
       }
 
       const realm = getRealm();
@@ -214,7 +214,7 @@ export const accountOperations = {
           .objects('Account')
           .filtered('id = $0', account.id)[0];
 
-          console.log('Cached account', cachedAccount);
+        console.log('Cached account', cachedAccount);
         if (!cachedAccount) {
           return;
         }
@@ -282,7 +282,7 @@ export const accountOperations = {
             },
             'modified',
           );
-        } catch(err) {
+        } catch (err) {
           console.log(err);
         }
       });
@@ -306,7 +306,7 @@ export const accountOperations = {
         'content.type': 'Account',
       },
     });
-    
+
     const account = accounts.find(acc => acc.id === accountId);
 
     if (!account) {

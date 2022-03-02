@@ -6,14 +6,18 @@ import DocumentPicker from 'react-native-document-picker';
 import {Routes} from '../../core/routes';
 import {appSelectors, BiometryType} from '../app/app-slice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {accountActions, accountOperations, exportFile} from '../accounts/account-slice';
+import {
+  accountActions,
+  accountOperations,
+  exportFile,
+} from '../accounts/account-slice';
 import RNFS from 'react-native-fs';
 import {showConfirmationModal} from 'src/components/ConfirmationModal';
 import {translate} from 'src/locales';
 import {showToast} from 'src/core/toast';
 import {Logger} from 'src/core/logger';
 import {withErrorToast} from 'src/core/toast';
-import {clearCacheData, getRealm} from '../../core/realm';
+import {clearCacheData} from '../../core/realm';
 import Clipboard from '@react-native-community/clipboard';
 
 const initialState = {
@@ -71,7 +75,7 @@ async function validateAndImport(fileData, password) {
 
   try {
     await WalletRpc.importWallet(jsonData, password);
-  } catch(err) {
+  } catch (err) {
     console.error(err);
     throw new Error(translate('import_wallet.invalid_file'));
   }
@@ -93,24 +97,25 @@ async function validateAndImport(fileData, password) {
   const warnings = [];
 
   for (let account of accounts) {
-    const correlationDocs = account.correlation.map(docId => docs.find(doc => doc.id === docId));
+    const correlationDocs = account.correlation.map(docId =>
+      docs.find(doc => doc.id === docId),
+    );
     const hasMnemonic = correlationDocs.find(doc => doc.type === 'Mnemonic');
     const hasKeyPair = correlationDocs.find(doc => doc.type === 'KeyPair');
-          
+
     if (!hasMnemonic && !hasKeyPair) {
       warnings.push(`keypair not found for account ${account.id}`);
-      
+
       await WalletRpc.update({
         ...account,
         meta: {
           ...account.meta,
           readOnly: true,
           keypairNotFoundWarning: true,
-        }
+        },
       });
     }
   }
-  
 }
 
 export const walletOperations = {
@@ -118,7 +123,9 @@ export const walletOperations = {
     withErrorToast(async (dispatch, getState) => {
       const files = await DocumentPicker.pick({
         type: [DocumentPicker.types.allFiles],
-      }).catch(err => []);
+      }).catch(err => {
+        console.log(err);
+      });
 
       if (!files.length) {
         return;
@@ -128,7 +135,7 @@ export const walletOperations = {
         fileUri: files[0].fileCopyUri,
       });
     }),
-    
+
   importFromClipboard: () =>
     withErrorToast(async (dispatch, getState) => {
       const fileData = await Clipboard.getString();
@@ -144,15 +151,15 @@ export const walletOperations = {
           try {
             fileUri = fileUri.replace(/%20/gi, ' ');
             fileData = await RNFS.readFile(fileUri);
-          } catch(err) {
+          } catch (err) {
             console.error(err);
-            
+
             throw new Error('Unable to read file');
           }
         }
         const jsonData = JSON.parse(fileData);
-        await validateAndImport(fileData, password);
-      } catch(err) {
+        await validateAndImport(jsonData, password);
+      } catch (err) {
         console.error(err);
         showToast({
           message: err.message,
