@@ -37,7 +37,9 @@ exports[`ProtectYourWalletScreen should render correctly 1`] = `
     marginRight={26}
   >
     <BigButton
+      accessibilityID="DoThisLater"
       icon={<SvgFile />}
+      testID="DoThisLater"
     >
       Do this later
     </BigButton>

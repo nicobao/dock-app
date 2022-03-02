@@ -2,6 +2,7 @@
 
 exports[`ReceiveTokensScreen should render correctly 1`] = `
 <RNCSafeAreaView
+  accessibilityID="unlockWalletScreen"
   style={
     Object {
       "backgroundColor": "#18181B",
@@ -12,7 +13,10 @@ exports[`ReceiveTokensScreen should render correctly 1`] = `
 >
   <AppGlobalHeader />
   <Styled(View)>
-    <BackButton />
+    <BackButton
+      accessibilityID="BackButton"
+      testID="BackButton"
+    />
   </Styled(View)>
   <Memo(ForwardRef(Stack))
     alignItems="center"
@@ -82,6 +86,7 @@ exports[`ReceiveTokensScreen should render correctly 1`] = `
       <Button
         colorScheme="tertiary"
       >
+        testID="receive_token.share_address" accessibilityID="receive_token.share_address"
         Share address
       </Button>
     </Memo(ForwardRef(Stack))>
