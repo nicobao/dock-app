@@ -24,6 +24,7 @@ import {
   appSelectors,
   SUBSTRATE_NETWORKS,
 } from '../app/app-slice';
+import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
 
 export function DevSettingsScreen({onAddAccount, onNetworkChange}) {
   const [showNetworkOptions, setShowNetworkOptions] = useState();
@@ -157,15 +158,20 @@ export function DevSettingsScreen({onAddAccount, onNetworkChange}) {
                       message: translate('dev_settings.invalid_account_name'),
                       type: 'error',
                     });
+                    return;
                   }
 
-                  if (!accountAddress) {
+                  const isAddressValid = await UtilCryptoRpc.isAddressValid(
+                    accountAddress,
+                  );
+                  if (!accountAddress || !isAddressValid) {
                     showToast({
                       message: translate(
                         'dev_settings.invalid_account_address',
                       ),
                       type: 'error',
                     });
+                    return;
                   }
 
                   onAddAccount({
