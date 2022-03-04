@@ -115,7 +115,7 @@ export const transactionsOperations = {
   loadTransactions: () => async (dispatch, getState) => {
     const realm = getRealm();
     const networkId = appSelectors.getNetworkId(getState());
-    let items = realm.objects('Transaction').toJSON();
+    let items = realm.objects('Transaction').sorted('date', true).toJSON();
 
     dispatch(transactionsActions.setTransactions(items));
 
@@ -133,7 +133,7 @@ export const transactionsOperations = {
       }
     }
 
-    items = realm.objects('Transaction').toJSON();
+    items = realm.objects('Transaction').sorted('date', true).toJSON();
 
     if (networkId === 'mainnet') {
       items = items.filter(item => !(item.status === 'complete' && !item.hash));
