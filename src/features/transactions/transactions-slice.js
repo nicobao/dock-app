@@ -131,11 +131,6 @@ export const transactionsOperations = {
           console.error(err);
         }
       }
-    }
-
-    items = realm.objects('Transaction').sorted('date', true).toJSON();
-
-    if (networkId === 'mainnet') {
       items = items.filter(item => !(item.status === 'complete' && !item.hash));
     }
 
