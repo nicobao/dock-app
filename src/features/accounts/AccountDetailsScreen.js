@@ -32,6 +32,7 @@ import {accountOperations, accountSelectors} from './account-slice';
 import {AccountSettingsModal} from './AccountSettingsModal';
 import {QRCodeModal} from './QRCodeModal';
 import {addTestId} from '../../core/automation-utils';
+import {appSelectors} from '../app/app-slice';
 
 const TransactionStatusColor = {
   pending: Theme.colors.transactionPending,
@@ -143,11 +144,15 @@ export function filterTransactionHistory(transactions, accountAddress) {
 
 function TransactionHistory({accountAddress}) {
   const allTransactions = useSelector(transactionsSelectors.getTransactions);
+  const networkId = useSelector(appSelectors.getNetworkId);
   const transactions = useMemo(() => {
     return filterTransactionHistory(allTransactions, accountAddress);
   }, [allTransactions, accountAddress]);
 
   return useMemo(() => {
+    if (networkId !== 'mainnet') {
+      return <NBox />;
+    }
     if (!transactions.length) {
       return (
         <NBox>
@@ -168,7 +173,7 @@ function TransactionHistory({accountAddress}) {
         ))}
       </NBox>
     );
-  }, [transactions, accountAddress]);
+  }, [transactions, accountAddress, networkId]);
 }
 
 export function AccountDetailsScreen({
