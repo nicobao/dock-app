@@ -39,6 +39,7 @@ const transactions = createSlice({
       state.loading = action.payload;
     },
     setTransactions(state, action) {
+      console.log(action);
       state.transactions = action.payload.map(parseTransaction);
       // .sort(sortTransactions);
     },
@@ -116,36 +117,36 @@ export const transactionsOperations = {
       console.log(err);
     }
   },
-  loadTransactions: () => async (dispatch, getState) => {
-    const realm = getRealm();
-    const networkId = appSelectors.getNetworkId(getState());
-    if (networkId === 'mainnet') {
-      const accounts = accountSelectors.getAccounts(getState());
-      for (const account of accounts) {
-        try {
-          await dispatch(
-            transactionsOperations.loadExternalTransactions(account.id),
-          );
-        } catch (err) {
-          console.error(err);
+  loadTransactions:
+    (realm = getRealm()) =>
+    async (dispatch, getState) => {
+      const networkId = appSelectors.getNetworkId(getState());
+      if (networkId === 'mainnet') {
+        const accounts = accountSelectors.getAccounts(getState());
+        for (const account of accounts) {
+          try {
+            await dispatch(
+              transactionsOperations.loadExternalTransactions(account.id),
+            );
+          } catch (err) {
+            console.error(err);
+          }
         }
+
+        const realmTransactions = realm
+          .objects('Transaction')
+          .filtered("!(status == 'complete' && hash != null)")
+          .sorted('date', true)
+          .toJSON();
+        dispatch(transactionsActions.setTransactions(realmTransactions));
+      } else {
+        const realmTransactions = realm
+          .objects('Transaction')
+          .sorted('date', true)
+          .toJSON();
+        dispatch(transactionsActions.setTransactions(realmTransactions));
       }
-
-      const realmTransactions = realm
-        .objects('Transaction')
-        .filtered("!(status == 'complete' && hash != null)")
-        .sorted('date', true)
-        .toJSON();
-      dispatch(transactionsActions.setTransactions(realmTransactions));
-    } else {
-      const realmTransactions = realm
-        .objects('Transaction')
-        .sorted('date', true)
-        .toJSON();
-
-      dispatch(transactionsActions.setTransactions(realmTransactions));
-    }
-  },
+    },
   updateTransaction: transaction => async (dispatch, getState) => {
     const realm = getRealm();
 

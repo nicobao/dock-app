@@ -6,11 +6,66 @@ import {
   filterTransactionHistory,
 } from './AccountDetailsScreen';
 import {
-  transactionsActions,
+  transactionsOperations,
   transactionsReducer,
+  TransactionStatus,
 } from '../transactions/transactions-slice';
+import thunk from 'redux-thunk';
+import Realm from 'realm';
+import {Account, TokenPrice, Transaction} from '../../core/realm-schemas';
 
-const mockStore = configureMockStore();
+const mockStore = configureMockStore([thunk]);
+
+const initMockRealm = () => {
+  return Realm.open({
+    path: 'dock_unit_test',
+    schema: [TokenPrice, Transaction, Account],
+    schemaVersion: 3,
+    deleteRealmIfMigrationNeeded: false,
+    inMemory: true,
+    migration: () => {
+      // No migration required so far
+    },
+  });
+};
+
+const initMockTransactions = () => {
+  return [
+    {
+      amount: '10',
+      feeAmount: '1',
+      recipientAddress: '3C7Hq5jQGxeYzL7LnVASn48tEfr6D7yKtNYSuXcgioQoWWsB',
+      fromAddress: '4C7Hq5jQGxeYzL7LnVASn48tEfr6D7yKtNYSuXcgioQoWWsB',
+      id: '0',
+      hash: '0xa3b3bf9d13dd726c1e0051d48cb99fd05e79442b2cda05374e898351c3ade9c2',
+      network: 'testnet',
+      status: TransactionStatus.Complete,
+      date: new Date('2022-03-03T17:52:03.741Z'),
+    },
+    {
+      amount: '10',
+      feeAmount: '1',
+      recipientAddress: '3C7Hq5jQGxeYzL7LnVASn48tEfr6D7yKtNYSuXcgioQoWWsB',
+      fromAddress: '4C7Hq5jQGxeYzL7LnVASn48tEfr6D7yKtNYSuXcgioQoWWsB',
+      id: '2',
+      hash: '0xb3b3bf9d13dd726c1e0051d48cb99fd05e79442b2cda05374e898351c3ade9c2',
+      network: 'testnet',
+      status: TransactionStatus.Complete,
+      date: new Date('2022-01-03T17:52:03.741Z'),
+    },
+    {
+      amount: '10',
+      feeAmount: '1',
+      recipientAddress: '3C7Hq5jQGxeYzL7LnVASn48tEfr6D7yKtNYSuXcgioQoWWsB',
+      fromAddress: '4C7Hq5jQGxeYzL7LnVASn48tEfr6D7yKtNYSuXcgioQoWWsB',
+      id: '1',
+      hash: '0xc3b3bf9d13dd726c1e0051d48cb99fd05e79442b2cda05374e898351c3ade9c2',
+      network: 'testnet',
+      status: TransactionStatus.Complete,
+      date: new Date('2022-02-03T17:52:03.741Z'),
+    },
+  ];
+};
 
 describe('AccountDetailsScreen', () => {
   it('should render correctly', () => {
@@ -34,13 +89,49 @@ describe('AccountDetailsScreen', () => {
     expect(wrapper.dive()).toMatchSnapshot();
   });
 
-  describe.only('expect transactions to be retrieved in desc order', () => {
-    beforeEach(() => {});
-    it('Is initial state set successfully', () => {
-      expect(transactionsReducer(undefined, {}).transactions).toEqual([]);
+  describe('expect transactions to be retrieved in desc order', () => {
+    let store;
+    let realm;
+    beforeEach(async () => {
+      realm = await initMockRealm();
+      for (const tx of initMockTransactions()) {
+        realm.write(async () => {
+          realm.create('Transaction', tx, 'modified');
+        });
+      }
+
+      const initialState = {
+        app: {
+          networkId: 'testnet',
+          devSettingsEnabled: true,
+        },
+        wallet: {},
+        account: {},
+        createAccount: {},
+        qrCode: {},
+        transactions: {
+          transactions: [],
+        },
+      };
+      store = mockStore(initialState);
+    });
+    afterEach(() => {
+      realm.write(() => {
+        realm.deleteAll();
+      });
     });
 
-    it('Is history sorted', () => {});
+    it('Is history sorted', async () => {
+      expect(transactionsReducer(undefined, {}).transactions.length).toEqual(0);
+      return store
+        .dispatch(transactionsOperations.loadTransactions(realm))
+        .then(() => {
+          const actions = store.getActions();
+          expect(actions[0].payload[0].id).toEqual('0');
+          expect(actions[0].payload[1].id).toEqual('1');
+          expect(actions[0].payload[2].id).toEqual('2');
+        });
+    });
   });
   describe('expect to filter transaction history items', () => {
     const address1 = '3C7Hq5jQGxeYzL7LnVASn48tEfr6D7yKtNYSuXcgioQoWWsB';
