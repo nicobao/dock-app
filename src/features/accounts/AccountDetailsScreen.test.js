@@ -5,6 +5,10 @@ import {
   AccountDetailsScreen,
   filterTransactionHistory,
 } from './AccountDetailsScreen';
+import {
+  transactionsActions,
+  transactionsReducer,
+} from '../transactions/transactions-slice';
 
 const mockStore = configureMockStore();
 
@@ -30,6 +34,14 @@ describe('AccountDetailsScreen', () => {
     expect(wrapper.dive()).toMatchSnapshot();
   });
 
+  describe.only('expect transactions to be retrieved in desc order', () => {
+    beforeEach(() => {});
+    it('Is initial state set successfully', () => {
+      expect(transactionsReducer(undefined, {}).transactions).toEqual([]);
+    });
+
+    it('Is history sorted', () => {});
+  });
   describe('expect to filter transaction history items', () => {
     const address1 = '3C7Hq5jQGxeYzL7LnVASn48tEfr6D7yKtNYSuXcgioQoWWsB';
     const address2 = '4C7Hq5jQGxeYzL7LnVASn48tEfr6D7yKtNYSuXcgioQoWWsB';

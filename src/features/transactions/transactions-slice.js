@@ -39,9 +39,8 @@ const transactions = createSlice({
       state.loading = action.payload;
     },
     setTransactions(state, action) {
-      state.transactions = action.payload
-        .map(parseTransaction)
-        .sort(sortTransactions);
+      state.transactions = action.payload.map(parseTransaction);
+      // .sort(sortTransactions);
     },
     addTransaction(state, action) {
       state.transactions.push(parseTransaction(action.payload));
@@ -90,7 +89,7 @@ export const transactionsOperations = {
         id: tx.hash,
         hash: tx.hash,
         network: 'mainnet',
-        status: 'complete',
+        status: TransactionStatus.Complete,
         date: new Date(parseInt(tx.block_timestamp + '000', 10)),
       };
 
@@ -104,9 +103,14 @@ export const transactionsOperations = {
 
     try {
       do {
-        data = await fetchTransactions({address: account, page});
-        data.transfers.forEach(handleTransaction);
-        page++;
+        data = await fetchTransactions({
+          address: account,
+          page,
+        });
+        if (Array.isArray(data.transfers)) {
+          data.transfers.forEach(handleTransaction);
+          page++;
+        }
       } while (data.hasNextPage);
     } catch (err) {
       console.log(err);
@@ -115,13 +119,8 @@ export const transactionsOperations = {
   loadTransactions: () => async (dispatch, getState) => {
     const realm = getRealm();
     const networkId = appSelectors.getNetworkId(getState());
-    let items = realm.objects('Transaction').sorted('date', true).toJSON();
-
-    dispatch(transactionsActions.setTransactions(items));
-
     if (networkId === 'mainnet') {
       const accounts = accountSelectors.getAccounts(getState());
-
       for (const account of accounts) {
         try {
           await dispatch(
@@ -131,10 +130,21 @@ export const transactionsOperations = {
           console.error(err);
         }
       }
-      items = items.filter(item => !(item.status === 'complete' && !item.hash));
-    }
 
-    dispatch(transactionsActions.setTransactions(items));
+      const realmTransactions = realm
+        .objects('Transaction')
+        .filtered("!(status == 'complete' && hash != null)")
+        .sorted('date', true)
+        .toJSON();
+      dispatch(transactionsActions.setTransactions(realmTransactions));
+    } else {
+      const realmTransactions = realm
+        .objects('Transaction')
+        .sorted('date', true)
+        .toJSON();
+
+      dispatch(transactionsActions.setTransactions(realmTransactions));
+    }
   },
   updateTransaction: transaction => async (dispatch, getState) => {
     const realm = getRealm();
