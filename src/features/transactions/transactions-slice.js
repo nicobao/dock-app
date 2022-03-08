@@ -121,6 +121,7 @@ export const transactionsOperations = {
     (realm = getRealm()) =>
     async (dispatch, getState) => {
       const networkId = appSelectors.getNetworkId(getState());
+      const shouldReverseOrder = true;
       if (networkId === 'mainnet') {
         const accounts = accountSelectors.getAccounts(getState());
         for (const account of accounts) {
@@ -136,13 +137,13 @@ export const transactionsOperations = {
         const realmTransactions = realm
           .objects('Transaction')
           .filtered("!(status == 'complete' && hash != null)")
-          .sorted('date', true)
+          .sorted('date', shouldReverseOrder)
           .toJSON();
         dispatch(transactionsActions.setTransactions(realmTransactions));
       } else {
         const realmTransactions = realm
           .objects('Transaction')
-          .sorted('date', true)
+          .sorted('date', shouldReverseOrder)
           .toJSON();
         dispatch(transactionsActions.setTransactions(realmTransactions));
       }

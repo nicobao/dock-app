@@ -12,14 +12,14 @@ import {
 } from '../transactions/transactions-slice';
 import thunk from 'redux-thunk';
 import Realm from 'realm';
-import {Account, TokenPrice, Transaction} from '../../core/realm-schemas';
+import {Transaction} from '../../core/realm-schemas';
 
 const mockStore = configureMockStore([thunk]);
 
 const initMockRealm = () => {
   return Realm.open({
     path: 'dock_unit_test',
-    schema: [TokenPrice, Transaction, Account],
+    schema: [Transaction],
     schemaVersion: 3,
     deleteRealmIfMigrationNeeded: false,
     inMemory: true,
@@ -122,7 +122,6 @@ describe('AccountDetailsScreen', () => {
     });
 
     it('Is history sorted', async () => {
-      expect(transactionsReducer(undefined, {}).transactions.length).toEqual(0);
       return store
         .dispatch(transactionsOperations.loadTransactions(realm))
         .then(() => {
