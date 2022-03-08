@@ -94,7 +94,7 @@ describe('AccountDetailsScreen', () => {
     beforeEach(async () => {
       realm = await initMockRealm();
       for (const tx of initMockTransactions()) {
-        realm.write(async () => {
+        await realm.write(() => {
           realm.create('Transaction', tx, 'modified');
         });
       }
@@ -118,6 +118,7 @@ describe('AccountDetailsScreen', () => {
       realm.write(() => {
         realm.deleteAll();
       });
+      realm.close();
     });
 
     it('Is history sorted', async () => {
