@@ -154,7 +154,15 @@ function TransactionHistory({accountAddress}) {
 
   return useMemo(() => {
     if (networkId !== 'mainnet' && !showTestnetConfig) {
-      return <NBox />;
+      return (
+        <NBox>
+          <Typography variant="list-description">
+            {translate('account_details.no_transactions_on_testnet', {
+              networkId,
+            })}
+          </Typography>
+        </NBox>
+      );
     }
     if (!transactions.length) {
       return (

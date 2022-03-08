@@ -155,6 +155,7 @@
     "receive_tokens_btn": "Receive",
     "transactions": "Transactions",
     "empty_transacions_msg": "Your transactions will appear here",
+    "no_transactions_on_testnet": "History is hidden on %{networkId}",
     "pending_backup": "Account not backed up",
     "backup_details": "This phrase allows you to recover your account if your phone is lost or you change your device.",
     "backup_btn": "Back up now",

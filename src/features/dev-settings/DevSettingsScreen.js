@@ -1,5 +1,5 @@
 import {Input, Select, Stack} from 'native-base';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {addTestId} from 'src/core/automation-utils';
 import {translate} from 'src/locales';
@@ -57,6 +57,57 @@ export function DevSettingsScreen({
     setNetworkId(currentNetworkId);
   }, [currentNetworkId]);
 
+  const optionList = useMemo(() => {
+    const options = [
+      {
+        testID: 'switch-network',
+        title: translate('dev_settings.switch_network'),
+        icon: <ChevronRightIcon />,
+        onPress: () => {
+          setShowNetworkOptions(true);
+        },
+      },
+      {
+        testID: 'watch-account',
+        title: translate('dev_settings.watch_account'),
+        icon: <ChevronRightIcon />,
+        onPress: () => {
+          setShowWatchAccount(true);
+        },
+      },
+      {
+        testID: 'clear-cache',
+        title: translate('dev_settings.clear_cache'),
+        icon: <ChevronRightIcon />,
+        onPress: () => {
+          try {
+            const realm = getRealm();
+            realm.write(() => {
+              realm.delete(realm.objects('Account'));
+              showToast({
+                message: translate('dev_settings.clear_cache_success'),
+                type: 'success',
+              });
+            });
+          } catch (err) {
+            console.error(err);
+          }
+        },
+      },
+    ];
+    if (currentNetworkId !== 'mainnet') {
+      options.push({
+        testID: 'show-testnet-transaction',
+        title: translate('dev_settings.show_testnet_transaction'),
+        icon: <ChevronRightIcon />,
+        onPress: () => {
+          setShowTransactionHistory(true);
+        },
+      });
+    }
+    return options;
+  }, [currentNetworkId]);
+
   return (
     <ScreenContainer testID="DevSettingsScreen">
       <Header>
@@ -81,54 +132,7 @@ export function DevSettingsScreen({
       </Header>
       <Content>
         <Stack flex={1}>
-          <OptionList
-            mx={5}
-            items={[
-              {
-                testID: 'switch-network',
-                title: translate('dev_settings.switch_network'),
-                icon: <ChevronRightIcon />,
-                onPress: () => {
-                  setShowNetworkOptions(true);
-                },
-              },
-              {
-                testID: 'watch-account',
-                title: translate('dev_settings.watch_account'),
-                icon: <ChevronRightIcon />,
-                onPress: () => {
-                  setShowWatchAccount(true);
-                },
-              },
-              {
-                testID: 'clear-cache',
-                title: translate('dev_settings.clear_cache'),
-                icon: <ChevronRightIcon />,
-                onPress: () => {
-                  try {
-                    const realm = getRealm();
-                    realm.write(() => {
-                      realm.delete(realm.objects('Account'));
-                      showToast({
-                        message: translate('dev_settings.clear_cache_success'),
-                        type: 'success',
-                      });
-                    });
-                  } catch (err) {
-                    console.error(err);
-                  }
-                },
-              },
-              {
-                testID: 'show-testnet-transaction',
-                title: translate('dev_settings.show_testnet_transaction'),
-                icon: <ChevronRightIcon />,
-                onPress: () => {
-                  setShowTransactionHistory(true);
-                },
-              },
-            ]}
-          />
+          <OptionList mx={5} items={optionList} />
         </Stack>
         {showNetworkOptions ? (
           <Stack p={4}>
