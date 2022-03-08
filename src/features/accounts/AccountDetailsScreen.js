@@ -154,11 +154,7 @@ function TransactionHistory({accountAddress}) {
 
   return useMemo(() => {
     if (networkId !== 'mainnet' && !showTestnetConfig) {
-      return (
-        <NBox>
-          <Typography variant="list-description">Do not show</Typography>
-        </NBox>
-      );
+      return <NBox />;
     }
     if (!transactions.length) {
       return (
