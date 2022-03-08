@@ -66,7 +66,5 @@ buck-out/
 /ios/Pods/
 /android/app/release
 
-dock_unit_test.lock
-dock_unit_test.note
-dock_unit_test
-dock_unit_test.management
+
+dock_unit_test*

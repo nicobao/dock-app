@@ -39,9 +39,7 @@ const transactions = createSlice({
       state.loading = action.payload;
     },
     setTransactions(state, action) {
-      console.log(action);
       state.transactions = action.payload.map(parseTransaction);
-      // .sort(sortTransactions);
     },
     addTransaction(state, action) {
       state.transactions.push(parseTransaction(action.payload));
@@ -111,6 +109,8 @@ export const transactionsOperations = {
         if (Array.isArray(data.transfers)) {
           data.transfers.forEach(handleTransaction);
           page++;
+        } else {
+          break;
         }
       } while (data.hasNextPage);
     } catch (err) {
