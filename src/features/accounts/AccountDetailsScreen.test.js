@@ -7,7 +7,6 @@ import {
 } from './AccountDetailsScreen';
 import {
   transactionsOperations,
-  transactionsReducer,
   TransactionStatus,
 } from '../transactions/transactions-slice';
 import thunk from 'redux-thunk';
