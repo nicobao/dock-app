@@ -1,5 +1,5 @@
 import {Input, Select, Stack} from 'native-base';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {addTestId} from 'src/core/automation-utils';
 import {translate} from 'src/locales';
@@ -24,15 +24,33 @@ import {
   appOperations,
   appSelectors,
   SUBSTRATE_NETWORKS,
+  appActions,
 } from '../app/app-slice';
 import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
 
-export function DevSettingsScreen({onAddAccount, onNetworkChange}) {
+export function DevSettingsScreen({
+  onAddAccount,
+  onNetworkChange,
+  onTransactionHistoryToggled,
+}) {
   const [showNetworkOptions, setShowNetworkOptions] = useState();
   const [showWatchAccount, setShowWatchAccount] = useState();
+  const [showTransactionHistory, setShowTransactionHistory] = useState(false);
   const [accountName, setAccountName] = useState();
   const [accountAddress, setAccountAddress] = useState();
   const currentNetworkId = useSelector(appSelectors.getNetworkId);
+  const currentTestnetTransactionConfig = useSelector(
+    appSelectors.getShowTestnetTransactionConfig,
+  );
+  const [testnetTransactionConfig, setTestnetTransactionConfig] = useState(
+    () => {
+      if (typeof currentTestnetTransactionConfig === 'undefined') {
+        return false;
+      }
+      return currentTestnetTransactionConfig;
+    },
+  );
+
   const [networkId, setNetworkId] = useState(currentNetworkId);
 
   useEffect(() => {
@@ -101,6 +119,14 @@ export function DevSettingsScreen({onAddAccount, onNetworkChange}) {
                   }
                 },
               },
+              {
+                testID: 'show-testnet-transaction',
+                title: translate('dev_settings.show_testnet_transaction'),
+                icon: <ChevronRightIcon />,
+                onPress: () => {
+                  setShowTransactionHistory(true);
+                },
+              },
             ]}
           />
         </Stack>
@@ -133,6 +159,46 @@ export function DevSettingsScreen({onAddAccount, onNetworkChange}) {
               <Button
                 {...addTestId('CancelBtn')}
                 onPress={() => setShowNetworkOptions(false)}
+                colorScheme="tertiary">
+                Cancel
+              </Button>
+            </Stack>
+          </Stack>
+        ) : null}
+
+        {showTransactionHistory ? (
+          <Stack p={4}>
+            <Typography variant="h3">
+              {translate('dev_settings.show_testnet_transaction')}
+            </Typography>
+
+            <Stack pb={2}>
+              <Select
+                onValueChange={setTestnetTransactionConfig}
+                selectedValue={testnetTransactionConfig}>
+                <Select.Item
+                  label={translate('dev_settings.show_testnet_transaction')}
+                  value={true}
+                />
+                <Select.Item
+                  label={translate('dev_settings.hide_testnet_transaction')}
+                  value={false}
+                />
+              </Select>
+            </Stack>
+
+            <Button
+              {...addTestId('DevSettingsShowTransactionHistory')}
+              onPress={() => {
+                onTransactionHistoryToggled(testnetTransactionConfig);
+                setShowTransactionHistory(false);
+              }}>
+              {translate('dev_settings.update_network')}
+            </Button>
+            <Stack pt={3}>
+              <Button
+                {...addTestId('CancelBtn')}
+                onPress={() => setShowTransactionHistory(false)}
                 colorScheme="tertiary">
                 Cancel
               </Button>
@@ -210,6 +276,15 @@ export function DevSettingsContainer() {
     return dispatch(appOperations.setNetwork(networkId));
   };
 
+  const handleToggleTransactionHistory = useCallback(
+    testnetTransactionConfig => {
+      return dispatch(
+        appActions.setShowTestnetTransaction(testnetTransactionConfig),
+      );
+    },
+    [dispatch],
+  );
+
   const handleAddAccount = ({address, name}) => {
     return dispatch(accountOperations.watchAccount({address, name}));
   };
@@ -218,6 +293,7 @@ export function DevSettingsContainer() {
     <DevSettingsScreen
       onNetworkChange={handleNetworkChange}
       onAddAccount={handleAddAccount}
+      onTransactionHistoryToggled={handleToggleTransactionHistory}
     />
   );
 }

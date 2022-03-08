@@ -83,7 +83,9 @@
     "clear_cache": "Clear cache",
     "clear_cache_success": "Clear cache succeeded",
     "invalid_account_name": "Invalid account name",
-    "invalid_account_address": "Invalid account address"
+    "invalid_account_address": "Invalid account address",
+    "show_testnet_transaction": "Show testnet Transactions",
+    "hide_testnet_transaction": "Hide testnet Transactions"
   },
   "account_setup": {
     "title": "Account Name",

@@ -145,13 +145,20 @@ export function filterTransactionHistory(transactions, accountAddress) {
 function TransactionHistory({accountAddress}) {
   const allTransactions = useSelector(transactionsSelectors.getTransactions);
   const networkId = useSelector(appSelectors.getNetworkId);
+  const showTestnetConfig = useSelector(
+    appSelectors.getShowTestnetTransactionConfig,
+  );
   const transactions = useMemo(() => {
     return filterTransactionHistory(allTransactions, accountAddress);
   }, [allTransactions, accountAddress]);
 
   return useMemo(() => {
-    if (networkId !== 'mainnet') {
-      return <NBox />;
+    if (networkId !== 'mainnet' && !showTestnetConfig) {
+      return (
+        <NBox>
+          <Typography variant="list-description">Do not show</Typography>
+        </NBox>
+      );
     }
     if (!transactions.length) {
       return (
@@ -173,7 +180,7 @@ function TransactionHistory({accountAddress}) {
         ))}
       </NBox>
     );
-  }, [transactions, accountAddress, networkId]);
+  }, [transactions, accountAddress, networkId, showTestnetConfig]);
 }
 
 export function AccountDetailsScreen({
