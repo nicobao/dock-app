@@ -85,7 +85,9 @@
     "invalid_account_name": "Invalid account name",
     "invalid_account_address": "Invalid account address",
     "show_testnet_transaction": "Show testnet Transactions",
-    "hide_testnet_transaction": "Hide testnet Transactions"
+    "hide_testnet_transaction": "Hide testnet Transactions",
+    "switch_network_success": "Network switch successful",
+    "switch_network_error": "Network switch failed"
   },
   "account_setup": {
     "title": "Account Name",

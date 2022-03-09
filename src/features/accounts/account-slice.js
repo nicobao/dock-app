@@ -127,7 +127,13 @@ export const accountOperations = {
       };
 
       // update account meta
-      await WalletRpc.update(updatedAccount);
+      try {
+        await WalletRpc.update(updatedAccount);
+      } catch (err) {
+        console.log(err);
+        await WalletRpc.load();
+        await WalletRpc.update(updatedAccount);
+      }
 
       dispatch(accountActions.setAccountToBackup(null));
 
