@@ -63,6 +63,7 @@ const initialState = {
   dockReady: false,
   networkId: 'mainnet',
   devSettingsEnabled: false,
+  showTestnetTransaction: false,
 };
 
 const app = createSlice({
@@ -90,6 +91,9 @@ const app = createSlice({
     setDevSettingsEnabled(state, action) {
       state.devSettingsEnabled = action.payload;
     },
+    setShowTestnetTransaction(state, action) {
+      state.showTestnetTransaction = action.payload;
+    },
   },
 });
 
@@ -111,6 +115,8 @@ export const appSelectors = {
   },
   getDevSettingsEnabled: state => getRoot(state).devSettingsEnabled,
   getAppLocked: state => getRoot(state).lockedTime > Date.now(),
+  getShowTestnetTransactionConfig: state =>
+    getRoot(state).showTestnetTransaction,
 };
 
 export const appOperations = {

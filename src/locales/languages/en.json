@@ -84,6 +84,8 @@
     "clear_cache_success": "Clear cache succeeded",
     "invalid_account_name": "Invalid account name",
     "invalid_account_address": "Invalid account address",
+    "show_testnet_transaction": "Show testnet Transactions",
+    "hide_testnet_transaction": "Hide testnet Transactions",
     "switch_network_success": "Network switch successful",
     "switch_network_error": "Network switch failed"
   },
@@ -155,6 +157,7 @@
     "receive_tokens_btn": "Receive",
     "transactions": "Transactions",
     "empty_transacions_msg": "Your transactions will appear here",
+    "no_transactions_on_testnet": "History is hidden on %{networkId}",
     "pending_backup": "Account not backed up",
     "backup_details": "This phrase allows you to recover your account if your phone is lost or you change your device.",
     "backup_btn": "Back up now",
