@@ -122,11 +122,22 @@ export function DevSettingsScreen({onAddAccount, onNetworkChange}) {
 
             <Button
               {...addTestId('DevSettingsUpdateNetwork')}
-              onPress={async () =>
-                onNetworkChange(networkId).then(() => {
-                  setShowNetworkOptions(false);
-                })
-              }>
+              onPress={async () => {
+                setShowNetworkOptions(false);
+                onNetworkChange(networkId)
+                  .then(() => {
+                    showToast({
+                      message: translate('dev_settings.switch_network_success'),
+                      type: 'success',
+                    });
+                  })
+                  .catch(() => {
+                    showToast({
+                      message: translate('dev_settings.switch_network_error'),
+                      type: 'error',
+                    });
+                  });
+              }}>
               {translate('dev_settings.update_network')}
             </Button>
             <Stack pt={3}>
