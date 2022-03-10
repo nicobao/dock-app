@@ -39,9 +39,7 @@ const transactions = createSlice({
       state.loading = action.payload;
     },
     setTransactions(state, action) {
-      state.transactions = action.payload
-        .map(parseTransaction)
-        .sort(sortTransactions);
+      state.transactions = action.payload.map(parseTransaction);
     },
     addTransaction(state, action) {
       state.transactions.push(parseTransaction(action.payload));
@@ -90,7 +88,7 @@ export const transactionsOperations = {
         id: tx.hash,
         hash: tx.hash,
         network: 'mainnet',
-        status: 'complete',
+        status: TransactionStatus.Complete,
         date: new Date(parseInt(tx.block_timestamp + '000', 10)),
       };
 
@@ -104,43 +102,46 @@ export const transactionsOperations = {
 
     try {
       do {
-        data = await fetchTransactions({address: account, page});
-        data.transfers.forEach(handleTransaction);
-        page++;
+        data = await fetchTransactions({
+          address: account,
+          page,
+        });
+        if (Array.isArray(data.transfers)) {
+          data.transfers.forEach(handleTransaction);
+          page++;
+        } else {
+          break;
+        }
       } while (data.hasNextPage);
     } catch (err) {
       console.log(err);
     }
   },
-  loadTransactions: () => async (dispatch, getState) => {
-    const realm = getRealm();
-    const networkId = appSelectors.getNetworkId(getState());
-    let items = realm.objects('Transaction').toJSON();
-
-    dispatch(transactionsActions.setTransactions(items));
-
-    if (networkId === 'mainnet') {
-      const accounts = accountSelectors.getAccounts(getState());
-
-      for (const account of accounts) {
-        try {
-          await dispatch(
-            transactionsOperations.loadExternalTransactions(account.id),
-          );
-        } catch (err) {
-          console.error(err);
+  loadTransactions:
+    (realm = getRealm()) =>
+    async (dispatch, getState) => {
+      const networkId = appSelectors.getNetworkId(getState());
+      if (networkId === 'mainnet') {
+        const accounts = accountSelectors.getAccounts(getState());
+        for (const account of accounts) {
+          try {
+            await dispatch(
+              transactionsOperations.loadExternalTransactions(account.id),
+            );
+          } catch (err) {
+            console.error(err);
+          }
         }
       }
-    }
-
-    items = realm.objects('Transaction').toJSON();
-
-    if (networkId === 'mainnet') {
-      items = items.filter(item => !(item.status === 'complete' && !item.hash));
-    }
-
-    dispatch(transactionsActions.setTransactions(items));
-  },
+      const realmTransactions = realm
+        .objects('Transaction')
+        .filtered(
+          `(status == "${TransactionStatus.Complete}" AND hash !="") OR (status !="${TransactionStatus.Complete}")`,
+        )
+        .sorted('date', true)
+        .toJSON();
+      dispatch(transactionsActions.setTransactions(realmTransactions));
+    },
   updateTransaction: transaction => async (dispatch, getState) => {
     const realm = getRealm();
 
