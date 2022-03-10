@@ -136,7 +136,7 @@ export const transactionsOperations = {
       const realmTransactions = realm
         .objects('Transaction')
         .filtered(
-          `(status == "${TransactionStatus.Complete}" AND (hash != null AND hash !="")) OR (status !="${TransactionStatus.Complete}")`,
+          `(status == "${TransactionStatus.Complete}" AND hash !="") OR (status !="${TransactionStatus.Complete}")`,
         )
         .sorted('date', true)
         .toJSON();

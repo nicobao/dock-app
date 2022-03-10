@@ -192,7 +192,7 @@ describe('AccountDetailsScreen', () => {
         .dispatch(transactionsOperations.loadTransactions(realm))
         .then(() => {
           const actions = store.getActions();
-          expect(actions[0].payload.length).toEqual(7);
+          expect(actions[0].payload.length).toEqual(8);
         });
     });
 
@@ -201,6 +201,7 @@ describe('AccountDetailsScreen', () => {
         .dispatch(transactionsOperations.loadTransactions(realm))
         .then(() => {
           const actions = store.getActions();
+          expect(actions[0].payload[7].id).toEqual('0');
           expect(actions[0].payload[6].id).toEqual('1');
           expect(actions[0].payload[5].id).toEqual('2');
           expect(actions[0].payload[4].id).toEqual('4');

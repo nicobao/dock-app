@@ -99,6 +99,7 @@ export const AccountsScreen = withErrorBoundary(
                 {accounts.map(account => {
                   return (
                     <Stack
+                      key={account.id}
                       direction="row"
                       borderRadius={12}
                       backgroundColor={Theme.colors.secondaryBackground}
