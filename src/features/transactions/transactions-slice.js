@@ -135,11 +135,10 @@ export const transactionsOperations = {
       }
       const realmTransactions = realm
         .objects('Transaction')
-        // .filtered("!(status == 'complete' && hash != null)")
         .filtered(
-          `(status !="${TransactionStatus.Complete}") OR (status == "${TransactionStatus.Complete}" AND hash != null) OR (status == "${TransactionStatus.Complete}" AND hash != "")`,
+          `(status == "${TransactionStatus.Complete}" AND (hash != null AND hash !="")) OR (status !="${TransactionStatus.Complete}")`,
         )
-        .sorted('date', false)
+        .sorted('date', true)
         .toJSON();
       dispatch(transactionsActions.setTransactions(realmTransactions));
     },

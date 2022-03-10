@@ -187,20 +187,27 @@ describe('AccountDetailsScreen', () => {
       });
       realm.close();
     });
+    it('Is history filtered', async () => {
+      return store
+        .dispatch(transactionsOperations.loadTransactions(realm))
+        .then(() => {
+          const actions = store.getActions();
+          expect(actions[0].payload.length).toEqual(7);
+        });
+    });
 
     it('Is history sorted', async () => {
       return store
         .dispatch(transactionsOperations.loadTransactions(realm))
         .then(() => {
           const actions = store.getActions();
-          console.log(actions[0].payload);
-          // expect(actions[0].payload[0].id).toEqual('1');
-          // expect(actions[0].payload[1].id).toEqual('2');
-          // expect(actions[0].payload[2].id).toEqual('4');
-          // expect(actions[0].payload[2].id).toEqual('5');
-          // expect(actions[0].payload[2].id).toEqual('6');
-          // expect(actions[0].payload[2].id).toEqual('7');
-          // expect(actions[0].payload[2].id).toEqual('8');
+          expect(actions[0].payload[6].id).toEqual('1');
+          expect(actions[0].payload[5].id).toEqual('2');
+          expect(actions[0].payload[4].id).toEqual('4');
+          expect(actions[0].payload[3].id).toEqual('5');
+          expect(actions[0].payload[2].id).toEqual('6');
+          expect(actions[0].payload[1].id).toEqual('7');
+          expect(actions[0].payload[0].id).toEqual('8');
         });
     });
   });
