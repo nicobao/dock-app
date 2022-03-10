@@ -121,7 +121,6 @@ export const transactionsOperations = {
     (realm = getRealm()) =>
     async (dispatch, getState) => {
       const networkId = appSelectors.getNetworkId(getState());
-      const shouldReverseOrder = true;
       if (networkId === 'mainnet') {
         const accounts = accountSelectors.getAccounts(getState());
         for (const account of accounts) {
@@ -133,20 +132,16 @@ export const transactionsOperations = {
             console.error(err);
           }
         }
-
-        const realmTransactions = realm
-          .objects('Transaction')
-          .filtered("!(status == 'complete' && hash != null)")
-          .sorted('date', shouldReverseOrder)
-          .toJSON();
-        dispatch(transactionsActions.setTransactions(realmTransactions));
-      } else {
-        const realmTransactions = realm
-          .objects('Transaction')
-          .sorted('date', shouldReverseOrder)
-          .toJSON();
-        dispatch(transactionsActions.setTransactions(realmTransactions));
       }
+      const realmTransactions = realm
+        .objects('Transaction')
+        // .filtered("!(status == 'complete' && hash != null)")
+        .filtered(
+          `(status !="${TransactionStatus.Complete}") OR (status == "${TransactionStatus.Complete}" AND hash != null) OR (status == "${TransactionStatus.Complete}" AND hash != "")`,
+        )
+        .sorted('date', false)
+        .toJSON();
+      dispatch(transactionsActions.setTransactions(realmTransactions));
     },
   updateTransaction: transaction => async (dispatch, getState) => {
     const realm = getRealm();
