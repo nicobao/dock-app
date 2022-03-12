@@ -16,6 +16,7 @@ import ErrorAlert from './error-alert.svg';
 import XCircleIcon from './x-circle.svg';
 import AccountIcon from './account-icon.svg';
 import KeyboardDeleteIcon from './keyboard-delete.svg';
+import RetryIcon from './retry-icon.svg';
 
 export {
   DockLogoIcon,
@@ -36,4 +37,5 @@ export {
   XCircleIcon,
   AccountIcon,
   KeyboardDeleteIcon,
+  RetryIcon,
 };

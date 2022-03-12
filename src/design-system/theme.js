@@ -1,5 +1,5 @@
 import React from 'react';
-import {extendTheme, NativeBaseProvider} from 'native-base';
+import {Button, extendTheme, NativeBaseProvider} from 'native-base';
 import {ThemeProvider as SCThemeProvider} from 'styled-components/native';
 
 export const Theme = {
@@ -103,6 +103,26 @@ const nBaseTheme = extendTheme({
       }),
     },
     Button: {
+      variants: {
+        transactionFilter: ({isActive}) => {
+          return {
+            bg: isActive
+              ? 'rgba(30, 117, 197, 1).500'
+              : 'rgba(39, 39, 42, 1).500',
+            rounded: 'full',
+            mr: 1,
+            role: 'button',
+          };
+        },
+        transactionRetry: ({}) => {
+          return {
+            bg: 'rgba(39, 39, 42, 1).500',
+            role: 'button',
+            mt: 3,
+            borderRadius: 7,
+          };
+        },
+      },
       baseStyle: props => ({
         _stack: {
           my: 1,

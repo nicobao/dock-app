@@ -10,6 +10,21 @@ import {fetchTransactions} from '../../core/subscan';
 import {accountSelectors} from '../accounts/account-slice';
 import BigNumber from 'bignumber.js';
 
+const months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
 export const TransactionStatus = {
   InProgress: 'pending',
   Failed: 'failed',
@@ -19,6 +34,8 @@ export const TransactionStatus = {
 const initialState = {
   loading: false,
   transactions: [],
+  transactionFilter: 'all',
+  groupedTransactions: {},
 };
 
 export const parseTransaction = transaction =>
@@ -31,6 +48,28 @@ export const parseTransaction = transaction =>
 
 export const sortTransactions = (a, b) => b.date.getTime() - a.date.getTime();
 
+export const startDate = date => {
+  if (date instanceof Date) {
+    const parsedDate = new Date(date.setHours(0, 0, 0));
+    const fullYear = parsedDate.getFullYear();
+    const month = parsedDate.getMonth() + 1;
+    const day = parsedDate.getDate();
+    return `${fullYear}-${month}-${day}@0:0:0`;
+  }
+  return startDate(new Date());
+};
+
+export const endDate = date => {
+  if (date instanceof Date) {
+    const parsedDate = new Date(date.setHours(23, 59, 59));
+    const fullYear = parsedDate.getFullYear();
+    const month = parsedDate.getMonth() + 1;
+    const day = parsedDate.getDate();
+    return `${fullYear}-${month}-${day}@23:59:59`;
+  }
+  return endDate(new Date());
+};
+
 const transactions = createSlice({
   name: 'transactions',
   initialState,
@@ -40,6 +79,12 @@ const transactions = createSlice({
     },
     setTransactions(state, action) {
       state.transactions = action.payload.map(parseTransaction);
+    },
+    setTransactionFilter(state, action) {
+      state.transactionFilter = action.payload;
+    },
+    setGroupedTransactions(state, action) {
+      state.groupedTransactions = action.payload;
     },
     addTransaction(state, action) {
       state.transactions.push(parseTransaction(action.payload));
@@ -64,6 +109,8 @@ const getRoot = state => state.transactions;
 export const transactionsSelectors = {
   getLoading: state => getRoot(state).loading,
   getTransactions: state => getRoot(state).transactions,
+  getGroupedTransactions: state => getRoot(state).groupedTransactions,
+  getTransactionFilter: state => getRoot(state).transactionFilter,
 };
 
 export const transactionsOperations = {
@@ -118,9 +165,13 @@ export const transactionsOperations = {
     }
   },
   loadTransactions:
-    (realm = getRealm()) =>
+    (accountAddress, realm = getRealm()) =>
     async (dispatch, getState) => {
       const networkId = appSelectors.getNetworkId(getState());
+      const transactionFilter = transactionsSelectors.getTransactionFilter(
+        getState(),
+      );
+
       if (networkId === 'mainnet') {
         const accounts = accountSelectors.getAccounts(getState());
         for (const account of accounts) {
@@ -133,14 +184,67 @@ export const transactionsOperations = {
           }
         }
       }
-      const realmTransactions = realm
+
+      const today = new Date();
+      const yesterday = new Date(today);
+
+      yesterday.setDate(yesterday.getDate() - 1);
+
+      let baseRealmResults = realm
         .objects('Transaction')
         .filtered(
           `(status == "${TransactionStatus.Complete}" AND hash !="") OR (status !="${TransactionStatus.Complete}")`,
         )
-        .sorted('date', true)
-        .toJSON();
-      dispatch(transactionsActions.setTransactions(realmTransactions));
+        .filtered(
+          `fromAddress == "${accountAddress}" OR recipientAddress == "${accountAddress}"`,
+        );
+
+      const transactionDates = baseRealmResults.reduce(
+        (result, transaction) => {
+          const beginningDate = new Date(transaction.date).getTime();
+
+          if (!result[beginningDate]) {
+            result[beginningDate] = {
+              start: startDate(new Date(transaction.date)),
+              end: endDate(new Date(transaction.date)),
+            };
+          }
+          return result;
+        },
+        {},
+      );
+
+      const groupedTransactions = {};
+      for (const key in transactionDates) {
+        const {start, end} = transactionDates[key];
+
+        const todayRealTransaction = baseRealmResults
+          .filtered(`date >=${start} AND date <=${end}`)
+          .sorted('date', true)
+          .toJSON();
+
+        const beginningOfToday = startDate(today);
+        const beginningOfYesterday = startDate(yesterday);
+        const transactionDate = new Date(parseInt(key, 10));
+
+        if (beginningOfToday === start) {
+          groupedTransactions.Today =
+            todayRealTransaction.map(parseTransaction);
+        } else if (beginningOfYesterday === start) {
+          groupedTransactions.Yesterday =
+            todayRealTransaction.map(parseTransaction);
+        } else {
+          const fullYear = transactionDate.getFullYear();
+          const month = transactionDate.getMonth();
+          const day = transactionDate.getDate();
+
+          const parsedDate = `${months[month]} ${day},${fullYear}`;
+          groupedTransactions[parsedDate] =
+            todayRealTransaction.map(parseTransaction);
+        }
+      }
+
+      dispatch(transactionsActions.setGroupedTransactions(groupedTransactions));
     },
   updateTransaction: transaction => async (dispatch, getState) => {
     const realm = getRealm();

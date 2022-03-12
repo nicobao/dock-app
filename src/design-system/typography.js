@@ -10,6 +10,15 @@ const headerVariantBase = {
   color: Theme.colors.headerText,
 };
 
+const transactionFilterVariantBase = {
+  ...headerVariantBase,
+  fontFamily: Theme.fontFamily.nunitoSans,
+  fontSize: 16,
+  fontWeight: 600,
+  fontStyle: 'normal',
+  color: Theme.colors.textHighlighted,
+};
+
 type TypographyProps = ITextProps & {
   variant:
     | 'h1'
@@ -18,7 +27,12 @@ type TypographyProps = ITextProps & {
     | 'h4'
     | 'description'
     | 'list-description'
-    | 'montserrat',
+    | 'montserrat'
+    | 'fiat-amount'
+    | 'transaction-filter'
+    | 'transaction-filter-amount-sent'
+    | 'transaction-filter-amount-received'
+    | 'transaction-filter-amount-failed',
 };
 
 const variantsMap = {
@@ -43,6 +57,39 @@ const variantsMap = {
     fontSize: 17,
     fontWeight: 400,
     lineHeight: 22,
+  },
+  'fiat-amount': {
+    ...headerVariantBase,
+    fontFamily: Theme.fontFamily.nunitoSans,
+    fontStyle: 'normal',
+    fontSize: 16,
+    fontWeight: 400,
+    lineHeight: 24,
+    color: Theme.colors.description,
+  },
+  'transaction-filter': {
+    ...headerVariantBase,
+    fontFamily: Theme.fontFamily.nunitoSans,
+    fontStyle: 'normal',
+    fontSize: 12,
+    fontWeight: 600,
+    lineHeight: '20px',
+    color: Theme.colors.textHighlighted,
+    textAlign: 'center',
+    paddingLeft: '7px',
+    paddingRight: '7px',
+  },
+  'transaction-filter-amount-sent': {
+    ...transactionFilterVariantBase,
+    color: Theme.colors.textHighlighted,
+  },
+  'transaction-filter-amount-received': {
+    ...transactionFilterVariantBase,
+    color: Theme.colors.transactionCompleted,
+  },
+  'transaction-filter-amount-failed': {
+    ...transactionFilterVariantBase,
+    color: Theme.colors.textHighlighted,
   },
   'list-description': {
     fontFamily: Theme.fontFamily.montserrat,
