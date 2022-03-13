@@ -202,7 +202,9 @@ function TransactionHistory({accountAddress}) {
       transJsx = (
         <>
           {transJsx}
-          <Typography variant="h3">Today</Typography>
+          <Typography variant="h3">
+            {translate('transaction_history.today')}
+          </Typography>
           {todayTransactions.map(item => {
             return (
               <TransactionHistoryItem
@@ -225,7 +227,9 @@ function TransactionHistory({accountAddress}) {
       transJsx = (
         <>
           {transJsx}
-          <Typography variant="h3">Yesterday</Typography>
+          <Typography variant="h3">
+            {translate('transaction_history.yesterday')}
+          </Typography>
           {yesterdayTransactions.map(item => {
             return (
               <TransactionHistoryItem
