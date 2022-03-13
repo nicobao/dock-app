@@ -168,9 +168,6 @@ export const transactionsOperations = {
     (accountAddress, realm = getRealm()) =>
     async (dispatch, getState) => {
       const networkId = appSelectors.getNetworkId(getState());
-      const transactionFilter = transactionsSelectors.getTransactionFilter(
-        getState(),
-      );
 
       if (networkId === 'mainnet') {
         const accounts = accountSelectors.getAccounts(getState());
@@ -190,14 +187,15 @@ export const transactionsOperations = {
 
       yesterday.setDate(yesterday.getDate() - 1);
 
-      let baseRealmResults = realm
+      const baseRealmResults = realm
         .objects('Transaction')
         .filtered(
           `(status == "${TransactionStatus.Complete}" AND hash !="") OR (status !="${TransactionStatus.Complete}")`,
         )
         .filtered(
           `fromAddress == "${accountAddress}" OR recipientAddress == "${accountAddress}"`,
-        );
+        )
+        .sorted('date', true);
 
       const transactionDates = baseRealmResults.reduce(
         (result, transaction) => {
