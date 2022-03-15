@@ -270,12 +270,6 @@ describe('AccountDetailsScreen', () => {
       recipientAddress: address1,
       status: 'failed',
     };
-    const txOtherAddress = {
-      amount: '1',
-      fromAddress: 'someOtherAddress',
-      recipientAddress: 'someOtherAddress',
-      status: 'complete',
-    };
 
     it('expect to hide received transactions with failed status', () => {
       const transactions = filterTransactionHistory(

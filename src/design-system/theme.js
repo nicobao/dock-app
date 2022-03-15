@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, extendTheme, NativeBaseProvider} from 'native-base';
+import {extendTheme, NativeBaseProvider} from 'native-base';
 import {ThemeProvider as SCThemeProvider} from 'styled-components/native';
 
 export const Theme = {
