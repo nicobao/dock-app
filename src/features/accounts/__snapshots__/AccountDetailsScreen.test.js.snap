@@ -61,7 +61,7 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
   >
     <Memo(ForwardRef(Stack))
       flex={1}
-      mx={4}
+      mx={5}
     >
       <Memo(ForwardRef(Stack))
         alignItems="center"
@@ -156,7 +156,7 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
         <Memo(ForwardRef(Box))
           borderBottomColor="#3F3F46"
           borderBottomWidth={0.5}
-          pb={4}
+          pb={2}
           pl={0}
           pr={0}
         >

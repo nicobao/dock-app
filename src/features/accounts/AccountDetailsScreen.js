@@ -1,9 +1,9 @@
 import {Button, Pressable, ScrollView, Stack} from 'native-base';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {RefreshControl} from 'react-native';
 import {TouchableHighlight} from 'react-native-gesture-handler';
 import {useDispatch, useSelector} from 'react-redux';
-import {formatCurrency} from 'src/core/format-utils';
+import {formatCurrency, formatDate} from 'src/core/format-utils';
 import {PolkadotIcon} from '../../components/PolkadotIcon';
 import {navigate, navigateBack} from '../../core/navigation';
 import {Routes} from '../../core/routes';
@@ -34,12 +34,6 @@ import {AccountSettingsModal} from './AccountSettingsModal';
 import {QRCodeModal} from './QRCodeModal';
 import {addTestId} from '../../core/automation-utils';
 import {appSelectors} from '../app/app-slice';
-
-const TransactionStatusColor = {
-  pending: Theme.colors.transactionPending,
-  failed: Theme.colors.transactionFailed,
-  complete: Theme.colors.transactionCompleted,
-};
 
 const TRANSACTION_FILTERS = {
   sent: 'sent',
@@ -80,34 +74,15 @@ function TransactionHistoryItem({transaction, accountAddress}) {
         onPress={() => {
           setShowDetails(true);
         }}>
-        <Stack direction={'row'} py={2}>
+        <Stack direction={'row'} py={4}>
           <Stack direction={'column'} flex={1}>
-            <Typography variant="h3">
+            <Typography variant="transaction-type-label">
               {translate(`transaction_details.${sent ? 'sent' : 'received'}`)}{' '}
             </Typography>
-            <Stack direction="row">
-              <Stack
-                direction="row"
-                bg={Theme.colors.secondaryBackground}
-                borderRadius={Theme.borderRadius * 2}
-                px={3}
-                w="auto">
-                <Stack
-                  bg={TransactionStatusColor[transaction.status]}
-                  w={2}
-                  h={2}
-                  borderRadius={10}
-                  mt={2}
-                  mr={2}
-                />
-                <Typography>
-                  {translate(
-                    `transaction_status.${transaction.status || 'pending'}`,
-                  )}
-                </Typography>
-              </Stack>
-              <Stack flex={1} />
-            </Stack>
+            <Typography variant={'transaction-item-date'}>
+              {formatDate(transaction.date)}
+            </Typography>
+
             {transaction.status === TransactionStatus.Failed &&
             !transaction.retrySucceed ? (
               <Stack alignItems="flex-start">
@@ -129,7 +104,7 @@ function TransactionHistoryItem({transaction, accountAddress}) {
                     {sent ? '-' : ''}
                     {tokenAmount} {tokenSymbol}
                   </Typography>
-                  <Typography variant={'fiat-amount'}>
+                  <Typography variant={'transaction-item-fiat-amount'}>
                     {formatCurrency(fiatAmount)} {fiatSymbol}
                   </Typography>
                 </>
@@ -138,6 +113,10 @@ function TransactionHistoryItem({transaction, accountAddress}) {
           </Stack>
         </Stack>
       </TouchableHighlight>
+      <NBox
+        borderBottomColor={Theme.colors.tertiaryBackground}
+        borderBottomWidth={0.5}
+      />
     </>
   );
 }
@@ -175,112 +154,20 @@ export function filterTransactionHistory(
 }
 
 function TransactionHistory({accountAddress}) {
-  const groupedTransactions = useSelector(
-    transactionsSelectors.getGroupedTransactions,
-  );
-
+  const allTransactions = useSelector(transactionsSelectors.getTransactions);
+  const [activeFilter, setActiveFilter] = useState('all');
   const networkId = useSelector(appSelectors.getNetworkId);
   const showTestnetConfig = useSelector(
     appSelectors.getShowTestnetTransactionConfig,
   );
-  const [activeFilter, setActiveFilter] = useState('all');
 
-  const _renderTransactions = useCallback(() => {
-    let transJsx = <></>;
-
-    const {Today, Yesterday, ...rest} = groupedTransactions;
-
-    const todayTransactions = Array.isArray(Today)
-      ? filterTransactionHistory(Today, accountAddress, activeFilter)
-      : [];
-
-    const yesterdayTransactions = Array.isArray(Yesterday)
-      ? filterTransactionHistory(Yesterday, accountAddress, activeFilter)
-      : [];
-
-    if (todayTransactions.length > 0) {
-      transJsx = (
-        <>
-          {transJsx}
-          <Typography variant="h3">
-            {translate('transaction_history.today')}
-          </Typography>
-          {todayTransactions.map(item => {
-            return (
-              <TransactionHistoryItem
-                key={item.id}
-                transaction={item}
-                accountAddress={accountAddress}
-              />
-            );
-          })}
-          <NBox
-            borderBottomColor={Theme.colors.tertiaryBackground}
-            borderBottomWidth={0.5}
-            mt={3}
-            mb={3}
-          />
-        </>
-      );
-    }
-    if (yesterdayTransactions.length > 0) {
-      transJsx = (
-        <>
-          {transJsx}
-          <Typography variant="h3">
-            {translate('transaction_history.yesterday')}
-          </Typography>
-          {yesterdayTransactions.map(item => {
-            return (
-              <TransactionHistoryItem
-                key={item.id}
-                transaction={item}
-                accountAddress={accountAddress}
-              />
-            );
-          })}
-          <NBox
-            borderBottomColor={Theme.colors.tertiaryBackground}
-            borderBottomWidth={0.5}
-            mt={3}
-            mb={3}
-          />
-        </>
-      );
-    }
-
-    for (const key in rest) {
-      const transactions = filterTransactionHistory(
-        groupedTransactions[key],
-        accountAddress,
-        activeFilter,
-      );
-      if (transactions.length > 0) {
-        transJsx = (
-          <>
-            {transJsx}
-            <Typography variant="h3">{key}</Typography>
-            {transactions.map(item => {
-              return (
-                <TransactionHistoryItem
-                  key={item.id}
-                  transaction={item}
-                  accountAddress={accountAddress}
-                />
-              );
-            })}
-            <NBox
-              borderBottomColor={Theme.colors.tertiaryBackground}
-              borderBottomWidth={0.5}
-              mt={3}
-              mb={3}
-            />
-          </>
-        );
-      }
-    }
-    return transJsx;
-  }, [groupedTransactions, accountAddress, activeFilter]);
+  const transactions = useMemo(() => {
+    return filterTransactionHistory(
+      allTransactions,
+      accountAddress,
+      activeFilter,
+    );
+  }, [allTransactions, accountAddress, activeFilter]);
 
   if (networkId !== 'mainnet' && !showTestnetConfig) {
     return (
@@ -293,19 +180,10 @@ function TransactionHistory({accountAddress}) {
       </NBox>
     );
   }
-  if (Object.keys(groupedTransactions).length === 0) {
-    return (
-      <NBox>
-        <Typography variant="list-description">
-          {translate('account_details.empty_transacions_msg')}
-        </Typography>
-      </NBox>
-    );
-  }
 
   return (
     <NBox>
-      <Stack direction="row" my={4}>
+      <Stack direction="row" my={3}>
         <Button
           onPress={() => {
             setActiveFilter(TRANSACTION_FILTERS.sent);
@@ -341,7 +219,23 @@ function TransactionHistory({accountAddress}) {
         </Button>
       </Stack>
 
-      {_renderTransactions()}
+      {transactions.length > 0 ? (
+        transactions.map(item => {
+          return (
+            <TransactionHistoryItem
+              key={item.id}
+              transaction={item}
+              accountAddress={accountAddress}
+            />
+          );
+        })
+      ) : (
+        <NBox>
+          <Typography variant="list-description">
+            {translate('account_details.empty_transacions_msg')}
+          </Typography>
+        </NBox>
+      )}
     </NBox>
   );
 }
@@ -401,12 +295,12 @@ export function AccountDetailsScreen({
         refreshControl={
           <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
         }>
-        <Stack mx={4} flex={1}>
+        <Stack mx={5} flex={1}>
           <Stack mx={3} direction="column" alignItems="center">
             <Stack direction="column" alignItems="center" mt={8}>
               <PolkadotIcon address={account.id} size={48} />
               <TokenAmount amount={account.balance}>
-                {({fiatAmount, fiatSymbol, tokenAmount, tokenSymbol}) => (
+                {({fiatAmount, tokenAmount, tokenSymbol}) => (
                   <>
                     <Typography variant="h1" fontSize="32px" mt={6}>
                       {tokenAmount} {tokenSymbol}
@@ -501,7 +395,7 @@ export function AccountDetailsScreen({
             <NBox
               borderBottomColor={Theme.colors.tertiaryBackground}
               borderBottomWidth={0.5}
-              pb={4}
+              pb={2}
               pr={0}
               pl={0}>
               <Typography variant="h2">

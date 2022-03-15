@@ -209,7 +209,7 @@ describe('AccountDetailsScreen', () => {
         )
         .then(() => {
           const actions = store.getActions();
-          expect(actions[0].payload.Today.length).toEqual(1);
+          expect(actions[0].payload.length).toEqual(8);
         });
     });
     it('Is history filtered (received transactions with null/undefined hash)', async () => {
@@ -220,11 +220,7 @@ describe('AccountDetailsScreen', () => {
         )
         .then(() => {
           const actions = store.getActions();
-          const totalTransactions =
-            actions[0].payload.Today.length +
-            actions[0].payload.Yesterday.length +
-            actions[0].payload['March 1,2022'].length;
-          expect(totalTransactions).toEqual(8);
+          expect(actions[0].payload.length).toEqual(8);
         });
     });
 
@@ -237,15 +233,9 @@ describe('AccountDetailsScreen', () => {
         .then(() => {
           const actions = store.getActions();
 
-          expect(actions[0].payload.Today[0].id).toEqual('8');
-          expect(actions[0].payload.Yesterday[0].id).toEqual('7');
-
-          expect(actions[0].payload['March 1,2022'][0].id).toEqual('0');
-          expect(actions[0].payload['March 1,2022'][1].id).toEqual('1');
-          expect(actions[0].payload['March 1,2022'][2].id).toEqual('2');
-          expect(actions[0].payload['March 1,2022'][3].id).toEqual('4');
-          expect(actions[0].payload['March 1,2022'][4].id).toEqual('5');
-          expect(actions[0].payload['March 1,2022'][5].id).toEqual('6');
+          expect(actions[0].payload[0].id).toEqual('8');
+          expect(actions[0].payload[1].id).toEqual('7');
+          expect(actions[0].payload[2].id).toEqual('0');
         });
     });
   });

@@ -112,6 +112,8 @@ const nBaseTheme = extendTheme({
             rounded: 'full',
             mr: 1,
             role: 'button',
+            paddingBottom: 0,
+            paddingTop: 0,
           };
         },
         transactionRetry: ({}) => {

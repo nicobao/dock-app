@@ -16,7 +16,16 @@ const transactionFilterVariantBase = {
   fontSize: 16,
   fontWeight: 600,
   fontStyle: 'normal',
+  lineHeight: '24px',
   color: Theme.colors.textHighlighted,
+};
+const transactionItemMinorDetail = {
+  fontFamily: Theme.fontFamily.nunitoSans,
+  fontWeight: 400,
+  fontSize: 14,
+  fontStyle: 'normal',
+  lineHeight: '20px',
+  color: Theme.colors.description,
 };
 
 type TypographyProps = ITextProps & {
@@ -32,6 +41,8 @@ type TypographyProps = ITextProps & {
     | 'transaction-filter'
     | 'transaction-filter-amount-sent'
     | 'transaction-filter-amount-received'
+    | 'transaction-type-label'
+    | 'transaction-item-small-details'
     | 'transaction-filter-amount-failed',
 };
 
@@ -58,6 +69,21 @@ const variantsMap = {
     fontWeight: 400,
     lineHeight: 22,
   },
+  'transaction-type-label': {
+    fontFamily: Theme.fontFamily.nunitoSans,
+    fontWeight: 600,
+    fontSize: 16,
+    fontStyle: 'normal',
+    lineHeight: '24px',
+    color: Theme.colors.textHighlighted,
+  },
+  'transaction-item-date': {
+    ...transactionItemMinorDetail,
+  },
+  'transaction-item-fiat-amount': {
+    ...transactionItemMinorDetail,
+    textAlign: 'right',
+  },
   'fiat-amount': {
     ...headerVariantBase,
     fontFamily: Theme.fontFamily.nunitoSans,
@@ -68,16 +94,16 @@ const variantsMap = {
     color: Theme.colors.description,
   },
   'transaction-filter': {
-    ...headerVariantBase,
+    // ...headerVariantBase,
     fontFamily: Theme.fontFamily.nunitoSans,
     fontStyle: 'normal',
-    fontSize: 12,
-    fontWeight: 600,
+    fontSize: 15,
+    fontWeight: 400,
     lineHeight: '20px',
     color: Theme.colors.textHighlighted,
     textAlign: 'center',
-    paddingLeft: '7px',
-    paddingRight: '7px',
+    paddingLeft: '12px',
+    paddingRight: '12px',
   },
   'transaction-filter-amount-sent': {
     ...transactionFilterVariantBase,
