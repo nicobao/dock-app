@@ -1,4 +1,4 @@
-import {Button, Pressable, ScrollView, Stack, Icon} from 'native-base';
+import {Button, Pressable, ScrollView, Stack} from 'native-base';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {RefreshControl} from 'react-native';
 import {TouchableHighlight} from 'react-native-gesture-handler';
