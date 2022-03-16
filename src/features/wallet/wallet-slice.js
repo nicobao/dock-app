@@ -184,7 +184,9 @@ export const walletOperations = {
       await WalletRpc.load();
       const walletBackup = await WalletRpc.export(password);
       const jsonData = JSON.stringify(walletBackup);
-      const path = `${RNFS.DocumentDirectoryPath}/walletBackup.json`;
+      const path = `${
+        RNFS.DocumentDirectoryPath
+      }/walletBackup-${Date.now()}.json`;
       const mimeType = 'application/json';
       await RNFS.writeFile(path, jsonData);
 
