@@ -3,21 +3,6 @@ import BigNumber from 'bignumber.js';
 
 export const DOCK_TOKEN_UNIT = 1000000;
 
-const months = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sept',
-  'Oct',
-  'Nov',
-  'Dec',
-];
-
 export function formatCurrency(value, currency = 'USD') {
   var formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -49,14 +34,14 @@ export function getPlainDockAmount(value) {
   return BigNumber(value).times(DOCK_TOKEN_UNIT);
 }
 
+const dateFormat = new Intl.DateTimeFormat(['en-US'], {
+  dateStyle: 'medium',
+  timeStyle: 'short',
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric',
+});
+
 export function formatDate(date) {
-  const dateInstance = typeof date === 'string' ? new Date(date) : date;
-
-  const fullYear = dateInstance.getFullYear();
-  const month = dateInstance.getMonth();
-  const day = dateInstance.getDate();
-
-  return `${months[month]} ${day},${fullYear}`;
-
-  // return dateFormat.format(typeof date === 'string' ? new Date(date) : date);
+  return dateFormat.format(typeof date === 'string' ? new Date(date) : date);
 }

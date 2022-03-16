@@ -94,7 +94,6 @@ const variantsMap = {
     color: Theme.colors.description,
   },
   'transaction-filter': {
-    // ...headerVariantBase,
     fontFamily: Theme.fontFamily.nunitoSans,
     fontStyle: 'normal',
     fontSize: 15,

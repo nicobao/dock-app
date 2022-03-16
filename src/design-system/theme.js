@@ -107,8 +107,8 @@ const nBaseTheme = extendTheme({
         transactionFilter: ({isActive}) => {
           return {
             bg: isActive
-              ? 'rgba(30, 117, 197, 1).500'
-              : 'rgba(39, 39, 42, 1).500',
+              ? Theme.button.backgroundColor
+              : Theme.colors.secondaryBackground,
             rounded: 'full',
             mr: 1,
             role: 'button',
@@ -118,7 +118,7 @@ const nBaseTheme = extendTheme({
         },
         transactionRetry: ({}) => {
           return {
-            bg: 'rgba(39, 39, 42, 1).500',
+            bg: Theme.colors.secondaryBackground,
             role: 'button',
             mt: 3,
             borderRadius: 7,
