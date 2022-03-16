@@ -38,9 +38,6 @@ const dateFormat = new Intl.DateTimeFormat(['en-US'], {
   month: 'short',
   day: 'numeric',
   year: 'numeric',
-
-  hour: 'numeric',
-  minute: 'numeric',
 });
 
 export function formatDate(date) {
