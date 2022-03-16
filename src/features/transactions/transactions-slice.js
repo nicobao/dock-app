@@ -19,6 +19,8 @@ export const TransactionStatus = {
 const initialState = {
   loading: false,
   transactions: [],
+  transactionFilter: 'all',
+  groupedTransactions: {},
 };
 
 export const parseTransaction = transaction =>
@@ -118,9 +120,10 @@ export const transactionsOperations = {
     }
   },
   loadTransactions:
-    (realm = getRealm()) =>
+    (accountAddress, realm = getRealm()) =>
     async (dispatch, getState) => {
       const networkId = appSelectors.getNetworkId(getState());
+
       if (networkId === 'mainnet') {
         const accounts = accountSelectors.getAccounts(getState());
         for (const account of accounts) {
@@ -133,10 +136,14 @@ export const transactionsOperations = {
           }
         }
       }
+
       const realmTransactions = realm
         .objects('Transaction')
         .filtered(
           `(status == "${TransactionStatus.Complete}" AND hash !="") OR (status !="${TransactionStatus.Complete}")`,
+        )
+        .filtered(
+          `fromAddress == "${accountAddress}" OR recipientAddress == "${accountAddress}"`,
         )
         .sorted('date', true)
         .toJSON();

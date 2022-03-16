@@ -226,7 +226,9 @@
   "transaction_history": {
     "title": "Transactions",
     "failed": "Failed",
-    "try_again": "Try again"
+    "try_again": "Try again",
+    "yesterday": "Yesterday",
+    "today": "Today"
   },
   "transaction_details": {
     "title": "Transaction",

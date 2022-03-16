@@ -61,29 +61,35 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
   >
     <Memo(ForwardRef(Stack))
       flex={1}
-      mx={26}
+      mx={5}
     >
       <Memo(ForwardRef(Stack))
         alignItems="center"
-        backgroundColor="#27272A"
-        borderRadius={8}
         direction="column"
-        p="32px"
+        mx={3}
       >
-        <Memo()
-          size={48}
-        />
-        <Component>
-          <Component />
-        </Component>
+        <Memo(ForwardRef(Stack))
+          alignItems="center"
+          direction="column"
+          mt={8}
+        >
+          <Memo()
+            size={48}
+          />
+          <Component>
+            <Component />
+          </Component>
+        </Memo(ForwardRef(Stack))>
         <Memo(ForwardRef(Stack))
           direction="row"
-          mt={5}
+          mb={7}
+          mt={9}
           width="100%"
         >
           <Memo(ForwardRef(Button))
             accessibilityLabel="SendTokensBtn"
             flex={1}
+            mr={2}
             onPress={[Function]}
             size="sm"
             testID="SendTokensBtn"
@@ -145,12 +151,14 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
         </Memo(ForwardRef(Button))>
       </Memo(ForwardRef(Stack))>
       <Memo(ForwardRef(Stack))
-        mt={8}
+        mt={3}
       >
         <Memo(ForwardRef(Box))
           borderBottomColor="#3F3F46"
           borderBottomWidth={0.5}
-          pb={4}
+          pb={2}
+          pl={0}
+          pr={0}
         >
           <Styled(Component)
             variant="h2"
@@ -158,9 +166,7 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
             Transactions
           </Styled(Component)>
         </Memo(ForwardRef(Box))>
-        <Memo(ForwardRef(Box))
-          mt={3}
-        >
+        <Memo(ForwardRef(Box))>
           <TransactionHistory />
         </Memo(ForwardRef(Box))>
       </Memo(ForwardRef(Stack))>

@@ -103,6 +103,28 @@ const nBaseTheme = extendTheme({
       }),
     },
     Button: {
+      variants: {
+        transactionFilter: ({isActive}) => {
+          return {
+            bg: isActive
+              ? Theme.button.backgroundColor
+              : Theme.colors.secondaryBackground,
+            rounded: 'full',
+            mr: 1,
+            role: 'button',
+            paddingBottom: 0,
+            paddingTop: 0,
+          };
+        },
+        transactionRetry: ({}) => {
+          return {
+            bg: Theme.colors.secondaryBackground,
+            role: 'button',
+            mt: 3,
+            borderRadius: 7,
+          };
+        },
+      },
       baseStyle: props => ({
         _stack: {
           my: 1,
