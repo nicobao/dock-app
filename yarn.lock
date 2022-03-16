@@ -15079,7 +15079,7 @@ rn-webview-rpc@^2.1.0:
   dependencies:
     "@babel/runtime" "^7.5.5"
     "@babel/runtime-corejs3" "^7.5.5"
-    comlinkjs "git://github.com/ronhe/comlink.git#dist"
+    comlinkjs "https://github.com/ronhe/comlink.git#dist"
     prop-types "^15.7.2"
     proxy-polyfill "^0.3.0"
 
