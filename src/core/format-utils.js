@@ -35,10 +35,12 @@ export function getPlainDockAmount(value) {
 }
 
 const dateFormat = new Intl.DateTimeFormat(['en-US'], {
-  timeStyle: 'short',
   month: 'short',
   day: 'numeric',
   year: 'numeric',
+
+  hour: 'numeric',
+  minute: 'numeric',
 });
 
 export function formatDate(date) {
