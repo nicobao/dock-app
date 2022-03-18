@@ -19,8 +19,6 @@ export const TransactionStatus = {
 const initialState = {
   loading: false,
   transactions: [],
-  transactionFilter: 'all',
-  groupedTransactions: {},
 };
 
 export const parseTransaction = transaction =>

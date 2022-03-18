@@ -36,6 +36,7 @@ import {addTestId} from '../../core/automation-utils';
 import {appSelectors} from '../app/app-slice';
 
 const TRANSACTION_FILTERS = {
+  all: 'all',
   sent: 'sent',
   received: 'received',
   failed: 'failed',
@@ -137,7 +138,7 @@ export function filterTransactionHistory(
       return !receivedFailed;
     })
     .filter(item => {
-      if (filter === 'all') {
+      if (filter === TRANSACTION_FILTERS.all) {
         return true;
       }
       if (filter === TRANSACTION_FILTERS.sent) {
@@ -155,7 +156,7 @@ export function filterTransactionHistory(
 
 function TransactionHistory({accountAddress}) {
   const allTransactions = useSelector(transactionsSelectors.getTransactions);
-  const [activeFilter, setActiveFilter] = useState('all');
+  const [activeFilter, setActiveFilter] = useState(TRANSACTION_FILTERS.all);
   const networkId = useSelector(appSelectors.getNetworkId);
   const showTestnetConfig = useSelector(
     appSelectors.getShowTestnetTransactionConfig,
@@ -184,6 +185,17 @@ function TransactionHistory({accountAddress}) {
   return (
     <NBox>
       <Stack direction="row" my={3}>
+        <Button
+          onPress={() => {
+            setActiveFilter(TRANSACTION_FILTERS.all);
+          }}
+          isActive={activeFilter === TRANSACTION_FILTERS.all}
+          variant={'transactionFilter'}
+          size={'xs'}>
+          <Typography variant="transaction-filter">
+            {translate('transaction_details.all')}
+          </Typography>
+        </Button>
         <Button
           onPress={() => {
             setActiveFilter(TRANSACTION_FILTERS.sent);
