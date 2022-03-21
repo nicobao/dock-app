@@ -261,5 +261,8 @@
   },
   "keychain": {
     "password": "password"
+  },
+  "credentials": {
+    "title": "Credentials"
   }
 }

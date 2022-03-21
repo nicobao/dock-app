@@ -1,6 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Text, View} from 'native-base';
+import {View} from 'native-base';
 import React from 'react';
 import {Platform, StyleSheet} from 'react-native';
 import {Theme} from 'src/design-system';
@@ -31,7 +31,8 @@ import {DevSettingsContainer} from '../features/dev-settings/DevSettingsScreen';
 
 import {navigationRef} from './navigation';
 import {Routes} from './routes';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {CredentialsContainer} from '../features/credentials/CredentialsScreen';
+import {withNavigationContext} from './NavigationContext';
 
 const AppStack = createStackNavigator();
 const RootStack = createStackNavigator();
@@ -57,6 +58,20 @@ const styles = StyleSheet.create({
   },
 });
 
+const getScreenProps = ({component, options = {}, name, tab}) => {
+  return {
+    component: withNavigationContext(component),
+    name: name,
+    initialParams: {
+      currentTab: tab,
+    },
+    options: {
+      ...screenOptions,
+      ...options,
+    },
+  };
+};
+
 function AppStackScreen() {
   return (
     <AppStack.Navigator
@@ -67,199 +82,194 @@ function AppStackScreen() {
         cardOverlay: () => <View style={styles.cardOverlay} />,
       }}>
       <AppStack.Screen
-        name={Routes.SPLASH_SCREEN}
-        component={SplashScreen}
-        options={{
-          ...screenOptions,
-
-          gestureEnabled: false,
-        }}
+        {...getScreenProps({
+          name: Routes.SPLASH_SCREEN,
+          component: SplashScreen,
+          options: {
+            gestureEnabled: false,
+          },
+        })}
       />
       <AppStack.Screen
-        name={Routes.CREATE_WALLET}
-        component={CreateWalletScreen}
-        options={{
-          ...screenOptions,
-          gestureEnabled: false,
-        }}
+        {...getScreenProps({
+          name: Routes.CREATE_WALLET,
+          component: CreateWalletScreen,
+          options: {
+            gestureEnabled: false,
+          },
+        })}
       />
       <AppStack.Screen
-        name={Routes.APP_SETTINGS}
-        component={AppSettingsContainer}
-        options={{
-          ...screenOptions,
-          gestureEnabled: false,
-        }}
+        {...getScreenProps({
+          name: Routes.APP_SETTINGS,
+          component: AppSettingsContainer,
+          options: {
+            gestureEnabled: false,
+          },
+        })}
       />
       <AppStack.Screen
-        name={Routes.CREATE_WALLET_PASSCODE_SETUP}
-        component={SetupPasscodeScreen}
-        options={{
-          ...screenOptions,
-        }}
+        {...getScreenProps({
+          name: Routes.CREATE_WALLET_PASSCODE_SETUP,
+          component: SetupPasscodeScreen,
+        })}
       />
       <AppStack.Screen
-        name={Routes.ACCOUNT_IMPORT_FROM_MNEMONIC}
-        component={ImportAccountFromMnemonicContainer}
-        options={{
-          ...screenOptions,
-        }}
+        {...getScreenProps({
+          name: Routes.ACCOUNT_IMPORT_FROM_MNEMONIC,
+          component: ImportAccountFromMnemonicContainer,
+        })}
       />
       <AppStack.Screen
-        name={Routes.ACCOUNT_IMPORT_SETUP}
-        component={ImportAccountSetupContainer}
-        options={{
-          ...screenOptions,
-        }}
-      />
-
-      <AppStack.Screen
-        name={Routes.ACCOUNT_IMPORT_SETUP_PASSWORD}
-        component={ImportAccountPasswordContainer}
-        options={{
-          ...screenOptions,
-        }}
+        {...getScreenProps({
+          name: Routes.ACCOUNT_IMPORT_SETUP,
+          component: ImportAccountSetupContainer,
+        })}
       />
 
       <AppStack.Screen
-        name={Routes.ACCOUNT_EXPORT_SETUP_PASSWORD}
-        component={ExportAccountPasswordContainer}
-        options={{
-          ...screenOptions,
-        }}
+        {...getScreenProps({
+          name: Routes.ACCOUNT_IMPORT_SETUP_PASSWORD,
+          component: ImportAccountPasswordContainer,
+        })}
       />
 
       <AppStack.Screen
-        name={Routes.CREATE_WALLET_PASSCODE}
-        component={CreatePasscodeContainer}
-        options={{
-          ...screenOptions,
-        }}
-      />
-      <AppStack.Screen
-        name={Routes.CREATE_WALLET_PROTECT}
-        component={ProtectYourWalletContainer}
-        options={{
-          ...screenOptions,
-        }}
-      />
-      <AppStack.Screen
-        name={Routes.UNLOCK_WALLET}
-        component={UnlockWalletContainer}
-        options={{
-          ...screenOptions,
-          gestureEnabled: false,
-        }}
-      />
-      <AppStack.Screen
-        name={Routes.ACCOUNTS}
-        component={AccountsContainer}
-        options={{
-          ...screenOptions,
-          gestureEnabled: false,
-        }}
-      />
-      <AppStack.Screen
-        name={Routes.ACCOUNT_DETAILS}
-        component={AccountDetailsContainer}
-        options={{
-          ...screenOptions,
-        }}
+        {...getScreenProps({
+          name: Routes.ACCOUNT_EXPORT_SETUP_PASSWORD,
+          component: ExportAccountPasswordContainer,
+        })}
       />
 
       <AppStack.Screen
-        name={Routes.APP_QR_SCANNER}
-        component={QRScanScreen}
-        options={{
-          ...screenOptions,
-        }}
+        {...getScreenProps({
+          name: Routes.CREATE_WALLET_PASSCODE,
+          component: CreatePasscodeContainer,
+        })}
+      />
+      <AppStack.Screen
+        {...getScreenProps({
+          name: Routes.CREATE_WALLET_PROTECT,
+          component: ProtectYourWalletContainer,
+        })}
+      />
+      <AppStack.Screen
+        {...getScreenProps({
+          name: Routes.UNLOCK_WALLET,
+          component: UnlockWalletContainer,
+          options: {
+            gestureEnabled: false,
+          },
+        })}
+      />
+      <AppStack.Screen
+        {...getScreenProps({
+          name: Routes.ACCOUNTS,
+          component: AccountsContainer,
+          options: {
+            gestureEnabled: false,
+          },
+        })}
+      />
+      <AppStack.Screen
+        {...getScreenProps({
+          name: Routes.ACCOUNT_DETAILS,
+          component: AccountDetailsContainer,
+        })}
       />
 
       <AppStack.Screen
-        name={Routes.CREATE_ACCOUNT_SETUP}
-        component={CreateAccountSetupContainer}
-        options={{
-          ...screenOptions,
-        }}
+        {...getScreenProps({
+          name: Routes.APP_QR_SCANNER,
+          component: ReceiveTokenContainer,
+        })}
       />
 
       <AppStack.Screen
-        name={Routes.DEV_SETTINGS}
-        component={DevSettingsContainer}
-        options={{
-          ...screenOptions,
-        }}
+        {...getScreenProps({
+          name: Routes.CREATE_ACCOUNT_SETUP,
+          component: CreateAccountSetupContainer,
+        })}
       />
 
       <AppStack.Screen
-        name={Routes.CREATE_ACCOUNT_MNEMONIC}
-        component={CreateAccountMnemonicContainer}
-        options={{
-          ...screenOptions,
-        }}
+        {...getScreenProps({
+          name: Routes.DEV_SETTINGS,
+          component: DevSettingsContainer,
+        })}
       />
 
       <AppStack.Screen
-        name={Routes.CREATE_ACCOUNT_BACKUP}
-        component={CreateAccountBackupContainer}
-        options={{
-          ...screenOptions,
-        }}
+        {...getScreenProps({
+          name: Routes.CREATE_ACCOUNT_MNEMONIC,
+          component: CreateAccountMnemonicContainer,
+        })}
       />
 
       <AppStack.Screen
-        name={Routes.CREATE_ACCOUNT_VERIFY_PHRASE}
-        component={CreateAccountVerifyPhraseContainer}
-        options={{
-          ...screenOptions,
-        }}
+        {...getScreenProps({
+          name: Routes.CREATE_ACCOUNT_BACKUP,
+          component: CreateAccountBackupContainer,
+        })}
       />
 
       <AppStack.Screen
-        name={Routes.WALLET_EXPORT_BACKUP}
-        component={ExportWalletContainer}
-        options={{
-          ...screenOptions,
-        }}
+        {...getScreenProps({
+          name: Routes.CREATE_ACCOUNT_VERIFY_PHRASE,
+          component: CreateAccountVerifyPhraseContainer,
+        })}
       />
 
       <AppStack.Screen
-        name={Routes.WALLET_IMPORT_BACKUP}
-        component={ImportWalletContainer}
-        options={{
-          ...screenOptions,
-        }}
+        {...getScreenProps({
+          name: Routes.WALLET_EXPORT_BACKUP,
+          component: ExportWalletContainer,
+        })}
       />
 
       <AppStack.Screen
-        name={Routes.WALLET_IMPORT_BACKUP_PASSWORD}
-        component={ImportWalletPasswordContainer}
-        options={{
-          ...screenOptions,
-        }}
+        {...getScreenProps({
+          name: Routes.WALLET_IMPORT_BACKUP,
+          component: ImportWalletContainer,
+        })}
+      />
+
+      <AppStack.Screen
+        {...getScreenProps({
+          name: Routes.WALLET_IMPORT_BACKUP_PASSWORD,
+          component: ImportWalletPasswordContainer,
+        })}
       />
       <AppStack.Screen
-        name={Routes.TOKEN_RECEIVE}
-        component={ReceiveTokenContainer}
-        options={{
-          ...screenOptions,
-          gestureEnabled: false,
-        }}
+        {...getScreenProps({
+          name: Routes.TOKEN_RECEIVE,
+          component: ReceiveTokenContainer,
+          options: {
+            gestureEnabled: false,
+          },
+        })}
       />
       <AppStack.Screen
-        name={Routes.TOKEN_SEND}
-        component={SendTokenContainer}
-        options={{
-          ...screenOptions,
-          gestureEnabled: false,
-        }}
+        {...getScreenProps({
+          name: Routes.TOKEN_SEND,
+          component: SendTokenContainer,
+          options: {
+            gestureEnabled: false,
+          },
+        })}
       />
       <AppStack.Screen
-        name={Routes.CONFIRM_WALLET_ACCESS}
-        component={UnlockWalletContainer}
-        options={{
-          ...screenOptions,
-        }}
+        {...getScreenProps({
+          name: Routes.CONFIRM_WALLET_ACCESS,
+          component: UnlockWalletContainer,
+        })}
+      />
+      <AppStack.Screen
+        {...getScreenProps({
+          name: Routes.APP_CREDENTIALS,
+          component: CredentialsContainer,
+          tab: 'credentials',
+        })}
       />
     </AppStack.Navigator>
   );

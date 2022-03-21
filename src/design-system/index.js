@@ -1,5 +1,5 @@
 import {Stack, Box, Text, Pressable} from 'native-base';
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -17,6 +17,7 @@ import {
   MenuSettingsIcon,
   MenuTokensIcon,
 } from '../assets/icons';
+import {NavigationContext} from '../core/NavigationContext';
 
 function ConnectionStatus({status, loadingText, errorText}) {
   if (!status && loadingText) {
@@ -92,8 +93,10 @@ const menuOptions = [
 ];
 
 function TabNavigation() {
-  const currentTab = 'tokens';
+  const navContext = useContext(NavigationContext);
+  const currentTab = navContext.currentTab;
 
+  console.log('nav context', navContext);
   return (
     <Stack direction="row">
       {menuOptions.map(option => (
