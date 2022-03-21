@@ -35,6 +35,12 @@
     "title": "Create a password",
     "description": "This will be used when you import your account to a new device"
   },
+  "app_navigation": {
+    "tokens": "Tokens",
+    "credentials": "Credentials",
+    "scan": "Scan",
+    "settings": "Settings"
+  },
   "unlock_wallet": {
     "enter_passcode": "Enter your passcode",
     "biometrics_login": "Login with biometrics",

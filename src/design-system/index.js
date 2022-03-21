@@ -68,25 +68,25 @@ const menuOptions = [
   {
     id: 'tokens',
     route: Routes.ACCOUNTS,
-    name: 'Tokens',
+    name: translate('app_navigation.tokens'),
     Icon: MenuTokensIcon,
   },
   {
     id: 'credentials',
     route: Routes.APP_SETTINGS,
-    name: 'Credentials',
+    name: translate('app_navigation.credentials'),
     Icon: MenuCredentialsIcon,
   },
   {
     id: 'scan-qr',
     route: Routes.APP_QR_SCANNER,
-    name: 'Scan',
+    name: translate('app_navigation.scan'),
     Icon: MenuScanQRIcon,
   },
   {
     id: 'settings',
     route: Routes.APP_SETTINGS,
-    name: 'Settings',
+    name: translate('app_navigation.settings'),
     Icon: MenuSettingsIcon,
   },
 ];
