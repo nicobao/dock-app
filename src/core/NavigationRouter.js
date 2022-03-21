@@ -1,6 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {View} from 'native-base';
+import {Text, View} from 'native-base';
 import React from 'react';
 import {Platform, StyleSheet} from 'react-native';
 import {Theme} from 'src/design-system';
@@ -31,6 +31,7 @@ import {DevSettingsContainer} from '../features/dev-settings/DevSettingsScreen';
 
 import {navigationRef} from './navigation';
 import {Routes} from './routes';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 const AppStack = createStackNavigator();
 const RootStack = createStackNavigator();

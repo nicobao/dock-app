@@ -1,0 +1,5 @@
+{
+	"replaceAttrValues": {
+	  "current": "{props.current}",
+	}
+}

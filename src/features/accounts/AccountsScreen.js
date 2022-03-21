@@ -54,7 +54,7 @@ export const AccountsScreen = withErrorBoundary(
     const [showImportAccount, setShowImportAccount] = useState();
 
     return (
-      <ScreenContainer testID={AccountsScreenTestIDs.screen}>
+      <ScreenContainer testID={AccountsScreenTestIDs.screen} showTabNavigation>
         <Header>
           <Box
             marginLeft={22}
