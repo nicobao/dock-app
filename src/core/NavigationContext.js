@@ -11,7 +11,6 @@ export const withNavigationContext = WrappedComponent => props => {
     }
   }, [route]);
 
-  console.log('current tab', props);
   return (
     <NavigationContext.Provider
       value={{
