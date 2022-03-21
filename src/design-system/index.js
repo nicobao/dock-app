@@ -73,7 +73,7 @@ const menuOptions = [
   },
   {
     id: 'credentials',
-    route: Routes.APP_SETTINGS,
+    route: Routes.APP_CREDENTIALS,
     name: translate('app_navigation.credentials'),
     Icon: MenuCredentialsIcon,
   },
