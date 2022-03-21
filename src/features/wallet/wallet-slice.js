@@ -186,7 +186,7 @@ export const walletOperations = {
     withErrorToast(async (dispatch, getState) => {
       try {
         await WalletRpc.load();
-      } catch(err) {
+      } catch (err) {
         console.log(err);
       }
       const walletBackup = await WalletRpc.export(password);
