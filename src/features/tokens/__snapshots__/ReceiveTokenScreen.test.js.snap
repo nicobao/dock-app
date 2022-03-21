@@ -12,85 +12,93 @@ exports[`ReceiveTokensScreen should render correctly 1`] = `
   testID="ReceiveTokenScreen"
 >
   <AppGlobalHeader />
-  <Styled(View)>
-    <BackButton
-      accessibilityLabel="BackButton"
-      testID="BackButton"
-    />
-  </Styled(View)>
-  <Memo(ForwardRef(Stack))
-    alignItems="center"
+  <Memo(ForwardRef(Box))
+    flex={1}
   >
-    <Styled(Component)
-      mb={2}
-      variant="h1"
+    <Memo(ForwardRef(Box))
+      flex={1}
     >
-      Receive DOCK
-    </Styled(Component)>
-    <Styled(Component)
-      variant="screen-description"
-    >
-      Share your address
-    </Styled(Component)>
-  </Memo(ForwardRef(Stack))>
-  <Styled(ScrollView)
-    marginLeft={26}
-    marginRight={26}
-  >
-    <Memo(ForwardRef(Stack))
-      alignItems="center"
-      bg="#27272A"
-      borderRadius={12}
-      my={7}
-      p={5}
-    >
-      <Memo(ForwardRef(Stack))
-        bg="#fff"
-        p={2}
-      >
-        <QRCode
-          size={525}
-          value="3B9W5fS4ygoUVnGhzTk7sihSdhCyJQRNMQ7aJfDdsfWb16f1"
+      <Styled(View)>
+        <BackButton
+          accessibilityLabel="BackButton"
+          testID="BackButton"
         />
-      </Memo(ForwardRef(Stack))>
+      </Styled(View)>
       <Memo(ForwardRef(Stack))
         alignItems="center"
-        direction="row"
-        flex={1}
-        pt={5}
       >
-        <Memo(ForwardRef(Box))
-          pr={2}
-        />
-        <Memo(ForwardRef(Stack))
-          alignItems="flex-start"
-          direction="column"
-          flex={1}
+        <Styled(Component)
+          mb={2}
+          variant="h1"
         >
-          <Styled(Component)
-            variant="h3"
-          />
-          <Styled(Component)>
-            3B9W5fS4y...DdsfWb16f1
-          </Styled(Component)>
-        </Memo(ForwardRef(Stack))>
+          Receive DOCK
+        </Styled(Component)>
+        <Styled(Component)
+          variant="screen-description"
+        >
+          Share your address
+        </Styled(Component)>
       </Memo(ForwardRef(Stack))>
-    </Memo(ForwardRef(Stack))>
-    <Memo(ForwardRef(Stack))>
-      <Button
-        colorScheme="tertiary"
-        mb={4}
+      <Styled(ScrollView)
+        marginLeft={26}
+        marginRight={26}
       >
-        Copy address
-      </Button>
-      <Button
-        accessibilityLabel="ReceiveTokenShareAddress"
-        colorScheme="tertiary"
-        testID="ReceiveTokenShareAddress"
-      >
-        Share address
-      </Button>
-    </Memo(ForwardRef(Stack))>
-  </Styled(ScrollView)>
+        <Memo(ForwardRef(Stack))
+          alignItems="center"
+          bg="#27272A"
+          borderRadius={12}
+          my={7}
+          p={5}
+        >
+          <Memo(ForwardRef(Stack))
+            bg="#fff"
+            p={2}
+          >
+            <QRCode
+              size={525}
+              value="3B9W5fS4ygoUVnGhzTk7sihSdhCyJQRNMQ7aJfDdsfWb16f1"
+            />
+          </Memo(ForwardRef(Stack))>
+          <Memo(ForwardRef(Stack))
+            alignItems="center"
+            direction="row"
+            flex={1}
+            pt={5}
+          >
+            <Memo(ForwardRef(Box))
+              pr={2}
+            />
+            <Memo(ForwardRef(Stack))
+              alignItems="flex-start"
+              direction="column"
+              flex={1}
+            >
+              <Styled(Component)
+                variant="h3"
+              />
+              <Styled(Component)>
+                3B9W5fS4y...DdsfWb16f1
+              </Styled(Component)>
+            </Memo(ForwardRef(Stack))>
+          </Memo(ForwardRef(Stack))>
+        </Memo(ForwardRef(Stack))>
+        <Memo(ForwardRef(Stack))>
+          <Button
+            colorScheme="tertiary"
+            mb={4}
+          >
+            Copy address
+          </Button>
+          <Button
+            accessibilityLabel="ReceiveTokenShareAddress"
+            colorScheme="tertiary"
+            testID="ReceiveTokenShareAddress"
+          >
+            Share address
+          </Button>
+        </Memo(ForwardRef(Stack))>
+      </Styled(ScrollView)>
+    </Memo(ForwardRef(Box))>
+  </Memo(ForwardRef(Box))>
 </RNCSafeAreaView>
 `;

@@ -181,7 +181,7 @@ function AppStackScreen() {
       <AppStack.Screen
         {...getScreenProps({
           name: Routes.APP_QR_SCANNER,
-          component: ReceiveTokenContainer,
+          component: QRScanScreen,
         })}
       />
 

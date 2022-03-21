@@ -12,87 +12,95 @@ exports[`ImportAccountFromMnemonicScreen should render correctly 1`] = `
   testID="ImportAccountScreen"
 >
   <AppGlobalHeader />
-  <Styled(View)>
-    <BackButton
-      accessibilityLabel="BackButton"
-      testID="BackButton"
-    />
-  </Styled(View)>
-  <Styled(ScrollView)
-    marginLeft={26}
-    marginRight={26}
+  <Memo(ForwardRef(Box))
+    flex={1}
   >
-    <Styled(Component)
-      marginTop={52}
-      variant="h1"
+    <Memo(ForwardRef(Box))
+      flex={1}
     >
-      Account recovery phrase
-    </Styled(Component)>
-    <Styled(Component)
-      marginTop={12}
-    >
-      This is the 12 word phrase you were given when you created your account.
-    </Styled(Component)>
-    <Memo(ForwardRef(Box))>
-      <Memo(ForwardRef(FormControl))>
-        <Memo(ForwardRef(Stack))
-          mt={7}
+      <Styled(View)>
+        <BackButton
+          accessibilityLabel="BackButton"
+          testID="BackButton"
+        />
+      </Styled(View)>
+      <Styled(ScrollView)
+        marginLeft={26}
+        marginRight={26}
+      >
+        <Styled(Component)
+          marginTop={52}
+          variant="h1"
         >
-          <Memo(ForwardRef(FormControlLabel))>
-            Enter account recovery phrase
-          </Memo(ForwardRef(FormControlLabel))>
-          <Memo(ForwardRef(TextArea))
-            accessibilityLabel="EnterText"
-            autoCapitalize="none"
-            placeholder=""
-            testID="EnterText"
-            value="test"
-          />
-          <Memo(ForwardRef(FormControlErrorMessage))
-            accessibilityLabel="ErrorMessage"
-            testID="ErrorMessage"
-          >
-            Invalid recovery phrase
-          </Memo(ForwardRef(FormControlErrorMessage))>
-        </Memo(ForwardRef(Stack))>
-      </Memo(ForwardRef(FormControl))>
-    </Memo(ForwardRef(Box))>
-    <AccountAdvancedOptions
-      form={
-        Object {
-          "_errors": Object {},
-          "phrase": "test",
-        }
-      }
-      onChange={
-        [MockFunction] {
-          "calls": Array [
-            Array [
-              "phrase",
-            ],
-          ],
-          "results": Array [
+          Account recovery phrase
+        </Styled(Component)>
+        <Styled(Component)
+          marginTop={12}
+        >
+          This is the 12 word phrase you were given when you created your account.
+        </Styled(Component)>
+        <Memo(ForwardRef(Box))>
+          <Memo(ForwardRef(FormControl))>
+            <Memo(ForwardRef(Stack))
+              mt={7}
+            >
+              <Memo(ForwardRef(FormControlLabel))>
+                Enter account recovery phrase
+              </Memo(ForwardRef(FormControlLabel))>
+              <Memo(ForwardRef(TextArea))
+                accessibilityLabel="EnterText"
+                autoCapitalize="none"
+                placeholder=""
+                testID="EnterText"
+                value="test"
+              />
+              <Memo(ForwardRef(FormControlErrorMessage))
+                accessibilityLabel="ErrorMessage"
+                testID="ErrorMessage"
+              >
+                Invalid recovery phrase
+              </Memo(ForwardRef(FormControlErrorMessage))>
+            </Memo(ForwardRef(Stack))>
+          </Memo(ForwardRef(FormControl))>
+        </Memo(ForwardRef(Box))>
+        <AccountAdvancedOptions
+          form={
             Object {
-              "type": "return",
-              "value": undefined,
-            },
-          ],
-        }
-      }
-    />
-  </Styled(ScrollView)>
-  <Styled(Box)
-    marginBottom={10}
-    marginLeft={26}
-    marginRight={26}
-  >
-    <LoadingButton
-      accessibilityLabel="NextBtn"
-      full={true}
-      testID="NextBtn"
-    >
-      Next
-    </LoadingButton>
-  </Styled(Box)>
+              "_errors": Object {},
+              "phrase": "test",
+            }
+          }
+          onChange={
+            [MockFunction] {
+              "calls": Array [
+                Array [
+                  "phrase",
+                ],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
+            }
+          }
+        />
+      </Styled(ScrollView)>
+      <Styled(Component)
+        marginBottom={10}
+        marginLeft={26}
+        marginRight={26}
+      >
+        <LoadingButton
+          accessibilityLabel="NextBtn"
+          full={true}
+          testID="NextBtn"
+        >
+          Next
+        </LoadingButton>
+      </Styled(Component)>
+    </Memo(ForwardRef(Box))>
+  </Memo(ForwardRef(Box))>
 </RNCSafeAreaView>
 `;
