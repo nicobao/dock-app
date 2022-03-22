@@ -40,7 +40,7 @@ export function ProtectYourWalletScreen({
           access your wallet
         </Typography>
       </Content>
-      <Footer marginBottom={114} marginLeft={26} marginRight={26} flex>
+      <Footer marginBottom={114} marginLeft={26} marginRight={26} flex={1}>
         {/* <Button full icon={<LockClosedIcon />} testID="create-wallet-btn">
           Setup Passcode
         </Button> */}
