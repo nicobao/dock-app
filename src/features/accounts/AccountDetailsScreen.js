@@ -443,6 +443,8 @@ export function AccountDetailsContainer({route}) {
   const {id: accountId, qrCodeData} = route.params;
   const dispatch = useDispatch();
   const account = useSelector(accountSelectors.getAccountById(accountId));
+
+  console.log('return to account details', accountId);
   const [isRefreshing, setRefreshing] = useState(false);
 
   const onRefresh = () => {

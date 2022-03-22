@@ -194,7 +194,7 @@ export const accountOperations = {
       }
 
       navigate(Routes.ACCOUNT_DETAILS, {
-        accountId,
+        id: accountId,
         qrCodeData,
       });
 
