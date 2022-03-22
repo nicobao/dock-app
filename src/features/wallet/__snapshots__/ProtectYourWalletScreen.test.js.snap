@@ -37,7 +37,7 @@ exports[`ProtectYourWalletScreen should render correctly 1`] = `
         </Styled(Component)>
       </Styled(ScrollView)>
       <Styled(Component)
-        flex={true}
+        flex={1}
         marginBottom={114}
         marginLeft={26}
         marginRight={26}

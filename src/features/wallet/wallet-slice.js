@@ -66,12 +66,16 @@ async function validateAndImport(fileData, password) {
     throw new Error(translate('import_wallet.invalid_file'));
   }
 
-  await WalletRpc.remove('wallet');
-  await clearCacheData();
-  await AsyncStorage.removeItem('wallet');
-  await WalletRpc.create('wallet');
-  await WalletRpc.load();
-  await WalletRpc.sync();
+  try {
+    await WalletRpc.remove('wallet');
+    await clearCacheData();
+    await AsyncStorage.removeItem('wallet');
+    await WalletRpc.create('wallet');
+    await WalletRpc.load();
+    await WalletRpc.sync();
+  } catch (err) {
+    console.error(err);
+  }
 
   try {
     await WalletRpc.importWallet(jsonData, password);
@@ -157,8 +161,7 @@ export const walletOperations = {
             throw new Error('Unable to read file');
           }
         }
-        const jsonData = JSON.parse(fileData);
-        await validateAndImport(jsonData, password);
+        await validateAndImport(fileData, password);
       } catch (err) {
         console.error(err);
         showToast({

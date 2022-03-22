@@ -248,7 +248,8 @@
     "from": "From",
     "date": "Date",
     "nonce": "Nonce",
-    "view_on_subscan": "View on Subscan"
+    "view_on_subscan": "View on Subscan",
+    "all": "All"
   },
   "transaction_failed": {
     "title": "Transaction failed",

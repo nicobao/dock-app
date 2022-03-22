@@ -61,7 +61,7 @@ export const AccountsScreen = withErrorBoundary(
             marginRight={22}
             flexDirection="row"
             alignItems="center">
-            <Box flex>
+            <Box flex={1}>
               <Typography
                 fontFamily="Montserrat"
                 fontSize={24}
@@ -89,7 +89,7 @@ export const AccountsScreen = withErrorBoundary(
           }>
           <Stack mx={26} flex={1}>
             {isEmpty ? (
-              <Box flex justifyContent="center" alignItems="center">
+              <Box flex={1} justifyContent="center" alignItems="center">
                 <Typography marginTop={12}>
                   {translate('account_list.empty_accounts')}
                 </Typography>
@@ -218,7 +218,7 @@ export const AccountsScreen = withErrorBoundary(
           </Stack>
         </ScrollView>
         {isEmpty ? (
-          <Footer marginBottom={114} marginLeft={26} marginRight={26} flex>
+          <Footer marginBottom={114} marginLeft={26} marginRight={26} flex={1}>
             <BigButton
               {...addTestId('CreateNewAccount')}
               onPress={onAddAccount}

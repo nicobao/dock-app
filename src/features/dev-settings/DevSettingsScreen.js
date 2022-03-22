@@ -115,7 +115,7 @@ export function DevSettingsScreen({
       onPress: () => onFeatureToggled(Features.credentials),
     });
     return options;
-  }, [currentNetworkId, features]);
+  }, [currentNetworkId, features, onFeatureToggled]);
 
   return (
     <ScreenContainer testID="DevSettingsScreen">
