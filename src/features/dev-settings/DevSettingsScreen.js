@@ -1,5 +1,5 @@
 import {Input, Select, Stack} from 'native-base';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {addTestId} from 'src/core/automation-utils';
 import {translate} from 'src/locales';
@@ -24,10 +24,9 @@ import {
   appOperations,
   appSelectors,
   SUBSTRATE_NETWORKS,
-  appActions,
 } from '../app/app-slice';
 import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
-import {Features, useFeatures, FeatureFlags} from '../app/feature-flags';
+import {FeatureFlags, Features, useFeatures} from '../app/feature-flags';
 
 type Props = {
   onAddAccount: any,
@@ -44,7 +43,6 @@ export function DevSettingsScreen({
 }: Props) {
   const [showNetworkOptions, setShowNetworkOptions] = useState();
   const [showWatchAccount, setShowWatchAccount] = useState();
-  const [showTransactionHistory, setShowTransactionHistory] = useState(false);
   const [accountName, setAccountName] = useState();
   const [accountAddress, setAccountAddress] = useState();
   const currentNetworkId = useSelector(appSelectors.getNetworkId);
@@ -189,32 +187,6 @@ export function DevSettingsScreen({
             </Stack>
           </Stack>
         ) : null}
-
-        {/*{showTransactionHistory ? (*/}
-        {/*  <Stack p={4}>*/}
-        {/*    <Typography variant="h3">*/}
-        {/*      {translate('dev_settings.show_testnet_transaction')}*/}
-        {/*    </Typography>*/}
-
-        {/*    <Stack pb={2}>*/}
-        {/*      <Select*/}
-        {/*        onValueChange={() =>*/}
-        {/*          onFeatureToggled(Features.showTestnetTransaction)*/}
-        {/*        }*/}
-        {/*        selectedValue={features.showTestnetTransaction}>*/}
-        {/*        <Select.Item*/}
-        {/*          label={translate('dev_settings.show_testnet_transaction')}*/}
-        {/*          value={true}*/}
-        {/*        />*/}
-        {/*        <Select.Item*/}
-        {/*          label={translate('dev_settings.hide_testnet_transaction')}*/}
-        {/*          value={false}*/}
-        {/*        />*/}
-        {/*      </Select>*/}
-        {/*    </Stack>*/}
-        {/*  </Stack>*/}
-        {/*) : null}*/}
-
         {showWatchAccount ? (
           <Stack p={4}>
             <Typography variant="h3">

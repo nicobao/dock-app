@@ -13,7 +13,7 @@ import {initRealm} from 'src/core/realm';
 import {translate} from 'src/locales';
 import {Logger} from 'src/core/logger';
 import {captureException} from '@sentry/react-native';
-import {defaultFeatures, Features} from './feature-flags';
+import {defaultFeatures} from './feature-flags';
 
 export const BiometryType = {
   FaceId: Keychain.BIOMETRY_TYPE.FACE_ID,
