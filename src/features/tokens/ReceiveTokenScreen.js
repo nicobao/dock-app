@@ -28,7 +28,7 @@ export function ReceiveTokenScreen({
   onCopyAddress,
   onShareAddress,
 }) {
-  const qrSize = Dimensions.get('window').width * 0.7;
+  const qrSize = Dimensions.get('window').width * 0.5;
 
   return (
     <ScreenContainer {...addTestId('ReceiveTokenScreen')}>
@@ -61,18 +61,28 @@ export function ReceiveTokenScreen({
             </Stack>
           </Stack>
         </Stack>
-        <Stack>
-          <Button onPress={onCopyAddress} colorScheme="tertiary" mb={4}>
-            {translate('receive_token.copy_address')}
-          </Button>
-          <Button
-            onPress={onShareAddress}
-            colorScheme="tertiary"
-            {...addTestId('ReceiveTokenShareAddress')}>
-            {translate('receive_token.share_address')}
-          </Button>
-        </Stack>
       </Content>
+      <Stack direction="row" width="100%">
+        <Button
+          mr={1}
+          flex={1}
+          size="sm"
+          onPress={onCopyAddress}
+          colorScheme="tertiary"
+          ml={5}>
+          {translate('receive_token.copy_address')}
+        </Button>
+        <Button
+          ml={1}
+          flex={1}
+          size="sm"
+          onPress={onShareAddress}
+          colorScheme="tertiary"
+          {...addTestId('ReceiveTokenShareAddress')}
+          mr={5}>
+          {translate('receive_token.share_address')}
+        </Button>
+      </Stack>
     </ScreenContainer>
   );
 }
