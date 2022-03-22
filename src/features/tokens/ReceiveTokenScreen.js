@@ -62,7 +62,7 @@ export function ReceiveTokenScreen({
           </Stack>
         </Stack>
       </Content>
-      <Stack direction="row" width="100%">
+      <Stack direction="row" width="100%" mb={7}>
         <Button
           mr={1}
           flex={1}

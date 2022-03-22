@@ -79,6 +79,7 @@ exports[`ReceiveTokensScreen should render correctly 1`] = `
   </Styled(ScrollView)>
   <Memo(ForwardRef(Stack))
     direction="row"
+    mb={7}
     width="100%"
   >
     <Button
