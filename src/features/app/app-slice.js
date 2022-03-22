@@ -13,6 +13,7 @@ import {initRealm} from 'src/core/realm';
 import {translate} from 'src/locales';
 import {Logger} from 'src/core/logger';
 import {captureException} from '@sentry/react-native';
+import {defaultFeatures, Features} from './feature-flags';
 
 export const BiometryType = {
   FaceId: Keychain.BIOMETRY_TYPE.FACE_ID,
@@ -63,7 +64,7 @@ const initialState = {
   dockReady: false,
   networkId: 'mainnet',
   devSettingsEnabled: false,
-  showTestnetTransaction: false,
+  features: defaultFeatures,
 };
 
 const app = createSlice({
@@ -94,6 +95,12 @@ const app = createSlice({
     setShowTestnetTransaction(state, action) {
       state.showTestnetTransaction = action.payload;
     },
+    setFeature(state, action) {
+      state.features = {
+        ...(state.features || defaultFeatures),
+        ...action.payload,
+      };
+    },
   },
 });
 
@@ -117,6 +124,7 @@ export const appSelectors = {
   getAppLocked: state => getRoot(state).lockedTime > Date.now(),
   getShowTestnetTransactionConfig: state =>
     getRoot(state).showTestnetTransaction,
+  getFeatures: state => getRoot(state).features || defaultFeatures,
 };
 
 export const appOperations = {
@@ -132,6 +140,14 @@ export const appOperations = {
 
       checkRpc();
     });
+  },
+  updateFeature: (name, value) => async (dispatch, getState) => {
+    // validate
+    dispatch(
+      appActions.setFeature({
+        [name]: value,
+      }),
+    );
   },
   waitDockReady: () => async (dispatch, getState) => {
     return new Promise(res => {

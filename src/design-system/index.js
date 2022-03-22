@@ -1,5 +1,5 @@
-import {Stack, Box, Text, Pressable} from 'native-base';
-import React, {useContext} from 'react';
+import {Box, Stack} from 'native-base';
+import React from 'react';
 import {StyleSheet} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -9,15 +9,7 @@ import {translate} from 'src/locales';
 import styled from 'styled-components/native';
 import {Theme} from './theme';
 import {Typography} from './typography';
-import {Routes} from '../core/routes';
-import {navigate} from '../core/navigation';
-import {
-  MenuCredentialsIcon,
-  MenuScanQRIcon,
-  MenuSettingsIcon,
-  MenuTokensIcon,
-} from '../assets/icons';
-import {NavigationContext} from '../core/NavigationContext';
+import {TabNavigation} from './TabNavigation';
 
 function ConnectionStatus({status, loadingText, errorText}) {
   if (!status && loadingText) {
@@ -65,62 +57,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const menuOptions = [
-  {
-    id: 'tokens',
-    route: Routes.ACCOUNTS,
-    name: translate('app_navigation.tokens'),
-    Icon: MenuTokensIcon,
-  },
-  {
-    id: 'credentials',
-    route: Routes.APP_CREDENTIALS,
-    name: translate('app_navigation.credentials'),
-    Icon: MenuCredentialsIcon,
-  },
-  {
-    id: 'scan-qr',
-    route: Routes.APP_QR_SCANNER,
-    name: translate('app_navigation.scan'),
-    Icon: MenuScanQRIcon,
-  },
-  {
-    id: 'settings',
-    route: Routes.APP_SETTINGS,
-    name: translate('app_navigation.settings'),
-    Icon: MenuSettingsIcon,
-  },
-];
-
-function TabNavigation() {
-  const navContext = useContext(NavigationContext);
-  const currentTab = navContext.currentTab;
-
-  console.log('nav context', navContext);
-  return (
-    <Stack direction="row">
-      {menuOptions.map(option => (
-        <Pressable
-          key={option.id}
-          flex={1}
-          onPress={() => navigate(option.route)}
-          justifyContent={'center'}
-          alignItems={'center'}>
-          <option.Icon
-            color={
-              option.id === currentTab
-                ? Theme.colors.info2
-                : Theme.colors.description
-            }
-          />
-          <Text fontSize="12px" mt={1}>
-            {option.name}
-          </Text>
-        </Pressable>
-      ))}
-    </Stack>
-  );
-}
 export function ScreenContainer({
   children,
   hideGlobalHeader,
@@ -133,7 +69,7 @@ export function ScreenContainer({
       <Box flex={1}>
         <Box flex={1}>{children}</Box>
         {showTabNavigation ? (
-          <Box flex={1} flexGrow={0.05}>
+          <Box flex={1} flexGrow={0.07}>
             <TabNavigation />
           </Box>
         ) : null}

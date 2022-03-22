@@ -27,35 +27,35 @@ import {
   appActions,
 } from '../app/app-slice';
 import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
+import {Features, useFeatures, FeatureFlags} from '../app/feature-flags';
+
+type Props = {
+  onAddAccount: any,
+  onNetworkChange: any,
+  onFeatureToggled: any,
+  features: FeatureFlags,
+};
 
 export function DevSettingsScreen({
   onAddAccount,
   onNetworkChange,
-  onTransactionHistoryToggled,
-}) {
+  onFeatureToggled,
+  features,
+}: Props) {
   const [showNetworkOptions, setShowNetworkOptions] = useState();
   const [showWatchAccount, setShowWatchAccount] = useState();
   const [showTransactionHistory, setShowTransactionHistory] = useState(false);
   const [accountName, setAccountName] = useState();
   const [accountAddress, setAccountAddress] = useState();
   const currentNetworkId = useSelector(appSelectors.getNetworkId);
-  const currentTestnetTransactionConfig = useSelector(
-    appSelectors.getShowTestnetTransactionConfig,
-  );
-  const [testnetTransactionConfig, setTestnetTransactionConfig] = useState(
-    () => {
-      if (typeof currentTestnetTransactionConfig === 'undefined') {
-        return false;
-      }
-      return currentTestnetTransactionConfig;
-    },
-  );
 
   const [networkId, setNetworkId] = useState(currentNetworkId);
 
   useEffect(() => {
     setNetworkId(currentNetworkId);
   }, [currentNetworkId]);
+
+  console.log('features', features);
 
   const optionList = useMemo(() => {
     const options = [
@@ -100,13 +100,22 @@ export function DevSettingsScreen({
         testID: 'show-testnet-transaction',
         title: translate('dev_settings.show_testnet_transaction'),
         icon: <ChevronRightIcon />,
-        onPress: () => {
-          setShowTransactionHistory(true);
-        },
+        value: features.showTestnetTransaction,
+        isSwitch: true,
+        onPress: () => onFeatureToggled(Features.showTestnetTransaction),
       });
     }
+
+    options.push({
+      testID: 'show-credentials',
+      title: translate('dev_settings.show_credentials'),
+      icon: <ChevronRightIcon />,
+      value: features.credentials,
+      isSwitch: true,
+      onPress: () => onFeatureToggled(Features.credentials),
+    });
     return options;
-  }, [currentNetworkId]);
+  }, [currentNetworkId, features]);
 
   return (
     <ScreenContainer testID="DevSettingsScreen">
@@ -181,45 +190,30 @@ export function DevSettingsScreen({
           </Stack>
         ) : null}
 
-        {showTransactionHistory ? (
-          <Stack p={4}>
-            <Typography variant="h3">
-              {translate('dev_settings.show_testnet_transaction')}
-            </Typography>
+        {/*{showTransactionHistory ? (*/}
+        {/*  <Stack p={4}>*/}
+        {/*    <Typography variant="h3">*/}
+        {/*      {translate('dev_settings.show_testnet_transaction')}*/}
+        {/*    </Typography>*/}
 
-            <Stack pb={2}>
-              <Select
-                onValueChange={setTestnetTransactionConfig}
-                selectedValue={testnetTransactionConfig}>
-                <Select.Item
-                  label={translate('dev_settings.show_testnet_transaction')}
-                  value={true}
-                />
-                <Select.Item
-                  label={translate('dev_settings.hide_testnet_transaction')}
-                  value={false}
-                />
-              </Select>
-            </Stack>
-
-            <Button
-              {...addTestId('DevSettingsShowTransactionHistory')}
-              onPress={() => {
-                onTransactionHistoryToggled(testnetTransactionConfig);
-                setShowTransactionHistory(false);
-              }}>
-              {translate('dev_settings.update_network')}
-            </Button>
-            <Stack pt={3}>
-              <Button
-                {...addTestId('CancelBtn')}
-                onPress={() => setShowTransactionHistory(false)}
-                colorScheme="tertiary">
-                Cancel
-              </Button>
-            </Stack>
-          </Stack>
-        ) : null}
+        {/*    <Stack pb={2}>*/}
+        {/*      <Select*/}
+        {/*        onValueChange={() =>*/}
+        {/*          onFeatureToggled(Features.showTestnetTransaction)*/}
+        {/*        }*/}
+        {/*        selectedValue={features.showTestnetTransaction}>*/}
+        {/*        <Select.Item*/}
+        {/*          label={translate('dev_settings.show_testnet_transaction')}*/}
+        {/*          value={true}*/}
+        {/*        />*/}
+        {/*        <Select.Item*/}
+        {/*          label={translate('dev_settings.hide_testnet_transaction')}*/}
+        {/*          value={false}*/}
+        {/*        />*/}
+        {/*      </Select>*/}
+        {/*    </Stack>*/}
+        {/*  </Stack>*/}
+        {/*) : null}*/}
 
         {showWatchAccount ? (
           <Stack p={4}>
@@ -286,19 +280,16 @@ export function DevSettingsScreen({
 
 export function DevSettingsContainer() {
   const dispatch = useDispatch();
+  const {features, updateFeature} = useFeatures();
 
   const handleNetworkChange = networkId => {
     return dispatch(appOperations.setNetwork(networkId));
   };
 
-  const handleToggleTransactionHistory = useCallback(
-    testnetTransactionConfig => {
-      return dispatch(
-        appActions.setShowTestnetTransaction(testnetTransactionConfig),
-      );
-    },
-    [dispatch],
-  );
+  const handleFeatureToggled = (name: String) => {
+    console.log('toggle features', name);
+    updateFeature(Features[name], !features[Features[name]]);
+  };
 
   const handleAddAccount = ({address, name}) => {
     return dispatch(accountOperations.watchAccount({address, name}));
@@ -306,9 +297,10 @@ export function DevSettingsContainer() {
 
   return (
     <DevSettingsScreen
+      features={features}
       onNetworkChange={handleNetworkChange}
       onAddAccount={handleAddAccount}
-      onTransactionHistoryToggled={handleToggleTransactionHistory}
+      onFeatureToggled={handleFeatureToggled}
     />
   );
 }
