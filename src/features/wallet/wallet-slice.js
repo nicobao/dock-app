@@ -66,12 +66,16 @@ async function validateAndImport(fileData, password) {
     throw new Error(translate('import_wallet.invalid_file'));
   }
 
-  await WalletRpc.remove('wallet');
-  await clearCacheData();
-  await AsyncStorage.removeItem('wallet');
-  await WalletRpc.create('wallet');
-  await WalletRpc.load();
-  await WalletRpc.sync();
+  try {
+    await WalletRpc.remove('wallet');
+    await clearCacheData();
+    await AsyncStorage.removeItem('wallet');
+    await WalletRpc.create('wallet');
+    await WalletRpc.load();
+    await WalletRpc.sync();
+  } catch (err) {
+    console.error(err);
+  }
 
   try {
     await WalletRpc.importWallet(jsonData, password);
@@ -157,8 +161,7 @@ export const walletOperations = {
             throw new Error('Unable to read file');
           }
         }
-        const jsonData = JSON.parse(fileData);
-        await validateAndImport(jsonData, password);
+        await validateAndImport(fileData, password);
       } catch (err) {
         console.error(err);
         showToast({
@@ -181,10 +184,16 @@ export const walletOperations = {
     }),
   exportWallet: ({password, callback}) =>
     withErrorToast(async (dispatch, getState) => {
-      await WalletRpc.load();
+      try {
+        await WalletRpc.load();
+      } catch (err) {
+        console.log(err);
+      }
       const walletBackup = await WalletRpc.export(password);
       const jsonData = JSON.stringify(walletBackup);
-      const path = `${RNFS.DocumentDirectoryPath}/walletBackup.json`;
+      const path = `${
+        RNFS.DocumentDirectoryPath
+      }/walletBackup-${Date.now()}.json`;
       const mimeType = 'application/json';
       await RNFS.writeFile(path, jsonData);
 
