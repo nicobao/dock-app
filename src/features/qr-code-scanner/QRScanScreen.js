@@ -81,7 +81,7 @@ const QRCodeContainer = styled.View`
 `;
 
 export function QRScanScreen({route}) {
-  const {onData} = route.params;
+  const {onData} = route.params || {};
 
   return (
     <Container>

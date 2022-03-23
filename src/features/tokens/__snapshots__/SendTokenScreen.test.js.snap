@@ -11,58 +11,66 @@ exports[`SendTokenScreen should render correctly 1`] = `
   testID="unlockWalletScreen"
 >
   <AppGlobalHeader />
-  <Styled(View)>
-    <BackButton />
-  </Styled(View)>
-  <Styled(ScrollView)
-    marginLeft={26}
-    marginRight={26}
+  <Memo(ForwardRef(Box))
+    flex={1}
   >
-    <Memo(ForwardRef(Stack))>
-      <Styled(Component)
-        mb={2}
-        variant="h1"
-      >
-        Send to
-      </Styled(Component)>
-    </Memo(ForwardRef(Stack))>
     <Memo(ForwardRef(Box))
-      my={7}
-    >
-      <Memo(ForwardRef(Stack))>
-        <Memo(ForwardRef(FormControl))>
-          <Memo(ForwardRef(Input))
-            autoCapitalize="none"
-            onChangeText={[Function]}
-            pasteFromClipboard={true}
-            placeholder="Recipient address"
-          />
-          <Memo(ForwardRef(FormControlErrorMessage)) />
-        </Memo(ForwardRef(FormControl))>
-      </Memo(ForwardRef(Stack))>
-      <Memo(ForwardRef(Stack))
-        alignItems="center"
-        direction="row"
-        mt={3}
-      >
-        <Button
-          colorScheme="secondary"
-          size="sm"
-        >
-          Scan QR Code
-        </Button>
-      </Memo(ForwardRef(Stack))>
-    </Memo(ForwardRef(Box))>
-    <Memo(ForwardRef(Stack))
-      alignContent="flex-end"
       flex={1}
     >
-      <LoadingButton
-        mb={4}
+      <Styled(View)>
+        <BackButton />
+      </Styled(View)>
+      <Styled(ScrollView)
+        marginLeft={26}
+        marginRight={26}
       >
-        Next
-      </LoadingButton>
-    </Memo(ForwardRef(Stack))>
-  </Styled(ScrollView)>
+        <Memo(ForwardRef(Stack))>
+          <Styled(Component)
+            mb={2}
+            variant="h1"
+          >
+            Send to
+          </Styled(Component)>
+        </Memo(ForwardRef(Stack))>
+        <Memo(ForwardRef(Box))
+          my={7}
+        >
+          <Memo(ForwardRef(Stack))>
+            <Memo(ForwardRef(FormControl))>
+              <Memo(ForwardRef(Input))
+                autoCapitalize="none"
+                onChangeText={[Function]}
+                pasteFromClipboard={true}
+                placeholder="Recipient address"
+              />
+              <Memo(ForwardRef(FormControlErrorMessage)) />
+            </Memo(ForwardRef(FormControl))>
+          </Memo(ForwardRef(Stack))>
+          <Memo(ForwardRef(Stack))
+            alignItems="center"
+            direction="row"
+            mt={3}
+          >
+            <Button
+              colorScheme="secondary"
+              size="sm"
+            >
+              Scan QR Code
+            </Button>
+          </Memo(ForwardRef(Stack))>
+        </Memo(ForwardRef(Box))>
+        <Memo(ForwardRef(Stack))
+          alignContent="flex-end"
+          flex={1}
+        >
+          <LoadingButton
+            mb={4}
+          >
+            Next
+          </LoadingButton>
+        </Memo(ForwardRef(Stack))>
+      </Styled(ScrollView)>
+    </Memo(ForwardRef(Box))>
+  </Memo(ForwardRef(Box))>
 </RNCSafeAreaView>
 `;

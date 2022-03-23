@@ -16,9 +16,10 @@ jobs:
 
       - name: Install and lint
         run: |
+          git config --global url."https://".insteadOf git://
           yarn install
           yarn lint
-          
+
       - name: Unit tests
         run: |
           yarn test
