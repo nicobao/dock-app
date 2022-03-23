@@ -26,7 +26,7 @@ import {
   SUBSTRATE_NETWORKS,
 } from '../app/app-slice';
 import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
-import {FeatureFlags, Features, useFeatures} from '../app/feature-flags';
+import {FeatureFlags, getAllFeatures, useFeatures} from '../app/feature-flags';
 
 type Props = {
   onAddAccount: any,
@@ -52,8 +52,6 @@ export function DevSettingsScreen({
   useEffect(() => {
     setNetworkId(currentNetworkId);
   }, [currentNetworkId]);
-
-  console.log('features', features);
 
   const optionList = useMemo(() => {
     const options = [
@@ -93,25 +91,22 @@ export function DevSettingsScreen({
         },
       },
     ];
-    if (currentNetworkId !== 'mainnet') {
-      options.push({
-        testID: 'show-testnet-transaction',
-        title: translate('dev_settings.show_testnet_transaction'),
-        icon: <ChevronRightIcon />,
-        value: features.showTestnetTransaction,
-        isSwitch: true,
-        onPress: () => onFeatureToggled(Features.showTestnetTransaction),
-      });
-    }
 
-    options.push({
-      testID: 'show-credentials',
-      title: translate('dev_settings.show_credentials'),
-      icon: <ChevronRightIcon />,
-      value: features.credentials,
-      isSwitch: true,
-      onPress: () => onFeatureToggled(Features.credentials),
+    getAllFeatures().forEach(feature => {
+      if (feature.visible && !feature.visible({currentNetworkId})) {
+        return;
+      }
+
+      options.push({
+        testID: feature.id,
+        title: feature.title,
+        icon: <ChevronRightIcon />,
+        value: features[feature.id],
+        isSwitch: true,
+        onPress: () => onFeatureToggled(feature.id),
+      });
     });
+
     return options;
   }, [currentNetworkId, features, onFeatureToggled]);
 
@@ -258,9 +253,8 @@ export function DevSettingsContainer() {
     return dispatch(appOperations.setNetwork(networkId));
   };
 
-  const handleFeatureToggled = (name: String) => {
-    console.log('toggle features', name);
-    updateFeature(Features[name], !features[Features[name]]);
+  const handleFeatureToggled = (featureId: string) => {
+    updateFeature(featureId, !features[featureId]);
   };
 
   const handleAddAccount = ({address, name}) => {
