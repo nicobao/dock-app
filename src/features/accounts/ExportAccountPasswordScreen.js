@@ -129,7 +129,7 @@ export function GenericPasswordContainer({onSubmit, title, description}) {
     };
 
     if (key === 'password') {
-      updatedForm.lengthValidation = value.length >= 8 && value.length <= 12;
+      updatedForm.lengthValidation = value.length >= 8;
       updatedForm.digitsValidation = /\d/.test(value);
       updatedForm.caseValidation = /[A-Z]/.test(value) && /[a-z]/.test(value);
       updatedForm.specialCharactersValidation = /\W/.test(value);
