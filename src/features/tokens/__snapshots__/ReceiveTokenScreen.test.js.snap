@@ -55,7 +55,7 @@ exports[`ReceiveTokensScreen should render correctly 1`] = `
             p={2}
           >
             <QRCode
-              size={525}
+              size={375}
               value="3B9W5fS4ygoUVnGhzTk7sihSdhCyJQRNMQ7aJfDdsfWb16f1"
             />
           </Memo(ForwardRef(Stack))>
@@ -82,22 +82,33 @@ exports[`ReceiveTokensScreen should render correctly 1`] = `
             </Memo(ForwardRef(Stack))>
           </Memo(ForwardRef(Stack))>
         </Memo(ForwardRef(Stack))>
-        <Memo(ForwardRef(Stack))>
-          <Button
-            colorScheme="tertiary"
-            mb={4}
-          >
-            Copy address
-          </Button>
-          <Button
-            accessibilityLabel="ReceiveTokenShareAddress"
-            colorScheme="tertiary"
-            testID="ReceiveTokenShareAddress"
-          >
-            Share address
-          </Button>
-        </Memo(ForwardRef(Stack))>
       </Styled(ScrollView)>
+      <Memo(ForwardRef(Stack))
+        direction="row"
+        mb={7}
+        width="100%"
+      >
+        <Button
+          colorScheme="tertiary"
+          flex={1}
+          ml={5}
+          mr={1}
+          size="sm"
+        >
+          Copy address
+        </Button>
+        <Button
+          accessibilityLabel="ReceiveTokenShareAddress"
+          colorScheme="tertiary"
+          flex={1}
+          ml={1}
+          mr={5}
+          size="sm"
+          testID="ReceiveTokenShareAddress"
+        >
+          Share address
+        </Button>
+      </Memo(ForwardRef(Stack))>
     </Memo(ForwardRef(Box))>
   </Memo(ForwardRef(Box))>
 </RNCSafeAreaView>
