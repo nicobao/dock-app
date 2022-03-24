@@ -32,7 +32,7 @@ export function AppSettingsScreen({
   devSettingsEnabled,
 }) {
   return (
-    <ScreenContainer testID="AccountDetailsScreen">
+    <ScreenContainer testID="AccountDetailsScreen" showTabNavigation>
       <Header>
         <Box
           marginLeft={1}

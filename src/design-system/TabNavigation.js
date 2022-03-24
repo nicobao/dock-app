@@ -65,7 +65,7 @@ export function TabNavigation() {
                 : Theme.colors.description
             }
           />
-          <Text fontSize="12px" mt={1}>
+          <Text fontSize="11px" mt={1}>
             {option.name}
           </Text>
         </Pressable>
