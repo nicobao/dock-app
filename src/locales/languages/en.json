@@ -35,6 +35,12 @@
     "title": "Create a password",
     "description": "This will be used when you import your account to a new device"
   },
+  "app_navigation": {
+    "tokens": "Tokens",
+    "credentials": "Credentials",
+    "scan": "Scan",
+    "settings": "Settings"
+  },
   "unlock_wallet": {
     "enter_passcode": "Enter your passcode",
     "biometrics_login": "Login with biometrics",
@@ -85,6 +91,7 @@
     "invalid_account_name": "Invalid account name",
     "invalid_account_address": "Invalid account address",
     "show_testnet_transaction": "Show testnet Transactions",
+    "show_credentials": "Show credentials",
     "hide_testnet_transaction": "Hide testnet Transactions",
     "switch_network_success": "Network switch successful",
     "switch_network_error": "Network switch failed"
@@ -256,5 +263,8 @@
   },
   "keychain": {
     "password": "password"
+  },
+  "credentials": {
+    "title": "Credentials"
   }
 }

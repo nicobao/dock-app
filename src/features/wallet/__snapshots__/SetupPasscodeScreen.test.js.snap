@@ -12,42 +12,50 @@ exports[`SetupPasscodeScreen should render correctly 1`] = `
   testID="SetupPasscodeScreen"
 >
   <AppGlobalHeader />
-  <Styled(View)>
-    <BackButton
-      accessibilityLabel="BackButton"
-      testID="BackButton"
-    />
-  </Styled(View)>
-  <Styled(ScrollView)
-    marginLeft={26}
-    marginRight={26}
+  <Memo(ForwardRef(Box))
+    flex={1}
   >
-    <Styled(Component)
-      marginTop={52}
-      variant="h1"
+    <Memo(ForwardRef(Box))
+      flex={1}
     >
-      Setup Passcode
-    </Styled(Component)>
-    <Styled(Component)
-      marginTop={12}
-    >
-      Add a passcode to keep your wallet safe
-    </Styled(Component)>
-  </Styled(ScrollView)>
-  <Styled(Box)
-    marginBottom={114}
-    marginLeft={26}
-    marginRight={26}
-  >
-    <Button
-      accessibilityLabel="CreateWalletBtn"
-      full={true}
-      icon={<SvgFile />}
-      onPress={[Function]}
-      testID="CreateWalletBtn"
-    >
-      Setup Passcode
-    </Button>
-  </Styled(Box)>
+      <Styled(View)>
+        <BackButton
+          accessibilityLabel="BackButton"
+          testID="BackButton"
+        />
+      </Styled(View)>
+      <Styled(ScrollView)
+        marginLeft={26}
+        marginRight={26}
+      >
+        <Styled(Component)
+          marginTop={52}
+          variant="h1"
+        >
+          Setup Passcode
+        </Styled(Component)>
+        <Styled(Component)
+          marginTop={12}
+        >
+          Add a passcode to keep your wallet safe
+        </Styled(Component)>
+      </Styled(ScrollView)>
+      <Styled(Component)
+        marginBottom={114}
+        marginLeft={26}
+        marginRight={26}
+      >
+        <Button
+          accessibilityLabel="CreateWalletBtn"
+          full={true}
+          icon={<SvgFile />}
+          onPress={[Function]}
+          testID="CreateWalletBtn"
+        >
+          Setup Passcode
+        </Button>
+      </Styled(Component)>
+    </Memo(ForwardRef(Box))>
+  </Memo(ForwardRef(Box))>
 </RNCSafeAreaView>
 `;

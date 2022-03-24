@@ -1,4 +1,4 @@
-import {Stack} from 'native-base';
+import {Box, Stack} from 'native-base';
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -7,9 +7,9 @@ import {useSelector} from 'react-redux';
 import {appSelectors} from 'src/features/app/app-slice';
 import {translate} from 'src/locales';
 import styled from 'styled-components/native';
-import {Box} from './grid';
 import {Theme} from './theme';
 import {Typography} from './typography';
+import {TabNavigation} from './TabNavigation';
 
 function ConnectionStatus({status, loadingText, errorText}) {
   if (!status && loadingText) {
@@ -57,11 +57,23 @@ const styles = StyleSheet.create({
   },
 });
 
-export function ScreenContainer({children, hideGlobalHeader, ...props}) {
+export function ScreenContainer({
+  children,
+  hideGlobalHeader,
+  showTabNavigation,
+  ...props
+}) {
   return (
     <SafeAreaView {...props} style={styles.screenContainer}>
       {hideGlobalHeader ? null : <AppGlobalHeader />}
-      {children}
+      <Box flex={1}>
+        <Box flex={1}>{children}</Box>
+        {showTabNavigation ? (
+          <Box flex={1} flexGrow={0.07}>
+            <TabNavigation />
+          </Box>
+        ) : null}
+      </Box>
     </SafeAreaView>
   );
 }
