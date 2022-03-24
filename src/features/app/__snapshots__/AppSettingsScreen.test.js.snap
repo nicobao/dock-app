@@ -11,70 +11,78 @@ exports[`AppSettingsScreen should render correctly 1`] = `
   testID="AccountDetailsScreen"
 >
   <AppGlobalHeader />
-  <Styled(View)>
-    <Box
-      alignItems="center"
-      flexDirection="row"
-      marginLeft={1}
-      marginRight={22}
-    >
-      <Memo(ForwardRef(Box))
-        width="80px"
-      >
-        <BackButton
-          onPress={[Function]}
-        />
-      </Memo(ForwardRef(Box))>
-      <Memo(ForwardRef(Box))
-        alignContent="center"
-        alignItems="center"
-        flex={1}
-        pl={15}
-        width="100%"
-      >
-        <Styled(Component)
-          variant="h3"
-        >
-          Settings
-        </Styled(Component)>
-      </Memo(ForwardRef(Box))>
-      <Memo(ForwardRef(Box))
-        alignItems="flex-end"
-        width="80px"
-      />
-    </Box>
-  </Styled(View)>
-  <Styled(ScrollView)>
-    <Memo(ForwardRef(Stack))
+  <Memo(ForwardRef(Box))
+    flex={1}
+  >
+    <Memo(ForwardRef(Box))
       flex={1}
     >
-      <OptionList
-        items={
-          Array [
-            Object {
-              "icon": <SvgFile />,
-              "onPress": undefined,
-              "testID": "backupWallet",
-              "title": "Backup wallet",
-            },
-            Object {
-              "icon": <SvgFile />,
-              "onPress": undefined,
-              "testID": "deleteWallet",
-              "title": "Remove wallet",
-            },
-          ]
-        }
-        mx={5}
-      />
-    </Memo(ForwardRef(Stack))>
-    <Memo(ForwardRef(Stack))
-      p={5}
-    >
-      <BuildIdentifier
-        onUnlock={[Function]}
-      />
-    </Memo(ForwardRef(Stack))>
-  </Styled(ScrollView)>
+      <Styled(View)>
+        <Box
+          alignItems="center"
+          flexDirection="row"
+          marginLeft={1}
+          marginRight={22}
+        >
+          <Memo(ForwardRef(Box))
+            width="80px"
+          >
+            <BackButton
+              onPress={[Function]}
+            />
+          </Memo(ForwardRef(Box))>
+          <Memo(ForwardRef(Box))
+            alignContent="center"
+            alignItems="center"
+            flex={1}
+            pl={15}
+            width="100%"
+          >
+            <Styled(Component)
+              variant="h3"
+            >
+              Settings
+            </Styled(Component)>
+          </Memo(ForwardRef(Box))>
+          <Memo(ForwardRef(Box))
+            alignItems="flex-end"
+            width="80px"
+          />
+        </Box>
+      </Styled(View)>
+      <Styled(ScrollView)>
+        <Memo(ForwardRef(Stack))
+          flex={1}
+        >
+          <OptionList
+            items={
+              Array [
+                Object {
+                  "icon": <SvgFile />,
+                  "onPress": undefined,
+                  "testID": "backupWallet",
+                  "title": "Backup wallet",
+                },
+                Object {
+                  "icon": <SvgFile />,
+                  "onPress": undefined,
+                  "testID": "deleteWallet",
+                  "title": "Remove wallet",
+                },
+              ]
+            }
+            mx={5}
+          />
+        </Memo(ForwardRef(Stack))>
+        <Memo(ForwardRef(Stack))
+          p={5}
+        >
+          <BuildIdentifier
+            onUnlock={[Function]}
+          />
+        </Memo(ForwardRef(Stack))>
+      </Styled(ScrollView)>
+    </Memo(ForwardRef(Box))>
+  </Memo(ForwardRef(Box))>
 </RNCSafeAreaView>
 `;

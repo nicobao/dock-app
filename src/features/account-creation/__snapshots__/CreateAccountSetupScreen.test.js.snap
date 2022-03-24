@@ -11,70 +11,78 @@ exports[`CreateAccountSetupScreen should render correctly 1`] = `
   testID="createAccount"
 >
   <AppGlobalHeader />
-  <Styled(View)>
-    <BackButton
-      testID="createAccount.backBtn"
-    />
-  </Styled(View)>
-  <Styled(ScrollView)
-    marginLeft={26}
-    marginRight={26}
+  <Memo(ForwardRef(Box))
+    flex={1}
   >
-    <Styled(Component)
-      marginTop={52}
-      variant="h1"
-    >
-      Account Name
-    </Styled(Component)>
-    <Styled(Component)
-      f={true}
-      marginTop={12}
-    >
-      This will be used just for easy reference
-    </Styled(Component)>
     <Memo(ForwardRef(Box))
-      mt={7}
+      flex={1}
     >
-      <Memo(ForwardRef(Input))
-        placeholder="Account name"
-        testID="createAccountSetupScreen.acountNameInput"
-        value="test"
-      />
-    </Memo(ForwardRef(Box))>
-    <AccountAdvancedOptions
-      form={
-        Object {
-          "accountName": "test",
-        }
-      }
-      onChange={
-        [MockFunction] {
-          "calls": Array [
-            Array [
-              "accountName",
-            ],
-          ],
-          "results": Array [
+      <Styled(View)>
+        <BackButton
+          testID="createAccount.backBtn"
+        />
+      </Styled(View)>
+      <Styled(ScrollView)
+        marginLeft={26}
+        marginRight={26}
+      >
+        <Styled(Component)
+          marginTop={52}
+          variant="h1"
+        >
+          Account Name
+        </Styled(Component)>
+        <Styled(Component)
+          f={true}
+          marginTop={12}
+        >
+          This will be used just for easy reference
+        </Styled(Component)>
+        <Memo(ForwardRef(Box))
+          mt={7}
+        >
+          <Memo(ForwardRef(Input))
+            placeholder="Account name"
+            testID="createAccountSetupScreen.acountNameInput"
+            value="test"
+          />
+        </Memo(ForwardRef(Box))>
+        <AccountAdvancedOptions
+          form={
             Object {
-              "type": "return",
-              "value": undefined,
-            },
-          ],
-        }
-      }
-    />
-  </Styled(ScrollView)>
-  <Styled(Box)
-    marginBottom={10}
-    marginLeft={26}
-    marginRight={26}
-  >
-    <LoadingButton
-      full={true}
-      testID="createAccountSetupScreen.nextBtn"
-    >
-      Next
-    </LoadingButton>
-  </Styled(Box)>
+              "accountName": "test",
+            }
+          }
+          onChange={
+            [MockFunction] {
+              "calls": Array [
+                Array [
+                  "accountName",
+                ],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
+            }
+          }
+        />
+      </Styled(ScrollView)>
+      <Styled(Component)
+        marginBottom={10}
+        marginLeft={26}
+        marginRight={26}
+      >
+        <LoadingButton
+          full={true}
+          testID="createAccountSetupScreen.nextBtn"
+        >
+          Next
+        </LoadingButton>
+      </Styled(Component)>
+    </Memo(ForwardRef(Box))>
+  </Memo(ForwardRef(Box))>
 </RNCSafeAreaView>
 `;

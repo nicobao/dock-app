@@ -11,31 +11,39 @@ exports[`CreatePasscodeScreen should render correctly 1`] = `
   testID="createPasscodeScreen"
 >
   <AppGlobalHeader />
-  <Styled(View)>
-    <BackButton />
-  </Styled(View)>
-  <Styled(ScrollView)
-    marginLeft={26}
-    marginRight={26}
+  <Memo(ForwardRef(Box))
+    flex={1}
   >
-    <PasscodeMask
-      digits={6}
-      filled={2}
-      marginTop={59}
-    />
-    <Box
-      alignItems="center"
+    <Memo(ForwardRef(Box))
+      flex={1}
     >
-      <Styled(Component)
-        marginTop={52}
-        variant="h2"
+      <Styled(View)>
+        <BackButton />
+      </Styled(View)>
+      <Styled(ScrollView)
+        marginLeft={26}
+        marginRight={26}
       >
-        Create your passcode
-      </Styled(Component)>
-    </Box>
-    <NumericKeyboard
-      marginTop={85}
-    />
-  </Styled(ScrollView)>
+        <PasscodeMask
+          digits={6}
+          filled={2}
+          marginTop={59}
+        />
+        <Box
+          alignItems="center"
+        >
+          <Styled(Component)
+            marginTop={52}
+            variant="h2"
+          >
+            Create your passcode
+          </Styled(Component)>
+        </Box>
+        <NumericKeyboard
+          marginTop={85}
+        />
+      </Styled(ScrollView)>
+    </Memo(ForwardRef(Box))>
+  </Memo(ForwardRef(Box))>
 </RNCSafeAreaView>
 `;

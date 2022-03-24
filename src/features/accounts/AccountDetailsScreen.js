@@ -34,6 +34,7 @@ import {AccountSettingsModal} from './AccountSettingsModal';
 import {QRCodeModal} from './QRCodeModal';
 import {addTestId} from '../../core/automation-utils';
 import {appSelectors} from '../app/app-slice';
+import {useFeatures} from '../app/feature-flags';
 
 const TRANSACTION_FILTERS = {
   all: 'all',
@@ -158,10 +159,7 @@ function TransactionHistory({accountAddress}) {
   const allTransactions = useSelector(transactionsSelectors.getTransactions);
   const [activeFilter, setActiveFilter] = useState(TRANSACTION_FILTERS.all);
   const networkId = useSelector(appSelectors.getNetworkId);
-  const showTestnetConfig = useSelector(
-    appSelectors.getShowTestnetTransactionConfig,
-  );
-
+  const {features} = useFeatures();
   const transactions = useMemo(() => {
     return filterTransactionHistory(
       allTransactions,
@@ -170,7 +168,7 @@ function TransactionHistory({accountAddress}) {
     );
   }, [allTransactions, accountAddress, activeFilter]);
 
-  if (networkId !== 'mainnet' && !showTestnetConfig) {
+  if (networkId !== 'mainnet' && !features.showTestnetTransaction) {
     return (
       <NBox>
         <Typography variant="list-description">

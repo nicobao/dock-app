@@ -11,184 +11,192 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
   testID="AccountDetailsScreen"
 >
   <AppGlobalHeader />
-  <Styled(View)>
-    <Box
-      alignItems="center"
-      flexDirection="row"
-      marginLeft={1}
-      marginRight={22}
-    >
-      <Memo(ForwardRef(Box))
-        width="80px"
-      >
-        <BackButton
-          onPress={[Function]}
-        />
-      </Memo(ForwardRef(Box))>
-      <Memo(ForwardRef(Box))
-        alignContent="center"
-        alignItems="center"
-        flex={1}
-        pl={15}
-        width="100%"
-      >
-        <Styled(Component)
-          variant="h3"
-        />
-      </Memo(ForwardRef(Box))>
-      <Memo(ForwardRef(Box))
-        alignItems="flex-end"
-        width="80px"
-      >
-        <Memo(ForwardRef(Pressable))
-          _pressed={
-            Object {
-              "opacity": 0.2,
-            }
-          }
-          onPress={[Function]}
-        >
-          <SvgFile
-            height="22px"
-            width="22px"
-          />
-        </Memo(ForwardRef(Pressable))>
-      </Memo(ForwardRef(Box))>
-    </Box>
-  </Styled(View)>
-  <ForwardRef
-    refreshControl={<RefreshControlMock />}
+  <Memo(ForwardRef(Box))
+    flex={1}
   >
-    <Memo(ForwardRef(Stack))
+    <Memo(ForwardRef(Box))
       flex={1}
-      mx={5}
     >
-      <Memo(ForwardRef(Stack))
-        alignItems="center"
-        direction="column"
-        mx={3}
-      >
-        <Memo(ForwardRef(Stack))
+      <Styled(View)>
+        <Box
           alignItems="center"
-          direction="column"
-          mt={8}
-        >
-          <Memo()
-            size={48}
-          />
-          <Component>
-            <Component />
-          </Component>
-        </Memo(ForwardRef(Stack))>
-        <Memo(ForwardRef(Stack))
-          direction="row"
-          mb={7}
-          mt={9}
-          width="100%"
-        >
-          <Memo(ForwardRef(Button))
-            accessibilityLabel="SendTokensBtn"
-            flex={1}
-            mr={2}
-            onPress={[Function]}
-            size="sm"
-            testID="SendTokensBtn"
-          >
-            Send
-          </Memo(ForwardRef(Button))>
-          <Memo(ForwardRef(Button))
-            accessibilityLabel="ReceiveTokensBtn"
-            flex={1}
-            ml={2}
-            onPress={[Function]}
-            size="sm"
-            testID="ReceiveTokensBtn"
-          >
-            Receive
-          </Memo(ForwardRef(Button))>
-        </Memo(ForwardRef(Stack))>
-      </Memo(ForwardRef(Stack))>
-      <Memo(ForwardRef(Stack))
-        backgroundColor="rgba(120, 53, 15, 0.3)"
-        mt={5}
-        p="16px"
-      >
-        <Memo(ForwardRef(Stack))
-          direction="row"
+          flexDirection="row"
+          marginLeft={1}
+          marginRight={22}
         >
           <Memo(ForwardRef(Box))
-            mr={3}
-            mt="3px"
+            width="80px"
           >
-            <SvgFile />
+            <BackButton
+              onPress={[Function]}
+            />
           </Memo(ForwardRef(Box))>
-          <Styled(Component)
-            fontSize={17}
-            ml={2}
-            variant="h3"
+          <Memo(ForwardRef(Box))
+            alignContent="center"
+            alignItems="center"
+            flex={1}
+            pl={15}
+            width="100%"
           >
-            Account not backed up
-          </Styled(Component)>
-        </Memo(ForwardRef(Stack))>
-        <Memo(ForwardRef(Box))
-          mt={2}
-        >
-          <Styled(Component)
-            color="rgba(254, 243, 199, 1)"
+            <Styled(Component)
+              variant="h3"
+            />
+          </Memo(ForwardRef(Box))>
+          <Memo(ForwardRef(Box))
+            alignItems="flex-end"
+            width="80px"
           >
-            This phrase allows you to recover your account if your phone is lost or you change your device.
-          </Styled(Component)>
-        </Memo(ForwardRef(Box))>
-        <Memo(ForwardRef(Button))
-          accessibilityLabel="BackupBtn"
-          alignSelf="flex-start"
-          backgroundColor="rgba(120, 53, 15, 1)"
-          mt={4}
-          size="sm"
-          testID="BackupBtn"
-        >
-          Back up now
-        </Memo(ForwardRef(Button))>
-      </Memo(ForwardRef(Stack))>
-      <Memo(ForwardRef(Stack))
-        mt={3}
+            <Memo(ForwardRef(Pressable))
+              _pressed={
+                Object {
+                  "opacity": 0.2,
+                }
+              }
+              onPress={[Function]}
+            >
+              <SvgFile
+                height="22px"
+                width="22px"
+              />
+            </Memo(ForwardRef(Pressable))>
+          </Memo(ForwardRef(Box))>
+        </Box>
+      </Styled(View)>
+      <ForwardRef
+        refreshControl={<RefreshControlMock />}
       >
-        <Memo(ForwardRef(Box))
-          borderBottomColor="#3F3F46"
-          borderBottomWidth={0.5}
-          pb={2}
-          pl={0}
-          pr={0}
+        <Memo(ForwardRef(Stack))
+          flex={1}
+          mx={5}
         >
-          <Styled(Component)
-            variant="h2"
+          <Memo(ForwardRef(Stack))
+            alignItems="center"
+            direction="column"
+            mx={3}
           >
-            Transactions
-          </Styled(Component)>
-        </Memo(ForwardRef(Box))>
-        <Memo(ForwardRef(Box))>
-          <TransactionHistory />
-        </Memo(ForwardRef(Box))>
-      </Memo(ForwardRef(Stack))>
-    </Memo(ForwardRef(Stack))>
-  </ForwardRef>
-  <AccountSettingsModal
-    account={
-      Object {
-        "meta": Object {
-          "balance": 0,
-          "name": "Test account",
-        },
-      }
-    }
-    onClose={[Function]}
-  />
-  <QRCodeModal
-    accessibilityLabel="ExportAccountDescription"
-    description="Scan this QR code in your new device"
-    onClose={[Function]}
-    testID="ExportAccountDescription"
-    title="Export account"
-  />
+            <Memo(ForwardRef(Stack))
+              alignItems="center"
+              direction="column"
+              mt={8}
+            >
+              <Memo()
+                size={48}
+              />
+              <Component>
+                <Component />
+              </Component>
+            </Memo(ForwardRef(Stack))>
+            <Memo(ForwardRef(Stack))
+              direction="row"
+              mb={7}
+              mt={9}
+              width="100%"
+            >
+              <Memo(ForwardRef(Button))
+                accessibilityLabel="SendTokensBtn"
+                flex={1}
+                mr={2}
+                onPress={[Function]}
+                size="sm"
+                testID="SendTokensBtn"
+              >
+                Send
+              </Memo(ForwardRef(Button))>
+              <Memo(ForwardRef(Button))
+                accessibilityLabel="ReceiveTokensBtn"
+                flex={1}
+                ml={2}
+                onPress={[Function]}
+                size="sm"
+                testID="ReceiveTokensBtn"
+              >
+                Receive
+              </Memo(ForwardRef(Button))>
+            </Memo(ForwardRef(Stack))>
+          </Memo(ForwardRef(Stack))>
+          <Memo(ForwardRef(Stack))
+            backgroundColor="rgba(120, 53, 15, 0.3)"
+            mt={5}
+            p="16px"
+          >
+            <Memo(ForwardRef(Stack))
+              direction="row"
+            >
+              <Memo(ForwardRef(Box))
+                mr={3}
+                mt="3px"
+              >
+                <SvgFile />
+              </Memo(ForwardRef(Box))>
+              <Styled(Component)
+                fontSize={17}
+                ml={2}
+                variant="h3"
+              >
+                Account not backed up
+              </Styled(Component)>
+            </Memo(ForwardRef(Stack))>
+            <Memo(ForwardRef(Box))
+              mt={2}
+            >
+              <Styled(Component)
+                color="rgba(254, 243, 199, 1)"
+              >
+                This phrase allows you to recover your account if your phone is lost or you change your device.
+              </Styled(Component)>
+            </Memo(ForwardRef(Box))>
+            <Memo(ForwardRef(Button))
+              accessibilityLabel="BackupBtn"
+              alignSelf="flex-start"
+              backgroundColor="rgba(120, 53, 15, 1)"
+              mt={4}
+              size="sm"
+              testID="BackupBtn"
+            >
+              Back up now
+            </Memo(ForwardRef(Button))>
+          </Memo(ForwardRef(Stack))>
+          <Memo(ForwardRef(Stack))
+            mt={3}
+          >
+            <Memo(ForwardRef(Box))
+              borderBottomColor="#3F3F46"
+              borderBottomWidth={0.5}
+              pb={2}
+              pl={0}
+              pr={0}
+            >
+              <Styled(Component)
+                variant="h2"
+              >
+                Transactions
+              </Styled(Component)>
+            </Memo(ForwardRef(Box))>
+            <Memo(ForwardRef(Box))>
+              <TransactionHistory />
+            </Memo(ForwardRef(Box))>
+          </Memo(ForwardRef(Stack))>
+        </Memo(ForwardRef(Stack))>
+      </ForwardRef>
+      <AccountSettingsModal
+        account={
+          Object {
+            "meta": Object {
+              "balance": 0,
+              "name": "Test account",
+            },
+          }
+        }
+        onClose={[Function]}
+      />
+      <QRCodeModal
+        accessibilityLabel="ExportAccountDescription"
+        description="Scan this QR code in your new device"
+        onClose={[Function]}
+        testID="ExportAccountDescription"
+        title="Export account"
+      />
+    </Memo(ForwardRef(Box))>
+  </Memo(ForwardRef(Box))>
 </RNCSafeAreaView>
 `;
