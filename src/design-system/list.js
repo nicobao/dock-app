@@ -1,11 +1,11 @@
-import {Box, Pressable, Stack} from 'native-base';
+import {Box, Pressable, Stack, Switch} from 'native-base';
 import React from 'react';
 import {ChevronRightIcon, Text, Theme} from 'src/design-system';
 
 export function OptionList({items, postPress, ...otherProps}) {
   return (
     <Box {...otherProps}>
-      {items.map(({title, onPress, icon, testID}, idx) => (
+      {items.map(({title, onPress, icon, testID, isSwitch, value}, idx) => (
         <Pressable
           key={idx}
           _pressed={{
@@ -13,6 +13,10 @@ export function OptionList({items, postPress, ...otherProps}) {
           }}
           testID={testID}
           onPress={async () => {
+            if (isSwitch) {
+              return;
+            }
+
             if (onPress) {
               await onPress();
             }
@@ -32,7 +36,13 @@ export function OptionList({items, postPress, ...otherProps}) {
                 {title}
               </Text>
             </Box>
-            <ChevronRightIcon />
+            {isSwitch ? (
+              <Box top={-5}>
+                <Switch isChecked={value} onToggle={onPress} />
+              </Box>
+            ) : (
+              <ChevronRightIcon />
+            )}
           </Stack>
         </Pressable>
       ))}

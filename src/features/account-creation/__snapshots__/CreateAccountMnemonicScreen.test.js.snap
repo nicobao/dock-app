@@ -10,93 +10,101 @@ exports[`CreateAccountMnemonicScreen should render correctly 1`] = `
   }
   testID="create-wallet-screen"
 >
-  <Styled(View)>
-    <BackButton />
-  </Styled(View)>
-  <Styled(ScrollView)
-    marginLeft={26}
-    marginRight={26}
+  <Memo(ForwardRef(Box))
+    flex={1}
   >
-    <Styled(Component)
-      marginTop={52}
-      variant="h1"
-    >
-      Account recovery phrase
-    </Styled(Component)>
-    <Styled(Component)
-      marginTop={12}
-    >
-      Write this down or copy these words in the right order and save them somewhere safe. Do not share it to anyone
-    </Styled(Component)>
     <Memo(ForwardRef(Box))
-      backgroundColor="#27272A"
-      borderRadius={12}
-      flexDirection="row"
-      flexWrap="wrap"
-      mt={8}
-      p={5}
+      flex={1}
     >
-      <Memo(ForwardRef(Box))
-        flexDirection="row"
-        key="test"
-        p={3}
-        width="33%"
+      <Styled(View)>
+        <BackButton />
+      </Styled(View)>
+      <Styled(ScrollView)
+        marginLeft={26}
+        marginRight={26}
       >
-        <Memo(ForwardRef(Text))
-          color="#A1A1AA"
-          fontSize={14}
-          mr={2}
+        <Styled(Component)
+          marginTop={52}
+          variant="h1"
         >
-          1
-        </Memo(ForwardRef(Text))>
-        <Memo(ForwardRef(Text))
-          fontSize={14}
+          Account recovery phrase
+        </Styled(Component)>
+        <Styled(Component)
+          marginTop={12}
         >
-          test
-        </Memo(ForwardRef(Text))>
-      </Memo(ForwardRef(Box))>
-      <Memo(ForwardRef(Box))
-        flexDirection="row"
-        key="phrase"
-        p={3}
-        width="33%"
+          Write this down or copy these words in the right order and save them somewhere safe. Do not share it to anyone
+        </Styled(Component)>
+        <Memo(ForwardRef(Box))
+          backgroundColor="#27272A"
+          borderRadius={12}
+          flexDirection="row"
+          flexWrap="wrap"
+          mt={8}
+          p={5}
+        >
+          <Memo(ForwardRef(Box))
+            flexDirection="row"
+            key="test"
+            p={3}
+            width="33%"
+          >
+            <Memo(ForwardRef(Text))
+              color="#A1A1AA"
+              fontSize={14}
+              mr={2}
+            >
+              1
+            </Memo(ForwardRef(Text))>
+            <Memo(ForwardRef(Text))
+              fontSize={14}
+            >
+              test
+            </Memo(ForwardRef(Text))>
+          </Memo(ForwardRef(Box))>
+          <Memo(ForwardRef(Box))
+            flexDirection="row"
+            key="phrase"
+            p={3}
+            width="33%"
+          >
+            <Memo(ForwardRef(Text))
+              color="#A1A1AA"
+              fontSize={14}
+              mr={2}
+            >
+              2
+            </Memo(ForwardRef(Text))>
+            <Memo(ForwardRef(Text))
+              fontSize={14}
+            >
+              phrase
+            </Memo(ForwardRef(Text))>
+          </Memo(ForwardRef(Box))>
+        </Memo(ForwardRef(Box))>
+        <Memo(ForwardRef(Button))
+          backgroundColor="#27272A"
+          full={true}
+          mt={5}
+          testID="next-btn"
+          variant="unstyled"
+        >
+          Copy to clipboard
+        </Memo(ForwardRef(Button))>
+      </Styled(ScrollView)>
+      <Styled(Component)
+        marginBottom={0}
+        marginLeft={26}
+        marginRight={26}
       >
-        <Memo(ForwardRef(Text))
-          color="#A1A1AA"
-          fontSize={14}
-          mr={2}
+        <LoadingButton
+          full={true}
+          mb={5}
+          testID="next-btn"
         >
-          2
-        </Memo(ForwardRef(Text))>
-        <Memo(ForwardRef(Text))
-          fontSize={14}
-        >
-          phrase
-        </Memo(ForwardRef(Text))>
-      </Memo(ForwardRef(Box))>
+          Next
+        </LoadingButton>
+      </Styled(Component)>
     </Memo(ForwardRef(Box))>
-    <Memo(ForwardRef(Button))
-      backgroundColor="#27272A"
-      full={true}
-      mt={5}
-      testID="next-btn"
-      variant="unstyled"
-    >
-      Copy to clipboard
-    </Memo(ForwardRef(Button))>
-  </Styled(ScrollView)>
-  <Styled(Box)
-    marginBottom={0}
-    marginLeft={26}
-    marginRight={26}
-  >
-    <LoadingButton
-      full={true}
-      mb={5}
-      testID="next-btn"
-    >
-      Next
-    </LoadingButton>
-  </Styled(Box)>
+  </Memo(ForwardRef(Box))>
 </RNCSafeAreaView>
 `;

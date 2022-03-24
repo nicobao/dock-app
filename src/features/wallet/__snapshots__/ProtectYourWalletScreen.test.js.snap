@@ -11,38 +11,46 @@ exports[`ProtectYourWalletScreen should render correctly 1`] = `
   testID="create-wallet-screen"
 >
   <AppGlobalHeader />
-  <Styled(View)>
-    <BackButton />
-  </Styled(View)>
-  <Styled(ScrollView)
-    marginLeft={26}
-    marginRight={26}
-  >
-    <Styled(Component)
-      marginTop={52}
-      variant="h1"
-    >
-      Protect your wallet
-    </Styled(Component)>
-    <Styled(Component)
-      marginTop={12}
-    >
-      Use your biometric to add extra layer of security and easier way to access your wallet
-    </Styled(Component)>
-  </Styled(ScrollView)>
-  <Styled(Box)
+  <Memo(ForwardRef(Box))
     flex={1}
-    marginBottom={114}
-    marginLeft={26}
-    marginRight={26}
   >
-    <BigButton
-      accessibilityLabel="DoThisLater"
-      icon={<SvgFile />}
-      testID="DoThisLater"
+    <Memo(ForwardRef(Box))
+      flex={1}
     >
-      Do this later
-    </BigButton>
-  </Styled(Box)>
+      <Styled(View)>
+        <BackButton />
+      </Styled(View)>
+      <Styled(ScrollView)
+        marginLeft={26}
+        marginRight={26}
+      >
+        <Styled(Component)
+          marginTop={52}
+          variant="h1"
+        >
+          Protect your wallet
+        </Styled(Component)>
+        <Styled(Component)
+          marginTop={12}
+        >
+          Use your biometric to add extra layer of security and easier way to access your wallet
+        </Styled(Component)>
+      </Styled(ScrollView)>
+      <Styled(Component)
+        flex={1}
+        marginBottom={114}
+        marginLeft={26}
+        marginRight={26}
+      >
+        <BigButton
+          accessibilityLabel="DoThisLater"
+          icon={<SvgFile />}
+          testID="DoThisLater"
+        >
+          Do this later
+        </BigButton>
+      </Styled(Component)>
+    </Memo(ForwardRef(Box))>
+  </Memo(ForwardRef(Box))>
 </RNCSafeAreaView>
 `;
