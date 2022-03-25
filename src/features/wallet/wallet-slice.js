@@ -81,7 +81,7 @@ async function validateAndImport(fileData, password) {
     await WalletRpc.importWallet(jsonData, password);
   } catch (err) {
     console.error(err);
-    throw new Error(translate('import_wallet.invalid_file'));
+    throw new Error(translate('import_wallet.import_error'));
   }
 
   const docs = await WalletRpc.query({});
