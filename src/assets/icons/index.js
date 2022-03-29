@@ -21,6 +21,7 @@ import MenuTokensIcon from './menu_tokens.svg';
 import MenuCredentialsIcon from './menu_credentials.svg';
 import MenuScanQRIcon from './menu_scan_qr.svg';
 import MenuSettingsIcon from './menu_settings.svg';
+import EmptyCredentialIcon from './empty-credential.svg';
 
 export {
   DockLogoIcon,
@@ -46,4 +47,5 @@ export {
   MenuTokensIcon,
   MenuScanQRIcon,
   MenuSettingsIcon,
+  EmptyCredentialIcon,
 };
