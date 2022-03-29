@@ -16,6 +16,7 @@ import {addTestId} from '../../core/automation-utils';
 import {Center, Image, Text} from 'native-base';
 import {ICenterProps} from 'native-base/lib/typescript/components/composites/Center/types';
 import testCredential from './test-credential.json';
+import {useCredentials} from './credentials';
 
 function EmptyCredentials(props: ICenterProps) {
   return (
@@ -116,23 +117,6 @@ export function CredentialsScreen({credentials, onRemove}) {
       </Content>
     </ScreenContainer>
   );
-}
-
-function useCredentials() {
-  const [items, setItems] = useState([
-    testCredential,
-    {...testCredential},
-    {...testCredential},
-  ]);
-
-  const handleRemove = item => {
-    setItems(value => value.filter(v => v !== item));
-  };
-
-  return {
-    credentials: items,
-    handleRemove,
-  };
 }
 
 export function CredentialsContainer(props) {
