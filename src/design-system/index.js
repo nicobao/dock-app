@@ -10,6 +10,7 @@ import styled from 'styled-components/native';
 import {Theme} from './theme';
 import {Typography} from './typography';
 import {TabNavigation} from './TabNavigation';
+import {isAndroid} from './platform-utils';
 
 function ConnectionStatus({status, loadingText, errorText}) {
   if (!status && loadingText) {
@@ -69,7 +70,7 @@ export function ScreenContainer({
       <Box flex={1}>
         <Box flex={1}>{children}</Box>
         {showTabNavigation ? (
-          <Box flex={1} flexGrow={0.07}>
+          <Box flex={1} flexGrow={isAndroid() ? 0.15 : 0.07}>
             <TabNavigation />
           </Box>
         ) : null}

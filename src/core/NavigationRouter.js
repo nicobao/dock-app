@@ -106,6 +106,7 @@ function AppStackScreen() {
           options: {
             gestureEnabled: false,
           },
+          tab: 'settings',
         })}
       />
       <AppStack.Screen
@@ -196,6 +197,7 @@ function AppStackScreen() {
         {...getScreenProps({
           name: Routes.DEV_SETTINGS,
           component: DevSettingsContainer,
+          tab: 'settings',
         })}
       />
 

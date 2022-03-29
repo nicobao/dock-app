@@ -111,7 +111,7 @@ export function DevSettingsScreen({
   }, [currentNetworkId, features, onFeatureToggled]);
 
   return (
-    <ScreenContainer testID="DevSettingsScreen">
+    <ScreenContainer testID="DevSettingsScreen" showTabNavigation>
       <Header>
         <Box
           marginLeft={1}
