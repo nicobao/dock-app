@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {translate} from 'src/locales';
 import {navigateBack} from '../../core/navigation';
 import {
@@ -15,7 +15,6 @@ import {
 import {addTestId} from '../../core/automation-utils';
 import {Center, Image, Text} from 'native-base';
 import {ICenterProps} from 'native-base/lib/typescript/components/composites/Center/types';
-import testCredential from './test-credential.json';
 import {useCredentials} from './credentials';
 
 function EmptyCredentials(props: ICenterProps) {
@@ -31,7 +30,7 @@ function EmptyCredentials(props: ICenterProps) {
         pt={2}
         fontWeight={400}
         fontFamily={Theme.fontFamily.nunitoSans}>
-        You’ll see credentials here once you accept them
+        {translate('credentials.empty_items')}
       </Text>
     </Center>
   );
@@ -69,7 +68,6 @@ function CredentialListItem({credential}) {
             alt={''}
             source={{
               uri: credential.issuer.logo,
-              // body: credential.issuer.logo,
             }}
           />
         </NBox>

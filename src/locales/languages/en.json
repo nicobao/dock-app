@@ -96,6 +96,9 @@
     "switch_network_success": "Network switch successful",
     "switch_network_error": "Network switch failed"
   },
+  "credentials": {
+    "empty_message": "You’ll see credentials here once you accept them"
+  },
   "account_setup": {
     "title": "Account Name",
     "description": "This will be used just for easy reference",
