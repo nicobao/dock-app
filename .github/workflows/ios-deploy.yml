@@ -30,6 +30,7 @@ jobs:
           FASTLANE_ITC_TEAM_ID: ${{ secrets.FASTLANE_ITC_TEAM_ID }}
           FASTLANE_TEAM_ID: ${{ secrets.FASTLANE_TEAM_ID }}
         run: |
+          git config --global url."https://".insteadOf git://
           xcodebuild -version
           yarn install
           git clone "${{ secrets.CERTS_REPO_URL }}" ./certs
@@ -41,4 +42,3 @@ jobs:
           fastlane setup --verbose
           fastlane beta --verbose
 
-      
