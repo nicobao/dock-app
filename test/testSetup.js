@@ -62,13 +62,11 @@ jest.mock('react-native-fs', () => ({
 
 jest.mock('react-native-keychain', () => ({
   getSupportedBiometryType: () => Promise.resolve('FaceId'),
-	BIOMETRY_TYPE: {
-		FACE_ID: 1,
-		FINGERPRINT: 2,
-	}
+  BIOMETRY_TYPE: {
+    FACE_ID: 1,
+    FINGERPRINT: 2,
+  },
 }));
-
-
 
 NativeModules.RNGestureHandlerModule = {
   attachGestureHandler: jest.fn(),
@@ -94,11 +92,19 @@ NativeModules.RCTAnalytics = {
   getRemoteVariables: jest.fn(),
 };
 
-jest.mock('react-native/Libraries/Components/Touchable/TouchableOpacity', () => 'TouchableOpacity');
-jest.mock('react-native/Libraries/Components/Touchable/TouchableHighlight', () => 'TouchableHighlight');
-jest.mock('react-native/Libraries/Components/TextInput/TextInput', () => 'TextInput');
+jest.mock(
+  'react-native/Libraries/Components/Touchable/TouchableOpacity',
+  () => 'TouchableOpacity',
+);
+jest.mock(
+  'react-native/Libraries/Components/Touchable/TouchableHighlight',
+  () => 'TouchableHighlight',
+);
+jest.mock(
+  'react-native/Libraries/Components/TextInput/TextInput',
+  () => 'TextInput',
+);
 jest.mock('react-native-document-picker', () => 'RNDocumentPicker');
-
 
 jest.mock('react-native/Libraries/Interaction/InteractionManager', () => ({
   runAfterInteractions: jest.fn(),
@@ -106,3 +112,22 @@ jest.mock('react-native/Libraries/Interaction/InteractionManager', () => ({
   clearInteractionHandle: jest.fn(),
   setDeadline: jest.fn(),
 }));
+
+jest.mock('@docknetwork/react-native-sdk/src/client/wallet-rpc', () => {
+  const originalModule = jest.requireActual(
+    '@docknetwork/react-native-sdk/src/client/wallet-rpc',
+  );
+  const {WalletRpc} = originalModule;
+  return {
+    __esModule: true,
+    WalletRpc: {
+      ...WalletRpc,
+      importWallet: jest.fn(() => Promise.resolve()),
+      query: jest.fn(() => Promise.resolve([])),
+      remove: jest.fn(),
+      create: jest.fn(),
+      load: jest.fn(),
+      sync: jest.fn(),
+    },
+  };
+});
