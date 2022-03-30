@@ -43,8 +43,9 @@ platform :android do
           bucket:  ENV['S3_APP_BUCKET'],
           region: ENV['S3_REGION'],
           apk: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH].to_s,
-          app_directory: 'android',
+          app_directory: ENV['S3_ANDROID_APK_DIR'],
           upload_metadata: true,
+          acl: ENV['S3_ACL'],
         )
 
   end
