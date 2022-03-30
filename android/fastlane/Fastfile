@@ -24,18 +24,29 @@ platform :android do
 
   desc "Submit a new Beta Build to Google Play"
   lane :internal do
-    gradle(
-      task: 'assemble',
-      build_type: 'Release'
-    )
-    
-    supply(
-      track: 'internal',    
-      apk: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH].to_s,
-      skip_upload_metadata: true,
-      skip_upload_images: true,
-      skip_upload_changelogs: true,
-    )
+        gradle(
+          task: 'assemble',
+          build_type: 'Release'
+        )
+
+        supply(
+          track: 'internal',
+          apk: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH].to_s,
+          skip_upload_metadata: true,
+          skip_upload_images: true,
+          skip_upload_changelogs: true,
+        )
+
+        aws_s3(
+          access_key:  ENV['S3_ACCESS_KEY'],
+          secret_access_key: ENV['S3_SECRET_ACCESS_KEY'],
+          bucket:  ENV['S3_APP_BUCKET'],
+          region: ENV['S3_REGION'],
+          apk: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH].to_s,
+          app_directory: 'android',
+          upload_metadata: true,
+        )
+
   end
 end
 
