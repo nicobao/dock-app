@@ -32,6 +32,7 @@ export const Theme = {
     transactionFailed: '#F87171',
     transactionPending: '#FBBF24',
     qrCodeBackground: '#fff',
+    credentialCardBg: '#000',
   },
   screen: {
     backgroundColor: '#18181B',

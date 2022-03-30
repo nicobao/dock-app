@@ -16,6 +16,7 @@ import {addTestId} from '../../core/automation-utils';
 import {Center, Image, Text} from 'native-base';
 import {ICenterProps} from 'native-base/lib/typescript/components/composites/Center/types';
 import {useCredentials} from './credentials';
+import {formatDate} from '@docknetwork/wallet-sdk-core/lib/core/format-utils';
 
 function EmptyCredentials(props: ICenterProps) {
   return (
@@ -38,7 +39,7 @@ function EmptyCredentials(props: ICenterProps) {
 
 function CredentialListItem({credential}) {
   return (
-    <NBox bgColor="#000000" p={4} borderRadius={10} m={2}>
+    <NBox bgColor={Theme.colors.credentialCardBg} p={4} borderRadius={10} m={2}>
       <Text
         fontSize={'16px'}
         fontWeight={600}
@@ -57,7 +58,7 @@ function CredentialListItem({credential}) {
             fontSize={'11px'}
             fontWeight={500}
             fontFamily={Theme.fontFamily.montserrat}>
-            Issued on March, 13
+            {formatDate(credential.issuanceDate)}
           </Text>
         </NBox>
         <NBox flex={1} alignItems={'flex-end'}>
