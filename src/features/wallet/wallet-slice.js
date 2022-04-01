@@ -56,7 +56,7 @@ export const walletSelectors = {
   getCreationFlags: state => getRoot(state).creationFlags || {},
 };
 
-async function validateAndImport(fileData, password) {
+export async function validateWalletImport(fileData, password) {
   let jsonData;
 
   try {
@@ -76,50 +76,54 @@ async function validateAndImport(fileData, password) {
   } catch (err) {
     console.error(err);
   }
+  return jsonData;
+}
 
+export async function importWallet(jsonData, password) {
   try {
     await WalletRpc.importWallet(jsonData, password);
   } catch (err) {
     console.error(err);
-    throw new Error(translate('import_wallet.invalid_file'));
+    throw new Error(translate('import_wallet.import_error'));
   }
 
   const docs = await WalletRpc.query({});
+  if (Array.isArray(docs) && docs.length > 0) {
+    const accounts = docs.filter(doc => doc.type === 'Account');
 
-  console.log(docs);
-
-  if (docs.length === 0) {
-    throw new Error(translate('import_wallet.invalid_file'));
-  }
-
-  const accounts = docs.filter(doc => doc.type === 'Account');
-
-  if (accounts.length === 0) {
-    throw new Error(translate('import_wallet.invalid_file'));
-  }
-
-  const warnings = [];
-
-  for (let account of accounts) {
-    const correlationDocs = account.correlation.map(docId =>
-      docs.find(doc => doc.id === docId),
-    );
-    const hasMnemonic = correlationDocs.find(doc => doc.type === 'Mnemonic');
-    const hasKeyPair = correlationDocs.find(doc => doc.type === 'KeyPair');
-
-    if (!hasMnemonic && !hasKeyPair) {
-      warnings.push(`keypair not found for account ${account.id}`);
-
-      await WalletRpc.update({
-        ...account,
-        meta: {
-          ...account.meta,
-          readOnly: true,
-          keypairNotFoundWarning: true,
-        },
-      });
+    if (accounts.length === 0) {
+      throw new Error(translate('import_wallet.invalid_file'));
     }
+
+    const warnings = [];
+
+    for (let account of accounts) {
+      const correlationDocs = account.correlation.map(docId =>
+        docs.find(doc => doc.id === docId),
+      );
+      const hasMnemonic = correlationDocs.find(doc => doc.type === 'Mnemonic');
+      const hasKeyPair = correlationDocs.find(doc => doc.type === 'KeyPair');
+
+      if (!hasMnemonic && !hasKeyPair) {
+        warnings.push(`keypair not found for account ${account.id}`);
+
+        await WalletRpc.update({
+          ...account,
+          meta: {
+            ...account.meta,
+            readOnly: true,
+            keypairNotFoundWarning: true,
+          },
+        });
+      }
+    }
+  } else {
+    throw new Error(translate('import_wallet.invalid_file'));
   }
+}
+async function validateAndImport(fileData, password) {
+  const jsonData = await validateWalletImport(fileData, password);
+  await importWallet(jsonData, password);
 }
 
 export const walletOperations = {
