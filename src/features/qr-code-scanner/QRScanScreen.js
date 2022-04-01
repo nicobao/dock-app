@@ -13,6 +13,7 @@ import {Theme} from 'src/design-system';
 import styled from 'styled-components/native';
 import {navigateBack} from '../../core/navigation';
 import {Colors} from '../../theme/colors';
+import {qrCodeHandler} from './qr-code';
 
 const Container = styled.View`
   flex: 1;
@@ -81,7 +82,7 @@ const QRCodeContainer = styled.View`
 `;
 
 export function QRScanScreen({route}) {
-  const {onData} = route.params || {};
+  const {onData = qrCodeHandler} = route.params || {};
 
   return (
     <Container>

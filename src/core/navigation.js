@@ -1,8 +1,11 @@
 import {createRef} from 'react';
 
-const history = [];
+let history = [];
 
 export const navigationRef = createRef();
+
+export const getNavigationHistory = () => history;
+export const clearNavigationHistory = () => (history = []);
 
 export function navigate(name, params) {
   if (!navigationRef.current) {
