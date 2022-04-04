@@ -20,8 +20,17 @@ export async function credentialHandler(data) {
   try {
     // @ts-ignore
     const credentials: Credentials = Credentials.getInstance();
-    const credentialData = credentials.getCredentialFromUrl(data);
-    await credentials.add(credentialData);
+
+    let credentialData;
+
+    if (data.indexOf('http') === 0) {
+      credentialData = await credentials.getCredentialFromUrl(data);
+      await credentials.add(credentialData);
+    } else {
+      const jsonData = JSON.parse(data);
+      credentialData = await credentials.add(jsonData);
+    }
+
     navigate(Routes.APP_CREDENTIALS);
     return true;
   } catch (err) {

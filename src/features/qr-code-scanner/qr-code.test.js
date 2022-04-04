@@ -3,6 +3,7 @@ import {addressHandler, credentialHandler, qrCodeHandler} from './qr-code';
 import {navigationRef} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
+import testCredentialData from '@docknetwork/wallet-sdk-credentials/fixtures/test-credential.json';
 
 describe('qr-code', () => {
   describe('qr code handler', () => {
@@ -73,13 +74,13 @@ describe('qr-code', () => {
           throw new Error('Invalid credential');
         });
 
-      const result = await credentialHandler('some-address');
+      const result = await credentialHandler('http://some-url');
 
       expect(result).toBeFalsy();
       expect(navigationRef.current.navigate).not.toBeCalled();
     });
 
-    it('expect to add credential and navigate', async () => {
+    it('expect to add credential from url', async () => {
       navigationRef.current = {
         navigate: jest.fn(),
       };
@@ -93,7 +94,29 @@ describe('qr-code', () => {
         .spyOn(Credentials.getInstance(), 'add')
         .mockImplementationOnce(async () => true);
 
-      const result = await credentialHandler('some-address');
+      const result = await credentialHandler('http://some-url');
+
+      expect(result).toBeTruthy();
+      expect(navigationRef.current.navigate).toBeCalledWith(
+        Routes.APP_CREDENTIALS,
+        undefined,
+      );
+    });
+
+    it('expect to handle json data', async () => {
+      navigationRef.current = {
+        navigate: jest.fn(),
+      };
+
+      const credentialData = 'some-data';
+
+      jest
+        .spyOn(Credentials.getInstance(), 'add')
+        .mockImplementationOnce(async () => credentialData);
+
+      const result = await credentialHandler(
+        JSON.stringify(testCredentialData),
+      );
 
       expect(result).toBeTruthy();
       expect(navigationRef.current.navigate).toBeCalledWith(
