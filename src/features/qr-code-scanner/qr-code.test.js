@@ -1,6 +1,6 @@
 import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
 import {addressHandler, credentialHandler, qrCodeHandler} from './qr-code';
-import {clearNavigationHistory, navigationRef} from '../../core/navigation';
+import {navigationRef} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
 
@@ -22,7 +22,7 @@ describe('qr-code', () => {
       expect(handler2).not.toBeCalled();
     });
 
-    it('expect to trigger handler1', async () => {
+    it('expect to trigger handler2', async () => {
       const data = 'handler2';
       await qrCodeHandler(data, handlers);
 
@@ -38,8 +38,9 @@ describe('qr-code', () => {
         navigate: jest.fn(),
       };
 
-      await addressHandler('some-address');
+      const result = await addressHandler('some-address');
 
+      expect(result).toBeFalsy();
       expect(navigationRef.current.navigate).not.toBeCalled();
     });
 
@@ -51,8 +52,9 @@ describe('qr-code', () => {
       };
 
       const address = 'some-address';
-      await addressHandler(address);
+      const result = await addressHandler(address);
 
+      expect(result).toBeTruthy();
       expect(navigationRef.current.navigate).toBeCalledWith(Routes.TOKEN_SEND, {
         address,
       });
@@ -73,7 +75,7 @@ describe('qr-code', () => {
 
       const result = await credentialHandler('some-address');
 
-      expect(result).toBe(false);
+      expect(result).toBeFalsy();
       expect(navigationRef.current.navigate).not.toBeCalled();
     });
 
@@ -93,7 +95,7 @@ describe('qr-code', () => {
 
       const result = await credentialHandler('some-address');
 
-      expect(result).toBe(true);
+      expect(result).toBeTruthy();
       expect(navigationRef.current.navigate).toBeCalledWith(
         Routes.APP_CREDENTIALS,
         undefined,
