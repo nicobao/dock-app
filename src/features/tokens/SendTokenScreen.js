@@ -1,12 +1,12 @@
 import Clipboard from '@react-native-community/clipboard';
 import {Box, FormControl, Input, Stack} from 'native-base';
 import {Keyboard} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Share from 'react-native-share';
 import {useDispatch, useSelector} from 'react-redux';
 import {NumericKeyboard} from 'src/components/NumericKeyboard';
 import {PolkadotIcon} from 'src/components/PolkadotIcon';
-import {navigate, navigateBack} from 'src/core/navigation';
+import {getHistory, navigate, navigateBack} from 'src/core/navigation';
 import {Routes} from 'src/core/routes';
 import {showToast} from 'src/core/toast';
 import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
@@ -203,11 +203,14 @@ const defaultFormState = {
 
 export function SendTokenContainer({route}) {
   const dispatch = useDispatch();
-  const {address} = route.params || {};
+  const {address, recipientAddress = ''} = route.params || {};
   const accountDetails = useSelector(accountSelectors.getAccountById(address));
   const [showConfirmation, setShowConfirmation] = useState();
   const [step, setStep] = useState(Steps.sendTo);
-  const [form, setForm] = useState(defaultFormState);
+  const [form, setForm] = useState({
+    ...defaultFormState,
+    recipientAddress,
+  });
 
   const handleCopyAddress = () => {
     Clipboard.setString(address);
@@ -233,32 +236,49 @@ export function SendTokenContainer({route}) {
       ...newValues,
     }));
 
+  useEffect(() => {
+    const toAddress = route.params.recipientAddress;
+    if (toAddress && toAddress !== form.recipientAddress) {
+      updateForm({
+        recipientAddress: toAddress,
+      });
+    }
+  }, [route.params]);
+
   if (step === Steps.sendTo) {
     return (
       <SendTokenScreen
         form={form}
         onCopyAddress={handleCopyAddress}
         onScanQRCode={() => {
-          navigate(Routes.APP_QR_SCANNER, {
-            onData: async recipientAddress => {
-              const addressValid = await UtilCryptoRpc.isAddressValid(
-                recipientAddress,
-              );
-
-              navigateBack();
-
-              if (addressValid) {
-                updateForm({
+          navigate(
+            Routes.APP_QR_SCANNER,
+            {
+              onData: async recipientAddress => {
+                const addressValid = await UtilCryptoRpc.isAddressValid(
                   recipientAddress,
-                });
-              } else {
-                showToast({
-                  message: translate('global.not_valid_address'),
-                  type: 'error',
-                });
-              }
+                );
+
+                if (addressValid) {
+                  navigate(
+                    Routes.TOKEN_SEND,
+                    {
+                      address,
+                      recipientAddress,
+                    },
+                    true,
+                  );
+                } else {
+                  navigate(Routes.TOKEN_SEND, route.params);
+                  showToast({
+                    message: translate('global.not_valid_address'),
+                    type: 'error',
+                  });
+                }
+              },
             },
-          });
+            true,
+          );
         }}
         onShareAddress={handleShareAddress}
         onChange={handleChange}
@@ -348,7 +368,6 @@ export function SendTokenContainer({route}) {
                 accountAddress: accountDetails.id,
               }),
             ).then(fee => {
-              console.log('tx fee', fee);
               return handleFeeUpdate({
                 accountDetails,
                 form,
