@@ -6,7 +6,7 @@ import Share from 'react-native-share';
 import {useDispatch, useSelector} from 'react-redux';
 import {NumericKeyboard} from 'src/components/NumericKeyboard';
 import {PolkadotIcon} from 'src/components/PolkadotIcon';
-import {getHistory, navigate, navigateBack} from 'src/core/navigation';
+import {navigate} from 'src/core/navigation';
 import {Routes} from 'src/core/routes';
 import {showToast} from 'src/core/toast';
 import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
@@ -243,7 +243,7 @@ export function SendTokenContainer({route}) {
         recipientAddress: toAddress,
       });
     }
-  }, [route.params]);
+  }, [route.params, form.recipientAddress]);
 
   if (step === Steps.sendTo) {
     return (
@@ -254,9 +254,9 @@ export function SendTokenContainer({route}) {
           navigate(
             Routes.APP_QR_SCANNER,
             {
-              onData: async recipientAddress => {
+              onData: async toAddress => {
                 const addressValid = await UtilCryptoRpc.isAddressValid(
-                  recipientAddress,
+                  toAddress,
                 );
 
                 if (addressValid) {
@@ -264,7 +264,7 @@ export function SendTokenContainer({route}) {
                     Routes.TOKEN_SEND,
                     {
                       address,
-                      recipientAddress,
+                      recipientAddress: toAddress,
                     },
                     true,
                   );
