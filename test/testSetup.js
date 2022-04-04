@@ -4,6 +4,7 @@ import {NativeModules} from 'react-native';
 import mockAsyncStorage from '../node_modules/@react-native-async-storage/async-storage/jest/async-storage-mock';
 import mockRNPermissions from '../node_modules/react-native-permissions/mock';
 import '../src/core/setup-env';
+import DocumentPicker from 'react-native-document-picker';
 
 jest.mock('@react-native-async-storage/async-storage', () => mockAsyncStorage);
 jest.mock('react-native-device-info', () => 'DeviceInfo');
@@ -104,7 +105,10 @@ jest.mock(
   'react-native/Libraries/Components/TextInput/TextInput',
   () => 'TextInput',
 );
-jest.mock('react-native-document-picker', () => 'RNDocumentPicker');
+jest.mock('react-native-document-picker', () => ({
+  pick: jest.fn(),
+  types: {},
+}));
 
 jest.mock('react-native/Libraries/Interaction/InteractionManager', () => ({
   runAfterInteractions: jest.fn(),
