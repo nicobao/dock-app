@@ -104,7 +104,10 @@ jest.mock(
   'react-native/Libraries/Components/TextInput/TextInput',
   () => 'TextInput',
 );
-jest.mock('react-native-document-picker', () => 'RNDocumentPicker');
+jest.mock('react-native-document-picker', () => ({
+  pick: jest.fn(),
+  types: {},
+}));
 
 jest.mock('react-native/Libraries/Interaction/InteractionManager', () => ({
   runAfterInteractions: jest.fn(),

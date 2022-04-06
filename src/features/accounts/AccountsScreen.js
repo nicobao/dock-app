@@ -1,7 +1,6 @@
 import {Menu, Pressable, ScrollView, Stack} from 'native-base';
 import React, {useCallback, useEffect, useState} from 'react';
 import {Platform, RefreshControl} from 'react-native';
-import DocumentPicker from 'react-native-document-picker';
 import RNExitApp from 'react-native-exit-app';
 import RNFS from 'react-native-fs';
 import {useDispatch, useSelector} from 'react-redux';
@@ -36,6 +35,7 @@ import {TokenAmount} from '../tokens/ConfirmTransactionModal';
 import {accountOperations, accountSelectors} from './account-slice';
 import {AddAccountModal} from './AddAccountModal';
 import {AccountsScreenTestIDs} from './test-ids';
+import {pickDocuments} from '../../core/storage-utils';
 
 export const AccountsScreen = withErrorBoundary(
   ({
@@ -305,9 +305,11 @@ export const AccountsContainer = withErrorBoundary(({navigation}) => {
             },
           });
         } else if (method === 'json') {
-          const files = await DocumentPicker.pick({
-            type: [DocumentPicker.types.allFiles],
-          });
+          const files = await pickDocuments();
+
+          if (!files.length) {
+            return;
+          }
 
           const fileData = await RNFS.readFile(files[0].fileCopyUri);
 
