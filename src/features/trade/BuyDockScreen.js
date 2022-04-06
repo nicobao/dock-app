@@ -16,7 +16,7 @@ import {addTestId} from '../../core/automation-utils';
 import {translate} from '../../locales';
 import {navigateBack} from '../../core/navigation';
 
-const TRANSAK_STATES = {
+const BUY_STATES = {
   INTRO: 'INTRO',
   INITIATED: 'INITIATED',
   ORDER_COMPLETED: 'ORDER_COMPLETED',
@@ -53,9 +53,7 @@ function TransakIntroView({onPress}) {
   );
 }
 export function BuyDockScreenScreen({walletAddress, partnerOrderId}) {
-  const [transakPurchaseState, setTransakPurchaseState] = useState(
-    TRANSAK_STATES.INTRO,
-  );
+  const [buyState, setBuyState] = useState(BUY_STATES.INTRO);
 
   const queryUrl = useMemo(() => {
     return queryString.stringify({
@@ -78,8 +76,8 @@ export function BuyDockScreenScreen({walletAddress, partnerOrderId}) {
 
     pusher.bind_global((eventId, orderData) => {
       if (
-        eventId === TRANSAK_STATES.ORDER_COMPLETED ||
-        eventId === TRANSAK_STATES.ORDER_FAILED
+        eventId === BUY_STATES.ORDER_COMPLETED ||
+        eventId === BUY_STATES.ORDER_FAILED
       ) {
         setTimeout(() => {
           navigateBack();
@@ -93,16 +91,16 @@ export function BuyDockScreenScreen({walletAddress, partnerOrderId}) {
   }, [partnerOrderId]);
 
   const getScreenContent = useCallback(() => {
-    if (transakPurchaseState === TRANSAK_STATES.INTRO) {
+    if (buyState === BUY_STATES.INTRO) {
       return (
         <TransakIntroView
           onPress={() => {
-            setTransakPurchaseState(TRANSAK_STATES.INITIATED);
+            setBuyState(BUY_STATES.INITIATED);
           }}
         />
       );
     }
-    if (transakPurchaseState === TRANSAK_STATES.INITIATED) {
+    if (buyState === BUY_STATES.INITIATED) {
       return (
         <WebView
           source={{
@@ -114,12 +112,11 @@ export function BuyDockScreenScreen({walletAddress, partnerOrderId}) {
     return (
       <NBox mx={7} mt={12}>
         <Typography variant="description" marginTop={30}>
-          Processing Transaction
           {translate('intro_transak.processing_transaction')}
         </Typography>
       </NBox>
     );
-  }, [transakPurchaseState, queryUrl]);
+  }, [buyState, queryUrl]);
   return (
     <ScreenContainer testID="BuyDockScreenScreen">
       <Stack flex={1}>{getScreenContent()}</Stack>
