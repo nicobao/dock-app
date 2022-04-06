@@ -182,7 +182,8 @@
     "buy_dock_via_debit_card": "Buy Dock via debit card or bank transfers powered by Transak.",
     "countries_available": "Available at 59+ countries.",
     "continue_to_transak": "Continue Transak",
-    "transak": "Transak"
+    "transak": "Transak",
+    "processing_transaction": "Processing Transaction"
   },
   "account_settings_modal": {
     "options_title": "Options",
