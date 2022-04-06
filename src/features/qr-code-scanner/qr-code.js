@@ -76,15 +76,27 @@ export async function credentialHandler(data) {
 
 export const qrCodeHandlers = [addressHandler, credentialHandler];
 
-export async function qrCodeHandler(data, handlers = qrCodeHandlers) {
+export async function executeHandlers(data, handlers) {
+  if (!data) {
+    return false;
+  }
+
   for (const handler of handlers) {
     if (await handler(data)) {
-      return;
+      return true;
     }
   }
 
-  showToast({
-    type: 'error',
-    message: translate('qr_scanner.not_supported_data'),
-  });
+  return false;
+}
+
+export async function qrCodeHandler(data, handlers = qrCodeHandlers) {
+  const success = await executeHandlers(data, handlers);
+
+  if (!success) {
+    showToast({
+      type: 'error',
+      message: translate('qr_scanner.not_supported_data'),
+    });
+  }
 }
