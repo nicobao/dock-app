@@ -147,7 +147,6 @@ describe('qr-code', () => {
         navigate: jest.fn(),
       };
 
-      const credentialData = 'some-data';
       const toastMock = {
         show: jest.fn(),
       };
