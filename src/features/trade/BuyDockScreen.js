@@ -115,6 +115,7 @@ export function BuyDockScreenScreen({walletAddress, partnerOrderId}) {
       <NBox mx={7} mt={12}>
         <Typography variant="description" marginTop={30}>
           Processing Transaction
+          {translate('intro_transak.processing_transaction')}
         </Typography>
       </NBox>
     );
