@@ -106,7 +106,7 @@ export function CredentialsScreen({credentials, onRemove}) {
         {credentials.length ? (
           credentials.map(item => (
             <CredentialListItem
-              credential={item}
+              credential={item.content}
               onRemove={() => onRemove(item)}
             />
           ))

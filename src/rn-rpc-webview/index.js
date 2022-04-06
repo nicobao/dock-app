@@ -1,4 +1,8 @@
 import React, {useRef} from 'react';
+// import {
+//   initRpcClient as initRpc,
+//   getRpcClient as getRpc,
+// } from '@docknetwork/wallet-sdk-core/lib/rpc-client';
 import WebView from 'react-native-webview';
 import {
   getRpcClient,
@@ -60,7 +64,8 @@ export function RNRpcWebView({onReady}) {
               message: 'RPC client connected',
             });
           }
-          initRpcClient(async jsonRPCRequest => {
+
+          const handler = async jsonRPCRequest => {
             Logger.debug('Send request to webview client', jsonRPCRequest);
 
             webViewRef.current.injectJavaScript(`
@@ -76,13 +81,17 @@ export function RNRpcWebView({onReady}) {
             `);
 
             return jsonRPCRequest;
-          });
+          };
+
+          initRpcClient(handler);
+          // initRpc(handler);
 
           if (onReady) {
             onReady();
           }
         } else if (data.type === 'json-rpc-response') {
           getRpcClient().receive(data.body);
+          // getRpc().receive(data.body);
         } else if (data.type === 'json-rpc-request') {
           rpcServer.receive(data.body).then(response => {
             Logger.debug(

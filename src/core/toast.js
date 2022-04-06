@@ -21,6 +21,10 @@ const typeMap = {
     icon: () => <XCircleIcon />,
     bg: Theme.colors.primaryBackground,
   },
+  message: {
+    icon: () => null,
+    bg: Theme.colors.primaryBackground,
+  },
 };
 
 export const withErrorToast =
@@ -45,6 +49,10 @@ export function showUnexpectedErrorToast(
 }
 
 export function showToast({message, type = 'success', duration = 2000}) {
+  if (!toast) {
+    return;
+  }
+
   toast.show({
     duration,
     placement: 'top',
