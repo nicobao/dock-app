@@ -14,7 +14,8 @@
     "substrate_connection_loading": "Connecting to the remote API...",
     "not_valid_address": "The address is not valid",
     "subscan_unable_to_fetch": "Unable to fetch transaction history",
-    "unexpected_error": "Unexpected error, please try again"
+    "unexpected_error": "Unexpected error, please try again",
+    "fetching_data": "Fetching remote data, please wait"
   },
   "delete_wallet_confirmation": {
     "title": "Remove Wallet?",
@@ -96,9 +97,6 @@
     "hide_testnet_transaction": "Hide testnet Transactions",
     "switch_network_success": "Network switch successful",
     "switch_network_error": "Network switch failed"
-  },
-  "credentials": {
-    "empty_message": "You’ll see credentials here once you accept them"
   },
   "account_setup": {
     "title": "Account Name",
@@ -269,6 +267,10 @@
     "password": "password"
   },
   "credentials": {
-    "title": "Credentials"
+    "title": "Credentials",
+    "empty_items": "You’ll see credentials here once you accept them"
+  },
+  "qr_scanner": {
+    "not_supported_data": "Not supported QR Code"
   }
 }

@@ -4,6 +4,7 @@ import {navigationRef} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
 import testCredentialData from '@docknetwork/wallet-sdk-credentials/fixtures/test-credential.json';
+import {setToast} from '../../core/toast';
 
 describe('qr-code', () => {
   describe('qr code handler', () => {
@@ -63,10 +64,21 @@ describe('qr-code', () => {
   });
 
   describe('credentialHandler', () => {
+    beforeAll(() => {
+      Credentials.getInstance().wallet = {
+        add: data => data,
+      };
+    });
+
     it('expect to ignore invalid data', async () => {
       navigationRef.current = {
         navigate: jest.fn(),
       };
+
+      const toastMock = {
+        show: jest.fn(),
+      };
+      setToast(toastMock);
 
       jest
         .spyOn(Credentials.getInstance(), 'getCredentialFromUrl')
@@ -78,6 +90,7 @@ describe('qr-code', () => {
 
       expect(result).toBeFalsy();
       expect(navigationRef.current.navigate).not.toBeCalled();
+      expect(toastMock.show).toBeCalled();
     });
 
     it('expect to add credential from url', async () => {
@@ -109,6 +122,10 @@ describe('qr-code', () => {
       };
 
       const credentialData = 'some-data';
+      const toastMock = {
+        show: jest.fn(),
+      };
+      setToast(toastMock);
 
       jest
         .spyOn(Credentials.getInstance(), 'add')
@@ -123,6 +140,23 @@ describe('qr-code', () => {
         Routes.APP_CREDENTIALS,
         undefined,
       );
+    });
+
+    it('expect to handle malformed json', async () => {
+      navigationRef.current = {
+        navigate: jest.fn(),
+      };
+
+      const toastMock = {
+        show: jest.fn(),
+      };
+      setToast(toastMock);
+
+      jest.spyOn(Credentials.getInstance(), 'add');
+
+      const result = await credentialHandler('{d: bad json)');
+
+      expect(result).toBeFalsy();
     });
   });
 });

@@ -1318,8 +1318,10 @@
     uuid "^8.3.2"
     winston "^3.3.3"
 
-"@docknetwork/wallet-sdk-credentials@/Users/maycon/dev/dock/wallet-sdk/packages/credentials":
-  version "0.1.0"
+"@docknetwork/wallet-sdk-credentials@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@docknetwork/wallet-sdk-credentials/-/wallet-sdk-credentials-0.1.1.tgz#e1b5358d9ae88f4d49a102e154f08a4ed4f0a54e"
+  integrity sha512-2ZGLEMUkvX37syi8xTXdo1ruaWZRU+pP9nZ3JQ5liMyD6U4QQpTnDOWcxQK2nOVj8SuoH1XjVhkbcTwJRYhQsA==
   dependencies:
     "@docknetwork/wallet-sdk-core" "^0.1.3"
     axios "^0.25.0"
