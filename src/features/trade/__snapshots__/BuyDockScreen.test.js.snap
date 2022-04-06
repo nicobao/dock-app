@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BuyDockScreenScreen should render correctly 1`] = `
+<RNCSafeAreaView
+  style={
+    Object {
+      "backgroundColor": "#18181B",
+      "flex": 1,
+    }
+  }
+  testID="BuyDockScreenScreen"
+>
+  <AppGlobalHeader />
+  <Memo(ForwardRef(Box))
+    flex={1}
+  >
+    <Memo(ForwardRef(Box))
+      flex={1}
+    >
+      <Memo(ForwardRef(Stack))
+        flex={1}
+      >
+        <TransakIntroView
+          onPress={[Function]}
+        />
+      </Memo(ForwardRef(Stack))>
+    </Memo(ForwardRef(Box))>
+  </Memo(ForwardRef(Box))>
+</RNCSafeAreaView>
+`;

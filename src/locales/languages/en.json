@@ -174,7 +174,14 @@
     "export_error": "Unable to export account",
     "export_success": "Account exported",
     "account_removed": "Account Removed",
-    "unable_to_remove_account": "Unable to remove the account"
+    "unable_to_remove_account": "Unable to remove the account",
+    "buy": "Buy"
+  },
+  "intro_transak" : {
+    "buy_dock_via_debit_card": "Buy Dock via debit card or bank transfers powered by Transak.",
+    "countries_available": "Available at 59+ countries.",
+    "continue_to_transak": "Continue Transak",
+    "transak": "Transak"
   },
   "account_settings_modal": {
     "options_title": "Options",

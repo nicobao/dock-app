@@ -12,6 +12,7 @@ export const Routes = {
   CONFIRM_WALLET_ACCESS: 'confirmWalletAccess',
   ACCOUNTS: 'accounts',
   ACCOUNT_DETAILS: 'account/details',
+  TRADE_BUY_DOCK: 'trade/buyDock',
   ACCOUNT_IMPORT_FROM_MNEMONIC: 'account/importFromMnemonic',
   ACCOUNT_IMPORT_SETUP: 'account/importSetup',
   ACCOUNT_IMPORT_SETUP_PASSWORD: 'account/importSetupPassword',
