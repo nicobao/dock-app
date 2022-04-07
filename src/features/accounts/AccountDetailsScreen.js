@@ -358,7 +358,7 @@ export function AccountDetailsScreen({
                 onPress={() =>
                   navigate(Routes.TRADE_BUY_DOCK, {
                     id: account.id,
-                    partnerOrderId: uuid(),
+                    orderId: uuid(),
                   })
                 }>
                 {translate('account_details.buy')}
