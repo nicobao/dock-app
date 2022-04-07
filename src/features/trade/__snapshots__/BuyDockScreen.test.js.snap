@@ -17,13 +17,9 @@ exports[`BuyDockScreenScreen should render correctly 1`] = `
     <Memo(ForwardRef(Box))
       flex={1}
     >
-      <Memo(ForwardRef(Stack))
-        flex={1}
-      >
-        <TransakIntroView
-          onPress={[Function]}
-        />
-      </Memo(ForwardRef(Stack))>
+      <TransakPaymentProvider
+        walletAddress="3C7Hq5jQGxeYzL7LnVASn48tEfr6D7yKtNYSuXcgioQoWWsB"
+      />
     </Memo(ForwardRef(Box))>
   </Memo(ForwardRef(Box))>
 </RNCSafeAreaView>
