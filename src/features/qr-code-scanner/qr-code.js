@@ -5,6 +5,7 @@ import {Routes} from '../../core/routes';
 import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
 import {showToast} from '../../core/toast';
 import {translate} from '../../locales';
+import {safeJSONStringify} from '../../core';
 
 Credentials.getInstance().wallet = {
   add: async doc => {
@@ -66,7 +67,7 @@ export async function credentialHandler(data) {
     if (isUrl) {
       console.error(`Unable to resolve url: ${data}`);
     } else {
-      console.error(`Unable to resolve json: ${JSON.stringify(data)}`);
+      console.error(`Unable to resolve json: ${safeJSONStringify(data)}`);
     }
 
     console.error(err);
