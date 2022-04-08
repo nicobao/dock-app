@@ -77,7 +77,7 @@ export async function credentialHandler(data) {
 export const qrCodeHandlers = [addressHandler, credentialHandler];
 
 export async function executeHandlers(data, handlers) {
-  if (!data) {
+  if (!data || !handlers) {
     return false;
   }
 
