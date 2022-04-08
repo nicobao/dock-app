@@ -2,7 +2,6 @@ import {createSlice} from '@reduxjs/toolkit';
 import {Keychain} from '../../core/keychain';
 import {navigate, navigateBack} from '../../core/navigation';
 import {WalletRpc} from '@docknetwork/react-native-sdk/src/client/wallet-rpc';
-import DocumentPicker from 'react-native-document-picker';
 import {Routes} from '../../core/routes';
 import {appSelectors, BiometryType} from '../app/app-slice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -14,11 +13,11 @@ import {
 import RNFS from 'react-native-fs';
 import {showConfirmationModal} from 'src/components/ConfirmationModal';
 import {translate} from 'src/locales';
-import {showToast} from 'src/core/toast';
+import {showToast, withErrorToast} from 'src/core/toast';
 import {Logger} from 'src/core/logger';
-import {withErrorToast} from 'src/core/toast';
 import {clearCacheData} from '../../core/realm';
 import Clipboard from '@react-native-community/clipboard';
+import {pickDocuments} from '../../core/storage-utils';
 
 const initialState = {
   loading: true,
@@ -129,11 +128,7 @@ async function validateAndImport(fileData, password) {
 export const walletOperations = {
   pickWalletBackup: () =>
     withErrorToast(async (dispatch, getState) => {
-      const files = await DocumentPicker.pick({
-        type: [DocumentPicker.types.allFiles],
-      }).catch(err => {
-        console.log(err);
-      });
+      const files = await pickDocuments();
 
       if (!files.length) {
         return;
