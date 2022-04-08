@@ -1,5 +1,10 @@
 import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
-import {addressHandler, credentialHandler, qrCodeHandler} from './qr-code';
+import {
+  addressHandler,
+  credentialHandler,
+  executeHandlers,
+  qrCodeHandler,
+} from './qr-code';
 import {navigationRef} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
@@ -7,6 +12,12 @@ import testCredentialData from '@docknetwork/wallet-sdk-credentials/fixtures/tes
 import {setToast} from '../../core/toast';
 
 describe('qr-code', () => {
+  it('executeHandlers', async () => {
+    expect(await executeHandlers('test', [])).toBeFalsy();
+    expect(await executeHandlers('test', [() => true])).toBeTruthy();
+    expect(await executeHandlers('', [() => true])).toBeFalsy();
+    expect(await executeHandlers(undefined, [() => true])).toBeFalsy();
+  });
   describe('qr code handler', () => {
     const handler1 = jest
       .fn()
@@ -30,6 +41,27 @@ describe('qr-code', () => {
 
       expect(handler1).toBeCalledWith(data);
       expect(handler2).toBeCalledWith(data);
+    });
+
+    it('expect not to trigger handlers for empty data', async () => {
+      const data = '';
+      const mockHandlers = [jest.fn()];
+      await qrCodeHandler(data, mockHandlers);
+
+      expect(mockHandlers[0]).not.toBeCalled();
+    });
+
+    it('expect not to show error toast for not handled data', async () => {
+      const data = 'data';
+      const toastMock = {
+        show: jest.fn(),
+      };
+      setToast(toastMock);
+      const mockHandlers = [jest.fn().mockReturnValueOnce(false)];
+      await qrCodeHandler(data, mockHandlers);
+
+      expect(mockHandlers[0]).toBeCalled();
+      expect(toastMock.show).toBeCalled();
     });
   });
   describe('addressHandler', () => {
