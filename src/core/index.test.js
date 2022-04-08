@@ -1,9 +1,9 @@
-import {safeJSONStringify} from './index';
+import {getJsonOrErro, getJsonOrError} from './index';
 
 describe('core', () => {
-  it('safeJSONStringify', () => {
+  it('getJsonOrError', () => {
     const testData = {a: 2};
-    expect(safeJSONStringify(testData)).toBe(JSON.stringify(testData));
+    expect(getJsonOrError(testData)).toBe(JSON.stringify(testData));
 
     const circularData = {
       a: {
@@ -13,10 +13,6 @@ describe('core', () => {
 
     circularData.a.b = circularData;
 
-    expect(
-      safeJSONStringify(circularData).indexOf(
-        'TypeError: Converting circular structure to JSON',
-      ) === 0,
-    ).toBeTruthy();
+    expect(getJsonOrError(circularData) instanceof Error).toBeTruthy();
   });
 });

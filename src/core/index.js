@@ -4,10 +4,10 @@
  * @param value
  * @returns {string}
  */
-export function safeJSONStringify(value) {
+export function getJsonOrError(value) {
   try {
     return JSON.stringify(value);
   } catch (err) {
-    return err.toString();
+    return err;
   }
 }
