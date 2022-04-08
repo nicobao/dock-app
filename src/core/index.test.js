@@ -1,4 +1,4 @@
-import {getJsonOrErro, getJsonOrError} from './index';
+import {getJsonOrError} from './index';
 
 describe('core', () => {
   it('getJsonOrError', () => {
