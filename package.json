@@ -25,6 +25,8 @@
   "dependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.15.4",
     "@docknetwork/react-native-sdk": "github:docknetwork/react-native-sdk#9d13731a9e1dfdb6fb30eeeb38803c7ab7f460ba",
+    "@docknetwork/wallet-sdk-core": "^0.1.3",
+    "@docknetwork/wallet-sdk-credentials": "^0.1.1",
     "@native-base/icons": "^0.0.11",
     "@react-native-async-storage/async-storage": "^1.15.9",
     "@react-native-community/clipboard": "^1.5.1",
@@ -40,6 +42,7 @@
     "@walletconnect/client": "^1.4.1",
     "assert": "^1.5.0",
     "asyncstorage-down": "^4.2.0",
+    "axios": "^0.26.1",
     "bignumber.js": "^9.0.1",
     "browserify-zlib": "^0.1.4",
     "buffer": "^4.9.2",

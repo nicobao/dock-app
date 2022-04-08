@@ -60,7 +60,8 @@ export function RNRpcWebView({onReady}) {
               message: 'RPC client connected',
             });
           }
-          initRpcClient(async jsonRPCRequest => {
+
+          const handler = async jsonRPCRequest => {
             Logger.debug('Send request to webview client', jsonRPCRequest);
 
             webViewRef.current.injectJavaScript(`
@@ -76,7 +77,9 @@ export function RNRpcWebView({onReady}) {
             `);
 
             return jsonRPCRequest;
-          });
+          };
+
+          initRpcClient(handler);
 
           if (onReady) {
             onReady();
