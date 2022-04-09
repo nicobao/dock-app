@@ -55,7 +55,7 @@ describe('BuyDockScreenScreen', () => {
       cryptoCurrencyCode: 'DOCK',
       walletAddress: '3C7Hq5jQGxeYzL7LnVASn48tEfr6D7yKtNYSuXcgioQoWWsB',
     });
-    const wrapper = shallow(<TransakWebView queryUrl={queryUrl} />);
+    const wrapper = shallow(<TransakWebView url={queryUrl} />);
     expect(wrapper.dive()).toMatchSnapshot();
   });
 });
