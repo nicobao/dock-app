@@ -53,11 +53,11 @@ export function TransakIntroView({onPress}) {
   );
 }
 
-export function TransakWebView({queryUrl}) {
+export function TransakWebView({url}) {
   return (
     <WebView
       source={{
-        uri: `${TRANSAK_BASE_URL}?${queryUrl}`,
+        uri: url,
       }}
     />
   );
@@ -115,7 +115,7 @@ export default function TransakPaymentProvider({
       );
     }
     if (buyState === BUY_STATES.INITIATED) {
-      return <TransakWebView queryUrl={queryUrl} />;
+      return <TransakWebView queryUrl={`${TRANSAK_BASE_URL}?${queryUrl}`} />;
     }
     return (
       <NBox mx={7} mt={12}>
