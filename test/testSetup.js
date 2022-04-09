@@ -1,3 +1,4 @@
+import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme from 'enzyme';
 import {NativeModules} from 'react-native';
@@ -12,6 +13,13 @@ jest.mock('react-native-permissions', () => mockRNPermissions);
 jest.mock('react-native-share', () => 'RNShare');
 
 Enzyme.configure({adapter: new Adapter()});
+
+React.useLayoutEffect = React.useEffect 
+
+jest.mock('react-native-keyboard-aware-scroll-view', () => {
+  const KeyboardAwareScrollView = ({ children }) => children;
+  return { KeyboardAwareScrollView };
+});
 
 jest.mock('react-native-fs', () => ({
   CachesDirectoryPath: jest.fn(),

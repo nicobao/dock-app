@@ -27,6 +27,7 @@
     "@docknetwork/react-native-sdk": "github:docknetwork/react-native-sdk#9d13731a9e1dfdb6fb30eeeb38803c7ab7f460ba",
     "@docknetwork/wallet-sdk-core": "^0.1.3",
     "@docknetwork/wallet-sdk-credentials": "^0.1.1",
+    "@docknetwork/wallet-sdk-react-native": "^0.1.3",
     "@native-base/icons": "^0.0.11",
     "@react-native-async-storage/async-storage": "^1.15.9",
     "@react-native-community/clipboard": "^1.5.1",
@@ -37,6 +38,8 @@
     "@react-navigation/stack": "6.1.1",
     "@reduxjs/toolkit": "^1.5.1",
     "@sentry/react-native": "^2.6.2",
+    "@testing-library/jest-native": "^4.0.4",
+    "@testing-library/react-native": "^9.1.0",
     "@textile/hub": "^6.1.2",
     "@tradle/react-native-http": "^2.0.1",
     "@walletconnect/client": "^1.4.1",
@@ -66,6 +69,7 @@
     "native-base": "3.1",
     "node-libs-react-native": "^1.2.1",
     "path-browserify": "^0.0.0",
+    "prettier": "^2.6.2",
     "process": "^0.11.10",
     "punycode": "^1.4.1",
     "querystring-es3": "^0.2.1",
@@ -80,6 +84,7 @@
     "react-native-exit-app": "^1.1.0",
     "react-native-fs": "^2.18.0",
     "react-native-gesture-handler": "^1.10.3",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-keychain": "^7.0.0",
     "react-native-level-fs": "^3.0.1",
     "react-native-modal": "^11.9.0",
@@ -148,11 +153,13 @@
     "redux-logger": "^3.0.6",
     "redux-mock-store": "^1.5.4",
     "rn-nodeify": "^10.2.0",
+    "sync-directory": "^4.0.12",
     "typescript": "^3.8.3"
   },
   "resolutions": {
     "@types/react": "^17",
-    "react-native/@jest/create-cache-key-function": "^27.0.2",
+    "react-native/@jest/create-cache-key-function": "27.0.2",
+    "@jest/create-cache-key-function": "27.0.2",
     "promise": "^8.1.0"
   },
   "react-native": {

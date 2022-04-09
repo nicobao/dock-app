@@ -1,6 +1,6 @@
 import {SENTRY_DSN} from '@env';
 import {init as sentryInit} from '@sentry/react-native';
-import {useToast, View} from 'native-base';
+import {useToast, View, Text} from 'native-base';
 import React, {useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import {Provider, useDispatch} from 'react-redux';
@@ -12,13 +12,17 @@ import {setToast} from './core/toast';
 import {ThemeProvider} from './design-system';
 import {appOperations} from './features/app/app-slice';
 import {RNRpcWebView} from './rn-rpc-webview';
+import {WalletSDKProvider} from '@docknetwork/wallet-sdk-react-native/lib';
+import {AppIntegrationTest} from './wallet-sdk/AppIntegrationTest';
 
-try {
-  sentryInit({
-    dsn: SENTRY_DSN,
-  });
-} catch (err) {
-  console.error(err);
+if (process.env.NODE_ENV !== 'test') {
+  try {
+    sentryInit({
+      dsn: SENTRY_DSN,
+    });
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 const styles = StyleSheet.create({
@@ -30,7 +34,15 @@ const styles = StyleSheet.create({
   },
 });
 
-function GlobalComponents() {
+export function Test() {
+  return (
+    <View>
+      <Text>testing</Text>
+    </View>
+  );
+}
+
+export function GlobalComponents() {
   const dispatch = useDispatch();
   const toast = useToast();
 
@@ -61,7 +73,10 @@ const App = () => {
   return (
     <Provider store={store}>
       <ThemeProvider>
-        <GlobalComponents />
+        <WalletSDKProvider>
+          {/* <GlobalComponents /> */}
+          <AppIntegrationTest />
+        </WalletSDKProvider>
       </ThemeProvider>
     </Provider>
   );
