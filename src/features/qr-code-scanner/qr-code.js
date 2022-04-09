@@ -7,25 +7,25 @@ import {showToast} from '../../core/toast';
 import {translate} from '../../locales';
 import {getJsonOrError} from '../../core';
 
-Credentials.getInstance().wallet = {
-  add: async doc => {
-    const result = {
-      '@context': ['https://w3id.org/wallet/v1'],
-      id: `credential-${Date.now()}`,
-      ...doc,
-    };
-
-    await WalletRpc.add(result);
-
-    return result;
-  },
-  query: params =>
-    WalletRpc.query({
-      equals: {
-        'content.type': params.type,
-      },
-    }),
-};
+// Credentials.getInstance().wallet = {
+//   add: async doc => {
+//     const result = {
+//       '@context': ['https://w3id.org/wallet/v1'],
+//       id: `credential-${Date.now()}`,
+//       ...doc,
+//     };
+//
+//     await WalletRpc.add(result);
+//
+//     return result;
+//   },
+//   query: params =>
+//     WalletRpc.query({
+//       equals: {
+//         'content.type': params.type,
+//       },
+//     }),
+// };
 
 export async function addressHandler(data) {
   const isAddress = await UtilCryptoRpc.isAddressValid(data);

@@ -4,7 +4,9 @@
     "baseUrl": "./",
     "paths": {
       "@docknetwork/wallet-sdk-core/*": ["../wallet-sdk/packages/core/*"],
-      "@docknetwork/wallet-sdk-react-native/*": ["../wallet-sdk/packages/react-native/*"]
+      "@docknetwork/wallet-sdk-react-native/*": ["../wallet-sdk/packages/react-native/*"],
+      "@docknetwork/wallet-sdk-credentials/*": ["../wallet-sdk/packages/credentials/*"],
+      "@docknetwork/wallet-sdk-transactions/*": ["../wallet-sdk/packages/transactions/*"]
     },
     /* Basic Options */
     "target": "esnext",                       /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017','ES2018' or 'ESNEXT'. */
