@@ -262,6 +262,7 @@ export function AccountDetailsScreen({
   qrCodeData,
   onRefresh,
   isRefreshing,
+  showTransak,
 }) {
   const [accountSettingsVisible, setAccountSettingsVisible] = useState();
   const [qrCodeModalVisible, setQrCodeModalVisible] = useState();
@@ -350,19 +351,21 @@ export function AccountDetailsScreen({
                 }>
                 {translate('account_details.receive_tokens_btn')}
               </Button>
-              <Button
-                ml={2}
-                flex={1}
-                size="sm"
-                {...addTestId('BuyDockBtn')}
-                onPress={() =>
-                  navigate(Routes.TRADE_BUY_DOCK, {
-                    id: account.id,
-                    orderId: uuid(),
-                  })
-                }>
-                {translate('account_details.buy')}
-              </Button>
+              {showTransak ? (
+                <Button
+                  ml={2}
+                  flex={1}
+                  size="sm"
+                  {...addTestId('BuyDockBtn')}
+                  onPress={() =>
+                    navigate(Routes.TRADE_BUY_DOCK, {
+                      id: account.id,
+                      orderId: uuid(),
+                    })
+                  }>
+                  {translate('account_details.buy')}
+                </Button>
+              ) : null}
             </Stack>
           </Stack>
           {account.hasBackup ? null : (
@@ -455,6 +458,7 @@ export function AccountDetailsContainer({route}) {
   const {id: accountId, qrCodeData} = route.params;
   const dispatch = useDispatch();
   const account = useSelector(accountSelectors.getAccountById(accountId));
+  const {features} = useFeatures();
 
   const [isRefreshing, setRefreshing] = useState(false);
 
@@ -482,6 +486,7 @@ export function AccountDetailsContainer({route}) {
       }}
       isRefreshing={isRefreshing}
       onRefresh={onRefresh}
+      showTransak={features.activate_transak}
       onBackup={() => {
         return dispatch(accountOperations.backupAccount(account));
       }}

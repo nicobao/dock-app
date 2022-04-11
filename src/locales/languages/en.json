@@ -96,7 +96,8 @@
     "show_credentials": "Show credentials",
     "hide_testnet_transaction": "Hide testnet Transactions",
     "switch_network_success": "Network switch successful",
-    "switch_network_error": "Network switch failed"
+    "switch_network_error": "Network switch failed",
+    "activate_transak": "Activate Transak"
   },
   "account_setup": {
     "title": "Account Name",

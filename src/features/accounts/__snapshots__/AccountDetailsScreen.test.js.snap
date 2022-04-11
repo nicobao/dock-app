@@ -112,16 +112,6 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
               >
                 Receive
               </Memo(ForwardRef(Button))>
-              <Memo(ForwardRef(Button))
-                accessibilityLabel="BuyDockBtn"
-                flex={1}
-                ml={2}
-                onPress={[Function]}
-                size="sm"
-                testID="BuyDockBtn"
-              >
-                Buy
-              </Memo(ForwardRef(Button))>
             </Memo(ForwardRef(Stack))>
           </Memo(ForwardRef(Stack))>
           <Memo(ForwardRef(Stack))
