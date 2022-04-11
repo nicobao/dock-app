@@ -35,6 +35,7 @@ import {QRCodeModal} from './QRCodeModal';
 import {addTestId} from '../../core/automation-utils';
 import {appSelectors} from '../app/app-slice';
 import {useFeatures} from '../app/feature-flags';
+import uuid from 'uuid';
 
 const TRANSACTION_FILTERS = {
   all: 'all',
@@ -261,6 +262,7 @@ export function AccountDetailsScreen({
   qrCodeData,
   onRefresh,
   isRefreshing,
+  showTransak,
 }) {
   const [accountSettingsVisible, setAccountSettingsVisible] = useState();
   const [qrCodeModalVisible, setQrCodeModalVisible] = useState();
@@ -349,6 +351,21 @@ export function AccountDetailsScreen({
                 }>
                 {translate('account_details.receive_tokens_btn')}
               </Button>
+              {showTransak ? (
+                <Button
+                  ml={2}
+                  flex={1}
+                  size="sm"
+                  {...addTestId('BuyDockBtn')}
+                  onPress={() =>
+                    navigate(Routes.TRADE_BUY_DOCK, {
+                      id: account.id,
+                      orderId: uuid(),
+                    })
+                  }>
+                  {translate('account_details.buy')}
+                </Button>
+              ) : null}
             </Stack>
           </Stack>
           {account.hasBackup ? null : (
@@ -441,8 +458,8 @@ export function AccountDetailsContainer({route}) {
   const {id: accountId, qrCodeData} = route.params;
   const dispatch = useDispatch();
   const account = useSelector(accountSelectors.getAccountById(accountId));
+  const {features} = useFeatures();
 
-  console.log('return to account details', accountId);
   const [isRefreshing, setRefreshing] = useState(false);
 
   const onRefresh = () => {
@@ -469,6 +486,7 @@ export function AccountDetailsContainer({route}) {
       }}
       isRefreshing={isRefreshing}
       onRefresh={onRefresh}
+      showTransak={features.activate_transak}
       onBackup={() => {
         return dispatch(accountOperations.backupAccount(account));
       }}

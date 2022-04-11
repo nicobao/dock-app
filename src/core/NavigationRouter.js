@@ -28,7 +28,7 @@ import {ImportWalletContainer} from '../features/wallet/ImportWalletScreen';
 import {ProtectYourWalletContainer} from '../features/wallet/ProtectYourWalletScreen';
 import {SetupPasscodeScreen} from '../features/wallet/SetupPasscodeScreen';
 import {DevSettingsContainer} from '../features/dev-settings/DevSettingsScreen';
-
+import {BuyDockScreenContainer} from '../features/trade/BuyDockScreen';
 import {navigationRef} from './navigation';
 import {Routes} from './routes';
 import {CredentialsContainer} from '../features/credentials/CredentialsScreen';
@@ -176,6 +176,12 @@ function AppStackScreen() {
         {...getScreenProps({
           name: Routes.ACCOUNT_DETAILS,
           component: AccountDetailsContainer,
+        })}
+      />
+      <AppStack.Screen
+        {...getScreenProps({
+          name: Routes.TRADE_BUY_DOCK,
+          component: BuyDockScreenContainer,
         })}
       />
 
