@@ -12,6 +12,10 @@ export const Features = {
     id: 'credentials',
     title: translate('dev_settings.show_credentials'),
   },
+  transak: {
+    id: 'activate_transak',
+    title: translate('dev_settings.activate_transak'),
+  },
 };
 
 export const getAllFeatures = () =>

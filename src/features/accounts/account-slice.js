@@ -305,7 +305,6 @@ export const accountOperations = {
 
     const realm = getRealm();
     const balance = await ApiRpc.getAccountBalance(accountId);
-    console.log('Fetch balance for', accountId);
 
     const accounts = await WalletRpc.query({
       equals: {
@@ -320,8 +319,6 @@ export const accountOperations = {
       console.log('Account not found for id', accountId);
       return;
     }
-
-    console.log('account', account);
 
     realm.write(() => {
       realm.create(
