@@ -10,7 +10,6 @@ import {showToast} from 'src/core/toast';
 import {useDispatch} from 'react-redux';
 import {appActions} from 'src/features/app/app-slice';
 import {translate} from 'src/locales';
-import {Logger} from '../core/logger';
 
 const WEBVIEW_URI = 'http://localhost:3000';
 const DEV_MODE = false;
@@ -53,7 +52,6 @@ export function RNRpcWebView({onReady}) {
           return;
         }
 
-        Logger.debug('onMessage', data);
         if (data.type === 'json-rpc-ready') {
           if (DEV_MODE) {
             showToast({
@@ -62,8 +60,6 @@ export function RNRpcWebView({onReady}) {
           }
 
           const handler = async jsonRPCRequest => {
-            Logger.debug('Send request to webview client', jsonRPCRequest);
-
             webViewRef.current.injectJavaScript(`
             (function(){
               (navigator.appVersion.includes("Android") ? document : window).dispatchEvent(new MessageEvent('message', {data: ${JSON.stringify(
@@ -88,10 +84,6 @@ export function RNRpcWebView({onReady}) {
           getRpcClient().receive(data.body);
         } else if (data.type === 'json-rpc-request') {
           rpcServer.receive(data.body).then(response => {
-            Logger.debug(
-              'RN: Send json-rpc-request to webview client',
-              response,
-            );
             webViewRef.current.injectJavaScript(`
             (function(){
               (navigator.appVersion.includes("Android") ? document : window).dispatchEvent(new MessageEvent('message', {data: ${JSON.stringify(
@@ -106,7 +98,6 @@ export function RNRpcWebView({onReady}) {
             return response;
           });
         } else if (data.type === 'log') {
-          Logger.debug('====> Webview log:', ...JSON.parse(data.body));
         }
       }}
     />
