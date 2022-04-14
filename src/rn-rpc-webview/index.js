@@ -10,7 +10,6 @@ import {showToast} from 'src/core/toast';
 import {useDispatch} from 'react-redux';
 import {appActions} from 'src/features/app/app-slice';
 import {translate} from 'src/locales';
-import {Logger} from '../core/logger';
 
 const WEBVIEW_URI = 'http://localhost:3000';
 const DEV_MODE = false;
