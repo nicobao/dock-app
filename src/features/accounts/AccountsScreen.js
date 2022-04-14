@@ -10,7 +10,6 @@ import {formatCurrency} from 'src/core/format-utils';
 import {navigate} from 'src/core/navigation';
 import {Routes} from 'src/core/routes';
 import {translate} from 'src/locales';
-import CogIcon from '../../assets/icons/cog.svg';
 import DocumentDownloadIcon from '../../assets/icons/document-download.svg';
 import PlusCircleWhiteIcon from '../../assets/icons/plus-circle-white.svg';
 import PlusCircleIcon from '../../assets/icons/plus-circle.svg';
@@ -43,9 +42,7 @@ export const AccountsScreen = withErrorBoundary(
     onAddAccount,
     onImportExistingAccount,
     onDelete,
-    onEdit,
     onDetails,
-    onSettings,
     onRefresh,
     isRefreshing,
   }) => {
@@ -73,12 +70,8 @@ export const AccountsScreen = withErrorBoundary(
               <IconButton
                 col
                 {...addTestId(AccountsScreenTestIDs.addAccountMenuBtn)}
-                marginRight={10}
                 onPress={() => setShowAddAccount(true)}>
                 <PlusCircleWhiteIcon />
-              </IconButton>
-              <IconButton col onPress={onSettings}>
-                <CogIcon />
               </IconButton>
             </Box>
           </Box>
@@ -291,9 +284,6 @@ export const AccountsContainer = withErrorBoundary(({navigation}) => {
       accounts={accounts}
       onAddAccount={() => {
         dispatch(accountOperations.addAccountFlow());
-      }}
-      onSettings={() => {
-        navigate(Routes.APP_SETTINGS);
       }}
       onImportExistingAccount={async method => {
         if (method === 'mnemonic') {
