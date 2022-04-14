@@ -473,7 +473,7 @@ export function AccountDetailsContainer({route}) {
     dispatch(transactionsOperations.loadTransactions(accountId));
   }, [dispatch, accountId]);
 
-  if (!account) {
+  if (!('@context' in account)) {
     return <LoadingScreen />;
   }
 
