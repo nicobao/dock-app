@@ -37,6 +37,7 @@ jobs:
           # Pull env variables from certs repo
           # It will inject sentry token in the JS thread
           cp -rf ./certs/.env ./
+          cp -rf ./certs/GoogleService-Info.plist ./ios/
           cd ./ios
           pod install
           fastlane setup --verbose
