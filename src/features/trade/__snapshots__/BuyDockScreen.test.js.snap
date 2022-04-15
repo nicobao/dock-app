@@ -1797,7 +1797,22 @@ exports[`BuyDockScreenScreen should render TransakIntro Component 1`] = `
     config={Object {}}
   >
     <SafeAreaProvider
-      initialMetrics={null}
+      initialMetrics={
+        Object {
+          "frame": Object {
+            "height": 0,
+            "width": 0,
+            "x": 0,
+            "y": 0,
+          },
+          "insets": Object {
+            "bottom": 0,
+            "left": 0,
+            "right": 0,
+            "top": 0,
+          },
+        }
+      }
     >
       <HybridProvider
         options={
@@ -3670,7 +3685,22 @@ exports[`BuyDockScreenScreen should render TransakProvider correctly 1`] = `
     config={Object {}}
   >
     <SafeAreaProvider
-      initialMetrics={null}
+      initialMetrics={
+        Object {
+          "frame": Object {
+            "height": 0,
+            "width": 0,
+            "x": 0,
+            "y": 0,
+          },
+          "insets": Object {
+            "bottom": 0,
+            "left": 0,
+            "right": 0,
+            "top": 0,
+          },
+        }
+      }
     >
       <HybridProvider
         options={

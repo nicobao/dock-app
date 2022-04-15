@@ -1832,7 +1832,7 @@ exports[`AccountsScreen should render correctly with accounts 1`] = `
                   Array [
                     Object {
                       "balance": 21,
-                      "id": 1650051790500,
+                      "id": "test",
                       "name": "Account name",
                     },
                   ]

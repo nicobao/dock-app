@@ -5,7 +5,7 @@ import {renderAppProviders} from '../../core/test-utils';
 
 const mockAccounts = [
   {
-    id: Date.now(),
+    id: 'test',
     name: 'Account name',
     balance: 21,
   },
