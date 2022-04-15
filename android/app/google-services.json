@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "807311823487",
+    "project_id": "dock-wallet",
+    "storage_bucket": "dock-wallet.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:807311823487:android:4bd7097e57d4762186654a",
+        "android_client_info": {
+          "package_name": "com.dockapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "807311823487-avckggjo7pl6s6l513bqa8hqr33skeji.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1RskSaDEG9B-oq6Np2fUw_jS7bLfE0S4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "807311823487-avckggjo7pl6s6l513bqa8hqr33skeji.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "807311823487-098gtrui5abqsbuucok9tdbb2626kf4m.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "labs.dock.DockApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
