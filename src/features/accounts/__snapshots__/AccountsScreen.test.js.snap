@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BuyDockScreenScreen should render TransakIntro Component 1`] = `
+exports[`AccountsScreen should render correctly with accounts 1`] = `
 <ContextProvider
   value={
     Object {
@@ -1827,8 +1827,16 @@ exports[`BuyDockScreenScreen should render TransakIntro Component 1`] = `
           <ToastProvider>
             <InitializeToastRef />
             <SSRProvider>
-              <TransakIntroView
-                onPress={[MockFunction]}
+              <Component
+                accounts={
+                  Array [
+                    Object {
+                      "balance": 21,
+                      "id": "test",
+                      "name": "Account name",
+                    },
+                  ]
+                }
               />
             </SSRProvider>
           </ToastProvider>
@@ -1839,56 +1847,7 @@ exports[`BuyDockScreenScreen should render TransakIntro Component 1`] = `
 </ContextProvider>
 `;
 
-exports[`BuyDockScreenScreen should render TransakProvider Webview 1`] = `
-<View
-  style={
-    Array [
-      Object {
-        "flex": 1,
-        "overflow": "hidden",
-      },
-      undefined,
-    ]
-  }
->
-  <RNCWebView
-    cacheEnabled={true}
-    injectedJavaScriptBeforeContentLoadedForMainFrameOnly={true}
-    injectedJavaScriptForMainFrameOnly={true}
-    javaScriptEnabled={true}
-    key="webViewKey"
-    messagingEnabled={false}
-    onContentProcessDidTerminate={[Function]}
-    onHttpError={[Function]}
-    onLoadingError={[Function]}
-    onLoadingFinish={[Function]}
-    onLoadingProgress={[Function]}
-    onLoadingStart={[Function]}
-    onMessage={[Function]}
-    onShouldStartLoadWithRequest={[Function]}
-    source={
-      Object {
-        "uri": "cryptoCurrencyCode=DOCK&partnerOrderId=fd1b4a14-f4be-4218-9e76-4aec9c00db69&walletAddress=3C7Hq5jQGxeYzL7LnVASn48tEfr6D7yKtNYSuXcgioQoWWsB",
-      }
-    }
-    style={
-      Array [
-        Object {
-          "flex": 1,
-          "overflow": "hidden",
-        },
-        Object {
-          "backgroundColor": "#ffffff",
-        },
-        undefined,
-      ]
-    }
-    useSharedProcessPool={true}
-  />
-</View>
-`;
-
-exports[`BuyDockScreenScreen should render TransakProvider correctly 1`] = `
+exports[`AccountsScreen should render correctly with no accounts 1`] = `
 <ContextProvider
   value={
     Object {
@@ -3715,9 +3674,8 @@ exports[`BuyDockScreenScreen should render TransakProvider correctly 1`] = `
           <ToastProvider>
             <InitializeToastRef />
             <SSRProvider>
-              <TransakPaymentProvider
-                partnerOrderId="fd1b4a14-f4be-4218-9e76-4aec9c00db69"
-                walletAddress="3C7Hq5jQGxeYzL7LnVASn48tEfr6D7yKtNYSuXcgioQoWWsB"
+              <Component
+                accounts={Array []}
               />
             </SSRProvider>
           </ToastProvider>
@@ -3726,30 +3684,4 @@ exports[`BuyDockScreenScreen should render TransakProvider correctly 1`] = `
     </SafeAreaProvider>
   </NativeBaseConfigProviderProvider>
 </ContextProvider>
-`;
-
-exports[`BuyDockScreenScreen should render correctly 1`] = `
-<RNCSafeAreaView
-  style={
-    Object {
-      "backgroundColor": "#18181B",
-      "flex": 1,
-    }
-  }
-  testID="BuyDockScreenScreen"
->
-  <AppGlobalHeader />
-  <Memo(ForwardRef(Box))
-    flex={1}
-  >
-    <Memo(ForwardRef(Box))
-      flex={1}
-    >
-      <TransakPaymentProvider
-        partnerOrderId="fd1b4a14-f4be-4218-9e76-4aec9c00db69"
-        walletAddress="3C7Hq5jQGxeYzL7LnVASn48tEfr6D7yKtNYSuXcgioQoWWsB"
-      />
-    </Memo(ForwardRef(Box))>
-  </Memo(ForwardRef(Box))>
-</RNCSafeAreaView>
 `;
