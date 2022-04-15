@@ -1,6 +1,5 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import renderer from 'react-test-renderer';
 import {AccountsScreen} from './AccountsScreen';
 import {renderAppProviders} from '../../core/test-utils';
 
