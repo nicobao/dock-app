@@ -49,7 +49,6 @@ function getNetworkInfo(networkId) {
 }
 
 function initKeyring(networkId) {
-  Logger.debug('init keyring for network', networkId);
   const addressPrefix = getNetworkInfo(networkId).addressPrefix;
 
   return KeyringRpc.initialize({
@@ -191,8 +190,6 @@ export const appOperations = {
       });
 
       dispatch(appActions.setDockReady(true));
-
-      Logger.debug('Dock initialized');
     } catch (err) {
       dispatch(
         appActions.setDockReady(new Error('Unable to initialize dock api')),
@@ -204,7 +201,6 @@ export const appOperations = {
   initialize: () => async (dispatch, getState) => {
     await initRealm();
 
-    Logger.debug('Realm initialized');
     SplashScreen.hide();
 
     if (!appSelectors.getDevSettingsEnabled(getState())) {

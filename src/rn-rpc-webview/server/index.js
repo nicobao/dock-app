@@ -21,10 +21,6 @@ if (process.env.NODE_ENV !== 'test') {
       rpcServer.addMethod(method.name, async params => {
         const result = await method.resolver(params);
 
-        Logger.debug('Resolving rpc request', {
-          method,
-          result,
-        });
         return result || {};
       });
     });
