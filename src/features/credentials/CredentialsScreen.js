@@ -7,11 +7,13 @@ import {
   Content,
   EmptyCredentialIcon,
   Header,
+  IconButton,
   NBox,
   ScreenContainer,
   Theme,
   Typography,
 } from '../../design-system';
+import PlusCircleWhiteIcon from '../../assets/icons/plus-circle-white.svg';
 import {addTestId} from '../../core/automation-utils';
 import {Center, Image, Text} from 'native-base';
 import {ICenterProps} from 'native-base/lib/typescript/components/composites/Center/types';
@@ -77,7 +79,7 @@ function CredentialListItem({credential}) {
   );
 }
 
-export function CredentialsScreen({credentials, onRemove}) {
+export function CredentialsScreen({credentials, onRemove, onAdd}) {
   return (
     <ScreenContainer {...addTestId('CredentialsScreen')} showTabNavigation>
       <Header>
@@ -99,7 +101,11 @@ export function CredentialsScreen({credentials, onRemove}) {
               {translate('credentials.title')}
             </Typography>
           </NBox>
-          <NBox width="80px" alignItems="flex-end" />
+          <NBox width="80px" alignItems="flex-end">
+            <IconButton onPress={onAdd} col>
+              <PlusCircleWhiteIcon />
+            </IconButton>
+          </NBox>
         </Box>
       </Header>
       <Content>
@@ -119,8 +125,12 @@ export function CredentialsScreen({credentials, onRemove}) {
 }
 
 export function CredentialsContainer(props) {
-  const {credentials, handleRemove} = useCredentials();
+  const {credentials, handleRemove, onAdd} = useCredentials();
   return (
-    <CredentialsScreen credentials={credentials} onRemove={handleRemove} />
+    <CredentialsScreen
+      credentials={credentials}
+      onRemove={handleRemove}
+      onAdd={onAdd}
+    />
   );
 }

@@ -15,7 +15,8 @@
     "not_valid_address": "The address is not valid",
     "subscan_unable_to_fetch": "Unable to fetch transaction history",
     "unexpected_error": "Unexpected error, please try again",
-    "fetching_data": "Fetching remote data, please wait"
+    "fetching_data": "Fetching remote data, please wait",
+    "invalid_json_file": "Invalid json file"
   },
   "delete_wallet_confirmation": {
     "title": "Remove Wallet?",
@@ -277,6 +278,7 @@
   },
   "credentials": {
     "title": "Credentials",
+    "invalid_credential": "Invalid Credential",
     "empty_items": "You’ll see credentials here once you accept them"
   },
   "qr_scanner": {
