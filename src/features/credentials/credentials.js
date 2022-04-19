@@ -2,7 +2,10 @@ import {useEffect, useState} from 'react';
 import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
 import assert from 'assert';
 
-function getCredentialTimestamp(credential) {
+export const sortByIssuanceDate = (a, b) =>
+  getCredentialTimestamp(b) - getCredentialTimestamp(a);
+
+export function getCredentialTimestamp(credential) {
   assert(!!credential, 'credential is required');
 
   if (!credential.issuanceDate) {
@@ -17,11 +20,7 @@ export function useCredentials() {
 
   const syncCredentials = async () => {
     const credentials = await Credentials.getInstance().query();
-    setItems(
-      credentials.sort(
-        (a, b) => getCredentialTimestamp(a) - getCredentialTimestamp(b),
-      ),
-    );
+    setItems(credentials.sort(sortByIssuanceDate));
   };
 
   useEffect(() => {
