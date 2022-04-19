@@ -1,6 +1,6 @@
 import React from 'react';
 import {translate} from 'src/locales';
-import {navigate, navigateBack} from '../../core/navigation';
+import {navigate} from '../../core/navigation';
 import {
   BackButton,
   Box,
@@ -17,7 +17,7 @@ import {Center, Image, Text} from 'native-base';
 import {ICenterProps} from 'native-base/lib/typescript/components/composites/Center/types';
 import {useCredentials} from './credentials';
 import {formatDate} from '@docknetwork/wallet-sdk-core/lib/core/format-utils';
-import { Routes } from 'src/core/routes';
+import {Routes} from 'src/core/routes';
 
 function EmptyCredentials(props: ICenterProps) {
   return (
