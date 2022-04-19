@@ -32,7 +32,6 @@ export function useCredentials() {
     await syncCredentials();
   };
 
-  console.log('credetials', items);
   return {
     credentials: items,
     handleRemove,
