@@ -68,7 +68,7 @@ platform :ios do
        setup
        load_asc_api_key
        prepare_signing
-       #increment_version
+       increment_version
        build_release
        upload_release
   end
