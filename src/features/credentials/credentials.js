@@ -1,7 +1,10 @@
 import {useEffect, useState} from 'react';
 import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
+import assert from 'assert';
 
 function getCredentialTimestamp(credential) {
+  assert(!!credential, 'credential is required');
+
   if (!credential.issuanceDate) {
     return 0;
   }
