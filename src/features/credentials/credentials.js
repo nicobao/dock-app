@@ -1,5 +1,8 @@
 import {useEffect, useState} from 'react';
 import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
+import {pickJSONFile} from '../../core/storage-utils';
+import {showToast} from 'src/core/toast';
+import {translate} from 'src/locales';
 import assert from 'assert';
 
 export const sortByIssuanceDate = (a, b) =>
@@ -32,8 +35,26 @@ export function useCredentials() {
     await syncCredentials();
   };
 
+  const onAdd = async () => {
+    const jsonData = await pickJSONFile();
+
+    if (!jsonData) {
+      return;
+    }
+
+    try {
+      await Credentials.getInstance().add(jsonData);
+    } catch (err) {
+      showToast({
+        message: translate('credentials.invalid_credential'),
+        type: 'error',
+      });
+    }
+  };
+
   return {
     credentials: items,
     handleRemove,
+    onAdd,
   };
 }
