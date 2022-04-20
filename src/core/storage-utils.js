@@ -22,6 +22,7 @@ export function readFile(path) {
   try {
     return RNFS.readFile(path);
   } catch (err) {
+    console.error(err);
     throw new Error(`Unable to read file ${path}`);
   }
 }
