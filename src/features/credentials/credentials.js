@@ -24,6 +24,10 @@ export function useCredentials() {
   const onAdd = async () => {
     const jsonData = await pickJSONFile();
 
+    if (!jsonData) {
+      return;
+    }
+
     try {
       await Credentials.getInstance().add(jsonData);
     } catch (err) {

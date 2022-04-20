@@ -1,3 +1,4 @@
+import assert from 'assert';
 import DocumentPicker from 'react-native-document-picker';
 import RNFS from 'react-native-fs';
 import {translate} from 'src/locales';
@@ -15,6 +16,16 @@ export function pickDocuments() {
   });
 }
 
+export function readFile(path) {
+  assert(!!path, 'file path is required');
+
+  try {
+    return RNFS.readFile(path);
+  } catch (err) {
+    throw new Error(`Unable to read file ${path}`);
+  }
+}
+
 export async function pickFileData() {
   const files = await pickDocuments();
 
@@ -22,11 +33,20 @@ export async function pickFileData() {
     return;
   }
 
-  return RNFS.readFile(files[0].fileCopyUri);
+  const [file] = files;
+
+  assert(!!file, 'file is not defined');
+  assert(!!file.fileCopyUri, 'fileCopyUri is not defined');
+
+  return readFile(file.fileCopyUri);
 }
 
 export async function pickJSONFile() {
   const fileData = await pickFileData();
+
+  if (!fileData) {
+    return;
+  }
 
   try {
     return JSON.parse(fileData);
