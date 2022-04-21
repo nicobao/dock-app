@@ -36,6 +36,15 @@ import {AddAccountModal} from './AddAccountModal';
 import {AccountsScreenTestIDs} from './test-ids';
 import {pickDocuments} from '../../core/storage-utils';
 
+export function displayWarning(account) {
+  if (
+    account.hasBackup === false ||
+    (account.meta && account.meta.keypairNotFoundWarning)
+  ) {
+    return true;
+  }
+  return false;
+}
 export const AccountsScreen = withErrorBoundary(
   ({
     accounts = [],
@@ -122,9 +131,7 @@ export const AccountsScreen = withErrorBoundary(
                           </Pressable>
                           <NBox py={1} px={1}>
                             <Stack direction="row">
-                              {!account.hasBackup ||
-                              (account.meta &&
-                                account.meta.keypairNotFoundWarning) ? (
+                              {displayWarning(account) ? (
                                 <NBox mr={3} mt={1}>
                                   <AlertIcon />
                                 </NBox>
