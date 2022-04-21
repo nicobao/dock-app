@@ -19,6 +19,8 @@ export function getCredentialTimestamp(credential) {
   return new Date(credential.issuanceDate).getTime() || 0;
 }
 
+// TODO: Investigate why WalletRpc is not working properly for this calls
+// This proxy should not be required and must be handled by the wallet sdk
 Credentials.getInstance().wallet = {
   add: async doc => {
     const result = {
