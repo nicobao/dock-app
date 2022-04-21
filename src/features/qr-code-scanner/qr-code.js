@@ -1,31 +1,11 @@
 import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
-import {WalletRpc} from '@docknetwork/react-native-sdk/src/client/wallet-rpc';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
 import {showToast} from '../../core/toast';
 import {translate} from '../../locales';
 import {getJsonOrError} from '../../core';
-
-Credentials.getInstance().wallet = {
-  add: async doc => {
-    const result = {
-      '@context': ['https://w3id.org/wallet/v1'],
-      id: `credential-${Date.now()}`,
-      ...doc,
-    };
-
-    await WalletRpc.add(result);
-
-    return result;
-  },
-  query: params =>
-    WalletRpc.query({
-      equals: {
-        'content.type': params.type,
-      },
-    }),
-};
+import '../credentials/credentials';
 
 export async function addressHandler(data) {
   const isAddress = await UtilCryptoRpc.isAddressValid(data);

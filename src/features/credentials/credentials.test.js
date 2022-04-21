@@ -1,4 +1,4 @@
-import {renderHook} from '@testing-library/react-hooks';
+import {renderHook, act} from '@testing-library/react-hooks';
 import {
   sortByIssuanceDate,
   getCredentialTimestamp,
@@ -63,13 +63,18 @@ describe('Credentials helpers', () => {
 
   describe('useCredentials', () => {
     const creds = [...mockCreds];
+    let hook;
 
     beforeAll(async () => {
       jest.spyOn(creds, 'sort');
       jest
         .spyOn(Credentials.getInstance(), 'query')
         .mockImplementation(() => Promise.resolve(creds));
-      await renderHook(() => useCredentials());
+      jest
+        .spyOn(Credentials.getInstance(), 'remove')
+        .mockImplementation(() => Promise.resolve(creds[0]));
+      const {result} = await renderHook(() => useCredentials());
+      hook = result;
     });
 
     it('expect to fetch credentials', () => {
@@ -78,6 +83,14 @@ describe('Credentials helpers', () => {
 
     it('expect to sort credentials', () => {
       expect(creds.sort).toBeCalled();
+    });
+
+    it('expect to delete credential', async () => {
+      await act(() => {
+        hook.current.handleRemove({id: 1});
+      });
+
+      expect(Credentials.getInstance().remove).toBeCalledWith(1);
     });
   });
 });
