@@ -12,10 +12,11 @@ import {
   ScreenContainer,
   Theme,
   Typography,
+  DotsVerticalIcon,
 } from '../../design-system';
 import PlusCircleWhiteIcon from '../../assets/icons/plus-circle-white.svg';
 import {addTestId} from '../../core/automation-utils';
-import {Center, Image, Text} from 'native-base';
+import {Center, Image, Text, Stack, Menu, Pressable} from 'native-base';
 import {ICenterProps} from 'native-base/lib/typescript/components/composites/Center/types';
 import {useCredentials} from './credentials';
 import {formatDate} from '@docknetwork/wallet-sdk-core/lib/core/format-utils';
@@ -40,15 +41,35 @@ function EmptyCredentials(props: ICenterProps) {
   );
 }
 
-function CredentialListItem({credential}) {
+function CredentialListItem({credential, onRemove}) {
   return (
     <NBox bgColor={Theme.colors.credentialCardBg} p={4} borderRadius={10} m={2}>
-      <Text
-        fontSize={'16px'}
-        fontWeight={600}
-        fontFamily={Theme.fontFamily.montserrat}>
-        {credential.credentialSubject.title}
-      </Text>
+      <Stack direction="row">
+        <Text
+          fontSize={'16px'}
+          fontWeight={600}
+          fontFamily={Theme.fontFamily.montserrat}>
+          {credential.credentialSubject.title}
+        </Text>
+        <NBox flex={1} alignItems="flex-end">
+          <Menu
+            trigger={triggerProps => {
+              return (
+                <Pressable
+                  {...triggerProps}
+                  _pressed={{
+                    opacity: Theme.touchOpacity,
+                  }}>
+                  <DotsVerticalIcon />
+                </Pressable>
+              );
+            }}>
+            <Menu.Item onPress={() => onRemove(credential)}>
+              {translate('account_list.delete_account')}
+            </Menu.Item>
+          </Menu>
+        </NBox>
+      </Stack>
       <Text
         fontSize={'12px'}
         fontWeight={500}
