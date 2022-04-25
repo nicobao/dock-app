@@ -43,7 +43,12 @@ function EmptyCredentials(props: ICenterProps) {
 
 function CredentialListItem({credential, onRemove}) {
   return (
-    <NBox bgColor={Theme.colors.credentialCardBg} p={4} borderRadius={10} m={2}>
+    <NBox
+      bgColor={Theme.colors.credentialCardBg}
+      p={4}
+      borderRadius={10}
+      m={2}
+      key={`${credential.id}`}>
       <Stack direction="row">
         <Text
           fontSize={'16px'}

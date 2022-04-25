@@ -7,7 +7,7 @@ import assert from 'assert';
 import {WalletRpc} from '@docknetwork/react-native-sdk/src/client/wallet-rpc';
 
 export const sortByIssuanceDate = (a, b) =>
-  getCredentialTimestamp(b) - getCredentialTimestamp(a);
+  getCredentialTimestamp(b.content) - getCredentialTimestamp(a.content);
 
 export function getCredentialTimestamp(credential) {
   assert(!!credential, 'credential is required');
