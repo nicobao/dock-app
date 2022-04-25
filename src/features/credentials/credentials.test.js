@@ -55,7 +55,9 @@ describe('Credentials helpers', () => {
 
   describe('sortByIssuanceDate', () => {
     it('expect to sort credentials', () => {
-      const result = mockCreds.sort(sortByIssuanceDate);
+      const result = mockCreds
+        .map(cred => ({...cred, content: cred}))
+        .sort(sortByIssuanceDate);
 
       result.forEach((item, idx) => expect(item.id).toEqual(idx));
     });
