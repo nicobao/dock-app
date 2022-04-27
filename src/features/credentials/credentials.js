@@ -86,6 +86,7 @@ export function useCredentials() {
 
     try {
       await Credentials.getInstance().add(jsonData);
+      await syncCredentials();
     } catch (err) {
       showToast({
         message: translate('credentials.invalid_credential'),
