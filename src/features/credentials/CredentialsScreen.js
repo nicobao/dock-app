@@ -18,26 +18,17 @@ import PlusCircleWhiteIcon from '../../assets/icons/plus-circle-white.svg';
 import {addTestId} from '../../core/automation-utils';
 import {Center, Image, Text, Stack, Menu, Pressable} from 'native-base';
 import {ICenterProps} from 'native-base/lib/typescript/components/composites/Center/types';
-import {useCredentials} from './credentials';
+import {useCredentials, getObjectFields} from './credentials';
 import {formatDate} from '@docknetwork/wallet-sdk-core/lib/core/format-utils';
 import {Routes} from 'src/core/routes';
 
 function renderObjectAttributes(credential) {
-  const subject = credential.credentialSubject;
-  const objectAttributes = [];
-
-  Object.keys(subject).forEach(key => {
-    const data = subject[key];
-
-    if (typeof data === 'object') {
-      objectAttributes.push(key);
-    }
-  });
+  const objectAttributes = getObjectFields(credential);
 
   return (
     <>
       {objectAttributes.map(key => {
-        const attr = subject[key];
+        const attr = credential.credentialSubject[key];
         return (
           <Stack mb={1}>
             <Text

@@ -19,6 +19,23 @@ export function getCredentialTimestamp(credential) {
   return new Date(credential.issuanceDate).getTime() || 0;
 }
 
+export function getObjectFields(credential) {
+  assert(!!credential, 'credential is required');
+
+  const subject = credential.credentialSubject || {};
+  const objectAttributes = [];
+
+  Object.keys(subject).forEach(key => {
+    const data = subject[key];
+
+    if (typeof data === 'object') {
+      objectAttributes.push(key);
+    }
+  });
+
+  return objectAttributes;
+}
+
 // TODO: Investigate why WalletRpc is not working properly for this calls
 // This proxy should not be required and must be handled by the wallet sdk
 Credentials.getInstance().wallet = {
