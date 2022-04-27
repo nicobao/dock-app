@@ -22,6 +22,43 @@ import {useCredentials} from './credentials';
 import {formatDate} from '@docknetwork/wallet-sdk-core/lib/core/format-utils';
 import {Routes} from 'src/core/routes';
 
+function renderObjectAttributes(credential) {
+  const subject = credential.credentialSubject;
+  const objectAttributes = [];
+
+  Object.keys(subject).forEach(key => {
+    const data = subject[key];
+
+    if (typeof data === 'object') {
+      objectAttributes.push(key);
+    }
+  });
+
+  return (
+    <>
+      {objectAttributes.map(key => {
+        const attr = subject[key];
+        return (
+          <Stack mb={1}>
+            <Text
+              textTransform="capitalize"
+              fontSize={'12px'}
+              fontWeight={600}
+              fontFamily={Theme.fontFamily.montserrat}>
+              {key}
+            </Text>
+            {Object.keys(attr).map(attrKey => {
+              const item = attr[attrKey];
+
+              return <Text fontSize={'12px'}>{item}</Text>;
+            })}
+          </Stack>
+        );
+      })}
+    </>
+  );
+}
+
 function EmptyCredentials(props: ICenterProps) {
   return (
     <Center {...props}>
@@ -50,12 +87,23 @@ function CredentialListItem({credential, onRemove}) {
       m={2}
       key={`${credential.id}`}>
       <Stack direction="row">
-        <Text
-          fontSize={'16px'}
-          fontWeight={600}
-          fontFamily={Theme.fontFamily.montserrat}>
-          {credential.credentialSubject.title}
-        </Text>
+        <Stack>
+          {credential.credentialSubject.title ? (
+            <Text
+              fontSize={'16px'}
+              fontWeight={600}
+              fontFamily={Theme.fontFamily.montserrat}>
+              {credential.credentialSubject.title}
+            </Text>
+          ) : null}
+          <Text
+            fontSize={'12px'}
+            fontWeight={500}
+            fontFamily={Theme.fontFamily.montserrat}>
+            {credential.credentialSubject.subjectName}
+          </Text>
+          {renderObjectAttributes(credential)}
+        </Stack>
         <NBox flex={1} alignItems="flex-end">
           <Menu
             trigger={triggerProps => {
@@ -75,12 +123,7 @@ function CredentialListItem({credential, onRemove}) {
           </Menu>
         </NBox>
       </Stack>
-      <Text
-        fontSize={'12px'}
-        fontWeight={500}
-        fontFamily={Theme.fontFamily.montserrat}>
-        {credential.credentialSubject.subjectName}
-      </Text>
+
       <NBox mt={4} flexDirection="row" alignItems={'flex-end'}>
         <NBox>
           <Text
