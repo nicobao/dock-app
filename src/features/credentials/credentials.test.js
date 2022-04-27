@@ -3,6 +3,7 @@ import {
   sortByIssuanceDate,
   getCredentialTimestamp,
   useCredentials,
+  getObjectFields,
 } from './credentials';
 import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
 
@@ -93,6 +94,38 @@ describe('Credentials helpers', () => {
       });
 
       expect(Credentials.getInstance().remove).toBeCalledWith(1);
+    });
+  });
+
+  describe('getObjectFields', () => {
+    it('expect to validate credential', () => {
+      expect(() => getObjectFields(null)).toThrowError();
+    });
+
+    it('expect to handle non object fields', () => {
+      const credential = {
+        credentialSubject: {
+          title: 'test',
+          id: 'Test University',
+        },
+      };
+
+      const result = getObjectFields(credential);
+      expect(result.length).toBe(0);
+    });
+
+    it('expect to handle object fields', () => {
+      const credential = {
+        credentialSubject: {
+          degree: {
+            type: 'test',
+          },
+        },
+      };
+
+      const result = getObjectFields(credential);
+      expect(result.length).toBe(1);
+      expect(result[0]).toBe('degree');
     });
   });
 });
