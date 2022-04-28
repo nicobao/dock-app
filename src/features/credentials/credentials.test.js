@@ -67,16 +67,20 @@ describe('Credentials helpers', () => {
   describe('useCredentials', () => {
     const creds = [...mockCreds];
     let hook;
+    const onPickFile = jest.fn().mockResolvedValue({});
 
-    beforeAll(async () => {
+    beforeEach(async () => {
       jest.spyOn(creds, 'sort');
       jest
         .spyOn(Credentials.getInstance(), 'query')
         .mockImplementation(() => Promise.resolve(creds));
       jest
+        .spyOn(Credentials.getInstance(), 'add')
+        .mockImplementation(value => Promise.resolve(value));
+      jest
         .spyOn(Credentials.getInstance(), 'remove')
         .mockImplementation(() => Promise.resolve(creds[0]));
-      const {result} = await renderHook(() => useCredentials());
+      const {result} = await renderHook(() => useCredentials({onPickFile}));
       hook = result;
     });
 
@@ -94,6 +98,15 @@ describe('Credentials helpers', () => {
       });
 
       expect(Credentials.getInstance().remove).toBeCalledWith(1);
+    });
+
+    it('expect to add credential', async () => {
+      await act(async () => {
+        await hook.current.onAdd();
+      });
+
+      expect(Credentials.getInstance().add).toBeCalled();
+      expect(Credentials.getInstance().query).toBeCalled();
     });
   });
 
