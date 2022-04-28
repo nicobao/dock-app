@@ -21,6 +21,7 @@ import {ICenterProps} from 'native-base/lib/typescript/components/composites/Cen
 import {useCredentials, getObjectFields} from './credentials';
 import {formatDate} from '@docknetwork/wallet-sdk-core/lib/core/format-utils';
 import {Routes} from 'src/core/routes';
+import {withErrorBoundary} from 'src/core/error-handler';
 
 function renderObjectAttributes(credential) {
   const objectAttributes = getObjectFields(credential);
@@ -69,7 +70,7 @@ function EmptyCredentials(props: ICenterProps) {
   );
 }
 
-function CredentialListItem({credential, onRemove}) {
+const CredentialListItem = withErrorBoundary(({credential, onRemove}) => {
   return (
     <NBox
       bgColor={Theme.colors.credentialCardBg}
@@ -138,7 +139,7 @@ function CredentialListItem({credential, onRemove}) {
       </NBox>
     </NBox>
   );
-}
+});
 
 export function CredentialsScreen({credentials, onRemove, onAdd}) {
   return (

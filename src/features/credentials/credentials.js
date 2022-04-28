@@ -59,7 +59,7 @@ Credentials.getInstance().wallet = {
   remove: params => WalletRpc.remove(params),
 };
 
-export function useCredentials({onPickFile = pickJSONFile}) {
+export function useCredentials({onPickFile = pickJSONFile} = {}) {
   const [items, setItems] = useState([]);
 
   const syncCredentials = async () => {
