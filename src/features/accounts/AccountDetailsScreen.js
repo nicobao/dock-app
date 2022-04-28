@@ -36,6 +36,7 @@ import {addTestId} from '../../core/automation-utils';
 import {appSelectors} from '../app/app-slice';
 import {useFeatures} from '../app/feature-flags';
 import uuid from 'uuid';
+import {displayWarning} from './AccountsScreen';
 
 const TRANSACTION_FILTERS = {
   all: 'all',
@@ -368,7 +369,7 @@ export function AccountDetailsScreen({
               ) : null}
             </Stack>
           </Stack>
-          {account.hasBackup ? null : (
+          {!displayWarning(account) ? null : (
             <Stack
               backgroundColor={Theme.colors.warningBackground}
               p={'16px'}
@@ -473,7 +474,7 @@ export function AccountDetailsContainer({route}) {
     dispatch(transactionsOperations.loadTransactions(accountId));
   }, [dispatch, accountId]);
 
-  if (!account || !('@context' in account)) {
+  if (!account) {
     return <LoadingScreen />;
   }
 
