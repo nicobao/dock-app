@@ -59,11 +59,10 @@ Credentials.getInstance().wallet = {
   remove: params => WalletRpc.remove(params),
 };
 
-export function useCredentials() {
+export function useCredentials({onPickFile = pickJSONFile}) {
   const [items, setItems] = useState([]);
 
   const syncCredentials = async () => {
-    console.log('sync credentials');
     const credentials = await Credentials.getInstance().query();
     setItems(credentials.sort(sortByIssuanceDate));
   };
@@ -78,7 +77,7 @@ export function useCredentials() {
   };
 
   const onAdd = async () => {
-    const jsonData = await pickJSONFile();
+    const jsonData = await onPickFile();
 
     if (!jsonData) {
       return;
@@ -86,6 +85,7 @@ export function useCredentials() {
 
     try {
       await Credentials.getInstance().add(jsonData);
+      await syncCredentials();
     } catch (err) {
       showToast({
         message: translate('credentials.invalid_credential'),
