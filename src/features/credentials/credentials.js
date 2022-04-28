@@ -78,7 +78,7 @@ export function useCredentials() {
   };
 
   const onAdd = async () => {
-    const jsonData = await pickJSONFile();
+    const jsonData = await onPickFile();
 
     if (!jsonData) {
       return;
