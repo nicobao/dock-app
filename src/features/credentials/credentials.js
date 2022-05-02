@@ -59,6 +59,12 @@ Credentials.getInstance().wallet = {
   remove: params => WalletRpc.remove(params),
 };
 
+export function getDIDAddress(did) {
+  assert(!!did, 'did is required');
+
+  return did.replace(/did:\w+:/gi, '');
+}
+
 export function useCredentials({onPickFile = pickJSONFile} = {}) {
   const [items, setItems] = useState([]);
 
