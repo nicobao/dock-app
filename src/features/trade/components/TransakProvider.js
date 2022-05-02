@@ -11,14 +11,19 @@ import {addTestId} from '../../../core/automation-utils';
 import {StyleSheet} from 'react-native';
 import {
   TRANSAK_PUSHER_API_KEY,
-  TRANSAK_ENVIRONMENT,
-  TRANSAK_API_KEY,
-  TRANSAK_BASE_URL,
+  STAGING_TRANSAK_ENVIRONMENT,
+  PROD_TRANSAK_ENVIRONMENT,
+  STAGING_TRANSAK_API_KEY,
+  PROD_TRANSAK_API_KEY,
+  PROD_TRANSAK_BASE_URL,
+  STAGING_TRANSAK_BASE_URL,
 } from '@env';
 import {
   ANALYTICS_EVENT,
   logAnalyticsEvent,
 } from '../../analytics/analytics-slice';
+import {useSelector} from 'react-redux';
+import {appSelectors} from '../../app/app-slice';
 
 const BUY_STATES = {
   INTRO: 'INTRO',
@@ -73,15 +78,49 @@ export default function TransakPaymentProvider({
 }) {
   const [buyState, setBuyState] = useState(BUY_STATES.INTRO);
 
+  const currentNetworkId = useSelector(appSelectors.getNetworkId);
+
+  const TRANSAK_ENVIRONMENT = useMemo(
+    () => ({
+      mainnet: PROD_TRANSAK_ENVIRONMENT,
+      local: STAGING_TRANSAK_ENVIRONMENT,
+      testnet: STAGING_TRANSAK_ENVIRONMENT,
+    }),
+    [],
+  );
+
+  const TRANSAK_API_KEY = useMemo(
+    () => ({
+      mainnet: PROD_TRANSAK_API_KEY,
+      local: STAGING_TRANSAK_API_KEY,
+      testnet: STAGING_TRANSAK_API_KEY,
+    }),
+    [],
+  );
+  const TRANSAK_BASE_URL = useMemo(
+    () => ({
+      mainnet: PROD_TRANSAK_BASE_URL,
+      local: STAGING_TRANSAK_BASE_URL,
+      testnet: STAGING_TRANSAK_BASE_URL,
+    }),
+    [],
+  );
+
   const queryUrl = useMemo(() => {
     return queryString.stringify({
       partnerOrderId,
-      apiKey: TRANSAK_API_KEY,
-      environment: TRANSAK_ENVIRONMENT,
+      apiKey: TRANSAK_API_KEY[currentNetworkId],
+      environment: TRANSAK_ENVIRONMENT[currentNetworkId],
       cryptoCurrencyCode: 'DOCK',
       walletAddress,
     });
-  }, [walletAddress, partnerOrderId]);
+  }, [
+    TRANSAK_API_KEY,
+    TRANSAK_ENVIRONMENT,
+    currentNetworkId,
+    partnerOrderId,
+    walletAddress,
+  ]);
 
   useEffect(() => {
     const pusher = new Pusher(TRANSAK_PUSHER_API_KEY, {cluster: 'ap2'});
@@ -90,7 +129,7 @@ export default function TransakPaymentProvider({
       console.log(err);
     });
 
-    pusher.subscribe(`${TRANSAK_API_KEY}_${partnerOrderId}`);
+    pusher.subscribe(`${TRANSAK_API_KEY[currentNetworkId]}_${partnerOrderId}`);
 
     pusher.bind_global((eventId, orderData) => {
       if (
@@ -120,9 +159,11 @@ export default function TransakPaymentProvider({
     });
 
     return () => {
-      pusher.unsubscribe(`${TRANSAK_API_KEY}_${partnerOrderId}`);
+      pusher.unsubscribe(
+        `${TRANSAK_API_KEY[currentNetworkId]}_${partnerOrderId}`,
+      );
     };
-  }, [partnerOrderId, walletAddress]);
+  }, [TRANSAK_API_KEY, currentNetworkId, partnerOrderId, walletAddress]);
 
   const getScreenContent = useCallback(() => {
     if (buyState === BUY_STATES.INTRO) {
@@ -135,7 +176,11 @@ export default function TransakPaymentProvider({
       );
     }
     if (buyState === BUY_STATES.INITIATED) {
-      return <TransakWebView url={`${TRANSAK_BASE_URL}?${queryUrl}`} />;
+      return (
+        <TransakWebView
+          url={`${TRANSAK_BASE_URL[currentNetworkId]}?${queryUrl}`}
+        />
+      );
     }
     return (
       <NBox mx={7} mt={12}>
@@ -144,6 +189,6 @@ export default function TransakPaymentProvider({
         </Typography>
       </NBox>
     );
-  }, [buyState, queryUrl]);
+  }, [TRANSAK_BASE_URL, buyState, currentNetworkId, queryUrl]);
   return <NBox flex={1}>{getScreenContent()}</NBox>;
 }
