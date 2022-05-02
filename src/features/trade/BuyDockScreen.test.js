@@ -6,7 +6,6 @@ import thunk from 'redux-thunk';
 import {renderAppProviders} from '../../core/test-utils';
 import TransakProvider, {
   parseTransakConfig,
-  TRANSAK_ENVIRONMENT_CONFIG,
   TransakIntroView,
   TransakWebView,
 } from './components/TransakProvider';
