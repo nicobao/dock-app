@@ -1,11 +1,12 @@
 import analytics from '@react-native-firebase/analytics';
+import {captureException} from '@sentry/react-native';
 
 export function logAnalyticsEvent(eventName, params) {
   if (typeof eventName === 'string' && eventName.length > 0) {
     analytics()
       .logEvent(eventName, params)
       .catch(err => {
-        console.log(err, 'err');
+        captureException(err);
       });
   }
 }
