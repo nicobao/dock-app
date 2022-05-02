@@ -35,6 +35,7 @@ import {accountOperations, accountSelectors} from './account-slice';
 import {AddAccountModal} from './AddAccountModal';
 import {AccountsScreenTestIDs} from './test-ids';
 import {pickDocuments} from '../../core/storage-utils';
+import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
 
 export function displayWarning(account) {
   if (
@@ -312,6 +313,9 @@ export const AccountsContainer = withErrorBoundary(({navigation}) => {
 
           dispatch(createAccountOperations.importFromJson(fileData));
         }
+        logAnalyticsEvent(ANALYTICS_EVENT.ACCOUNT.IMPORT, {
+          method,
+        });
       }}
     />
   );

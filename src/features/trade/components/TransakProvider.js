@@ -15,6 +15,10 @@ import {
   TRANSAK_API_KEY,
   TRANSAK_BASE_URL,
 } from '@env';
+import {
+  ANALYTICS_EVENT,
+  logAnalyticsEvent,
+} from '../../analytics/analytics-slice';
 
 const BUY_STATES = {
   INTRO: 'INTRO',
@@ -93,6 +97,22 @@ export default function TransakPaymentProvider({
         eventId === BUY_STATES.ORDER_COMPLETED ||
         eventId === BUY_STATES.ORDER_FAILED
       ) {
+        if (eventId === BUY_STATES.ORDER_COMPLETED) {
+          logAnalyticsEvent(ANALYTICS_EVENT.TOKENS.BUY_TOKEN, {
+            id: partnerOrderId,
+            walletAddress,
+            ...orderData,
+          });
+        }
+        if (eventId === BUY_STATES.ORDER_FAILED) {
+          logAnalyticsEvent(ANALYTICS_EVENT.FAILURES, {
+            name: ANALYTICS_EVENT.TOKENS.BUY_TOKEN,
+            id: partnerOrderId,
+            walletAddress,
+            ...orderData,
+          });
+        }
+
         setTimeout(() => {
           navigateBack();
         }, 3000);
@@ -102,7 +122,7 @@ export default function TransakPaymentProvider({
     return () => {
       pusher.unsubscribe(`${TRANSAK_API_KEY}_${partnerOrderId}`);
     };
-  }, [partnerOrderId]);
+  }, [partnerOrderId, walletAddress]);
 
   const getScreenContent = useCallback(() => {
     if (buyState === BUY_STATES.INTRO) {
