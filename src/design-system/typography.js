@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 import {Theme} from './theme';
 
 const headerVariantBase = {
-  fontFamily: Theme.fontFamily.satoshi,
+  fontFamily: Theme.fontFamily.default,
   lineHeight: 32,
   fontWeight: '600',
   color: Theme.colors.headerText,
@@ -12,7 +12,7 @@ const headerVariantBase = {
 
 const transactionFilterVariantBase = {
   ...headerVariantBase,
-  fontFamily: Theme.fontFamily.satoshi,
+  fontFamily: Theme.fontFamily.default,
   fontSize: 16,
   fontWeight: 600,
   fontStyle: 'normal',
@@ -20,7 +20,7 @@ const transactionFilterVariantBase = {
   color: Theme.colors.textHighlighted,
 };
 const transactionItemMinorDetail = {
-  fontFamily: Theme.fontFamily.satoshi,
+  fontFamily: Theme.fontFamily.default,
   fontWeight: 400,
   fontSize: 14,
   fontStyle: 'normal',
@@ -70,7 +70,7 @@ const variantsMap = {
     lineHeight: 22,
   },
   'transaction-type-label': {
-    fontFamily: Theme.fontFamily.satoshi,
+    fontFamily: Theme.fontFamily.default,
     fontWeight: 600,
     fontSize: 16,
     fontStyle: 'normal',
@@ -86,7 +86,7 @@ const variantsMap = {
   },
   'fiat-amount': {
     ...headerVariantBase,
-    fontFamily: Theme.fontFamily.satoshi,
+    fontFamily: Theme.fontFamily.default,
     fontStyle: 'normal',
     fontSize: 16,
     fontWeight: 400,
@@ -94,7 +94,7 @@ const variantsMap = {
     color: Theme.colors.description,
   },
   'transaction-filter': {
-    fontFamily: Theme.fontFamily.satoshi,
+    fontFamily: Theme.fontFamily.default,
     fontStyle: 'normal',
     fontSize: 15,
     fontWeight: 400,
@@ -137,7 +137,7 @@ const variantsMap = {
     color: Theme.colors.warningText,
   },
   transactionRetryTxt: {
-    fontFamily: Theme.fontFamily.satoshi,
+    fontFamily: Theme.fontFamily.default,
     fontWeight: 500,
     fontSize: 14,
     lineHeight: 20,
@@ -146,7 +146,7 @@ const variantsMap = {
 };
 
 export const Typography: ComponentType<TypographyProps> = styled(Text)`
-  font-family: ${Theme.fontFamily.satoshi};
+  font-family: ${Theme.fontFamily.default};
   line-height: 25px;
   color: ${props => (props.color ? props.color : Theme.colors.text)};
   ${({variant}) => {

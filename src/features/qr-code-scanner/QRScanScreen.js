@@ -203,6 +203,6 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: Theme.colors.textHighlighted,
-    fontFamily: Theme.fontFamily.satoshi,
+    fontFamily: Theme.fontFamily.default,
   },
 });

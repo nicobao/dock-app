@@ -7,6 +7,7 @@ export const Theme = {
     nunitoSans: 'Nunito Sans',
     montserrat: 'Montserrat',
     satoshi: 'Satoshi',
+    default: 'Satoshi',
   },
   borderRadius: 6,
   colors: {
@@ -84,7 +85,7 @@ const nBaseTheme = extendTheme({
     Select: {
       baseStyle: props => ({
         ...props,
-        fontFamily: Theme.fontFamily.satoshi,
+        fontFamily: Theme.fontFamily.default,
       }),
     },
     Input: {
@@ -93,7 +94,7 @@ const nBaseTheme = extendTheme({
         borderColor: Theme.colors.secondaryBackground,
         backgroundColor: Theme.colors.secondaryBackground,
         fontSize: '19px',
-        fontFamily: Theme.fontFamily.satoshi,
+        fontFamily: Theme.fontFamily.default,
         _hover: {
           borderColor: Theme.colors.secondaryBackground,
         },
@@ -114,7 +115,7 @@ const nBaseTheme = extendTheme({
     },
     Text: {
       baseStyle: props => ({
-        fontFamily: Theme.fontFamily.satoshi,
+        fontFamily: Theme.fontFamily.default,
       }),
     },
     Button: {
