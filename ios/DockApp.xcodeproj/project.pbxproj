@@ -52,6 +52,17 @@
 		F24E81F71C3C4892A909FDEF /* Montserrat-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 011D3B0D43474222A234EB20 /* Montserrat-ExtraBoldItalic.ttf */; };
 		F3597DA9273546EF8AF6C2DB /* Montserrat-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ACD455918F5947EE87F31034 /* Montserrat-Italic.ttf */; };
 		FE73118F03404CA09E269D6D /* Montserrat-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D2EE6FB676CD4B3BA9A76B4F /* Montserrat-ExtraLight.ttf */; };
+		38C85470533D4CB0BDBB4C08 /* Satoshi-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = F1C1093180C24410A4A2504C /* Satoshi-Black.otf */; };
+		38EC696FAEFF47D3A5E07C03 /* Satoshi-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2C4E129C28D1423CB43A4D14 /* Satoshi-BlackItalic.otf */; };
+		990CD0A84896484BACC060EE /* Satoshi-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F85CF6BFAF6549A9A659F9AF /* Satoshi-Bold.otf */; };
+		E273E1EA6C364670A9C9D838 /* Satoshi-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = D17D11526D72421988A17323 /* Satoshi-BoldItalic.otf */; };
+		FF8DE2A3DCAF4FDDA0CCD7D4 /* Satoshi-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 793FE573DC634CE59207CBE5 /* Satoshi-Italic.otf */; };
+		083218142919482AA3869327 /* Satoshi-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9523D9D94FA348A3A0755D8D /* Satoshi-Light.otf */; };
+		3A17C01F6F504773BE8B27D3 /* Satoshi-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 27BEC4D9577643E6956D7313 /* Satoshi-LightItalic.otf */; };
+		8A75B7AF767843E2B52F0F97 /* Satoshi-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = B81F3C8325014F63A8C4A157 /* Satoshi-Medium.otf */; };
+		BECB90CB783548B28435C4DC /* Satoshi-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = B249F109788342ABA2E16098 /* Satoshi-MediumItalic.otf */; };
+		7C5A481F89524318ACFC3526 /* Satoshi-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 12E3EB497D7348D8A8D274F8 /* Satoshi-Regular.otf */; };
+		B77EBAD4976043228348A027 /* WaterBrush-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6929ADE239874723B12228B7 /* WaterBrush-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -155,6 +166,17 @@
 		F3EA8D7FE2E74C9A88CD98B6 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/native-base/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		F427315783BF4E6F9AC664E5 /* Montserrat-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-BoldItalic.ttf"; path = "../assets/fonts/Montserrat-BoldItalic.ttf"; sourceTree = "<group>"; };
 		F87E7A6767094431A35A4421 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/native-base/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
+		F1C1093180C24410A4A2504C /* Satoshi-Black.otf */ = {isa = PBXFileReference; name = "Satoshi-Black.otf"; path = "../assets/fonts/Satoshi-Black.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2C4E129C28D1423CB43A4D14 /* Satoshi-BlackItalic.otf */ = {isa = PBXFileReference; name = "Satoshi-BlackItalic.otf"; path = "../assets/fonts/Satoshi-BlackItalic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F85CF6BFAF6549A9A659F9AF /* Satoshi-Bold.otf */ = {isa = PBXFileReference; name = "Satoshi-Bold.otf"; path = "../assets/fonts/Satoshi-Bold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D17D11526D72421988A17323 /* Satoshi-BoldItalic.otf */ = {isa = PBXFileReference; name = "Satoshi-BoldItalic.otf"; path = "../assets/fonts/Satoshi-BoldItalic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		793FE573DC634CE59207CBE5 /* Satoshi-Italic.otf */ = {isa = PBXFileReference; name = "Satoshi-Italic.otf"; path = "../assets/fonts/Satoshi-Italic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9523D9D94FA348A3A0755D8D /* Satoshi-Light.otf */ = {isa = PBXFileReference; name = "Satoshi-Light.otf"; path = "../assets/fonts/Satoshi-Light.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		27BEC4D9577643E6956D7313 /* Satoshi-LightItalic.otf */ = {isa = PBXFileReference; name = "Satoshi-LightItalic.otf"; path = "../assets/fonts/Satoshi-LightItalic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B81F3C8325014F63A8C4A157 /* Satoshi-Medium.otf */ = {isa = PBXFileReference; name = "Satoshi-Medium.otf"; path = "../assets/fonts/Satoshi-Medium.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B249F109788342ABA2E16098 /* Satoshi-MediumItalic.otf */ = {isa = PBXFileReference; name = "Satoshi-MediumItalic.otf"; path = "../assets/fonts/Satoshi-MediumItalic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		12E3EB497D7348D8A8D274F8 /* Satoshi-Regular.otf */ = {isa = PBXFileReference; name = "Satoshi-Regular.otf"; path = "../assets/fonts/Satoshi-Regular.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6929ADE239874723B12228B7 /* WaterBrush-Regular.ttf */ = {isa = PBXFileReference; name = "WaterBrush-Regular.ttf"; path = "../assets/fonts/WaterBrush-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -292,6 +314,17 @@
 				0E75605EF23F48B5B42AFE86 /* MaterialIcons.ttf */,
 				12D2FA99D4B84DDEA169A66D /* SimpleLineIcons.ttf */,
 				D4F4423DFAA14404AC85E613 /* Zocial.ttf */,
+				F1C1093180C24410A4A2504C /* Satoshi-Black.otf */,
+				2C4E129C28D1423CB43A4D14 /* Satoshi-BlackItalic.otf */,
+				F85CF6BFAF6549A9A659F9AF /* Satoshi-Bold.otf */,
+				D17D11526D72421988A17323 /* Satoshi-BoldItalic.otf */,
+				793FE573DC634CE59207CBE5 /* Satoshi-Italic.otf */,
+				9523D9D94FA348A3A0755D8D /* Satoshi-Light.otf */,
+				27BEC4D9577643E6956D7313 /* Satoshi-LightItalic.otf */,
+				B81F3C8325014F63A8C4A157 /* Satoshi-Medium.otf */,
+				B249F109788342ABA2E16098 /* Satoshi-MediumItalic.otf */,
+				12E3EB497D7348D8A8D274F8 /* Satoshi-Regular.otf */,
+				6929ADE239874723B12228B7 /* WaterBrush-Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -476,6 +509,17 @@
 				99B319952B4B4172A14F1025 /* NunitoSans-Regular.ttf in Resources */,
 				3C56B78B81B44796BC2B0DD5 /* NunitoSans-SemiBold.ttf in Resources */,
 				99C52ECBF38C4928A8018DA9 /* NunitoSans-SemiBoldItalic.ttf in Resources */,
+				38C85470533D4CB0BDBB4C08 /* Satoshi-Black.otf in Resources */,
+				38EC696FAEFF47D3A5E07C03 /* Satoshi-BlackItalic.otf in Resources */,
+				990CD0A84896484BACC060EE /* Satoshi-Bold.otf in Resources */,
+				E273E1EA6C364670A9C9D838 /* Satoshi-BoldItalic.otf in Resources */,
+				FF8DE2A3DCAF4FDDA0CCD7D4 /* Satoshi-Italic.otf in Resources */,
+				083218142919482AA3869327 /* Satoshi-Light.otf in Resources */,
+				3A17C01F6F504773BE8B27D3 /* Satoshi-LightItalic.otf in Resources */,
+				8A75B7AF767843E2B52F0F97 /* Satoshi-Medium.otf in Resources */,
+				BECB90CB783548B28435C4DC /* Satoshi-MediumItalic.otf in Resources */,
+				7C5A481F89524318ACFC3526 /* Satoshi-Regular.otf in Resources */,
+				B77EBAD4976043228348A027 /* WaterBrush-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

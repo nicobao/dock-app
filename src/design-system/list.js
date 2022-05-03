@@ -32,7 +32,7 @@ export function OptionList({items, postPress, ...otherProps}) {
                 fontSize="16px"
                 fontWeight={600}
                 color="#fff"
-                fontFamily="Montserrat">
+                fontFamily={Theme.fontFamily.satoshi}>
                 {title}
               </Text>
             </Box>

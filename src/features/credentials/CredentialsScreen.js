@@ -64,7 +64,7 @@ function EmptyCredentials(props: ICenterProps) {
         fontSize={14}
         pt={2}
         fontWeight={400}
-        fontFamily={Theme.fontFamily.nunitoSans}>
+        fontFamily={Theme.fontFamily.satoshi}>
         {translate('credentials.empty_items')}
       </Text>
     </Center>
