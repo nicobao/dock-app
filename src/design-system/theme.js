@@ -35,19 +35,19 @@ export const Theme = {
     transactionPending: '#FBBF24',
     qrCodeBackground: '#fff',
     credentialCardBg: '#000',
-    absoluteBlack: '#000',
-    absoluteWhite: '#fff',
 
-    btnWhiteBackground: '#F4F4F5',
-    btnBlueBackground: '#0063F7',
     primaryBlue: '#0063F7',
+
+    inactiveText: '#fff',
+    activeText: '#18181B',
   },
   screen: {
-    backgroundColor: '#18181B',
+    backgroundColor: '#000',
   },
   button: {
     backgroundColor: '#0063F7',
     textColor: '#fff',
+    btnWhiteBackground: '#F4F4F5',
   },
   touchOpacity: 0.2,
 };
@@ -121,12 +121,12 @@ const nBaseTheme = extendTheme({
     Button: {
       variants: {
         whiteButton: props => ({
-          bg: Theme.colors.btnWhiteBackground,
+          bg: Theme.button.btnWhiteBackground,
         }),
         transactionFilter: ({isActive}) => {
           return {
             bg: isActive
-              ? Theme.colors.btnWhiteBackground
+              ? Theme.button.btnWhiteBackground
               : Theme.colors.secondaryBackground,
             mr: 1,
             role: 'button',
@@ -136,7 +136,7 @@ const nBaseTheme = extendTheme({
         },
         transactionRetry: ({}) => {
           return {
-            bg: Theme.colors.btnWhiteBackground,
+            bg: Theme.button.btnWhiteBackground,
             role: 'button',
             mt: 3,
             borderRadius: 7,

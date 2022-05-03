@@ -87,9 +87,8 @@ function TransactionHistoryItem({transaction, accountAddress}) {
               {formatDate(transaction.date)}
             </Typography>
 
-            {(transaction.status === TransactionStatus.Failed &&
-              !transaction.retrySucceed) ||
-            true ? (
+            {transaction.status === TransactionStatus.Failed &&
+            !transaction.retrySucceed ? (
               <Stack alignItems="flex-start">
                 <Button
                   startIcon={<RetryIcon />}
@@ -200,8 +199,8 @@ function TransactionHistory({accountAddress}) {
             variant="transaction-filter"
             color={
               activeFilter === TRANSACTION_FILTERS.all
-                ? Theme.colors.primaryBackground
-                : Theme.colors.absoluteWhite
+                ? Theme.colors.activeText
+                : Theme.colors.inactiveText
             }>
             {translate('transaction_details.all')}
           </Typography>
@@ -217,8 +216,8 @@ function TransactionHistory({accountAddress}) {
             variant="transaction-filter"
             color={
               activeFilter === TRANSACTION_FILTERS.sent
-                ? Theme.colors.primaryBackground
-                : Theme.colors.absoluteWhite
+                ? Theme.colors.activeText
+                : Theme.colors.inactiveText
             }>
             {translate('transaction_details.sent')}
           </Typography>
@@ -234,8 +233,8 @@ function TransactionHistory({accountAddress}) {
             variant="transaction-filter"
             color={
               activeFilter === TRANSACTION_FILTERS.received
-                ? Theme.colors.primaryBackground
-                : Theme.colors.absoluteWhite
+                ? Theme.colors.activeText
+                : Theme.colors.inactiveText
             }>
             {translate('transaction_details.received')}
           </Typography>
@@ -251,8 +250,8 @@ function TransactionHistory({accountAddress}) {
             variant="transaction-filter"
             color={
               activeFilter === TRANSACTION_FILTERS.failed
-                ? Theme.colors.primaryBackground
-                : Theme.colors.absoluteWhite
+                ? Theme.colors.activeText
+                : Theme.colors.inactiveText
             }>
             {translate('transaction_history.failed')}
           </Typography>
@@ -366,7 +365,7 @@ export function AccountDetailsScreen({
                     address: account.id,
                   })
                 }>
-                <Typography color={Theme.colors.absoluteWhite}>
+                <Typography color={Theme.button.textColor}>
                   {translate('account_details.send_tokens_btn')}
                 </Typography>
               </Button>
@@ -381,7 +380,7 @@ export function AccountDetailsScreen({
                     address: account.id,
                   })
                 }>
-                <Typography color={Theme.colors.absoluteWhite}>
+                <Typography color={Theme.button.textColor}>
                   {translate('account_details.receive_tokens_btn')}
                 </Typography>
               </Button>
@@ -397,7 +396,7 @@ export function AccountDetailsScreen({
                       orderId: uuid(),
                     })
                   }>
-                  <Typography color={Theme.colors.absoluteWhite}>
+                  <Typography color={Theme.button.textColor}>
                     {translate('account_details.buy')}
                   </Typography>
                 </Button>
