@@ -94,8 +94,11 @@ function TransactionHistoryItem({transaction, accountAddress}) {
                   startIcon={<RetryIcon />}
                   variant={'transactionRetry'}
                   size="xs"
+                  whiteBtn
                   onPress={() => setShowConfirmation(true)}>
-                  {translate('transaction_history.try_again')}
+                  <Typography variant={'transactionRetryTxt'}>
+                    {translate('transaction_history.try_again')}
+                  </Typography>
                 </Button>
               </Stack>
             ) : null}
@@ -192,7 +195,13 @@ function TransactionHistory({accountAddress}) {
           isActive={activeFilter === TRANSACTION_FILTERS.all}
           variant={'transactionFilter'}
           size={'xs'}>
-          <Typography variant="transaction-filter">
+          <Typography
+            variant="transaction-filter"
+            color={
+              activeFilter === TRANSACTION_FILTERS.all
+                ? Theme.colors.activeText
+                : Theme.colors.inactiveText
+            }>
             {translate('transaction_details.all')}
           </Typography>
         </Button>
@@ -203,7 +212,13 @@ function TransactionHistory({accountAddress}) {
           isActive={activeFilter === TRANSACTION_FILTERS.sent}
           variant={'transactionFilter'}
           size={'xs'}>
-          <Typography variant="transaction-filter">
+          <Typography
+            variant="transaction-filter"
+            color={
+              activeFilter === TRANSACTION_FILTERS.sent
+                ? Theme.colors.activeText
+                : Theme.colors.inactiveText
+            }>
             {translate('transaction_details.sent')}
           </Typography>
         </Button>
@@ -214,7 +229,13 @@ function TransactionHistory({accountAddress}) {
           isActive={activeFilter === TRANSACTION_FILTERS.received}
           size={'xs'}
           variant={'transactionFilter'}>
-          <Typography variant="transaction-filter">
+          <Typography
+            variant="transaction-filter"
+            color={
+              activeFilter === TRANSACTION_FILTERS.received
+                ? Theme.colors.activeText
+                : Theme.colors.inactiveText
+            }>
             {translate('transaction_details.received')}
           </Typography>
         </Button>
@@ -225,7 +246,13 @@ function TransactionHistory({accountAddress}) {
           isActive={activeFilter === TRANSACTION_FILTERS.failed}
           size={'xs'}
           variant={'transactionFilter'}>
-          <Typography variant="transaction-filter">
+          <Typography
+            variant="transaction-filter"
+            color={
+              activeFilter === TRANSACTION_FILTERS.failed
+                ? Theme.colors.activeText
+                : Theme.colors.inactiveText
+            }>
             {translate('transaction_history.failed')}
           </Typography>
         </Button>
@@ -326,9 +353,9 @@ export function AccountDetailsScreen({
 
             <Stack direction="row" width="100%" mt={9} mb={7}>
               <Button
-                mr={2}
+                mr={1}
                 flex={1}
-                size="sm"
+                size="xs"
                 {...addTestId('SendTokensBtn')}
                 disabled={account.readOnly}
                 onPress={() =>
@@ -336,25 +363,30 @@ export function AccountDetailsScreen({
                     address: account.id,
                   })
                 }>
-                {translate('account_details.send_tokens_btn')}
+                <Typography color={Theme.button.textColor}>
+                  {translate('account_details.send_tokens_btn')}
+                </Typography>
               </Button>
               <Button
-                ml={2}
+                ml={1}
+                mr={1}
                 flex={1}
-                size="sm"
+                size="xs"
                 {...addTestId('ReceiveTokensBtn')}
                 onPress={() =>
                   navigate(Routes.TOKEN_RECEIVE, {
                     address: account.id,
                   })
                 }>
-                {translate('account_details.receive_tokens_btn')}
+                <Typography color={Theme.button.textColor}>
+                  {translate('account_details.receive_tokens_btn')}
+                </Typography>
               </Button>
               {showTransak ? (
                 <Button
-                  ml={2}
+                  ml={1}
                   flex={1}
-                  size="sm"
+                  size="xs"
                   {...addTestId('BuyDockBtn')}
                   onPress={() =>
                     navigate(Routes.TRADE_BUY_DOCK, {
@@ -362,7 +394,9 @@ export function AccountDetailsScreen({
                       orderId: uuid(),
                     })
                   }>
-                  {translate('account_details.buy')}
+                  <Typography color={Theme.button.textColor}>
+                    {translate('account_details.buy')}
+                  </Typography>
                 </Button>
               ) : null}
             </Stack>
