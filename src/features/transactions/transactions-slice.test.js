@@ -6,10 +6,9 @@ import {
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import {getRealm} from '../../core/realm';
-import {ApiRpc} from '@docknetwork/react-native-sdk/src/client/api-rpc';
 
 const mockStore = configureMockStore([thunk]);
-describe.only('transactions-slice', () => {
+describe('transactions-slice', () => {
   it('expect to parse transaction', () => {
     const t1 = {
       date: new Date(),
