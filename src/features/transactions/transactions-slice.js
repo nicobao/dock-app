@@ -214,7 +214,10 @@ export const transactionsOperations = {
           dispatch(transactionsActions.updateTransaction(updatedTransation));
 
           realm.write(() => {
-            realm.create('Transaction', updatedTransation, 'modified');
+            const realmTransaction = realm
+              .objects('Transaction')
+              .filtered(`id == "${internalId}"`);
+            realm.delete(realmTransaction);
           });
 
           showToast({
