@@ -18,6 +18,7 @@ import {
   createAccountOperations,
   createAccountSelectors,
 } from './create-account-slice';
+import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
 
 export function CreateAccountVerifyPhraseScreen({
   form,
@@ -142,6 +143,7 @@ export function CreateAccountVerifyPhraseContainer() {
       message: translate('verify_recovery_phrase.invalid_confirmation'),
       type: 'error',
     });
+    logAnalyticsEvent(ANALYTICS_EVENT.ACCOUNT.BACKUP);
   };
 
   useEffect(() => {
