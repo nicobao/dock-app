@@ -5,13 +5,10 @@ import {
   ScreenContainer,
   Typography,
   Box,
-  NBox,
-  BackButton,
   OptionList,
   DownloadIcon,
   TrashIcon,
   ChevronRightIcon,
-  IconButton,
 } from '../../design-system';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppConstants} from './constants';
@@ -22,7 +19,6 @@ import {translate} from 'src/locales';
 import {BuildIdentifier} from './BuildIdentifier';
 import {Stack} from 'native-base';
 import {appActions, appSelectors} from './app-slice';
-import PlusCircleWhiteIcon from '../../assets/icons/plus-circle-white.svg';
 
 const constants = AppConstants.settings;
 
