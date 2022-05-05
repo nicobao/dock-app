@@ -296,9 +296,7 @@ export function AccountDetailsScreen({
   const [qrCodeModalVisible, setQrCodeModalVisible] = useState();
 
   useEffect(() => {
-    if (qrCodeData) {
-      setQrCodeModalVisible(true);
-    }
+    setQrCodeModalVisible(!!qrCodeData);
   }, [qrCodeData]);
 
   return (
@@ -484,9 +482,9 @@ export function AccountDetailsScreen({
         {...addTestId('ExportAccountDescription')}
         visible={qrCodeModalVisible}
         onClose={() => {
-          setQrCodeModalVisible(false);
           navigate(Routes.ACCOUNT_DETAILS, {
             id: account.id,
+            qrCodeData: null,
           });
         }}
       />
