@@ -185,7 +185,6 @@ export function CredentialsScreen({credentials, onRemove, onAdd}) {
 
 export function CredentialsContainer(props) {
   const {credentials, handleRemove, onAdd} = useCredentials();
-  console.log(credentials, 'credentials');
   return (
     <CredentialsScreen
       credentials={credentials}
