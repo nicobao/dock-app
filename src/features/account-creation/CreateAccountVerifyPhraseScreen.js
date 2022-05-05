@@ -120,6 +120,7 @@ export function CreateAccountVerifyPhraseContainer() {
   };
 
   const handleSubmit = () => {
+    logAnalyticsEvent(ANALYTICS_EVENT.ACCOUNT.BACKUP);
     const words = phrase.split(' ');
     const word1 = form.word1.toLowerCase();
     const word2 = form.word2.toLowerCase();
@@ -143,7 +144,6 @@ export function CreateAccountVerifyPhraseContainer() {
       message: translate('verify_recovery_phrase.invalid_confirmation'),
       type: 'error',
     });
-    logAnalyticsEvent(ANALYTICS_EVENT.ACCOUNT.BACKUP);
   };
 
   useEffect(() => {
