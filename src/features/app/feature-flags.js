@@ -24,7 +24,8 @@ export const getAllFeatures = () =>
 
 export const defaultFeatures = {
   [Features.showTestnetTransaction.id]: false,
-  [Features.credentials.id]: false,
+  [Features.credentials.id]: true,
+  [Features.transak.id]: true,
 };
 
 export type FeatureFlags = {
