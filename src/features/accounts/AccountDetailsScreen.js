@@ -5,7 +5,7 @@ import {TouchableHighlight} from 'react-native-gesture-handler';
 import {useDispatch, useSelector} from 'react-redux';
 import {formatCurrency, formatDate} from 'src/core/format-utils';
 import {PolkadotIcon} from '../../components/PolkadotIcon';
-import {navigate, navigateBack} from '../../core/navigation';
+import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {
   AlertIcon,
@@ -519,7 +519,7 @@ export function AccountDetailsContainer({route}) {
     <AccountDetailsScreen
       onDelete={() => {
         return dispatch(accountOperations.removeAccount({id: accountId})).then(
-          navigateBack,
+          () => navigate(Routes.ACCOUNTS),
         );
       }}
       isRefreshing={isRefreshing}
