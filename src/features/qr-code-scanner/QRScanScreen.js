@@ -87,7 +87,7 @@ export function QRScanScreen({onData, isScreenFocus}) {
   return (
     <Container>
       <QRCodeContainer>
-        {isScreenFocus && (
+        {Boolean(isScreenFocus) && (
           <QRCodeScanner
             style={styles.scanner}
             reactivate={true}
