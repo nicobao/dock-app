@@ -98,6 +98,7 @@ const CredentialListItem = withErrorBoundary(({credential, onRemove}) => {
             trigger={triggerProps => {
               return (
                 <Pressable
+                  p={2}
                   {...triggerProps}
                   _pressed={{
                     opacity: Theme.touchOpacity,
