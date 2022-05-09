@@ -519,7 +519,7 @@ export function AccountDetailsContainer({route}) {
     <AccountDetailsScreen
       onDelete={() => {
         return dispatch(accountOperations.removeAccount({id: accountId})).then(
-          navigateBack,
+          () => navigate(Routes.ACCOUNTS),
         );
       }}
       isRefreshing={isRefreshing}
