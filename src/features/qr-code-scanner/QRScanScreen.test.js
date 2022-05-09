@@ -6,14 +6,31 @@ import {QRScanScreen} from './QRScanScreen';
 const mockStore = configureMockStore();
 
 describe('QRScanScreen', () => {
-  it('should render correctly', () => {
+  it('should render correctly when isScreenFocus=true', () => {
     const initialState = {
       // placeholder for redux store
     };
 
-    const wrapper = shallow(<QRScanScreen route={{}} />, {
-      context: {store: mockStore(initialState)},
-    });
+    const wrapper = shallow(
+      <QRScanScreen onData={jest.fn} isScreenFocus={true} />,
+      {
+        context: {store: mockStore(initialState)},
+      },
+    );
+    expect(wrapper.dive()).toMatchSnapshot();
+  });
+
+  it('should render correctly when isScreenFocus=false', () => {
+    const initialState = {
+      // placeholder for redux store
+    };
+
+    const wrapper = shallow(
+      <QRScanScreen onData={jest.fn} isScreenFocus={false} />,
+      {
+        context: {store: mockStore(initialState)},
+      },
+    );
     expect(wrapper.dive()).toMatchSnapshot();
   });
 });
