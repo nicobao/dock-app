@@ -144,7 +144,6 @@ const nBaseTheme = extendTheme({
         },
       },
       baseStyle: props => ({
-        bg: Theme.colors.error,
         rounded: 'full',
         _stack: {
           my: 1,
