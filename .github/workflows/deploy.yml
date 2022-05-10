@@ -91,7 +91,7 @@ jobs:
 
   internal_release_ios:
     name: "iOS deploy"
-    needs: increment-version
+    needs: increment_version
     runs-on: macos-latest
     if: github.event.pull_request.merged == true
     steps:
