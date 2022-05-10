@@ -2,7 +2,7 @@ name: Deployment
 on:
   pull_request:
     branches:
-      - deploy
+      - dev2
     types: [closed]
 jobs:
   increment_version:
