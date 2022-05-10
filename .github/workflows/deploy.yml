@@ -33,7 +33,7 @@ jobs:
         with:
           commit_message: (CI) Increment build number
           file_pattern: "*.pbxproj *.plist *.gradle"
-          branch: deploy
+          branch: dev2
 
   internal_release_android:
     name: "Android deploy"
