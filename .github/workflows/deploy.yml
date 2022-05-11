@@ -6,11 +6,13 @@ on: [push]
   #   types: [closed]
 jobs:
   log_pr:
-    - uses: jwalton/gh-find-current-pr@v1
-      id: findPr
-      with:
-        state: all
-    - run: echo "Your PR is ${PR}"
+    steps:
+      - uses: jwalton/gh-find-current-pr@v1
+        id: findPr
+        with:
+          state: all
+      - run: echo "Your PR is ${PR}"
+
   increment_version:
     runs-on: macos-latest
     name: "Increment app version"
