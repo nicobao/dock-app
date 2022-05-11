@@ -10,7 +10,7 @@ jobs:
       id: findPr
       with:
         state: all
-      - run: echo "Your PR is ${PR}"
+    - run: echo "Your PR is ${PR}"
   increment_version:
     runs-on: macos-latest
     name: "Increment app version"
