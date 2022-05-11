@@ -12,7 +12,7 @@ jobs:
         id: findPr
         with:
           state: all
-      - run: echo "Yur PR is $(PR)"
+      - run: echo "Yur PR is $(env.PR)"
         env:
           PR: ${{ steps.findPr.outputs.pr }}
 
