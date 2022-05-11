@@ -87,7 +87,7 @@ jobs:
           S3_ANDROID_APK_DIR: ${{ secrets.S3_ANDROID_APK_DIR }}
           S3_ACL: ${{ secrets.S3_ACL }}
         run: |
-          "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
+          echo "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
           cd ./android
           # fastlane internal
           # fastlane s3_upload
