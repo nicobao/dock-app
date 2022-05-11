@@ -33,6 +33,9 @@ jobs:
         with:
           commit_message: (CI) Increment build number
           file_pattern: "*.pbxproj *.plist *.gradle"
+          commit_user_name: GitHub Actions Bot
+          commit_user_email: github-actions-bot@dock.io
+          commit_author: Author <actions@github.com>
           branch: dev2
 
   internal_release_android:
@@ -96,9 +99,9 @@ jobs:
         with:
           channel: '#wallet-bot'
           status: ${{ job.status }}
-          success_text: '${env.GITHUB_WORKFLOW} #${env.GITHUB_RUN_NUMBER} build completed successfully'
-          failure_text: '${env.GITHUB_WORKFLOW} #${env.GITHUB_RUN_NUMBER} build failed'
-          cancelled_text: '${env.GITHUB_WORKFLOW} #${env.GITHUB_RUN_NUMBER} build was cancelled'
+          success_text: 'Android #${env.GITHUB_RUN_NUMBER} build completed successfully'
+          failure_text: 'Android #${env.GITHUB_RUN_NUMBER} build failed'
+          cancelled_text: 'Android #${env.GITHUB_RUN_NUMBER} build was cancelled'
           fields: |
             [{ "title": "Repository", "value": "${env.GITHUB_REPOSITORY}", "short": true },
             { "title": "Branch", "value": "${env.BRANCH}", "short": true },
@@ -159,9 +162,9 @@ jobs:
         with:
           channel: '#wallet-bot'
           status: ${{ job.status }}
-          success_text: '${env.GITHUB_WORKFLOW} #${env.GITHUB_RUN_NUMBER} build completed successfully'
-          failure_text: '${env.GITHUB_WORKFLOW} #${env.GITHUB_RUN_NUMBER} build failed'
-          cancelled_text: '${env.GITHUB_WORKFLOW} #${env.GITHUB_RUN_NUMBER} build was cancelled'
+          success_text: 'iOS #${env.GITHUB_RUN_NUMBER} build completed successfully'
+          failure_text: 'iOS #${env.GITHUB_RUN_NUMBER} build failed'
+          cancelled_text: 'iOS #${env.GITHUB_RUN_NUMBER} build was cancelled'
           fields: |
             [{ "title": "Repository", "value": "${env.GITHUB_REPOSITORY}", "short": true },
             { "title": "Branch", "value": "${env.BRANCH}", "short": true },
