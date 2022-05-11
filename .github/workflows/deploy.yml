@@ -13,6 +13,8 @@ jobs:
         with:
           state: all
       - run: echo "Your PR is ${PR}"
+        env:
+          PR: ${{ steps.findPr.outputs.pr }}
 
   increment_version:
     runs-on: macos-latest
