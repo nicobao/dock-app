@@ -2,7 +2,7 @@ name: Deployment
 on:
   pull_request:
     branches:
-      - dev2
+      - dev
     types: [closed]
 jobs:
   increment_version:
@@ -36,7 +36,7 @@ jobs:
           commit_user_name: GitHub Actions Bot
           commit_user_email: github-actions-bot@dock.io
           commit_author: Author <actions@github.com>
-          branch: dev2
+          branch: dev
 
   internal_release_android:
     name: "Android deploy"
