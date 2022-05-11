@@ -48,6 +48,12 @@ jobs:
         with:
           token: "${{ secrets.GIT_ACCESS_TOKEN }}"
 
+      - name: Get Pull Request Number
+        id: pr
+        run: echo "::set-output name=pull_request_number::$(gh pr view --json number -q .number || echo "")"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
+
       - name: Setup node
         uses: actions/setup-node@v1
         with:
@@ -63,7 +69,6 @@ jobs:
           echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
           yarn install
           yarn postinstall
-          export BUILD_NUMBER=$(node print-build-number)
           rm -rf ./certs
           git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/dock-app-certs.git" ./certs
           mv ./certs/google-play.json ./
@@ -88,9 +93,10 @@ jobs:
           S3_ANDROID_APK_DIR: ${{ secrets.S3_ANDROID_APK_DIR }}
           S3_ACL: ${{ secrets.S3_ACL }}
         run: |
+          echo "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
           cd ./android
-          # fastlane internal
-          # fastlane s3_upload
+          fastlane internal
+          fastlane s3_upload
 
       - name: Send slack notification
         if: always()
@@ -100,24 +106,31 @@ jobs:
         with:
           channel: '#wallet-bot'
           status: ${{ job.status }}
-          success_text: 'Android #${env.BUILD_NUMBER} build completed successfully'
-          failure_text: 'Android #${env.BUILD_NUMBER} build failed'
-          cancelled_text: 'Android #${env.BUILD_NUMBER} build was cancelled'
+          success_text: 'Android ${env.BUILD_NUMBER} completed successfully'
+          failure_text: 'Android build failed'
+          cancelled_text: 'Android build was cancelled'
           fields: |
             [{ "title": "Repository", "value": "${env.GITHUB_REPOSITORY}", "short": true },
             { "title": "App version", "value": "${env.BUILD_NUMBER}", "short": true },
-            { "title": "Action URL", "value": "${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}"}]
+            { "title": "Action URL", "value": "${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}"},
+            { "title": "Pull Request", "value": "${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/pull/${{ steps.pr.outputs.pull_request_number }}"}
+            ]
 
   internal_release_ios:
     name: "iOS deploy"
     needs: increment_version
     runs-on: macos-latest
-    if: github.event.pull_request.merged == true
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           token: "${{ secrets.GIT_ACCESS_TOKEN }}"
+
+      - name: Get Pull Request Number
+        id: pr
+        run: echo "::set-output name=pull_request_number::$(gh pr view --json number -q .number || echo "")"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
 
       - name: Setup node
         uses: actions/setup-node@v1
@@ -143,7 +156,7 @@ jobs:
           git config --global url."https://".insteadOf git://
           xcodebuild -version
           yarn install
-          export BUILD_NUMBER=$(node print-build-number)
+          echo "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
           git clone "${{ secrets.CERTS_REPO_URL }}" ./certs
           # Pull env variables from certs repo
           # It will inject sentry token in the JS thread
@@ -151,8 +164,7 @@ jobs:
           cp -rf ./certs/GoogleService-Info.plist ./ios/
           cd ./ios
           pod install
-          # fastlane build_upload_testflight
-          # fastlane send_message
+          fastlane build_upload_testflight
 
       - name: Send slack notification
         if: always()
@@ -162,10 +174,12 @@ jobs:
         with:
           channel: '#wallet-bot'
           status: ${{ job.status }}
-          success_text: 'iOS #${env.BUILD_NUMBER} build completed successfully'
-          failure_text: 'iOS #${env.BUILD_NUMBER} build failed'
-          cancelled_text: 'iOS #${env.BUILD_NUMBER} build was cancelled'
+          success_text: 'iOS ${env.BUILD_NUMBER} completed successfully'
+          failure_text: 'iOS build failed'
+          cancelled_text: 'iOS build was cancelled'
           fields: |
             [{ "title": "Repository", "value": "${env.GITHUB_REPOSITORY}", "short": true },
             { "title": "App version", "value": "${env.BUILD_NUMBER}", "short": true },
-            { "title": "Action URL", "value": "${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}"}]
+            { "title": "Action URL", "value": "${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/actions/runs/${env.GITHUB_RUN_ID}"},
+            { "title": "Pull Request", "value": "${env.GITHUB_SERVER_URL}/${env.GITHUB_REPOSITORY}/pull/${{ steps.pr.outputs.pull_request_number }}"}
+            ]
