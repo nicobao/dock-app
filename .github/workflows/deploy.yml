@@ -8,11 +8,12 @@ jobs:
   log_pr:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v1
       - uses: jwalton/gh-find-current-pr@v1
         id: findPr
         with:
           state: all
-      - run: echo "Yur PR is ${env.PR}"
+      - run: echo "Yur PR is ${PR}"
         env:
           PR: ${{ steps.findPr.outputs.pr }}
 
