@@ -8,14 +8,20 @@ jobs:
   log_pr:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: jwalton/gh-find-current-pr@v1
-        id: findPr
+      - name: Checkout
+        uses: actions/checkout@v2
         with:
-          state: all
-      - run: echo "Yur PR is ${PR}"
+          token: "${{ secrets.GIT_ACCESS_TOKEN }}"
+
+      - name: Get Pull Request Number
+        id: pr
+        run: echo "::set-output name=pull_request_number::$(gh pr view --json number -q .number || echo "")"
         env:
-          PR: ${{ steps.findPr.outputs.pr }}
+          GITHUB_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
+
+      - name: print pr number
+        run: |
+          echo "Pr number is: ${{ steps.pr.outputs.pull_request_number }}"
 
   increment_version:
     runs-on: macos-latest
