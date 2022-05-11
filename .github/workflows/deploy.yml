@@ -12,10 +12,9 @@ jobs:
         id: findPr
         with:
           state: all
-      - run: echo "PR_NUMBER=$(env.PR)" >> $GITHUB_ENV
+      - run: echo "Yur PR is $(PR)"
         env:
           PR: ${{ steps.findPr.outputs.pr }}
-      - run: echo "${env.PR_NUMBER}"
 
   increment_version:
     runs-on: macos-latest
