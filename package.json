@@ -50,6 +50,7 @@
     "bignumber.js": "^9.0.1",
     "browserify-zlib": "^0.1.4",
     "buffer": "^4.9.2",
+    "build-gradle-reader": "^1.0.0",
     "console-browserify": "^1.2.0",
     "constants-browserify": "^1.0.0",
     "date-fns": "^2.23.0",
