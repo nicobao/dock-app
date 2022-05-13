@@ -96,6 +96,8 @@ export async function authHandler(data) {
           type: 'message',
           message: translate('global.auth_sign_in_success'),
         });
+
+        navigate(Routes.APP_CREDENTIALS); // temporary redirect so it looks like scan was complete
       } else {
         showToast({
           type: 'error',
