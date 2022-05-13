@@ -5,6 +5,7 @@ import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
 import {showToast} from '../../core/toast';
 import {translate} from '../../locales';
 import {getJsonOrError} from '../../core';
+import {DebugConstants} from '../constants';
 import '../credentials/credentials';
 
 export async function addressHandler(data) {
@@ -61,7 +62,60 @@ export async function credentialHandler(data) {
   }
 }
 
-export const qrCodeHandlers = [addressHandler, credentialHandler];
+export async function authHandler(data) {
+  const authLinkPrefix = 'dockwallet://didauth?url=';
+  const isAuthLink =
+    typeof data === 'string' && data.indexOf(authLinkPrefix) === 0;
+
+  if (isAuthLink) {
+    const url =
+      'https://' + decodeURIComponent(data.substr(authLinkPrefix.length));
+
+    showToast({
+      type: 'message',
+      message: translate('global.auth_sign_in'),
+    });
+
+    try {
+      // DEBUG: For internal testing we just submit a hardcoded credential
+      // for production we will require the wallet to build and sign one
+      const vc = DebugConstants.authCredential;
+      const req = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          vc,
+        }),
+      });
+
+      const result = await req.json();
+      if (result.verified) {
+        showToast({
+          type: 'message',
+          message: translate('global.auth_sign_in_success'),
+        });
+      } else {
+        showToast({
+          type: 'error',
+          message: result.error || translate('global.auth_sign_in_failed'),
+        });
+      }
+    } catch (e) {
+      console.error(e);
+      showToast({
+        type: 'error',
+        message: `Sign in error: ${e.message}`,
+      });
+    }
+    return true;
+  }
+
+  return false;
+}
+
+export const qrCodeHandlers = [authHandler, addressHandler, credentialHandler];
 
 export async function executeHandlers(data, handlers) {
   if (!data || !handlers) {

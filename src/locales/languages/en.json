@@ -18,6 +18,11 @@
     "fetching_data": "Fetching remote data, please wait",
     "invalid_json_file": "Invalid json file"
   },
+  "auth": {
+    "auth_sign_in": "Signing in with debug credential",
+    "auth_sign_in_success": "Success! Signed in with DID!",
+    "auth_sign_in_failed": "Unknown error on sign in"
+  },
   "delete_wallet_confirmation": {
     "title": "Remove Wallet?",
     "message": "This can’t be undone. You’ll lose all accounts and tokens associated with this wallet if you did not back up.",
