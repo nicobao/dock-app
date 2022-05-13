@@ -73,7 +73,7 @@ export async function authHandler(data) {
 
     showToast({
       type: 'message',
-      message: translate('global.auth_sign_in'),
+      message: translate('auth.auth_sign_in'),
     });
 
     try {
@@ -94,14 +94,14 @@ export async function authHandler(data) {
       if (result.verified) {
         showToast({
           type: 'message',
-          message: translate('global.auth_sign_in_success'),
+          message: translate('auth.auth_sign_in_success'),
         });
 
         navigate(Routes.APP_CREDENTIALS); // temporary redirect so it looks like scan was complete
       } else {
         showToast({
           type: 'error',
-          message: result.error || translate('global.auth_sign_in_failed'),
+          message: result.error || translate('auth.auth_sign_in_failed'),
         });
       }
     } catch (e) {
