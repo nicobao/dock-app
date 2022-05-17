@@ -39,25 +39,7 @@ exports[`QRScanScreen should render correctly when isScreenFocus=false 1`] = `
         Scan QR Code
       </Styled(Text)>
       <Styled(View)>
-        <TouchableWithoutFeedback
-          onPress={[Function]}
-          style={
-            Object {
-              "padding": 20,
-            }
-          }
-        >
-          <Text
-            style={
-              Object {
-                "color": "#ffffff",
-                "fontFamily": "Satoshi",
-              }
-            }
-          >
-            Back
-          </Text>
-        </TouchableWithoutFeedback>
+        <BackButton />
       </Styled(View)>
     </Styled(View)>
     <Styled(View)>
@@ -309,25 +291,7 @@ exports[`QRScanScreen should render correctly when isScreenFocus=true 1`] = `
         Scan QR Code
       </Styled(Text)>
       <Styled(View)>
-        <TouchableWithoutFeedback
-          onPress={[Function]}
-          style={
-            Object {
-              "padding": 20,
-            }
-          }
-        >
-          <Text
-            style={
-              Object {
-                "color": "#ffffff",
-                "fontFamily": "Satoshi",
-              }
-            }
-          >
-            Back
-          </Text>
-        </TouchableWithoutFeedback>
+        <BackButton />
       </Styled(View)>
     </Styled(View)>
     <Styled(View)>

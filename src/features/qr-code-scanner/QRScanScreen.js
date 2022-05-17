@@ -12,6 +12,7 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
 import {Theme} from 'src/design-system';
 import styled from 'styled-components/native';
 import {navigateBack} from '../../core/navigation';
+import {BackButton} from '../../design-system';
 import {Colors} from '../../theme/colors';
 import {qrCodeHandler} from './qr-code';
 import {translate} from '../../locales';
@@ -32,6 +33,7 @@ const Title = styled.Text`
   color: ${Colors.white};
   font-size: 18px;
   line-height: 24px;
+  padding-top: 8px;
   width: 100%;
   text-align: center;
 `;
@@ -106,13 +108,7 @@ export function QRScanScreen({onData, isScreenFocus}) {
             {translate('qr_scanner.scan_qr_code')}
           </Title>
           <IconContainer>
-            <TouchableWithoutFeedback
-              onPress={navigateBack}
-              style={styles.headerIcon}>
-              <Text style={styles.headerText}>
-                {translate('navigation.back')}
-              </Text>
-            </TouchableWithoutFeedback>
+            <BackButton />
           </IconContainer>
         </Header>
         <Body>
