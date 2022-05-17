@@ -130,7 +130,11 @@ describe('qr-code', () => {
         navigate: jest.fn(),
       };
 
-      const credentialData = 'some-data';
+      const credentialData = {
+        id: 'test',
+        content: 'some-data',
+      };
+
       jest
         .spyOn(Credentials.getInstance(), 'getCredentialFromUrl')
         .mockImplementationOnce(async () => credentialData);
@@ -138,6 +142,10 @@ describe('qr-code', () => {
       jest
         .spyOn(Credentials.getInstance(), 'add')
         .mockImplementationOnce(async () => true);
+
+      jest
+        .spyOn(Credentials.getInstance(), 'query')
+        .mockImplementationOnce(async () => []);
 
       const result = await credentialHandler('http://some-url');
 
@@ -153,7 +161,10 @@ describe('qr-code', () => {
         navigate: jest.fn(),
       };
 
-      const credentialData = 'some-data';
+      const credentialData = {
+        id: Date.now(),
+        content: 'some-data',
+      };
       const toastMock = {
         show: jest.fn(),
       };
@@ -162,6 +173,10 @@ describe('qr-code', () => {
       jest
         .spyOn(Credentials.getInstance(), 'add')
         .mockImplementationOnce(async () => credentialData);
+
+      jest
+        .spyOn(Credentials.getInstance(), 'query')
+        .mockImplementationOnce(async () => []);
 
       const result = await credentialHandler(
         JSON.stringify(testCredentialData),
@@ -172,6 +187,34 @@ describe('qr-code', () => {
         Routes.APP_CREDENTIALS,
         undefined,
       );
+    });
+
+    it('expect to not allow duplicated credential', async () => {
+      
+      const credentialData = {
+        id: 1,
+      };
+
+      const toastMock = {
+        show: jest.fn(),
+      };
+      setToast(toastMock);
+
+      jest
+        .spyOn(Credentials.getInstance(), 'add')
+        .mockImplementationOnce(async () => credentialData);
+      jest
+        .spyOn(Credentials.getInstance(), 'query')
+        .mockImplementationOnce(async () => [{
+          content: credentialData
+        }]);
+
+      const result = await credentialHandler(
+        JSON.stringify(credentialData),
+      );
+
+      expect(result).toBeTruthy();
+      expect(toastMock.show).toBeCalled();
     });
 
     it('expect to handle malformed json', async () => {
