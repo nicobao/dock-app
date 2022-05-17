@@ -36,15 +36,31 @@ export async function credentialHandler(data) {
         message: translate('global.fetching_data'),
       });
       credentialData = await credentials.getCredentialFromUrl(data);
-      await credentials.add(credentialData);
     } else {
-      const jsonData = JSON.parse(data);
-      credentialData = await credentials.add(jsonData);
+      credentialData = JSON.parse(data);
     }
+
+    const items = await credentials.query({});
+
+    if (
+      credentialData.id &&
+      items.find(item => item.content && item.content.id === credentialData.id)
+    ) {
+      showToast({
+        message: translate('credentials.existing_credential'),
+        type: 'error',
+      });
+
+      return true;
+    }
+
+    await credentials.add(credentialData);
 
     navigate(Routes.APP_CREDENTIALS);
     return true;
   } catch (err) {
+    console.error(err);
+
     if (isUrl) {
       console.error(`Unable to resolve url: ${data}`);
     } else {

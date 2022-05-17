@@ -91,6 +91,13 @@ export function useCredentials({onPickFile = pickJSONFile} = {}) {
     }
 
     try {
+      if (items.find(item => item.content.id === item.id)) {
+        showToast({
+          message: translate('credentials.existing_credential'),
+          type: 'error',
+        });
+        return;
+      }
       await Credentials.getInstance().add(jsonData);
       await syncCredentials();
       logAnalyticsEvent(ANALYTICS_EVENT.CREDENTIALS.IMPORT);
