@@ -42,7 +42,10 @@ export async function credentialHandler(data) {
 
     const items = await credentials.query({});
 
-    if (credentialData.id && items.find(item => item.content && item.content.id === credentialData.id)) {
+    if (
+      credentialData.id &&
+      items.find(item => item.content && item.content.id === credentialData.id)
+    ) {
       showToast({
         message: translate('credentials.existing_credential'),
         type: 'error',

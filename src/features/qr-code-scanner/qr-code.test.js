@@ -190,7 +190,6 @@ describe('qr-code', () => {
     });
 
     it('expect to not allow duplicated credential', async () => {
-      
       const credentialData = {
         id: 1,
       };
@@ -205,13 +204,13 @@ describe('qr-code', () => {
         .mockImplementationOnce(async () => credentialData);
       jest
         .spyOn(Credentials.getInstance(), 'query')
-        .mockImplementationOnce(async () => [{
-          content: credentialData
-        }]);
+        .mockImplementationOnce(async () => [
+          {
+            content: credentialData,
+          },
+        ]);
 
-      const result = await credentialHandler(
-        JSON.stringify(credentialData),
-      );
+      const result = await credentialHandler(JSON.stringify(credentialData));
 
       expect(result).toBeTruthy();
       expect(toastMock.show).toBeCalled();
