@@ -123,7 +123,7 @@ export function UnlockWalletContainer({route}) {
   const [passcode, setPasscode] = useState('');
   const supportBiometry = useSelector(appSelectors.getSupportedBiometryType);
   const walletInfo = useSelector(walletSelectors.getWalletInfo);
-  const biometryEnabled = walletInfo && walletInfo.biometry;
+  const biometryEnabled = Boolean(walletInfo && walletInfo.biometry);
   const [logoPressCount, setLogoPressCount] = useState(1);
   const isAppLocked = useSelector(appSelectors.getAppLocked);
   const [failedAttempts, setFailedAttempts] = useState(0);
@@ -198,7 +198,7 @@ export function UnlockWalletContainer({route}) {
       filled={passcode.length}
       onPasscodeChange={handlePasscodeChange}
       onLoginWithBiometric={handleBiometricUnlock}
-      biometry={supportBiometry}
+      biometry={supportBiometry && biometryEnabled}
       passcode={passcode}
       onLogoPress={handleLogoPress}
       onCloseApp={() => {

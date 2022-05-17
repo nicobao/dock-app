@@ -274,6 +274,10 @@ export const walletOperations = {
           },
         });
 
+        if (!result) {
+          return;
+        }
+
         Logger.debug('Biometry unlock succeed');
         Logger.debug(JSON.stringify(result));
       } else {
