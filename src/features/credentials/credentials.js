@@ -66,12 +66,28 @@ export function getDIDAddress(did) {
   return did.replace(/did:\w+:/gi, '');
 }
 
+export function processCredential(credential) {
+  assert(!!credential, 'Credential is required');
+  assert(!!credential.content, 'credential.content is required');
+
+  if (credential.content.issuanceDate) {
+    const issuanceDate = new Date(credential.content.issuanceDate);
+    const userTimezoneOffset = issuanceDate.getTimezoneOffset() * 60000;
+    credential.content.issuanceDate = new Date(
+      issuanceDate.getTime() + userTimezoneOffset,
+    );
+  }
+
+  return credential;
+}
+
 export function useCredentials({onPickFile = pickJSONFile} = {}) {
   const [items, setItems] = useState([]);
 
   const syncCredentials = async () => {
     const credentials = await Credentials.getInstance().query();
-    setItems(credentials.sort(sortByIssuanceDate));
+
+    setItems(credentials.sort(sortByIssuanceDate).map(processCredential));
   };
 
   useEffect(() => {
