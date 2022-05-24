@@ -5,6 +5,7 @@ import {
   useCredentials,
   getObjectFields,
   getDIDAddress,
+  processCredential,
 } from './credentials';
 import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
 
@@ -80,6 +81,21 @@ describe('Credentials helpers', () => {
     expect(
       getDIDAddress('5CNyqnHYmrbSE9nmQnpyhdZHi1TavExi3kFWbfrRh1WxQw6A'),
     ).toBe('5CNyqnHYmrbSE9nmQnpyhdZHi1TavExi3kFWbfrRh1WxQw6A');
+  });
+
+  describe('processCredential', () => {
+    it('expect to remove timezone offset', () => {
+      const issuanceDate = new Date('2022-04-24T00:53:13.265Z');
+      const credential = {issuanceDate};
+      const result = processCredential({content: credential});
+      expect(result.content.issuanceDate.getDate()).toBe(24);
+      expect(result.content.issuanceDate.getMonth()).toBe(3);
+    });
+
+    it('expect to handle bad data', () => {
+      expect(() => processCredential({})).toThrowError();
+      expect(() => processCredential(null)).toThrowError();
+    });
   });
 
   describe('useCredentials', () => {

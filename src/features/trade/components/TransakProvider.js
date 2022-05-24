@@ -9,6 +9,7 @@ import {Button} from 'native-base';
 import TransakLogo from '../../../assets/transak_logo.png';
 import {addTestId} from '../../../core/automation-utils';
 import {StyleSheet} from 'react-native';
+import {captureEvent} from '@sentry/react-native';
 import {
   TRANSAK_PUSHER_API_KEY,
   STAGING_TRANSAK_ENVIRONMENT,
@@ -117,6 +118,16 @@ export default function TransakPaymentProvider({
 
   useEffect(() => {
     const pusher = new Pusher(TRANSAK_PUSHER_API_KEY, {cluster: 'ap2'});
+
+    captureEvent({
+      message: 'TransakPaymentProvider created',
+      debug_meta: {
+        partnerOrderId,
+        currentNetworkId,
+        walletAddress,
+        TRANSAK_ENVIRONMENT_CONFIG,
+      },
+    });
 
     pusher.connection.bind('error', function (err) {
       console.log(err);
