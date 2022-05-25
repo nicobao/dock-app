@@ -1,7 +1,3 @@
-import {KeyringRpc} from '@docknetwork/react-native-sdk/src/client/keyring-rpc';
-import {DockRpc} from '@docknetwork/react-native-sdk/src/client/dock-rpc';
-import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
-import {WalletRpc} from '@docknetwork/react-native-sdk/src/client/wallet-rpc';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createSlice} from '@reduxjs/toolkit';
 import SplashScreen from 'react-native-splash-screen';
@@ -9,8 +5,6 @@ import {Keychain} from '../../core/keychain';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {walletActions} from '../wallet/wallet-slice';
-import {initRealm} from 'src/core/realm';
-import {translate} from 'src/locales';
 import {Logger} from 'src/core/logger';
 import {captureException} from '@sentry/react-native';
 import {defaultFeatures} from './feature-flags';
@@ -48,14 +42,14 @@ function getNetworkInfo(networkId) {
   return networkInfo;
 }
 
-function initKeyring(networkId) {
-  Logger.debug('init keyring for network', networkId);
-  const addressPrefix = getNetworkInfo(networkId).addressPrefix;
+// function initKeyring(networkId) {
+//   Logger.debug('init keyring for network', networkId);
+//   const addressPrefix = getNetworkInfo(networkId).addressPrefix;
 
-  return KeyringRpc.initialize({
-    ss58Format: addressPrefix,
-  });
-}
+//   return keyringService.initialize({
+//     ss58Format: addressPrefix,
+//   });
+// }
 
 const initialState = {
   loading: true,
@@ -163,46 +157,46 @@ export const appOperations = {
     });
   },
   rpcReady: () => async (dispatch, getState) => {
-    Logger.debug('Rpc ready');
-    const networkId = appSelectors.getNetworkId(getState());
-    const networkInfo = getNetworkInfo(networkId);
+    // Logger.debug('Rpc ready');
+    // const networkId = appSelectors.getNetworkId(getState());
+    // const networkInfo = getNetworkInfo(networkId);
 
-    try {
-      await UtilCryptoRpc.cryptoWaitReady();
-      await initKeyring(networkId);
-      await WalletRpc.create('wallet');
-      await WalletRpc.load();
-      await WalletRpc.sync();
+    // try {
+    //   await UtilCryptoRpc.cryptoWaitReady();
+    //   await initKeyring(networkId);
+    //   await WalletRpc.create('wallet');
+    //   await WalletRpc.load();
+    //   await WalletRpc.sync();
 
-      dispatch(appActions.setRpcReady(true));
-    } catch (err) {
-      dispatch(
-        appActions.setRpcReady(
-          new Error(translate('global.webview_connection_error')),
-        ),
-      );
-      console.error(err);
-      captureException(err);
-    }
+    //   dispatch(appActions.setRpcReady(true));
+    // } catch (err) {
+    //   dispatch(
+    //     appActions.setRpcReady(
+    //       new Error(translate('global.webview_connection_error')),
+    //     ),
+    //   );
+    //   console.error(err);
+    //   captureException(err);
+    // }
 
-    try {
-      await DockRpc.init({
-        address: networkInfo.url,
-      });
+    // try {
+    //   await DockRpc.init({
+    //     address: networkInfo.url,
+    //   });
 
-      dispatch(appActions.setDockReady(true));
+    //   dispatch(appActions.setDockReady(true));
 
-      Logger.debug('Dock initialized');
-    } catch (err) {
-      dispatch(
-        appActions.setDockReady(new Error('Unable to initialize dock api')),
-      );
-      console.error(err);
-      captureException(err);
-    }
+    //   Logger.debug('Dock initialized');
+    // } catch (err) {
+    //   dispatch(
+    //     appActions.setDockReady(new Error('Unable to initialize dock api')),
+    //   );
+    //   console.error(err);
+    //   captureException(err);
+    // }
   },
   initialize: () => async (dispatch, getState) => {
-    await initRealm();
+    // await initRealm();
 
     Logger.debug('Realm initialized');
     SplashScreen.hide();
@@ -247,18 +241,18 @@ export const appOperations = {
   },
 
   setNetwork: networkId => async (dispatch, getState) => {
-    dispatch(appActions.setNetworkId(networkId));
+    // dispatch(appActions.setNetworkId(networkId));
 
-    await initKeyring(networkId);
-    const substrateUrl = getNetworkInfo(networkId).url;
+    // await initKeyring(networkId);
+    // const substrateUrl = getNetworkInfo(networkId).url;
 
-    await DockRpc.disconnect();
+    // await DockRpc.disconnect();
 
-    Logger.debug('Init dock with url', substrateUrl);
+    // Logger.debug('Init dock with url', substrateUrl);
 
-    await DockRpc.init({
-      address: substrateUrl,
-    });
+    // await DockRpc.init({
+    //   address: substrateUrl,
+    // });
   },
 };
 

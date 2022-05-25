@@ -11,8 +11,10 @@ import store from './core/redux-store';
 import {setToast} from './core/toast';
 import {ThemeProvider} from './design-system';
 import {appOperations} from './features/app/app-slice';
-import {RNRpcWebView} from './rn-rpc-webview';
-import {WalletSDKProvider} from '@docknetwork/wallet-sdk-react-native/lib';
+import {
+  WalletSDKProvider,
+  useWallet,
+} from '@docknetwork/wallet-sdk-react-native/lib';
 import {AppIntegrationTest} from './wallet-sdk/AppIntegrationTest';
 
 if (process.env.NODE_ENV !== 'test') {
@@ -44,6 +46,8 @@ export function Test() {
 
 export function GlobalComponents() {
   const dispatch = useDispatch();
+  const {wallet, status, documents} = useWallet({syncDocs: true});
+
   const toast = useToast();
 
   useEffect(() => {
@@ -57,13 +61,6 @@ export function GlobalComponents() {
   return (
     <View style={styles.globalComponents}>
       <NavigationRouter />
-      <View style={styles.globalComponentsInner}>
-        <RNRpcWebView
-          onReady={() => {
-            dispatch(appOperations.rpcReady());
-          }}
-        />
-      </View>
       <ConfirmationModal />
     </View>
   );
@@ -74,8 +71,8 @@ const App = () => {
     <Provider store={store}>
       <ThemeProvider>
         <WalletSDKProvider>
-          {/* <GlobalComponents /> */}
-          <AppIntegrationTest />
+          <GlobalComponents />
+          {/* <AppIntegrationTest /> */}
         </WalletSDKProvider>
       </ThemeProvider>
     </Provider>
