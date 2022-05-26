@@ -51,7 +51,7 @@ const AccountCard = withErrorBoundary(({document, onDetails, onDelete}) => {
 
   return (
     <Stack
-      key={account.id}
+      key={account.address}
       direction="row"
       borderRadius={12}
       backgroundColor={Theme.colors.primaryBackground}
@@ -68,7 +68,7 @@ const AccountCard = withErrorBoundary(({document, onDetails, onDelete}) => {
             onPress={() => onDetails(account)}
             flex={1}>
             <Stack direction="row" flex={1} alignItems="center">
-              <PolkadotIcon address={account.id} size={32} />
+              <PolkadotIcon address={account.address} size={32} />
               <Stack direction="row" flex={1} ml={3}>
                 <Typography
                   color={Theme.colors.textHighlighted}
@@ -140,7 +140,7 @@ const AccountCard = withErrorBoundary(({document, onDetails, onDelete}) => {
               {...addTestId('TokenSend')}
               onPress={() => {
                 navigate(Routes.TOKEN_SEND, {
-                  address: account.id,
+                  address: account.address,
                 });
               }}>
               <Typography
@@ -158,7 +158,7 @@ const AccountCard = withErrorBoundary(({document, onDetails, onDelete}) => {
             {...addTestId('TokenReceive')}
             onPress={() => {
               navigate(Routes.TOKEN_RECEIVE, {
-                address: account.id,
+                address: account.address,
               });
             }}>
             <Typography color={Theme.colors.primaryBackground}>
