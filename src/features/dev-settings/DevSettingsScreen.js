@@ -28,6 +28,7 @@ import {
 
 import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
 import {FeatureFlags, getAllFeatures, useFeatures} from '../app/feature-flags';
+import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
 
 type Props = {
   onAddAccount: any,
@@ -159,6 +160,9 @@ export function DevSettingsScreen({
                 setShowNetworkOptions(false);
                 onNetworkChange(networkId)
                   .then(() => {
+                    logAnalyticsEvent(ANALYTICS_EVENT.SETTINGS.SWITCH_NETWORK, {
+                      networkId,
+                    });
                     showToast({
                       message: translate('dev_settings.switch_network_success'),
                       type: 'success',
@@ -168,6 +172,10 @@ export function DevSettingsScreen({
                     showToast({
                       message: translate('dev_settings.switch_network_error'),
                       type: 'error',
+                    });
+                    logAnalyticsEvent(ANALYTICS_EVENT.FAILURES, {
+                      networkId,
+                      name: ANALYTICS_EVENT.SETTINGS.SWITCH_NETWORK,
                     });
                   });
               }}>

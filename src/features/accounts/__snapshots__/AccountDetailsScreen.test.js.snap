@@ -4,7 +4,7 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
 <RNCSafeAreaView
   style={
     Object {
-      "backgroundColor": "#18181B",
+      "backgroundColor": "#000",
       "flex": 1,
     }
   }
@@ -95,66 +95,33 @@ exports[`AccountDetailsScreen should render correctly 1`] = `
               <Memo(ForwardRef(Button))
                 accessibilityLabel="SendTokensBtn"
                 flex={1}
-                mr={2}
+                mr={1}
                 onPress={[Function]}
-                size="sm"
+                size="xs"
                 testID="SendTokensBtn"
               >
-                Send
+                <Styled(Component)
+                  color="#fff"
+                >
+                  Send
+                </Styled(Component)>
               </Memo(ForwardRef(Button))>
               <Memo(ForwardRef(Button))
                 accessibilityLabel="ReceiveTokensBtn"
                 flex={1}
-                ml={2}
+                ml={1}
+                mr={1}
                 onPress={[Function]}
-                size="sm"
+                size="xs"
                 testID="ReceiveTokensBtn"
               >
-                Receive
+                <Styled(Component)
+                  color="#fff"
+                >
+                  Receive
+                </Styled(Component)>
               </Memo(ForwardRef(Button))>
             </Memo(ForwardRef(Stack))>
-          </Memo(ForwardRef(Stack))>
-          <Memo(ForwardRef(Stack))
-            backgroundColor="rgba(120, 53, 15, 0.3)"
-            mt={5}
-            p="16px"
-          >
-            <Memo(ForwardRef(Stack))
-              direction="row"
-            >
-              <Memo(ForwardRef(Box))
-                mr={3}
-                mt="3px"
-              >
-                <SvgFile />
-              </Memo(ForwardRef(Box))>
-              <Styled(Component)
-                fontSize={17}
-                ml={2}
-                variant="h3"
-              >
-                Account not backed up
-              </Styled(Component)>
-            </Memo(ForwardRef(Stack))>
-            <Memo(ForwardRef(Box))
-              mt={2}
-            >
-              <Styled(Component)
-                color="rgba(254, 243, 199, 1)"
-              >
-                This phrase allows you to recover your account if your phone is lost or you change your device.
-              </Styled(Component)>
-            </Memo(ForwardRef(Box))>
-            <Memo(ForwardRef(Button))
-              accessibilityLabel="BackupBtn"
-              alignSelf="flex-start"
-              backgroundColor="rgba(120, 53, 15, 1)"
-              mt={4}
-              size="sm"
-              testID="BackupBtn"
-            >
-              Back up now
-            </Memo(ForwardRef(Button))>
           </Memo(ForwardRef(Stack))>
           <Memo(ForwardRef(Stack))
             mt={3}

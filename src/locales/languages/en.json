@@ -15,7 +15,13 @@
     "not_valid_address": "The address is not valid",
     "subscan_unable_to_fetch": "Unable to fetch transaction history",
     "unexpected_error": "Unexpected error, please try again",
-    "fetching_data": "Fetching remote data, please wait"
+    "fetching_data": "Fetching remote data, please wait",
+    "invalid_json_file": "Invalid json file"
+  },
+  "auth": {
+    "auth_sign_in": "Signing in with debug credential",
+    "auth_sign_in_success": "Success! Signed in with DID!",
+    "auth_sign_in_failed": "Unknown error on sign in"
   },
   "delete_wallet_confirmation": {
     "title": "Remove Wallet?",
@@ -96,7 +102,8 @@
     "show_credentials": "Show credentials",
     "hide_testnet_transaction": "Hide testnet Transactions",
     "switch_network_success": "Network switch successful",
-    "switch_network_error": "Network switch failed"
+    "switch_network_error": "Network switch failed",
+    "activate_transak": "Activate Transak"
   },
   "account_setup": {
     "title": "Account Name",
@@ -175,7 +182,15 @@
     "export_error": "Unable to export account",
     "export_success": "Account exported",
     "account_removed": "Account Removed",
-    "unable_to_remove_account": "Unable to remove the account"
+    "unable_to_remove_account": "Unable to remove the account",
+    "buy": "Buy"
+  },
+  "intro_transak" : {
+    "buy_dock_via_debit_card": "Buy Dock via debit card or bank transfers powered by Transak.",
+    "countries_available": "Available at 59+ countries.",
+    "continue_to_transak": "Continue Transak",
+    "transak": "Transak",
+    "processing_transaction": "Processing Transaction"
   },
   "account_settings_modal": {
     "options_title": "Options",
@@ -268,9 +283,12 @@
   },
   "credentials": {
     "title": "Credentials",
+    "invalid_credential": "Invalid Credential",
+    "existing_credential": "This credential already exists in the wallet",
     "empty_items": "You’ll see credentials here once you accept them"
   },
   "qr_scanner": {
-    "not_supported_data": "Not supported QR Code"
+    "not_supported_data": "Not supported QR Code",
+    "scan_qr_code": "Scan QR Code"
   }
 }

@@ -10,12 +10,12 @@ import {formatCurrency} from 'src/core/format-utils';
 import {navigate} from 'src/core/navigation';
 import {Routes} from 'src/core/routes';
 import {translate} from 'src/locales';
-import CogIcon from '../../assets/icons/cog.svg';
 import DocumentDownloadIcon from '../../assets/icons/document-download.svg';
 import PlusCircleWhiteIcon from '../../assets/icons/plus-circle-white.svg';
 import PlusCircleIcon from '../../assets/icons/plus-circle.svg';
 import {PolkadotIcon} from '../../components/PolkadotIcon';
 import {useWallet, useAccount} from '@docknetwork/wallet-sdk-react-native/lib';
+import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
 import {
   AlertIcon,
   BigButton,
@@ -51,10 +51,10 @@ const AccountCard = withErrorBoundary(({document, onDetails, onDelete}) => {
 
   return (
     <Stack
-      key={document.id}
+      key={account.id}
       direction="row"
       borderRadius={12}
-      backgroundColor={Theme.colors.secondaryBackground}
+      backgroundColor={Theme.colors.primaryBackground}
       space={2}
       mb={4}
       py={6}
@@ -65,23 +65,23 @@ const AccountCard = withErrorBoundary(({document, onDetails, onDelete}) => {
             _pressed={{
               opacity: Theme.touchOpacity,
             }}
-            onPress={() => onDetails(document)}
+            onPress={() => onDetails(account)}
             flex={1}>
             <Stack direction="row" flex={1} alignItems="center">
-              <PolkadotIcon address={document.id} size={32} />
+              <PolkadotIcon address={account.id} size={32} />
               <Stack direction="row" flex={1} ml={3}>
                 <Typography
                   color={Theme.colors.textHighlighted}
                   fontWeight={600}>
-                  {document.name}
+                  {account.name}
                 </Typography>
-                <ChevronRightIcon marginTop={1} />
+                <ChevronRightIcon marginTop={3} />
               </Stack>
             </Stack>
           </Pressable>
           <NBox py={1} px={1}>
             <Stack direction="row">
-              {!metadata.hasBackup || metadata.keypairNotFoundWarning ? (
+              {displayWarning(account) ? (
                 <NBox mr={3} mt={1}>
                   <AlertIcon />
                 </NBox>
@@ -98,10 +98,10 @@ const AccountCard = withErrorBoundary(({document, onDetails, onDelete}) => {
                     </Pressable>
                   );
                 }}>
-                <Menu.Item onPress={() => onDetails(document)}>
+                <Menu.Item onPress={() => onDetails(account)}>
                   {translate('account_list.account_details')}
                 </Menu.Item>
-                <Menu.Item onPress={() => onDelete(document)}>
+                <Menu.Item onPress={() => onDelete(account)}>
                   {translate('account_list.delete_account')}
                 </Menu.Item>
               </Menu>
@@ -110,7 +110,12 @@ const AccountCard = withErrorBoundary(({document, onDetails, onDelete}) => {
         </Stack>
 
         <TokenAmount amount={account.balance}>
-          {({fiatAmount, fiatSymbol, tokenAmount, tokenSymbol}) => (
+          {({
+            fiatAmount,
+            fiatSymbol,
+            tokenAmount,
+            tokenSymbol,
+          }) => (
             <>
               <Stack direction="column" mt={4}>
                 <Typography variant="h2">
@@ -128,30 +133,37 @@ const AccountCard = withErrorBoundary(({document, onDetails, onDelete}) => {
           {
             <Button
               width="50%"
-              size="sm"
-              disabled={metadata.readOnly}
+              size="xs"
+              disabled={account.readOnly}
+              variant={'whiteButton'}
               colorScheme="dark"
               {...addTestId('TokenSend')}
               onPress={() => {
                 navigate(Routes.TOKEN_SEND, {
-                  address: document.id,
+                  address: account.id,
                 });
               }}>
-              {translate('account_list.send_token')}
+              <Typography
+                color={Theme.colors.primaryBackground}>
+                {translate('account_list.send_token')}
+              </Typography>
             </Button>
           }
           <Button
             width="50%"
-            size="sm"
+            size="xs"
             ml={2}
+            variant={'whiteButton'}
             colorScheme="dark"
             {...addTestId('TokenReceive')}
             onPress={() => {
               navigate(Routes.TOKEN_RECEIVE, {
-                address: document.id,
+                address: account.id,
               });
             }}>
-            {translate('account_list.receive_token')}
+            <Typography color={Theme.colors.primaryBackground}>
+              {translate('account_list.receive_token')}
+            </Typography>
           </Button>
         </Stack>
       </Stack>
@@ -159,15 +171,22 @@ const AccountCard = withErrorBoundary(({document, onDetails, onDelete}) => {
   );
 });
 
+export function displayWarning(account) {
+  if (
+    account.hasBackup === false ||
+    (account.meta && account.meta.keypairNotFoundWarning)
+  ) {
+    return true;
+  }
+  return false;
+}
 export const AccountsScreen = withErrorBoundary(
   ({
     accounts = [],
     onAddAccount,
     onImportExistingAccount,
     onDelete,
-    onEdit,
     onDetails,
-    onSettings,
     onRefresh,
     isRefreshing,
   }) => {
@@ -195,12 +214,8 @@ export const AccountsScreen = withErrorBoundary(
               <IconButton
                 col
                 {...addTestId(AccountsScreenTestIDs.addAccountMenuBtn)}
-                marginRight={10}
                 onPress={() => setShowAddAccount(true)}>
                 <PlusCircleWhiteIcon />
-              </IconButton>
-              <IconButton col onPress={onSettings}>
-                <CogIcon />
               </IconButton>
             </Box>
           </Box>
@@ -307,9 +322,6 @@ export const AccountsContainer = withErrorBoundary(({navigation}) => {
       onAddAccount={() => {
         dispatch(accountOperations.addAccountFlow());
       }}
-      onSettings={() => {
-        navigate(Routes.APP_SETTINGS);
-      }}
       onImportExistingAccount={async method => {
         if (method === 'mnemonic') {
           navigate(Routes.ACCOUNT_IMPORT_FROM_MNEMONIC);
@@ -330,6 +342,9 @@ export const AccountsContainer = withErrorBoundary(({navigation}) => {
 
           dispatch(createAccountOperations.importFromJson(fileData));
         }
+        logAnalyticsEvent(ANALYTICS_EVENT.ACCOUNT.IMPORT, {
+          method,
+        });
       }}
     />
   );

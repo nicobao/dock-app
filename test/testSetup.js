@@ -6,6 +6,21 @@ import mockAsyncStorage from '../node_modules/@react-native-async-storage/async-
 import mockRNPermissions from '../node_modules/react-native-permissions/mock';
 import '../src/core/setup-env';
 
+jest.mock('../src/core/realm', () => {
+  const realmFunctions = {
+    write: jest.fn(callback => {
+      callback();
+    }),
+    create: jest.fn(),
+    delete: jest.fn(),
+    objects: jest.fn(() => ({
+      filtered: jest.fn(),
+    })),
+  };
+  return {
+    getRealm: () => realmFunctions,
+  };
+});
 jest.mock('@react-native-async-storage/async-storage', () => mockAsyncStorage);
 jest.mock('react-native-device-info', () => 'DeviceInfo');
 jest.mock('react-native-permissions', () => mockRNPermissions);
@@ -124,6 +139,16 @@ jest.mock('react-native/Libraries/Interaction/InteractionManager', () => ({
   setDeadline: jest.fn(),
 }));
 
+jest.mock('@react-native-firebase/analytics', () => {
+  const logEvent = jest.fn(() => Promise.resolve([]));
+  return {
+    __esModule: true,
+    default: jest.fn().mockReturnValue({
+      logEvent,
+    }),
+  };
+});
+
 jest.mock('@docknetwork/react-native-sdk/src/client/wallet-rpc', () => {
   const originalModule = jest.requireActual(
     '@docknetwork/react-native-sdk/src/client/wallet-rpc',
@@ -139,6 +164,19 @@ jest.mock('@docknetwork/react-native-sdk/src/client/wallet-rpc', () => {
       create: jest.fn(),
       load: jest.fn(),
       sync: jest.fn(),
+    },
+  };
+});
+jest.mock('@docknetwork/react-native-sdk/src/client/api-rpc', () => {
+  const originalModule = jest.requireActual(
+    '@docknetwork/react-native-sdk/src/client/api-rpc',
+  );
+  const {ApiRpc} = originalModule;
+  return {
+    __esModule: true,
+    ApiRpc: {
+      ...ApiRpc,
+      sendTokens: jest.fn(() => Promise.resolve()),
     },
   };
 });

@@ -31,6 +31,22 @@ Increment android version
 
 Submit a new Beta Build to Google Play
 
+### android send_message
+
+```sh
+[bundle exec] fastlane android send_message
+```
+
+Send slack message
+
+### android s3_upload
+
+```sh
+[bundle exec] fastlane android s3_upload
+```
+
+Upload to S3 bucket
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.

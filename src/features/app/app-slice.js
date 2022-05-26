@@ -42,15 +42,6 @@ function getNetworkInfo(networkId) {
   return networkInfo;
 }
 
-// function initKeyring(networkId) {
-//   Logger.debug('init keyring for network', networkId);
-//   const addressPrefix = getNetworkInfo(networkId).addressPrefix;
-
-//   return keyringService.initialize({
-//     ss58Format: addressPrefix,
-//   });
-// }
-
 const initialState = {
   loading: true,
   supportedBiometryType: null,
@@ -157,48 +148,11 @@ export const appOperations = {
     });
   },
   rpcReady: () => async (dispatch, getState) => {
-    // Logger.debug('Rpc ready');
-    // const networkId = appSelectors.getNetworkId(getState());
-    // const networkInfo = getNetworkInfo(networkId);
-
-    // try {
-    //   await UtilCryptoRpc.cryptoWaitReady();
-    //   await initKeyring(networkId);
-    //   await WalletRpc.create('wallet');
-    //   await WalletRpc.load();
-    //   await WalletRpc.sync();
-
-    //   dispatch(appActions.setRpcReady(true));
-    // } catch (err) {
-    //   dispatch(
-    //     appActions.setRpcReady(
-    //       new Error(translate('global.webview_connection_error')),
-    //     ),
-    //   );
-    //   console.error(err);
-    //   captureException(err);
-    // }
-
-    // try {
-    //   await DockRpc.init({
-    //     address: networkInfo.url,
-    //   });
-
-    //   dispatch(appActions.setDockReady(true));
-
-    //   Logger.debug('Dock initialized');
-    // } catch (err) {
-    //   dispatch(
-    //     appActions.setDockReady(new Error('Unable to initialize dock api')),
-    //   );
-    //   console.error(err);
-    //   captureException(err);
-    // }
+    return;
   },
   initialize: () => async (dispatch, getState) => {
     // await initRealm();
 
-    Logger.debug('Realm initialized');
     SplashScreen.hide();
 
     if (!appSelectors.getDevSettingsEnabled(getState())) {
@@ -241,18 +195,7 @@ export const appOperations = {
   },
 
   setNetwork: networkId => async (dispatch, getState) => {
-    // dispatch(appActions.setNetworkId(networkId));
-
-    // await initKeyring(networkId);
-    // const substrateUrl = getNetworkInfo(networkId).url;
-
-    // await DockRpc.disconnect();
-
-    // Logger.debug('Init dock with url', substrateUrl);
-
-    // await DockRpc.init({
-    //   address: substrateUrl,
-    // });
+    return;
   },
 };
 

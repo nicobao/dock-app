@@ -36,19 +36,43 @@ platform :android do
           skip_upload_images: true,
           skip_upload_changelogs: true,
         )
+  end
 
-        aws_s3(
-          access_key:  ENV['S3_ACCESS_KEY'],
-          secret_access_key: ENV['S3_SECRET_ACCESS_KEY'],
-          bucket:  ENV['S3_APP_BUCKET'],
-          region: ENV['S3_REGION'],
-          apk: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH].to_s,
-          app_directory: ENV['S3_ANDROID_APK_DIR'],
-          upload_metadata: true,
-          acl: ENV['S3_ACL'],
-        )
+  desc "Send slack message"
+  lane :send_message do
+    build_number = lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH].to_s
+    slack(
+      slack_url: ENV['SLACK_URL'],
+      message: "Android App successfully deployed!",
+      success: true,
+      payload: {
+        "Build Date" => Time.new.to_s,
+        "APK" => ENV['S3_ANDROID_APK_DIR'],
+      },
+      default_payloads: [:git_branch, :git_author]
+    )
 
   end
+
+  desc "Upload to S3 bucket"
+    lane :s3_upload do
+          gradle(
+            task: 'assemble',
+            build_type: 'Release'
+          )
+
+          aws_s3(
+            access_key:  ENV['S3_ACCESS_KEY'],
+            secret_access_key: ENV['S3_SECRET_ACCESS_KEY'],
+            bucket:  ENV['S3_APP_BUCKET'],
+            region: ENV['S3_REGION'],
+            apk: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH].to_s,
+            app_directory: ENV['S3_ANDROID_APK_DIR'],
+            upload_metadata: true,
+            acl: ENV['S3_ACL'],
+          )
+
+    end
 end
 
 

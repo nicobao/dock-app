@@ -5,7 +5,7 @@ import {TouchableHighlight} from 'react-native-gesture-handler';
 import {useDispatch, useSelector} from 'react-redux';
 import {formatCurrency, formatDate} from 'src/core/format-utils';
 import {PolkadotIcon} from '../../components/PolkadotIcon';
-import {navigate, navigateBack} from '../../core/navigation';
+import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {
   AlertIcon,
@@ -35,6 +35,8 @@ import {QRCodeModal} from './QRCodeModal';
 import {addTestId} from '../../core/automation-utils';
 import {appSelectors} from '../app/app-slice';
 import {useFeatures} from '../app/feature-flags';
+import uuid from 'uuid';
+import {displayWarning} from './AccountsScreen';
 
 const TRANSACTION_FILTERS = {
   all: 'all',
@@ -92,8 +94,11 @@ function TransactionHistoryItem({transaction, accountAddress}) {
                   startIcon={<RetryIcon />}
                   variant={'transactionRetry'}
                   size="xs"
+                  whiteBtn
                   onPress={() => setShowConfirmation(true)}>
-                  {translate('transaction_history.try_again')}
+                  <Typography variant={'transactionRetryTxt'}>
+                    {translate('transaction_history.try_again')}
+                  </Typography>
                 </Button>
               </Stack>
             ) : null}
@@ -190,7 +195,13 @@ function TransactionHistory({accountAddress}) {
           isActive={activeFilter === TRANSACTION_FILTERS.all}
           variant={'transactionFilter'}
           size={'xs'}>
-          <Typography variant="transaction-filter">
+          <Typography
+            variant="transaction-filter"
+            color={
+              activeFilter === TRANSACTION_FILTERS.all
+                ? Theme.colors.activeText
+                : Theme.colors.inactiveText
+            }>
             {translate('transaction_details.all')}
           </Typography>
         </Button>
@@ -201,7 +212,13 @@ function TransactionHistory({accountAddress}) {
           isActive={activeFilter === TRANSACTION_FILTERS.sent}
           variant={'transactionFilter'}
           size={'xs'}>
-          <Typography variant="transaction-filter">
+          <Typography
+            variant="transaction-filter"
+            color={
+              activeFilter === TRANSACTION_FILTERS.sent
+                ? Theme.colors.activeText
+                : Theme.colors.inactiveText
+            }>
             {translate('transaction_details.sent')}
           </Typography>
         </Button>
@@ -212,7 +229,13 @@ function TransactionHistory({accountAddress}) {
           isActive={activeFilter === TRANSACTION_FILTERS.received}
           size={'xs'}
           variant={'transactionFilter'}>
-          <Typography variant="transaction-filter">
+          <Typography
+            variant="transaction-filter"
+            color={
+              activeFilter === TRANSACTION_FILTERS.received
+                ? Theme.colors.activeText
+                : Theme.colors.inactiveText
+            }>
             {translate('transaction_details.received')}
           </Typography>
         </Button>
@@ -223,7 +246,13 @@ function TransactionHistory({accountAddress}) {
           isActive={activeFilter === TRANSACTION_FILTERS.failed}
           size={'xs'}
           variant={'transactionFilter'}>
-          <Typography variant="transaction-filter">
+          <Typography
+            variant="transaction-filter"
+            color={
+              activeFilter === TRANSACTION_FILTERS.failed
+                ? Theme.colors.activeText
+                : Theme.colors.inactiveText
+            }>
             {translate('transaction_history.failed')}
           </Typography>
         </Button>
@@ -261,14 +290,13 @@ export function AccountDetailsScreen({
   qrCodeData,
   onRefresh,
   isRefreshing,
+  showTransak,
 }) {
   const [accountSettingsVisible, setAccountSettingsVisible] = useState();
   const [qrCodeModalVisible, setQrCodeModalVisible] = useState();
 
   useEffect(() => {
-    if (qrCodeData) {
-      setQrCodeModalVisible(true);
-    }
+    setQrCodeModalVisible(!!qrCodeData);
   }, [qrCodeData]);
 
   return (
@@ -325,9 +353,9 @@ export function AccountDetailsScreen({
 
             <Stack direction="row" width="100%" mt={9} mb={7}>
               <Button
-                mr={2}
+                mr={1}
                 flex={1}
-                size="sm"
+                size="xs"
                 {...addTestId('SendTokensBtn')}
                 disabled={account.readOnly}
                 onPress={() =>
@@ -335,23 +363,45 @@ export function AccountDetailsScreen({
                     address: account.id,
                   })
                 }>
-                {translate('account_details.send_tokens_btn')}
+                <Typography color={Theme.button.textColor}>
+                  {translate('account_details.send_tokens_btn')}
+                </Typography>
               </Button>
               <Button
-                ml={2}
+                ml={1}
+                mr={1}
                 flex={1}
-                size="sm"
+                size="xs"
                 {...addTestId('ReceiveTokensBtn')}
                 onPress={() =>
                   navigate(Routes.TOKEN_RECEIVE, {
                     address: account.id,
                   })
                 }>
-                {translate('account_details.receive_tokens_btn')}
+                <Typography color={Theme.button.textColor}>
+                  {translate('account_details.receive_tokens_btn')}
+                </Typography>
               </Button>
+              {showTransak ? (
+                <Button
+                  ml={1}
+                  flex={1}
+                  size="xs"
+                  {...addTestId('BuyDockBtn')}
+                  onPress={() =>
+                    navigate(Routes.TRADE_BUY_DOCK, {
+                      id: account.id,
+                      orderId: uuid(),
+                    })
+                  }>
+                  <Typography color={Theme.button.textColor}>
+                    {translate('account_details.buy')}
+                  </Typography>
+                </Button>
+              ) : null}
             </Stack>
           </Stack>
-          {account.hasBackup ? null : (
+          {!displayWarning(account) ? null : (
             <Stack
               backgroundColor={Theme.colors.warningBackground}
               p={'16px'}
@@ -431,7 +481,12 @@ export function AccountDetailsScreen({
         description={translate('account_details.export_account_description')}
         {...addTestId('ExportAccountDescription')}
         visible={qrCodeModalVisible}
-        onClose={() => setQrCodeModalVisible(false)}
+        onClose={() => {
+          navigate(Routes.ACCOUNT_DETAILS, {
+            id: account.id,
+            qrCodeData: null,
+          });
+        }}
       />
     </ScreenContainer>
   );
@@ -441,8 +496,8 @@ export function AccountDetailsContainer({route}) {
   const {id: accountId, qrCodeData} = route.params;
   const dispatch = useDispatch();
   const account = useSelector(accountSelectors.getAccountById(accountId));
+  const {features} = useFeatures();
 
-  console.log('return to account details', accountId);
   const [isRefreshing, setRefreshing] = useState(false);
 
   const onRefresh = () => {
@@ -464,11 +519,12 @@ export function AccountDetailsContainer({route}) {
     <AccountDetailsScreen
       onDelete={() => {
         return dispatch(accountOperations.removeAccount({id: accountId})).then(
-          navigateBack,
+          () => navigate(Routes.ACCOUNTS),
         );
       }}
       isRefreshing={isRefreshing}
       onRefresh={onRefresh}
+      showTransak={features.activate_transak}
       onBackup={() => {
         return dispatch(accountOperations.backupAccount(account));
       }}
