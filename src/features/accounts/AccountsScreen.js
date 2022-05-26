@@ -110,12 +110,7 @@ const AccountCard = withErrorBoundary(({document, onDetails, onDelete}) => {
         </Stack>
 
         <TokenAmount amount={account.balance}>
-          {({
-            fiatAmount,
-            fiatSymbol,
-            tokenAmount,
-            tokenSymbol,
-          }) => (
+          {({fiatAmount, fiatSymbol, tokenAmount, tokenSymbol}) => (
             <>
               <Stack direction="column" mt={4}>
                 <Typography variant="h2">
@@ -143,8 +138,7 @@ const AccountCard = withErrorBoundary(({document, onDetails, onDelete}) => {
                   address: account.address,
                 });
               }}>
-              <Typography
-                color={Theme.colors.primaryBackground}>
+              <Typography color={Theme.colors.primaryBackground}>
                 {translate('account_list.send_token')}
               </Typography>
             </Button>
