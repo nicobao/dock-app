@@ -16,6 +16,7 @@ import {
   useWallet,
 } from '@docknetwork/wallet-sdk-react-native/lib';
 import {AppIntegrationTest} from './wallet-sdk/AppIntegrationTest';
+import {didOperations} from './features/didManagement/didManagment-slice';
 
 if (process.env.NODE_ENV !== 'test') {
   try {
@@ -48,6 +49,11 @@ export function GlobalComponents() {
   const dispatch = useDispatch();
   const {wallet, status, documents} = useWallet({syncDocs: true});
 
+  useEffect(() => {
+    if (status === 'ready') {
+      dispatch(didOperations.createDID({}));
+    }
+  }, [status]);
   const toast = useToast();
 
   useEffect(() => {
