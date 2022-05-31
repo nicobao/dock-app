@@ -307,7 +307,7 @@ export const AccountsContainer = withErrorBoundary(({navigation}) => {
       }}
       onDetails={account => {
         navigate(Routes.ACCOUNT_DETAILS, {
-          id: account.id,
+          id: account.address,
         });
       }}
       isRefreshing={isRefreshing}
