@@ -1,63 +1,59 @@
-import uuid from 'uuid';
 import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
+import {didServiceRPC} from '@docknetwork/wallet-sdk-core/lib/services/dids';
 
-export const didOperations = {
-  createDID: () => async (dispatch, getState) => {
-    const wallet = Wallet.getInstance();
+const wallet = Wallet.getInstance();
 
+const createKeyDoc = () => {
+  return didServiceRPC.generateKeyDoc({});
+};
+const createDID = async keyDoc => {
+  const correlations = Array.isArray(keyDoc.correlation)
+    ? keyDoc.correlation
+    : [];
+
+  const {didDocument} = await didServiceRPC.keypairToDidKeyDocument({
+    keypairDoc: keyDoc,
+  });
+
+  const didDocumentResolution = await didServiceRPC.getDidResolution({
+    didDocument,
+  });
+
+  correlations.push(didDocumentResolution.id);
+  await wallet.add({
+    ...didDocumentResolution,
+  });
+  await wallet.update({
+    ...keyDoc,
+    correlation: correlations,
+  });
+};
+
+const initializeDiDs = async () => {
+  const keyDocs = await wallet.query({
+    type: 'Ed25519VerificationKey2018',
+  });
+
+  if (keyDocs.length > 0) {
     const didResolutionDocuments = await wallet.query({
       type: 'DIDResolutionResponse',
     });
+
     if (didResolutionDocuments.length === 0) {
-      const keyDocs = await wallet.query({
-        type: 'Ed25519VerificationKey2018',
-      });
-      if (keyDocs.length > 0) {
-        //TODO include DID into correlation of keyDoc
-        const keyDoc = keyDocs[0];
-
-        console.log(keyDoc);
-      }
+      await createDID(keyDocs[0]);
     }
+  } else {
+    const keyDoc = await createKeyDoc();
+    await wallet.add({
+      ...keyDoc,
+    });
 
-    // WalletRpc.query({
-    //   equals: {
-    //     'content.type': 'KeyringPair',
-    //   },
-    // });
-  },
+    await initializeDiDs();
+  }
+};
+
+export const didOperations = {
   initializeDiDs: () => async (dispatch, getState) => {
-    const d = await DidRpc.createDIDFromMnemonic({
-      mnemonic:
-        'zoo cotton detail parade inflict helmet ladder topple toilet invite garden online',
-    });
-    console.log(d);
-    return;
-    const existingDiDs = await WalletRpc.query({
-      equals: {
-        'content.type': 'DID',
-      },
-    });
-
-    if (existingDiDs.length === 0) {
-      const keyPair = await DidRpc.createDidKeyPair();
-
-      const keypairDocument = {
-        '@context': ['https://w3id.org/wallet/v1'],
-        id: `key-${uuid()}`,
-        type: 'KEY',
-        ...keyPair,
-      };
-      await WalletRpc.add(keypairDocument);
-
-      const didDocument = await DidRpc.createDID({keyPair: keypairDocument});
-
-      await WalletRpc.add({
-        '@context': ['https://w3id.org/wallet/v1'],
-        id: `did-${uuid()}`,
-        type: 'DID',
-        ...didDocument,
-      });
-    }
+    await initializeDiDs();
   },
 };

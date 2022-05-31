@@ -1,18 +1,18 @@
 import {didOperations} from './didManagment-slice';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import {WalletRpc} from '@docknetwork/react-native-sdk/src/client/wallet-rpc';
-import {DidRpc} from '@docknetwork/react-native-sdk/src/client/did-rpc';
+import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
 
 const mockStore = configureMockStore([thunk]);
-describe('DID Management Slice', () => {
+describe('DID Management', () => {
   it('Create a default DIDs', () => {
-    const store = mockStore({});
+    const wallet = Wallet.getInstance();
 
+    const store = mockStore({});
     return store.dispatch(didOperations.initializeDiDs()).then(() => {
-      expect(WalletRpc.query.mock.calls.length).toBe(1);
-      expect(DidRpc.createDidKeyPair.mock.calls.length).toBe(1);
-      expect(WalletRpc.add.mock.calls.length).toBe(2);
+      const docs = wallet.query({});
+      expect(docs[1]).toHaveProperty('didDocument');
+      expect(docs[0].correlation[0]).toBe(docs[1].id);
     });
   });
 });
