@@ -267,7 +267,6 @@ export const walletOperations = {
     ({biometry = false} = {}) =>
     async (dispatch, getState) => {
       const passcode = walletSelectors.getPasscode(getState());
-      const flags = walletSelectors.getCreationFlags(getState());
       const keychainId = 'wallet';
       const keychainProps = {
         passcode: passcode.toString(),

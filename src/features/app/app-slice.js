@@ -5,7 +5,6 @@ import {Keychain} from '../../core/keychain';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {walletActions} from '../wallet/wallet-slice';
-import {Logger} from 'src/core/logger';
 import {captureException} from '@sentry/react-native';
 import {defaultFeatures} from './feature-flags';
 
@@ -31,16 +30,6 @@ export const SUBSTRATE_NETWORKS = {
     addressPrefix: 21,
   },
 };
-
-function getNetworkInfo(networkId) {
-  const networkInfo = SUBSTRATE_NETWORKS[networkId];
-
-  if (!networkInfo) {
-    throw new Error(`Network ${networkId} not found`);
-  }
-
-  return networkInfo;
-}
 
 const initialState = {
   loading: true,
@@ -151,8 +140,6 @@ export const appOperations = {
     return;
   },
   initialize: () => async (dispatch, getState) => {
-    // await initRealm();
-
     SplashScreen.hide();
 
     if (!appSelectors.getDevSettingsEnabled(getState())) {

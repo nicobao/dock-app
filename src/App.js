@@ -15,7 +15,6 @@ import {
   WalletSDKProvider,
   useWallet,
 } from '@docknetwork/wallet-sdk-react-native/lib';
-import {AppIntegrationTest} from './wallet-sdk/AppIntegrationTest';
 
 if (process.env.NODE_ENV !== 'test') {
   try {
@@ -46,7 +45,7 @@ export function Test() {
 
 export function GlobalComponents() {
   const dispatch = useDispatch();
-  const {wallet, status, documents} = useWallet({syncDocs: true});
+  useWallet({syncDocs: true});
 
   const toast = useToast();
 
@@ -79,10 +78,4 @@ const App = () => {
   );
 };
 
-let exportedApp = App;
-
-// if (APP_RUNTIME === 'storybook') {
-// exportedApp = require('../storybook').default;
-// }
-
-export default exportedApp;
+export default App;
