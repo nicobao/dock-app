@@ -51,7 +51,7 @@ export function GlobalComponents() {
 
   useEffect(() => {
     if (status === 'ready') {
-      dispatch(didOperations.initializeDiDs());
+      dispatch(didOperations.initializeDID());
     }
   }, [dispatch, status]);
   const toast = useToast();

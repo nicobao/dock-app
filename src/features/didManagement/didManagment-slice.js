@@ -29,7 +29,7 @@ const createDID = async keyDoc => {
   });
 };
 
-const initializeDiDs = async () => {
+const initializeDID = async () => {
   const keyDocs = await wallet.query({
     type: 'Ed25519VerificationKey2018',
   });
@@ -42,18 +42,18 @@ const initializeDiDs = async () => {
     if (didResolutionDocuments.length === 0) {
       await createDID(keyDocs[0]);
     }
-  } else {
+  } else if (keyDocs.length === 0) {
     const keyDoc = await createKeyDoc();
     await wallet.add({
       ...keyDoc,
     });
 
-    await initializeDiDs();
+    await initializeDID();
   }
 };
 
 export const didOperations = {
-  initializeDiDs: () => async (dispatch, getState) => {
-    await initializeDiDs();
+  initializeDID: () => async (dispatch, getState) => {
+    await initializeDID();
   },
 };

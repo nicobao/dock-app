@@ -287,6 +287,7 @@ jest.mock('@docknetwork/wallet-sdk-core/lib/services/dids', () => {
     getDidResolution: jest.fn(({didDocument}) => {
       return {
         id: new Date().getTime().toString(),
+        type: 'DIDResolutionResponse',
         didDocument,
       };
     }),
