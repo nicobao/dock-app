@@ -201,11 +201,12 @@ export const transactionsOperations = {
         message: translate('confirm_transaction.transfer_initiated'),
       });
 
-      ApiRpc.sendTokens({
-        recipientAddress,
-        accountAddress,
-        amount: parsedAmount,
-      })
+      substrateService
+        .sendTokens({
+          toAddress: recipientAddress,
+          fromAddress: accountAddress,
+          amount: parsedAmount,
+        })
         .then(res => {
           const updatedTransation = {
             ...transaction,
