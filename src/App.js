@@ -15,7 +15,6 @@ import {
   WalletSDKProvider,
   useWallet,
 } from '@docknetwork/wallet-sdk-react-native/lib';
-import {AppIntegrationTest} from './wallet-sdk/AppIntegrationTest';
 import {didOperations} from './features/didManagement/didManagment-slice';
 
 if (process.env.NODE_ENV !== 'test') {
@@ -47,7 +46,7 @@ export function Test() {
 
 export function GlobalComponents() {
   const dispatch = useDispatch();
-  useWallet({syncDocs: true});
+  const {status} = useWallet({syncDocs: true});
 
   useEffect(() => {
     if (status === 'ready') {
