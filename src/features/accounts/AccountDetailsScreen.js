@@ -25,9 +25,9 @@ import {TokenAmount} from '../tokens/ConfirmTransactionModal';
 import {TransactionConfirmationModal} from '../transactions/TransactionConfirmationModal';
 import {TransactionDetailsModal} from '../transactions/TransactionDetailsModal';
 import {
-  transactionsOperations,
   transactionsSelectors,
   TransactionStatus,
+  transactionsOperations,
 } from '../transactions/transactions-slice';
 import {accountOperations} from './account-slice';
 import {useAccount} from '@docknetwork/wallet-sdk-react-native/lib';
@@ -499,21 +499,22 @@ export function AccountDetailsContainer({route}) {
   assert(!!accountId, 'Account id is required');
 
   const dispatch = useDispatch();
-  // const account = useSelector(accountSelectors.getAccountById(accountId));
   const {account} = useAccount(accountId);
   const {features} = useFeatures();
 
   const [isRefreshing, setRefreshing] = useState(false);
 
   const onRefresh = () => {
-    // setRefreshing(true);
-    // dispatch(accountOperations.fetchAccountBalance(account.id)).finally(() => {
-    //   setRefreshing(false);
-    // });
+    setRefreshing(true);
+    dispatch(accountOperations.fetchAccountBalance(account.address)).finally(
+      () => {
+        setRefreshing(false);
+      },
+    );
   };
 
   useEffect(() => {
-    // dispatch(transactionsOperations.loadTransactions(accountId));
+    dispatch(transactionsOperations.loadTransactions(accountId));
   }, [dispatch, accountId]);
 
   console.log('account details', account);

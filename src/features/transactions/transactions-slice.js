@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {translate} from 'src/locales';
-import {ApiRpc} from '@docknetwork/react-native-sdk/src/client/api-rpc';
+import {substrateService} from '@docknetwork/wallet-sdk-core/lib/services/substrate';
 import uuid from 'uuid';
 import {getRealm} from 'src/core/realm';
 import {showToast} from 'src/core/toast';
@@ -161,9 +161,9 @@ export const transactionsOperations = {
   getFeeAmount:
     ({recipientAddress, accountAddress, amount}) =>
     async (dispatch, getState) => {
-      return ApiRpc.getFeeAmount({
-        recipientAddress: recipientAddress,
-        accountAddress,
+      return substrateService.getFeeAmount({
+        toAddress: recipientAddress,
+        fromAddress: accountAddress,
         amount: amount,
       });
     },
@@ -201,11 +201,12 @@ export const transactionsOperations = {
         message: translate('confirm_transaction.transfer_initiated'),
       });
 
-      ApiRpc.sendTokens({
-        recipientAddress,
-        accountAddress,
-        amount: parsedAmount,
-      })
+      substrateService
+        .sendTokens({
+          toAddress: recipientAddress,
+          fromAddress: accountAddress,
+          amount: parsedAmount,
+        })
         .then(res => {
           const updatedTransation = {
             ...transaction,

@@ -1,7 +1,8 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {Keychain} from '../../core/keychain';
 import {navigate, navigateBack} from '../../core/navigation';
-import {WalletRpc} from '@docknetwork/react-native-sdk/src/client/wallet-rpc';
+import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
+
 import {Routes} from '../../core/routes';
 import {appSelectors, BiometryType} from '../app/app-slice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -67,12 +68,8 @@ export async function validateWalletImport(fileData, password) {
   }
 
   try {
-    await WalletRpc.remove('wallet');
-    await clearCacheData();
     await AsyncStorage.removeItem('wallet');
-    await WalletRpc.create('wallet');
-    await WalletRpc.load();
-    await WalletRpc.sync();
+    await Wallet.getInstance().deleteWallet();
   } catch (err) {
     console.error(err);
   }
@@ -81,43 +78,15 @@ export async function validateWalletImport(fileData, password) {
 
 export async function importWallet(jsonData, password) {
   try {
-    await WalletRpc.importWallet(jsonData, password);
+    await Wallet.getInstance().importWallet(jsonData, password);
   } catch (err) {
     console.error(err);
     throw new Error(translate('import_wallet.import_error'));
   }
 
-  const docs = await WalletRpc.query({});
-  if (Array.isArray(docs) && docs.length > 0) {
-    const accounts = docs.filter(doc => doc.type === 'Account');
+  const accounts = await Wallet.getInstance().accounts.load();
 
-    if (accounts.length === 0) {
-      throw new Error(translate('import_wallet.invalid_file'));
-    }
-
-    const warnings = [];
-
-    for (let account of accounts) {
-      const correlationDocs = account.correlation.map(docId =>
-        docs.find(doc => doc.id === docId),
-      );
-      const hasMnemonic = correlationDocs.find(doc => doc.type === 'Mnemonic');
-      const hasKeyPair = correlationDocs.find(doc => doc.type === 'KeyPair');
-
-      if (!hasMnemonic && !hasKeyPair) {
-        warnings.push(`keypair not found for account ${account.id}`);
-
-        await WalletRpc.update({
-          ...account,
-          meta: {
-            ...account.meta,
-            readOnly: true,
-            keypairNotFoundWarning: true,
-          },
-        });
-      }
-    }
-  } else {
+  if (accounts.length === 0) {
     throw new Error(translate('import_wallet.invalid_file'));
   }
 }
@@ -188,12 +157,7 @@ export const walletOperations = {
     }),
   exportWallet: ({password, callback}) =>
     withErrorToast(async (dispatch, getState) => {
-      try {
-        await WalletRpc.load();
-      } catch (err) {
-        console.log(err);
-      }
-      const walletBackup = await WalletRpc.export(password);
+      const walletBackup = await Wallet.getInstance().export(password);
       const jsonData = JSON.stringify(walletBackup);
       const path = `${
         RNFS.DocumentDirectoryPath
@@ -219,7 +183,7 @@ export const walletOperations = {
       dispatch(accountActions.clearAccounts());
       await AsyncStorage.removeItem('walletInfo');
       await AsyncStorage.removeItem('wallet');
-      await WalletRpc.create('wallet');
+      await Wallet.getInstance().deleteWallet();
       dispatch(walletActions.setWalletInfo(null));
       navigate(Routes.CREATE_WALLET);
     }),
@@ -303,7 +267,6 @@ export const walletOperations = {
     ({biometry = false} = {}) =>
     async (dispatch, getState) => {
       const passcode = walletSelectors.getPasscode(getState());
-      const flags = walletSelectors.getCreationFlags(getState());
       const keychainId = 'wallet';
       const keychainProps = {
         passcode: passcode.toString(),
@@ -344,9 +307,9 @@ export const walletOperations = {
 
       dispatch(walletActions.setWalletInfo(walletInfo));
 
-      if (!flags.importWalletFlow) {
-        await WalletRpc.create(keychainId);
-      }
+      // if (!flags.importWalletFlow) {
+      // await Wallet.getInstance().create(keychainId);
+      // }
 
       dispatch(walletActions.setCreationFlags({}));
 

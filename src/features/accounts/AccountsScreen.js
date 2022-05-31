@@ -43,7 +43,6 @@ const AccountCard = withErrorBoundary(({document, onDetails, onDelete}) => {
   assert(document.type === 'Address', 'Address document expected');
 
   const {account} = useAccount(document.address);
-  const metadata = (account && account.meta) || {};
 
   if (!account) {
     return null;

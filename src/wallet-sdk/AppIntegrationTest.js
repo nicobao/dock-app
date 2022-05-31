@@ -1,8 +1,5 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {
-  useWallet,
-  WalletSDKContext,
-} from '@docknetwork/wallet-sdk-react-native/lib';
+import React, {useEffect, useState} from 'react';
+import {useWallet} from '@docknetwork/wallet-sdk-react-native/lib';
 import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
 import testCredential from '@docknetwork/wallet-sdk-credentials/fixtures/test-credential.json';
 import {
@@ -12,14 +9,11 @@ import {
   Flex,
   ScrollView,
   Select,
-  Stack,
   Text,
-  View,
   VStack,
 } from 'native-base';
 import SplashScreen from 'react-native-splash-screen';
 import {Theme} from '../design-system';
-import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
 
 function CoreTest() {
   const {wallet, status, documents} = useWallet({syncDocs: true});

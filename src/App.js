@@ -47,7 +47,7 @@ export function Test() {
 
 export function GlobalComponents() {
   const dispatch = useDispatch();
-  const {wallet, status, documents} = useWallet({syncDocs: true});
+  useWallet({syncDocs: true});
 
   useEffect(() => {
     if (status === 'ready') {
@@ -85,10 +85,4 @@ const App = () => {
   );
 };
 
-let exportedApp = App;
-
-// if (APP_RUNTIME === 'storybook') {
-// exportedApp = require('../storybook').default;
-// }
-
-export default exportedApp;
+export default App;
