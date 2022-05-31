@@ -26,7 +26,7 @@ import {
   SUBSTRATE_NETWORKS,
 } from '../app/app-slice';
 
-import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
+import {utilCryptoService} from '@docknetwork/wallet-sdk-core/lib/services/util-crypto';
 import {FeatureFlags, getAllFeatures, useFeatures} from '../app/feature-flags';
 import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
 
@@ -215,7 +215,7 @@ export function DevSettingsScreen({
                     return;
                   }
 
-                  const isAddressValid = await UtilCryptoRpc.isAddressValid(
+                  const isAddressValid = await utilCryptoService.isAddressValid(
                     accountAddress,
                   );
                   if (!accountAddress || !isAddressValid) {

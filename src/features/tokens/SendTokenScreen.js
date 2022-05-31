@@ -9,7 +9,7 @@ import {PolkadotIcon} from 'src/components/PolkadotIcon';
 import {navigate} from 'src/core/navigation';
 import {Routes} from 'src/core/routes';
 import {showToast} from 'src/core/toast';
-import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
+import {utilCryptoService} from '@docknetwork/wallet-sdk-core/lib/services/util-crypto';
 import BigNumber from 'bignumber.js';
 
 import {
@@ -255,7 +255,7 @@ export function SendTokenContainer({route}) {
             Routes.APP_QR_SCANNER,
             {
               onData: async toAddress => {
-                const addressValid = await UtilCryptoRpc.isAddressValid(
+                const addressValid = await utilCryptoService.isAddressValid(
                   toAddress,
                 );
 
@@ -292,7 +292,7 @@ export function SendTokenContainer({route}) {
             }));
           }
 
-          const addressValid = await UtilCryptoRpc.isAddressValid(
+          const addressValid = await utilCryptoService.isAddressValid(
             form.recipientAddress,
           );
 

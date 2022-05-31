@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {WalletRpc} from '@docknetwork/react-native-sdk/src/client/wallet-rpc';
-import {PolkadotUIRpc} from '@docknetwork/react-native-sdk/src/client/polkadot-ui-rpc';
-import {ApiRpc} from '@docknetwork/react-native-sdk/src/client/api-rpc';
+import {walletService} from '@docknetwork/wallet-sdk-core/lib/services/wallet';
+import {polkadotService} from '@docknetwork/wallet-sdk-core/lib/services/polkadot';
+import {substrateService} from '@docknetwork/wallet-sdk-core/lib/services/substrate';
 import {showToast, withErrorToast} from '../../core/toast';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
@@ -108,22 +108,6 @@ export const accountSelectors = {
 let fetchBalanceTimeout;
 
 export const accountOperations = {
-  addTestAccount: () => async (dispatch, getState) => {
-    await WalletRpc.add({
-      '@context': ['https://w3id.org/wallet/v1'],
-      id: '0x774477c4cd54718d32d4df393415796b9bfcb63c',
-      type: 'Account',
-      name: 'cocomelon',
-      balance: 0,
-    });
-
-    dispatch(accountOperations.loadAccounts());
-
-    showToast({
-      message: translate('account_setup.success'),
-    });
-  },
-
   confirmAccountBackup: () =>
     withErrorToast(async (dispatch, getState) => {
       const account = accountSelectors.getAccountToBackup(getState());
@@ -135,18 +119,18 @@ export const accountOperations = {
       const updatedAccount = {
         ...account,
         meta: {
-          ...account.meta,
+          ...(account.meta || {}),
           hasBackup: true,
         },
       };
 
       // update account meta
       try {
-        await WalletRpc.update(updatedAccount);
+        await walletService.update(updatedAccount);
       } catch (err) {
         console.log(err);
-        await WalletRpc.load();
-        await WalletRpc.update(updatedAccount);
+        await walletService.load();
+        await walletService.update(updatedAccount);
         logAnalyticsEvent(ANALYTICS_EVENT.FAILURES, {
           message: err.message,
           name: ANALYTICS_EVENT.ACCOUNT.BACKUP,
@@ -174,7 +158,7 @@ export const accountOperations = {
       dispatch(accountActions.setAccountToBackup(account));
 
       // get mnemonic phrase for the acount
-      const result = await WalletRpc.query({
+      const result = await walletService.query({
         equals: {
           'content.id': account.correlation[0],
         },
@@ -193,10 +177,10 @@ export const accountOperations = {
   exportAccountAs:
     ({accountId, method, password}) =>
     async (dispatch, getState) => {
-      const encryptedAccount = await WalletRpc.exportAccount(
-        accountId,
+      const encryptedAccount = await walletService.exportAccount({
+        address: accountId,
         password,
-      );
+      });
       const jsonData = JSON.stringify(encryptedAccount);
 
       let qrCodeData;
@@ -234,7 +218,7 @@ export const accountOperations = {
       dispatch(accountActions.removeAccount(account.id));
 
       try {
-        await WalletRpc.remove(account.id);
+        await walletService.remove(account.id);
       } catch (err) {
         console.error(err);
       }
@@ -268,7 +252,10 @@ export const accountOperations = {
   getPolkadotSvgIcon:
     (address, isAlternative) => async (dispatch, getState) => {
       await dispatch(appOperations.waitRpcReady());
-      return PolkadotUIRpc.getPolkadotSvgIcon(address, isAlternative);
+      return polkadotService.getAddressSvg({
+        address,
+        isAlternative,
+      });
     },
   loadAccounts: () => async (dispatch, getState) => {
     const realm = getRealm();
@@ -277,9 +264,9 @@ export const accountOperations = {
 
     await dispatch(appOperations.waitRpcReady());
 
-    await WalletRpc.sync();
+    await walletService.sync();
 
-    let accounts = await WalletRpc.query({
+    let accounts = await walletService.query({
       equals: {
         'content.type': 'Account',
       },
@@ -328,14 +315,14 @@ export const accountOperations = {
     }
 
     const realm = getRealm();
-    const balance = await ApiRpc.getAccountBalance(accountId);
-
-    const accounts = await WalletRpc.query({
+    const balance = await substrateService.getAccountBalance({
+      address: accountId,
+    });
+    const accounts = await walletService.query({
       equals: {
         'content.type': 'Account',
       },
     });
-
     const account = accounts.find(acc => acc.id === accountId);
 
     if (!account) {
@@ -387,7 +374,7 @@ export const accountOperations = {
     ({name, address}) =>
     async (dispatch, getState) => {
       Logger.debug('add account', {name, address});
-      await WalletRpc.add({
+      await walletService.add({
         '@context': ['https://w3id.org/wallet/v1'],
         id: address,
         type: 'Account',

@@ -1,4 +1,4 @@
-import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
+import {utilCryptoService} from '@docknetwork/wallet-sdk-core/lib/services/util-crypto';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
@@ -8,9 +8,8 @@ import {getJsonOrError} from '../../core';
 import {DebugConstants} from '../constants';
 import '../credentials/credentials';
 
-
 export async function addressHandler(data) {
-  const isAddress = await UtilCryptoRpc.isAddressValid(data);
+  const isAddress = await utilCryptoService.isAddressValid(data);
 
   if (isAddress) {
     navigate(Routes.TOKEN_SEND, {

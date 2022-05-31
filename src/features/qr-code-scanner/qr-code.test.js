@@ -1,4 +1,4 @@
-import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
+import {utilCryptoService} from '@docknetwork/wallet-sdk-core/lib/services/util-crypto';
 import {
   addressHandler,
   credentialHandler,
@@ -66,7 +66,9 @@ describe('qr-code', () => {
   });
   describe('addressHandler', () => {
     it('expect to ignore invalid data', async () => {
-      jest.spyOn(UtilCryptoRpc, 'isAddressValid').mockReturnValueOnce(false);
+      jest
+        .spyOn(utilCryptoService, 'isAddressValid')
+        .mockReturnValueOnce(false);
 
       navigationRef.current = {
         navigate: jest.fn(),
@@ -79,7 +81,7 @@ describe('qr-code', () => {
     });
 
     it('expect to navigate to send tokens route', async () => {
-      jest.spyOn(UtilCryptoRpc, 'isAddressValid').mockReturnValueOnce(true);
+      jest.spyOn(utilCryptoService, 'isAddressValid').mockReturnValueOnce(true);
 
       navigationRef.current = {
         navigate: jest.fn(),
