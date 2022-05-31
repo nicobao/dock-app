@@ -11,6 +11,7 @@ describe('DID Management', () => {
     const store = mockStore({});
     return store.dispatch(didOperations.initializeDiDs()).then(() => {
       const docs = wallet.query({});
+      expect(docs.length).toBe(2);
       expect(docs[1]).toHaveProperty('didDocument');
       expect(docs[0].correlation[0]).toBe(docs[1].id);
     });
