@@ -137,7 +137,7 @@ export function useCredentials({onPickFile = pickJSONFile} = {}) {
     onAdd,
   };
 }
-export async function onScanAuth0QRCode() {
+export async function onScanAuthQRCode() {
   const keyDocs = await wallet.query({
     type: 'Ed25519VerificationKey2018',
   });

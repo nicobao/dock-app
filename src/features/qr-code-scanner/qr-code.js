@@ -6,7 +6,7 @@ import {showToast} from '../../core/toast';
 import {translate} from '../../locales';
 import {getJsonOrError} from '../../core';
 import '../credentials/credentials';
-import {onScanAuth0QRCode} from '../credentials/credentials';
+import {onScanAuthQRCode} from '../credentials/credentials';
 
 export async function addressHandler(data) {
   const isAddress = await utilCryptoService.isAddressValid(data);
@@ -93,9 +93,7 @@ export async function authHandler(data) {
     });
 
     try {
-      // DEBUG: For internal testing we just submit a hardcoded credential
-      // for production we will require the wallet to build and sign one
-      const vc = await onScanAuth0QRCode();
+      const vc = await onScanAuthQRCode();
 
       const req = await fetch(url, {
         method: 'POST',

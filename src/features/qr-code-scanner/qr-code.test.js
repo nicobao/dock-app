@@ -10,7 +10,7 @@ import {Routes} from '../../core/routes';
 import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
 import testCredentialData from '@docknetwork/wallet-sdk-credentials/fixtures/test-credential.json';
 import {setToast} from '../../core/toast';
-import {onScanAuth0QRCode} from '../credentials/credentials';
+import {onScanAuthQRCode} from '../credentials/credentials';
 import {didOperations} from '../didManagement/didManagment-slice';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -245,7 +245,7 @@ describe('qr-code', () => {
     });
 
     it('expect to onScanAuth0QRCode to generate credential', async () => {
-      await expect(onScanAuth0QRCode()).rejects.toThrow(
+      await expect(onScanAuthQRCode()).rejects.toThrow(
         translate('qr_scanner.no_key_doc', {
           locale: 'en',
         }),
@@ -253,7 +253,7 @@ describe('qr-code', () => {
 
       const store = mockStore({});
       await store.dispatch(didOperations.initializeDID());
-      await onScanAuth0QRCode();
+      await onScanAuthQRCode();
 
       const wallet = Wallet.getInstance();
       const keyDocs = wallet.query({});
