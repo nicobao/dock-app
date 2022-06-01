@@ -5,6 +5,7 @@ import {NativeModules} from 'react-native';
 import mockAsyncStorage from '../node_modules/@react-native-async-storage/async-storage/jest/async-storage-mock';
 import mockRNPermissions from '../node_modules/react-native-permissions/mock';
 import '../src/core/setup-env';
+import {DebugConstants} from '../src/features/constants';
 
 jest.mock('../src/core/realm', () => {
   const realmFunctions = {
@@ -239,7 +240,7 @@ jest.mock('@docknetwork/wallet-sdk-core/lib/services/dids', () => {
         '3CQCBKF3Mf1tU5q1FLpHpbxYrNYxLiZk4adDtfyPEfc39Wk6gsTb2qoc1ZtpqzJYdM1rG4gpaD3ZVKdkiDrkLF1p',
       publicKeyBase58: '6GwnHZARcEkJio9dxPYy6SC5sAL6PxpZAB6VYwoFjGMU',
     }),
-    keypairToDidKeyDocument: jest.fn().mockReturnValue({
+    keypairToDIDKeyDocument: jest.fn().mockReturnValue({
       didDocument: {
         '@context': [
           'https://www.w3.org/ns/did/v1',
@@ -284,7 +285,7 @@ jest.mock('@docknetwork/wallet-sdk-core/lib/services/dids', () => {
         keyAgreement: ['#z6LScrLMVd9jvbphPeQkGffSeB99EWSYqAnMg8rGiHCgz5ha'],
       },
     }),
-    getDidResolution: jest.fn(({didDocument}) => {
+    getDIDResolution: jest.fn(({didDocument}) => {
       return {
         id: new Date().getTime().toString(),
         type: 'DIDResolutionResponse',
@@ -296,5 +297,25 @@ jest.mock('@docknetwork/wallet-sdk-core/lib/services/dids', () => {
   return {
     ...originalModule,
     didServiceRPC: mockFunctions,
+  };
+});
+
+jest.mock('@docknetwork/wallet-sdk-core/lib/services/credential', () => {
+  const originalModule = jest.requireActual(
+    '@docknetwork/wallet-sdk-core/lib/services/credential',
+  );
+  const mockFunctions = {
+    generateCredential: jest.fn().mockResolvedValue({
+      '@context': ['https://www.w3.org/2018/credentials/v1'],
+      type: ['VerifiableCredential'],
+      credentialSubject: [],
+      issuanceDate: '2022-06-01T12:32:13.106Z',
+    }),
+    signCredential: jest.fn().mockResolvedValue(DebugConstants.authCredential),
+  };
+
+  return {
+    ...originalModule,
+    credentialServiceRPC: mockFunctions,
   };
 });

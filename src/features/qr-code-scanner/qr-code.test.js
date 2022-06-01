@@ -10,6 +10,15 @@ import {Routes} from '../../core/routes';
 import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
 import testCredentialData from '@docknetwork/wallet-sdk-credentials/fixtures/test-credential.json';
 import {setToast} from '../../core/toast';
+import {onScanAuth0QRCode} from '../credentials/credentials';
+import {didOperations} from '../didManagement/didManagment-slice';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import {credentialServiceRPC} from '@docknetwork/wallet-sdk-core/lib/services/credential';
+import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
+import {translate} from 'src/locales';
+
+const mockStore = configureMockStore([thunk]);
 
 describe('qr-code', () => {
   it('executeHandlers', async () => {
@@ -233,6 +242,32 @@ describe('qr-code', () => {
       const result = await credentialHandler('{d: bad json)');
 
       expect(result).toBeFalsy();
+    });
+
+    it('expect to onScanAuth0QRCode to generate credential', async () => {
+      await expect(onScanAuth0QRCode()).rejects.toThrow(
+        translate('qr_scanner.no_key_doc', {
+          locale: 'en',
+        }),
+      );
+
+      const store = mockStore({});
+      await store.dispatch(didOperations.initializeDID());
+      await onScanAuth0QRCode();
+
+      const wallet = Wallet.getInstance();
+      const keyDocs = wallet.query({});
+
+      const subject = {
+        state: 'debugstate',
+      };
+
+      expect(credentialServiceRPC.generateCredential).toBeCalledWith({subject});
+      const vc = await credentialServiceRPC.generateCredential({});
+      expect(credentialServiceRPC.signCredential).toBeCalledWith({
+        vcJson: vc,
+        keyDoc: keyDocs[0],
+      });
     });
   });
 });

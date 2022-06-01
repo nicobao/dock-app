@@ -4,7 +4,10 @@ import {pickJSONFile} from '../../core/storage-utils';
 import {showToast} from 'src/core/toast';
 import {translate} from 'src/locales';
 import assert from 'assert';
+import {credentialServiceRPC} from '@docknetwork/wallet-sdk-core/lib/services/credential';
+import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
 
+const wallet = Wallet.getInstance();
 import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
 
 export const sortByIssuanceDate = (a, b) =>
@@ -133,4 +136,24 @@ export function useCredentials({onPickFile = pickJSONFile} = {}) {
     handleRemove,
     onAdd,
   };
+}
+export async function onScanAuth0QRCode() {
+  const keyDocs = await wallet.query({
+    type: 'Ed25519VerificationKey2018',
+  });
+  if (keyDocs.length > 0) {
+    const subject = {
+      state: 'debugstate',
+    };
+    const verifiableCredential = await credentialServiceRPC.generateCredential({
+      subject,
+    });
+
+    return credentialServiceRPC.signCredential({
+      vcJson: verifiableCredential,
+      keyDoc: keyDocs[0],
+    });
+  } else {
+    throw new Error(translate('qr_scanner.no_key_doc'));
+  }
 }

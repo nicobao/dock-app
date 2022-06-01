@@ -11,11 +11,11 @@ const createDID = async keyDoc => {
     ? keyDoc.correlation
     : [];
 
-  const {didDocument} = await didServiceRPC.keypairToDidKeyDocument({
+  const {didDocument} = await didServiceRPC.keypairToDIDKeyDocument({
     keypairDoc: keyDoc,
   });
 
-  const didDocumentResolution = await didServiceRPC.getDidResolution({
+  const didDocumentResolution = await didServiceRPC.getDIDResolution({
     didDocument,
   });
 
