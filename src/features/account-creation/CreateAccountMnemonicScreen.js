@@ -1,6 +1,6 @@
 import Clipboard from '@react-native-community/clipboard';
 import {Button} from 'native-base';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
@@ -16,12 +16,25 @@ import {
   Theme,
   Typography,
 } from '../../design-system';
-import {BackButton} from '../../design-system/buttons';
+import {BackButton} from '../../design-system';
 import {translate} from '../../locales';
 import {createAccountSelectors} from './create-account-slice';
 import {withErrorBoundary} from '../../core/error-handler';
+import ScreenCaptureSecure from 'react-native-screen-capture-secure';
 
+export function preventScreenShot() {
+  ScreenCaptureSecure.enableSecure();
+}
+export function enableScreenShot() {
+  ScreenCaptureSecure.disableSecure();
+}
 export function CreateAccountMnemonicScreen({phrase, onCopy, onSubmit}) {
+  useEffect(() => {
+    preventScreenShot();
+    return () => {
+      enableScreenShot();
+    };
+  }, []);
   return (
     <ScreenContainer testID="create-wallet-screen" hideGlobalHeader>
       <Header>
