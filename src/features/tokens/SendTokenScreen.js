@@ -1,17 +1,25 @@
+import {useAccount} from '@docknetwork/wallet-sdk-react-native/lib';
 import Clipboard from '@react-native-community/clipboard';
 import {Box, FormControl, Input, Stack} from 'native-base';
-import {Keyboard} from 'react-native';
 import React, {useEffect, useState} from 'react';
+import {Keyboard} from 'react-native';
 import Share from 'react-native-share';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {NumericKeyboard} from 'src/components/NumericKeyboard';
 import {PolkadotIcon} from 'src/components/PolkadotIcon';
 import {navigate} from 'src/core/navigation';
-import {Routes} from 'src/core/routes';
-import {showToast} from 'src/core/toast';
+
 import {utilCryptoService} from '@docknetwork/wallet-sdk-core/lib/services/util-crypto';
 import BigNumber from 'bignumber.js';
+import {Routes} from 'src/core/routes';
+import {showToast} from 'src/core/toast';
 
+import {
+  DOCK_TOKEN_UNIT,
+  formatCurrency,
+  formatDockAmount,
+  getPlainDockAmount,
+} from 'src/core/format-utils';
 import {
   BackButton,
   Button,
@@ -22,15 +30,8 @@ import {
   Typography,
 } from '../../design-system';
 import {translate} from '../../locales';
-import {accountSelectors} from '../accounts/account-slice';
 import {transactionsOperations} from '../transactions/transactions-slice';
 import {ConfirmTransactionModal, TokenAmount} from './ConfirmTransactionModal';
-import {
-  DOCK_TOKEN_UNIT,
-  formatCurrency,
-  formatDockAmount,
-  getPlainDockAmount,
-} from 'src/core/format-utils';
 
 export function SendTokenScreen({form, onChange, onScanQRCode, onNext}) {
   const onChangeAddressMethod = onChange('recipientAddress');
@@ -147,12 +148,12 @@ const Steps = {
 
 export function handleFeeUpdate({
   updateForm,
-  accountDetails,
+  account,
   form,
   fee,
   setShowConfirmation,
 }) {
-  const accountBalance = formatDockAmount(accountDetails.balance);
+  const accountBalance = formatDockAmount(account.balance);
   const amountAndFees = formatDockAmount(
     getPlainDockAmount(form.amount).plus(fee),
   );
@@ -170,9 +171,7 @@ export function handleFeeUpdate({
   };
 
   if (amountAndFees > accountBalance) {
-    const newAmount = formatDockAmount(
-      BigNumber(accountDetails.balance).minus(fee),
-    );
+    const newAmount = formatDockAmount(BigNumber(account.balance).minus(fee));
 
     formUpdates.amount = newAmount;
 
@@ -203,8 +202,13 @@ const defaultFormState = {
 
 export function SendTokenContainer({route}) {
   const dispatch = useDispatch();
-  const {address, recipientAddress = ''} = route.params || {};
-  const accountDetails = useSelector(accountSelectors.getAccountById(address));
+  const {
+    address,
+    recipientAddress = '3B55QmdMTBo7SsWfFsmbVJCL1LkRdMnno3PCScwgiT4Npcso',
+  } = route.params || {};
+  const {account} = useAccount(address);
+  console.log('selected account', account);
+
   const [showConfirmation, setShowConfirmation] = useState();
   const [step, setStep] = useState(Steps.sendTo);
   const [form, setForm] = useState({
@@ -283,7 +287,7 @@ export function SendTokenContainer({route}) {
         onShareAddress={handleShareAddress}
         onChange={handleChange}
         onNext={async () => {
-          if (form.recipientAddress === accountDetails.id) {
+          if (form.recipientAddress === account.address) {
             return setForm(v => ({
               ...v,
               _errors: {
@@ -322,12 +326,12 @@ export function SendTokenContainer({route}) {
             dispatch(
               transactionsOperations.sendTransaction({
                 ...form,
-                accountAddress: accountDetails.id,
+                accountAddress: account.address,
               }),
             ).finally(() => {
               setShowConfirmation(false);
               navigate(Routes.ACCOUNT_DETAILS, {
-                id: accountDetails.id,
+                id: account.address,
               });
               setForm(defaultFormState);
               setStep(Steps.sendTo);
@@ -349,7 +353,7 @@ export function SendTokenContainer({route}) {
 
             if (form.amount <= 0) {
               amountError = translate('send_token.invalid_amount');
-            } else if (form.amount > formatDockAmount(accountDetails.balance)) {
+            } else if (form.amount > formatDockAmount(account.balance)) {
               amountError = translate('send_token.insufficient_funds');
             }
 
@@ -365,11 +369,11 @@ export function SendTokenContainer({route}) {
             return dispatch(
               transactionsOperations.getFeeAmount({
                 ...form,
-                accountAddress: accountDetails.id,
+                accountAddress: account.id,
               }),
             ).then(fee => {
               return handleFeeUpdate({
-                accountDetails,
+                account,
                 form,
                 fee,
                 updateForm,
@@ -382,7 +386,7 @@ export function SendTokenContainer({route}) {
           }}
           onMax={() => {
             updateForm({
-              amount: formatDockAmount(accountDetails.balance),
+              amount: formatDockAmount(account.balance),
               sendMax: true,
             });
           }}
