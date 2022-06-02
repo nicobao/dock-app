@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ImportExistingAccount should render correctly 1`] = `
+exports[`App should render correctly 1`] = `
 <NativeBaseProvider
   initialWindowMetrics={
     Object {
@@ -19,9 +19,6 @@ exports[`ImportExistingAccount should render correctly 1`] = `
     }
   }
 >
-  <ImportExistingAccount
-    onClose={[MockFunction]}
-    visible={true}
-  />
+  <GlobalComponents />
 </NativeBaseProvider>
 `;

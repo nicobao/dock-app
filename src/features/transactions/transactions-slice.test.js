@@ -48,37 +48,4 @@ describe('transactions-slice', () => {
     expect(sorted[2]).toBe(t2);
     expect(sorted[3]).toBe(t1);
   });
-
-  it('Test if realm delete is called', () => {
-    const initialState = {
-      app: {
-        networkId: 'testnet',
-        devSettingsEnabled: true,
-      },
-      wallet: {},
-      account: {},
-      createAccount: {},
-      qrCode: {},
-      transactions: {
-        loading: false,
-        transactions: [],
-      },
-    };
-
-    const store = mockStore(initialState);
-
-    const realm = getRealm();
-    return store
-      .dispatch(
-        transactionsOperations.sendTransaction({
-          recipientAddress: '3C7Hq5jQGxeYzL7LnVASn48tEfr6D7yKtNYSuXcgioQoWWsB',
-          accountAddress: '4C7Hq5jQGxeYzL7LnVASn48tEfr6D7yKtNYSuXcgioQoWWsB',
-          amount: 1,
-          fee: 1,
-        }),
-      )
-      .then(() => {
-        expect(realm.delete.mock.calls.length).toBe(1);
-      });
-  });
 });

@@ -36,43 +36,43 @@ describe('Wallet Slice', () => {
     );
   });
 
-  it('expect to  import wallet with accurate data', () => {
-    const docs =
-      '[{"@context": ["https://w3id.org/wallet/v1"], "id": "4390ffcb-39e9-4827-907b-b0f9c9442819", "name": "Account_1", "type": "Mnemonic", "value": "zoo cotton detail parade inflict helmet ladder topple toilet invite garden online"}, {"@context": ["https://w3id.org/wallet/v1"], "correlation": ["4390ffcb-39e9-4827-907b-b0f9c9442819"], "id": "3HVkSiuFQj5dSjuAMX7ghwGz567fwaZhF1fSkhKm9BtHz9Mu", "meta": {"balance": 0, "derivationPath": "", "hasBackup": true, "keypairType": "sr25519", "name": "Account_1"}, "type": "Account"}, {"@context": ["https://w3id.org/wallet/v1"], "id": "50bf585d-9ce0-4516-a5e8-36d21123e52f", "name": "Account_2", "type": "Mnemonic", "value": "file inhale link winter notable record donkey churn vacant lobster innocent patch"}, {"@context": ["https://w3id.org/wallet/v1"], "correlation": ["50bf585d-9ce0-4516-a5e8-36d21123e52f"], "id": "3HGFGDZKDwV9BUoTJZhfPEDohi99DimpYhNSiC319U3Y1L2t", "meta": {"balance": 0, "derivationPath": "", "hasBackup": true, "keypairType": "sr25519", "name": "Account_2"}, "type": "Account"}]';
-    walletService.query.mockResolvedValue(JSON.parse(docs));
-    return importWallet({}, 'Password');
-  });
+  // it('expect to  import wallet with accurate data', () => {
+  //   const docs =
+  //     '[{"@context": ["https://w3id.org/wallet/v1"], "id": "4390ffcb-39e9-4827-907b-b0f9c9442819", "name": "Account_1", "type": "Mnemonic", "value": "zoo cotton detail parade inflict helmet ladder topple toilet invite garden online"}, {"@context": ["https://w3id.org/wallet/v1"], "correlation": ["4390ffcb-39e9-4827-907b-b0f9c9442819"], "id": "3HVkSiuFQj5dSjuAMX7ghwGz567fwaZhF1fSkhKm9BtHz9Mu", "meta": {"balance": 0, "derivationPath": "", "hasBackup": true, "keypairType": "sr25519", "name": "Account_1"}, "type": "Account"}, {"@context": ["https://w3id.org/wallet/v1"], "id": "50bf585d-9ce0-4516-a5e8-36d21123e52f", "name": "Account_2", "type": "Mnemonic", "value": "file inhale link winter notable record donkey churn vacant lobster innocent patch"}, {"@context": ["https://w3id.org/wallet/v1"], "correlation": ["50bf585d-9ce0-4516-a5e8-36d21123e52f"], "id": "3HGFGDZKDwV9BUoTJZhfPEDohi99DimpYhNSiC319U3Y1L2t", "meta": {"balance": 0, "derivationPath": "", "hasBackup": true, "keypairType": "sr25519", "name": "Account_2"}, "type": "Account"}]';
+  //   walletService.query.mockResolvedValue(JSON.parse(docs));
+  //   return importWallet({}, 'Password');
+  // });
 
-  it('expect to throw error when importing wallet with no docs', () => {
-    walletService.query.mockResolvedValue([]);
-    return expect(importWallet({}, 'Password')).rejects.toThrow(
-      'Invalid backup file',
-    );
-  });
+  // it('expect to throw error when importing wallet with no docs', () => {
+  //   walletService.query.mockResolvedValue([]);
+  //   return expect(importWallet({}, 'Password')).rejects.toThrow(
+  //     'Invalid backup file',
+  //   );
+  // });
 
-  it('expect to throw error when importing wallet with no accounts', () => {
-    const docs = `[
-      {
-          "@context": ["https://w3id.org/wallet/v1"], 
-          "id": "4390ffcb-39e9-4827-907b-b0f9c9442819",
-           "name": "Account_1", 
-           "type": "Mnemonic",
-           "value": "zoo cotton detail parade inflict helmet ladder topple toilet invite garden online"
-      },
-      {   
-          "@context": ["https://w3id.org/wallet/v1"], 
-          "id": "50bf585d-9ce0-4516-a5e8-36d21123e52f", 
-          "name": "Account_2", 
-          "type": "Mnemonic",
-           "value": "file inhale link winter notable record donkey churn vacant lobster innocent patch"
-      }
-    ]`;
+  // it('expect to throw error when importing wallet with no accounts', () => {
+  //   const docs = `[
+  //     {
+  //         "@context": ["https://w3id.org/wallet/v1"], 
+  //         "id": "4390ffcb-39e9-4827-907b-b0f9c9442819",
+  //          "name": "Account_1", 
+  //          "type": "Mnemonic",
+  //          "value": "zoo cotton detail parade inflict helmet ladder topple toilet invite garden online"
+  //     },
+  //     {   
+  //         "@context": ["https://w3id.org/wallet/v1"], 
+  //         "id": "50bf585d-9ce0-4516-a5e8-36d21123e52f", 
+  //         "name": "Account_2", 
+  //         "type": "Mnemonic",
+  //          "value": "file inhale link winter notable record donkey churn vacant lobster innocent patch"
+  //     }
+  //   ]`;
 
-    walletService.query.mockResolvedValue(JSON.parse(docs));
-    return expect(importWallet({}, 'Password')).rejects.toThrow(
-      translate('import_wallet.invalid_file', {
-        locale: 'en',
-      }),
-    );
-  });
+  //   walletService.query.mockResolvedValue(JSON.parse(docs));
+  //   return expect(importWallet({}, 'Password')).rejects.toThrow(
+  //     translate('import_wallet.invalid_file', {
+  //       locale: 'en',
+  //     }),
+  //   );
+  // });
 });
