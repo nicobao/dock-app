@@ -202,10 +202,7 @@ const defaultFormState = {
 
 export function SendTokenContainer({route}) {
   const dispatch = useDispatch();
-  const {
-    address,
-    recipientAddress = '3B55QmdMTBo7SsWfFsmbVJCL1LkRdMnno3PCScwgiT4Npcso',
-  } = route.params || {};
+  const {address, recipientAddress} = route.params || {};
   const {account} = useAccount(address);
   console.log('selected account', account);
 
