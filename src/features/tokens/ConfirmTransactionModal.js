@@ -7,6 +7,7 @@ import {translate} from 'src/locales';
 import {Modal} from '../../components/Modal';
 import {Typography} from '../../design-system';
 import {getDockTokenPrice} from './price-service';
+import BigNumber from 'bignumber.js';
 
 export const TokenAmount = withErrorBoundary(
   ({amount, symbol = 'DOCK', children}) => {
@@ -15,7 +16,7 @@ export const TokenAmount = withErrorBoundary(
 
     useEffect(() => {
       getDockTokenPrice().then(price =>
-        setFiatAmount(formatDockAmount(amount) * price),
+        setFiatAmount(BigNumber(amount).toNumber() * price),
       );
     }, [amount]);
 

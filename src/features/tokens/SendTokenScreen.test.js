@@ -49,7 +49,7 @@ describe('SendTokenScreen', () => {
       const fee = 2;
 
       const result = handleFeeUpdate({
-        accountDetails: {
+        account: {
           balance,
         },
         fee,
@@ -75,7 +75,7 @@ describe('SendTokenScreen', () => {
       const fee = getPlainDockAmount(2);
 
       const result = handleFeeUpdate({
-        accountDetails: {
+        account: {
           balance,
         },
         fee,
@@ -103,7 +103,7 @@ describe('SendTokenScreen', () => {
       const fee = getPlainDockAmount(2);
 
       const result = handleFeeUpdate({
-        accountDetails: {
+        account: {
           balance,
         },
         fee,
