@@ -1,13 +1,5 @@
-import {
-  parseTransaction,
-  sortTransactions,
-  transactionsOperations,
-} from './transactions-slice';
-import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
-import {getRealm} from '../../core/realm';
+import {parseTransaction, sortTransactions} from './transactions-slice';
 
-const mockStore = configureMockStore([thunk]);
 describe('transactions-slice', () => {
   it('expect to parse transaction', () => {
     const t1 = {

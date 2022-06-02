@@ -1,12 +1,10 @@
 import {translate} from 'src/locales';
-import {validateWalletImport, importWallet} from './wallet-slice';
+import {validateWalletImport} from './wallet-slice';
 
 jest.mock('@docknetwork/wallet-sdk-core/lib/services/wallet', () => ({
   __esModule: true,
   default: jest.fn(() => 42),
 }));
-
-import {walletService} from '@docknetwork/wallet-sdk-core/lib/services/wallet';
 
 describe('Wallet Slice', () => {
   beforeEach(() => {
@@ -53,16 +51,16 @@ describe('Wallet Slice', () => {
   // it('expect to throw error when importing wallet with no accounts', () => {
   //   const docs = `[
   //     {
-  //         "@context": ["https://w3id.org/wallet/v1"], 
+  //         "@context": ["https://w3id.org/wallet/v1"],
   //         "id": "4390ffcb-39e9-4827-907b-b0f9c9442819",
-  //          "name": "Account_1", 
+  //          "name": "Account_1",
   //          "type": "Mnemonic",
   //          "value": "zoo cotton detail parade inflict helmet ladder topple toilet invite garden online"
   //     },
-  //     {   
-  //         "@context": ["https://w3id.org/wallet/v1"], 
-  //         "id": "50bf585d-9ce0-4516-a5e8-36d21123e52f", 
-  //         "name": "Account_2", 
+  //     {
+  //         "@context": ["https://w3id.org/wallet/v1"],
+  //         "id": "50bf585d-9ce0-4516-a5e8-36d21123e52f",
+  //         "name": "Account_2",
   //         "type": "Mnemonic",
   //          "value": "file inhale link winter notable record donkey churn vacant lobster innocent patch"
   //     }
