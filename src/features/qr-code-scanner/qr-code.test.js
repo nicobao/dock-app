@@ -1,4 +1,4 @@
-import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
+import {utilCryptoService} from '@docknetwork/wallet-sdk-core/lib/services/util-crypto';
 import {
   addressHandler,
   credentialHandler,
@@ -10,6 +10,15 @@ import {Routes} from '../../core/routes';
 import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
 import testCredentialData from '@docknetwork/wallet-sdk-credentials/fixtures/test-credential.json';
 import {setToast} from '../../core/toast';
+import {onScanAuthQRCode} from '../credentials/credentials';
+import {didOperations} from '../didManagement/didManagment-slice';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import {credentialServiceRPC} from '@docknetwork/wallet-sdk-core/lib/services/credential';
+import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
+import {translate} from 'src/locales';
+
+const mockStore = configureMockStore([thunk]);
 
 describe('qr-code', () => {
   it('executeHandlers', async () => {
@@ -66,7 +75,9 @@ describe('qr-code', () => {
   });
   describe('addressHandler', () => {
     it('expect to ignore invalid data', async () => {
-      jest.spyOn(UtilCryptoRpc, 'isAddressValid').mockReturnValueOnce(false);
+      jest
+        .spyOn(utilCryptoService, 'isAddressValid')
+        .mockReturnValueOnce(false);
 
       navigationRef.current = {
         navigate: jest.fn(),
@@ -79,7 +90,7 @@ describe('qr-code', () => {
     });
 
     it('expect to navigate to send tokens route', async () => {
-      jest.spyOn(UtilCryptoRpc, 'isAddressValid').mockReturnValueOnce(true);
+      jest.spyOn(utilCryptoService, 'isAddressValid').mockReturnValueOnce(true);
 
       navigationRef.current = {
         navigate: jest.fn(),
@@ -231,6 +242,32 @@ describe('qr-code', () => {
       const result = await credentialHandler('{d: bad json)');
 
       expect(result).toBeFalsy();
+    });
+
+    it('expect to onScanAuth0QRCode to generate credential', async () => {
+      await expect(onScanAuthQRCode()).rejects.toThrow(
+        translate('qr_scanner.no_key_doc', {
+          locale: 'en',
+        }),
+      );
+
+      const store = mockStore({});
+      await store.dispatch(didOperations.initializeDID());
+      await onScanAuthQRCode();
+
+      const wallet = Wallet.getInstance();
+      const keyDocs = wallet.query({});
+
+      const subject = {
+        state: 'debugstate',
+      };
+
+      expect(credentialServiceRPC.generateCredential).toBeCalledWith({subject});
+      const vc = await credentialServiceRPC.generateCredential({});
+      expect(credentialServiceRPC.signCredential).toBeCalledWith({
+        vcJson: vc,
+        keyDoc: keyDocs[0],
+      });
     });
   });
 });

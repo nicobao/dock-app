@@ -4,6 +4,8 @@
 
 # Xcode
 #
+android/app/google-services.json
+ios/GoogleService-Info.plist
 google-play.json
 android/app/src/main/assets/app-html/bundle.js
 assets/app-html/bundle.js

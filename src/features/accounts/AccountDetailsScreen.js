@@ -25,11 +25,12 @@ import {TokenAmount} from '../tokens/ConfirmTransactionModal';
 import {TransactionConfirmationModal} from '../transactions/TransactionConfirmationModal';
 import {TransactionDetailsModal} from '../transactions/TransactionDetailsModal';
 import {
-  transactionsOperations,
   transactionsSelectors,
   TransactionStatus,
+  transactionsOperations,
 } from '../transactions/transactions-slice';
-import {accountOperations, accountSelectors} from './account-slice';
+import {accountOperations} from './account-slice';
+import {useAccount} from '@docknetwork/wallet-sdk-react-native/lib';
 import {AccountSettingsModal} from './AccountSettingsModal';
 import {QRCodeModal} from './QRCodeModal';
 import {addTestId} from '../../core/automation-utils';
@@ -37,6 +38,7 @@ import {appSelectors} from '../app/app-slice';
 import {useFeatures} from '../app/feature-flags';
 import uuid from 'uuid';
 import {displayWarning} from './AccountsScreen';
+import assert from 'assert';
 
 const TRANSACTION_FILTERS = {
   all: 'all',
@@ -494,22 +496,28 @@ export function AccountDetailsScreen({
 
 export function AccountDetailsContainer({route}) {
   const {id: accountId, qrCodeData} = route.params;
+  assert(!!accountId, 'Account id is required');
+
   const dispatch = useDispatch();
-  const account = useSelector(accountSelectors.getAccountById(accountId));
+  const {account} = useAccount(accountId);
   const {features} = useFeatures();
 
   const [isRefreshing, setRefreshing] = useState(false);
 
   const onRefresh = () => {
     setRefreshing(true);
-    dispatch(accountOperations.fetchAccountBalance(account.id)).finally(() => {
-      setRefreshing(false);
-    });
+    dispatch(accountOperations.fetchAccountBalance(account.address)).finally(
+      () => {
+        setRefreshing(false);
+      },
+    );
   };
 
   useEffect(() => {
     dispatch(transactionsOperations.loadTransactions(accountId));
   }, [dispatch, accountId]);
+
+  console.log('account details', account);
 
   if (!account) {
     return <LoadingScreen />;

@@ -1,15 +1,15 @@
-import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
+import {utilCryptoService} from '@docknetwork/wallet-sdk-core/lib/services/util-crypto';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
 import {showToast} from '../../core/toast';
 import {translate} from '../../locales';
 import {getJsonOrError} from '../../core';
-import {DebugConstants} from '../constants';
 import '../credentials/credentials';
+import {onScanAuthQRCode} from '../credentials/credentials';
 
 export async function addressHandler(data) {
-  const isAddress = await UtilCryptoRpc.isAddressValid(data);
+  const isAddress = await utilCryptoService.isAddressValid(data);
 
   if (isAddress) {
     navigate(Routes.TOKEN_SEND, {
@@ -93,9 +93,8 @@ export async function authHandler(data) {
     });
 
     try {
-      // DEBUG: For internal testing we just submit a hardcoded credential
-      // for production we will require the wallet to build and sign one
-      const vc = DebugConstants.authCredential;
+      const vc = await onScanAuthQRCode();
+
       const req = await fetch(url, {
         method: 'POST',
         headers: {

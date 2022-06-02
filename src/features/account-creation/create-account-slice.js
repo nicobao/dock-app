@@ -1,8 +1,7 @@
-import {WalletRpc} from '@docknetwork/react-native-sdk/src/client/wallet-rpc';
-import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
-import {KeyringRpc} from '@docknetwork/react-native-sdk/src/client/keyring-rpc';
+import {utilCryptoService} from '@docknetwork/wallet-sdk-core/lib/services/util-crypto';
+import {keyringService} from '@docknetwork/wallet-sdk-core/lib/services/keyring';
 import {createSlice} from '@reduxjs/toolkit';
-import uuid from 'uuid/v4';
+import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {showToast, withErrorToast} from '../../core/toast';
@@ -47,12 +46,12 @@ export const createAccountSelectors = {
 };
 
 function validateDerivationPath({phrase, type = 'sr25519', derivePath = ''}) {
-  return KeyringRpc.addressFromUri({
-    phrase,
-    type,
-    derivePath,
-  })
-
+  return keyringService
+    .addressFromUri({
+      mnemonic: phrase,
+      type,
+      derivePath,
+    })
     .then(() => true)
     .catch(() => false);
 }
@@ -115,12 +114,11 @@ export const createAccountOperations = {
     }, translate('import_account.invalid_account_data')),
   unlockJson: password => async (dispatch, getState) => {
     const form = createAccountSelectors.getForm(getState());
-    const keyPairJson = await KeyringRpc.addFromJson(form.data, password);
 
     dispatch(
       createAccountActions.setForm({
         ...form,
-        keyPairJson,
+        json: form.data,
         password,
         accountName: form.data.meta && form.data.meta.name,
       }),
@@ -131,7 +129,7 @@ export const createAccountOperations = {
   importFromMnemonic: form =>
     withErrorToast(async (dispatch, getState) => {
       const phrase = form.phrase.trim();
-      const isValidPhrase = await UtilCryptoRpc.mnemonicValidate(phrase);
+      const isValidPhrase = await utilCryptoService.mnemonicValidate(phrase);
 
       if (!isValidPhrase) {
         showToast({
@@ -151,7 +149,7 @@ export const createAccountOperations = {
         return;
       }
 
-      const address = await KeyringRpc.addressFromUri({
+      const address = await keyringService.addressFromUri({
         phrase,
         type: form.keypairType || 'sr25519',
         derivePath: form.derivationPath || '',
@@ -174,7 +172,7 @@ export const createAccountOperations = {
     }),
   submitAccountForm: form =>
     withErrorToast(async (dispatch, getState) => {
-      const phrase = await UtilCryptoRpc.mnemonicGenerate(12);
+      const phrase = await utilCryptoService.mnemonicGenerate(12);
       const isAdvancedOptionsValid = await validateAdvancedOptionsForm({
         phrase,
         form,
@@ -196,57 +194,28 @@ export const createAccountOperations = {
   } = {}) =>
     withErrorToast(async (dispatch, getState) => {
       const state = getState();
-      const phrase = createAccountSelectors.getMnemonicPhrase(state);
+      const mnemonic = createAccountSelectors.getMnemonicPhrase(state);
       const form = {
         ...createAccountSelectors.getForm(state),
         ...extraForm,
       };
 
-      const secretId = uuid();
       let {accountName, keypairType, derivationPath} = form;
-      let address;
 
       if (!form.json) {
-        address = await KeyringRpc.addressFromUri({
-          phrase,
-          type: keypairType || 'sr25519',
-          derivePath: derivationPath || '',
-        });
-
-        // Create mnemonic phrase
-        await WalletRpc.add({
-          '@context': ['https://w3id.org/wallet/v1'],
-          id: secretId,
+        await Wallet.getInstance().accounts.create({
+          derivationPath,
           name: accountName,
-          type: 'Mnemonic',
-          value: phrase,
+          mnemonic,
+          type: keypairType,
         });
       } else {
-        address = form.data.address;
-
-        await WalletRpc.add({
-          '@context': ['https://w3id.org/wallet/v1'],
-          id: secretId,
+        await Wallet.getInstance().accounts.create({
           name: accountName,
-          type: 'KeyPair',
-          value: form.keyPairJson,
+          json: form.json,
+          password: form.password,
         });
       }
-
-      // Create account
-      await WalletRpc.add({
-        '@context': ['https://w3id.org/wallet/v1'],
-        id: address,
-        type: 'Account',
-        correlation: [secretId],
-        meta: {
-          name: accountName,
-          keypairType,
-          derivationPath,
-          hasBackup,
-          balance: 0,
-        },
-      });
 
       dispatch(accountOperations.loadAccounts());
       navigate(Routes.ACCOUNTS);
