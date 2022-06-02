@@ -27,7 +27,7 @@ export function formatAddress(value, size = 19) {
 }
 
 export function formatDockAmount(value) {
-  return BigNumber(value).dividedBy(DOCK_TOKEN_UNIT).toNumber();
+  return BigNumber(value).toNumber();
 }
 
 export function getPlainDockAmount(value) {

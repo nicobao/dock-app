@@ -1,5 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {walletService} from '@docknetwork/wallet-sdk-core/lib/services/wallet';
+import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
 import {polkadotService} from '@docknetwork/wallet-sdk-core/lib/services/polkadot';
 import {substrateService} from '@docknetwork/wallet-sdk-core/lib/services/substrate';
 import {showToast, withErrorToast} from '../../core/toast';
@@ -215,28 +216,7 @@ export const accountOperations = {
 
   removeAccount: (account: any) => async (dispatch, getState) => {
     try {
-      dispatch(accountActions.removeAccount(account.id));
-
-      try {
-        await walletService.remove(account.id);
-      } catch (err) {
-        console.error(err);
-      }
-
-      const realm = getRealm();
-
-      realm.write(() => {
-        const cachedAccount = realm
-          .objects('Account')
-          .filtered('id = $0', account.id)[0];
-
-        console.log('Cached account', cachedAccount);
-        if (!cachedAccount) {
-          return;
-        }
-
-        realm.delete(cachedAccount);
-      });
+      await Wallet.getInstance().remove(account.address);
 
       showToast({
         message: translate('account_details.account_removed'),

@@ -7,6 +7,8 @@ import {Routes} from '../../core/routes';
 import {walletActions} from '../wallet/wallet-slice';
 import {captureException} from '@sentry/react-native';
 import {defaultFeatures} from './feature-flags';
+import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
+import {NetworkManager} from '@docknetwork/wallet-sdk-core/lib/modules/network-manager';
 
 export const BiometryType = {
   FaceId: Keychain.BIOMETRY_TYPE.FACE_ID,
@@ -142,9 +144,9 @@ export const appOperations = {
   initialize: () => async (dispatch, getState) => {
     SplashScreen.hide();
 
-    if (!appSelectors.getDevSettingsEnabled(getState())) {
-      dispatch(appActions.setNetworkId('mainnet'));
-    }
+    await dispatch(
+      appActions.setNetworkId(NetworkManager.getInstance().networkId),
+    );
 
     await Keychain.getSupportedBiometryType().then(value => {
       let type;
@@ -182,7 +184,8 @@ export const appOperations = {
   },
 
   setNetwork: networkId => async (dispatch, getState) => {
-    return;
+    dispatch(appActions.setNetworkId(networkId));
+    await Wallet.getInstance().switchNetwork(networkId);
   },
 };
 

@@ -275,16 +275,16 @@ export const AccountsScreen = withErrorBoundary(
 
 export const AccountsContainer = withErrorBoundary(({navigation}) => {
   const dispatch = useDispatch();
-  const {documents} = useWallet({syncDocs: true});
+  const {documents, refetch} = useWallet({syncDocs: true});
   const accounts = documents.filter(doc => doc.type === 'Address');
   const [isRefreshing, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    dispatch(accountOperations.fetchBalances()).finally(() => {
+    refetch().finally(() => {
       setRefreshing(false);
     });
-  }, [dispatch]);
+  }, [refetch]);
 
   useEffect(() => {
     dispatch(accountOperations.loadAccounts());
