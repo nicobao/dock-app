@@ -150,6 +150,21 @@ jest.mock('@react-native-firebase/analytics', () => {
   };
 });
 
+jest.mock('react-native-screen-capture-secure', () => {
+  const originalModule = jest.requireActual(
+    'react-native-screen-capture-secure',
+  );
+  const enableSecure = jest.fn();
+  const disableSecure = jest.fn();
+  return {
+    __esModule: true,
+    default: {
+      enableSecure,
+      disableSecure,
+    },
+  };
+});
+
 jest.mock('@docknetwork/react-native-sdk/src/client/wallet-rpc', () => {
   const originalModule = jest.requireActual(
     '@docknetwork/react-native-sdk/src/client/wallet-rpc',

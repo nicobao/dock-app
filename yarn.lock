@@ -1307,10 +1307,10 @@
     "@babel/node" "^7.16.0"
     babel-node "^0.0.1-security"
 
-"@docknetwork/wallet-sdk-core@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@docknetwork/wallet-sdk-core/-/wallet-sdk-core-0.2.1.tgz#52e44310c9abdc9d5fa9c40172f2c04420a9cbec"
-  integrity sha512-d+2yqfpwKOnC3wFexW9mmbfkNkKGyMqh1u3amAXSkZaXvLR4KJbXiiCrdlmGp6vf1GZO9GvYuIJ38asuGqZSCQ==
+"@docknetwork/wallet-sdk-core@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@docknetwork/wallet-sdk-core/-/wallet-sdk-core-0.2.2.tgz#f56181ecfb24820eb2ea93be054119e4e74f7ff5"
+  integrity sha512-GsgT7RH8Bmjbzhq2dTYFNImKo7u6sSRf00P5/7EtzW8Ic7hVLJTjnwjxw/j0jJLMw69wTvryWZ+nSHpEdhMg7g==
   dependencies:
     "@polkadot/keyring" "^7.2.1"
     "@polkadot/types-known" "5.6.1"
@@ -1325,18 +1325,18 @@
     uuid "^8.3.2"
     winston "^3.3.3"
 
-"@docknetwork/wallet-sdk-credentials@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@docknetwork/wallet-sdk-credentials/-/wallet-sdk-credentials-0.2.1.tgz#8db706505773975ed7173c60b098d19063b22cf2"
-  integrity sha512-rTxh6gdIgHPCDg0mPRInwE4fcWC31EX0ZnHdH8+CJkZa9qxDtPBEdphlYmShPr13XFItl9JSMBgaq/RONYYbKQ==
+"@docknetwork/wallet-sdk-credentials@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@docknetwork/wallet-sdk-credentials/-/wallet-sdk-credentials-0.2.2.tgz#fea66c0dcd2d3795dff5d554a6aa93daceae0673"
+  integrity sha512-hQr00+RBbHsn7j/YWf6ZOSoAGYNTGqYdCLgM+drqtUaCgtbdWAJOBGk2PvuwSGOSHOPnJxQ5Mrys+K1KRWucZg==
   dependencies:
-    "@docknetwork/wallet-sdk-core" "^0.2.1"
+    "@docknetwork/wallet-sdk-core" "^0.2.2"
     axios "^0.25.0"
 
-"@docknetwork/wallet-sdk-react-native@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@docknetwork/wallet-sdk-react-native/-/wallet-sdk-react-native-0.2.1.tgz#fe7c9d7f9a5356be100414127d2d7d884c1e0d90"
-  integrity sha512-hw1Rmg6imY0EwETCB51b/koxUH7Oo1NxekMcDrOIitXzd/A6n33s31F9rchgR0whDYIPsXsh/cKTteGLHIsuNg==
+"@docknetwork/wallet-sdk-react-native@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@docknetwork/wallet-sdk-react-native/-/wallet-sdk-react-native-0.2.2.tgz#12febeb30f118f4df03a5ac92405b7216735ea13"
+  integrity sha512-q1++65I3o6gO8dwH3e7GfGwR4Q5a1J8ri7hqPQ1ESt4UTqrARXsd+Ans01TDgdu5AtJiTLwoKw/kYae7M+nuSQ==
   dependencies:
     "@polkadot/keyring" "^7.2.1"
     "@polkadot/types-known" "5.6.1"
@@ -1347,6 +1347,17 @@
     react-native-webview "^11.4.3"
     webpack "^5.67.0"
     webpack-dev-server "3.11.1"
+
+"@docknetwork/wallet-sdk-transactions@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@docknetwork/wallet-sdk-transactions/-/wallet-sdk-transactions-0.2.2.tgz#3b91ae33c44b00f162f8b92e83f6198f87d90621"
+  integrity sha512-n/BToJdx0hTEFRu+Iwt8dpscpEpGvplYK5ndrlGdk8OX1XzMTaVp7fkXMQsjdF6Hx8rT+x2CwqUrh930c4R9Qw==
+  dependencies:
+    "@polkadot/keyring" "^7.2.1"
+    "@polkadot/types-known" "5.6.1"
+    "@polkadot/ui-shared" "^0.87.5"
+    "@polkadot/util-crypto" "^7.2.1"
+    "@polkadot/wasm-crypto" "^4.5.1"
 
 "@egjs/hammerjs@^2.0.17":
   version "2.0.17"
@@ -15490,6 +15501,11 @@ react-native-safe-area-context@^3.2.0:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-3.3.2.tgz#9549a2ce580f2374edb05e49d661258d1b8bcaed"
   integrity sha512-yOwiiPJ1rk+/nfK13eafbpW6sKW0jOnsRem2C1LPJjM3tfTof6hlvV5eWHATye3XOpu2cJ7N+HdkUvUDGwFD2Q==
+
+react-native-screen-capture-secure@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-screen-capture-secure/-/react-native-screen-capture-secure-1.0.5.tgz#5ba6649a7cb9fdf2595c7620c3ce6c0e785ab972"
+  integrity sha512-/YnJR2uAsMtuAB2/u83jBm6VvyF7xRx0VIisnc8KR2rX25/wVpjFWG8RdZ6gZfhWYtQoQSKJNuljoQIg1sjeJw==
 
 react-native-screens@^3.3.0:
   version "3.9.0"
