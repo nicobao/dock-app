@@ -1,8 +1,8 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {View} from 'native-base';
-import React from 'react';
-import {Platform, StyleSheet} from 'react-native';
+import React, {useCallback, useEffect} from 'react';
+import {Linking, Platform, StyleSheet} from 'react-native';
 import {Theme} from 'src/design-system';
 import {ReceiveTokenContainer} from 'src/features/tokens/ReceiveTokenScreen';
 import {SendTokenContainer} from 'src/features/tokens/SendTokenScreen';
@@ -33,6 +33,9 @@ import {navigationRef} from './navigation';
 import {Routes} from './routes';
 import {CredentialsContainer} from '../features/credentials/CredentialsScreen';
 import {withNavigationContext} from './NavigationContext';
+import DeepLinking from 'react-native-deep-linking';
+import {isDidAuthUrl} from '../features/qr-code-scanner/qr-code';
+import {navigate} from './navigation';
 
 const AppStack = createStackNavigator();
 const RootStack = createStackNavigator();
@@ -284,6 +287,20 @@ function AppStackScreen() {
 }
 
 export function NavigationRouter() {
+  const handleUrl = useCallback(({url}) => {
+    if (isDidAuthUrl(url)) {
+      navigate(Routes.APP_QR_SCANNER);
+    }
+  }, []);
+  useEffect(() => {
+    DeepLinking.addScheme('dockwallet://');
+    Linking.addEventListener('url', handleUrl);
+
+    return () => {
+      Linking.removeEventListener('url', handleUrl);
+    };
+  }, []);
+
   return (
     <NavigationContainer ref={navigationRef}>
       <RootStack.Navigator mode="modal">
