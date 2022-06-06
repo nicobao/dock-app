@@ -10,7 +10,7 @@ export function ImportWalletPasswordContainer({route}) {
   const handleSubmit = ({password}) => {
     return dispatch(
       walletOperations.importWallet({
-        password: fileData ? '12345678Qw!' : password,
+        password,
         fileUri,
         fileData,
       }),
