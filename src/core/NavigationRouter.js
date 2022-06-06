@@ -299,7 +299,7 @@ export function NavigationRouter() {
     return () => {
       Linking.removeEventListener('url', handleUrl);
     };
-  }, []);
+  }, [handleUrl]);
 
   return (
     <NavigationContainer ref={navigationRef}>
