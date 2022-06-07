@@ -23,7 +23,7 @@ export const TokenAmount = withErrorBoundary(
     return children({
       fiatAmount,
       fiatSymbol,
-      tokenAmount: formatDockAmount(amount),
+      tokenAmount: amount,
       tokenSymbol: symbol,
     });
   },
