@@ -33,7 +33,7 @@ The structure should look like
 
 ```bash
 # clone the wallet-sdk repo to the proper folder
-git@github.com:docknetwork/react-native-sdk.git
+git clone git@github.com:docknetwork/react-native-sdk.git
 
 # run the script to sync the files and watch for changes
 
