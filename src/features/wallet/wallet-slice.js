@@ -76,20 +76,15 @@ export async function validateWalletImport(fileData, password) {
   return jsonData;
 }
 
-export async function importWallet(jsonData, password) {
+export async function importWallet(json, password) {
   try {
-    await Wallet.getInstance().importWallet(jsonData, password);
+    await Wallet.getInstance().importWallet({json, password});
   } catch (err) {
     console.error(err);
     throw new Error(translate('import_wallet.import_error'));
   }
-
-  const accounts = await Wallet.getInstance().accounts.load();
-
-  if (accounts.length === 0) {
-    throw new Error(translate('import_wallet.invalid_file'));
-  }
 }
+
 async function validateAndImport(fileData, password) {
   const jsonData = await validateWalletImport(fileData, password);
   await importWallet(jsonData, password);
