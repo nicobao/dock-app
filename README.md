@@ -8,7 +8,8 @@ pod install
 ```
 
 ## Starting the app
-To start the app you need 3 separate terminal tabs
+To start the app you need 2 separate terminal tabs.
+
 ```bash
 # start the metro server
 yarn start
@@ -25,7 +26,7 @@ yarn android
 ## Wallet sdk
 To build using the local wallet-sdk you need to clone the wallet-sdk repo to the parent dir of the app. It's required in order to copy the sdk files and run the file watcher. Note that symlinks are not supported on react-native.
 
-The structure should look like
+The structure should look like:
 - root-folder:
     - dock-app
     - wallet-sdk
@@ -41,11 +42,11 @@ yarn sync-sdk
 ```
 
 ## Wallet sdk bundle
-The wallet sdk uses a json-rpc client to connect to a webview. Its rquired to handle webassembly properly
+The wallet sdk uses a json-rpc client to connect to a webview. Its rquired to handle webassembly properly.
 
-In case you update any service in the wallet-sdk a new js bundle will need to be genearted
+In case you update any service in the wallet-sdk a new js bundle will need to be generated.
 
-For doing that you can runnin the foolowing script
+For doing that you can runnin the following script:
 
 ```bash
 # from the dock-app project
