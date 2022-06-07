@@ -80,9 +80,8 @@ export async function credentialHandler(data) {
 
 export async function authHandler(data) {
   const authLinkPrefix = 'dockwallet://didauth?url=';
-  const isAuthLink =
-    typeof data === 'string' && data.indexOf(authLinkPrefix) === 0;
 
+  const isAuthLink = isDidAuthUrl(data);
   if (isAuthLink) {
     const url =
       'https://' + decodeURIComponent(data.substr(authLinkPrefix.length));
@@ -157,4 +156,12 @@ export async function qrCodeHandler(data, handlers = qrCodeHandlers) {
       message: translate('qr_scanner.not_supported_data'),
     });
   }
+}
+
+export function isDidAuthUrl(url) {
+  const authLinkPrefix = 'dockwallet://didauth?url=';
+  const isAuthLink =
+    typeof url === 'string' && url.indexOf(authLinkPrefix) === 0;
+
+  return isAuthLink;
 }

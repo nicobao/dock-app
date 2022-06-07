@@ -229,6 +229,7 @@ export const AccountsScreen = withErrorBoundary(
                 {accounts.map(account => {
                   return (
                     <AccountCard
+                      key={account.id}
                       document={account}
                       onDetails={onDetails}
                       onDelete={onDelete}
