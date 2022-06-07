@@ -338,7 +338,7 @@ export function AccountDetailsScreen({
         <Stack mx={5} flex={1}>
           <Stack mx={3} direction="column" alignItems="center">
             <Stack direction="column" alignItems="center" mt={8}>
-              <PolkadotIcon address={account.id} size={48} />
+              <PolkadotIcon address={account.address} size={48} />
               <TokenAmount amount={account.balance}>
                 {({fiatAmount, tokenAmount, tokenSymbol}) => (
                   <>
@@ -362,7 +362,7 @@ export function AccountDetailsScreen({
                 disabled={account.readOnly}
                 onPress={() =>
                   navigate(Routes.TOKEN_SEND, {
-                    address: account.id,
+                    address: account.address,
                   })
                 }>
                 <Typography color={Theme.button.textColor}>
@@ -377,7 +377,7 @@ export function AccountDetailsScreen({
                 {...addTestId('ReceiveTokensBtn')}
                 onPress={() =>
                   navigate(Routes.TOKEN_RECEIVE, {
-                    address: account.id,
+                    address: account.address,
                   })
                 }>
                 <Typography color={Theme.button.textColor}>
@@ -392,7 +392,7 @@ export function AccountDetailsScreen({
                   {...addTestId('BuyDockBtn')}
                   onPress={() =>
                     navigate(Routes.TRADE_BUY_DOCK, {
-                      id: account.id,
+                      id: account.address,
                       orderId: uuid(),
                     })
                   }>
@@ -465,7 +465,7 @@ export function AccountDetailsScreen({
               </Typography>
             </NBox>
             <NBox>
-              <TransactionHistory accountAddress={account.id} />
+              <TransactionHistory accountAddress={account.address} />
             </NBox>
           </Stack>
         </Stack>
@@ -485,7 +485,7 @@ export function AccountDetailsScreen({
         visible={qrCodeModalVisible}
         onClose={() => {
           navigate(Routes.ACCOUNT_DETAILS, {
-            id: account.id,
+            id: account.address,
             qrCodeData: null,
           });
         }}

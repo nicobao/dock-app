@@ -1,7 +1,7 @@
 import {Box, Stack} from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {withErrorBoundary} from 'src/core/error-handler';
-import {formatCurrency, formatDockAmount} from 'src/core/format-utils';
+import {formatCurrency} from 'src/core/format-utils';
 import {Button, Theme} from 'src/design-system';
 import {translate} from 'src/locales';
 import {Modal} from '../../components/Modal';
@@ -23,7 +23,7 @@ export const TokenAmount = withErrorBoundary(
     return children({
       fiatAmount,
       fiatSymbol,
-      tokenAmount: formatDockAmount(amount),
+      tokenAmount: amount,
       tokenSymbol: symbol,
     });
   },
