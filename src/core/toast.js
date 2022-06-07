@@ -33,6 +33,7 @@ export const withErrorToast =
     try {
       await fn(...params);
     } catch (err) {
+      console.error(err);
       captureException(err);
       showUnexpectedErrorToast(message);
       throw err;
