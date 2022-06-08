@@ -6,9 +6,7 @@ import uuid from 'uuid';
 import {getRealm} from '@docknetwork/wallet-sdk-core/lib/core/realm';
 import {showToast} from 'src/core/toast';
 import {DOCK_TOKEN_UNIT} from 'src/core/format-utils';
-import {appSelectors} from '../app/app-slice';
 import {fetchTransactions} from '../../core/subscan';
-import {accountSelectors} from '../accounts/account-slice';
 import BigNumber from 'bignumber.js';
 import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
 
