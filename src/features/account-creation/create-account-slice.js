@@ -150,7 +150,7 @@ export const createAccountOperations = {
       }
 
       const address = await keyringService.addressFromUri({
-        phrase,
+        mnemonic: phrase,
         type: form.keypairType || 'sr25519',
         derivePath: form.derivationPath || '',
       });
