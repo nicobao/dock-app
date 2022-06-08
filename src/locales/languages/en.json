@@ -290,6 +290,10 @@
   "qr_scanner": {
     "not_supported_data": "Not supported QR Code",
     "scan_qr_code": "Scan QR Code",
-    "no_key_doc": "No key document found"
+    "no_key_doc": "No key document found",
+    "start": "Start",
+    "processing": "Processing...",
+    "completed": "DID Authorized"
+
   }
 }

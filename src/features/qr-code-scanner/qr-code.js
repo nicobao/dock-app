@@ -77,7 +77,15 @@ export async function credentialHandler(data) {
     return false;
   }
 }
-
+function onAuthQRScanned(data) {
+  const isAuthLink = isDidAuthUrl(data);
+  if (isAuthLink) {
+    navigate(Routes.APP_DID_AUTH, {
+      dockWalletAuthDeepLink: data,
+    });
+  }
+  return false;
+}
 export async function authHandler(data) {
   const authLinkPrefix = 'dockwallet://didauth?url=';
 
@@ -92,7 +100,7 @@ export async function authHandler(data) {
     });
 
     try {
-      const vc = await onScanAuthQRCode();
+      const vc = await onScanAuthQRCode(url);
 
       const req = await fetch(url, {
         method: 'POST',
@@ -110,8 +118,6 @@ export async function authHandler(data) {
           type: 'message',
           message: translate('auth.auth_sign_in_success'),
         });
-
-        navigate(Routes.APP_CREDENTIALS); // temporary redirect so it looks like scan was complete
       } else {
         showToast({
           type: 'error',
@@ -131,7 +137,11 @@ export async function authHandler(data) {
   return false;
 }
 
-export const qrCodeHandlers = [authHandler, addressHandler, credentialHandler];
+export const qrCodeHandlers = [
+  onAuthQRScanned,
+  addressHandler,
+  credentialHandler,
+];
 
 export async function executeHandlers(data, handlers) {
   if (!data || !handlers) {
@@ -160,8 +170,5 @@ export async function qrCodeHandler(data, handlers = qrCodeHandlers) {
 
 export function isDidAuthUrl(url) {
   const authLinkPrefix = 'dockwallet://didauth?url=';
-  const isAuthLink =
-    typeof url === 'string' && url.indexOf(authLinkPrefix) === 0;
-
-  return isAuthLink;
+  return typeof url === 'string' && url.indexOf(authLinkPrefix) === 0;
 }

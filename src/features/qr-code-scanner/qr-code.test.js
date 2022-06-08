@@ -11,7 +11,7 @@ import {Routes} from '../../core/routes';
 import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
 import testCredentialData from '@docknetwork/wallet-sdk-credentials/fixtures/test-credential.json';
 import {setToast} from '../../core/toast';
-import {onScanAuthQRCode} from '../credentials/credentials';
+import {getParamsFromUrl, onScanAuthQRCode} from '../credentials/credentials';
 import {didOperations} from '../didManagement/didManagment-slice';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -246,7 +246,9 @@ describe('qr-code', () => {
     });
 
     it('expect to onScanAuth0QRCode to generate credential', async () => {
-      await expect(onScanAuthQRCode()).rejects.toThrow(
+      const url =
+        'https://auth-server-i78ydv67d-docklabs.vercel.app/verify?id=dockstagingtestHsBR-jkCCPl4sBOh3f3_n66r9X1uIKgW&scope=public email';
+      await expect(onScanAuthQRCode(url)).rejects.toThrow(
         translate('qr_scanner.no_key_doc', {
           locale: 'en',
         }),
@@ -254,13 +256,13 @@ describe('qr-code', () => {
 
       const store = mockStore({});
       await store.dispatch(didOperations.initializeDID());
-      await onScanAuthQRCode();
+      await onScanAuthQRCode(url);
 
       const wallet = Wallet.getInstance();
       const keyDocs = wallet.query({});
 
       const subject = {
-        state: 'debugstate',
+        state: 'dockstagingtestHsBR-jkCCPl4sBOh3f3_n66r9X1uIKgW',
       };
 
       expect(credentialServiceRPC.generateCredential).toBeCalledWith({subject});
@@ -280,6 +282,13 @@ describe('qr-code', () => {
         'dockwallet://didauth?ul=https://auth-server-i78ydv67d-docklabs.vercel.app/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',
       );
       expect(isValid1).toBeFalsy();
+    });
+
+    it('Get param from url', () => {
+      const url =
+        'https://auth-server-i78ydv67d-docklabs.vercel.app/verify?id=dockstagingtestHsBR-jkCCPl4sBOh3f3_n66r9X1uIKgW&scope=public email';
+      const id = getParamsFromUrl(url, 'id');
+      expect(id).toBe('dockstagingtestHsBR-jkCCPl4sBOh3f3_n66r9X1uIKgW');
     });
   });
 });
