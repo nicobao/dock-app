@@ -1,4 +1,4 @@
-import {getRealm} from 'src/core/realm';
+import {getRealm} from '@docknetwork/wallet-sdk-core/lib/core/realm';
 
 const tokenPrices = {};
 
