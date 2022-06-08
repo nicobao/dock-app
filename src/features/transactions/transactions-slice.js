@@ -1,8 +1,9 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {translate} from 'src/locales';
 import {substrateService} from '@docknetwork/wallet-sdk-core/lib/services/substrate';
+import {Transactions} from '@docknetwork/wallet-sdk-transactions/lib/transactions';
 import uuid from 'uuid';
-import {getRealm} from 'src/core/realm';
+import {getRealm} from '@docknetwork/wallet-sdk-core/lib/core/realm';
 import {showToast} from 'src/core/toast';
 import {DOCK_TOKEN_UNIT} from 'src/core/format-utils';
 import {appSelectors} from '../app/app-slice';
@@ -121,32 +122,11 @@ export const transactionsOperations = {
   loadTransactions:
     (accountAddress, realm = getRealm()) =>
     async (dispatch, getState) => {
-      const networkId = appSelectors.getNetworkId(getState());
+      const items = await Transactions.getInstance().loadTransactions(
+        accountAddress,
+      );
 
-      if (networkId === 'mainnet') {
-        const accounts = accountSelectors.getAccounts(getState());
-        for (const account of accounts) {
-          try {
-            await dispatch(
-              transactionsOperations.loadExternalTransactions(account.id),
-            );
-          } catch (err) {
-            console.error(err);
-          }
-        }
-      }
-
-      const realmTransactions = realm
-        .objects('Transaction')
-        .filtered(
-          `(status == "${TransactionStatus.Complete}" AND hash !="") OR (status !="${TransactionStatus.Complete}")`,
-        )
-        .filtered(
-          `fromAddress == "${accountAddress}" OR recipientAddress == "${accountAddress}"`,
-        )
-        .sorted('date', true)
-        .toJSON();
-      dispatch(transactionsActions.setTransactions(realmTransactions));
+      dispatch(transactionsActions.setTransactions(items));
     },
   updateTransaction: transaction => async (dispatch, getState) => {
     const realm = getRealm();
@@ -175,11 +155,11 @@ export const transactionsOperations = {
         message: translate('send_token.transaction_sent'),
       });
 
-      const parsedAmount = parseFloat(amount) * DOCK_TOKEN_UNIT;
+      const parsedAmount = amount;
 
       const internalId = uuid();
       const transaction = {
-        id: internalId,
+        hash: internalId,
         date: new Date().toISOString(),
         fromAddress: accountAddress,
         recipientAddress: recipientAddress,
@@ -217,7 +197,7 @@ export const transactionsOperations = {
           realm.write(() => {
             const realmTransaction = realm
               .objects('Transaction')
-              .filtered(`id == "${internalId}"`);
+              .filtered(`hash == "${internalId}"`);
             realm.delete(realmTransaction);
           });
 
