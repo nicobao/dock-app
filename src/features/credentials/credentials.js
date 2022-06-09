@@ -6,7 +6,7 @@ import {translate} from 'src/locales';
 import assert from 'assert';
 import {credentialServiceRPC} from '@docknetwork/wallet-sdk-core/lib/services/credential';
 import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
-
+import queryString from 'query-string';
 const wallet = Wallet.getInstance();
 import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
 
@@ -137,13 +137,19 @@ export function useCredentials({onPickFile = pickJSONFile} = {}) {
     onAdd,
   };
 }
-export async function onScanAuthQRCode() {
+export function getParamsFromUrl(url, param) {
+  const startOfQueryParams = url.indexOf('?');
+
+  const parsed = queryString.parse(url.substring(startOfQueryParams));
+  return parsed[param] ? parsed[param] : '';
+}
+export async function onScanAuthQRCode(url) {
   const keyDocs = await wallet.query({
     type: 'Ed25519VerificationKey2018',
   });
   if (keyDocs.length > 0) {
     const subject = {
-      state: 'debugstate',
+      state: getParamsFromUrl(url, 'id'),
     };
     const verifiableCredential = await credentialServiceRPC.generateCredential({
       subject,

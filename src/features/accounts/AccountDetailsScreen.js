@@ -526,9 +526,9 @@ export function AccountDetailsContainer({route}) {
   return (
     <AccountDetailsScreen
       onDelete={() => {
-        return dispatch(accountOperations.removeAccount({id: accountId})).then(
-          () => navigate(Routes.ACCOUNTS),
-        );
+        return dispatch(
+          accountOperations.removeAccount({address: accountId}),
+        ).then(() => navigate(Routes.ACCOUNTS));
       }}
       isRefreshing={isRefreshing}
       onRefresh={onRefresh}

@@ -36,6 +36,7 @@ import {withNavigationContext} from './NavigationContext';
 import DeepLinking from 'react-native-deep-linking';
 import {isDidAuthUrl} from '../features/qr-code-scanner/qr-code';
 import {navigate} from './navigation';
+import {DIDAuthScreenContainer} from '../features/didManagement/DIDAuthScreen';
 
 const AppStack = createStackNavigator();
 const RootStack = createStackNavigator();
@@ -197,6 +198,13 @@ function AppStackScreen() {
 
       <AppStack.Screen
         {...getScreenProps({
+          name: Routes.APP_DID_AUTH,
+          component: DIDAuthScreenContainer,
+        })}
+      />
+
+      <AppStack.Screen
+        {...getScreenProps({
           name: Routes.CREATE_ACCOUNT_SETUP,
           component: CreateAccountSetupContainer,
         })}
@@ -289,7 +297,9 @@ function AppStackScreen() {
 export function NavigationRouter() {
   const handleUrl = useCallback(({url}) => {
     if (isDidAuthUrl(url)) {
-      navigate(Routes.APP_QR_SCANNER);
+      navigate(Routes.APP_DID_AUTH, {
+        dockWalletAuthDeepLink: url,
+      });
     }
   }, []);
   useEffect(() => {
