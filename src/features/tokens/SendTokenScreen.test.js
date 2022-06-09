@@ -71,8 +71,8 @@ describe('SendTokenScreen', () => {
       const updateForm = f => {
         form = f;
       };
-      const balance = getPlainDockAmount(3);
-      const fee = getPlainDockAmount(2);
+      const balance = 3;
+      const fee = 2;
 
       const result = handleFeeUpdate({
         account: {
@@ -87,7 +87,7 @@ describe('SendTokenScreen', () => {
       expect(result).toBe(true);
       expect(form.fee).toBe(fee);
       expect(form.amountMessage).toBeDefined();
-      expect(form.amount).toBe(1);
+      expect(form.amount.toNumber()).toBe(1));
       expect(setShowConfirmation).toBeCalledWith(true);
     });
 
