@@ -87,7 +87,7 @@ describe('SendTokenScreen', () => {
       expect(result).toBe(true);
       expect(form.fee).toBe(fee);
       expect(form.amountMessage).toBeDefined();
-      expect(form.amount.toNumber()).toBe(1));
+      expect(form.amount.toNumber()).toBe(1);
       expect(setShowConfirmation).toBeCalledWith(true);
     });
 
