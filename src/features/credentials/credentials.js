@@ -9,6 +9,7 @@ import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
 import queryString from 'query-string';
 const wallet = Wallet.getInstance();
 import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
+import {captureException} from '@sentry/react-native';
 
 export const sortByIssuanceDate = (a, b) =>
   getCredentialTimestamp(b.content) - getCredentialTimestamp(a.content);
@@ -144,22 +145,28 @@ export function getParamsFromUrl(url, param) {
   return parsed[param] ? parsed[param] : '';
 }
 export async function onScanAuthQRCode(url) {
-  const keyDocs = await wallet.query({
-    type: 'Ed25519VerificationKey2018',
-  });
-  if (keyDocs.length > 0) {
-    const subject = {
-      state: getParamsFromUrl(url, 'id'),
-    };
-    const verifiableCredential = await credentialServiceRPC.generateCredential({
-      subject,
+  try {
+    const keyDocs = await wallet.query({
+      type: 'Ed25519VerificationKey2018',
     });
+    if (keyDocs.length > 0) {
+      const subject = {
+        state: getParamsFromUrl(url, 'id'),
+      };
+      const verifiableCredential =
+        await credentialServiceRPC.generateCredential({
+          subject,
+        });
 
-    return credentialServiceRPC.signCredential({
-      vcJson: verifiableCredential,
-      keyDoc: keyDocs[0],
-    });
-  } else {
-    throw new Error(translate('qr_scanner.no_key_doc'));
+      return credentialServiceRPC.signCredential({
+        vcJson: verifiableCredential,
+        keyDoc: keyDocs[0],
+      });
+    } else {
+      throw new Error(translate('qr_scanner.no_key_doc'));
+    }
+  } catch (e) {
+    captureException(e);
+    throw new Error(e.message);
   }
 }

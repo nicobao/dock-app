@@ -1,6 +1,7 @@
 import {utilCryptoService} from '@docknetwork/wallet-sdk-core/lib/services/util-crypto';
 import {
   addressHandler,
+  authHandler,
   credentialHandler,
   executeHandlers,
   isDidAuthUrl,
@@ -18,7 +19,6 @@ import thunk from 'redux-thunk';
 import {credentialServiceRPC} from '@docknetwork/wallet-sdk-core/lib/services/credential';
 import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
 import {translate} from 'src/locales';
-
 const mockStore = configureMockStore([thunk]);
 
 describe('qr-code', () => {
@@ -289,6 +289,61 @@ describe('qr-code', () => {
         'https://auth-server-i78ydv67d-docklabs.vercel.app/verify?id=dockstagingtestHsBR-jkCCPl4sBOh3f3_n66r9X1uIKgW&scope=public email';
       const id = getParamsFromUrl(url, 'id');
       expect(id).toBe('dockstagingtestHsBR-jkCCPl4sBOh3f3_n66r9X1uIKgW');
+    });
+
+    it('expect authHandler to sign and upload vc', async () => {
+      await authHandler(
+        'dockwallet://didauth?url=https%3A%2F%2Fauth.dock.io%2Fverify%3Fid%3Dqi0hkXbZQzpuAVgzM6Zkq905w0LnegROzDrsvy0W%26scope%3Dpublic%20email',
+      );
+      expect(fetch).toHaveBeenCalledWith(
+        'https://auth.dock.io/verify?id=qi0hkXbZQzpuAVgzM6Zkq905w0LnegROzDrsvy0W&scope=public email',
+        {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify({
+            vc: {
+              '@context': [
+                'https://www.w3.org/2018/credentials/v1',
+                {
+                  dk: 'https://ld.dock.io/credentials#',
+                  DockAuthCredential: 'dk:DockAuthCredential',
+                  name: 'dk:name',
+                  email: 'dk:email',
+                  state: 'dk:state',
+                  description: 'dk:description',
+                  logo: 'dk:logo',
+                },
+              ],
+              id: 'didauth:dock:clientid',
+              type: ['VerifiableCredential', 'DockAuthCredential'],
+              credentialSubject: {
+                name: 'John Doe',
+                email: 'test@dock.io',
+                state: 'debugstate',
+              },
+              issuanceDate: '2022-04-01T18:26:21.637Z',
+              expirationDate: '2023-04-01T18:26:21.637Z',
+              proof: {
+                type: 'Ed25519Signature2018',
+                created: '2022-05-13T17:57:12Z',
+                verificationMethod:
+                  'did:dock:5FbQXJULrLt8kymWe4ScrM2MyRWAweYXCQ79EpL7ADUV2H8Y#keys-1',
+                proofPurpose: 'assertionMethod',
+                proofValue:
+                  'z4ndjdQcqyypWAdtmRcz8KRh6cMzQCuDrQfq4fwa7WdANtxjsXje8UN7Pc16w1DDYNWdrWuV75bWvd6H2VDYfG1qB',
+              },
+              issuer: {
+                name: 'Auth Test',
+                description: 'test',
+                logo: '',
+                id: 'did:dock:5FbQXJULrLt8kymWe4ScrM2MyRWAweYXCQ79EpL7ADUV2H8Y',
+              },
+            },
+          }),
+        },
+      );
     });
   });
 });

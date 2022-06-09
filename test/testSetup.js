@@ -6,7 +6,6 @@ import mockAsyncStorage from '../node_modules/@react-native-async-storage/async-
 import mockRNPermissions from '../node_modules/react-native-permissions/mock';
 import '../src/core/setup-env';
 import {DebugConstants} from '../src/features/constants';
-
 jest.mock('../src/core/realm', () => {
   const realmFunctions = {
     write: jest.fn(callback => {
@@ -334,3 +333,8 @@ jest.mock('@docknetwork/wallet-sdk-core/lib/services/credential', () => {
     credentialServiceRPC: mockFunctions,
   };
 });
+global.fetch = jest.fn(() =>
+  Promise.resolve({
+    json: () => Promise.resolve({test: 100}),
+  }),
+);
