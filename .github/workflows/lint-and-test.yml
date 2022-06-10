@@ -19,6 +19,9 @@ jobs:
           git config --global url."https://".insteadOf git://
           yarn install
           yarn lint
+          git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
+          yarn --cwd ../wallet-sdk install
+          yarn sync-sdk
 
       - name: Unit tests
         run: |
