@@ -4,6 +4,8 @@ const path = require('path');
 const sdkRoot = path.resolve(__dirname, '../../wallet-sdk');
 const appModules = path.resolve(__dirname, '../node_modules/@docknetwork/');
 
+const watch = process.argv[2] === '--watch';
+
 function syncPackage(packageName) {
   return syncDirectory.sync(
     path.resolve(sdkRoot, `./packages/${packageName}`),
@@ -12,7 +14,7 @@ function syncPackage(packageName) {
       afterEachSync(props) {
         console.log(props);
       },
-      watch: true,
+      watch,
       exclude: [/node_modules/],
     },
   );
