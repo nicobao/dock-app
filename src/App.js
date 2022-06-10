@@ -1,20 +1,21 @@
+import {
+  useWallet,
+  WalletSDKProvider,
+} from '@docknetwork/wallet-sdk-react-native/lib';
+import '@docknetwork/wallet-sdk-transactions/lib/schema';
 import {SENTRY_DSN} from '@env';
 import {init as sentryInit} from '@sentry/react-native';
-import {useToast, View, Text} from 'native-base';
+import {Text, useToast, View} from 'native-base';
 import React, {useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import {Provider, useDispatch} from 'react-redux';
-import './core/setup-env';
 import {ConfirmationModal} from '../src/components/ConfirmationModal';
 import {NavigationRouter} from './core/NavigationRouter';
 import store from './core/redux-store';
+import './core/setup-env';
 import {setToast} from './core/toast';
 import {ThemeProvider} from './design-system';
 import {appOperations} from './features/app/app-slice';
-import {
-  WalletSDKProvider,
-  useWallet,
-} from '@docknetwork/wallet-sdk-react-native/lib';
 import {didOperations} from './features/didManagement/didManagment-slice';
 
 if (process.env.NODE_ENV !== 'test') {
