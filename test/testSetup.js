@@ -6,6 +6,7 @@ import mockAsyncStorage from '../node_modules/@react-native-async-storage/async-
 import mockRNPermissions from '../node_modules/react-native-permissions/mock';
 import '../src/core/setup-env';
 import {DebugConstants} from '../src/features/constants';
+import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
 jest.mock('../src/core/realm', () => {
   const realmFunctions = {
     write: jest.fn(callback => {
@@ -304,6 +305,7 @@ jest.mock('@docknetwork/wallet-sdk-core/lib/services/dids', () => {
         id: new Date().getTime().toString(),
         type: 'DIDResolutionResponse',
         didDocument,
+        correlation: [],
       };
     }),
   };
@@ -331,6 +333,53 @@ jest.mock('@docknetwork/wallet-sdk-core/lib/services/credential', () => {
   return {
     ...originalModule,
     credentialServiceRPC: mockFunctions,
+  };
+});
+
+jest.mock('@docknetwork/wallet-sdk-core/lib/services/wallet', () => {
+  const originalModule = jest.requireActual(
+    '@docknetwork/wallet-sdk-core/lib/services/wallet',
+  );
+  const mockFunctions = {
+    resolveCorrelations: jest.fn(() => {
+      return [
+        {
+          '@context': ['https://w3id.org/wallet/v1'],
+          id: 'urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130002',
+          name: 'My Test Key 2',
+          image: 'https://via.placeholder.com/150',
+          description: 'For testing only, totally compromised.',
+          tags: ['professional', 'organization', 'compromised'],
+          correlation: ['1654905466848'],
+          controller:
+            'did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r',
+          type: 'Ed25519VerificationKey2018',
+          privateKeyBase58:
+            '3CQCBKF3Mf1tU5q1FLpHpbxYrNYxLiZk4adDtfyPEfc39Wk6gsTb2qoc1ZtpqzJYdM1rG4gpaD3ZVKdkiDrkLF1p',
+          publicKeyBase58: '6GwnHZARcEkJio9dxPYy6SC5sAL6PxpZAB6VYwoFjGMU',
+        },
+        {
+          id: '1654905466848',
+          type: 'DIDResolutionResponse',
+          didDocument: {
+            '@context': [Array],
+            id: 'did:key:z6Mks8mvCnVx4HQcoq7ZwvpTbMnoRGudHSiEpXhMf6VW8XMg',
+            verificationMethod: [Array],
+            authentication: [Array],
+            assertionMethod: [Array],
+            capabilityInvocation: [Array],
+            capabilityDelegation: [Array],
+            keyAgreement: [Array],
+          },
+          correlation: ['urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130002'],
+        },
+      ];
+    }),
+  };
+
+  return {
+    ...originalModule,
+    walletService: mockFunctions,
   };
 });
 global.fetch = jest.fn(() =>

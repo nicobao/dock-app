@@ -21,6 +21,8 @@ const createDID = async keyDoc => {
       didDocument,
     });
 
+    didDocumentResolution.correlation.push(keyDoc.id);
+
     correlations.push(didDocumentResolution.id);
     await wallet.add({
       ...didDocumentResolution,

@@ -253,24 +253,17 @@ describe('qr-code', () => {
           locale: 'en',
         }),
       );
-
       const store = mockStore({});
       await store.dispatch(didOperations.initializeDID());
       await onScanAuthQRCode(url);
-
-      const wallet = Wallet.getInstance();
-      const keyDocs = wallet.query({});
 
       const subject = {
         state: 'dockstagingtestHsBR-jkCCPl4sBOh3f3_n66r9X1uIKgW',
       };
 
       expect(credentialServiceRPC.generateCredential).toBeCalledWith({subject});
-      const vc = await credentialServiceRPC.generateCredential({});
-      expect(credentialServiceRPC.signCredential).toBeCalledWith({
-        vcJson: vc,
-        keyDoc: keyDocs[0],
-      });
+      await credentialServiceRPC.generateCredential({});
+      expect(credentialServiceRPC.signCredential).toBeCalled();
     });
 
     it('Is did auth URL', () => {
