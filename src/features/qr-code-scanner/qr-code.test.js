@@ -17,7 +17,6 @@ import {didOperations} from '../didManagement/didManagment-slice';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import {credentialServiceRPC} from '@docknetwork/wallet-sdk-core/lib/services/credential';
-import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
 import {translate} from 'src/locales';
 const mockStore = configureMockStore([thunk]);
 
