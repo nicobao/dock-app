@@ -157,7 +157,7 @@ export const transactionsOperations = {
 
       const internalId = uuid();
       const transaction = {
-        hash: internalId,
+        id: internalId,
         date: new Date().toISOString(),
         fromAddress: accountAddress,
         recipientAddress: recipientAddress,
