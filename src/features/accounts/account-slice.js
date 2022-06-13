@@ -238,55 +238,7 @@ export const accountOperations = {
       });
     },
   loadAccounts: () => async (dispatch, getState) => {
-    const realm = getRealm();
-    const cachedAccounts = realm.objects('Account').toJSON();
-    dispatch(accountActions.setAccounts(cachedAccounts));
-
-    await dispatch(appOperations.waitRpcReady());
-
-    await walletService.sync();
-
-    let accounts = await walletService.query({
-      equals: {
-        'content.type': 'Account',
-      },
-    });
-
-    if (!Array.isArray(accounts)) {
-      return;
-    }
-
-    accounts = accounts.map(account => {
-      const cachedAccount = cachedAccounts.find(item => item.id === account.id);
-      const cachedBalance = cachedAccount && cachedAccount.balance;
-
-      return {
-        ...account,
-        ...(account.meta || {}),
-        balance: cachedBalance || account.balance,
-      };
-    });
-
-    realm.write(() => {
-      accounts.forEach((account: any) => {
-        try {
-          realm.create(
-            'Account',
-            {
-              id: account.id,
-              name: account.name || '',
-              readyOnly: account.meta && account.meta.readOnly,
-            },
-            'modified',
-          );
-        } catch (err) {
-          console.log(err);
-        }
-      });
-    });
-
-    dispatch(accountActions.setAccounts(accounts));
-    dispatch(accountOperations.fetchBalances());
+    return Wallet.getInstance().accounts.load();
   },
 
   fetchAccountBalance: accountId => async (dispatch, getState) => {
@@ -294,41 +246,7 @@ export const accountOperations = {
       return;
     }
 
-    const realm = getRealm();
-    const balance = await substrateService.getAccountBalance({
-      address: accountId,
-    });
-    const accounts = await walletService.query({
-      equals: {
-        'content.type': 'Account',
-      },
-    });
-    const account = accounts.find(acc => acc.id === accountId);
-
-    if (!account) {
-      console.log(accounts);
-      console.log('Account not found for id', accountId);
-      return;
-    }
-
-    realm.write(() => {
-      realm.create(
-        'Account',
-        {
-          id: accountId,
-          name: account.meta && account.meta.name,
-          balance: `${balance}`,
-        },
-        'modified',
-      );
-    });
-
-    dispatch(
-      accountActions.setAccount({
-        id: accountId,
-        balance,
-      }),
-    );
+    return Wallet.getInstance().accounts.fetchBalance(accountId);
   },
   fetchBalances: () => async (dispatch, getState) => {
     try {
