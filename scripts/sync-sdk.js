@@ -23,3 +23,5 @@ function syncPackage(packageName) {
 syncPackage('core');
 syncPackage('react-native');
 syncPackage('credentials');
+syncPackage('transactions');
+syncPackage('did');
