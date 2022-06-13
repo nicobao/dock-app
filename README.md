@@ -38,7 +38,7 @@ git clone git@github.com:docknetwork/react-native-sdk.git
 
 # run the script to sync the files and watch for changes
 
-yarn sync-sdk
+yarn sync-sdk --watch
 ```
 
 ## Wallet sdk bundle

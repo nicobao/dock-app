@@ -57,7 +57,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v1
         with:
-          node-version: '15.x'
+          node-version: '16.x'
 
       - uses: actions/setup-ruby@v1
         with:
@@ -69,6 +69,9 @@ jobs:
           echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
           yarn install
           yarn postinstall
+          git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
+          yarn --cwd ../wallet-sdk install
+          yarn sync-sdk
           rm -rf ./certs
           git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/dock-app-certs.git" ./certs
           mv ./certs/google-play.json ./
@@ -135,7 +138,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v1
         with:
-          node-version: '15.x'
+          node-version: '16.x'
 
       - name: Run fastlane setup
         env:
@@ -156,6 +159,9 @@ jobs:
           git config --global url."https://".insteadOf git://
           xcodebuild -version
           yarn install
+          git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
+          yarn --cwd ../wallet-sdk install
+          yarn sync-sdk
           echo "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
           git clone "${{ secrets.CERTS_REPO_URL }}" ./certs
           # Pull env variables from certs repo
