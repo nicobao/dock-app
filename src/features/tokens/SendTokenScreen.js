@@ -14,12 +14,7 @@ import BigNumber from 'bignumber.js';
 import {Routes} from 'src/core/routes';
 import {showToast} from 'src/core/toast';
 
-import {
-  DOCK_TOKEN_UNIT,
-  formatCurrency,
-  formatDockAmount,
-  getPlainDockAmount,
-} from 'src/core/format-utils';
+import {DOCK_TOKEN_UNIT, formatCurrency} from 'src/core/format-utils';
 import {
   BackButton,
   Button,
@@ -153,12 +148,10 @@ export function handleFeeUpdate({
   fee,
   setShowConfirmation,
 }) {
-  const accountBalance = formatDockAmount(account.balance);
-  const amountAndFees = formatDockAmount(
-    getPlainDockAmount(form.amount).plus(fee),
-  );
+  const accountBalance = account.balance;
+  const amountAndFees = BigNumber(form.amount).plus(fee);
 
-  if (formatDockAmount(fee) >= accountBalance) {
+  if (fee >= accountBalance) {
     showToast({
       message: translate('send_token.insufficient_balance'),
       type: 'error',
@@ -171,7 +164,7 @@ export function handleFeeUpdate({
   };
 
   if (amountAndFees > accountBalance) {
-    const newAmount = formatDockAmount(BigNumber(account.balance).minus(fee));
+    const newAmount = BigNumber(account.balance).minus(fee);
 
     formUpdates.amount = newAmount;
 
@@ -338,7 +331,7 @@ export function SendTokenContainer({route}) {
           visible={showConfirmation}
           accountIcon={<PolkadotIcon address={form.recipientAddress} />}
           tokenSymbol={form.tokenSymbol}
-          sentAmount={parseFloat(form.amount) * DOCK_TOKEN_UNIT}
+          sentAmount={form.amount}
           fee={form.fee}
           recipientAddress={form.recipientAddress}
         />
@@ -350,7 +343,7 @@ export function SendTokenContainer({route}) {
 
             if (form.amount <= 0) {
               amountError = translate('send_token.invalid_amount');
-            } else if (form.amount > formatDockAmount(account.balance)) {
+            } else if (form.amount > account.balance) {
               amountError = translate('send_token.insufficient_funds');
             }
 
@@ -366,7 +359,7 @@ export function SendTokenContainer({route}) {
             return dispatch(
               transactionsOperations.getFeeAmount({
                 ...form,
-                accountAddress: account.id,
+                accountAddress: account.address,
               }),
             ).then(fee => {
               return handleFeeUpdate({
@@ -383,7 +376,7 @@ export function SendTokenContainer({route}) {
           }}
           onMax={() => {
             updateForm({
-              amount: formatDockAmount(account.balance),
+              amount: account.balance,
               sendMax: true,
             });
           }}
