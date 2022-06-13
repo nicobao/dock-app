@@ -24,4 +24,4 @@ syncPackage('core');
 syncPackage('react-native');
 syncPackage('credentials');
 syncPackage('transactions');
-syncPackage('did');
+syncPackage('dids');
