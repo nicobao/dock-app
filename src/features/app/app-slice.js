@@ -7,7 +7,10 @@ import {Routes} from '../../core/routes';
 import {walletActions} from '../wallet/wallet-slice';
 import {captureException} from '@sentry/react-native';
 import {defaultFeatures} from './feature-flags';
-import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
+import {
+  Wallet,
+  WalletEvents,
+} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
 import {NetworkManager} from '@docknetwork/wallet-sdk-core/lib/modules/network-manager';
 
 export const BiometryType = {
@@ -143,6 +146,18 @@ export const appOperations = {
   },
   initialize: () => async (dispatch, getState) => {
     SplashScreen.hide();
+
+    const wallet = Wallet.getInstance();
+
+    wallet.eventManager.on(WalletEvents.ready, () => {
+      dispatch(appActions.setDockReady(true));
+      dispatch(appActions.setRpcReady(true));
+    });
+
+    wallet.eventManager.on(WalletEvents.error, error => {
+      console.error(error);
+      captureException(error);
+    });
 
     await dispatch(
       appActions.setNetworkId(NetworkManager.getInstance().networkId),
