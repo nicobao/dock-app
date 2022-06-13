@@ -7,6 +7,7 @@ import {translate} from '../../locales';
 import {getJsonOrError} from '../../core';
 import '../credentials/credentials';
 import {onScanAuthQRCode} from '../credentials/credentials';
+import {captureException} from '@sentry/react-native';
 
 export async function addressHandler(data) {
   const isAddress = await utilCryptoService.isAddressValid(data);
@@ -91,8 +92,7 @@ export async function authHandler(data) {
 
   const isAuthLink = isDidAuthUrl(data);
   if (isAuthLink) {
-    const url =
-      'https://' + decodeURIComponent(data.substr(authLinkPrefix.length));
+    const url = decodeURIComponent(data.substr(authLinkPrefix.length));
 
     showToast({
       type: 'message',
@@ -113,6 +113,7 @@ export async function authHandler(data) {
       });
 
       const result = await req.json();
+
       if (result.verified) {
         showToast({
           type: 'message',
@@ -123,6 +124,7 @@ export async function authHandler(data) {
           type: 'error',
           message: result.error || translate('auth.auth_sign_in_failed'),
         });
+        captureException(result);
       }
     } catch (e) {
       console.error(e);
@@ -130,6 +132,8 @@ export async function authHandler(data) {
         type: 'error',
         message: `Sign in error: ${e.message}`,
       });
+      captureException(e);
+      return false;
     }
     return true;
   }
