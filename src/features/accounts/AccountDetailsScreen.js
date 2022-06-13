@@ -515,6 +515,7 @@ export function AccountDetailsContainer({route}) {
 
   useEffect(() => {
     dispatch(transactionsOperations.loadTransactions(accountId));
+    dispatch(accountOperations.fetchAccountBalance(accountId));
   }, [dispatch, accountId]);
 
   console.log('account details', account);
