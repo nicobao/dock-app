@@ -6,6 +6,7 @@ import {Spinner} from 'native-base';
 import {translate} from '../../locales';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
+import {useWallet} from '@docknetwork/wallet-sdk-react-native/lib';
 
 export function DIDAuthScreen({authState}) {
   return (
@@ -20,21 +21,26 @@ export function DIDAuthScreen({authState}) {
 export function DIDAuthScreenContainer({route}) {
   const {dockWalletAuthDeepLink} = route.params || {};
   const isScreenFocus = useIsFocused();
+  const {status} = useWallet({syncDocs: true});
   const [authState, setAuthState] = useState('start');
 
   const authenticateDid = useCallback(async () => {
     setAuthState('processing');
-    await authHandler(dockWalletAuthDeepLink);
-    setAuthState('completed');
-    setTimeout(() => {
-      navigate(Routes.ACCOUNTS);
-    }, 2000);
+    const result = await authHandler(dockWalletAuthDeepLink);
+    if (result) {
+      setAuthState('completed');
+      setTimeout(() => {
+        navigate(Routes.ACCOUNTS);
+      }, 2000);
+    } else {
+      setAuthState('error');
+    }
   }, [dockWalletAuthDeepLink]);
 
   useEffect(() => {
-    if (dockWalletAuthDeepLink && isScreenFocus) {
+    if (dockWalletAuthDeepLink && isScreenFocus && status === 'ready') {
       authenticateDid();
     }
-  }, [authenticateDid, dockWalletAuthDeepLink, isScreenFocus]);
+  }, [authenticateDid, dockWalletAuthDeepLink, isScreenFocus, status]);
   return <DIDAuthScreen authState={authState} />;
 }
