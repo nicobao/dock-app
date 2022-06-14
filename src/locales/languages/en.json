@@ -285,7 +285,8 @@
     "title": "Credentials",
     "invalid_credential": "Invalid Credential",
     "existing_credential": "This credential already exists in the wallet",
-    "empty_items": "You’ll see credentials here once you accept them"
+    "empty_items": "You’ll see credentials here once you accept them",
+    "default_title": "Untitled Credential"
   },
   "qr_scanner": {
     "not_supported_data": "Not supported QR Code",

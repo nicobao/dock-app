@@ -68,7 +68,7 @@ function EmptyCredentials(props) {
 
 const CredentialListItem = withErrorBoundary(
   ({credential, formattedData, onRemove}) => {
-    const {title = 'Untitled Credential'} = formattedData;
+    const {title = translate('credentials.default_title')} = formattedData;
     return (
       <NBox
         bgColor={Theme.colors.credentialCardBg}
