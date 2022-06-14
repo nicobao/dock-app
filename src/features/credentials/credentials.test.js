@@ -92,8 +92,9 @@ describe('Credentials helpers', () => {
     });
 
     it('expect to handle bad data', async () => {
-      expect(async () => await processCredential({})).toThrowError();
-      expect(async () => await processCredential(null)).toThrowError();
+      await expect(processCredential({})).rejects.toThrowError();
+
+      await expect(processCredential(null)).rejects.toThrowError();
     });
   });
 
