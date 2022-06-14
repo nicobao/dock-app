@@ -41,8 +41,12 @@ import assert from 'assert';
 
 const AccountCard = withErrorBoundary(({document, onDetails, onDelete}) => {
   assert(document.type === 'Address', 'Address document expected');
+  const {address} = document;
+  const {account, fetchBalance} = useAccount(address);
 
-  const {account} = useAccount(document.address);
+  useEffect(() => {
+    fetchBalance(address);
+  }, [address, fetchBalance]);
 
   if (!account) {
     return null;
