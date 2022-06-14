@@ -562,8 +562,11 @@ export function AccountDetailsContainer({route}) {
   };
 
   useEffect(() => {
-    dispatch(accountOperations.fetchAccountBalance(accountId));
-  }, [dispatch, accountId]);
+    if (!account) {
+      return;
+    }
+    dispatch(accountOperations.fetchAccountBalance(account.address));
+  }, [dispatch, account]);
 
   console.log('account details', account);
 
