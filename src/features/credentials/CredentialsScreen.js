@@ -59,8 +59,7 @@ function EmptyCredentials(props) {
         fontSize={14}
         pt={2}
         fontWeight={400}
-        fontFamily={Theme.fontFamily.default}
-      >
+        fontFamily={Theme.fontFamily.default}>
         {translate('credentials.empty_items')}
       </Text>
     </Center>
@@ -76,16 +75,14 @@ const CredentialListItem = withErrorBoundary(
         p={4}
         borderRadius={10}
         m={2}
-        key={`${credential.id}`}
-      >
+        key={`${credential.id}`}>
         <Stack direction="row">
           <Stack>
             <Text
               mb={4}
               fontSize={'16px'}
               fontWeight={600}
-              fontFamily={Theme.fontFamily.montserrat}
-            >
+              fontFamily={Theme.fontFamily.montserrat}>
               {title}
             </Text>
             {renderObjectAttributes(formattedData)}
@@ -99,13 +96,11 @@ const CredentialListItem = withErrorBoundary(
                     {...triggerProps}
                     _pressed={{
                       opacity: Theme.touchOpacity,
-                    }}
-                  >
+                    }}>
                     <DotsVerticalIcon />
                   </Pressable>
                 );
-              }}
-            >
+              }}>
               <Menu.Item onPress={() => onRemove(credential)}>
                 {translate('account_list.delete_account')}
               </Menu.Item>
@@ -118,8 +113,7 @@ const CredentialListItem = withErrorBoundary(
             <Text
               fontSize={'11px'}
               fontWeight={500}
-              fontFamily={Theme.fontFamily.montserrat}
-            >
+              fontFamily={Theme.fontFamily.montserrat}>
               {formatDate(credential.issuanceDate)}
             </Text>
           </NBox>
@@ -155,8 +149,7 @@ export function CredentialsScreen({credentials, onRemove, onAdd}) {
           marginLeft={22}
           marginRight={22}
           flexDirection="row"
-          alignItems="center"
-        >
+          alignItems="center">
           <Box flex={1}>
             <Typography fontFamily="Montserrat" fontSize={24} fontWeight="600">
               {translate('credentials.title')}
