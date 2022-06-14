@@ -527,7 +527,6 @@ function useTransactions({address}) {
     fetch();
 
     const listener = addr => {
-      console.log('new tx added for', addr);
       if (addr === address) {
         loadTransactions();
       }
