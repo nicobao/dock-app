@@ -3,7 +3,6 @@ import {
   sortByIssuanceDate,
   getCredentialTimestamp,
   useCredentials,
-  getObjectFields,
   getDIDAddress,
   processCredential,
 } from './credentials';
@@ -84,17 +83,17 @@ describe('Credentials helpers', () => {
   });
 
   describe('processCredential', () => {
-    it('expect to remove timezone offset', () => {
+    it('expect to remove timezone offset', async () => {
       const issuanceDate = new Date('2022-04-24T00:53:13.265Z');
       const credential = {issuanceDate};
-      const result = processCredential({content: credential});
+      const result = await processCredential({content: credential});
       expect(result.content.issuanceDate.getDate()).toBe(24);
       expect(result.content.issuanceDate.getMonth()).toBe(3);
     });
 
-    it('expect to handle bad data', () => {
-      expect(() => processCredential({})).toThrowError();
-      expect(() => processCredential(null)).toThrowError();
+    it('expect to handle bad data', async () => {
+      expect(async () => await processCredential({})).toThrowError();
+      expect(async () => await processCredential(null)).toThrowError();
     });
   });
 
@@ -141,38 +140,6 @@ describe('Credentials helpers', () => {
 
       expect(Credentials.getInstance().add).toBeCalled();
       expect(Credentials.getInstance().query).toBeCalled();
-    });
-  });
-
-  describe('getObjectFields', () => {
-    it('expect to validate credential', () => {
-      expect(() => getObjectFields(null)).toThrowError();
-    });
-
-    it('expect to handle non object fields', () => {
-      const credential = {
-        credentialSubject: {
-          title: 'test',
-          id: 'Test University',
-        },
-      };
-
-      const result = getObjectFields(credential);
-      expect(result.length).toBe(0);
-    });
-
-    it('expect to handle object fields', () => {
-      const credential = {
-        credentialSubject: {
-          degree: {
-            type: 'test',
-          },
-        },
-      };
-
-      const result = getObjectFields(credential);
-      expect(result.length).toBe(1);
-      expect(result[0]).toBe('degree');
     });
   });
 });

@@ -16,32 +16,31 @@ import {
 import PlusCircleWhiteIcon from '../../assets/icons/plus-circle-white.svg';
 import {addTestId} from '../../core/automation-utils';
 import {Center, Image, Text, Stack, Menu, Pressable} from 'native-base';
-import {useCredentials, getObjectFields, getDIDAddress} from './credentials';
+import {useCredentials, getDIDAddress} from './credentials';
 import {formatDate} from '@docknetwork/wallet-sdk-core/lib/core/format-utils';
 import {withErrorBoundary} from 'src/core/error-handler';
 
-function renderObjectAttributes(credential) {
-  const objectAttributes = getObjectFields(credential);
+function shouldRenderAttr(attr) {
+  return attr.property !== 'id' && attr.property !== 'title';
+}
 
+function renderObjectAttributes({attributes}) {
   return (
     <>
-      {objectAttributes.map(key => {
-        const attr = credential.credentialSubject[key];
+      {attributes.map(attr => {
         return (
-          <Stack mb={1}>
-            <Text
-              textTransform="capitalize"
-              fontSize={'12px'}
-              fontWeight={600}
-              fontFamily={Theme.fontFamily.montserrat}>
-              {key}
-            </Text>
-            {Object.keys(attr).map(attrKey => {
-              const item = attr[attrKey];
-
-              return <Text fontSize={'12px'}>{item}</Text>;
-            })}
-          </Stack>
+          shouldRenderAttr(attr) && (
+            <Stack mb={1}>
+              <Text
+                textTransform="capitalize"
+                fontSize={'12px'}
+                fontWeight={600}
+                fontFamily={Theme.fontFamily.montserrat}>
+                {attr.name}
+              </Text>
+              <Text fontSize={'12px'}>{attr.value}</Text>
+            </Stack>
+          )
         );
       })}
     </>
@@ -60,91 +59,93 @@ function EmptyCredentials(props) {
         fontSize={14}
         pt={2}
         fontWeight={400}
-        fontFamily={Theme.fontFamily.default}>
+        fontFamily={Theme.fontFamily.default}
+      >
         {translate('credentials.empty_items')}
       </Text>
     </Center>
   );
 }
 
-const CredentialListItem = withErrorBoundary(({credential, onRemove}) => {
-  return (
-    <NBox
-      bgColor={Theme.colors.credentialCardBg}
-      p={4}
-      borderRadius={10}
-      m={2}
-      key={`${credential.id}`}>
-      <Stack direction="row">
-        <Stack>
-          {credential.credentialSubject.title ? (
+const CredentialListItem = withErrorBoundary(
+  ({credential, formattedData, onRemove}) => {
+    const {title = 'Untitled Credential'} = formattedData;
+    return (
+      <NBox
+        bgColor={Theme.colors.credentialCardBg}
+        p={4}
+        borderRadius={10}
+        m={2}
+        key={`${credential.id}`}
+      >
+        <Stack direction="row">
+          <Stack>
             <Text
+              mb={4}
               fontSize={'16px'}
               fontWeight={600}
-              fontFamily={Theme.fontFamily.montserrat}>
-              {credential.credentialSubject.title}
+              fontFamily={Theme.fontFamily.montserrat}
+            >
+              {title}
             </Text>
-          ) : null}
-          <Text
-            fontSize={'12px'}
-            fontWeight={500}
-            fontFamily={Theme.fontFamily.montserrat}>
-            {credential.credentialSubject.subjectName}
-          </Text>
-          {renderObjectAttributes(credential)}
-        </Stack>
-        <NBox flex={1} alignItems="flex-end">
-          <Menu
-            trigger={triggerProps => {
-              return (
-                <Pressable
-                  p={2}
-                  {...triggerProps}
-                  _pressed={{
-                    opacity: Theme.touchOpacity,
-                  }}>
-                  <DotsVerticalIcon />
-                </Pressable>
-              );
-            }}>
-            <Menu.Item onPress={() => onRemove(credential)}>
-              {translate('account_list.delete_account')}
-            </Menu.Item>
-          </Menu>
-        </NBox>
-      </Stack>
-
-      <NBox mt={4} flexDirection="row" alignItems={'flex-end'}>
-        <NBox>
-          <Text
-            fontSize={'11px'}
-            fontWeight={500}
-            fontFamily={Theme.fontFamily.montserrat}>
-            {formatDate(credential.issuanceDate)}
-          </Text>
-        </NBox>
-        <NBox flex={1} alignItems={'flex-end'}>
-          {credential.issuer.logo ? (
-            <Image
-              borderRadius={8}
-              width={50}
-              height={50}
-              alt={''}
-              source={{
-                uri: credential.issuer.logo,
+            {renderObjectAttributes(formattedData)}
+          </Stack>
+          <NBox flex={1} alignItems="flex-end">
+            <Menu
+              trigger={triggerProps => {
+                return (
+                  <Pressable
+                    p={2}
+                    {...triggerProps}
+                    _pressed={{
+                      opacity: Theme.touchOpacity,
+                    }}
+                  >
+                    <DotsVerticalIcon />
+                  </Pressable>
+                );
               }}
-            />
-          ) : (
-            <PolkadotIcon
-              address={getDIDAddress(credential.issuer.id)}
-              size={32}
-            />
-          )}
+            >
+              <Menu.Item onPress={() => onRemove(credential)}>
+                {translate('account_list.delete_account')}
+              </Menu.Item>
+            </Menu>
+          </NBox>
+        </Stack>
+
+        <NBox mt={4} flexDirection="row" alignItems={'flex-end'}>
+          <NBox>
+            <Text
+              fontSize={'11px'}
+              fontWeight={500}
+              fontFamily={Theme.fontFamily.montserrat}
+            >
+              {formatDate(credential.issuanceDate)}
+            </Text>
+          </NBox>
+          <NBox flex={1} alignItems={'flex-end'}>
+            {credential.issuer.logo ? (
+              <Image
+                borderRadius={8}
+                width={50}
+                height={50}
+                alt={''}
+                source={{
+                  uri: credential.issuer.logo,
+                }}
+              />
+            ) : (
+              <PolkadotIcon
+                address={getDIDAddress(credential.issuer.id)}
+                size={32}
+              />
+            )}
+          </NBox>
         </NBox>
       </NBox>
-    </NBox>
-  );
-});
+    );
+  },
+);
 
 export function CredentialsScreen({credentials, onRemove, onAdd}) {
   return (
@@ -154,7 +155,8 @@ export function CredentialsScreen({credentials, onRemove, onAdd}) {
           marginLeft={22}
           marginRight={22}
           flexDirection="row"
-          alignItems="center">
+          alignItems="center"
+        >
           <Box flex={1}>
             <Typography fontFamily="Montserrat" fontSize={24} fontWeight="600">
               {translate('credentials.title')}
@@ -173,6 +175,7 @@ export function CredentialsScreen({credentials, onRemove, onAdd}) {
             <CredentialListItem
               key={item.id}
               credential={item.content}
+              formattedData={item.formattedData}
               onRemove={() => onRemove(item)}
             />
           ))
