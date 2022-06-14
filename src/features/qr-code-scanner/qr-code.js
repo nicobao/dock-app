@@ -89,20 +89,17 @@ export function onAuthQRScanned(data) {
   return false;
 }
 export async function authHandler(data) {
-  const authLinkPrefix = 'dockwallet://didauth?url=';
+  try {
+    const authLinkPrefix = 'dockwallet://didauth?url=';
+    const isAuthLink = isDidAuthUrl(data);
+    if (isAuthLink) {
+      showToast({
+        type: 'message',
+        message: translate('auth.auth_sign_in'),
+      });
+      const url = decodeURIComponent(data.substr(authLinkPrefix.length));
 
-  const isAuthLink = isDidAuthUrl(data);
-  if (isAuthLink) {
-    const url = decodeURIComponent(data.substr(authLinkPrefix.length));
-
-    showToast({
-      type: 'message',
-      message: translate('auth.auth_sign_in'),
-    });
-
-    try {
       const vc = await onScanAuthQRCode(url);
-
       const req = await fetch(url, {
         method: 'POST',
         headers: {
@@ -112,34 +109,31 @@ export async function authHandler(data) {
           vc,
         }),
       });
-
       const result = await req.json();
-
       if (result.verified) {
         showToast({
           type: 'message',
           message: translate('auth.auth_sign_in_success'),
         });
+        return true;
       } else {
         showToast({
           type: 'error',
           message: result.error || translate('auth.auth_sign_in_failed'),
         });
         captureException(result);
+        return false;
       }
-    } catch (e) {
-      console.error(e);
-      showToast({
-        type: 'error',
-        message: `Sign in error: ${e.message}`,
-      });
-      captureException(e);
-      return false;
     }
-    return true;
+    return false;
+  } catch (e) {
+    showToast({
+      type: 'error',
+      message: `Sign in error: ${e.message}`,
+    });
+    captureException(e);
+    return false;
   }
-
-  return false;
 }
 
 export const qrCodeHandlers = [

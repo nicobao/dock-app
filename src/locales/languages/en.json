@@ -294,7 +294,8 @@
     "start": "Start",
     "processing": "Processing...",
     "completed": "DID Authorized",
-    "error": "DID Error"
-
+    "error": "DID Error",
+    "header": "DID Authorization",
+    "retry": "Retry"
   }
 }
