@@ -37,6 +37,7 @@ import DeepLinking from 'react-native-deep-linking';
 import {isDidAuthUrl} from '../features/qr-code-scanner/qr-code';
 import {navigate} from './navigation';
 import {DIDAuthScreenContainer} from '../features/didManagement/DIDAuthScreen';
+import {useWallet} from '@docknetwork/wallet-sdk-react-native/lib';
 
 const AppStack = createStackNavigator();
 const RootStack = createStackNavigator();
@@ -295,6 +296,21 @@ function AppStackScreen() {
 }
 
 export function NavigationRouter() {
+  const {status} = useWallet({syncDocs: true});
+  useEffect(() => {
+    const getAsyncURL = async () => {
+      const initialUrl = await Linking.getInitialURL();
+      if (initialUrl !== undefined && initialUrl != null) {
+        navigate(Routes.APP_DID_AUTH, {
+          dockWalletAuthDeepLink: initialUrl,
+        });
+      }
+    };
+
+    if (status === 'ready') {
+      getAsyncURL();
+    }
+  }, [status]);
   const handleUrl = useCallback(({url}) => {
     if (isDidAuthUrl(url)) {
       navigate(Routes.APP_DID_AUTH, {
