@@ -14,7 +14,7 @@ import BigNumber from 'bignumber.js';
 import {Routes} from 'src/core/routes';
 import {showToast} from 'src/core/toast';
 
-import {DOCK_TOKEN_UNIT, formatCurrency} from 'src/core/format-utils';
+import {formatCurrency} from 'src/core/format-utils';
 import {
   BackButton,
   Button,
