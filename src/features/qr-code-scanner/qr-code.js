@@ -84,6 +84,7 @@ function onAuthQRScanned(data) {
     navigate(Routes.APP_DID_AUTH, {
       dockWalletAuthDeepLink: data,
     });
+    return true;
   }
   return false;
 }
