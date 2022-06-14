@@ -78,7 +78,7 @@ export async function credentialHandler(data) {
     return false;
   }
 }
-function onAuthQRScanned(data) {
+export function onAuthQRScanned(data) {
   const isAuthLink = isDidAuthUrl(data);
   if (isAuthLink) {
     navigate(Routes.APP_DID_AUTH, {
