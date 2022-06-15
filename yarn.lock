@@ -1300,10 +1300,10 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@docknetwork/prettyvc@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@docknetwork/prettyvc/-/prettyvc-1.2.0.tgz#f2625cff2d02fa1981c8085f27fbf01a7206e690"
-  integrity sha512-0ZAU8fTKkfh/GqmVDqWn/ZSDbdgozwMzP/u96hw7UIgvwicg0/XAAySsyPpC7SaNQAc19QOs5s5ioTrQ4f52LA==
+"@docknetwork/prettyvc@1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@docknetwork/prettyvc/-/prettyvc-1.2.1.tgz#6845043a79424b29e4711663f13b62c5765a358d"
+  integrity sha512-ZfuSsA5etw3i/KMtqwPRWTJpGsJ80NuSeHumYsji5DCFgCnY9KbGITS2q2g6qtFfkDhlzRVUPyBR7mwvyYFKfA==
   dependencies:
     identicon.js "^2.3.3"
     jssha "^3.2.0"
