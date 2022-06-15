@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
+import {getVCData} from '@docknetwork/prettyvc';
 import {pickJSONFile} from '../../core/storage-utils';
 import {showToast} from 'src/core/toast';
 import {translate} from 'src/locales';
@@ -23,23 +24,6 @@ export function getCredentialTimestamp(credential) {
   }
 
   return new Date(credential.issuanceDate).getTime() || 0;
-}
-
-export function getObjectFields(credential) {
-  assert(!!credential, 'credential is required');
-
-  const subject = credential.credentialSubject || {};
-  const objectAttributes = [];
-
-  Object.keys(subject).forEach(key => {
-    const data = subject[key];
-
-    if (typeof data === 'object') {
-      objectAttributes.push(key);
-    }
-  });
-
-  return objectAttributes;
 }
 
 // TODO: Investigate why WalletRpc is not working properly for this calls
@@ -71,9 +55,13 @@ export function getDIDAddress(did) {
   return did.replace(/did:\w+:/gi, '');
 }
 
-export function processCredential(credential) {
+export async function processCredential(credential) {
   assert(!!credential, 'Credential is required');
   assert(!!credential.content, 'credential.content is required');
+  assert(
+    !!credential.content.credentialSubject,
+    'credential.content.credentialSubject is required',
+  );
 
   if (credential.content.issuanceDate) {
     const issuanceDate = new Date(credential.content.issuanceDate);
@@ -83,7 +71,15 @@ export function processCredential(credential) {
     );
   }
 
-  return credential;
+  const formattedData = await getVCData(credential.content, {
+    generateImages: false,
+    generateQRImage: false,
+  });
+
+  return {
+    ...credential,
+    formattedData,
+  };
 }
 
 export function useCredentials({onPickFile = pickJSONFile} = {}) {
@@ -92,7 +88,11 @@ export function useCredentials({onPickFile = pickJSONFile} = {}) {
   const syncCredentials = async () => {
     const credentials = await Credentials.getInstance().query();
 
-    setItems(credentials.sort(sortByIssuanceDate).map(processCredential));
+    const processedCredentials = await Promise.all(
+      credentials.sort(sortByIssuanceDate).map(processCredential),
+    );
+
+    setItems(processedCredentials);
   };
 
   useEffect(() => {
