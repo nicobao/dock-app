@@ -59,8 +59,8 @@ export async function processCredential(credential) {
   assert(!!credential, 'Credential is required');
   assert(!!credential.content, 'credential.content is required');
   assert(
-    !!credential.content.credentiaSubject,
-    'credential.content.credentiaSubject is required',
+    !!credential.content.credentialSubject,
+    'credential.content.credentialSubject is required',
   );
 
   if (credential.content.issuanceDate) {
