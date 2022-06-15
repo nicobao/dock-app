@@ -58,6 +58,10 @@ export function getDIDAddress(did) {
 export async function processCredential(credential) {
   assert(!!credential, 'Credential is required');
   assert(!!credential.content, 'credential.content is required');
+  assert(
+    !!credential.content.credentiaSubject,
+    'credential.content.credentiaSubject is required',
+  );
 
   if (credential.content.issuanceDate) {
     const issuanceDate = new Date(credential.content.issuanceDate);
