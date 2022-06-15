@@ -1,15 +1,16 @@
-import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
+import {utilCryptoService} from '@docknetwork/wallet-sdk-core/lib/services/util-crypto';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
 import {showToast} from '../../core/toast';
 import {translate} from '../../locales';
 import {getJsonOrError} from '../../core';
-import {DebugConstants} from '../constants';
 import '../credentials/credentials';
+import {onScanAuthQRCode} from '../credentials/credentials';
+import {captureException} from '@sentry/react-native';
 
 export async function addressHandler(data) {
-  const isAddress = await UtilCryptoRpc.isAddressValid(data);
+  const isAddress = await utilCryptoService.isAddressValid(data);
 
   if (isAddress) {
     navigate(Routes.TOKEN_SEND, {
@@ -77,25 +78,28 @@ export async function credentialHandler(data) {
     return false;
   }
 }
-
-export async function authHandler(data) {
-  const authLinkPrefix = 'dockwallet://didauth?url=';
-  const isAuthLink =
-    typeof data === 'string' && data.indexOf(authLinkPrefix) === 0;
-
+export function onAuthQRScanned(data) {
+  const isAuthLink = isDidAuthUrl(data);
   if (isAuthLink) {
-    const url =
-      'https://' + decodeURIComponent(data.substr(authLinkPrefix.length));
-
-    showToast({
-      type: 'message',
-      message: translate('auth.auth_sign_in'),
+    navigate(Routes.APP_DID_AUTH, {
+      dockWalletAuthDeepLink: data,
     });
+    return true;
+  }
+  return false;
+}
+export async function authHandler(data) {
+  try {
+    const authLinkPrefix = 'dockwallet://didauth?url=';
+    const isAuthLink = isDidAuthUrl(data);
+    if (isAuthLink) {
+      showToast({
+        type: 'message',
+        message: translate('auth.auth_sign_in'),
+      });
+      const url = decodeURIComponent(data.substr(authLinkPrefix.length));
 
-    try {
-      // DEBUG: For internal testing we just submit a hardcoded credential
-      // for production we will require the wallet to build and sign one
-      const vc = DebugConstants.authCredential;
+      const vc = await onScanAuthQRCode(url);
       const req = await fetch(url, {
         method: 'POST',
         headers: {
@@ -105,35 +109,38 @@ export async function authHandler(data) {
           vc,
         }),
       });
-
       const result = await req.json();
       if (result.verified) {
         showToast({
           type: 'message',
           message: translate('auth.auth_sign_in_success'),
         });
-
-        navigate(Routes.APP_CREDENTIALS); // temporary redirect so it looks like scan was complete
+        return true;
       } else {
         showToast({
           type: 'error',
           message: result.error || translate('auth.auth_sign_in_failed'),
         });
+        captureException(result);
+        return false;
       }
-    } catch (e) {
-      console.error(e);
-      showToast({
-        type: 'error',
-        message: `Sign in error: ${e.message}`,
-      });
     }
-    return true;
+    return false;
+  } catch (e) {
+    showToast({
+      type: 'error',
+      message: `Sign in error: ${e.message}`,
+    });
+    captureException(e);
+    return false;
   }
-
-  return false;
 }
 
-export const qrCodeHandlers = [authHandler, addressHandler, credentialHandler];
+export const qrCodeHandlers = [
+  onAuthQRScanned,
+  addressHandler,
+  credentialHandler,
+];
 
 export async function executeHandlers(data, handlers) {
   if (!data || !handlers) {
@@ -158,4 +165,9 @@ export async function qrCodeHandler(data, handlers = qrCodeHandlers) {
       message: translate('qr_scanner.not_supported_data'),
     });
   }
+}
+
+export function isDidAuthUrl(url) {
+  const authLinkPrefix = 'dockwallet://didauth?url=';
+  return typeof url === 'string' && url.indexOf(authLinkPrefix) === 0;
 }

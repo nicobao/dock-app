@@ -1,11 +1,17 @@
 import {useEffect, useState} from 'react';
 import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
+import {getVCData} from '@docknetwork/prettyvc';
 import {pickJSONFile} from '../../core/storage-utils';
 import {showToast} from 'src/core/toast';
 import {translate} from 'src/locales';
 import assert from 'assert';
-import {WalletRpc} from '@docknetwork/react-native-sdk/src/client/wallet-rpc';
+import {credentialServiceRPC} from '@docknetwork/wallet-sdk-core/lib/services/credential';
+import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
+import queryString from 'query-string';
+const wallet = Wallet.getInstance();
 import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
+import {captureException} from '@sentry/react-native';
+import {walletService} from '@docknetwork/wallet-sdk-core/lib/services/wallet';
 
 export const sortByIssuanceDate = (a, b) =>
   getCredentialTimestamp(b.content) - getCredentialTimestamp(a.content);
@@ -20,45 +26,28 @@ export function getCredentialTimestamp(credential) {
   return new Date(credential.issuanceDate).getTime() || 0;
 }
 
-export function getObjectFields(credential) {
-  assert(!!credential, 'credential is required');
-
-  const subject = credential.credentialSubject || {};
-  const objectAttributes = [];
-
-  Object.keys(subject).forEach(key => {
-    const data = subject[key];
-
-    if (typeof data === 'object') {
-      objectAttributes.push(key);
-    }
-  });
-
-  return objectAttributes;
-}
-
 // TODO: Investigate why WalletRpc is not working properly for this calls
 // This proxy should not be required and must be handled by the wallet sdk
-Credentials.getInstance().wallet = {
-  add: async doc => {
-    const result = {
-      '@context': ['https://w3id.org/wallet/v1'],
-      id: `credential-${Date.now()}`,
-      ...doc,
-    };
+// Credentials.getInstance().wallet = {
+//   add: async doc => {
+//     const result = {
+//       '@context': ['https://w3id.org/wallet/v1'],
+//       id: `credential-${Date.now()}`,
+//       ...doc,
+//     };
 
-    await WalletRpc.add(result);
+//     await WalletRpc.add(result);
 
-    return result;
-  },
-  query: params =>
-    WalletRpc.query({
-      equals: {
-        'content.type': params.type,
-      },
-    }),
-  remove: params => WalletRpc.remove(params),
-};
+//     return result;
+//   },
+//   query: params =>
+//     WalletRpc.query({
+//       equals: {
+//         'content.type': params.type,
+//       },
+//     }),
+//   remove: params => WalletRpc.remove(params),
+// };
 
 export function getDIDAddress(did) {
   assert(!!did, 'did is required');
@@ -66,9 +55,13 @@ export function getDIDAddress(did) {
   return did.replace(/did:\w+:/gi, '');
 }
 
-export function processCredential(credential) {
+export async function processCredential(credential) {
   assert(!!credential, 'Credential is required');
   assert(!!credential.content, 'credential.content is required');
+  assert(
+    !!credential.content.credentialSubject,
+    'credential.content.credentialSubject is required',
+  );
 
   if (credential.content.issuanceDate) {
     const issuanceDate = new Date(credential.content.issuanceDate);
@@ -78,7 +71,15 @@ export function processCredential(credential) {
     );
   }
 
-  return credential;
+  const formattedData = await getVCData(credential.content, {
+    generateImages: false,
+    generateQRImage: false,
+  });
+
+  return {
+    ...credential,
+    formattedData,
+  };
 }
 
 export function useCredentials({onPickFile = pickJSONFile} = {}) {
@@ -87,7 +88,11 @@ export function useCredentials({onPickFile = pickJSONFile} = {}) {
   const syncCredentials = async () => {
     const credentials = await Credentials.getInstance().query();
 
-    setItems(credentials.sort(sortByIssuanceDate).map(processCredential));
+    const processedCredentials = await Promise.all(
+      credentials.sort(sortByIssuanceDate).map(processCredential),
+    );
+
+    setItems(processedCredentials);
   };
 
   useEffect(() => {
@@ -133,4 +138,43 @@ export function useCredentials({onPickFile = pickJSONFile} = {}) {
     handleRemove,
     onAdd,
   };
+}
+export function getParamsFromUrl(url, param) {
+  const startOfQueryParams = url.indexOf('?');
+
+  const parsed = queryString.parse(url.substring(startOfQueryParams));
+  return parsed[param] ? parsed[param] : '';
+}
+export async function onScanAuthQRCode(url) {
+  try {
+    const didResolutionDocuments = await wallet.query({
+      type: 'DIDResolutionResponse',
+    });
+
+    if (didResolutionDocuments.length > 0) {
+      const correlationDocs = await walletService.resolveCorrelations(
+        didResolutionDocuments[0].id,
+      );
+      const keyDoc = correlationDocs.find(
+        document => document.type === 'Ed25519VerificationKey2018',
+      );
+      const subject = {
+        state: getParamsFromUrl(url, 'id'),
+      };
+      const verifiableCredential =
+        await credentialServiceRPC.generateCredential({
+          subject,
+        });
+      if (keyDoc) {
+        return credentialServiceRPC.signCredential({
+          vcJson: verifiableCredential,
+          keyDoc,
+        });
+      }
+    }
+    throw new Error(translate('qr_scanner.no_key_doc'));
+  } catch (e) {
+    captureException(e);
+    throw new Error(e.message);
+  }
 }

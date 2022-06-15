@@ -20,6 +20,7 @@ export const Routes = {
   APP_QR_SCANNER: 'app/qrScanner',
   APP_SETTINGS: 'app/settings',
   APP_CREDENTIALS: 'app/credentials',
+  APP_DID_AUTH: 'app/DIDAuth',
   DEV_SETTINGS: 'app/devSettings',
   WALLET_EXPORT_BACKUP: 'wallet/exportBackup',
   WALLET_IMPORT_BACKUP: 'wallet/importBackup',

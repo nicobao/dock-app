@@ -1,10 +1,12 @@
+import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme from 'enzyme';
 import {NativeModules} from 'react-native';
 import mockAsyncStorage from '../node_modules/@react-native-async-storage/async-storage/jest/async-storage-mock';
 import mockRNPermissions from '../node_modules/react-native-permissions/mock';
 import '../src/core/setup-env';
-
+import {DebugConstants} from '../src/features/constants';
+import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
 jest.mock('../src/core/realm', () => {
   const realmFunctions = {
     write: jest.fn(callback => {
@@ -27,6 +29,13 @@ jest.mock('react-native-permissions', () => mockRNPermissions);
 jest.mock('react-native-share', () => 'RNShare');
 
 Enzyme.configure({adapter: new Adapter()});
+
+React.useLayoutEffect = React.useEffect;
+
+jest.mock('react-native-keyboard-aware-scroll-view', () => {
+  const KeyboardAwareScrollView = ({children}) => children;
+  return {KeyboardAwareScrollView};
+});
 
 jest.mock('react-native-fs', () => ({
   CachesDirectoryPath: jest.fn(),
@@ -141,6 +150,21 @@ jest.mock('@react-native-firebase/analytics', () => {
   };
 });
 
+jest.mock('react-native-screen-capture-secure', () => {
+  const originalModule = jest.requireActual(
+    'react-native-screen-capture-secure',
+  );
+  const enableSecure = jest.fn();
+  const disableSecure = jest.fn();
+  return {
+    __esModule: true,
+    default: {
+      enableSecure,
+      disableSecure,
+    },
+  };
+});
+
 jest.mock('@docknetwork/react-native-sdk/src/client/wallet-rpc', () => {
   const originalModule = jest.requireActual(
     '@docknetwork/react-native-sdk/src/client/wallet-rpc',
@@ -172,3 +196,194 @@ jest.mock('@docknetwork/react-native-sdk/src/client/api-rpc', () => {
     },
   };
 });
+
+jest.mock('@docknetwork/wallet-sdk-core/lib/modules/wallet', () => {
+  const originalModule = jest.requireActual(
+    '@docknetwork/wallet-sdk-core/lib/modules/wallet',
+  );
+  const docs = [];
+  const mockFunctions = {
+    getInstance: jest.fn().mockReturnValue({
+      query: jest.fn(q => {
+        if (q) {
+          return docs.filter(singleDocument => {
+            for (const key in q) {
+              if (q[key] !== singleDocument[key]) {
+                return false;
+              }
+            }
+            return true;
+          });
+        }
+        return docs;
+      }),
+      add: jest.fn(doc => {
+        docs.push(doc);
+      }),
+      update: jest.fn(doc => {
+        docs.forEach((singleDocument, index) => {
+          if (doc.id === singleDocument.id) {
+            docs[index] = doc;
+          }
+        });
+      }),
+    }),
+  };
+
+  return {
+    ...originalModule,
+    Wallet: mockFunctions,
+  };
+});
+
+jest.mock('@docknetwork/wallet-sdk-core/lib/services/dids', () => {
+  const originalModule = jest.requireActual(
+    '@docknetwork/wallet-sdk-core/lib/services/dids',
+  );
+  const mockFunctions = {
+    generateKeyDoc: jest.fn().mockReturnValue({
+      '@context': ['https://w3id.org/wallet/v1'],
+      id: 'urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130002',
+      name: 'My Test Key 2',
+      image: 'https://via.placeholder.com/150',
+      description: 'For testing only, totally compromised.',
+      tags: ['professional', 'organization', 'compromised'],
+      correlation: [],
+      controller: 'did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r',
+      type: 'Ed25519VerificationKey2018',
+      privateKeyBase58:
+        '3CQCBKF3Mf1tU5q1FLpHpbxYrNYxLiZk4adDtfyPEfc39Wk6gsTb2qoc1ZtpqzJYdM1rG4gpaD3ZVKdkiDrkLF1p',
+      publicKeyBase58: '6GwnHZARcEkJio9dxPYy6SC5sAL6PxpZAB6VYwoFjGMU',
+    }),
+    keypairToDIDKeyDocument: jest.fn().mockReturnValue({
+      didDocument: {
+        '@context': [
+          'https://www.w3.org/ns/did/v1',
+          'https://ns.did.ai/transmute/v1',
+          {
+            '@base': 'did:key:z6Mks8mvCnVx4HQcoq7ZwvpTbMnoRGudHSiEpXhMf6VW8XMg',
+          },
+        ],
+        id: 'did:key:z6Mks8mvCnVx4HQcoq7ZwvpTbMnoRGudHSiEpXhMf6VW8XMg',
+        verificationMethod: [
+          {
+            id: '#z6Mks8mvCnVx4HQcoq7ZwvpTbMnoRGudHSiEpXhMf6VW8XMg',
+            type: 'JsonWebKey2020',
+            controller:
+              'did:key:z6Mks8mvCnVx4HQcoq7ZwvpTbMnoRGudHSiEpXhMf6VW8XMg',
+            publicKeyJwk: {
+              crv: 'Ed25519',
+              x: 'vGur-MEOrN6GDLf4TBGHDYAERxkmWOjTbztvG3xP0I8',
+              kty: 'OKP',
+            },
+          },
+          {
+            id: '#z6LScrLMVd9jvbphPeQkGffSeB99EWSYqAnMg8rGiHCgz5ha',
+            type: 'JsonWebKey2020',
+            controller:
+              'did:key:z6Mks8mvCnVx4HQcoq7ZwvpTbMnoRGudHSiEpXhMf6VW8XMg',
+            publicKeyJwk: {
+              kty: 'OKP',
+              crv: 'X25519',
+              x: 'EXXinkMxdA4zGmwpOOpbCXt6Ts6CwyXyEKI3jfHkS3k',
+            },
+          },
+        ],
+        authentication: ['#z6Mks8mvCnVx4HQcoq7ZwvpTbMnoRGudHSiEpXhMf6VW8XMg'],
+        assertionMethod: ['#z6Mks8mvCnVx4HQcoq7ZwvpTbMnoRGudHSiEpXhMf6VW8XMg'],
+        capabilityInvocation: [
+          '#z6Mks8mvCnVx4HQcoq7ZwvpTbMnoRGudHSiEpXhMf6VW8XMg',
+        ],
+        capabilityDelegation: [
+          '#z6Mks8mvCnVx4HQcoq7ZwvpTbMnoRGudHSiEpXhMf6VW8XMg',
+        ],
+        keyAgreement: ['#z6LScrLMVd9jvbphPeQkGffSeB99EWSYqAnMg8rGiHCgz5ha'],
+      },
+    }),
+    getDIDResolution: jest.fn(({didDocument}) => {
+      return {
+        id: new Date().getTime().toString(),
+        type: 'DIDResolutionResponse',
+        didDocument,
+        correlation: [],
+      };
+    }),
+  };
+
+  return {
+    ...originalModule,
+    didServiceRPC: mockFunctions,
+  };
+});
+
+jest.mock('@docknetwork/wallet-sdk-core/lib/services/credential', () => {
+  const originalModule = jest.requireActual(
+    '@docknetwork/wallet-sdk-core/lib/services/credential',
+  );
+  const mockFunctions = {
+    generateCredential: jest.fn().mockResolvedValue({
+      '@context': ['https://www.w3.org/2018/credentials/v1'],
+      type: ['VerifiableCredential'],
+      credentialSubject: [],
+      issuanceDate: '2022-06-01T12:32:13.106Z',
+    }),
+    signCredential: jest.fn().mockResolvedValue(DebugConstants.authCredential),
+  };
+
+  return {
+    ...originalModule,
+    credentialServiceRPC: mockFunctions,
+  };
+});
+
+jest.mock('@docknetwork/wallet-sdk-core/lib/services/wallet', () => {
+  const originalModule = jest.requireActual(
+    '@docknetwork/wallet-sdk-core/lib/services/wallet',
+  );
+  const mockFunctions = {
+    resolveCorrelations: jest.fn(() => {
+      return [
+        {
+          '@context': ['https://w3id.org/wallet/v1'],
+          id: 'urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130002',
+          name: 'My Test Key 2',
+          image: 'https://via.placeholder.com/150',
+          description: 'For testing only, totally compromised.',
+          tags: ['professional', 'organization', 'compromised'],
+          correlation: ['1654905466848'],
+          controller:
+            'did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r',
+          type: 'Ed25519VerificationKey2018',
+          privateKeyBase58:
+            '3CQCBKF3Mf1tU5q1FLpHpbxYrNYxLiZk4adDtfyPEfc39Wk6gsTb2qoc1ZtpqzJYdM1rG4gpaD3ZVKdkiDrkLF1p',
+          publicKeyBase58: '6GwnHZARcEkJio9dxPYy6SC5sAL6PxpZAB6VYwoFjGMU',
+        },
+        {
+          id: '1654905466848',
+          type: 'DIDResolutionResponse',
+          didDocument: {
+            '@context': [Array],
+            id: 'did:key:z6Mks8mvCnVx4HQcoq7ZwvpTbMnoRGudHSiEpXhMf6VW8XMg',
+            verificationMethod: [Array],
+            authentication: [Array],
+            assertionMethod: [Array],
+            capabilityInvocation: [Array],
+            capabilityDelegation: [Array],
+            keyAgreement: [Array],
+          },
+          correlation: ['urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130002'],
+        },
+      ];
+    }),
+  };
+
+  return {
+    ...originalModule,
+    walletService: mockFunctions,
+  };
+});
+global.fetch = jest.fn(() =>
+  Promise.resolve({
+    json: () => Promise.resolve({test: 100}),
+  }),
+);

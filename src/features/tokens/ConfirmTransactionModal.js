@@ -1,12 +1,13 @@
 import {Box, Stack} from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {withErrorBoundary} from 'src/core/error-handler';
-import {formatCurrency, formatDockAmount} from 'src/core/format-utils';
+import {formatCurrency} from 'src/core/format-utils';
 import {Button, Theme} from 'src/design-system';
 import {translate} from 'src/locales';
 import {Modal} from '../../components/Modal';
 import {Typography} from '../../design-system';
 import {getDockTokenPrice} from './price-service';
+import BigNumber from 'bignumber.js';
 
 export const TokenAmount = withErrorBoundary(
   ({amount, symbol = 'DOCK', children}) => {
@@ -15,14 +16,14 @@ export const TokenAmount = withErrorBoundary(
 
     useEffect(() => {
       getDockTokenPrice().then(price =>
-        setFiatAmount(formatDockAmount(amount) * price),
+        setFiatAmount(BigNumber(amount).toNumber() * price),
       );
     }, [amount]);
 
     return children({
       fiatAmount,
       fiatSymbol,
-      tokenAmount: formatDockAmount(amount),
+      tokenAmount: amount,
       tokenSymbol: symbol,
     });
   },

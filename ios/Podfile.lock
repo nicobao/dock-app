@@ -372,6 +372,8 @@ PODS:
     - React-Core
   - react-native-safe-area-context (3.3.2):
     - React-Core
+  - react-native-screen-capture-secure (1.0.5):
+    - React
   - react-native-splash-screen (3.2.0):
     - React
   - react-native-udp (4.1.3):
@@ -569,6 +571,7 @@ DEPENDENCIES:
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-randombytes (from `../node_modules/react-native-randombytes`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - react-native-screen-capture-secure (from `../node_modules/react-native-screen-capture-secure`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - react-native-udp (from `../node_modules/react-native-udp`)
   - react-native-webview (from `../node_modules/react-native-webview`)
@@ -677,6 +680,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-randombytes"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-screen-capture-secure:
+    :path: "../node_modules/react-native-screen-capture-secure"
   react-native-splash-screen:
     :path: "../node_modules/react-native-splash-screen"
   react-native-udp:
@@ -757,7 +762,7 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   FBLazyVector: e686045572151edef46010a6f819ade377dfeb4b
-  FBReactNativeSpec: 1342cd088f4557a457683f5559bed654fba3ee66
+  FBReactNativeSpec: d6707a7404370413585ea2d033f4d3c61d50fc2b
   Firebase: 7e8fe528c161b9271d365217a74c16aaf834578e
   FirebaseAnalytics: 2fc3876e2eb347673ad2f35e249ae7b15d6c88f5
   FirebaseCore: b84a44ee7ba999e0f9f76d198a9c7f60a797b848
@@ -796,6 +801,7 @@ SPEC CHECKSUMS:
   react-native-netinfo: e922cb2e3eaf9ccdf16b8d4744a89657377aa4a1
   react-native-randombytes: 421f1c7d48c0af8dbcd471b0324393ebf8fe7846
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
+  react-native-screen-capture-secure: e5b88c0aa936ea94adcb60380e10bfa160089b0b
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-udp: f0fbf5386c45af5523dc143a86afe2cbf29f764e
   react-native-webview: b83cf1aa6b4453fe53ffcc5896c36cdf37f0383f
@@ -836,6 +842,6 @@ SPEC CHECKSUMS:
   Yoga: 575c581c63e0d35c9a83f4b46d01d63abc1100ac
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: e9ff62217035eb6612f967ba733746dcea2b11d6
+PODFILE CHECKSUM: 364673b1e835c12e48b1805d6b78886b9fd87351
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3

@@ -1,17 +1,20 @@
+import {useAccount} from '@docknetwork/wallet-sdk-react-native/lib';
 import Clipboard from '@react-native-community/clipboard';
 import {Box, FormControl, Input, Stack} from 'native-base';
-import {Keyboard} from 'react-native';
 import React, {useEffect, useState} from 'react';
+import {Keyboard} from 'react-native';
 import Share from 'react-native-share';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {NumericKeyboard} from 'src/components/NumericKeyboard';
 import {PolkadotIcon} from 'src/components/PolkadotIcon';
 import {navigate} from 'src/core/navigation';
+
+import {utilCryptoService} from '@docknetwork/wallet-sdk-core/lib/services/util-crypto';
+import BigNumber from 'bignumber.js';
 import {Routes} from 'src/core/routes';
 import {showToast} from 'src/core/toast';
-import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
-import BigNumber from 'bignumber.js';
 
+import {formatCurrency} from 'src/core/format-utils';
 import {
   BackButton,
   Button,
@@ -22,15 +25,8 @@ import {
   Typography,
 } from '../../design-system';
 import {translate} from '../../locales';
-import {accountSelectors} from '../accounts/account-slice';
 import {transactionsOperations} from '../transactions/transactions-slice';
 import {ConfirmTransactionModal, TokenAmount} from './ConfirmTransactionModal';
-import {
-  DOCK_TOKEN_UNIT,
-  formatCurrency,
-  formatDockAmount,
-  getPlainDockAmount,
-} from 'src/core/format-utils';
 
 export function SendTokenScreen({form, onChange, onScanQRCode, onNext}) {
   const onChangeAddressMethod = onChange('recipientAddress');
@@ -102,9 +98,7 @@ export function EnterTokenAmount({form, onMax, onChange, onBack, onNext}) {
               mr={2}>{`${form.amount || 0}`}</Typography>
             <Typography variant="h1">{form.tokenSymbol}</Typography>
           </Stack>
-          <TokenAmount
-            amount={parseInt(form.amount || 0, 10) * DOCK_TOKEN_UNIT}
-            symbol={form.tokenSymbol}>
+          <TokenAmount amount={form.amount || 0} symbol={form.tokenSymbol}>
             {({fiatSymbol, fiatAmount}) => (
               <Stack direction="row" justifyContent="center">
                 <Typography>{formatCurrency(fiatAmount)} </Typography>
@@ -147,17 +141,15 @@ const Steps = {
 
 export function handleFeeUpdate({
   updateForm,
-  accountDetails,
+  account,
   form,
   fee,
   setShowConfirmation,
 }) {
-  const accountBalance = formatDockAmount(accountDetails.balance);
-  const amountAndFees = formatDockAmount(
-    getPlainDockAmount(form.amount).plus(fee),
-  );
+  const accountBalance = account.balance;
+  const amountAndFees = BigNumber(form.amount).plus(fee);
 
-  if (formatDockAmount(fee) >= accountBalance) {
+  if (fee >= accountBalance) {
     showToast({
       message: translate('send_token.insufficient_balance'),
       type: 'error',
@@ -170,9 +162,7 @@ export function handleFeeUpdate({
   };
 
   if (amountAndFees > accountBalance) {
-    const newAmount = formatDockAmount(
-      BigNumber(accountDetails.balance).minus(fee),
-    );
+    const newAmount = BigNumber(account.balance).minus(fee);
 
     formUpdates.amount = newAmount;
 
@@ -203,8 +193,10 @@ const defaultFormState = {
 
 export function SendTokenContainer({route}) {
   const dispatch = useDispatch();
-  const {address, recipientAddress = ''} = route.params || {};
-  const accountDetails = useSelector(accountSelectors.getAccountById(address));
+  const {address, recipientAddress} = route.params || {};
+  const {account} = useAccount(address);
+  console.log('selected account', account);
+
   const [showConfirmation, setShowConfirmation] = useState();
   const [step, setStep] = useState(Steps.sendTo);
   const [form, setForm] = useState({
@@ -255,7 +247,7 @@ export function SendTokenContainer({route}) {
             Routes.APP_QR_SCANNER,
             {
               onData: async toAddress => {
-                const addressValid = await UtilCryptoRpc.isAddressValid(
+                const addressValid = await utilCryptoService.isAddressValid(
                   toAddress,
                 );
 
@@ -283,7 +275,7 @@ export function SendTokenContainer({route}) {
         onShareAddress={handleShareAddress}
         onChange={handleChange}
         onNext={async () => {
-          if (form.recipientAddress === accountDetails.id) {
+          if (form.recipientAddress === account.address) {
             return setForm(v => ({
               ...v,
               _errors: {
@@ -292,7 +284,7 @@ export function SendTokenContainer({route}) {
             }));
           }
 
-          const addressValid = await UtilCryptoRpc.isAddressValid(
+          const addressValid = await utilCryptoService.isAddressValid(
             form.recipientAddress,
           );
 
@@ -322,12 +314,12 @@ export function SendTokenContainer({route}) {
             dispatch(
               transactionsOperations.sendTransaction({
                 ...form,
-                accountAddress: accountDetails.id,
+                accountAddress: account.address,
               }),
             ).finally(() => {
               setShowConfirmation(false);
               navigate(Routes.ACCOUNT_DETAILS, {
-                id: accountDetails.id,
+                id: account.address,
               });
               setForm(defaultFormState);
               setStep(Steps.sendTo);
@@ -337,7 +329,7 @@ export function SendTokenContainer({route}) {
           visible={showConfirmation}
           accountIcon={<PolkadotIcon address={form.recipientAddress} />}
           tokenSymbol={form.tokenSymbol}
-          sentAmount={parseFloat(form.amount) * DOCK_TOKEN_UNIT}
+          sentAmount={form.amount}
           fee={form.fee}
           recipientAddress={form.recipientAddress}
         />
@@ -349,7 +341,7 @@ export function SendTokenContainer({route}) {
 
             if (form.amount <= 0) {
               amountError = translate('send_token.invalid_amount');
-            } else if (form.amount > formatDockAmount(accountDetails.balance)) {
+            } else if (form.amount > account.balance) {
               amountError = translate('send_token.insufficient_funds');
             }
 
@@ -365,11 +357,11 @@ export function SendTokenContainer({route}) {
             return dispatch(
               transactionsOperations.getFeeAmount({
                 ...form,
-                accountAddress: accountDetails.id,
+                accountAddress: account.address,
               }),
             ).then(fee => {
               return handleFeeUpdate({
-                accountDetails,
+                account,
                 form,
                 fee,
                 updateForm,
@@ -382,7 +374,7 @@ export function SendTokenContainer({route}) {
           }}
           onMax={() => {
             updateForm({
-              amount: formatDockAmount(accountDetails.balance),
+              amount: account.balance,
               sendMax: true,
             });
           }}

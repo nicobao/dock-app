@@ -1,4 +1,6 @@
 import {NativeBaseProvider} from 'native-base';
+import {Provider} from 'react-redux';
+import store from './redux-store';
 import React from 'react';
 
 const inset = {
@@ -8,9 +10,11 @@ const inset = {
 
 export const renderAppProviders = component => {
   return (
-    <NativeBaseProvider initialWindowMetrics={inset}>
-      {component}
-    </NativeBaseProvider>
+    <Provider store={store}>
+      <NativeBaseProvider initialWindowMetrics={inset}>
+        {component}
+      </NativeBaseProvider>
+    </Provider>
   );
 };
 

@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {addTestId} from 'src/core/automation-utils';
 import {translate} from 'src/locales';
 import {navigate} from '../../core/navigation';
-import {getRealm} from '../../core/realm';
+import {getRealm} from '@docknetwork/wallet-sdk-core/lib/core/realm';
 import {Routes} from '../../core/routes';
 import {showToast} from '../../core/toast';
 import {
@@ -25,7 +25,8 @@ import {
   appSelectors,
   SUBSTRATE_NETWORKS,
 } from '../app/app-slice';
-import {UtilCryptoRpc} from '@docknetwork/react-native-sdk/src/client/util-crypto-rpc';
+
+import {utilCryptoService} from '@docknetwork/wallet-sdk-core/lib/services/util-crypto';
 import {FeatureFlags, getAllFeatures, useFeatures} from '../app/feature-flags';
 import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
 
@@ -81,6 +82,7 @@ export function DevSettingsScreen({
             const realm = getRealm();
             realm.write(() => {
               realm.delete(realm.objects('Account'));
+              realm.delete(realm.objects('Transaction'));
               showToast({
                 message: translate('dev_settings.clear_cache_success'),
                 type: 'success',
@@ -214,7 +216,7 @@ export function DevSettingsScreen({
                     return;
                   }
 
-                  const isAddressValid = await UtilCryptoRpc.isAddressValid(
+                  const isAddressValid = await utilCryptoService.isAddressValid(
                     accountAddress,
                   );
                   if (!accountAddress || !isAddressValid) {

@@ -1,8 +1,8 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {View} from 'native-base';
-import React from 'react';
-import {Platform, StyleSheet} from 'react-native';
+import React, {useCallback, useEffect} from 'react';
+import {Linking, Platform, StyleSheet} from 'react-native';
 import {Theme} from 'src/design-system';
 import {ReceiveTokenContainer} from 'src/features/tokens/ReceiveTokenScreen';
 import {SendTokenContainer} from 'src/features/tokens/SendTokenScreen';
@@ -33,6 +33,10 @@ import {navigationRef} from './navigation';
 import {Routes} from './routes';
 import {CredentialsContainer} from '../features/credentials/CredentialsScreen';
 import {withNavigationContext} from './NavigationContext';
+import DeepLinking from 'react-native-deep-linking';
+import {isDidAuthUrl} from '../features/qr-code-scanner/qr-code';
+import {navigate} from './navigation';
+import {DIDAuthScreenContainer} from '../features/didManagement/DIDAuthScreen';
 
 const AppStack = createStackNavigator();
 const RootStack = createStackNavigator();
@@ -194,6 +198,13 @@ function AppStackScreen() {
 
       <AppStack.Screen
         {...getScreenProps({
+          name: Routes.APP_DID_AUTH,
+          component: DIDAuthScreenContainer,
+        })}
+      />
+
+      <AppStack.Screen
+        {...getScreenProps({
           name: Routes.CREATE_ACCOUNT_SETUP,
           component: CreateAccountSetupContainer,
         })}
@@ -284,6 +295,34 @@ function AppStackScreen() {
 }
 
 export function NavigationRouter() {
+  useEffect(() => {
+    const getAsyncURL = async () => {
+      const initialUrl = await Linking.getInitialURL();
+      if (initialUrl !== undefined && initialUrl != null) {
+        navigate(Routes.APP_DID_AUTH, {
+          dockWalletAuthDeepLink: initialUrl,
+        });
+      }
+    };
+
+    getAsyncURL();
+  }, []);
+  const handleUrl = useCallback(({url}) => {
+    if (isDidAuthUrl(url)) {
+      navigate(Routes.APP_DID_AUTH, {
+        dockWalletAuthDeepLink: url,
+      });
+    }
+  }, []);
+  useEffect(() => {
+    DeepLinking.addScheme('dockwallet://');
+    Linking.addEventListener('url', handleUrl);
+
+    return () => {
+      Linking.removeEventListener('url', handleUrl);
+    };
+  }, [handleUrl]);
+
   return (
     <NavigationContainer ref={navigationRef}>
       <RootStack.Navigator mode="modal">

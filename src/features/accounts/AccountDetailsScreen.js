@@ -1,5 +1,5 @@
-import {Button, Pressable, ScrollView, Stack} from 'native-base';
-import React, {useEffect, useMemo, useState} from 'react';
+import {Button, Pressable, ScrollView, Spinner, Stack} from 'native-base';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {RefreshControl} from 'react-native';
 import {TouchableHighlight} from 'react-native-gesture-handler';
 import {useDispatch, useSelector} from 'react-redux';
@@ -24,12 +24,9 @@ import {translate} from '../../locales';
 import {TokenAmount} from '../tokens/ConfirmTransactionModal';
 import {TransactionConfirmationModal} from '../transactions/TransactionConfirmationModal';
 import {TransactionDetailsModal} from '../transactions/TransactionDetailsModal';
-import {
-  transactionsOperations,
-  transactionsSelectors,
-  TransactionStatus,
-} from '../transactions/transactions-slice';
-import {accountOperations, accountSelectors} from './account-slice';
+import {TransactionStatus} from '../transactions/transactions-slice';
+import {accountOperations} from './account-slice';
+import {useAccount} from '@docknetwork/wallet-sdk-react-native/lib';
 import {AccountSettingsModal} from './AccountSettingsModal';
 import {QRCodeModal} from './QRCodeModal';
 import {addTestId} from '../../core/automation-utils';
@@ -37,6 +34,12 @@ import {appSelectors} from '../app/app-slice';
 import {useFeatures} from '../app/feature-flags';
 import uuid from 'uuid';
 import {displayWarning} from './AccountsScreen';
+import assert from 'assert';
+import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
+import {
+  TransactionEvents,
+  Transactions,
+} from '@docknetwork/wallet-sdk-transactions/lib/transactions';
 
 const TRANSACTION_FILTERS = {
   all: 'all',
@@ -161,7 +164,9 @@ export function filterTransactionHistory(
 }
 
 function TransactionHistory({accountAddress}) {
-  const allTransactions = useSelector(transactionsSelectors.getTransactions);
+  const {transactions: allTransactions, fetching} = useTransactions({
+    address: accountAddress,
+  });
   const [activeFilter, setActiveFilter] = useState(TRANSACTION_FILTERS.all);
   const networkId = useSelector(appSelectors.getNetworkId);
   const {features} = useFeatures();
@@ -256,6 +261,7 @@ function TransactionHistory({accountAddress}) {
             {translate('transaction_history.failed')}
           </Typography>
         </Button>
+        {Boolean(fetching) && <Spinner size="small" />}
       </Stack>
 
       {transactions.length > 0 ? (
@@ -336,7 +342,7 @@ export function AccountDetailsScreen({
         <Stack mx={5} flex={1}>
           <Stack mx={3} direction="column" alignItems="center">
             <Stack direction="column" alignItems="center" mt={8}>
-              <PolkadotIcon address={account.id} size={48} />
+              <PolkadotIcon address={account.address} size={48} />
               <TokenAmount amount={account.balance}>
                 {({fiatAmount, tokenAmount, tokenSymbol}) => (
                   <>
@@ -360,7 +366,7 @@ export function AccountDetailsScreen({
                 disabled={account.readOnly}
                 onPress={() =>
                   navigate(Routes.TOKEN_SEND, {
-                    address: account.id,
+                    address: account.address,
                   })
                 }>
                 <Typography color={Theme.button.textColor}>
@@ -375,7 +381,7 @@ export function AccountDetailsScreen({
                 {...addTestId('ReceiveTokensBtn')}
                 onPress={() =>
                   navigate(Routes.TOKEN_RECEIVE, {
-                    address: account.id,
+                    address: account.address,
                   })
                 }>
                 <Typography color={Theme.button.textColor}>
@@ -390,7 +396,7 @@ export function AccountDetailsScreen({
                   {...addTestId('BuyDockBtn')}
                   onPress={() =>
                     navigate(Routes.TRADE_BUY_DOCK, {
-                      id: account.id,
+                      id: account.address,
                       orderId: uuid(),
                     })
                   }>
@@ -463,7 +469,7 @@ export function AccountDetailsScreen({
               </Typography>
             </NBox>
             <NBox>
-              <TransactionHistory accountAddress={account.id} />
+              <TransactionHistory accountAddress={account.address} />
             </NBox>
           </Stack>
         </Stack>
@@ -483,7 +489,7 @@ export function AccountDetailsScreen({
         visible={qrCodeModalVisible}
         onClose={() => {
           navigate(Routes.ACCOUNT_DETAILS, {
-            id: account.id,
+            id: account.address,
             qrCodeData: null,
           });
         }}
@@ -492,24 +498,77 @@ export function AccountDetailsScreen({
   );
 }
 
+function useTransactions({address}) {
+  const events = Wallet.getInstance().eventManager;
+  const txModule = Transactions.getInstance();
+  const [transactions, setTransactions] = useState([]);
+  const [fetching, setFetching] = useState(false);
+
+  const loadTransactions = useCallback(
+    async function loadTransactions() {
+      const items = await txModule.loadTransactions(address);
+      setTransactions(items);
+    },
+    [address, setTransactions, txModule],
+  );
+
+  const fetch = useCallback(
+    async function () {
+      setFetching(true);
+      txModule.loadExternalTransactions(address).finally(() => {
+        setFetching(false);
+      });
+      loadTransactions();
+    },
+    [address, txModule, loadTransactions, setFetching],
+  );
+
+  useEffect(() => {
+    fetch();
+
+    const listener = addr => {
+      if (addr === address) {
+        loadTransactions();
+      }
+    };
+
+    events.on(TransactionEvents.added, listener);
+
+    return () => events.removeListener(listener);
+  }, [events, address, loadTransactions, fetch]);
+
+  return {
+    transactions,
+    refetch: fetch,
+    fetching,
+  };
+}
 export function AccountDetailsContainer({route}) {
   const {id: accountId, qrCodeData} = route.params;
+  assert(!!accountId, 'Account id is required');
   const dispatch = useDispatch();
-  const account = useSelector(accountSelectors.getAccountById(accountId));
+  const {account} = useAccount(accountId);
   const {features} = useFeatures();
 
   const [isRefreshing, setRefreshing] = useState(false);
 
   const onRefresh = () => {
     setRefreshing(true);
-    dispatch(accountOperations.fetchAccountBalance(account.id)).finally(() => {
-      setRefreshing(false);
-    });
+    dispatch(accountOperations.fetchAccountBalance(account.address)).finally(
+      () => {
+        setRefreshing(false);
+      },
+    );
   };
 
   useEffect(() => {
-    dispatch(transactionsOperations.loadTransactions(accountId));
-  }, [dispatch, accountId]);
+    if (!account) {
+      return;
+    }
+    dispatch(accountOperations.fetchAccountBalance(account.address));
+  }, [dispatch, account]);
+
+  console.log('account details', account);
 
   if (!account) {
     return <LoadingScreen />;
@@ -518,9 +577,9 @@ export function AccountDetailsContainer({route}) {
   return (
     <AccountDetailsScreen
       onDelete={() => {
-        return dispatch(accountOperations.removeAccount({id: accountId})).then(
-          () => navigate(Routes.ACCOUNTS),
-        );
+        return dispatch(
+          accountOperations.removeAccount({address: accountId}),
+        ).then(() => navigate(Routes.ACCOUNTS));
       }}
       isRefreshing={isRefreshing}
       onRefresh={onRefresh}

@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QRScanScreen should render correctly when isScreenFocus=true 1`] = `
+<RNCSafeAreaView
+  style={
+    Object {
+      "backgroundColor": "#000",
+      "flex": 1,
+    }
+  }
+  testID="DIDAuthScreen"
+>
+  <AppGlobalHeader />
+  <Memo(ForwardRef(Box))
+    flex={1}
+  >
+    <Memo(ForwardRef(Box))
+      flex={1}
+    >
+      <Styled(View)>
+        <Box
+          alignItems="center"
+          flexDirection="row"
+          marginLeft={22}
+          marginRight={22}
+        >
+          <Box
+            flex={1}
+          >
+            <Styled(Component)
+              fontFamily="Montserrat"
+              fontSize={24}
+              fontWeight="600"
+            >
+              DID Authorization
+            </Styled(Component)>
+          </Box>
+        </Box>
+      </Styled(View)>
+      <Memo(ForwardRef(Stack))
+        direction="column"
+        mt={40}
+        mx={70}
+      >
+        <Memo(ForwardRef(Box))
+          mt={15}
+        >
+          <Styled(Component)
+            style={
+              Object {
+                "textAlign": "center",
+              }
+            }
+            variant="list-description"
+          >
+            Start
+          </Styled(Component)>
+        </Memo(ForwardRef(Box))>
+      </Memo(ForwardRef(Stack))>
+    </Memo(ForwardRef(Box))>
+  </Memo(ForwardRef(Box))>
+</RNCSafeAreaView>
+`;
