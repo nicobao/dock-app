@@ -85,7 +85,7 @@ describe('Credentials helpers', () => {
   describe('processCredential', () => {
     it('expect to remove timezone offset', async () => {
       const issuanceDate = new Date('2022-04-24T00:53:13.265Z');
-      const credential = {issuanceDate};
+      const credential = {issuanceDate, credentialSubject: {}};
       const result = await processCredential({content: credential});
       expect(result.content.issuanceDate.getDate()).toBe(24);
       expect(result.content.issuanceDate.getMonth()).toBe(3);
