@@ -19,7 +19,7 @@
     "invalid_json_file": "Invalid json file"
   },
   "auth": {
-    "auth_sign_in": "Signing in with debug credential",
+    "auth_sign_in": "Signing in...",
     "auth_sign_in_success": "Success! Signed in with DID!",
     "auth_sign_in_failed": "Unknown error on sign in"
   },
@@ -285,7 +285,8 @@
     "title": "Credentials",
     "invalid_credential": "Invalid Credential",
     "existing_credential": "This credential already exists in the wallet",
-    "empty_items": "You’ll see credentials here once you accept them"
+    "empty_items": "You’ll see credentials here once you accept them",
+    "default_title": "Untitled Credential"
   },
   "qr_scanner": {
     "not_supported_data": "Not supported QR Code",
@@ -294,7 +295,8 @@
     "start": "Start",
     "processing": "Processing...",
     "completed": "DID Authorized",
-    "error": "DID Error"
-
+    "error": "DID Error",
+    "header": "DID Authorization",
+    "retry": "Retry"
   }
 }

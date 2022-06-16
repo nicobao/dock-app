@@ -5,6 +5,7 @@ import {
   credentialHandler,
   executeHandlers,
   isDidAuthUrl,
+  onAuthQRScanned,
   qrCodeHandler,
 } from './qr-code';
 import {navigationRef} from '../../core/navigation';
@@ -263,6 +264,17 @@ describe('qr-code', () => {
       expect(credentialServiceRPC.generateCredential).toBeCalledWith({subject});
       await credentialServiceRPC.generateCredential({});
       expect(credentialServiceRPC.signCredential).toBeCalled();
+    });
+
+    it('is Auth QRCode scanned', () => {
+      const res = onAuthQRScanned(
+        'dockwallet://didauth?url=https://auth-server-i78ydv67d-docklabs.vercel.app/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',
+      );
+      expect(res).toBeTruthy();
+      const isValid1 = onAuthQRScanned(
+        'dockwallet://didauth?ul=https://auth-server-i78ydv67d-docklabs.vercel.app/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',
+      );
+      expect(isValid1).toBeFalsy();
     });
 
     it('Is did auth URL', () => {
