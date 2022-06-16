@@ -5,7 +5,8 @@
     "skip": "Skip",
     "close": "Close",
     "cancel": "Cancel",
-    "ok": "OK"
+    "ok": "OK",
+    "approve": "Approve"
   },
   "global": {
     "rendering_error": "Something went wrong",
@@ -35,7 +36,7 @@
     "confirm": "Back up",
     "cancel": "Skip"
   },
-  "backup_wallet" : {
+  "backup_wallet": {
     "error": "Unable to generate backup"
   },
   "export_account": {
@@ -185,7 +186,7 @@
     "unable_to_remove_account": "Unable to remove the account",
     "buy": "Buy"
   },
-  "intro_transak" : {
+  "intro_transak": {
     "buy_dock_via_debit_card": "Buy Dock via debit card or bank transfers powered by Transak.",
     "countries_available": "Available at 59+ countries.",
     "continue_to_transak": "Continue Transak",
@@ -289,6 +290,7 @@
     "default_title": "Untitled Credential"
   },
   "qr_scanner": {
+    "nodids": "You have no DIDs!",
     "not_supported_data": "Not supported QR Code",
     "scan_qr_code": "Scan QR Code",
     "no_key_doc": "No key document found",
