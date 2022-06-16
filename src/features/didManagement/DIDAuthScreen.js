@@ -28,15 +28,17 @@ const validateEmail = email => {
     );
 };
 
+const nameField = {
+  name: 'Name',
+  placeholder: 'John Doe',
+  type: 'text',
+  id: 'name',
+};
+
 const knownScopeFields = {
-  public: [
-    {
-      name: 'Name',
-      placeholder: 'John Doe',
-      type: 'text',
-      id: 'name',
-    },
-  ],
+  public: [nameField],
+  profile: [nameField],
+  user: [nameField],
   email: [
     {
       name: 'Email',
