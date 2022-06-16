@@ -176,7 +176,10 @@ export function DIDAuthConfirmScreen({
             <Button onPress={handleCancel} width="48.5%" colorScheme="dark">
               <Typography>{translate('navigation.cancel')}</Typography>
             </Button>
-            <Button onPress={handleSubmit} disabled={!selectedDID} width="48.5%">
+            <Button
+              onPress={handleSubmit}
+              disabled={!selectedDID}
+              width="48.5%">
               <Typography>{translate('navigation.approve')}</Typography>
             </Button>
           </Button.Group>
