@@ -20,6 +20,8 @@
     "invalid_json_file": "Invalid json file"
   },
   "auth": {
+    "authorize": "Authorize",
+    "sign_in_msg": "Sign in with your Decentralized Identity",
     "auth_sign_in": "Signing in...",
     "auth_sign_in_success": "Success! Signed in with DID!",
     "auth_sign_in_failed": "Unknown error on sign in"

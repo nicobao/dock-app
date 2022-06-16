@@ -78,11 +78,6 @@ export function DIDAuthConfirmScreen({
   }
 
   function handleSubmit() {
-    if (!selectedDID) {
-      setError('You need to own a DID');
-      return;
-    }
-
     for (let i = 0; i < fields.length; i++) {
       const field = fields[i];
       const value = profileData[field.id];
@@ -102,7 +97,6 @@ export function DIDAuthConfirmScreen({
   }
 
   function handleChangeDID(value) {
-    console.log('handleChangeDID', value);
     setSelectedDID(value);
   }
 
@@ -126,7 +120,7 @@ export function DIDAuthConfirmScreen({
             alignItems="center">
             <Box flex={1}>
               <Typography variant="h1" textAlign="center">
-                Authorize {name}
+                {translate('auth.authorize')} {name}
               </Typography>
             </Box>
           </Box>
@@ -134,7 +128,7 @@ export function DIDAuthConfirmScreen({
         <Stack direction={'column'} mx={4}>
           <NBox mb={50}>
             <Typography textAlign="center" variant="list-description">
-              Sign in with your Decentralized Identity
+              {translate('auth.sign_in_msg')}
             </Typography>
           </NBox>
 
@@ -182,7 +176,7 @@ export function DIDAuthConfirmScreen({
             <Button onPress={handleCancel} width="48.5%" colorScheme="dark">
               <Typography>{translate('navigation.cancel')}</Typography>
             </Button>
-            <Button onPress={handleSubmit} width="48.5%">
+            <Button onPress={handleSubmit} disabled={!selectedDID} width="48.5%">
               <Typography>{translate('navigation.approve')}</Typography>
             </Button>
           </Button.Group>
