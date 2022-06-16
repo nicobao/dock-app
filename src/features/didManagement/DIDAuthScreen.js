@@ -59,7 +59,7 @@ function getScopeFields(scope) {
       result.push(...knownFields);
     }
   });
-  return result;
+  return result.filter((item, i) => result.indexOf(item) === i);
 }
 
 export function DIDAuthConfirmScreen({
