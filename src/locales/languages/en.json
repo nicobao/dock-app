@@ -21,9 +21,9 @@
   },
   "auth": {
     "authorize": "Authorize",
-    "sign_in_msg": "Sign in with your Decentralized Identity",
+    "sign_in_msg": "Sign in with your Web3 ID",
     "auth_sign_in": "Signing in...",
-    "auth_sign_in_success": "Success! Signed in with DID!",
+    "auth_sign_in_success": "Success! Signed in with Web3 ID!",
     "auth_sign_in_failed": "Unknown error on sign in"
   },
   "delete_wallet_confirmation": {
@@ -292,15 +292,15 @@
     "default_title": "Untitled Credential"
   },
   "qr_scanner": {
-    "nodids": "You have no DIDs!",
+    "nodids": "You have no Web3 IDs!",
     "not_supported_data": "Not supported QR Code",
     "scan_qr_code": "Scan QR Code",
     "no_key_doc": "No key document found",
     "start": "Start",
     "processing": "Processing...",
-    "completed": "DID Authorized",
-    "error": "DID Error",
-    "header": "DID Authorization",
+    "completed": "Web3 ID Authorized",
+    "error": "Web3 ID Error",
+    "header": "Web3 ID Authorization",
     "retry": "Retry"
   }
 }
