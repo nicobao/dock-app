@@ -6,6 +6,7 @@ import {
   authenticationReducer,
   authenticationActions,
 } from './unlock-wallet-slice';
+import {NumericKeyboard} from '../../components/NumericKeyboard';
 
 const mockStore = configureMockStore();
 
@@ -18,6 +19,13 @@ describe('UnlockWalletScreen', () => {
     const wrapper = shallow(<UnlockWalletScreen biometry={true} />, {
       context: {store: mockStore(initialState)},
     });
+    expect(wrapper.dive()).toMatchSnapshot();
+  });
+  it('should render keypad correctly', () => {
+    const wrapper = shallow(
+      <NumericKeyboard marginTop={50} onChange={jest.fn()} value={''} />,
+      {},
+    );
     expect(wrapper.dive()).toMatchSnapshot();
   });
 });
