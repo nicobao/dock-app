@@ -18,7 +18,8 @@ import {Routes} from '../../core/routes';
 import {getOwnedDIDs} from '../credentials/credentials';
 import {useWallet} from '@docknetwork/wallet-sdk-react-native/lib';
 import queryString from 'query-string';
-
+import {KeyboardAvoidingView, Platform} from 'react-native';
+const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0;
 // Taken from https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/web_tests/fast/forms/resources/ValidityState-typeMismatch-email.js?q=ValidityState-typeMismatch-email.js&ss=chromium
 const validateEmail = email => {
   return String(email)
@@ -148,21 +149,26 @@ export function DIDAuthConfirmScreen({
 
           <FormControl isInvalid={!!error}>
             <Box marginTop={12}>
-              {fields.map(field => (
-                <>
-                  <Typography variant="field-label">{field.name}:</Typography>
-                  <Box marginTop={4} marginBottom={12}>
-                    <Input
-                      placeholder={field.placeholder}
-                      {...addTestId(field.name)}
-                      value={profileData[field.id]}
-                      onChangeText={handleChange(field.id)}
-                      autoCapitalize="none"
-                      secureTextEntry={field.type === 'password'}
-                    />
-                  </Box>
-                </>
-              ))}
+              <KeyboardAvoidingView
+                keyboardVerticalOffset={keyboardVerticalOffset}
+                behavior={'position'}
+                style={{flex: 1}}>
+                {fields.map(field => (
+                  <>
+                    <Typography variant="field-label">{field.name}:</Typography>
+                    <Box marginTop={4} marginBottom={12}>
+                      <Input
+                        placeholder={field.placeholder}
+                        {...addTestId(field.name)}
+                        value={profileData[field.id]}
+                        onChangeText={handleChange(field.id)}
+                        autoCapitalize="none"
+                        secureTextEntry={field.type === 'password'}
+                      />
+                    </Box>
+                  </>
+                ))}
+              </KeyboardAvoidingView>
             </Box>
             <FormControl.ErrorMessage>{error}</FormControl.ErrorMessage>
           </FormControl>
