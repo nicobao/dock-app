@@ -170,13 +170,14 @@ const AccountCard = withErrorBoundary(({document, onDetails, onDelete}) => {
 
 export function displayWarning(account) {
   if (
-    account.hasBackup === false ||
+    !account.hasBackup ||
     (account.meta && account.meta.keypairNotFoundWarning)
   ) {
     return true;
   }
   return false;
 }
+
 export const AccountsScreen = withErrorBoundary(
   ({
     accounts = [],
