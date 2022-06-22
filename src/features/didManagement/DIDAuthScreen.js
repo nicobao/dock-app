@@ -149,26 +149,21 @@ export function DIDAuthConfirmScreen({
 
           <FormControl isInvalid={!!error}>
             <Box marginTop={12}>
-              <KeyboardAvoidingView
-                keyboardVerticalOffset={keyboardVerticalOffset}
-                behavior={'position'}
-                style={{flex: 1}}>
-                {fields.map(field => (
-                  <>
-                    <Typography variant="field-label">{field.name}:</Typography>
-                    <Box marginTop={4} marginBottom={12}>
-                      <Input
-                        placeholder={field.placeholder}
-                        {...addTestId(field.name)}
-                        value={profileData[field.id]}
-                        onChangeText={handleChange(field.id)}
-                        autoCapitalize="none"
-                        secureTextEntry={field.type === 'password'}
-                      />
-                    </Box>
-                  </>
-                ))}
-              </KeyboardAvoidingView>
+              {fields.map(field => (
+                <>
+                  <Typography variant="field-label">{field.name}:</Typography>
+                  <Box marginTop={4} marginBottom={12}>
+                    <Input
+                      placeholder={field.placeholder}
+                      {...addTestId(field.name)}
+                      value={profileData[field.id]}
+                      onChangeText={handleChange(field.id)}
+                      autoCapitalize="none"
+                      secureTextEntry={field.type === 'password'}
+                    />
+                  </Box>
+                </>
+              ))}
             </Box>
             <FormControl.ErrorMessage>{error}</FormControl.ErrorMessage>
           </FormControl>
@@ -300,20 +295,27 @@ export function DIDAuthScreenContainer({route}) {
     }
   }, [dids, isScreenFocus, status]);
 
-  return authState === 'start' ? (
-    <DIDAuthConfirmScreen
-      {...{
-        setAuthState,
-        authenticateDID,
-        profileData,
-        setProfileData,
-        dids,
-        selectedDID,
-        setSelectedDID,
-        clientInfo,
-      }}
-    />
-  ) : (
-    <DIDAuthScreen authState={authState} retry={handleRetry} />
+  return (
+    <KeyboardAvoidingView
+      keyboardVerticalOffset={keyboardVerticalOffset}
+      behavior="padding"
+      style={{flex: 1}}>
+      {authState === 'start' ? (
+        <DIDAuthConfirmScreen
+          {...{
+            setAuthState,
+            authenticateDID,
+            profileData,
+            setProfileData,
+            dids,
+            selectedDID,
+            setSelectedDID,
+            clientInfo,
+          }}
+        />
+      ) : (
+        <DIDAuthScreen authState={authState} retry={handleRetry} />
+      )}
+    </KeyboardAvoidingView>
   );
 }
