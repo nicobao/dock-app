@@ -1,4 +1,4 @@
-import {Menu, Pressable, ScrollView, Stack} from 'native-base';
+import {Menu, Pressable, ScrollView, Spinner, Stack} from 'native-base';
 import React, {useCallback, useEffect, useState} from 'react';
 import {Platform, RefreshControl} from 'react-native';
 import RNExitApp from 'react-native-exit-app';
@@ -180,6 +180,8 @@ export function displayWarning(account) {
 
 export const AccountsScreen = withErrorBoundary(
   ({
+    status,
+    migrated,
     accounts = [],
     onAddAccount,
     onImportExistingAccount,
@@ -188,7 +190,7 @@ export const AccountsScreen = withErrorBoundary(
     onRefresh,
     isRefreshing,
   }) => {
-    const isEmpty = accounts.length === 0;
+    const isEmpty = accounts.length === 0 && migrated;
     const [showAddAccount, setShowAddAccount] = useState();
     const [showImportAccount, setShowImportAccount] = useState();
 
@@ -222,6 +224,9 @@ export const AccountsScreen = withErrorBoundary(
           refreshControl={
             <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
           }>
+          <Stack>
+            {Boolean(!migrated || status !== 'ready') && <Spinner />}
+          </Stack>
           <Stack mx={26} flex={1}>
             {isEmpty ? (
               <Box flex={1} justifyContent="center" alignItems="center">
@@ -281,7 +286,7 @@ export const AccountsScreen = withErrorBoundary(
 
 export const AccountsContainer = withErrorBoundary(({navigation}) => {
   const dispatch = useDispatch();
-  const {documents, refetch} = useWallet({syncDocs: true});
+  const {documents, refetch, status, migrated} = useWallet({syncDocs: true});
   const accounts = documents.filter(doc => doc.type === 'Address');
   const [isRefreshing, setRefreshing] = useState(false);
 
@@ -307,6 +312,8 @@ export const AccountsContainer = withErrorBoundary(({navigation}) => {
 
   return (
     <AccountsScreen
+      status={status}
+      migrated={migrated}
       onDelete={accountId => {
         dispatch(accountOperations.removeAccount(accountId));
       }}
