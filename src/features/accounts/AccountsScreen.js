@@ -1,4 +1,4 @@
-import {Menu, Pressable, ScrollView, Spinner, Stack} from 'native-base';
+import {Menu, Pressable, ScrollView, Stack} from 'native-base';
 import React, {useCallback, useEffect, useState} from 'react';
 import {Platform, RefreshControl} from 'react-native';
 import RNExitApp from 'react-native-exit-app';
@@ -190,7 +190,7 @@ export const AccountsScreen = withErrorBoundary(
     onRefresh,
     isRefreshing,
   }) => {
-    const isEmpty = accounts.length === 0 && migrated;
+    const isEmpty = accounts.length === 0;
     const [showAddAccount, setShowAddAccount] = useState();
     const [showImportAccount, setShowImportAccount] = useState();
 
@@ -224,9 +224,6 @@ export const AccountsScreen = withErrorBoundary(
           refreshControl={
             <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
           }>
-          <Stack>
-            {Boolean(!migrated || status !== 'ready') && <Spinner />}
-          </Stack>
           <Stack mx={26} flex={1}>
             {isEmpty ? (
               <Box flex={1} justifyContent="center" alignItems="center">
