@@ -78,7 +78,6 @@ const App = () => {
       <ThemeProvider>
         <WalletSDKProvider>
           <GlobalComponents />
-          {/* <AppIntegrationTest /> */}
         </WalletSDKProvider>
       </ThemeProvider>
     </Provider>

@@ -180,6 +180,8 @@ export function displayWarning(account) {
 
 export const AccountsScreen = withErrorBoundary(
   ({
+    status,
+    migrated,
     accounts = [],
     onAddAccount,
     onImportExistingAccount,
@@ -281,7 +283,7 @@ export const AccountsScreen = withErrorBoundary(
 
 export const AccountsContainer = withErrorBoundary(({navigation}) => {
   const dispatch = useDispatch();
-  const {documents, refetch} = useWallet({syncDocs: true});
+  const {documents, refetch, status, migrated} = useWallet({syncDocs: true});
   const accounts = documents.filter(doc => doc.type === 'Address');
   const [isRefreshing, setRefreshing] = useState(false);
 
@@ -307,6 +309,8 @@ export const AccountsContainer = withErrorBoundary(({navigation}) => {
 
   return (
     <AccountsScreen
+      status={status}
+      migrated={migrated}
       onDelete={accountId => {
         dispatch(accountOperations.removeAccount(accountId));
       }}
