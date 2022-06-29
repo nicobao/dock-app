@@ -83,6 +83,9 @@ export async function processCredential(credential) {
   };
 }
 
+export function doesCredentialExist(allCredentials, credentialToAdd) {
+  return !!allCredentials.find(item => item.content.id === credentialToAdd.id);
+}
 export function useCredentials({onPickFile = pickJSONFile} = {}) {
   const [items, setItems] = useState([]);
 
@@ -113,7 +116,7 @@ export function useCredentials({onPickFile = pickJSONFile} = {}) {
     }
 
     try {
-      if (items.find(item => item.content.id === item.id)) {
+      if (doesCredentialExist(items, jsonData)) {
         showToast({
           message: translate('credentials.existing_credential'),
           type: 'error',
