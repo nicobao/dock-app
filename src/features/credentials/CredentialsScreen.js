@@ -118,14 +118,14 @@ const CredentialListItem = withErrorBoundary(
             </Text>
           </NBox>
           <NBox flex={1} alignItems={'flex-end'}>
-            {credential.issuer.logo ? (
+            {formattedData.image ? (
               <Image
                 borderRadius={8}
                 width={50}
                 height={50}
                 alt={''}
                 source={{
-                  uri: credential.issuer.logo,
+                  uri: formattedData.image,
                 }}
               />
             ) : (
