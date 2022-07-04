@@ -14,6 +14,10 @@ import {walletService} from '@docknetwork/wallet-sdk-core/lib/services/wallet';
 
 const wallet = Wallet.getInstance();
 
+export function doesCredentialExist(allCredentials, credentialToAdd) {
+  return !!allCredentials.find(item => item.content.id === credentialToAdd.id);
+}
+
 export const sortByIssuanceDate = (a, b) =>
   getCredentialTimestamp(b.content) - getCredentialTimestamp(a.content);
 
@@ -83,9 +87,6 @@ export async function processCredential(credential) {
   };
 }
 
-export function doesCredentialExist(allCredentials, credentialToAdd) {
-  return !!allCredentials.find(item => item.content.id === credentialToAdd.id);
-}
 export function useCredentials({onPickFile = pickJSONFile} = {}) {
   const [items, setItems] = useState([]);
 
@@ -181,11 +182,29 @@ export async function getOwnedDIDs() {
   }
 }
 
-function generateAuthVC(credentialSubject) {
+// The issuer (the assigner) is prohibiting verifiers (the assignee) from storing the data in an archive.
+function generatePolicyNoArchiveStore(id, assigner) {
+  return {
+    type: 'IssuerPolicy',
+    id: 'https://ld.dock.io/policies/credential/1',
+    prohibition: [
+      {
+        assigner,
+        assignee: 'AllVerifiers',
+        target: id,
+        action: ['Archival'],
+      },
+    ],
+  };
+}
+
+export function generateAuthVC({controller}, credentialSubject) {
+  assert(!!controller);
   const AUTHCRED_EXPIRY_MINS = 10;
   const expirationDate = new Date(
     new Date().getTime() + AUTHCRED_EXPIRY_MINS * 60000,
   );
+  const id = `didauth:${credentialSubject.state}`;
   return {
     '@context': [
       'https://www.w3.org/2018/credentials/v1',
@@ -197,7 +216,8 @@ function generateAuthVC(credentialSubject) {
         state: 'dk:state',
       },
     ],
-    id: `didauth:${credentialSubject.state}`,
+    termsOfUse: [generatePolicyNoArchiveStore(id, controller)],
+    id,
     type: ['VerifiableCredential', 'DockAuthCredential'],
     credentialSubject,
     expirationDate: expirationDate.toISOString(),
@@ -207,7 +227,7 @@ function generateAuthVC(credentialSubject) {
 export async function onScanAuthQRCode(url, keyDoc, profile) {
   if (keyDoc) {
     try {
-      const verifiableCredential = generateAuthVC({
+      const verifiableCredential = generateAuthVC(keyDoc, {
         ...profile,
         state: getParamsFromUrl(url, 'id'),
       });
