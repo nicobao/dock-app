@@ -200,6 +200,7 @@ function generatePolicyNoArchiveStore(id, assigner) {
 
 export function generateAuthVC({controller}, credentialSubject) {
   assert(!!controller);
+  assert(!!credentialSubject);
   const AUTHCRED_EXPIRY_MINS = 10;
   const expirationDate = new Date(
     new Date().getTime() + AUTHCRED_EXPIRY_MINS * 60000,
