@@ -26,7 +26,7 @@ import {TransactionConfirmationModal} from '../transactions/TransactionConfirmat
 import {TransactionDetailsModal} from '../transactions/TransactionDetailsModal';
 import {TransactionStatus} from '../transactions/transactions-slice';
 import {accountOperations} from './account-slice';
-import {useAccount} from '@docknetwork/wallet-sdk-react-native/lib';
+import {useAccount, useWallet} from '@docknetwork/wallet-sdk-react-native/lib';
 import {AccountSettingsModal} from './AccountSettingsModal';
 import {QRCodeModal} from './QRCodeModal';
 import {addTestId} from '../../core/automation-utils';
@@ -549,6 +549,12 @@ export function AccountDetailsContainer({route}) {
   const dispatch = useDispatch();
   const {account} = useAccount(accountId);
   const {features} = useFeatures();
+  const {refetch} = useWallet({syncDocs: true});
+
+  useEffect(() => {
+    refetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [isRefreshing, setRefreshing] = useState(false);
 
