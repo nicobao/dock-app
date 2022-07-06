@@ -151,11 +151,16 @@ const variantsMap = {
     lineHeight: 20,
     color: Theme.colors.primaryBackground,
   },
+  didDescription: {
+    fontFamily: Theme.fontFamily.default,
+    fontWeight: 500,
+    fontSize: 16,
+  },
 };
 
 export const Typography: ComponentType<TypographyProps> = styled(Text)`
   font-family: ${Theme.fontFamily.default};
-  line-height: 25px;
+  line-height: 24px;
   color: ${props => (props.color ? props.color : Theme.colors.text)};
   ${({variant}) => {
     return variantsMap[variant] || {};

@@ -36,4 +36,5 @@ export const Routes = {
   CREATE_WALLET_MNEMONIC: 'createWallet/mnemonic',
   BACKUP_CREATE: 'backup/create',
   BACKUP_LOAD: 'backup/load',
+  DID_MANAGEMENT_LIST: 'didManagement/list',
 };
