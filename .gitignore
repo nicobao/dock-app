@@ -70,3 +70,4 @@ buck-out/
 
 dock_unit_test*
 ios/GoogleService-Info.plist
+coverage
