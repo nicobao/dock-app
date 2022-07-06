@@ -195,7 +195,6 @@ export function SendTokenContainer({route}) {
   const dispatch = useDispatch();
   const {address, recipientAddress} = route.params || {};
   const {account} = useAccount(address);
-  console.log('selected account', account);
 
   const [showConfirmation, setShowConfirmation] = useState();
   const [step, setStep] = useState(Steps.sendTo);
