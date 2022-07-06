@@ -1,5 +1,14 @@
-import {parseTransaction, sortTransactions} from './transactions-slice';
+import {getRealm} from '@docknetwork/wallet-sdk-core/lib/core/realm';
+import {
+  getTransactionQuery,
+  parseTransaction,
+  sortTransactions,
+  transactionsOperations,
+} from './transactions-slice';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 
+const mockStore = configureMockStore([thunk]);
 describe('transactions-slice', () => {
   it('expect to parse transaction', () => {
     const t1 = {
@@ -39,5 +48,42 @@ describe('transactions-slice', () => {
     expect(sorted[1]).toBe(t3);
     expect(sorted[2]).toBe(t2);
     expect(sorted[3]).toBe(t1);
+  });
+  it('Test if realm delete is called', () => {
+    const initialState = {
+      app: {
+        networkId: 'testnet',
+        devSettingsEnabled: true,
+      },
+      wallet: {},
+      account: {},
+      createAccount: {},
+      qrCode: {},
+      transactions: {
+        loading: false,
+        transactions: [],
+      },
+    };
+
+    const store = mockStore(initialState);
+
+    const realm = getRealm();
+
+    expect(getTransactionQuery('testUUid')).toBe(
+      'hash == "testUUid" OR id == "testUUid"',
+    );
+
+    return store
+      .dispatch(
+        transactionsOperations.sendTransaction({
+          recipientAddress: '3C7Hq5jQGxeYzL7LnVASn48tEfr6D7yKtNYSuXcgioQoWWsB',
+          accountAddress: '4C7Hq5jQGxeYzL7LnVASn48tEfr6D7yKtNYSuXcgioQoWWsB',
+          amount: 1,
+          fee: 1,
+        }),
+      )
+      .then(() => {
+        expect(realm.delete.mock.calls.length).toBe(1);
+      });
   });
 });

@@ -66,6 +66,18 @@ export const transactionsSelectors = {
   getTransactions: state => getRoot(state).transactions,
 };
 
+export function getTransactionQuery(internalId) {
+  return `hash == "${internalId}" OR id == "${internalId}"`;
+}
+export function deleteLocalTransaction(internalId) {
+  const realm = getRealm();
+  realm.write(() => {
+    const realmTransaction = realm
+      .objects('Transaction')
+      .filtered(getTransactionQuery(internalId));
+    realm.delete(realmTransaction);
+  });
+}
 export const transactionsOperations = {
   loadExternalTransactions: account => async (dispatch, getState) => {
     const realm = getRealm();
@@ -178,7 +190,6 @@ export const transactionsOperations = {
         type: 'success',
         message: translate('confirm_transaction.transfer_initiated'),
       });
-
       substrateService
         .sendTokens({
           toAddress: recipientAddress,
@@ -192,12 +203,7 @@ export const transactionsOperations = {
           };
           dispatch(transactionsActions.updateTransaction(updatedTransation));
 
-          realm.write(() => {
-            const realmTransaction = realm
-              .objects('Transaction')
-              .filtered(`hash == "${internalId}"`);
-            realm.delete(realmTransaction);
-          });
+          deleteLocalTransaction(internalId);
 
           showToast({
             type: 'success',
