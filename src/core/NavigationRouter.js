@@ -39,6 +39,7 @@ import {navigate} from './navigation';
 import {DIDAuthScreenContainer} from '../features/didManagement/DIDAuthScreen';
 import {authenticationSelectors} from '../features/unlock-wallet/unlock-wallet-slice';
 import {useSelector} from 'react-redux';
+import {DIDListScreenContainer} from '../features/didManagement/DIDListScreen';
 
 const AppStack = createStackNavigator();
 const RootStack = createStackNavigator();
@@ -290,6 +291,13 @@ function AppStackScreen() {
           name: Routes.APP_CREDENTIALS,
           component: CredentialsContainer,
           tab: 'credentials',
+        })}
+      />
+      <AppStack.Screen
+        {...getScreenProps({
+          name: Routes.DID_MANAGEMENT_LIST,
+          component: DIDListScreenContainer,
+          tab: 'did-management',
         })}
       />
     </AppStack.Navigator>
