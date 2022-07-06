@@ -29,6 +29,7 @@ describe('AccountsScreen', () => {
       displayWarning({
         id: 'test',
         name: 'Account name',
+        mnemonic: 'some phrase',
         balance: 21,
       }),
     );
@@ -61,6 +62,7 @@ describe('AccountsScreen', () => {
         correlation: ['5f274200-9e9e-4fea-87e2-ab5045b8e21e'],
         derivationPath: '',
         hasBackup: false,
+        mnemonic: 'some phrase',
         id: '3HAZ9oQx9eJgy7M2r4X6wPcCV2W438xMpXJjmFsqEwDm4BNu',
         keypairType: 'sr25519',
         meta: {

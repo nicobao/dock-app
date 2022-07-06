@@ -170,7 +170,7 @@ const AccountCard = withErrorBoundary(({document, onDetails, onDelete}) => {
 
 export function displayWarning(account) {
   if (
-    !account.hasBackup ||
+    (account.mnemonic && !account.hasBackup) ||
     (account.meta && account.meta.keypairNotFoundWarning)
   ) {
     return true;
