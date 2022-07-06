@@ -1,0 +1,126 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DIDListScreen should render correctly  1`] = `
+<RNCSafeAreaView
+  style={
+    Object {
+      "backgroundColor": "#000",
+      "flex": 1,
+    }
+  }
+  testID="DIDListScreen"
+>
+  <AppGlobalHeader />
+  <Memo(ForwardRef(Box))
+    flex={1}
+  >
+    <Memo(ForwardRef(Box))
+      flex={1}
+    >
+      <Styled(View)>
+        <Box
+          alignItems="center"
+          flexDirection="row"
+          marginLeft={22}
+          marginRight={22}
+        >
+          <Box
+            flex={1}
+          >
+            <Styled(Component)
+              fontFamily="Montserrat"
+              fontSize={24}
+              fontWeight="600"
+            >
+              DIDs
+            </Styled(Component)>
+          </Box>
+          <Box
+            row={true}
+          >
+            <IconButton
+              accessibilityLabel="DIDListScreen_Add_DID"
+              col={true}
+              onPress={null}
+              testID="DIDListScreen_Add_DID"
+            >
+              <SvgFile />
+            </IconButton>
+          </Box>
+        </Box>
+      </Styled(View)>
+      <ForwardRef
+        marginLeft={26}
+        marginRight={26}
+      >
+        <Memo(ForwardRef(Box))
+          mt={70}
+        >
+          <Memo(ForwardRef(VStack))
+            alignItems="center"
+            space={7}
+          >
+            <SvgFile />
+            <Styled(Component)
+              mt={3}
+              textAlign="center"
+              variant="didDescription"
+            >
+              Decentralized Identifiers (DIDs) are a new type of identifier that enables a decentralized digital identity and allows you to accept verifiable credentials.
+            </Styled(Component)>
+            <Memo(ForwardRef(Button))
+              endIcon={
+                <Memo
+                  as={[Function]}
+                  name="open-outline"
+                  size="xs"
+                />
+              }
+              isActive={false}
+              onPress={null}
+              size="xs"
+              variant="transactionFilter"
+            >
+              <Styled(Component)
+                color="#fff"
+                variant="transaction-filter"
+              >
+                Learn More
+              </Styled(Component)>
+            </Memo(ForwardRef(Button))>
+          </Memo(ForwardRef(VStack))>
+        </Memo(ForwardRef(Box))>
+      </ForwardRef>
+      <Styled(Component)
+        flex={1}
+        marginBottom={114}
+        marginLeft={3}
+        marginRight={3}
+      >
+        <BigButton
+          accessibilityLabel="CreateNewDID"
+          icon={<SvgFile />}
+          onPress={null}
+          testID="CreateNewDID"
+        >
+          Create New DID
+        </BigButton>
+        <BigButton
+          accessibilityLabel="ImportExistingDIDBtn"
+          icon={<SvgFile />}
+          onPress={null}
+          testID="ImportExistingDIDBtn"
+        >
+          Import existing DID
+        </BigButton>
+      </Styled(Component)>
+    </Memo(ForwardRef(Box))>
+    <Memo(ForwardRef(Box))
+      flex={1}
+      flexGrow={0.11}
+    >
+      <TabNavigation />
+    </Memo(ForwardRef(Box))>
+  </Memo(ForwardRef(Box))>
+</RNCSafeAreaView>
+`;

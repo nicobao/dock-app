@@ -6,6 +6,7 @@ import {
   getDIDAddress,
   processCredential,
   doesCredentialExist,
+  generateAuthVC,
 } from './credentials';
 import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
 
@@ -28,6 +29,44 @@ const mockCreds = [
   },
 ];
 describe('Credentials helpers', () => {
+  describe('generateAuthVC', () => {
+    it('expect a valid credential with terms of use', () => {
+      const credential = generateAuthVC(
+        {controller: 'did:test:123'},
+        {
+          id: 'my subject',
+          state: 'state',
+        },
+      );
+
+      expect(credential['@context']).toBeDefined();
+      expect(credential.id).toBeDefined();
+      expect(credential.type).toBeDefined();
+      expect(credential.expirationDate).toBeDefined();
+      expect(credential.credentialSubject).toBeDefined();
+      expect(credential.credentialSubject.id).toEqual('my subject');
+      expect(credential.credentialSubject.state).toEqual('state');
+      expect(credential.id).toEqual('didauth:state');
+      expect(credential.type[0]).toEqual('VerifiableCredential');
+      expect(credential.type[1]).toEqual('DockAuthCredential');
+      expect(credential.termsOfUse).toBeDefined();
+      expect(credential.termsOfUse[0]).toBeDefined();
+      expect(credential.termsOfUse[0].type).toBeDefined();
+      expect(credential.termsOfUse[0].type).toEqual('IssuerPolicy');
+      expect(credential.termsOfUse[0].prohibition[0]).toBeDefined();
+    });
+
+    it('expect throw for invalid controller', () => {
+      expect(() => generateAuthVC(null, {id: 'test'})).toThrowError();
+    });
+
+    it('expect throw for invalid subject', () => {
+      expect(() =>
+        generateAuthVC({controller: 'did:test:123'}, null),
+      ).toThrowError();
+    });
+  });
+
   describe('getCredentialTimestamp', () => {
     it('expect to get credential timestamp', () => {
       expect(
