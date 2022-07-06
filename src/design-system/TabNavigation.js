@@ -7,6 +7,7 @@ import {
   MenuScanQRIcon,
   MenuSettingsIcon,
   MenuTokensIcon,
+  DIDManagementIcon,
 } from '../assets/icons';
 import React, {useContext, useMemo} from 'react';
 import {NavigationContext} from '../core/NavigationContext';
@@ -33,6 +34,12 @@ const getMenuOptions = (features: FeatureFlags) =>
       route: Routes.APP_QR_SCANNER,
       name: translate('app_navigation.scan'),
       Icon: MenuScanQRIcon,
+    },
+    {
+      id: 'did-management',
+      route: Routes.DID_MANAGEMENT_LIST,
+      name: translate('app_navigation.did_management'),
+      Icon: DIDManagementIcon,
     },
     {
       id: 'settings',
