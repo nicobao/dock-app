@@ -159,7 +159,14 @@ export const transactionsOperations = {
     },
 
   sendTransaction:
-    ({recipientAddress, accountAddress, amount, fee, prevTransaction}) =>
+    ({
+      recipientAddress,
+      accountAddress,
+      amount,
+      fee,
+      prevTransaction,
+      sendMax,
+    }) =>
     async (dispatch, getState) => {
       showToast({
         message: translate('send_token.transaction_sent'),
@@ -194,6 +201,7 @@ export const transactionsOperations = {
         .sendTokens({
           toAddress: recipientAddress,
           fromAddress: accountAddress,
+          transferAll: sendMax,
           amount: parsedAmount,
         })
         .then(res => {
