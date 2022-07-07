@@ -224,7 +224,7 @@ export function SendTokenContainer({route}) {
       sendMax: false,
       [key]: evt,
     });
-  }
+  };
 
   const updateForm = newValues =>
     setForm(v => ({
