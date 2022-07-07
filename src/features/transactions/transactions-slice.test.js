@@ -8,12 +8,9 @@ import {
 import {substrateService} from '@docknetwork/wallet-sdk-core/lib/services/substrate';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import {initRealm} from '@docknetwork/wallet-sdk-core/lib/core/realm';
 
 const mockStore = configureMockStore([thunk]);
 describe('transactions-slice', () => {
-  beforeAll(initRealm);
-
   it('expect to parse transaction', () => {
     const t1 = {
       date: new Date(),
