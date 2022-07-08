@@ -66,10 +66,13 @@ describe('SendTokenScreen', () => {
     it('expect to reduce the amount to pay for fees', () => {
       const setShowConfirmation = jest.fn();
       let form = {
-        amount: 2,
+        amount: 1,
       };
       const updateForm = f => {
-        form = f;
+        form = {
+          ...form,
+          ...f,
+        };
       };
       const balance = 3;
       const fee = 2;
@@ -87,7 +90,7 @@ describe('SendTokenScreen', () => {
       expect(result).toBe(true);
       expect(form.fee).toBe(fee);
       expect(form.amountMessage).toBeDefined();
-      expect(form.amount.toNumber()).toBe(1);
+      expect(form.amount).toBe(1);
       expect(setShowConfirmation).toBeCalledWith(true);
     });
 

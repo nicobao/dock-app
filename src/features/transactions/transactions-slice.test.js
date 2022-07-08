@@ -5,6 +5,7 @@ import {
   sortTransactions,
   transactionsOperations,
 } from './transactions-slice';
+import {substrateService} from '@docknetwork/wallet-sdk-core/lib/services/substrate';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
@@ -49,6 +50,7 @@ describe('transactions-slice', () => {
     expect(sorted[2]).toBe(t2);
     expect(sorted[3]).toBe(t1);
   });
+
   it('Test if realm delete is called', () => {
     const initialState = {
       app: {
@@ -85,5 +87,30 @@ describe('transactions-slice', () => {
       .then(() => {
         expect(realm.delete.mock.calls.length).toBe(1);
       });
+  });
+
+  it('expect to sendTransaction', async () => {
+    const dispatch = () => {};
+    const getState = () => {};
+
+    const spy = jest.spyOn(substrateService, 'sendTokens');
+
+    spy.mockImplementation(() => Promise.resolve({}));
+
+    const form = {
+      recipientAddress: 'address',
+      accountAddress: 'address2',
+      amount: 1,
+      sendMax: true,
+    };
+
+    await transactionsOperations.sendTransaction(form)(dispatch, getState);
+
+    expect(substrateService.sendTokens).toBeCalledWith({
+      toAddress: form.recipientAddress,
+      fromAddress: form.accountAddress,
+      transferAll: form.sendMax,
+      amount: form.amount,
+    });
   });
 });
