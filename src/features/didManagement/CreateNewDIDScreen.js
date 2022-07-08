@@ -27,7 +27,7 @@ import {Ionicons} from '@native-base/icons';
 export function CreateNewDIDScreen() {
   const onChange = useCallback(() => {}, []);
   return (
-    <ScreenContainer testID="CreateNewDIDScreen" showTabNavigation>
+    <ScreenContainer testID="CreateNewDIDScreen">
       <Header>
         <Box
           marginLeft={1}

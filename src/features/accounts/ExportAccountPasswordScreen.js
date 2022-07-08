@@ -1,4 +1,4 @@
-import {CheckCircleIcon, Stack} from 'native-base';
+import {Stack} from 'native-base';
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {addTestId} from 'src/core/automation-utils';
@@ -12,21 +12,12 @@ import {
   LoadingButton,
   NBox as Box,
   ScreenContainer,
-  Theme,
   Typography,
 } from '../../design-system';
 import {BackButton} from '../../design-system/buttons';
 import {accountOperations} from './account-slice';
 import {AccountsConstants} from './constants';
-
-const CheckCircle = ({checked}) => (
-  <CheckCircleIcon
-    color={checked ? Theme.colors.circleChecked : Theme.colors.circleUnckecked}
-    width={16}
-    height={16}
-    marginRight={2}
-  />
-);
+import {CheckCircle} from '../../components/CheckCircleComponent';
 
 export function GenericPasswordScreen({
   form,
