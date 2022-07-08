@@ -73,6 +73,7 @@ jobs:
           git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
           yarn --cwd ../wallet-sdk install
           yarn sync-sdk
+          yarn build-sdk
           rm -rf ./certs
           git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/dock-app-certs.git" ./certs
           mv ./certs/google-play.json ./
@@ -163,6 +164,7 @@ jobs:
           git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
           yarn --cwd ../wallet-sdk install
           yarn sync-sdk
+          yarn build-sdk
           echo "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
           git clone "${{ secrets.CERTS_REPO_URL }}" ./certs
           # Pull env variables from certs repo
