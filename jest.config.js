@@ -1,5 +1,13 @@
 const config = {
   preset: 'react-native',
+  coverageThreshold: {
+    global: {
+      branches: 25,
+      functions: 25,
+      lines: 25,
+      statements: 25,
+    }
+  },
   setupFilesAfterEnv: ['@testing-library/jest-native/extend-expect'],
   setupFiles: ['<rootDir>/test/testSetup.js'],
   transformIgnorePatterns: [
