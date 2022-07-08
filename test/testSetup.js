@@ -6,7 +6,7 @@ import mockAsyncStorage from '../node_modules/@react-native-async-storage/async-
 import mockRNPermissions from '../node_modules/react-native-permissions/mock';
 import '../src/core/setup-env';
 import {DebugConstants} from '../src/features/constants';
-jest.mock('../src/core/realm', () => {
+jest.mock('@docknetwork/wallet-sdk-core/lib/core/realm', () => {
   const realmFunctions = {
     write: jest.fn(callback => {
       callback();
@@ -19,6 +19,7 @@ jest.mock('../src/core/realm', () => {
   };
   return {
     getRealm: () => realmFunctions,
+    addSchema: jest.fn(),
   };
 });
 jest.mock('@react-native-async-storage/async-storage', () => mockAsyncStorage);
@@ -182,15 +183,15 @@ jest.mock('@docknetwork/react-native-sdk/src/client/wallet-rpc', () => {
     },
   };
 });
-jest.mock('@docknetwork/react-native-sdk/src/client/api-rpc', () => {
+jest.mock('@docknetwork/wallet-sdk-core/lib/services/substrate', () => {
   const originalModule = jest.requireActual(
-    '@docknetwork/react-native-sdk/src/client/api-rpc',
+    '@docknetwork/wallet-sdk-core/lib/services/substrate',
   );
-  const {ApiRpc} = originalModule;
+  const {substrateService} = originalModule;
   return {
     __esModule: true,
-    ApiRpc: {
-      ...ApiRpc,
+    substrateService: {
+      ...substrateService,
       sendTokens: jest.fn(() => Promise.resolve()),
     },
   };
