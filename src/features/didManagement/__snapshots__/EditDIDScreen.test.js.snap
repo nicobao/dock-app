@@ -2,13 +2,14 @@
 
 exports[`EditDIDScreen should render correctly  1`] = `
 <RNCSafeAreaView
+  accessibilityLabel="EditDIDScreen"
   style={
     Object {
       "backgroundColor": "#000",
       "flex": 1,
     }
   }
-  testID="CreateNewDIDScreen"
+  testID="EditDIDScreen"
 >
   <AppGlobalHeader />
   <Memo(ForwardRef(Box))
@@ -28,7 +29,9 @@ exports[`EditDIDScreen should render correctly  1`] = `
             width="80px"
           >
             <BackButton
+              accessibilityLabel="EditDIDScreenGoBack"
               onPress={[Function]}
+              testID="EditDIDScreenGoBack"
             />
           </Memo(ForwardRef(Box))>
           <Memo(ForwardRef(Box))
@@ -62,7 +65,9 @@ exports[`EditDIDScreen should render correctly  1`] = `
               DID Name
             </Memo(ForwardRef(FormControlLabel))>
             <Memo(ForwardRef(Input))
+              accessibilityLabel="EditDIDScreenGoBack"
               autoCapitalize="none"
+              testID="EditDIDScreenGoBack"
               value=""
             />
           </Memo(ForwardRef(Stack))>
@@ -72,6 +77,7 @@ exports[`EditDIDScreen should render correctly  1`] = `
         mx={7}
       >
         <LoadingButton
+          accessibilityLabel="EditDIDScreenSave"
           full={true}
           isDisabled={false}
           mb={70}

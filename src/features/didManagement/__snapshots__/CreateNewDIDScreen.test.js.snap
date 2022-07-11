@@ -28,7 +28,9 @@ exports[`CreateNewDIDScreen should render correctly  1`] = `
             width="80px"
           >
             <BackButton
+              accessibilityLabel="CreateNewDIDScreenGoBack"
               onPress={[Function]}
+              testID="CreateNewDIDScreenGoBack"
             />
           </Memo(ForwardRef(Box))>
           <Memo(ForwardRef(Box))
@@ -62,7 +64,9 @@ exports[`CreateNewDIDScreen should render correctly  1`] = `
               DID Name
             </Memo(ForwardRef(FormControlLabel))>
             <Memo(ForwardRef(Input))
+              accessibilityLabel="CreateNewDIDScreenDIDName"
               autoCapitalize="none"
+              testID="CreateNewDIDScreenDIDName"
               value=""
             />
             <Memo(ForwardRef(FormControlHelperText))>
@@ -148,11 +152,12 @@ exports[`CreateNewDIDScreen should render correctly  1`] = `
           onChange={[Function]}
         />
         <LoadingButton
+          accessibilityLabel="CreateNewDIDScreenDIDCreate"
           full={true}
           isDisabled={false}
           mt={70}
           onPress={null}
-          testID="next-btn"
+          testID="CreateNewDIDScreenDIDCreate"
         >
           Create
         </LoadingButton>
