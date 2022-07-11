@@ -23,6 +23,7 @@ import {
 import {translate} from '../../locales';
 import {DIDAdvancedOptions} from './components/DIDAdvancedOptions';
 import {Ionicons} from '@native-base/icons';
+import {addTestId} from '../../core/automation-utils';
 
 export function CreateNewDIDScreen() {
   const onChange = useCallback(() => {}, []);
@@ -35,7 +36,10 @@ export function CreateNewDIDScreen() {
           flexDirection="row"
           alignItems="center">
           <NBox width={'80px'}>
-            <BackButton onPress={navigateBack} />
+            <BackButton
+              {...addTestId('CreateNewDIDScreenGoBack')}
+              onPress={navigateBack}
+            />
           </NBox>
           <NBox
             flex={1}
@@ -57,6 +61,7 @@ export function CreateNewDIDScreen() {
               {translate('didManagement.did_name')}
             </FormControl.Label>
             <Input
+              {...addTestId('CreateNewDIDScreenDIDName')}
               value={''}
               onChangeText={onChange('word1')}
               autoCapitalize="none"
@@ -109,7 +114,7 @@ export function CreateNewDIDScreen() {
         <DIDAdvancedOptions onChange={onChange} form={{}} />
         <LoadingButton
           full
-          testID="next-btn"
+          {...addTestId('CreateNewDIDScreenDIDCreate')}
           mt={70}
           onPress={null}
           isDisabled={false}>

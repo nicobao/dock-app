@@ -12,6 +12,7 @@ import {
 import {navigateBack} from '../../core/navigation';
 import {translate} from '../../locales';
 import {FormControl, ScrollView, Stack} from 'native-base';
+import {addTestId} from '../../core/automation-utils';
 export function EditDIDScreen() {
   const onChange = useCallback(() => {}, []);
   return (
@@ -23,7 +24,10 @@ export function EditDIDScreen() {
           flexDirection="row"
           alignItems="center">
           <NBox width={'80px'}>
-            <BackButton onPress={navigateBack} />
+            <BackButton
+              {...addTestId('EditDIDScreenGoBack')}
+              onPress={navigateBack}
+            />
           </NBox>
           <NBox
             flex={1}
@@ -45,6 +49,7 @@ export function EditDIDScreen() {
               {translate('didManagement.did_name')}
             </FormControl.Label>
             <Input
+              {...addTestId('EditDIDScreenGoBack')}
               value={''}
               onChangeText={onChange('word1')}
               autoCapitalize="none"
@@ -54,6 +59,7 @@ export function EditDIDScreen() {
       </ScrollView>
       <NBox mx={7}>
         <LoadingButton
+          {...addTestId('EditDIDScreenSave')}
           full
           testID="save-btn"
           mb={70}
