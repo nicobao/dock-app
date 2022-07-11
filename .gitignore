@@ -28,6 +28,7 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
+bundle.js
 
 # Android/IntelliJ
 #
@@ -70,3 +71,4 @@ buck-out/
 
 dock_unit_test*
 ios/GoogleService-Info.plist
+coverage
