@@ -1,6 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {translate} from 'src/locales';
 import {substrateService} from '@docknetwork/wallet-sdk-core/lib/services/substrate';
+import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
 import {Transactions} from '@docknetwork/wallet-sdk-transactions/lib/transactions';
 import uuid from 'uuid';
 import {getRealm} from '@docknetwork/wallet-sdk-core/lib/core/realm';
@@ -205,6 +206,10 @@ export const transactionsOperations = {
           amount: parsedAmount,
         })
         .then(res => {
+          [recipientAddress, accountAddress].forEach(address => {
+            Wallet.getInstance().accounts.fetchBalance(address);
+          });
+
           const updatedTransation = {
             ...transaction,
             status: TransactionStatus.Complete,
