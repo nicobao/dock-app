@@ -75,4 +75,3 @@ export function EditDIDScreen() {
 export function EditDIDScreenContainer() {
   return <EditDIDScreen />;
 }
-ZZ;
