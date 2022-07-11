@@ -16,7 +16,7 @@ import {addTestId} from '../../core/automation-utils';
 export function EditDIDScreen() {
   const onChange = useCallback(() => {}, []);
   return (
-    <ScreenContainer testID="CreateNewDIDScreen">
+    <ScreenContainer {...addTestId('EditDIDScreen')}>
       <Header>
         <Box
           marginLeft={1}
@@ -75,3 +75,4 @@ export function EditDIDScreen() {
 export function EditDIDScreenContainer() {
   return <EditDIDScreen />;
 }
+ZZ;
