@@ -162,7 +162,7 @@ export function handleFeeUpdate({
   };
 
   if (amountAndFees > accountBalance) {
-    const newAmount = BigNumber(account.balance).minus(fee);
+    const newAmount = BigNumber(account.balance).minus(fee).toNumber();
 
     formUpdates.amount = newAmount;
 
@@ -215,11 +215,16 @@ export function SendTokenContainer({route}) {
       message: address,
     });
 
-  const handleChange = key => evt =>
+  const handleChange = key => evt => {
+    if (form[key] === evt) {
+      return;
+    }
+
     updateForm({
       sendMax: false,
       [key]: evt,
     });
+  };
 
   const updateForm = newValues =>
     setForm(v => ({
