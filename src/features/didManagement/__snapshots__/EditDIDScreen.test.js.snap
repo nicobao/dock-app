@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditDIDScreen should render correctly  1`] = `
+<RNCSafeAreaView
+  accessibilityLabel="EditDIDScreen"
+  style={
+    Object {
+      "backgroundColor": "#000",
+      "flex": 1,
+    }
+  }
+  testID="EditDIDScreen"
+>
+  <AppGlobalHeader />
+  <Memo(ForwardRef(Box))
+    flex={1}
+  >
+    <Memo(ForwardRef(Box))
+      flex={1}
+    >
+      <Styled(View)>
+        <Box
+          alignItems="center"
+          flexDirection="row"
+          marginLeft={1}
+          marginRight={22}
+        >
+          <Memo(ForwardRef(Box))
+            width="80px"
+          >
+            <BackButton
+              accessibilityLabel="EditDIDScreenGoBack"
+              onPress={[Function]}
+              testID="EditDIDScreenGoBack"
+            />
+          </Memo(ForwardRef(Box))>
+          <Memo(ForwardRef(Box))
+            alignContent="center"
+            alignItems="center"
+            flex={1}
+            pl={15}
+            width="100%"
+          >
+            <Styled(Component)
+              variant="h3"
+            >
+              Edit DID
+            </Styled(Component)>
+          </Memo(ForwardRef(Box))>
+          <Memo(ForwardRef(Box))
+            alignItems="flex-end"
+            width="80px"
+          />
+        </Box>
+      </Styled(View)>
+      <ForwardRef
+        marginLeft={5}
+        marginRight={5}
+      >
+        <Memo(ForwardRef(FormControl))>
+          <Memo(ForwardRef(Stack))
+            mt={7}
+          >
+            <Memo(ForwardRef(FormControlLabel))>
+              DID Name
+            </Memo(ForwardRef(FormControlLabel))>
+            <Memo(ForwardRef(Input))
+              accessibilityLabel="EditDIDScreenGoBack"
+              autoCapitalize="none"
+              testID="EditDIDScreenGoBack"
+              value=""
+            />
+          </Memo(ForwardRef(Stack))>
+        </Memo(ForwardRef(FormControl))>
+      </ForwardRef>
+      <Memo(ForwardRef(Box))
+        mx={7}
+      >
+        <LoadingButton
+          accessibilityLabel="EditDIDScreenSave"
+          full={true}
+          isDisabled={false}
+          mb={70}
+          onPress={null}
+          testID="save-btn"
+        >
+          Save
+        </LoadingButton>
+      </Memo(ForwardRef(Box))>
+    </Memo(ForwardRef(Box))>
+  </Memo(ForwardRef(Box))>
+</RNCSafeAreaView>
+`;

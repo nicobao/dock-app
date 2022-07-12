@@ -37,9 +37,13 @@ import DeepLinking from 'react-native-deep-linking';
 import {isDidAuthUrl} from '../features/qr-code-scanner/qr-code';
 import {navigate} from './navigation';
 import {DIDAuthScreenContainer} from '../features/didManagement/DIDAuthScreen';
+import {CreateNewDIDScreenContainer} from '../features/didManagement/CreateNewDIDScreen';
 import {authenticationSelectors} from '../features/unlock-wallet/unlock-wallet-slice';
 import {useSelector} from 'react-redux';
 import {DIDListScreenContainer} from '../features/didManagement/DIDListScreen';
+import {EditDIDScreenContainer} from '../features/didManagement/EditDIDScreen';
+import {ShareDIDScreenContainer} from '../features/didManagement/ShareDIDScreen';
+import {ExportDIDScreenContainer} from '../features/didManagement/ExportDIDScreen';
 
 const AppStack = createStackNavigator();
 const RootStack = createStackNavigator();
@@ -298,6 +302,46 @@ function AppStackScreen() {
           name: Routes.DID_MANAGEMENT_LIST,
           component: DIDListScreenContainer,
           tab: 'did-management',
+        })}
+      />
+
+      <AppStack.Screen
+        {...getScreenProps({
+          name: Routes.DID_MANAGEMENT_NEW_DID,
+          component: CreateNewDIDScreenContainer,
+          options: {
+            gestureEnabled: false,
+          },
+        })}
+      />
+
+      <AppStack.Screen
+        {...getScreenProps({
+          name: Routes.DID_MANAGEMENT_EDIT_DID,
+          component: EditDIDScreenContainer,
+          options: {
+            gestureEnabled: false,
+          },
+        })}
+      />
+
+      <AppStack.Screen
+        {...getScreenProps({
+          name: Routes.DID_MANAGEMENT_SHARE_DID,
+          component: ShareDIDScreenContainer,
+          options: {
+            gestureEnabled: false,
+          },
+        })}
+      />
+
+      <AppStack.Screen
+        {...getScreenProps({
+          name: Routes.DID_MANAGEMENT_EXPORT_DID,
+          component: ExportDIDScreenContainer,
+          options: {
+            gestureEnabled: false,
+          },
         })}
       />
     </AppStack.Navigator>
