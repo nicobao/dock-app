@@ -1,4 +1,5 @@
 import {getRealm} from '@docknetwork/wallet-sdk-core/lib/core/realm';
+import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
 import {
   getTransactionQuery,
   parseTransaction,
@@ -93,9 +94,12 @@ describe('transactions-slice', () => {
     const dispatch = () => {};
     const getState = () => {};
 
-    const spy = jest.spyOn(substrateService, 'sendTokens');
+    const walletModule = Wallet.getInstance();
+    const sendTokensSpy = jest.spyOn(substrateService, 'sendTokens');
+    const fetchBalanceSpy = jest.spyOn(walletModule.accounts, 'fetchBalance');
 
-    spy.mockImplementation(() => Promise.resolve({}));
+    sendTokensSpy.mockImplementation(() => Promise.resolve({}));
+    fetchBalanceSpy.mockImplementation(() => Promise.resolve({}));
 
     const form = {
       recipientAddress: 'address',
@@ -112,5 +116,12 @@ describe('transactions-slice', () => {
       transferAll: form.sendMax,
       amount: form.amount,
     });
+
+    expect(walletModule.accounts.fetchBalance).toBeCalledWith(
+      form.recipientAddress,
+    );
+
+    fetchBalanceSpy.mockClear();
+    sendTokensSpy.mockClear();
   });
 });
