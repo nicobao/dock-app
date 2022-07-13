@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React from 'react';
 import {
   BackButton,
   Box,
@@ -10,7 +10,7 @@ import {
   Theme,
   Typography,
 } from '../../design-system';
-import {navigateBack, navigate} from '../../core/navigation';
+import {navigateBack} from '../../core/navigation';
 import {
   FormControl,
   HStack,
@@ -24,10 +24,7 @@ import {translate} from '../../locales';
 import {DIDAdvancedOptions} from './components/DIDAdvancedOptions';
 import {Ionicons} from '@native-base/icons';
 import {addTestId} from '../../core/automation-utils';
-import {useDIDManagement, useDIDManagementHandlers} from './didHooks';
-import {Routes} from '../../core/routes';
-import {showToast} from '../../core/toast';
-import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
+import {useDIDManagementHandlers} from './didHooks';
 
 export function CreateNewDIDScreen({form, handleChange, handleSubmit}) {
   return (

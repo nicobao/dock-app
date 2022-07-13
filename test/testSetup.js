@@ -227,6 +227,9 @@ jest.mock('@docknetwork/wallet-sdk-core/lib/modules/wallet', () => {
           }
         });
       }),
+      accounts: {
+        fetchBalance: jest.fn(() => Promise.resolve(0)),
+      },
     }),
   };
 
