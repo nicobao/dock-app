@@ -2,6 +2,7 @@
 
 exports[`DIDListScreen should render correctly  1`] = `
 <RNCSafeAreaView
+  accessibilityLabel="DIDListScreen"
   style={
     Object {
       "backgroundColor": "#000",
@@ -50,8 +51,8 @@ exports[`DIDListScreen should render correctly  1`] = `
         </Box>
       </Styled(View)>
       <ForwardRef
-        marginLeft={26}
-        marginRight={26}
+        marginLeft={3}
+        marginRight={3}
       >
         <Memo(ForwardRef(Box))
           mt={70}
@@ -100,7 +101,7 @@ exports[`DIDListScreen should render correctly  1`] = `
         <BigButton
           accessibilityLabel="CreateNewDID"
           icon={<SvgFile />}
-          onPress={null}
+          onPress={[Function]}
           testID="CreateNewDID"
         >
           Create New DID

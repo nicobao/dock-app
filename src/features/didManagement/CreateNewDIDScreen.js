@@ -1,16 +1,16 @@
-import React, {useCallback} from 'react';
+import React, {useMemo, useState} from 'react';
 import {
   BackButton,
   Box,
   Header,
-  Input,
+  IconButton,
   LoadingButton,
   NBox,
   ScreenContainer,
   Theme,
   Typography,
 } from '../../design-system';
-import {navigateBack} from '../../core/navigation';
+import {navigateBack, navigate} from '../../core/navigation';
 import {
   FormControl,
   HStack,
@@ -24,11 +24,14 @@ import {translate} from '../../locales';
 import {DIDAdvancedOptions} from './components/DIDAdvancedOptions';
 import {Ionicons} from '@native-base/icons';
 import {addTestId} from '../../core/automation-utils';
+import {useDIDManagement, useDIDManagementHandlers} from './didHooks';
+import {Routes} from '../../core/routes';
+import {showToast} from '../../core/toast';
+import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
 
-export function CreateNewDIDScreen() {
-  const onChange = useCallback(() => {}, []);
+export function CreateNewDIDScreen({form, handleChange, handleSubmit}) {
   return (
-    <ScreenContainer testID="CreateNewDIDScreen">
+    <ScreenContainer {...addTestId('CreateNewDIDScreen')}>
       <Header>
         <Box
           marginLeft={1}
@@ -54,76 +57,85 @@ export function CreateNewDIDScreen() {
           <NBox width="80px" alignItems="flex-end" />
         </Box>
       </Header>
-      <ScrollView marginLeft={5} marginRight={5}>
-        <FormControl>
-          <Stack mt={7}>
-            <FormControl.Label>
-              {translate('didManagement.did_name')}
-            </FormControl.Label>
-            <Input
-              {...addTestId('CreateNewDIDScreenDIDName')}
-              value={''}
-              onChangeText={onChange('word1')}
-              autoCapitalize="none"
-            />
-            <FormControl.HelperText>
-              {translate('didManagement.did_name_input_hint')}
-            </FormControl.HelperText>
-          </Stack>
-        </FormControl>
-        <FormControl>
+      <ScrollView marginLeft={3} marginRight={3}>
+        <FormControl isInvalid={form._errors.didType}>
           <Stack mt={7}>
             <FormControl.Label>
               {translate('didManagement.did_type')}
             </FormControl.Label>
-            <Select>
+            <Select
+              onValueChange={handleChange('didType')}
+              selectedValue={form.didType}>
               <Select.Item label="did:key" value="didkey" />
               <Select.Item label="did:dock" value="diddock" />
             </Select>
           </Stack>
+          <FormControl.ErrorMessage>
+            {form._errors.didType}
+          </FormControl.ErrorMessage>
         </FormControl>
-        <VStack
-          mt={7}
-          px={5}
-          py={5}
-          style={{
-            backgroundColor: Theme.colors.bgBlue,
-            borderRadius: Theme.borderRadius,
-          }}>
-          <HStack>
-            <HStack
-              style={{
-                flexGrow: 1,
-              }}>
-              <Icon as={Ionicons} name="information-circle-outline" />
-              <Typography ml={1} variant="h3">
-                {' ' + translate('didManagement.quick_info')}
-              </Typography>
-            </HStack>
-            <Icon as={Ionicons} name="close-outline" />
-          </HStack>
-          <Typography mt={3} textAlign="left" variant="didDescription">
-            {translate('didManagement.did_dock_info')}
-          </Typography>
 
-          <Typography my={2} color={Theme.colors.inactiveText}>
-            {translate('didManagement.learn_more') + ' '}
-            <Icon as={Ionicons} name="open-outline" size="xs" />
-          </Typography>
-        </VStack>
-        <DIDAdvancedOptions onChange={onChange} form={{}} />
-        <LoadingButton
-          full
-          {...addTestId('CreateNewDIDScreenDIDCreate')}
-          mt={70}
-          onPress={null}
-          isDisabled={false}>
-          {translate('didManagement.create')}
-        </LoadingButton>
+        {form.didType === 'diddock' && form.showDIDDockQuickInfo ? (
+          <VStack
+            mt={7}
+            px={5}
+            py={5}
+            style={{
+              backgroundColor: Theme.colors.bgBlue,
+              borderRadius: Theme.borderRadius,
+            }}>
+            <HStack>
+              <HStack
+                style={{
+                  flexGrow: 1,
+                }}>
+                <Icon mt={2} as={Ionicons} name="information-circle-outline" />
+                <Typography mt={2} ml={1} variant="h3">
+                  {' ' + translate('didManagement.quick_info')}
+                </Typography>
+              </HStack>
+              <IconButton
+                {...addTestId('CreateNewDIDScreenCloseQuickInfo')}
+                onPress={() => {
+                  handleChange('showDIDDockQuickInfo')(false);
+                }}>
+                <Icon as={Ionicons} name="close-outline" />
+              </IconButton>
+            </HStack>
+            <Typography mt={3} textAlign="left" variant="didDescription">
+              {translate('didManagement.did_dock_info')}
+            </Typography>
+
+            <Typography my={2} color={Theme.colors.inactiveText}>
+              {translate('didManagement.learn_more') + ' '}
+              <Icon as={Ionicons} name="open-outline" size="xs" />
+            </Typography>
+          </VStack>
+        ) : null}
+
+        <DIDAdvancedOptions onChange={handleChange} form={form} />
       </ScrollView>
+      <LoadingButton
+        full
+        {...addTestId('CreateNewDIDScreenDIDCreate')}
+        mb={70}
+        ml={3}
+        mr={3}
+        onPress={handleSubmit}
+        isDisabled={form.didType.length <= 0}>
+        {translate('didManagement.create')}
+      </LoadingButton>
     </ScreenContainer>
   );
 }
 export function CreateNewDIDScreenContainer() {
-  return <CreateNewDIDScreen />;
+  const {form, onCreateDID, handleChange} = useDIDManagementHandlers();
+
+  return (
+    <CreateNewDIDScreen
+      handleChange={handleChange}
+      form={form}
+      handleSubmit={onCreateDID}
+    />
+  );
 }

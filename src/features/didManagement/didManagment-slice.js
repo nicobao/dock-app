@@ -4,10 +4,10 @@ import {captureException} from '@sentry/react-native';
 
 const wallet = Wallet.getInstance();
 
-const createKeyDoc = () => {
-  return didServiceRPC.generateKeyDoc({});
+const createKeyDoc = ({type, derivePath}) => {
+  return didServiceRPC.generateKeyDoc({type, derivePath});
 };
-const createDID = async keyDoc => {
+const createKeyDID = async keyDoc => {
   try {
     const correlations = Array.isArray(keyDoc.correlation)
       ? keyDoc.correlation
@@ -36,7 +36,7 @@ const createDID = async keyDoc => {
   }
 };
 
-const initializeDID = async () => {
+export const createDefaultDID = async () => {
   const keyDocs = await wallet.query({
     type: 'Ed25519VerificationKey2018',
   });
@@ -47,24 +47,39 @@ const initializeDID = async () => {
     });
 
     if (didResolutionDocuments.length === 0) {
-      await createDID(keyDocs[0]);
+      await createKeyDID(keyDocs[0]);
     }
   } else if (keyDocs.length === 0) {
     try {
-      const keyDoc = await createKeyDoc();
+      const keyDoc = await createKeyDoc({
+        type: 'ed25519',
+        derivePath: '',
+      });
       await wallet.add({
         ...keyDoc,
       });
 
-      await initializeDID();
+      await createDefaultDID();
     } catch (e) {
       captureException(e);
     }
   }
 };
 
+const createDockDID = () => {};
+export const createNewDID = async newDidParams => {
+  if (newDidParams.didType === 'didkey') {
+    const keyDoc = await createKeyDoc(newDidParams);
+    await wallet.add({
+      ...keyDoc,
+    });
+    await createKeyDID(keyDoc);
+  } else if (newDidParams.didType === 'diddock') {
+    createDockDID();
+  }
+};
 export const didOperations = {
   initializeDID: () => async (dispatch, getState) => {
-    await initializeDID();
+    await createDefaultDID();
   },
 };

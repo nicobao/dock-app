@@ -11,6 +11,7 @@ export const Theme = {
   },
   borderRadius: 6,
   colors: {
+    grey: '#1F1F21',
     backdrop: 'rgba(0, 0, 0, 0.6)',
     transparent: 'transparent',
     text: '#D4D4D8',

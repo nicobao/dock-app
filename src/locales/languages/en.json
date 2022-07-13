@@ -324,6 +324,10 @@
     "share_did_desc": "Share your Decentralized Identifier",
     "did_dock_info": "did:dock requires DOCK token to create. This is used for the transaction fee required to create the DID and have a record on the blockchain.",
     "enter_password": "Enter Password",
-    "confirm_password": "Confirm Password"
+    "confirm_password": "Confirm Password",
+    "share": "Share",
+    "did_created": "DID Created",
+    "did_creation_error": "Oops, an error occurred creating DID",
+    "error_keypair_type": "%{keypairType} is not supported."
   }
 }
