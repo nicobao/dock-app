@@ -201,7 +201,7 @@ jest.mock('@docknetwork/wallet-sdk-core/lib/modules/wallet', () => {
   const originalModule = jest.requireActual(
     '@docknetwork/wallet-sdk-core/lib/modules/wallet',
   );
-  const docs = [];
+  let docs = [];
   const mockFunctions = {
     getInstance: jest.fn().mockReturnValue({
       query: jest.fn(q => {
@@ -225,6 +225,11 @@ jest.mock('@docknetwork/wallet-sdk-core/lib/modules/wallet', () => {
           if (doc.id === singleDocument.id) {
             docs[index] = doc;
           }
+        });
+      }),
+      remove: jest.fn(documentId => {
+        docs = docs.filter(doc => {
+          return doc.id !== documentId;
         });
       }),
       accounts: {

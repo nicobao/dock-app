@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   BigButton,
   Box,
@@ -23,9 +23,12 @@ import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {useDIDManagement} from './didHooks';
 import {DIDListItem} from './components/DIDListItem';
+import {SingleDIDOptionsModal} from './components/SingleDIDOptionsModal';
 
-export function DIDListScreen() {
-  const {didList} = useDIDManagement();
+export function DIDListScreen({didList, onDeleteDID}) {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedDID, setSelectedDID] = useState(null);
+
   return (
     <ScreenContainer {...addTestId('DIDListScreen')} showTabNavigation>
       <Header>
@@ -53,8 +56,17 @@ export function DIDListScreen() {
       </Header>
       <ScrollView marginLeft={3} marginRight={3}>
         {didList.length > 0 ? (
-          didList.map(didDocument => {
-            return <DIDListItem didDocument={didDocument.didDocument} />;
+          didList.map(didDocumentResolution => {
+            return (
+              <DIDListItem
+                key={didDocumentResolution.id}
+                onOptionClicked={() => {
+                  setSelectedDID(didDocumentResolution);
+                  setIsModalVisible(true);
+                }}
+                didDocumentResolution={didDocumentResolution}
+              />
+            );
           })
         ) : (
           <NBox mt={70}>
@@ -64,7 +76,7 @@ export function DIDListScreen() {
                 {translate('didManagement.did_definition')}
               </Typography>
               <Button
-                onPress={null}
+                onPress={() => {}}
                 isActive={false}
                 endIcon={<Icon as={Ionicons} name="open-outline" size="xs" />}
                 variant={'transactionFilter'}
@@ -91,15 +103,24 @@ export function DIDListScreen() {
           </BigButton>
           <BigButton
             {...addTestId('ImportExistingDIDBtn')}
-            onPress={null}
+            onPress={() => {}}
             icon={<DocumentDownloadIcon />}>
             {translate('didManagement.import_existing_did')}
           </BigButton>
         </Footer>
       ) : null}
+      <SingleDIDOptionsModal
+        onDeleteDID={onDeleteDID}
+        visible={isModalVisible}
+        didDocumentResolution={selectedDID}
+        onClose={() => {
+          setIsModalVisible(false);
+        }}
+      />
     </ScreenContainer>
   );
 }
 export function DIDListScreenContainer() {
-  return <DIDListScreen />;
+  const {didList, onDeleteDID} = useDIDManagement();
+  return <DIDListScreen didList={didList} onDeleteDID={onDeleteDID} />;
 }

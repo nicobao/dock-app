@@ -40,4 +40,18 @@ describe('DID hooks', () => {
     await w2();
     expect(dIDManagementResult.current.didList.length).toBe(2);
   });
+
+  test('Delete DID', async () => {
+    const {result, waitForNextUpdate} = renderHook(() => useDIDManagement());
+
+    result.current.queryDIDDocuments();
+    await waitForNextUpdate();
+    const previousLength = result.current.didList.length;
+
+    result.current.onDeleteDID(result.current.didList[0]);
+
+    result.current.queryDIDDocuments();
+    await waitForNextUpdate();
+    expect(result.current.didList.length).toBe(previousLength - 1);
+  });
 });

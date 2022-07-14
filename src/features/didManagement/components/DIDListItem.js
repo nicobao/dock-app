@@ -1,48 +1,40 @@
 import {
   Button,
   DotsVerticalIcon,
+  IconButton,
   NBox,
   Theme,
   Typography,
 } from '../../../design-system';
-import {HStack, Menu, Pressable, VStack} from 'native-base';
+import {HStack, VStack} from 'native-base';
 import {addTestId} from '../../../core/automation-utils';
 import {translate} from '../../../locales';
 import React from 'react';
 
-export function DIDListItem({didDocument}) {
+export function DIDListItem({didDocumentResolution, onOptionClicked}) {
+  const {didDocument} = didDocumentResolution;
   return (
     <NBox
-      mt={3}
-      mb={3}
-      px={7}
-      py={5}
+      my={3}
+      py={3}
+      pl={4}
+      pr={10}
       style={{
         backgroundColor: Theme.colors.grey,
         borderRadius: 12,
       }}>
       <VStack>
         <HStack>
-          <Typography numberOfLines={1} mb={7} variant="didDescription">
+          <Typography numberOfLines={1} mb={7} pt={2} variant="didDescription">
             {didDocument.id}
           </Typography>
-          <NBox py={1} px={1}>
-            <Menu
-              trigger={triggerProps => {
-                return (
-                  <Pressable
-                    {...triggerProps}
-                    _pressed={{
-                      opacity: Theme.touchOpacity,
-                    }}>
-                    <DotsVerticalIcon />
-                  </Pressable>
-                );
-              }}>
-              <Menu.Item onPress={null}>
-                {translate('account_list.delete_account')}
-              </Menu.Item>
-            </Menu>
+          <NBox>
+            <IconButton
+              col
+              {...addTestId('DIDListItemOptionButton')}
+              onPress={onOptionClicked}>
+              <DotsVerticalIcon />
+            </IconButton>
           </NBox>
         </HStack>
         <Button
@@ -51,7 +43,7 @@ export function DIDListItem({didDocument}) {
           variant={'whiteButton'}
           colorScheme="dark"
           {...addTestId('Share')}
-          onPress={null}>
+          onPress={() => {}}>
           <Typography color={Theme.colors.primaryBackground}>
             {translate('didManagement.share')}
           </Typography>

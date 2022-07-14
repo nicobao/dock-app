@@ -78,6 +78,10 @@ export const createNewDID = async newDidParams => {
     createDockDID();
   }
 };
+
+export const deleteDIDDocument = async documentId => {
+  await wallet.remove(documentId);
+};
 export const didOperations = {
   initializeDID: () => async (dispatch, getState) => {
     await createDefaultDID();

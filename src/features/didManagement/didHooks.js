@@ -1,6 +1,6 @@
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
-import {createNewDID} from './didManagment-slice';
+import {createNewDID, deleteDIDDocument} from './didManagment-slice';
 import {showToast} from '../../core/toast';
 import {translate} from '../../locales';
 import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
@@ -77,10 +77,23 @@ export function useDIDManagement() {
     queryDIDDocuments();
   }, [queryDIDDocuments]);
 
+  const onDeleteDID = useCallback(
+    async didResolution => {
+      await deleteDIDDocument(didResolution.id);
+      queryDIDDocuments();
+      showToast({
+        message: translate('didManagement.did_deleted'),
+        type: 'success',
+      });
+    },
+    [queryDIDDocuments],
+  );
+
   return useMemo(() => {
     return {
       didList,
       queryDIDDocuments,
+      onDeleteDID,
     };
-  }, [didList, queryDIDDocuments]);
+  }, [didList, queryDIDDocuments, onDeleteDID]);
 }

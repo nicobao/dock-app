@@ -25,6 +25,9 @@ import EmptyCredentialIcon from './empty-credential.svg';
 import CancelIcon from './cancel.svg';
 import DIDManagementIcon from './did-management.svg';
 import RoundedDIDIcon from './rounded_did.svg';
+
+import PencilIcon from './pencil.svg';
+import BinIcon from './bin.svg';
 export {
   DockLogoIcon,
   DotsVerticalIcon,
@@ -53,4 +56,6 @@ export {
   CancelIcon,
   DIDManagementIcon,
   RoundedDIDIcon,
+  PencilIcon,
+  BinIcon,
 };
