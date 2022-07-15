@@ -15,6 +15,7 @@ describe('CreateNewDIDScreen', () => {
     };
 
     const form = {
+      didName: '',
       didType: 'didkey',
       showDIDDockQuickInfo: false,
       keypairType: 'ed25519',
@@ -42,6 +43,7 @@ describe('CreateNewDIDScreen', () => {
     };
 
     const form = {
+      didName: '',
       didType: 'diddock',
       showDIDDockQuickInfo: true,
       keypairType: 'ed25519',

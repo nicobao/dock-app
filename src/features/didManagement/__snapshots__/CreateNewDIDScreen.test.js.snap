@@ -44,6 +44,25 @@ exports[`CreateNewDIDScreen should render CreateNewDIDScreenContainer correctly 
     marginLeft={3}
     marginRight={3}
   >
+    <Memo(ForwardRef(FormControl))>
+      <Memo(ForwardRef(Stack))
+        mt={7}
+      >
+        <Memo(ForwardRef(FormControlLabel))>
+          DID Name
+        </Memo(ForwardRef(FormControlLabel))>
+        <Memo(ForwardRef(Input))
+          accessibilityLabel="DIDName"
+          autoCapitalize="none"
+          onChangeText={[Function]}
+          testID="DIDName"
+          value=""
+        />
+        <Memo(ForwardRef(FormControlHelperText))>
+          This will just be used for easy reference
+        </Memo(ForwardRef(FormControlHelperText))>
+      </Memo(ForwardRef(Stack))>
+    </Memo(ForwardRef(FormControl))>
     <Memo(ForwardRef(FormControl))
       isInvalid=""
     >
@@ -80,6 +99,7 @@ exports[`CreateNewDIDScreen should render CreateNewDIDScreenContainer correctly 
           },
           "_hasError": false,
           "derivationPath": "",
+          "didName": "",
           "didType": "",
           "keypairType": "ed25519",
           "showDIDDockQuickInfo": true,
@@ -161,6 +181,24 @@ exports[`CreateNewDIDScreen should render correctly with modal 1`] = `
         marginLeft={3}
         marginRight={3}
       >
+        <Memo(ForwardRef(FormControl))>
+          <Memo(ForwardRef(Stack))
+            mt={7}
+          >
+            <Memo(ForwardRef(FormControlLabel))>
+              DID Name
+            </Memo(ForwardRef(FormControlLabel))>
+            <Memo(ForwardRef(Input))
+              accessibilityLabel="DIDName"
+              autoCapitalize="none"
+              testID="DIDName"
+              value=""
+            />
+            <Memo(ForwardRef(FormControlHelperText))>
+              This will just be used for easy reference
+            </Memo(ForwardRef(FormControlHelperText))>
+          </Memo(ForwardRef(Stack))>
+        </Memo(ForwardRef(FormControl))>
         <Memo(ForwardRef(FormControl))
           isInvalid=""
         >
@@ -189,8 +227,9 @@ exports[`CreateNewDIDScreen should render correctly with modal 1`] = `
         </Memo(ForwardRef(FormControl))>
         <Memo(ForwardRef(VStack))
           mt={7}
+          pb={5}
+          pt={3}
           px={5}
-          py={5}
           style={
             Object {
               "backgroundColor": "#00174D",
@@ -237,17 +276,6 @@ exports[`CreateNewDIDScreen should render correctly with modal 1`] = `
           >
             did:dock requires DOCK token to create. This is used for the transaction fee required to create the DID and have a record on the blockchain.
           </Styled(Component)>
-          <Styled(Component)
-            color="#fff"
-            my={2}
-          >
-            Learn More 
-            <Memo(ForwardRef(Icon))
-              as={[Function]}
-              name="open-outline"
-              size="xs"
-            />
-          </Styled(Component)>
         </Memo(ForwardRef(VStack))>
         <DIDAdvancedOptions
           accessibilityLabel="DIDAdvancedOptions"
@@ -258,6 +286,7 @@ exports[`CreateNewDIDScreen should render correctly with modal 1`] = `
               },
               "_hasError": false,
               "derivationPath": "",
+              "didName": "",
               "didType": "diddock",
               "keypairType": "ed25519",
               "showDIDDockQuickInfo": true,
@@ -267,10 +296,17 @@ exports[`CreateNewDIDScreen should render correctly with modal 1`] = `
             [MockFunction] {
               "calls": Array [
                 Array [
+                  "didName",
+                ],
+                Array [
                   "didType",
                 ],
               ],
               "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
                 Object {
                   "type": "return",
                   "value": undefined,
@@ -284,7 +320,7 @@ exports[`CreateNewDIDScreen should render correctly with modal 1`] = `
       <LoadingButton
         accessibilityLabel="CreateNewDIDScreenDIDCreate"
         full={true}
-        isDisabled={false}
+        isDisabled={true}
         mb={70}
         ml={3}
         mr={3}
@@ -355,6 +391,24 @@ exports[`CreateNewDIDScreen should render correctly without modal  1`] = `
         marginLeft={3}
         marginRight={3}
       >
+        <Memo(ForwardRef(FormControl))>
+          <Memo(ForwardRef(Stack))
+            mt={7}
+          >
+            <Memo(ForwardRef(FormControlLabel))>
+              DID Name
+            </Memo(ForwardRef(FormControlLabel))>
+            <Memo(ForwardRef(Input))
+              accessibilityLabel="DIDName"
+              autoCapitalize="none"
+              testID="DIDName"
+              value=""
+            />
+            <Memo(ForwardRef(FormControlHelperText))>
+              This will just be used for easy reference
+            </Memo(ForwardRef(FormControlHelperText))>
+          </Memo(ForwardRef(Stack))>
+        </Memo(ForwardRef(FormControl))>
         <Memo(ForwardRef(FormControl))
           isInvalid=""
         >
@@ -390,6 +444,7 @@ exports[`CreateNewDIDScreen should render correctly without modal  1`] = `
               },
               "_hasError": false,
               "derivationPath": "",
+              "didName": "",
               "didType": "didkey",
               "keypairType": "ed25519",
               "showDIDDockQuickInfo": false,
@@ -399,10 +454,17 @@ exports[`CreateNewDIDScreen should render correctly without modal  1`] = `
             [MockFunction] {
               "calls": Array [
                 Array [
+                  "didName",
+                ],
+                Array [
                   "didType",
                 ],
               ],
               "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
                 Object {
                   "type": "return",
                   "value": undefined,
@@ -416,7 +478,7 @@ exports[`CreateNewDIDScreen should render correctly without modal  1`] = `
       <LoadingButton
         accessibilityLabel="CreateNewDIDScreenDIDCreate"
         full={true}
-        isDisabled={false}
+        isDisabled={true}
         mb={70}
         ml={3}
         mr={3}

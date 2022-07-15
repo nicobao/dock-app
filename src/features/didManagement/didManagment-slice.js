@@ -35,6 +35,7 @@ const createKeyDID = async (keyDoc, didDocumentCustomProp = {}) => {
     });
   } catch (e) {
     captureException(e);
+    throw new Error(e.message);
   }
 };
 

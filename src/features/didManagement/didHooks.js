@@ -13,7 +13,6 @@ import {Routes} from '../../core/routes';
 const wallet = Wallet.getInstance();
 
 export function useDIDManagementHandlers() {
-  const {queryDIDDocuments} = useDIDManagement();
   const [form, setForm] = useState({
     didName: '',
     didType: '',
@@ -36,9 +35,9 @@ export function useDIDManagementHandlers() {
   }, []);
 
   const onCreateDID = useCallback(async () => {
-    try {
-      const {derivationPath, didType, keypairType, didName} = form;
+    const {derivationPath, didType, keypairType, didName} = form;
 
+    if (keypairType === 'ed25519') {
       const newDIDParams = {
         derivePath: derivationPath,
         didType,
@@ -53,11 +52,12 @@ export function useDIDManagementHandlers() {
       });
       navigate(Routes.DID_MANAGEMENT_LIST);
       logAnalyticsEvent(ANALYTICS_EVENT.DID.DID_CREATED, {});
-    } catch (e) {
-      showToast({
-        message: translate('didManagement.did_creation_error'),
-        type: 'error',
-      });
+    } else {
+      throw new Error(
+        translate('didManagement.error_keypair_type', {
+          keypairType,
+        }),
+      );
     }
   }, [form]);
 
@@ -88,7 +88,6 @@ export function useDIDManagement() {
     const didResolutionDocuments = await wallet.query({
       type: 'DIDResolutionResponse',
     });
-    console.log(didResolutionDocuments.length, 'didResolutionDocuments.length');
     setDIDList(didResolutionDocuments);
   }, []);
 

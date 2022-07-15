@@ -201,26 +201,6 @@ exports[`DIDListScreen should render correctly without list 1`] = `
             >
               Decentralized Identifiers (DIDs) are a new type of identifier that enables a decentralized digital identity and allows you to accept verifiable credentials.
             </Styled(Component)>
-            <Memo(ForwardRef(Button))
-              endIcon={
-                <Memo
-                  as={[Function]}
-                  name="open-outline"
-                  size="xs"
-                />
-              }
-              isActive={false}
-              onPress={[Function]}
-              size="xs"
-              variant="transactionFilter"
-            >
-              <Styled(Component)
-                color="#fff"
-                variant="transaction-filter"
-              >
-                Learn More
-              </Styled(Component)>
-            </Memo(ForwardRef(Button))>
           </Memo(ForwardRef(VStack))>
         </Memo(ForwardRef(Box))>
       </ForwardRef>

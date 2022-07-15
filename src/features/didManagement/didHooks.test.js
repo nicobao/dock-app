@@ -1,6 +1,7 @@
 import {renderHook, act} from '@testing-library/react-hooks';
 import {useDIDManagement, useDIDManagementHandlers} from './didHooks';
 import {createDefaultDID} from './didManagment-slice';
+
 describe('DID hooks', () => {
   test('Can query set queried dids', async () => {
     const {result, waitForNextUpdate} = renderHook(() => useDIDManagement());
@@ -23,19 +24,24 @@ describe('DID hooks', () => {
   });
 
   test('Handle new DID key creation', async () => {
-    const {result: dIDManagementHandlersResult, waitForNextUpdate: w1} =
-      renderHook(() => useDIDManagementHandlers());
-    act(() => {
-      dIDManagementHandlersResult.current.handleChange('didType')('didkey');
-    });
-    dIDManagementHandlersResult.current.onCreateDID();
+    const {result, waitForNextUpdate: w1} = renderHook(() =>
+      useDIDManagementHandlers(),
+    );
 
-    await w1();
+    act(() => {
+      result.current.handleChange('didType')('didkey');
+    });
+    expect(result.current.form.didType).toBe('didkey');
+    result.current.onCreateDID();
+
+    await w1({
+      timeout: 5000,
+    });
 
     const {result: dIDManagementResult, waitForNextUpdate: w2} = renderHook(
       () => useDIDManagement(),
     );
-
+    //
     dIDManagementResult.current.queryDIDDocuments();
     await w2();
     expect(dIDManagementResult.current.didList.length).toBe(2);
