@@ -39,6 +39,9 @@ describe('DID hooks', () => {
     dIDManagementResult.current.queryDIDDocuments();
     await w2();
     expect(dIDManagementResult.current.didList.length).toBe(2);
+    expect(
+      dIDManagementResult.current.didList[1].didDocument.id.indexOf('did:key'),
+    ).toBe(0);
   });
 
   test('Delete DID', async () => {

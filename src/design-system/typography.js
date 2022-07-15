@@ -151,10 +151,16 @@ const variantsMap = {
     lineHeight: 20,
     color: Theme.colors.primaryBackground,
   },
+  didTitle: {
+    fontFamily: Theme.fontFamily.default,
+    fontWeight: 700,
+    fontSize: 16,
+    color: Theme.colors.textHighlighted,
+  },
   didDescription: {
     fontFamily: Theme.fontFamily.default,
     fontWeight: 500,
-    fontSize: 16,
+    fontSize: 14,
   },
 };
 

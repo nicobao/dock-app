@@ -1,11 +1,13 @@
 import {Stack} from 'native-base';
 import React, {useCallback} from 'react';
-import {DownloadIcon, BinIcon, OptionList} from 'src/design-system';
+import {DownloadIcon, BinIcon, OptionList, PencilIcon} from 'src/design-system';
 import {translate} from 'src/locales';
 import {Modal} from '../../../components/Modal';
 import {Typography} from '../../../design-system';
 import {addTestId} from '../../../core/automation-utils';
 import {showConfirmationModal} from '../../../components/ConfirmationModal';
+import {navigate} from '../../../core/navigation';
+import {Routes} from '../../../core/routes';
 
 export function SingleDIDOptionsModal({
   onClose,
@@ -35,12 +37,18 @@ export function SingleDIDOptionsModal({
       <OptionList
         mt={5}
         items={[
-          // {
-          //   testID: addTestId('EditDIDOption').testID,
-          //   title: translate('didManagement.edit_did'),
-          //   icon: <PencilIcon />,
-          //   onPress: () => {},
-          // },
+          {
+            testID: addTestId('EditDIDOption').testID,
+            title: translate('didManagement.edit_did'),
+            icon: <PencilIcon />,
+            onPress: () => {
+              if (didDocumentResolution) {
+                navigate(Routes.DID_MANAGEMENT_EDIT_DID, {
+                  didDocumentResolution,
+                });
+              }
+            },
+          },
           {
             testID: addTestId('ExportDIDOption').testID,
             title: translate('didManagement.export_did'),
@@ -61,7 +69,10 @@ export function SingleDIDOptionsModal({
     </Stack>
   );
   return (
-    <Modal visible={visible} onClose={onClose} onBackButtonPress={onClose}>
+    <Modal
+      visible={visible && didDocumentResolution}
+      onClose={onClose}
+      onBackButtonPress={onClose}>
       {content}
     </Modal>
   );

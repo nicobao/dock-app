@@ -6,6 +6,7 @@ import {
   IconButton,
   LoadingButton,
   NBox,
+  Input,
   ScreenContainer,
   Theme,
   Typography,
@@ -55,12 +56,29 @@ export function CreateNewDIDScreen({form, handleChange, handleSubmit}) {
         </Box>
       </Header>
       <ScrollView marginLeft={3} marginRight={3}>
+        <FormControl>
+          <Stack mt={7}>
+            <FormControl.Label>
+              {translate('didManagement.did_name')}
+            </FormControl.Label>
+            <Input
+              {...addTestId('DIDName')}
+              value={form.didName}
+              onChangeText={handleChange('didName')}
+              autoCapitalize="none"
+            />
+            <FormControl.HelperText>
+              {translate('didManagement.did_name_input_hint')}
+            </FormControl.HelperText>
+          </Stack>
+        </FormControl>
         <FormControl isInvalid={form._errors.didType}>
           <Stack mt={7}>
             <FormControl.Label>
               {translate('didManagement.did_type')}
             </FormControl.Label>
             <Select
+              {...addTestId('DIDType')}
               onValueChange={handleChange('didType')}
               selectedValue={form.didType}>
               <Select.Item label="did:key" value="didkey" />
@@ -76,7 +94,8 @@ export function CreateNewDIDScreen({form, handleChange, handleSubmit}) {
           <VStack
             mt={7}
             px={5}
-            py={5}
+            pt={3}
+            pb={5}
             style={{
               backgroundColor: Theme.colors.bgBlue,
               borderRadius: Theme.borderRadius,
@@ -102,15 +121,14 @@ export function CreateNewDIDScreen({form, handleChange, handleSubmit}) {
             <Typography mt={3} textAlign="left" variant="didDescription">
               {translate('didManagement.did_dock_info')}
             </Typography>
-
-            <Typography my={2} color={Theme.colors.inactiveText}>
-              {translate('didManagement.learn_more') + ' '}
-              <Icon as={Ionicons} name="open-outline" size="xs" />
-            </Typography>
           </VStack>
         ) : null}
 
-        <DIDAdvancedOptions onChange={handleChange} form={form} />
+        <DIDAdvancedOptions
+          {...addTestId('DIDAdvancedOptions')}
+          onChange={handleChange}
+          form={form}
+        />
       </ScrollView>
       <LoadingButton
         full
@@ -119,7 +137,9 @@ export function CreateNewDIDScreen({form, handleChange, handleSubmit}) {
         ml={3}
         mr={3}
         onPress={handleSubmit}
-        isDisabled={form.didType.length <= 0}>
+        isDisabled={
+          form.didType.length <= 0 || form.didName.trim().length <= 0
+        }>
         {translate('didManagement.create')}
       </LoadingButton>
     </ScreenContainer>

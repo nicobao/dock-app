@@ -7,16 +7,15 @@ import {
   IconButton,
   NBox,
   ScreenContainer,
-  Theme,
   Typography,
 } from '../../design-system';
 import {translate} from '../../locales';
 import {addTestId} from '../../core/automation-utils';
 import PlusCircleWhiteIcon from '../../assets/icons/plus-circle-white.svg';
 import {RoundedDIDIcon} from '../../assets/icons';
-import {Button, ScrollView} from 'native-base';
-import {Ionicons} from '@native-base/icons';
-import {Icon, VStack} from 'native-base';
+import {ScrollView} from 'native-base';
+
+import {VStack} from 'native-base';
 import PlusCircleIcon from '../../assets/icons/plus-circle.svg';
 import DocumentDownloadIcon from '../../assets/icons/document-download.svg';
 import {navigate} from '../../core/navigation';
@@ -56,9 +55,10 @@ export function DIDListScreen({didList, onDeleteDID}) {
       </Header>
       <ScrollView marginLeft={3} marginRight={3}>
         {didList.length > 0 ? (
-          didList.map(didDocumentResolution => {
+          didList.map((didDocumentResolution, i) => {
             return (
               <DIDListItem
+                {...addTestId(`DIDListItem_${i}`)}
                 key={didDocumentResolution.id}
                 onOptionClicked={() => {
                   setSelectedDID(didDocumentResolution);
@@ -75,18 +75,6 @@ export function DIDListScreen({didList, onDeleteDID}) {
               <Typography mt={3} textAlign="center" variant="didDescription">
                 {translate('didManagement.did_definition')}
               </Typography>
-              <Button
-                onPress={() => {}}
-                isActive={false}
-                endIcon={<Icon as={Ionicons} name="open-outline" size="xs" />}
-                variant={'transactionFilter'}
-                size={'xs'}>
-                <Typography
-                  variant="transaction-filter"
-                  color={Theme.colors.inactiveText}>
-                  {translate('didManagement.learn_more')}
-                </Typography>
-              </Button>
             </VStack>
           </NBox>
         )}
@@ -115,12 +103,13 @@ export function DIDListScreen({didList, onDeleteDID}) {
         didDocumentResolution={selectedDID}
         onClose={() => {
           setIsModalVisible(false);
+          setSelectedDID(null);
         }}
       />
     </ScreenContainer>
   );
 }
-export function DIDListScreenContainer() {
+export function DIDListScreenContainer({}) {
   const {didList, onDeleteDID} = useDIDManagement();
   return <DIDListScreen didList={didList} onDeleteDID={onDeleteDID} />;
 }

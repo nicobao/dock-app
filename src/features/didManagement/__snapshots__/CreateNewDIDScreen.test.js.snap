@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CreateNewDIDScreen should render correctly with hmm 1`] = `
+exports[`CreateNewDIDScreen should render CreateNewDIDScreenContainer correctly 1`] = `
 <ScreenContainer
   accessibilityLabel="CreateNewDIDScreen"
   testID="CreateNewDIDScreen"
@@ -54,8 +54,10 @@ exports[`CreateNewDIDScreen should render correctly with hmm 1`] = `
           DID Type
         </Memo(ForwardRef(FormControlLabel))>
         <Memo(ForwardRef(Select))
+          accessibilityLabel="DIDType"
           onValueChange={[Function]}
           selectedValue=""
+          testID="DIDType"
         >
           <Memo(ForwardRef(Item))
             label="did:key"
@@ -70,6 +72,7 @@ exports[`CreateNewDIDScreen should render correctly with hmm 1`] = `
       <Memo(ForwardRef(FormControlErrorMessage)) />
     </Memo(ForwardRef(FormControl))>
     <DIDAdvancedOptions
+      accessibilityLabel="DIDAdvancedOptions"
       form={
         Object {
           "_errors": Object {
@@ -83,6 +86,7 @@ exports[`CreateNewDIDScreen should render correctly with hmm 1`] = `
         }
       }
       onChange={[Function]}
+      testID="DIDAdvancedOptions"
     />
   </ForwardRef>
   <LoadingButton
@@ -167,7 +171,9 @@ exports[`CreateNewDIDScreen should render correctly with modal 1`] = `
               DID Type
             </Memo(ForwardRef(FormControlLabel))>
             <Memo(ForwardRef(Select))
+              accessibilityLabel="DIDType"
               selectedValue="diddock"
+              testID="DIDType"
             >
               <Memo(ForwardRef(Item))
                 label="did:key"
@@ -244,6 +250,7 @@ exports[`CreateNewDIDScreen should render correctly with modal 1`] = `
           </Styled(Component)>
         </Memo(ForwardRef(VStack))>
         <DIDAdvancedOptions
+          accessibilityLabel="DIDAdvancedOptions"
           form={
             Object {
               "_errors": Object {
@@ -271,6 +278,7 @@ exports[`CreateNewDIDScreen should render correctly with modal 1`] = `
               ],
             }
           }
+          testID="DIDAdvancedOptions"
         />
       </ForwardRef>
       <LoadingButton
@@ -357,7 +365,9 @@ exports[`CreateNewDIDScreen should render correctly without modal  1`] = `
               DID Type
             </Memo(ForwardRef(FormControlLabel))>
             <Memo(ForwardRef(Select))
+              accessibilityLabel="DIDType"
               selectedValue="didkey"
+              testID="DIDType"
             >
               <Memo(ForwardRef(Item))
                 label="did:key"
@@ -372,6 +382,7 @@ exports[`CreateNewDIDScreen should render correctly without modal  1`] = `
           <Memo(ForwardRef(FormControlErrorMessage)) />
         </Memo(ForwardRef(FormControl))>
         <DIDAdvancedOptions
+          accessibilityLabel="DIDAdvancedOptions"
           form={
             Object {
               "_errors": Object {
@@ -399,6 +410,7 @@ exports[`CreateNewDIDScreen should render correctly without modal  1`] = `
               ],
             }
           }
+          testID="DIDAdvancedOptions"
         />
       </ForwardRef>
       <LoadingButton

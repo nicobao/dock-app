@@ -328,12 +328,14 @@
     "share": "Share",
     "did_created": "DID Created",
     "did_deleted": "DID Deleted Successfully",
-    "did_creation_error": "Oops, an error occurred creating DID",
+    "did_creation_error": "An error occurred creating DID",
     "error_keypair_type": "%{keypairType} is not supported.",
     "export_did": "Export DID",
     "delete_did": "Delete DID",
     "delete_description": "This can’t be undone. Verifiable credentials received through this DID will not be deleted, you can delete it manually.",
     "delete": "Delete",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "default": "Default DID",
+    "did_edited_successfully": "DID updated successsfully"
   }
 }

@@ -64,7 +64,7 @@ describe('CreateNewDIDScreen', () => {
     expect(wrapper.dive()).toMatchSnapshot();
   });
 
-  it('should render correctly with hmm', () => {
+  it('should render CreateNewDIDScreenContainer correctly', () => {
     const initialState = {
       // placeholder for redux store
     };
