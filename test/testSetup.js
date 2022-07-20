@@ -6,6 +6,7 @@ import mockAsyncStorage from '../node_modules/@react-native-async-storage/async-
 import mockRNPermissions from '../node_modules/react-native-permissions/mock';
 import '../src/core/setup-env';
 import {DebugConstants} from '../src/features/constants';
+
 jest.mock('@docknetwork/wallet-sdk-core/lib/core/realm', () => {
   const realmFunctions = {
     write: jest.fn(callback => {
@@ -432,7 +433,34 @@ jest.mock('@docknetwork/wallet-sdk-react-native/lib', () => {
     useDIDManagement: () => mockFunctions,
   };
 });
+jest.mock('@docknetwork/wallet-sdk-react-native/lib', () => {
+  const originalModule = jest.requireActual(
+    '@docknetwork/wallet-sdk-react-native/lib',
+  );
 
+  const mockFunctions = {
+    createKeyDID: jest.fn(didParams => {
+      const {type = 'ed25519'} = didParams;
+      if (type === 'ed25519') {
+        return Promise.resolve();
+      }
+      return Promise.reject('Only ed25519 keypair is supported.');
+    }),
+    deleteDID: jest.fn(() => {}),
+    editDID: jest.fn(didParams => {
+      const {id} = didParams;
+      if (typeof id === 'string' && id.length > 0) {
+        return Promise.resolve();
+      }
+      return Promise.reject('Document ID is not set');
+    }),
+    didList: [],
+  };
+  return {
+    WalletSDKProvider: originalModule.WalletSDKProvider,
+    useDIDManagement: () => mockFunctions,
+  };
+});
 global.fetch = jest.fn(() =>
   Promise.resolve({
     json: () => Promise.resolve({test: 100}),

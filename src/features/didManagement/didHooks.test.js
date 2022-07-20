@@ -1,6 +1,7 @@
 import {renderHook, act} from '@testing-library/react-hooks';
 import {useDIDManagementHandlers} from './didHooks';
 import {useDIDManagement} from '@docknetwork/wallet-sdk-react-native/lib';
+
 describe('DID hooks', () => {
   test('Handle on change', () => {
     const {result} = renderHook(() => useDIDManagementHandlers());
@@ -10,7 +11,7 @@ describe('DID hooks', () => {
     });
     expect(result.current.form.didType).toBe('didkey');
   });
-
+  //
   test('Handle new DID key creation', async () => {
     const {result} = renderHook(() => useDIDManagementHandlers());
 
@@ -36,8 +37,8 @@ describe('DID hooks', () => {
       result.current.handleChange('keypairType')('sr25519');
     });
 
-    await expect(result.current.onCreateDID()).rejects.toThrowError(
-      'sr25519 keypair type  is not supported.',
+    await expect(result.current.onCreateDID()).rejects.toMatch(
+      'Only ed25519 keypair is supported.',
     );
   });
   //
@@ -51,7 +52,7 @@ describe('DID hooks', () => {
       id: 'did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r',
     });
   });
-
+  //
   test('Update  DID', async () => {
     const {result} = renderHook(() => useDIDManagementHandlers());
     act(() => {
@@ -72,8 +73,9 @@ describe('DID hooks', () => {
     act(() => {
       result.current.handleChange('id')('');
     });
-    await expect(result.current.onEditDID()).rejects.toThrowError(
-      'An error occurred updating DID',
+
+    await expect(result.current.onEditDID()).rejects.toMatch(
+      'Document ID is not set',
     );
   });
 });

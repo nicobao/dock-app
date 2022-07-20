@@ -1,5 +1,5 @@
 import {useCallback, useMemo, useState} from 'react';
-import {showToast} from '../../core/toast';
+import {showToast, withErrorToast} from '../../core/toast';
 import {translate} from '../../locales';
 import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
 import {navigate} from '../../core/navigation';
@@ -31,39 +31,28 @@ export function useDIDManagementHandlers() {
 
   const onCreateDID = useCallback(async () => {
     const {derivationPath, didType, keypairType, didName} = form;
-
-    try {
-      const newDIDParams = {
-        derivePath: derivationPath,
-        didType,
-        type: keypairType,
-        name: didName,
-      };
-      await createKeyDID(newDIDParams);
-      showToast({
-        message: translate('didManagement.did_created'),
-        type: 'success',
-      });
-      navigate(Routes.DID_MANAGEMENT_LIST);
-      logAnalyticsEvent(ANALYTICS_EVENT.DID.DID_CREATED, {});
-    } catch (e) {
-      throw new Error(
-        translate('didManagement.error_keypair_type', {
-          keypairType,
-        }),
-      );
-    }
+    const newDIDParams = {
+      derivePath: derivationPath,
+      didType,
+      type: keypairType,
+      name: didName,
+    };
+    await createKeyDID(newDIDParams);
+    showToast({
+      message: translate('didManagement.did_created'),
+      type: 'success',
+    });
+    navigate(Routes.DID_MANAGEMENT_LIST);
+    logAnalyticsEvent(ANALYTICS_EVENT.DID.DID_CREATED, {});
   }, [createKeyDID, form]);
 
   const onDeleteDID = useCallback(
     async didResolution => {
-      try {
-        await deleteDID({id: didResolution.id});
-        showToast({
-          message: translate('didManagement.did_deleted'),
-          type: 'success',
-        });
-      } catch (e) {}
+      await deleteDID({id: didResolution.id});
+      showToast({
+        message: translate('didManagement.did_deleted'),
+        type: 'success',
+      });
     },
     [deleteDID],
   );
@@ -71,33 +60,21 @@ export function useDIDManagementHandlers() {
   const onEditDID = useCallback(async () => {
     const {id, didName} = form;
 
-    try {
-      await editDID({id, name: didName});
-      showToast({
-        message: translate('didManagement.did_edited_successfully'),
-        type: 'success',
-      });
-      navigate(Routes.DID_MANAGEMENT_LIST);
-      logAnalyticsEvent(ANALYTICS_EVENT.DID.DID_UPDATED, {});
-    } catch (e) {
-      showToast({
-        message: translate('didManagement.did_updating_error'),
-        type: 'error',
-      });
-      logAnalyticsEvent(ANALYTICS_EVENT.FAILURES, {
-        action: ANALYTICS_EVENT.DID.DID_UPDATED,
-        ...form,
-      });
-      throw new Error(translate('didManagement.did_updating_error'));
-    }
+    await editDID({id, name: didName});
+    showToast({
+      message: translate('didManagement.did_edited_successfully'),
+      type: 'success',
+    });
+    navigate(Routes.DID_MANAGEMENT_LIST);
+    logAnalyticsEvent(ANALYTICS_EVENT.DID.DID_UPDATED, {});
   }, [editDID, form]);
   return useMemo(() => {
     return {
-      onCreateDID,
+      onCreateDID: withErrorToast(onCreateDID),
       form,
       handleChange,
-      onEditDID,
-      onDeleteDID,
+      onEditDID: withErrorToast(onEditDID),
+      onDeleteDID: withErrorToast(onDeleteDID),
       didList,
     };
   }, [onCreateDID, form, handleChange, onEditDID, onDeleteDID, didList]);
