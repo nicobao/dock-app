@@ -405,6 +405,10 @@ jest.mock('@docknetwork/wallet-sdk-core/lib/services/keyring', () => {
   };
 });
 jest.mock('@docknetwork/wallet-sdk-react-native/lib', () => {
+  const originalModule = jest.requireActual(
+    '@docknetwork/wallet-sdk-react-native/lib',
+  );
+
   const mockFunctions = {
     createKeyDID: jest.fn(didParams => {
       const {type = 'ed25519'} = didParams;
@@ -424,6 +428,7 @@ jest.mock('@docknetwork/wallet-sdk-react-native/lib', () => {
     didList: [],
   };
   return {
+    WalletSDKProvider: originalModule.WalletSDKProvider,
     useDIDManagement: () => mockFunctions,
   };
 });
