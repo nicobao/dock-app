@@ -330,7 +330,7 @@
     "did_deleted": "DID Deleted Successfully",
     "did_creation_error": "An error occurred creating DID",
     "did_updating_error": "An error occurred updating DID",
-    "error_keypair_type": "%{keypairType} keypair type  is not supported.",
+    "error_keypair_type": "%{keypairType} keypair type is not supported.",
     "export_did": "Export DID",
     "delete_did": "Delete DID",
     "delete_description": "This can’t be undone. Verifiable credentials received through this DID will not be deleted, you can delete it manually.",
