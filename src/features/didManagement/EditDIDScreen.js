@@ -80,7 +80,9 @@ export function EditDIDScreenContainer({route}) {
     if (didDocumentResolution) {
       handleChange('id')(didDocumentResolution.id);
       handleChange('didName')(
-        didDocumentResolution.name ? didDocumentResolution.name : '',
+        typeof didDocumentResolution.name === 'string'
+          ? didDocumentResolution.name.trim()
+          : '',
       );
     }
     //eslint-disable-next-line react-hooks/exhaustive-deps
