@@ -1,19 +1,7 @@
 import {renderHook, act} from '@testing-library/react-hooks';
-import {useDIDManagement, useDIDManagementHandlers} from './didHooks';
-import {createDefaultDID} from './didManagment-slice';
-
+import {useDIDManagementHandlers} from './didHooks';
+import {useDIDManagement} from '@docknetwork/wallet-sdk-react-native/lib';
 describe('DID hooks', () => {
-  test('Can query set queried dids', async () => {
-    const {result, waitForNextUpdate} = renderHook(() => useDIDManagement());
-    expect(result.current.didList.length).toBe(0);
-
-    await createDefaultDID();
-
-    result.current.queryDIDDocuments();
-    await waitForNextUpdate();
-    expect(result.current.didList.length).toBe(1);
-  });
-
   test('Handle on change', () => {
     const {result} = renderHook(() => useDIDManagementHandlers());
 
@@ -24,43 +12,68 @@ describe('DID hooks', () => {
   });
 
   test('Handle new DID key creation', async () => {
-    const {result, waitForNextUpdate: w1} = renderHook(() =>
-      useDIDManagementHandlers(),
-    );
+    const {result} = renderHook(() => useDIDManagementHandlers());
 
     act(() => {
       result.current.handleChange('didType')('didkey');
     });
-    expect(result.current.form.didType).toBe('didkey');
-    result.current.onCreateDID();
 
-    await w1({
-      timeout: 5000,
+    await result.current.onCreateDID();
+
+    const {result: dIDManagementResult} = renderHook(() => useDIDManagement());
+    expect(dIDManagementResult.current.createKeyDID).toBeCalledWith({
+      derivePath: '',
+      type: 'ed25519',
+      name: '',
+      didType: 'didkey',
+    });
+  });
+  test('Handle new DID key creation with invalid params', async () => {
+    const {result} = renderHook(() => useDIDManagementHandlers());
+
+    act(() => {
+      result.current.handleChange('didType')('didkey');
+      result.current.handleChange('keypairType')('sr25519');
     });
 
-    const {result: dIDManagementResult, waitForNextUpdate: w2} = renderHook(
-      () => useDIDManagement(),
+    await expect(result.current.onCreateDID()).rejects.toThrowError(
+      'sr25519 keypair type  is not supported.',
     );
-    //
-    dIDManagementResult.current.queryDIDDocuments();
-    await w2();
-    expect(dIDManagementResult.current.didList.length).toBe(2);
-    expect(
-      dIDManagementResult.current.didList[1].didDocument.id.indexOf('did:key'),
-    ).toBe(0);
+  });
+  //
+  test('Delete DID', async () => {
+    const {result} = renderHook(() => useDIDManagementHandlers());
+    await result.current.onDeleteDID({
+      id: 'did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r',
+    });
+    const {result: dIDManagementResult} = renderHook(() => useDIDManagement());
+    expect(dIDManagementResult.current.deleteDID).toBeCalledWith({
+      id: 'did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r',
+    });
   });
 
-  test('Delete DID', async () => {
-    const {result, waitForNextUpdate} = renderHook(() => useDIDManagement());
-
-    result.current.queryDIDDocuments();
-    await waitForNextUpdate();
-    const previousLength = result.current.didList.length;
-
-    result.current.onDeleteDID(result.current.didList[0]);
-
-    result.current.queryDIDDocuments();
-    await waitForNextUpdate();
-    expect(result.current.didList.length).toBe(previousLength - 1);
+  test('Update  DID', async () => {
+    const {result} = renderHook(() => useDIDManagementHandlers());
+    act(() => {
+      result.current.handleChange('didName')('DockSocials');
+      result.current.handleChange('id')(
+        'did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r',
+      );
+    });
+    await result.current.onEditDID();
+    const {result: dIDManagementResult} = renderHook(() => useDIDManagement());
+    expect(dIDManagementResult.current.editDID).toBeCalledWith({
+      id: 'did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r',
+      name: 'DockSocials',
+    });
+  });
+  test('Update  DID with invalid params', async () => {
+    const {result} = renderHook(() => useDIDManagementHandlers());
+    act(() => {
+      result.current.handleChange('id')('');
+    });
+    await expect(result.current.onEditDID()).rejects.toThrowError(
+      'An error occurred updating DID',
+    );
   });
 });

@@ -491,3 +491,319 @@ exports[`CreateNewDIDScreen should render correctly without modal  1`] = `
   </Memo(ForwardRef(Box))>
 </RNCSafeAreaView>
 `;
+
+exports[`CreateNewDIDScreen should render disabled button when no name is provided 1`] = `
+<RNCSafeAreaView
+  accessibilityLabel="CreateNewDIDScreen"
+  style={
+    Object {
+      "backgroundColor": "#000",
+      "flex": 1,
+    }
+  }
+  testID="CreateNewDIDScreen"
+>
+  <AppGlobalHeader />
+  <Memo(ForwardRef(Box))
+    flex={1}
+  >
+    <Memo(ForwardRef(Box))
+      flex={1}
+    >
+      <Styled(View)>
+        <Box
+          alignItems="center"
+          flexDirection="row"
+          marginLeft={1}
+          marginRight={22}
+        >
+          <Memo(ForwardRef(Box))
+            width="80px"
+          >
+            <BackButton
+              accessibilityLabel="CreateNewDIDScreenGoBack"
+              onPress={[Function]}
+              testID="CreateNewDIDScreenGoBack"
+            />
+          </Memo(ForwardRef(Box))>
+          <Memo(ForwardRef(Box))
+            alignContent="center"
+            alignItems="center"
+            flex={1}
+            pl={15}
+            width="100%"
+          >
+            <Styled(Component)
+              variant="h3"
+            >
+              Create New DID
+            </Styled(Component)>
+          </Memo(ForwardRef(Box))>
+          <Memo(ForwardRef(Box))
+            alignItems="flex-end"
+            width="80px"
+          />
+        </Box>
+      </Styled(View)>
+      <ForwardRef
+        marginLeft={3}
+        marginRight={3}
+      >
+        <Memo(ForwardRef(FormControl))>
+          <Memo(ForwardRef(Stack))
+            mt={7}
+          >
+            <Memo(ForwardRef(FormControlLabel))>
+              DID Name
+            </Memo(ForwardRef(FormControlLabel))>
+            <Memo(ForwardRef(Input))
+              accessibilityLabel="DIDName"
+              autoCapitalize="none"
+              testID="DIDName"
+              value=""
+            />
+            <Memo(ForwardRef(FormControlHelperText))>
+              This will just be used for easy reference
+            </Memo(ForwardRef(FormControlHelperText))>
+          </Memo(ForwardRef(Stack))>
+        </Memo(ForwardRef(FormControl))>
+        <Memo(ForwardRef(FormControl))
+          isInvalid=""
+        >
+          <Memo(ForwardRef(Stack))
+            mt={7}
+          >
+            <Memo(ForwardRef(FormControlLabel))>
+              DID Type
+            </Memo(ForwardRef(FormControlLabel))>
+            <Memo(ForwardRef(Select))
+              accessibilityLabel="DIDType"
+              selectedValue="didkey"
+              testID="DIDType"
+            >
+              <Memo(ForwardRef(Item))
+                label="did:key"
+                value="didkey"
+              />
+              <Memo(ForwardRef(Item))
+                label="did:dock"
+                value="diddock"
+              />
+            </Memo(ForwardRef(Select))>
+          </Memo(ForwardRef(Stack))>
+          <Memo(ForwardRef(FormControlErrorMessage)) />
+        </Memo(ForwardRef(FormControl))>
+        <DIDAdvancedOptions
+          accessibilityLabel="DIDAdvancedOptions"
+          form={
+            Object {
+              "_errors": Object {
+                "didType": "",
+              },
+              "_hasError": false,
+              "derivationPath": "",
+              "didName": "",
+              "didType": "didkey",
+              "keypairType": "ed25519",
+              "showDIDDockQuickInfo": false,
+            }
+          }
+          onChange={
+            [MockFunction] {
+              "calls": Array [
+                Array [
+                  "didName",
+                ],
+                Array [
+                  "didType",
+                ],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
+            }
+          }
+          testID="DIDAdvancedOptions"
+        />
+      </ForwardRef>
+      <LoadingButton
+        accessibilityLabel="CreateNewDIDScreenDIDCreate"
+        full={true}
+        isDisabled={true}
+        mb={70}
+        ml={3}
+        mr={3}
+        onPress={[MockFunction]}
+        testID="CreateNewDIDScreenDIDCreate"
+      >
+        Create
+      </LoadingButton>
+    </Memo(ForwardRef(Box))>
+  </Memo(ForwardRef(Box))>
+</RNCSafeAreaView>
+`;
+
+exports[`CreateNewDIDScreen should render enabled button when  name is provided 1`] = `
+<RNCSafeAreaView
+  accessibilityLabel="CreateNewDIDScreen"
+  style={
+    Object {
+      "backgroundColor": "#000",
+      "flex": 1,
+    }
+  }
+  testID="CreateNewDIDScreen"
+>
+  <AppGlobalHeader />
+  <Memo(ForwardRef(Box))
+    flex={1}
+  >
+    <Memo(ForwardRef(Box))
+      flex={1}
+    >
+      <Styled(View)>
+        <Box
+          alignItems="center"
+          flexDirection="row"
+          marginLeft={1}
+          marginRight={22}
+        >
+          <Memo(ForwardRef(Box))
+            width="80px"
+          >
+            <BackButton
+              accessibilityLabel="CreateNewDIDScreenGoBack"
+              onPress={[Function]}
+              testID="CreateNewDIDScreenGoBack"
+            />
+          </Memo(ForwardRef(Box))>
+          <Memo(ForwardRef(Box))
+            alignContent="center"
+            alignItems="center"
+            flex={1}
+            pl={15}
+            width="100%"
+          >
+            <Styled(Component)
+              variant="h3"
+            >
+              Create New DID
+            </Styled(Component)>
+          </Memo(ForwardRef(Box))>
+          <Memo(ForwardRef(Box))
+            alignItems="flex-end"
+            width="80px"
+          />
+        </Box>
+      </Styled(View)>
+      <ForwardRef
+        marginLeft={3}
+        marginRight={3}
+      >
+        <Memo(ForwardRef(FormControl))>
+          <Memo(ForwardRef(Stack))
+            mt={7}
+          >
+            <Memo(ForwardRef(FormControlLabel))>
+              DID Name
+            </Memo(ForwardRef(FormControlLabel))>
+            <Memo(ForwardRef(Input))
+              accessibilityLabel="DIDName"
+              autoCapitalize="none"
+              testID="DIDName"
+              value="Default"
+            />
+            <Memo(ForwardRef(FormControlHelperText))>
+              This will just be used for easy reference
+            </Memo(ForwardRef(FormControlHelperText))>
+          </Memo(ForwardRef(Stack))>
+        </Memo(ForwardRef(FormControl))>
+        <Memo(ForwardRef(FormControl))
+          isInvalid=""
+        >
+          <Memo(ForwardRef(Stack))
+            mt={7}
+          >
+            <Memo(ForwardRef(FormControlLabel))>
+              DID Type
+            </Memo(ForwardRef(FormControlLabel))>
+            <Memo(ForwardRef(Select))
+              accessibilityLabel="DIDType"
+              selectedValue="didkey"
+              testID="DIDType"
+            >
+              <Memo(ForwardRef(Item))
+                label="did:key"
+                value="didkey"
+              />
+              <Memo(ForwardRef(Item))
+                label="did:dock"
+                value="diddock"
+              />
+            </Memo(ForwardRef(Select))>
+          </Memo(ForwardRef(Stack))>
+          <Memo(ForwardRef(FormControlErrorMessage)) />
+        </Memo(ForwardRef(FormControl))>
+        <DIDAdvancedOptions
+          accessibilityLabel="DIDAdvancedOptions"
+          form={
+            Object {
+              "_errors": Object {
+                "didType": "",
+              },
+              "_hasError": false,
+              "derivationPath": "",
+              "didName": "Default",
+              "didType": "didkey",
+              "keypairType": "ed25519",
+              "showDIDDockQuickInfo": false,
+            }
+          }
+          onChange={
+            [MockFunction] {
+              "calls": Array [
+                Array [
+                  "didName",
+                ],
+                Array [
+                  "didType",
+                ],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
+            }
+          }
+          testID="DIDAdvancedOptions"
+        />
+      </ForwardRef>
+      <LoadingButton
+        accessibilityLabel="CreateNewDIDScreenDIDCreate"
+        full={true}
+        isDisabled={false}
+        mb={70}
+        ml={3}
+        mr={3}
+        onPress={[MockFunction]}
+        testID="CreateNewDIDScreenDIDCreate"
+      >
+        Create
+      </LoadingButton>
+    </Memo(ForwardRef(Box))>
+  </Memo(ForwardRef(Box))>
+</RNCSafeAreaView>
+`;

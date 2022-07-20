@@ -36,5 +36,6 @@ export const ANALYTICS_EVENT = {
   FAILURES: 'failure',
   DID: {
     DID_CREATED: 'didCreated',
+    DID_UPDATED: 'didUpdated',
   },
 };

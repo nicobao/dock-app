@@ -69,10 +69,7 @@ export function SingleDIDOptionsModal({
     </Stack>
   );
   return (
-    <Modal
-      visible={visible && didDocumentResolution}
-      onClose={onClose}
-      onBackButtonPress={onClose}>
+    <Modal visible={visible} onClose={onClose} onBackButtonPress={onClose}>
       {content}
     </Modal>
   );

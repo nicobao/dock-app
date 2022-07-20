@@ -82,24 +82,9 @@ export const createNewDID = async newDidParams => {
       await createKeyDID(keyDoc, newDidParams);
     },
   };
-  didFactories[newDidParams.didType]();
+  await didFactories[newDidParams.didType]();
 };
 
-export const updateDIDDocument = async (documentId, updatedDoc) => {
-  const docs = await wallet.query({
-    id: documentId,
-  });
-  if (docs.length === 1) {
-    const doc = docs[0];
-    await wallet.update({
-      ...doc,
-      ...updatedDoc,
-    });
-  }
-};
-export const deleteDIDDocument = async documentId => {
-  await wallet.remove(documentId);
-};
 export const didOperations = {
   initializeDID: () => async (dispatch, getState) => {
     await createDefaultDID();

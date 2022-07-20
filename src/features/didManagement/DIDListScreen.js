@@ -20,9 +20,9 @@ import PlusCircleIcon from '../../assets/icons/plus-circle.svg';
 import DocumentDownloadIcon from '../../assets/icons/document-download.svg';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
-import {useDIDManagement} from './didHooks';
 import {DIDListItem} from './components/DIDListItem';
 import {SingleDIDOptionsModal} from './components/SingleDIDOptionsModal';
+import {useDIDManagementHandlers} from './didHooks';
 
 export function DIDListScreen({didList, onDeleteDID}) {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -99,7 +99,7 @@ export function DIDListScreen({didList, onDeleteDID}) {
       ) : null}
       <SingleDIDOptionsModal
         onDeleteDID={onDeleteDID}
-        visible={isModalVisible}
+        visible={isModalVisible && selectedDID}
         didDocumentResolution={selectedDID}
         onClose={() => {
           setIsModalVisible(false);
@@ -110,6 +110,6 @@ export function DIDListScreen({didList, onDeleteDID}) {
   );
 }
 export function DIDListScreenContainer({}) {
-  const {didList, onDeleteDID} = useDIDManagement();
+  const {onDeleteDID, didList} = useDIDManagementHandlers();
   return <DIDListScreen didList={didList} onDeleteDID={onDeleteDID} />;
 }

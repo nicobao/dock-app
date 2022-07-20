@@ -404,6 +404,30 @@ jest.mock('@docknetwork/wallet-sdk-core/lib/services/keyring', () => {
     keyringService: mockFunctions,
   };
 });
+jest.mock('@docknetwork/wallet-sdk-react-native/lib', () => {
+  const mockFunctions = {
+    createKeyDID: jest.fn(didParams => {
+      const {type = 'ed25519'} = didParams;
+      if (type === 'ed25519') {
+        return Promise.resolve();
+      }
+      return Promise.reject();
+    }),
+    deleteDID: jest.fn(() => {}),
+    editDID: jest.fn(didParams => {
+      const {id} = didParams;
+      if (typeof id === 'string' && id.length > 0) {
+        return Promise.resolve();
+      }
+      return Promise.reject();
+    }),
+    didList: [],
+  };
+  return {
+    useDIDManagement: () => mockFunctions,
+  };
+});
+
 global.fetch = jest.fn(() =>
   Promise.resolve({
     json: () => Promise.resolve({test: 100}),

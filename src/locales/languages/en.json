@@ -329,6 +329,7 @@
     "did_created": "DID Created",
     "did_deleted": "DID Deleted Successfully",
     "did_creation_error": "An error occurred creating DID",
+    "did_updating_error": "An error occurred updating DID",
     "error_keypair_type": "%{keypairType} keypair type  is not supported.",
     "export_did": "Export DID",
     "delete_did": "Delete DID",
@@ -336,6 +337,6 @@
     "delete": "Delete",
     "cancel": "Cancel",
     "default": "Default DID",
-    "did_edited_successfully": "DID updated successsfully"
+    "did_edited_successfully": "DID updated successfully"
   }
 }
