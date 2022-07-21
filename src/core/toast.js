@@ -5,6 +5,10 @@ import {Pressable} from 'react-native';
 import {translate} from 'src/locales';
 import {CheckCircleIcon, Text, XCircleIcon} from '../design-system';
 import {Theme} from '../design-system/theme';
+import {
+  ANALYTICS_EVENT,
+  logAnalyticsEvent,
+} from '../features/analytics/analytics-slice';
 
 let toast;
 
@@ -33,8 +37,15 @@ export const withErrorToast =
     try {
       await fn(...params);
     } catch (err) {
+      const errorMessage = message || getErrorMessageFromErrorObject(err);
       captureException(err);
-      showUnexpectedErrorToast(message || getErrorMessageFromErrorObject(err));
+      showUnexpectedErrorToast(errorMessage);
+
+      logAnalyticsEvent(ANALYTICS_EVENT.FAILURES, {
+        ...params,
+        message: errorMessage,
+      });
+      console.log(err, 'osi');
       throw err;
     }
   };

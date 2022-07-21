@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useEffect} from 'react';
 import {
   BackButton,
   Box,
@@ -13,8 +13,8 @@ import {navigateBack} from '../../core/navigation';
 import {translate} from '../../locales';
 import {FormControl, ScrollView, Stack} from 'native-base';
 import {addTestId} from '../../core/automation-utils';
-export function EditDIDScreen() {
-  const onChange = useCallback(() => {}, []);
+import {useDIDManagementHandlers} from './didHooks';
+export function EditDIDScreen({handleChange, form, handleSubmit}) {
   return (
     <ScreenContainer {...addTestId('EditDIDScreen')}>
       <Header>
@@ -49,9 +49,9 @@ export function EditDIDScreen() {
               {translate('didManagement.did_name')}
             </FormControl.Label>
             <Input
-              {...addTestId('EditDIDScreenGoBack')}
-              value={''}
-              onChangeText={onChange('word1')}
+              {...addTestId('EditDIDScreenDIDName')}
+              value={form.didName}
+              onChangeText={handleChange('didName')}
               autoCapitalize="none"
             />
           </Stack>
@@ -63,8 +63,8 @@ export function EditDIDScreen() {
           full
           testID="save-btn"
           mb={70}
-          onPress={null}
-          isDisabled={false}>
+          onPress={handleSubmit}
+          isDisabled={form.didName.trim().length <= 0}>
           {translate('didManagement.save')}
         </LoadingButton>
       </NBox>
@@ -72,6 +72,27 @@ export function EditDIDScreen() {
   );
 }
 
-export function EditDIDScreenContainer() {
-  return <EditDIDScreen />;
+export function EditDIDScreenContainer({route}) {
+  const {didDocumentResolution} = route.params;
+  const {form, onEditDID, handleChange} = useDIDManagementHandlers();
+
+  useEffect(() => {
+    if (didDocumentResolution) {
+      handleChange('id')(didDocumentResolution.id);
+      handleChange('didName')(
+        typeof didDocumentResolution.name === 'string'
+          ? didDocumentResolution.name.trim()
+          : '',
+      );
+    }
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <EditDIDScreen
+      handleChange={handleChange}
+      form={form}
+      handleSubmit={onEditDID}
+    />
+  );
 }
