@@ -121,6 +121,10 @@ exports[`DIDListScreen should render correctly with list 1`] = `
         onDeleteDID={[MockFunction]}
         visible={false}
       />
+      <NewDIDModal
+        onClose={[Function]}
+        visible={false}
+      />
     </Memo(ForwardRef(Box))>
     <Memo(ForwardRef(Box))
       flex={1}
@@ -221,7 +225,6 @@ exports[`DIDListScreen should render correctly without list 1`] = `
         <BigButton
           accessibilityLabel="ImportExistingDIDBtn"
           icon={<SvgFile />}
-          onPress={[Function]}
           testID="ImportExistingDIDBtn"
         >
           Import existing DID
@@ -231,6 +234,10 @@ exports[`DIDListScreen should render correctly without list 1`] = `
         didDocumentResolution={null}
         onClose={[Function]}
         onDeleteDID={[MockFunction]}
+        visible={false}
+      />
+      <NewDIDModal
+        onClose={[Function]}
         visible={false}
       />
     </Memo(ForwardRef(Box))>

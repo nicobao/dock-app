@@ -23,9 +23,12 @@ import {Routes} from '../../core/routes';
 import {DIDListItem} from './components/DIDListItem';
 import {SingleDIDOptionsModal} from './components/SingleDIDOptionsModal';
 import {useDIDManagementHandlers} from './didHooks';
+import {NewDIDModal} from './components/NewDIDModal';
 
-export function DIDListScreen({didList, onDeleteDID}) {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+export function DIDListScreen({didList, onDeleteDID, onImportDID}) {
+  const [isDIDOptionsModalVisible, setIsDIDOptionsModalVisible] =
+    useState(false);
+  const [isCreateDIDModalVisible, setIsCreateDIDModalVisible] = useState(false);
   const [selectedDID, setSelectedDID] = useState(null);
 
   return (
@@ -46,7 +49,7 @@ export function DIDListScreen({didList, onDeleteDID}) {
               col
               {...addTestId('DIDListScreen_Add_DID')}
               onPress={() => {
-                navigate(Routes.DID_MANAGEMENT_NEW_DID);
+                setIsCreateDIDModalVisible(true);
               }}>
               <PlusCircleWhiteIcon />
             </IconButton>
@@ -62,7 +65,7 @@ export function DIDListScreen({didList, onDeleteDID}) {
                 key={didDocumentResolution.id}
                 onOptionClicked={() => {
                   setSelectedDID(didDocumentResolution);
-                  setIsModalVisible(true);
+                  setIsDIDOptionsModalVisible(true);
                 }}
                 didDocumentResolution={didDocumentResolution}
               />
@@ -91,7 +94,7 @@ export function DIDListScreen({didList, onDeleteDID}) {
           </BigButton>
           <BigButton
             {...addTestId('ImportExistingDIDBtn')}
-            onPress={() => {}}
+            onPress={onImportDID}
             icon={<DocumentDownloadIcon />}>
             {translate('didManagement.import_existing_did')}
           </BigButton>
@@ -99,17 +102,30 @@ export function DIDListScreen({didList, onDeleteDID}) {
       ) : null}
       <SingleDIDOptionsModal
         onDeleteDID={onDeleteDID}
-        visible={isModalVisible && selectedDID}
+        visible={isDIDOptionsModalVisible && selectedDID}
         didDocumentResolution={selectedDID}
         onClose={() => {
-          setIsModalVisible(false);
+          setIsDIDOptionsModalVisible(false);
           setSelectedDID(null);
+        }}
+      />
+      <NewDIDModal
+        onImportDID={onImportDID}
+        visible={isCreateDIDModalVisible}
+        onClose={() => {
+          setIsCreateDIDModalVisible(false);
         }}
       />
     </ScreenContainer>
   );
 }
 export function DIDListScreenContainer({}) {
-  const {onDeleteDID, didList} = useDIDManagementHandlers();
-  return <DIDListScreen didList={didList} onDeleteDID={onDeleteDID} />;
+  const {onDeleteDID, didList, onImportDID} = useDIDManagementHandlers();
+  return (
+    <DIDListScreen
+      didList={didList}
+      onDeleteDID={onDeleteDID}
+      onImportDID={onImportDID}
+    />
+  );
 }
