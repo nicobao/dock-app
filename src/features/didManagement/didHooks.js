@@ -5,7 +5,6 @@ import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {useDIDManagement} from '@docknetwork/wallet-sdk-react-native/lib';
-import {pickJSONFile} from '../../core/storage-utils';
 
 export function useDIDManagementHandlers() {
   const {createKeyDID, deleteDID, editDID, didList} = useDIDManagement();
@@ -21,9 +20,7 @@ export function useDIDManagementHandlers() {
     _hasError: false,
   });
 
-  const onImportDID = useCallback(async () => {
-    const jsonfile = await pickJSONFile(); //TODO
-  }, []);
+  const onImportDID = useCallback(async () => {}, []);
   const handleChange = useCallback(key => {
     return evt => {
       setForm(v => ({
