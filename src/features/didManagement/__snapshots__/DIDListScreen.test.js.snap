@@ -112,6 +112,7 @@ exports[`DIDListScreen should render correctly with list 1`] = `
           }
           key="1657822960364"
           onOptionClicked={[Function]}
+          onShare={[Function]}
           testID="DIDListItem_0"
         />
       </ForwardRef>

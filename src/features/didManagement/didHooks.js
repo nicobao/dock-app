@@ -7,10 +7,12 @@ import {Routes} from '../../core/routes';
 import {useDIDManagement} from '@docknetwork/wallet-sdk-react-native/lib';
 
 export function useDIDManagementHandlers() {
-  const {createKeyDID, deleteDID, editDID, didList} = useDIDManagement();
+  const {createKeyDID, deleteDID, editDID, didList, importDID} =
+    useDIDManagement();
   const [form, setForm] = useState({
     didName: '',
     didType: '',
+    password: '',
     showDIDDockQuickInfo: true,
     keypairType: 'ed25519',
     derivationPath: '',
@@ -20,7 +22,18 @@ export function useDIDManagementHandlers() {
     _hasError: false,
   });
 
-  const onImportDID = useCallback(async () => {}, []);
+  const onImportDID = useCallback(
+    async ({encryptedJSONWallet, password}) => {
+      await importDID({encryptedJSONWallet, password});
+      showToast({
+        message: translate('didManagement.did_imported_successfully'),
+        type: 'success',
+      });
+      navigate(Routes.DID_MANAGEMENT_LIST);
+      logAnalyticsEvent(ANALYTICS_EVENT.DID.DID_IMPORTED, {});
+    },
+    [importDID],
+  );
   const handleChange = useCallback(key => {
     return evt => {
       setForm(v => ({

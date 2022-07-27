@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   BigButton,
   Box,
@@ -24,6 +24,7 @@ import {DIDListItem} from './components/DIDListItem';
 import {SingleDIDOptionsModal} from './components/SingleDIDOptionsModal';
 import {useDIDManagementHandlers} from './didHooks';
 import {NewDIDModal} from './components/NewDIDModal';
+import {pickJSONFile} from '../../core/storage-utils';
 
 export function DIDListScreen({didList, onDeleteDID, onImportDID}) {
   const [isDIDOptionsModalVisible, setIsDIDOptionsModalVisible] =
@@ -66,6 +67,12 @@ export function DIDListScreen({didList, onDeleteDID, onImportDID}) {
                 onOptionClicked={() => {
                   setSelectedDID(didDocumentResolution);
                   setIsDIDOptionsModalVisible(true);
+                }}
+                onShare={() => {
+                  navigate(Routes.DID_MANAGEMENT_SHARE_DID, {
+                    did: didDocumentResolution.didDocument.id,
+                    didName: didDocumentResolution.name,
+                  });
                 }}
                 didDocumentResolution={didDocumentResolution}
               />
@@ -120,12 +127,19 @@ export function DIDListScreen({didList, onDeleteDID, onImportDID}) {
   );
 }
 export function DIDListScreenContainer({}) {
-  const {onDeleteDID, didList, onImportDID} = useDIDManagementHandlers();
+  const getFile = useCallback(async () => {
+    const encryptedJSONWallet = await pickJSONFile();
+    navigate(Routes.DID_MANAGEMENT_IMPORT_DID, {
+      encryptedJSONWallet,
+    });
+  }, []);
+
+  const {onDeleteDID, didList} = useDIDManagementHandlers();
   return (
     <DIDListScreen
       didList={didList}
       onDeleteDID={onDeleteDID}
-      onImportDID={onImportDID}
+      onImportDID={getFile}
     />
   );
 }

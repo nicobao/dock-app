@@ -45,7 +45,6 @@ export const withErrorToast =
         ...params,
         message: errorMessage,
       });
-      console.log(err, 'osi');
       throw err;
     }
   };

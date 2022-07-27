@@ -1,5 +1,5 @@
 import {Box, Stack} from 'native-base';
-import React from 'react';
+import React, {useCallback} from 'react';
 import {Dimensions} from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import {PolkadotIcon} from 'src/components/PolkadotIcon';
@@ -17,6 +17,9 @@ import {
   Typography,
 } from '../../design-system';
 import {translate} from '../../locales';
+import Clipboard from '@react-native-community/clipboard';
+import {showToast} from '../../core/toast';
+import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
 
 export function ShareDIDScreen({did, didName, accountIcon, onCopyAddress}) {
   const qrSize = Dimensions.get('window').width * 0.5;
@@ -65,13 +68,22 @@ export function ShareDIDScreen({did, didName, accountIcon, onCopyAddress}) {
   );
 }
 
-export function ShareDIDScreenContainer() {
-  const did = '3HVkSiuFQj5dSjuAMX7ghwGz567fwaZhF1fSkhKm9BtHz9Mu';
-  const didName = 'cocomelon';
+export function ShareDIDScreenContainer({route}) {
+  const {did, didName} = route.params || {};
+
+  const handleCopyAddress = useCallback(() => {
+    Clipboard.setString(did);
+    showToast({
+      message: translate('didManagement.did_copied'),
+    });
+    logAnalyticsEvent(ANALYTICS_EVENT.DID.DID_SHARED, {
+      did,
+    });
+  }, [did]);
+
   return (
     <ShareDIDScreen
-      onCopyAddress={() => {}}
-      onShareAddress={() => {}}
+      onCopyAddress={handleCopyAddress}
       did={did}
       didName={didName}
       accountIcon={<PolkadotIcon address={did} size={32} />}

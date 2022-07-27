@@ -41,4 +41,5 @@ export const Routes = {
   DID_MANAGEMENT_EDIT_DID: 'didManagement/editDID',
   DID_MANAGEMENT_SHARE_DID: 'didManagement/shareDID',
   DID_MANAGEMENT_EXPORT_DID: 'didManagement/exportDID',
+  DID_MANAGEMENT_IMPORT_DID: 'didManagement/importDID',
 };

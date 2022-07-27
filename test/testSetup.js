@@ -439,6 +439,12 @@ jest.mock('@docknetwork/wallet-sdk-react-native/lib', () => {
   );
 
   const mockFunctions = {
+    importDID: jest.fn(({password}) => {
+      if (password === 'test') {
+        return Promise.resolve([]);
+      }
+      return Promise.reject('Incorrect password');
+    }),
     createKeyDID: jest.fn(didParams => {
       const {type = 'ed25519'} = didParams;
       if (type === 'ed25519') {
