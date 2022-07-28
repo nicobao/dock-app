@@ -56,6 +56,7 @@ exports[`ShareDIDScreen should render correctly 1`] = `
           >
             <QRCode
               size={375}
+              value="did:dock:5EfZQN8LKZvqwE9oda4wiognj3217bMj5AaDX4jBgEe3orJk"
             />
           </Memo(ForwardRef(Stack))>
           <Memo(ForwardRef(Stack))
@@ -66,7 +67,12 @@ exports[`ShareDIDScreen should render correctly 1`] = `
           >
             <Memo(ForwardRef(Box))
               pr={2}
-            />
+            >
+              <Memo()
+                address="did:dock:5EfZQN8LKZvqwE9oda4wiognj3217bMj5AaDX4jBgEe3orJk"
+                size={32}
+              />
+            </Memo(ForwardRef(Box))>
             <Memo(ForwardRef(Stack))
               alignItems="flex-start"
               direction="column"
@@ -74,8 +80,12 @@ exports[`ShareDIDScreen should render correctly 1`] = `
             >
               <Styled(Component)
                 variant="h3"
-              />
-              <Styled(Component) />
+              >
+                TestDID
+              </Styled(Component)>
+              <Styled(Component)>
+                did:dock:5EfZQN8LKZvqwE9oda4wiognj3217bMj5AaDX4jBgEe3orJk
+              </Styled(Component)>
             </Memo(ForwardRef(Stack))>
           </Memo(ForwardRef(Stack))>
         </Memo(ForwardRef(Stack))>
@@ -85,6 +95,7 @@ exports[`ShareDIDScreen should render correctly 1`] = `
         mx={7}
       >
         <Button
+          onPress={[MockFunction]}
           size="sm"
           startIcon={
             <Memo

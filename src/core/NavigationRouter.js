@@ -44,6 +44,7 @@ import {DIDListScreenContainer} from '../features/didManagement/DIDListScreen';
 import {EditDIDScreenContainer} from '../features/didManagement/EditDIDScreen';
 import {ShareDIDScreenContainer} from '../features/didManagement/ShareDIDScreen';
 import {ExportDIDScreenContainer} from '../features/didManagement/ExportDIDScreen';
+import {ImportDIDScreenContainer} from '../features/didManagement/ImportDIDScreen';
 
 const AppStack = createStackNavigator();
 const RootStack = createStackNavigator();
@@ -339,6 +340,15 @@ function AppStackScreen() {
         {...getScreenProps({
           name: Routes.DID_MANAGEMENT_EXPORT_DID,
           component: ExportDIDScreenContainer,
+          options: {
+            gestureEnabled: false,
+          },
+        })}
+      />
+      <AppStack.Screen
+        {...getScreenProps({
+          name: Routes.DID_MANAGEMENT_IMPORT_DID,
+          component: ImportDIDScreenContainer,
           options: {
             gestureEnabled: false,
           },

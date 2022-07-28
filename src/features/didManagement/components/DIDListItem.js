@@ -11,7 +11,7 @@ import {addTestId} from '../../../core/automation-utils';
 import {translate} from '../../../locales';
 import React from 'react';
 
-export function DIDListItem({didDocumentResolution, onOptionClicked}) {
+export function DIDListItem({didDocumentResolution, onOptionClicked, onShare}) {
   const {didDocument} = didDocumentResolution;
   return (
     <NBox
@@ -52,7 +52,7 @@ export function DIDListItem({didDocumentResolution, onOptionClicked}) {
           variant={'whiteButton'}
           colorScheme="dark"
           {...addTestId('Share')}
-          onPress={() => {}}>
+          onPress={onShare}>
           <Typography color={Theme.colors.primaryBackground}>
             {translate('didManagement.share')}
           </Typography>

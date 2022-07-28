@@ -102,6 +102,7 @@ exports[`CreateNewDIDScreen should render CreateNewDIDScreenContainer correctly 
           "didName": "",
           "didType": "",
           "keypairType": "ed25519",
+          "password": "",
           "showDIDDockQuickInfo": true,
         }
       }

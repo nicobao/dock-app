@@ -337,6 +337,9 @@
     "delete": "Delete",
     "cancel": "Cancel",
     "default": "Default DID",
-    "did_edited_successfully": "DID updated successfully"
+    "did_edited_successfully": "DID updated successfully",
+    "did_imported_successfully": "DID imported successfully",
+    "add_did": "Add DID",
+    "did_copied": "DID Copied"
   }
 }

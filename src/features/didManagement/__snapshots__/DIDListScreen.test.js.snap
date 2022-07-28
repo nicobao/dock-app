@@ -112,6 +112,7 @@ exports[`DIDListScreen should render correctly with list 1`] = `
           }
           key="1657822960364"
           onOptionClicked={[Function]}
+          onShare={[Function]}
           testID="DIDListItem_0"
         />
       </ForwardRef>
@@ -119,6 +120,10 @@ exports[`DIDListScreen should render correctly with list 1`] = `
         didDocumentResolution={null}
         onClose={[Function]}
         onDeleteDID={[MockFunction]}
+        visible={false}
+      />
+      <NewDIDModal
+        onClose={[Function]}
         visible={false}
       />
     </Memo(ForwardRef(Box))>
@@ -221,7 +226,6 @@ exports[`DIDListScreen should render correctly without list 1`] = `
         <BigButton
           accessibilityLabel="ImportExistingDIDBtn"
           icon={<SvgFile />}
-          onPress={[Function]}
           testID="ImportExistingDIDBtn"
         >
           Import existing DID
@@ -231,6 +235,10 @@ exports[`DIDListScreen should render correctly without list 1`] = `
         didDocumentResolution={null}
         onClose={[Function]}
         onDeleteDID={[MockFunction]}
+        visible={false}
+      />
+      <NewDIDModal
+        onClose={[Function]}
         visible={false}
       />
     </Memo(ForwardRef(Box))>
