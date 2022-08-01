@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback} from 'react';
 import {addTestId} from '../../core/automation-utils';
 import {
   BackButton,
