@@ -35,9 +35,6 @@ jest.mock('react-native-share', () => {
       open,
     },
   };
-  // return {
-  //   open: jest.fn(),
-  // };
 });
 
 Enzyme.configure({adapter: new Adapter()});

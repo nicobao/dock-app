@@ -71,7 +71,7 @@ exports[`ExportDIDScreen should render correctly when form invalid 1`] = `
               <Memo(ForwardRef(Input))
                 accessibilityLabel="ConfirmPassword"
                 autoCapitalize="none"
-                placeholder="Confirm password"
+                placeholder="Confirm Password"
                 secureTextEntry={true}
                 testID="ConfirmPassword"
                 value=""
@@ -219,7 +219,7 @@ exports[`ExportDIDScreen should render correctly when form valid 1`] = `
               <Memo(ForwardRef(Input))
                 accessibilityLabel="ConfirmPassword"
                 autoCapitalize="none"
-                placeholder="Confirm password"
+                placeholder="Confirm Password"
                 secureTextEntry={true}
                 testID="ConfirmPassword"
                 value=""

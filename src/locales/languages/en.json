@@ -83,7 +83,9 @@
   },
   "password_input": {
     "title": "Enter password",
-    "submit": "Next"
+    "submit": "Next",
+    "password": "Password",
+    "confirm_password": "Confirm Password"
   },
   "settings": {
     "title": "Settings",

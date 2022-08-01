@@ -132,3 +132,67 @@ export function useDIDManagementHandlers() {
     didList,
   ]);
 }
+
+export function useExportDIDHandlers() {
+  const [form, setForm] = useState({
+    password: '',
+    passwordConfirmation: '',
+    _errors: {},
+    _hasError: false,
+  });
+  const formValid = useMemo(() => {
+    return (
+      form.password &&
+      form.passwordConfirmation &&
+      form.caseValidation &&
+      form.specialCharactersValidation &&
+      form.digitsValidation &&
+      form.passwordMatchValidation &&
+      form.lengthValidation
+    );
+  }, [
+    form.caseValidation,
+    form.digitsValidation,
+    form.lengthValidation,
+    form.password,
+    form.passwordConfirmation,
+    form.passwordMatchValidation,
+    form.specialCharactersValidation,
+  ]);
+
+  const handleChange = useCallback(
+    key => {
+      return value => {
+        const updatedForm = {
+          ...form,
+          [key]: value,
+        };
+
+        if (key === 'password') {
+          updatedForm.lengthValidation = value.length >= 8;
+          updatedForm.digitsValidation = /\d/.test(value);
+          updatedForm.caseValidation =
+            /[A-Z]/.test(value) && /[a-z]/.test(value);
+          updatedForm.specialCharactersValidation = /\W/.test(value);
+        }
+
+        updatedForm.passwordMatchValidation =
+          updatedForm.password === updatedForm.passwordConfirmation &&
+          updatedForm.password.length > 0;
+
+        setForm(v => ({
+          ...v,
+          ...updatedForm,
+        }));
+      };
+    },
+    [form],
+  );
+  return useMemo(() => {
+    return {
+      form,
+      handleChange,
+      formValid,
+    };
+  }, [form, handleChange, formValid]);
+}

@@ -14,7 +14,7 @@ import {
 import {FormControl, Stack} from 'native-base';
 import {translate} from '../../locales';
 import {CheckCircle} from '../../components/CheckCircleComponent';
-import {useDIDManagementHandlers} from './didHooks';
+import {useDIDManagementHandlers, useExportDIDHandlers} from './didHooks';
 
 export function ExportDIDScreen({form, onChange, formValid, onSubmit}) {
   return (
@@ -37,7 +37,7 @@ export function ExportDIDScreen({form, onChange, formValid, onSubmit}) {
                 {translate('didManagement.enter_password')}
               </FormControl.Label>
               <Input
-                placeholder="Password"
+                placeholder={translate('password_input.password')}
                 {...addTestId('Password')}
                 value={form.password}
                 onChangeText={onChange('password')}
@@ -55,7 +55,7 @@ export function ExportDIDScreen({form, onChange, formValid, onSubmit}) {
                 {translate('didManagement.confirm_password')}
               </FormControl.Label>
               <Input
-                placeholder="Confirm password"
+                placeholder={translate('password_input.confirm_password')}
                 {...addTestId('ConfirmPassword')}
                 value={form.passwordConfirmation}
                 onChangeText={onChange('passwordConfirmation')}
@@ -113,60 +113,9 @@ export function ExportDIDScreen({form, onChange, formValid, onSubmit}) {
 export function ExportDIDScreenContainer({route}) {
   const {didDocumentResolution} = route.params;
 
-  const [form, setForm] = useState({
-    password: '',
-    passwordConfirmation: '',
-    _errors: {},
-    _hasError: false,
-  });
+  const {form, handleChange, formValid} = useExportDIDHandlers();
+
   const {onExportDID} = useDIDManagementHandlers();
-  const handleChange = useCallback(
-    key => {
-      return value => {
-        const updatedForm = {
-          ...form,
-          [key]: value,
-        };
-
-        if (key === 'password') {
-          updatedForm.lengthValidation = value.length >= 8;
-          updatedForm.digitsValidation = /\d/.test(value);
-          updatedForm.caseValidation =
-            /[A-Z]/.test(value) && /[a-z]/.test(value);
-          updatedForm.specialCharactersValidation = /\W/.test(value);
-        }
-
-        updatedForm.passwordMatchValidation =
-          updatedForm.password === updatedForm.passwordConfirmation &&
-          updatedForm.password.length > 0;
-
-        setForm(v => ({
-          ...v,
-          ...updatedForm,
-        }));
-      };
-    },
-    [form],
-  );
-  const formValid = useMemo(() => {
-    return (
-      form.password &&
-      form.passwordConfirmation &&
-      form.caseValidation &&
-      form.specialCharactersValidation &&
-      form.digitsValidation &&
-      form.passwordMatchValidation &&
-      form.lengthValidation
-    );
-  }, [
-    form.caseValidation,
-    form.digitsValidation,
-    form.lengthValidation,
-    form.password,
-    form.passwordConfirmation,
-    form.passwordMatchValidation,
-    form.specialCharactersValidation,
-  ]);
 
   const onSubmit = useCallback(async () => {
     await onExportDID({id: didDocumentResolution.id, password: form.password});

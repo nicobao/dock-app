@@ -1,9 +1,36 @@
 import {renderHook, act} from '@testing-library/react-hooks';
-import {useDIDManagementHandlers} from './didHooks';
+import {useDIDManagementHandlers, useExportDIDHandlers} from './didHooks';
 import {useDIDManagement} from '@docknetwork/wallet-sdk-react-native/lib';
 import Share from 'react-native-share';
 import RNFS from 'react-native-fs';
 describe('DID hooks', () => {
+  describe('Export DID hooks', () => {
+    it('Can handle change', () => {
+      const {result} = renderHook(() => useExportDIDHandlers());
+      act(() => {
+        result.current.handleChange('password')('secret');
+      });
+      expect(result.current.form.password).toBe('secret');
+    });
+    it('check invalid form', () => {
+      const {result} = renderHook(() => useExportDIDHandlers());
+      act(() => {
+        result.current.handleChange('password')('secret');
+      });
+      expect(result.current.formValid).toBeFalsy();
+    });
+    it('check valid form', () => {
+      const {result} = renderHook(() => useExportDIDHandlers());
+
+      act(() => {
+        result.current.handleChange('password')('Password1$');
+      });
+      act(() => {
+        result.current.handleChange('passwordConfirmation')('Password1$');
+      });
+      expect(result.current.formValid).toBeTruthy();
+    });
+  });
   test('Handle on change', () => {
     const {result} = renderHook(() => useDIDManagementHandlers());
 
