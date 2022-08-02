@@ -246,11 +246,11 @@ exports[`CreateNewDIDScreen should render correctly with modal 1`] = `
                 }
               }
             >
-              <Memo(ForwardRef(Icon))
-                as={[Function]}
-                mt={2}
-                name="information-circle-outline"
-              />
+              <Memo(ForwardRef(Box))
+                mt={4}
+              >
+                <SvgFile />
+              </Memo(ForwardRef(Box))>
               <Styled(Component)
                 ml={1}
                 mt={2}
@@ -271,7 +271,6 @@ exports[`CreateNewDIDScreen should render correctly with modal 1`] = `
             </IconButton>
           </Memo(ForwardRef(HStack))>
           <Styled(Component)
-            mt={3}
             textAlign="left"
             variant="didDescription"
           >

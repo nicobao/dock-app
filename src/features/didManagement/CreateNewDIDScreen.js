@@ -26,6 +26,7 @@ import {DIDAdvancedOptions} from './components/DIDAdvancedOptions';
 import {Ionicons} from '@native-base/icons';
 import {addTestId} from '../../core/automation-utils';
 import {useDIDManagementHandlers} from './didHooks';
+import QuickInfoIcon from '../../assets/icons/quick-info.svg';
 
 export function CreateNewDIDScreen({form, handleChange, handleSubmit}) {
   return (
@@ -105,7 +106,9 @@ export function CreateNewDIDScreen({form, handleChange, handleSubmit}) {
                 style={{
                   flexGrow: 1,
                 }}>
-                <Icon mt={2} as={Ionicons} name="information-circle-outline" />
+                <NBox mt={4}>
+                  <QuickInfoIcon />
+                </NBox>
                 <Typography mt={2} ml={1} variant="h3">
                   {' ' + translate('didManagement.quick_info')}
                 </Typography>
@@ -118,7 +121,7 @@ export function CreateNewDIDScreen({form, handleChange, handleSubmit}) {
                 <Icon as={Ionicons} name="close-outline" />
               </IconButton>
             </HStack>
-            <Typography mt={3} textAlign="left" variant="didDescription">
+            <Typography textAlign="left" variant="didDescription">
               {translate('didManagement.did_dock_info')}
             </Typography>
           </VStack>
