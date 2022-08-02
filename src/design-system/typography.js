@@ -141,6 +141,11 @@ const variantsMap = {
     fontSize: 14,
     color: Theme.colors.description,
   },
+  selectText: {
+    fontWeight: 600,
+    fontSize: 14,
+    color: Theme.colors.headerText,
+  },
   warning: {
     color: Theme.colors.warningText,
   },
