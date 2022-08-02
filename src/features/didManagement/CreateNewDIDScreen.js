@@ -17,7 +17,6 @@ import {
   HStack,
   Icon,
   ScrollView,
-  Select,
   Stack,
   VStack,
 } from 'native-base';
@@ -27,6 +26,7 @@ import {Ionicons} from '@native-base/icons';
 import {addTestId} from '../../core/automation-utils';
 import {useDIDManagementHandlers} from './didHooks';
 import QuickInfoIcon from '../../assets/icons/quick-info.svg';
+import {CustomSelectInput} from '../../components/CustomSelectInput';
 
 export function CreateNewDIDScreen({form, handleChange, handleSubmit}) {
   return (
@@ -73,18 +73,41 @@ export function CreateNewDIDScreen({form, handleChange, handleSubmit}) {
             </FormControl.HelperText>
           </Stack>
         </FormControl>
+
         <FormControl isInvalid={form._errors.didType}>
           <Stack mt={7}>
             <FormControl.Label>
               {translate('didManagement.did_type')}
             </FormControl.Label>
-            <Select
-              {...addTestId('DIDType')}
-              onValueChange={handleChange('didType')}
-              selectedValue={form.didType}>
-              <Select.Item label="did:key" value="didkey" />
-              <Select.Item label="did:dock" value="diddock" />
-            </Select>
+            <CustomSelectInput
+              onPressItem={item => {
+                handleChange('didType')(item.value);
+              }}
+              renderItem={item => {
+                return (
+                  <>
+                    <Typography textAlign="left" variant="description">
+                      {item.label}
+                    </Typography>
+                    <Typography textAlign="left" variant="screen-description">
+                      {item.description}
+                    </Typography>
+                  </>
+                );
+              }}
+              items={[
+                {
+                  value: 'didkey',
+                  label: translate('didManagement.did_key'),
+                  description: translate('didManagement.did_key_description'),
+                },
+                {
+                  value: 'diddock',
+                  label: translate('didManagement.did_dock'),
+                  description: translate('didManagement.did_dock_description'),
+                },
+              ]}
+            />
           </Stack>
           <FormControl.ErrorMessage>
             {form._errors.didType}
