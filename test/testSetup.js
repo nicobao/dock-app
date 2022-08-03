@@ -174,24 +174,6 @@ jest.mock('react-native-screen-capture-secure', () => {
   };
 });
 
-jest.mock('@docknetwork/react-native-sdk/src/client/wallet-rpc', () => {
-  const originalModule = jest.requireActual(
-    '@docknetwork/react-native-sdk/src/client/wallet-rpc',
-  );
-  const {WalletRpc} = originalModule;
-  return {
-    __esModule: true,
-    WalletRpc: {
-      ...WalletRpc,
-      importWallet: jest.fn(() => Promise.resolve()),
-      query: jest.fn(() => Promise.resolve([])),
-      remove: jest.fn(),
-      create: jest.fn(),
-      load: jest.fn(),
-      sync: jest.fn(),
-    },
-  };
-});
 jest.mock('@docknetwork/wallet-sdk-core/lib/services/substrate', () => {
   const originalModule = jest.requireActual(
     '@docknetwork/wallet-sdk-core/lib/services/substrate',
