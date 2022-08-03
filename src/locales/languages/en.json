@@ -348,6 +348,7 @@
     "did_key": "did:key",
     "did_key_description": "W3C compliant Decentralized identifier",
     "did_dock": "did:dock",
-    "did_dock_description": "W3C compliant Decentralized Identifier created by Dock. Uses blockchain to secure verifiable credentials."
+    "did_dock_description": "W3C compliant Decentralized Identifier created by Dock. Uses blockchain to secure verifiable credentials.",
+    "no_name_set": "DID name not set"
   }
 }

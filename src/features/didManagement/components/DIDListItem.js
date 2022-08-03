@@ -32,7 +32,10 @@ export function DIDListItem({didDocumentResolution, onOptionClicked, onShare}) {
             numberOfLines={1}
             pt={2}
             variant="didTitle">
-            {didDocumentResolution.name}
+            {typeof didDocumentResolution.name === 'string' &&
+            didDocumentResolution.name.length > 0
+              ? didDocumentResolution.name
+              : translate('didManagement.no_name_set')}
           </Typography>
           <IconButton
             col
