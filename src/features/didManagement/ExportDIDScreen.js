@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {addTestId} from '../../core/automation-utils';
 import {
   BackButton,
@@ -14,8 +14,9 @@ import {
 import {FormControl, Stack} from 'native-base';
 import {translate} from '../../locales';
 import {CheckCircle} from '../../components/CheckCircleComponent';
+import {useDIDManagementHandlers, useExportDIDHandlers} from './didHooks';
 
-export function ExportDIDScreen() {
+export function ExportDIDScreen({form, onChange, formValid, onSubmit}) {
   return (
     <ScreenContainer {...addTestId('ExportDIDScreen')}>
       <Header>
@@ -36,10 +37,10 @@ export function ExportDIDScreen() {
                 {translate('didManagement.enter_password')}
               </FormControl.Label>
               <Input
-                placeholder="Password"
+                placeholder={translate('password_input.password')}
                 {...addTestId('Password')}
-                value={''}
-                onChangeText={() => {}}
+                value={form.password}
+                onChangeText={onChange('password')}
                 autoCapitalize="none"
                 secureTextEntry={true}
               />
@@ -54,10 +55,10 @@ export function ExportDIDScreen() {
                 {translate('didManagement.confirm_password')}
               </FormControl.Label>
               <Input
-                placeholder="Confirm password"
+                placeholder={translate('password_input.confirm_password')}
                 {...addTestId('ConfirmPassword')}
-                value={''}
-                onChangeText={() => {}}
+                value={form.passwordConfirmation}
+                onChangeText={onChange('passwordConfirmation')}
                 autoCapitalize="none"
                 secureTextEntry={true}
               />
@@ -66,31 +67,31 @@ export function ExportDIDScreen() {
         </Box>
         <Stack marginTop={4}>
           <Stack direction="row">
-            <CheckCircle checked={true} />
+            <CheckCircle checked={form.lengthValidation} />
             <Typography>
               {translate('create_password.include_char_length')}
             </Typography>
           </Stack>
           <Stack direction="row" marginTop={3}>
-            <CheckCircle checked={false} />
+            <CheckCircle checked={form.digitsValidation} />
             <Typography>
               {translate('create_password.include_digits')}
             </Typography>
           </Stack>
           <Stack direction="row" marginTop={3}>
-            <CheckCircle checked={true} />
+            <CheckCircle checked={form.caseValidation} />
             <Typography>
               {translate('create_password.include_proper_case')}
             </Typography>
           </Stack>
           <Stack direction="row" marginTop={3}>
-            <CheckCircle checked={false} />
+            <CheckCircle checked={form.specialCharactersValidation} />
             <Typography>
               {translate('create_password.include_special_characters')}
             </Typography>
           </Stack>
           <Stack direction="row" marginTop={3}>
-            <CheckCircle checked={true} />
+            <CheckCircle checked={form.passwordMatchValidation} />
             <Typography>
               {translate('create_password.passwords_match')}
             </Typography>
@@ -101,14 +102,30 @@ export function ExportDIDScreen() {
         <LoadingButton
           full
           {...addTestId('NextBtn')}
-          isDisabled={false}
-          onPress={() => {}}>
+          isDisabled={!formValid}
+          onPress={onSubmit}>
           {translate('navigation.next')}
         </LoadingButton>
       </Footer>
     </ScreenContainer>
   );
 }
-export function ExportDIDScreenContainer() {
-  return <ExportDIDScreen />;
+export function ExportDIDScreenContainer({route}) {
+  const {didDocumentResolution} = route.params;
+
+  const {form, handleChange, formValid} = useExportDIDHandlers();
+
+  const {onExportDID} = useDIDManagementHandlers();
+
+  const onSubmit = useCallback(async () => {
+    await onExportDID({id: didDocumentResolution.id, password: form.password});
+  }, [didDocumentResolution.id, form.password, onExportDID]);
+  return (
+    <ExportDIDScreen
+      form={form}
+      onChange={handleChange}
+      formValid={formValid}
+      onSubmit={onSubmit}
+    />
+  );
 }

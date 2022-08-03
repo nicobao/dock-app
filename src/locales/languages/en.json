@@ -83,7 +83,9 @@
   },
   "password_input": {
     "title": "Enter password",
-    "submit": "Next"
+    "submit": "Next",
+    "password": "Password",
+    "confirm_password": "Confirm Password"
   },
   "settings": {
     "title": "Settings",
@@ -340,6 +342,12 @@
     "did_edited_successfully": "DID updated successfully",
     "did_imported_successfully": "DID imported successfully",
     "add_did": "Add DID",
-    "did_copied": "DID Copied"
+    "did_copied": "DID Copied",
+    "did_exported": "DID exported successfully ",
+    "export_error": "Unable to export DID",
+    "did_key": "did:key",
+    "did_key_description": "W3C compliant Decentralized identifier",
+    "did_dock": "did:dock",
+    "did_dock_description": "W3C compliant Decentralized Identifier created by Dock. Uses blockchain to secure verifiable credentials."
   }
 }

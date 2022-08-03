@@ -72,21 +72,24 @@ exports[`CreateNewDIDScreen should render CreateNewDIDScreenContainer correctly 
         <Memo(ForwardRef(FormControlLabel))>
           DID Type
         </Memo(ForwardRef(FormControlLabel))>
-        <Memo(ForwardRef(Select))
-          accessibilityLabel="DIDType"
-          onValueChange={[Function]}
-          selectedValue=""
-          testID="DIDType"
-        >
-          <Memo(ForwardRef(Item))
-            label="did:key"
-            value="didkey"
-          />
-          <Memo(ForwardRef(Item))
-            label="did:dock"
-            value="diddock"
-          />
-        </Memo(ForwardRef(Select))>
+        <CustomSelectInput
+          items={
+            Array [
+              Object {
+                "description": "W3C compliant Decentralized identifier",
+                "label": "did:key",
+                "value": "didkey",
+              },
+              Object {
+                "description": "W3C compliant Decentralized Identifier created by Dock. Uses blockchain to secure verifiable credentials.",
+                "label": "did:dock",
+                "value": "diddock",
+              },
+            ]
+          }
+          onPressItem={[Function]}
+          renderItem={[Function]}
+        />
       </Memo(ForwardRef(Stack))>
       <Memo(ForwardRef(FormControlErrorMessage)) />
     </Memo(ForwardRef(FormControl))>
@@ -209,20 +212,24 @@ exports[`CreateNewDIDScreen should render correctly with modal 1`] = `
             <Memo(ForwardRef(FormControlLabel))>
               DID Type
             </Memo(ForwardRef(FormControlLabel))>
-            <Memo(ForwardRef(Select))
-              accessibilityLabel="DIDType"
-              selectedValue="diddock"
-              testID="DIDType"
-            >
-              <Memo(ForwardRef(Item))
-                label="did:key"
-                value="didkey"
-              />
-              <Memo(ForwardRef(Item))
-                label="did:dock"
-                value="diddock"
-              />
-            </Memo(ForwardRef(Select))>
+            <CustomSelectInput
+              items={
+                Array [
+                  Object {
+                    "description": "W3C compliant Decentralized identifier",
+                    "label": "did:key",
+                    "value": "didkey",
+                  },
+                  Object {
+                    "description": "W3C compliant Decentralized Identifier created by Dock. Uses blockchain to secure verifiable credentials.",
+                    "label": "did:dock",
+                    "value": "diddock",
+                  },
+                ]
+              }
+              onPressItem={[Function]}
+              renderItem={[Function]}
+            />
           </Memo(ForwardRef(Stack))>
           <Memo(ForwardRef(FormControlErrorMessage)) />
         </Memo(ForwardRef(FormControl))>
@@ -246,11 +253,11 @@ exports[`CreateNewDIDScreen should render correctly with modal 1`] = `
                 }
               }
             >
-              <Memo(ForwardRef(Icon))
-                as={[Function]}
-                mt={2}
-                name="information-circle-outline"
-              />
+              <Memo(ForwardRef(Box))
+                mt={4}
+              >
+                <SvgFile />
+              </Memo(ForwardRef(Box))>
               <Styled(Component)
                 ml={1}
                 mt={2}
@@ -271,7 +278,6 @@ exports[`CreateNewDIDScreen should render correctly with modal 1`] = `
             </IconButton>
           </Memo(ForwardRef(HStack))>
           <Styled(Component)
-            mt={3}
             textAlign="left"
             variant="didDescription"
           >
@@ -299,15 +305,8 @@ exports[`CreateNewDIDScreen should render correctly with modal 1`] = `
                 Array [
                   "didName",
                 ],
-                Array [
-                  "didType",
-                ],
               ],
               "results": Array [
-                Object {
-                  "type": "return",
-                  "value": undefined,
-                },
                 Object {
                   "type": "return",
                   "value": undefined,
@@ -419,20 +418,24 @@ exports[`CreateNewDIDScreen should render correctly without modal  1`] = `
             <Memo(ForwardRef(FormControlLabel))>
               DID Type
             </Memo(ForwardRef(FormControlLabel))>
-            <Memo(ForwardRef(Select))
-              accessibilityLabel="DIDType"
-              selectedValue="didkey"
-              testID="DIDType"
-            >
-              <Memo(ForwardRef(Item))
-                label="did:key"
-                value="didkey"
-              />
-              <Memo(ForwardRef(Item))
-                label="did:dock"
-                value="diddock"
-              />
-            </Memo(ForwardRef(Select))>
+            <CustomSelectInput
+              items={
+                Array [
+                  Object {
+                    "description": "W3C compliant Decentralized identifier",
+                    "label": "did:key",
+                    "value": "didkey",
+                  },
+                  Object {
+                    "description": "W3C compliant Decentralized Identifier created by Dock. Uses blockchain to secure verifiable credentials.",
+                    "label": "did:dock",
+                    "value": "diddock",
+                  },
+                ]
+              }
+              onPressItem={[Function]}
+              renderItem={[Function]}
+            />
           </Memo(ForwardRef(Stack))>
           <Memo(ForwardRef(FormControlErrorMessage)) />
         </Memo(ForwardRef(FormControl))>
@@ -457,15 +460,8 @@ exports[`CreateNewDIDScreen should render correctly without modal  1`] = `
                 Array [
                   "didName",
                 ],
-                Array [
-                  "didType",
-                ],
               ],
               "results": Array [
-                Object {
-                  "type": "return",
-                  "value": undefined,
-                },
                 Object {
                   "type": "return",
                   "value": undefined,
@@ -577,20 +573,24 @@ exports[`CreateNewDIDScreen should render disabled button when no name is provid
             <Memo(ForwardRef(FormControlLabel))>
               DID Type
             </Memo(ForwardRef(FormControlLabel))>
-            <Memo(ForwardRef(Select))
-              accessibilityLabel="DIDType"
-              selectedValue="didkey"
-              testID="DIDType"
-            >
-              <Memo(ForwardRef(Item))
-                label="did:key"
-                value="didkey"
-              />
-              <Memo(ForwardRef(Item))
-                label="did:dock"
-                value="diddock"
-              />
-            </Memo(ForwardRef(Select))>
+            <CustomSelectInput
+              items={
+                Array [
+                  Object {
+                    "description": "W3C compliant Decentralized identifier",
+                    "label": "did:key",
+                    "value": "didkey",
+                  },
+                  Object {
+                    "description": "W3C compliant Decentralized Identifier created by Dock. Uses blockchain to secure verifiable credentials.",
+                    "label": "did:dock",
+                    "value": "diddock",
+                  },
+                ]
+              }
+              onPressItem={[Function]}
+              renderItem={[Function]}
+            />
           </Memo(ForwardRef(Stack))>
           <Memo(ForwardRef(FormControlErrorMessage)) />
         </Memo(ForwardRef(FormControl))>
@@ -615,15 +615,8 @@ exports[`CreateNewDIDScreen should render disabled button when no name is provid
                 Array [
                   "didName",
                 ],
-                Array [
-                  "didType",
-                ],
               ],
               "results": Array [
-                Object {
-                  "type": "return",
-                  "value": undefined,
-                },
                 Object {
                   "type": "return",
                   "value": undefined,
@@ -735,20 +728,24 @@ exports[`CreateNewDIDScreen should render enabled button when  name is provided 
             <Memo(ForwardRef(FormControlLabel))>
               DID Type
             </Memo(ForwardRef(FormControlLabel))>
-            <Memo(ForwardRef(Select))
-              accessibilityLabel="DIDType"
-              selectedValue="didkey"
-              testID="DIDType"
-            >
-              <Memo(ForwardRef(Item))
-                label="did:key"
-                value="didkey"
-              />
-              <Memo(ForwardRef(Item))
-                label="did:dock"
-                value="diddock"
-              />
-            </Memo(ForwardRef(Select))>
+            <CustomSelectInput
+              items={
+                Array [
+                  Object {
+                    "description": "W3C compliant Decentralized identifier",
+                    "label": "did:key",
+                    "value": "didkey",
+                  },
+                  Object {
+                    "description": "W3C compliant Decentralized Identifier created by Dock. Uses blockchain to secure verifiable credentials.",
+                    "label": "did:dock",
+                    "value": "diddock",
+                  },
+                ]
+              }
+              onPressItem={[Function]}
+              renderItem={[Function]}
+            />
           </Memo(ForwardRef(Stack))>
           <Memo(ForwardRef(FormControlErrorMessage)) />
         </Memo(ForwardRef(FormControl))>
@@ -773,15 +770,8 @@ exports[`CreateNewDIDScreen should render enabled button when  name is provided 
                 Array [
                   "didName",
                 ],
-                Array [
-                  "didType",
-                ],
               ],
               "results": Array [
-                Object {
-                  "type": "return",
-                  "value": undefined,
-                },
                 Object {
                   "type": "return",
                   "value": undefined,

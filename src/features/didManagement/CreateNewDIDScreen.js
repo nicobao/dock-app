@@ -17,7 +17,6 @@ import {
   HStack,
   Icon,
   ScrollView,
-  Select,
   Stack,
   VStack,
 } from 'native-base';
@@ -26,6 +25,8 @@ import {DIDAdvancedOptions} from './components/DIDAdvancedOptions';
 import {Ionicons} from '@native-base/icons';
 import {addTestId} from '../../core/automation-utils';
 import {useDIDManagementHandlers} from './didHooks';
+import QuickInfoIcon from '../../assets/icons/quick-info.svg';
+import {CustomSelectInput} from '../../components/CustomSelectInput';
 
 export function CreateNewDIDScreen({form, handleChange, handleSubmit}) {
   return (
@@ -72,18 +73,41 @@ export function CreateNewDIDScreen({form, handleChange, handleSubmit}) {
             </FormControl.HelperText>
           </Stack>
         </FormControl>
+
         <FormControl isInvalid={form._errors.didType}>
           <Stack mt={7}>
             <FormControl.Label>
               {translate('didManagement.did_type')}
             </FormControl.Label>
-            <Select
-              {...addTestId('DIDType')}
-              onValueChange={handleChange('didType')}
-              selectedValue={form.didType}>
-              <Select.Item label="did:key" value="didkey" />
-              <Select.Item label="did:dock" value="diddock" />
-            </Select>
+            <CustomSelectInput
+              onPressItem={item => {
+                handleChange('didType')(item.value);
+              }}
+              renderItem={item => {
+                return (
+                  <>
+                    <Typography textAlign="left" variant="description">
+                      {item.label}
+                    </Typography>
+                    <Typography textAlign="left" variant="screen-description">
+                      {item.description}
+                    </Typography>
+                  </>
+                );
+              }}
+              items={[
+                {
+                  value: 'didkey',
+                  label: translate('didManagement.did_key'),
+                  description: translate('didManagement.did_key_description'),
+                },
+                {
+                  value: 'diddock',
+                  label: translate('didManagement.did_dock'),
+                  description: translate('didManagement.did_dock_description'),
+                },
+              ]}
+            />
           </Stack>
           <FormControl.ErrorMessage>
             {form._errors.didType}
@@ -105,7 +129,9 @@ export function CreateNewDIDScreen({form, handleChange, handleSubmit}) {
                 style={{
                   flexGrow: 1,
                 }}>
-                <Icon mt={2} as={Ionicons} name="information-circle-outline" />
+                <NBox mt={4}>
+                  <QuickInfoIcon />
+                </NBox>
                 <Typography mt={2} ml={1} variant="h3">
                   {' ' + translate('didManagement.quick_info')}
                 </Typography>
@@ -118,7 +144,7 @@ export function CreateNewDIDScreen({form, handleChange, handleSubmit}) {
                 <Icon as={Ionicons} name="close-outline" />
               </IconButton>
             </HStack>
-            <Typography mt={3} textAlign="left" variant="didDescription">
+            <Typography textAlign="left" variant="didDescription">
               {translate('didManagement.did_dock_info')}
             </Typography>
           </VStack>
