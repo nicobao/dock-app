@@ -31,7 +31,10 @@ export function useDIDManagementHandlers() {
   });
 
   const didList = useMemo(() => {
-    return rawDIDList.reverse();
+    if (Array.isArray(rawDIDList)) {
+      return [...rawDIDList].reverse();
+    }
+    return [];
   }, [rawDIDList]);
   const onImportDID = useCallback(
     async ({encryptedJSONWallet, password}) => {
