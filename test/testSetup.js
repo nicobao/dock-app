@@ -456,7 +456,22 @@ jest.mock('@docknetwork/wallet-sdk-react-native/lib', () => {
       }
       return Promise.reject('DID Document not found');
     }),
-    didList: [],
+    didList: [
+      {
+        '@context': ['https://w3id.org/wallet/v1'],
+        id: '1',
+        type: 'DIDResolutionResponse',
+        didDocument: {},
+        correlation: ['urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130002'],
+      },
+      {
+        '@context': ['https://w3id.org/wallet/v1'],
+        id: '2',
+        type: 'DIDResolutionResponse',
+        didDocument: {},
+        correlation: ['urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130002'],
+      },
+    ],
   };
   return {
     WalletSDKProvider: originalModule.WalletSDKProvider,

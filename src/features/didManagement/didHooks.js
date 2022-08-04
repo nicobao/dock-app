@@ -9,8 +9,14 @@ import RNFS from 'react-native-fs';
 import {exportFile} from '../accounts/account-slice';
 
 export function useDIDManagementHandlers() {
-  const {createKeyDID, deleteDID, editDID, didList, importDID, exportDID} =
-    useDIDManagement();
+  const {
+    createKeyDID,
+    deleteDID,
+    editDID,
+    didList: rawDIDList,
+    importDID,
+    exportDID,
+  } = useDIDManagement();
   const [form, setForm] = useState({
     didName: '',
     didType: '',
@@ -24,6 +30,9 @@ export function useDIDManagementHandlers() {
     _hasError: false,
   });
 
+  const didList = useMemo(() => {
+    return rawDIDList.reverse();
+  }, [rawDIDList]);
   const onImportDID = useCallback(
     async ({encryptedJSONWallet, password}) => {
       await importDID({encryptedJSONWallet, password});
