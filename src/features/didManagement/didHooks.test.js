@@ -227,4 +227,10 @@ describe('DID hooks', () => {
       }),
     ).rejects.toMatch('DID Document not found');
   });
+  test('test DID reversal', () => {
+    const {result} = renderHook(() => useDIDManagementHandlers());
+
+    expect(result.current.didList[0].id).toBe('2');
+    expect(result.current.didList[1].id).toBe('1');
+  });
 });
