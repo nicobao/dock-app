@@ -68,6 +68,19 @@ exports[`ShareDIDScreen should render correctly 1`] = `
             <Memo(ForwardRef(Box))
               pr={2}
             >
+              <Image
+                source={
+                  Object {
+                    "testUri": "../../../src/assets/circle.png",
+                  }
+                }
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              />
               <Memo()
                 address="did:dock:5EfZQN8LKZvqwE9oda4wiognj3217bMj5AaDX4jBgEe3orJk"
                 size={32}
@@ -83,7 +96,9 @@ exports[`ShareDIDScreen should render correctly 1`] = `
               >
                 TestDID
               </Styled(Component)>
-              <Styled(Component)>
+              <Styled(Component)
+                numberOfLines={1}
+              >
                 did:dock:5EfZQN8LKZvqwE9oda4wiognj3217bMj5AaDX4jBgEe3orJk
               </Styled(Component)>
             </Memo(ForwardRef(Stack))>

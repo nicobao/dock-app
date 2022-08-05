@@ -20,6 +20,7 @@ import {translate} from '../../locales';
 import Clipboard from '@react-native-community/clipboard';
 import {showToast} from '../../core/toast';
 import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
+import {Image} from 'react-native';
 
 export function ShareDIDScreen({did, didName, accountIcon, onCopyAddress}) {
   const qrSize = Dimensions.get('window').width * 0.5;
@@ -48,10 +49,19 @@ export function ShareDIDScreen({did, didName, accountIcon, onCopyAddress}) {
             <QRCode value={did} size={qrSize} />
           </Stack>
           <Stack direction="row" alignItems="center" flex={1} pt={5}>
-            <Box pr={2}>{accountIcon}</Box>
+            <Box pr={2}>
+              <Image
+                style={{
+                  height: 40,
+                  width: 40,
+                }}
+                source={require('../../assets/circle.png')}
+              />
+              {accountIcon}
+            </Box>
             <Stack direction="column" alignItems="flex-start" flex={1}>
               <Typography variant="h3">{didName}</Typography>
-              <Typography>{did}</Typography>
+              <Typography numberOfLines={1}>{did}</Typography>
             </Stack>
           </Stack>
         </Stack>
