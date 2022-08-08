@@ -32,7 +32,7 @@ export function CustomSelectInput({
           py={1}
           borderRadius={6}>
           <Box flex={1}>
-            {selectedValue ? (
+            {typeof selectedValue === 'string' && selectedValue.length > 0 ? (
               <Typography variant="selectText">{selectedValue}</Typography>
             ) : (
               <Typography variant="label">{placeholder}</Typography>

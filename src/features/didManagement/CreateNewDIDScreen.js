@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {
   BackButton,
   Box,
@@ -27,8 +27,17 @@ import {addTestId} from '../../core/automation-utils';
 import {useDIDManagementHandlers} from './didHooks';
 import QuickInfoIcon from '../../assets/icons/quick-info.svg';
 import {CustomSelectInput} from '../../components/CustomSelectInput';
+import {useAccountsList} from '../accounts/accountsHooks';
+import {CreateDIDDockConfirmationModal} from './components/CreateDIDDockConfirmationModal';
 
-export function CreateNewDIDScreen({form, handleChange, handleSubmit}) {
+export function CreateNewDIDScreen({
+  form,
+  handleChange,
+  handleSubmit,
+  accounts,
+  isFormValid,
+}) {
+  const [isConfirmDIDDockVisible, setIsConfirmDIDDockVisible] = useState(false);
   return (
     <ScreenContainer {...addTestId('CreateNewDIDScreen')}>
       <Header>
@@ -82,6 +91,9 @@ export function CreateNewDIDScreen({form, handleChange, handleSubmit}) {
             <CustomSelectInput
               onPressItem={item => {
                 handleChange('didType')(item.value);
+                if (item.value === 'didkey') {
+                  handleChange('didPaymentAddress')('');
+                }
               }}
               renderItem={item => {
                 return (
@@ -113,6 +125,43 @@ export function CreateNewDIDScreen({form, handleChange, handleSubmit}) {
             {form._errors.didType}
           </FormControl.ErrorMessage>
         </FormControl>
+
+        {form.didType === 'diddock' ? (
+          <FormControl isInvalid={form._errors.didPaymentAddress}>
+            <Stack mt={7}>
+              <FormControl.Label>
+                {translate('didManagement.did_payment_address')}
+              </FormControl.Label>
+              <CustomSelectInput
+                onPressItem={item => {
+                  handleChange('didPaymentAddress')(item.value);
+                }}
+                renderItem={item => {
+                  return (
+                    <>
+                      <Typography
+                        numberOfLines={1}
+                        textAlign="left"
+                        variant="description">
+                        {item.label}
+                      </Typography>
+                      <Typography
+                        numberOfLines={1}
+                        textAlign="left"
+                        variant="screen-description">
+                        {item.description}
+                      </Typography>
+                    </>
+                  );
+                }}
+                items={accounts}
+              />
+            </Stack>
+            <FormControl.ErrorMessage>
+              {form._errors.didPaymentAddress}
+            </FormControl.ErrorMessage>
+          </FormControl>
+        ) : null}
 
         {form.didType === 'diddock' && form.showDIDDockQuickInfo ? (
           <VStack
@@ -162,23 +211,47 @@ export function CreateNewDIDScreen({form, handleChange, handleSubmit}) {
         mb={70}
         ml={3}
         mr={3}
-        onPress={handleSubmit}
-        isDisabled={
-          form.didType.length <= 0 || form.didName.trim().length <= 0
-        }>
+        onPress={() => {
+          if (form.didType === 'didkey') {
+            handleSubmit();
+          } else if (form.didType === 'diddock') {
+            setIsConfirmDIDDockVisible(true);
+          }
+        }}
+        isDisabled={!isFormValid}>
         {translate('didManagement.create')}
       </LoadingButton>
+      <CreateDIDDockConfirmationModal
+        visible={isConfirmDIDDockVisible}
+        didName={form.didName}
+        didType={form.didType}
+        onCreateDID={handleSubmit}
+      />
     </ScreenContainer>
   );
 }
 export function CreateNewDIDScreenContainer() {
-  const {form, onCreateDID, handleChange} = useDIDManagementHandlers();
+  const {form, onCreateDID, handleChange, isFormValid} =
+    useDIDManagementHandlers();
+  const {accounts} = useAccountsList();
+
+  const parseAccounts = useMemo(() => {
+    return accounts.map(account => {
+      return {
+        value: account.address,
+        label: account.name,
+        description: account.address,
+      };
+    });
+  }, [accounts]);
 
   return (
     <CreateNewDIDScreen
+      isFormValid={isFormValid}
       handleChange={handleChange}
       form={form}
       handleSubmit={onCreateDID}
+      accounts={parseAccounts}
     />
   );
 }

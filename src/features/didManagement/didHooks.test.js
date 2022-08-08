@@ -55,6 +55,24 @@ describe('DID hooks', () => {
       type: 'ed25519',
       name: '',
       didType: 'didkey',
+      address: '',
+    });
+
+    act(() => {
+      result.current.handleChange('didPaymentAddress')(
+        '6GwnHZARcEkJio9dxPYy6SC5sAL6PxpZAB6VYwoFjGMU',
+      );
+    });
+    act(() => {
+      result.current.handleChange('didType')('diddock');
+    });
+    await result.current.onCreateDID();
+    expect(dIDManagementResult.current.createKeyDID).toBeCalledWith({
+      derivePath: '',
+      type: 'ed25519',
+      name: '',
+      didType: 'diddock',
+      address: '6GwnHZARcEkJio9dxPYy6SC5sAL6PxpZAB6VYwoFjGMU',
     });
   });
   test('Handle new DID key creation with invalid params', async () => {
