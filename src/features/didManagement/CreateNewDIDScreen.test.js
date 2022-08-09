@@ -1,15 +1,19 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import configureMockStore from 'redux-mock-store';
-import {
-  CreateNewDIDScreen,
-  CreateNewDIDScreenContainer,
-} from './CreateNewDIDScreen';
+import {CreateNewDIDScreen} from './CreateNewDIDScreen';
 
 const mockStore = configureMockStore();
 
+const accounts = [
+  {
+    value: '6GwnHZARcEkJio9dxPYy6SC5sAL6PxpZAB6VYwoFjGMU',
+    label: 'Test Account',
+    description: '6GwnHZARcEkJio9dxPYy6SC5sAL6PxpZAB6VYwoFjGMU',
+  },
+];
 describe('CreateNewDIDScreen', () => {
-  it('should render disabled button when no name is provided', () => {
+  it('should render correctly when form is invalid', () => {
     const initialState = {
       // placeholder for redux store
     };
@@ -27,6 +31,8 @@ describe('CreateNewDIDScreen', () => {
     };
     const wrapper = shallow(
       <CreateNewDIDScreen
+        isFormValid={false}
+        accounts={[]}
         handleChange={jest.fn()}
         form={form}
         handleSubmit={jest.fn()}
@@ -37,7 +43,7 @@ describe('CreateNewDIDScreen', () => {
     );
     expect(wrapper.dive()).toMatchSnapshot();
   });
-  it('should render enabled button when  name is provided', () => {
+  it('should render correctly when form is valid', () => {
     const initialState = {
       // placeholder for redux store
     };
@@ -55,6 +61,8 @@ describe('CreateNewDIDScreen', () => {
     };
     const wrapper = shallow(
       <CreateNewDIDScreen
+        isFormValid={true}
+        accounts={[]}
         handleChange={jest.fn()}
         form={form}
         handleSubmit={jest.fn()}
@@ -65,34 +73,7 @@ describe('CreateNewDIDScreen', () => {
     );
     expect(wrapper.dive()).toMatchSnapshot();
   });
-  it('should render correctly without modal ', () => {
-    const initialState = {
-      // placeholder for redux store
-    };
 
-    const form = {
-      didName: '',
-      didType: 'didkey',
-      showDIDDockQuickInfo: false,
-      keypairType: 'ed25519',
-      derivationPath: '',
-      _errors: {
-        didType: '',
-      },
-      _hasError: false,
-    };
-    const wrapper = shallow(
-      <CreateNewDIDScreen
-        handleChange={jest.fn()}
-        form={form}
-        handleSubmit={jest.fn()}
-      />,
-      {
-        context: {store: mockStore(initialState)},
-      },
-    );
-    expect(wrapper.dive()).toMatchSnapshot();
-  });
   it('should render correctly with modal', () => {
     const initialState = {
       // placeholder for redux store
@@ -111,6 +92,8 @@ describe('CreateNewDIDScreen', () => {
     };
     const wrapper = shallow(
       <CreateNewDIDScreen
+        isFormValid={true}
+        accounts={accounts}
         handleChange={jest.fn()}
         form={form}
         handleSubmit={jest.fn()}
@@ -119,17 +102,6 @@ describe('CreateNewDIDScreen', () => {
         context: {store: mockStore(initialState)},
       },
     );
-    expect(wrapper.dive()).toMatchSnapshot();
-  });
-
-  it('should render CreateNewDIDScreenContainer correctly', () => {
-    const initialState = {
-      // placeholder for redux store
-    };
-
-    const wrapper = shallow(<CreateNewDIDScreenContainer />, {
-      context: {store: mockStore(initialState)},
-    });
     expect(wrapper.dive()).toMatchSnapshot();
   });
 });

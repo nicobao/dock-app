@@ -50,11 +50,29 @@ describe('DID hooks', () => {
     await result.current.onCreateDID();
 
     const {result: dIDManagementResult} = renderHook(() => useDIDManagement());
-    expect(dIDManagementResult.current.createKeyDID).toBeCalledWith({
+    expect(dIDManagementResult.current.createDID).toBeCalledWith({
       derivePath: '',
       type: 'ed25519',
       name: '',
       didType: 'didkey',
+      address: '',
+    });
+
+    act(() => {
+      result.current.handleChange('didPaymentAddress')(
+        '6GwnHZARcEkJio9dxPYy6SC5sAL6PxpZAB6VYwoFjGMU',
+      );
+    });
+    act(() => {
+      result.current.handleChange('didType')('diddock');
+    });
+    await result.current.onCreateDID();
+    expect(dIDManagementResult.current.createDID).toBeCalledWith({
+      derivePath: '',
+      type: 'ed25519',
+      name: '',
+      didType: 'diddock',
+      address: '6GwnHZARcEkJio9dxPYy6SC5sAL6PxpZAB6VYwoFjGMU',
     });
   });
   test('Handle new DID key creation with invalid params', async () => {

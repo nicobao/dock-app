@@ -10,7 +10,7 @@ import {exportFile} from '../accounts/account-slice';
 
 export function useDIDManagementHandlers() {
   const {
-    createKeyDID,
+    createDID,
     deleteDID,
     editDID,
     didList: rawDIDList,
@@ -22,6 +22,7 @@ export function useDIDManagementHandlers() {
     didType: '',
     password: '',
     showDIDDockQuickInfo: true,
+    didPaymentAddress: '',
     keypairType: 'ed25519',
     derivationPath: '',
     _errors: {
@@ -29,6 +30,19 @@ export function useDIDManagementHandlers() {
     },
     _hasError: false,
   });
+
+  const isFormValid = useMemo(() => {
+    if (form.didType === 'didkey') {
+      return form.didType.length > 0 && form.didName.trim().length > 0;
+    } else if (form.didType === 'diddock') {
+      return (
+        form.didType.length > 0 &&
+        form.didName.trim().length > 0 &&
+        form.didPaymentAddress
+      );
+    }
+    return false;
+  }, [form.didName, form.didPaymentAddress, form.didType]);
 
   const didList = useMemo(() => {
     if (Array.isArray(rawDIDList)) {
@@ -58,21 +72,25 @@ export function useDIDManagementHandlers() {
   }, []);
 
   const onCreateDID = useCallback(async () => {
-    const {derivationPath, didType, keypairType, didName} = form;
+    const {derivationPath, didType, keypairType, didName, didPaymentAddress} =
+      form;
     const newDIDParams = {
       derivePath: derivationPath,
       didType,
       type: keypairType,
       name: didName,
+      address: didPaymentAddress,
     };
-    await createKeyDID(newDIDParams);
+
+    await createDID(newDIDParams);
+
     showToast({
       message: translate('didManagement.did_created'),
       type: 'success',
     });
     navigate(Routes.DID_MANAGEMENT_LIST);
     logAnalyticsEvent(ANALYTICS_EVENT.DID.DID_CREATED, {});
-  }, [createKeyDID, form]);
+  }, [createDID, form]);
 
   const onDeleteDID = useCallback(
     async didResolution => {
@@ -132,6 +150,7 @@ export function useDIDManagementHandlers() {
       onImportDID: withErrorToast(onImportDID),
       onExportDID: withErrorToast(onExportDID),
       didList,
+      isFormValid,
     };
   }, [
     onCreateDID,
@@ -142,6 +161,7 @@ export function useDIDManagementHandlers() {
     onImportDID,
     onExportDID,
     didList,
+    isFormValid,
   ]);
 }
 
