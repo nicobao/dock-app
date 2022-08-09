@@ -10,7 +10,7 @@ import {exportFile} from '../accounts/account-slice';
 
 export function useDIDManagementHandlers() {
   const {
-    createKeyDID,
+    createDID,
     deleteDID,
     editDID,
     didList: rawDIDList,
@@ -82,14 +82,15 @@ export function useDIDManagementHandlers() {
       address: didPaymentAddress,
     };
 
-    await createKeyDID(newDIDParams);
+    await createDID(newDIDParams);
+
     showToast({
       message: translate('didManagement.did_created'),
       type: 'success',
     });
     navigate(Routes.DID_MANAGEMENT_LIST);
     logAnalyticsEvent(ANALYTICS_EVENT.DID.DID_CREATED, {});
-  }, [createKeyDID, form]);
+  }, [createDID, form]);
 
   const onDeleteDID = useCallback(
     async didResolution => {

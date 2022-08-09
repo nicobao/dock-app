@@ -50,7 +50,7 @@ describe('DID hooks', () => {
     await result.current.onCreateDID();
 
     const {result: dIDManagementResult} = renderHook(() => useDIDManagement());
-    expect(dIDManagementResult.current.createKeyDID).toBeCalledWith({
+    expect(dIDManagementResult.current.createDID).toBeCalledWith({
       derivePath: '',
       type: 'ed25519',
       name: '',
@@ -67,7 +67,7 @@ describe('DID hooks', () => {
       result.current.handleChange('didType')('diddock');
     });
     await result.current.onCreateDID();
-    expect(dIDManagementResult.current.createKeyDID).toBeCalledWith({
+    expect(dIDManagementResult.current.createDID).toBeCalledWith({
       derivePath: '',
       type: 'ed25519',
       name: '',
