@@ -1,14 +1,15 @@
-import {useWallet} from '@docknetwork/wallet-sdk-react-native/lib';
+import {useAccounts} from '@docknetwork/wallet-sdk-react-native/lib';
 import {useMemo} from 'react';
 
 export function useAccountsList() {
-  const {documents} = useWallet({syncDocs: true});
+  const {accounts: rawAccounts} = useAccounts();
+
   const accounts = useMemo(() => {
-    if (Array.isArray(documents)) {
-      return documents.filter(doc => doc.type === 'Address');
+    if (Array.isArray(rawAccounts)) {
+      return [...rawAccounts].reverse();
     }
     return [];
-  }, [documents]);
+  }, [rawAccounts]);
 
   return useMemo(() => {
     return {
