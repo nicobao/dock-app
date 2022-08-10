@@ -395,40 +395,13 @@ jest.mock('@docknetwork/wallet-sdk-core/lib/services/keyring', () => {
     keyringService: mockFunctions,
   };
 });
+
 jest.mock('@docknetwork/wallet-sdk-react-native/lib', () => {
   const originalModule = jest.requireActual(
     '@docknetwork/wallet-sdk-react-native/lib',
   );
 
-  const mockFunctions = {
-    createDID: jest.fn(didParams => {
-      const {type = 'ed25519'} = didParams;
-      if (type === 'ed25519') {
-        return Promise.resolve();
-      }
-      return Promise.reject();
-    }),
-    deleteDID: jest.fn(() => {}),
-    editDID: jest.fn(didParams => {
-      const {id} = didParams;
-      if (typeof id === 'string' && id.length > 0) {
-        return Promise.resolve();
-      }
-      return Promise.reject();
-    }),
-    didList: [],
-  };
-  return {
-    WalletSDKProvider: originalModule.WalletSDKProvider,
-    useDIDManagement: () => mockFunctions,
-  };
-});
-jest.mock('@docknetwork/wallet-sdk-react-native/lib', () => {
-  const originalModule = jest.requireActual(
-    '@docknetwork/wallet-sdk-react-native/lib',
-  );
-
-  const mockFunctions = {
+  const useDIDManagementMockFunctions = {
     importDID: jest.fn(({password}) => {
       if (password === 'test') {
         return Promise.resolve([]);
@@ -473,9 +446,24 @@ jest.mock('@docknetwork/wallet-sdk-react-native/lib', () => {
       },
     ],
   };
+  const useAccountsMockFunctions = {
+    accounts: [
+      {
+        '@context': ['https://w3id.org/wallet/v1'],
+        id: '1',
+        type: 'Address',
+      },
+      {
+        '@context': ['https://w3id.org/wallet/v1'],
+        id: '2',
+        type: 'Address',
+      },
+    ],
+  };
   return {
     WalletSDKProvider: originalModule.WalletSDKProvider,
-    useDIDManagement: () => mockFunctions,
+    useDIDManagement: () => useDIDManagementMockFunctions,
+    useAccounts: () => useAccountsMockFunctions,
   };
 });
 global.fetch = jest.fn(() =>

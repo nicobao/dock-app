@@ -38,6 +38,7 @@ import {AddAccountModal} from './AddAccountModal';
 import {AccountsScreenTestIDs} from './test-ids';
 import {pickDocuments} from '../../core/storage-utils';
 import assert from 'assert';
+import {useAccountsList} from './accountsHooks';
 
 const AccountCard = withErrorBoundary(({document, onDetails, onDelete}) => {
   assert(document.type === 'Address', 'Address document expected');
@@ -283,8 +284,9 @@ export const AccountsScreen = withErrorBoundary(
 
 export const AccountsContainer = withErrorBoundary(({navigation}) => {
   const dispatch = useDispatch();
-  const {documents, refetch, status, migrated} = useWallet({syncDocs: true});
-  const accounts = documents.filter(doc => doc.type === 'Address');
+  const {refetch, status, migrated} = useWallet({syncDocs: true});
+
+  const {accounts} = useAccountsList();
   const [isRefreshing, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(() => {
