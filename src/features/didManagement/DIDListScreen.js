@@ -129,6 +129,11 @@ export function DIDListScreen({didList, onDeleteDID, onImportDID}) {
 export function DIDListScreenContainer({}) {
   const getFile = useCallback(async () => {
     const encryptedJSONWallet = await pickJSONFile();
+
+    if (!encryptedJSONWallet) {
+      return;
+    }
+
     navigate(Routes.DID_MANAGEMENT_IMPORT_DID, {
       encryptedJSONWallet,
     });
