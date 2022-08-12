@@ -1,9 +1,34 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {translate} from '../../../locales';
 import {FormControl, Input, Select, Stack} from 'native-base';
 import {InputPopover, SelectToggler} from '../../../design-system';
 
 export function DIDAdvancedOptions({onChange, form}) {
+  const keypairType = useMemo(() => {
+    if (form.didType === 'diddock') {
+      return [
+        {
+          label: translate('account_advanced_options.keypair_type_ed25519'),
+          value: 'ed25519',
+        },
+        {
+          label: translate('account_advanced_options.keypair_type_sr25519'),
+          value: 'sr25519',
+        },
+        {
+          label: translate('account_advanced_options.keypair_type_ecdsa'),
+          value: 'ecdsa',
+        },
+      ];
+    }
+    return [
+      {
+        label: translate('account_advanced_options.keypair_type_ed25519'),
+        value: 'ed25519',
+      },
+    ];
+  }, [form.didType]);
+
   return (
     <SelectToggler
       placeholder={translate('account_advanced_options.advanced_options')}>
@@ -19,10 +44,15 @@ export function DIDAdvancedOptions({onChange, form}) {
           <Select
             onValueChange={onChange('keypairType')}
             selectedValue={form.keypairType}>
-            <Select.Item
-              label={translate('account_advanced_options.keypair_type_ed25519')}
-              value="ed25519"
-            />
+            {keypairType.map(({label, value}, index) => {
+              return (
+                <Select.Item
+                  key={`keypairType_${index}`}
+                  label={label}
+                  value={value}
+                />
+              );
+            })}
           </Select>
         </Stack>
       </FormControl>
