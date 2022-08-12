@@ -153,6 +153,7 @@ exports[`CreateNewDIDScreen should render correctly when form is invalid 1`] = `
       <CreateDIDDockConfirmationModal
         didName=""
         didType="didkey"
+        onClose={[Function]}
         onCreateDID={[MockFunction]}
         visible={false}
       />
@@ -314,6 +315,7 @@ exports[`CreateNewDIDScreen should render correctly when form is valid 1`] = `
       <CreateDIDDockConfirmationModal
         didName="Default"
         didType="didkey"
+        onClose={[Function]}
         onCreateDID={[MockFunction]}
         visible={false}
       />
@@ -549,6 +551,7 @@ exports[`CreateNewDIDScreen should render correctly with modal 1`] = `
       <CreateDIDDockConfirmationModal
         didName=""
         didType="diddock"
+        onClose={[Function]}
         onCreateDID={[MockFunction]}
         visible={false}
       />

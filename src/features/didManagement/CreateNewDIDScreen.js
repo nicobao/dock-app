@@ -222,6 +222,9 @@ export function CreateNewDIDScreen({
         {translate('didManagement.create')}
       </LoadingButton>
       <CreateDIDDockConfirmationModal
+        onClose={() => {
+          setIsConfirmDIDDockVisible(false);
+        }}
         visible={isConfirmDIDDockVisible}
         didName={form.didName}
         didType={form.didType}
