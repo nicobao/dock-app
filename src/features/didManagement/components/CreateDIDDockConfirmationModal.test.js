@@ -17,6 +17,7 @@ describe('CreateDIDDockConfirmationModal', () => {
         didName={'DIDName'}
         didType={'ed25519'}
         onCreateDID={jest.fn()}
+        onClose={jest.fn()}
       />,
       {
         context: {store: mockStore(initialState)},
@@ -35,6 +36,7 @@ describe('CreateDIDDockConfirmationModal', () => {
         didName={'DIDName'}
         didType={'ed25519'}
         onCreateDID={jest.fn()}
+        onClose={jest.fn()}
       />,
       {
         context: {store: mockStore(initialState)},
