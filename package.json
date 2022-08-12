@@ -28,7 +28,7 @@
   "dependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.15.4",
     "@docknetwork/prettyvc": "1.2.3",
-    "@docknetwork/react-native-sdk": "github:docknetwork/react-native-sdk#3bbf16b7dc9a198d1855d44442c9c00cccbdf6c1",
+    "@docknetwork/react-native-sdk": "github:docknetwork/react-native-sdk#6a16d7cb89f40671d148fab256212d281a63a479",
     "@docknetwork/wallet-sdk-core": "^0.2.3",
     "@docknetwork/wallet-sdk-credentials": "^0.2.3",
     "@docknetwork/wallet-sdk-react-native": "^0.2.3",
