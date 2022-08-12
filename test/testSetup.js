@@ -434,14 +434,20 @@ jest.mock('@docknetwork/wallet-sdk-react-native/lib', () => {
         '@context': ['https://w3id.org/wallet/v1'],
         id: '1',
         type: 'DIDResolutionResponse',
-        didDocument: {},
+        name: 'Test DID 1',
+        didDocument: {
+          id: 'did:key:z6MkhN7PBjWgSMQ24Bebdpvvw8fVRv7m6MHDqiwTKozzBgr',
+        },
         correlation: ['urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130002'],
       },
       {
         '@context': ['https://w3id.org/wallet/v1'],
         id: '2',
         type: 'DIDResolutionResponse',
-        didDocument: {},
+        name: 'Test DID 2',
+        didDocument: {
+          id: 'did:key:z6MkhN7PBjWgSMQ24Bebdpvvw8fVRv7m6MHDqiwTKozzBlr',
+        },
         correlation: ['urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130002'],
       },
     ],
