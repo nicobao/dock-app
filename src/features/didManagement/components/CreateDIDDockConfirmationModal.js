@@ -11,12 +11,13 @@ export function CreateDIDDockConfirmationModal({
   didType,
   onCreateDID,
   visible,
+  onClose,
 }) {
   return (
     <Modal
       visible={visible}
-      onClose={() => {}}
-      onBackButtonPress={() => {}}
+      onClose={onClose}
+      onBackButtonPress={onClose}
       modalSize={0.8}>
       <VStack p={7}>
         <Typography variant="h1" mb={4}>
