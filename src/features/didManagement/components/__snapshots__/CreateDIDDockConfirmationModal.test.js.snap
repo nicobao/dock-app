@@ -1,0 +1,313 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateDIDDockConfirmationModal should render correctly when not visible 1`] = `
+<ReactNativeModal
+  animationIn="slideInUp"
+  animationInTiming={300}
+  animationOut="slideOutDown"
+  animationOutTiming={300}
+  avoidKeyboard={false}
+  backdropColor="black"
+  backdropOpacity={0.7}
+  backdropTransitionInTiming={300}
+  backdropTransitionOutTiming={300}
+  coverScreen={true}
+  customBackdrop={null}
+  deviceHeight={null}
+  deviceWidth={null}
+  hasBackdrop={true}
+  hideModalContentWhileAnimating={false}
+  isVisible={false}
+  onBackButtonPress={[Function]}
+  onBackdropPress={[Function]}
+  onModalHide={[Function]}
+  onModalShow={[Function]}
+  onModalWillHide={[Function]}
+  onModalWillShow={[Function]}
+  onSwipeComplete={[Function]}
+  panResponderThreshold={4}
+  propagateSwipe={false}
+  scrollHorizontal={false}
+  scrollOffset={0}
+  scrollOffsetMax={0}
+  scrollTo={null}
+  style={
+    Object {
+      "justifyContent": "flex-end",
+      "margin": 0,
+    }
+  }
+  supportedOrientations={
+    Array [
+      "portrait",
+      "landscape",
+    ]
+  }
+  swipeDirection={
+    Array [
+      "down",
+    ]
+  }
+  swipeThreshold={100}
+  useNativeDriver={false}
+>
+  <View
+    style={
+      Object {
+        "backgroundColor": "#18181B",
+        "borderTopLeftRadius": 20,
+        "borderTopRightRadius": 20,
+        "height": 1067.2,
+        "width": "100%",
+      }
+    }
+  >
+    <Memo(ForwardRef(Stack))
+      alignItems="center"
+      mt={6}
+    >
+      <Memo(ForwardRef(Box))
+        backgroundColor="#3F3F46"
+        borderRadius={6}
+        height="4px"
+        width="36px"
+      />
+    </Memo(ForwardRef(Stack))>
+    <Memo(ForwardRef(VStack))
+      p={7}
+    >
+      <Styled(Component)
+        mb={4}
+        variant="h1"
+      >
+        Confirm
+      </Styled(Component)>
+      <Memo(ForwardRef(Box))
+        mt={5}
+      >
+        <Styled(Component)
+          mb={1}
+          variant="label"
+        >
+          DID Name
+        </Styled(Component)>
+        <Styled(Component)
+          mb={1}
+          variant="description"
+        >
+          DIDName
+        </Styled(Component)>
+      </Memo(ForwardRef(Box))>
+      <Memo(ForwardRef(Box))
+        mt={5}
+      >
+        <Styled(Component)
+          mb={1}
+          variant="label"
+        >
+          DID Type
+        </Styled(Component)>
+        <Styled(Component)
+          mb={1}
+          variant="description"
+        >
+          ed25519
+        </Styled(Component)>
+      </Memo(ForwardRef(Box))>
+      <Memo(ForwardRef(Box))
+        mt={5}
+      >
+        <Styled(Component)
+          mb={1}
+          variant="label"
+        >
+          Transaction Fee
+        </Styled(Component)>
+        <Component
+          amount={1}
+          symbol="DOCK"
+        />
+      </Memo(ForwardRef(Box))>
+      <Memo(ForwardRef(Box))
+        mt={5}
+      >
+        <Styled(Component)
+          mb={1}
+          variant="label"
+        >
+          Total
+        </Styled(Component)>
+        <Component
+          amount={1}
+          symbol="DOCK"
+        />
+      </Memo(ForwardRef(Box))>
+      <LoadingButton
+        accessibilityLabel="CreateNewDIDScreenDIDCreate"
+        full={true}
+        mt={12}
+        onPress={[MockFunction]}
+        testID="CreateNewDIDScreenDIDCreate"
+      >
+        Confirm
+      </LoadingButton>
+    </Memo(ForwardRef(VStack))>
+  </View>
+</ReactNativeModal>
+`;
+
+exports[`CreateDIDDockConfirmationModal should render correctly when visible 1`] = `
+<ReactNativeModal
+  animationIn="slideInUp"
+  animationInTiming={300}
+  animationOut="slideOutDown"
+  animationOutTiming={300}
+  avoidKeyboard={false}
+  backdropColor="black"
+  backdropOpacity={0.7}
+  backdropTransitionInTiming={300}
+  backdropTransitionOutTiming={300}
+  coverScreen={true}
+  customBackdrop={null}
+  deviceHeight={null}
+  deviceWidth={null}
+  hasBackdrop={true}
+  hideModalContentWhileAnimating={false}
+  isVisible={true}
+  onBackButtonPress={[Function]}
+  onBackdropPress={[Function]}
+  onModalHide={[Function]}
+  onModalShow={[Function]}
+  onModalWillHide={[Function]}
+  onModalWillShow={[Function]}
+  onSwipeComplete={[Function]}
+  panResponderThreshold={4}
+  propagateSwipe={false}
+  scrollHorizontal={false}
+  scrollOffset={0}
+  scrollOffsetMax={0}
+  scrollTo={null}
+  style={
+    Object {
+      "justifyContent": "flex-end",
+      "margin": 0,
+    }
+  }
+  supportedOrientations={
+    Array [
+      "portrait",
+      "landscape",
+    ]
+  }
+  swipeDirection={
+    Array [
+      "down",
+    ]
+  }
+  swipeThreshold={100}
+  useNativeDriver={false}
+>
+  <View
+    style={
+      Object {
+        "backgroundColor": "#18181B",
+        "borderTopLeftRadius": 20,
+        "borderTopRightRadius": 20,
+        "height": 1067.2,
+        "width": "100%",
+      }
+    }
+  >
+    <Memo(ForwardRef(Stack))
+      alignItems="center"
+      mt={6}
+    >
+      <Memo(ForwardRef(Box))
+        backgroundColor="#3F3F46"
+        borderRadius={6}
+        height="4px"
+        width="36px"
+      />
+    </Memo(ForwardRef(Stack))>
+    <Memo(ForwardRef(VStack))
+      p={7}
+    >
+      <Styled(Component)
+        mb={4}
+        variant="h1"
+      >
+        Confirm
+      </Styled(Component)>
+      <Memo(ForwardRef(Box))
+        mt={5}
+      >
+        <Styled(Component)
+          mb={1}
+          variant="label"
+        >
+          DID Name
+        </Styled(Component)>
+        <Styled(Component)
+          mb={1}
+          variant="description"
+        >
+          DIDName
+        </Styled(Component)>
+      </Memo(ForwardRef(Box))>
+      <Memo(ForwardRef(Box))
+        mt={5}
+      >
+        <Styled(Component)
+          mb={1}
+          variant="label"
+        >
+          DID Type
+        </Styled(Component)>
+        <Styled(Component)
+          mb={1}
+          variant="description"
+        >
+          ed25519
+        </Styled(Component)>
+      </Memo(ForwardRef(Box))>
+      <Memo(ForwardRef(Box))
+        mt={5}
+      >
+        <Styled(Component)
+          mb={1}
+          variant="label"
+        >
+          Transaction Fee
+        </Styled(Component)>
+        <Component
+          amount={1}
+          symbol="DOCK"
+        />
+      </Memo(ForwardRef(Box))>
+      <Memo(ForwardRef(Box))
+        mt={5}
+      >
+        <Styled(Component)
+          mb={1}
+          variant="label"
+        >
+          Total
+        </Styled(Component)>
+        <Component
+          amount={1}
+          symbol="DOCK"
+        />
+      </Memo(ForwardRef(Box))>
+      <LoadingButton
+        accessibilityLabel="CreateNewDIDScreenDIDCreate"
+        full={true}
+        mt={12}
+        onPress={[MockFunction]}
+        testID="CreateNewDIDScreenDIDCreate"
+      >
+        Confirm
+      </LoadingButton>
+    </Memo(ForwardRef(VStack))>
+  </View>
+</ReactNativeModal>
+`;
