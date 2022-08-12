@@ -17,7 +17,7 @@ export function CreateDIDDockConfirmationModal({
       visible={visible}
       onClose={() => {}}
       onBackButtonPress={() => {}}
-      modalSize={0.65}>
+      modalSize={0.8}>
       <VStack p={7}>
         <Typography variant="h1" mb={4}>
           {translate('confirm_transaction.title')}
