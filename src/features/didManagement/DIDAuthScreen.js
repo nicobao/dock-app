@@ -13,8 +13,7 @@ import {Button, Spinner, Stack, FormControl} from 'native-base';
 import {translate} from '../../locales';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
-import {validateEmail, getScopeFields} from './didAuthUtils';
-import queryString from 'query-string';
+import {validateEmail, getScopeFields, extractClientInfo} from './didAuthUtils';
 import {KeyboardAvoidingView, Platform} from 'react-native';
 import {CustomSelectInput} from '../../components/CustomSelectInput';
 import {useDIDAuth, useDIDAuthHandlers} from './didAuthHooks';
@@ -160,18 +159,7 @@ export function DIDAuthConfirmScreen({
     </ScreenContainer>
   );
 }
-function extractClientInfo(url) {
-  const parsed = queryString.parse(url.substr(url.indexOf('?')));
-  const submitUrl = parsed.url || '';
-  const submitParsed = queryString.parse(
-    submitUrl.substr(submitUrl.indexOf('?')),
-  );
-  return {
-    name: submitParsed.client_name || 'Unnamed App',
-    website: submitParsed.client_website,
-    scope: submitParsed.scope || 'public',
-  };
-}
+
 export function DIDAuthScreen({authState, retry}) {
   return (
     <ScreenContainer testID="DIDAuthScreen">

@@ -305,7 +305,12 @@
     "completed": "Web3 ID Authorized",
     "error": "Web3 ID Error",
     "header": "Web3 ID Authorization",
-    "retry": "Retry"
+    "retry": "Retry",
+    "unamed_app": "Unnamed App"
+  },
+  "didAuth": {
+    "email": "Email",
+    "name": "Name"
   },
   "didManagement": {
     "create_password": "Create a password",

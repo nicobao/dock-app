@@ -1,5 +1,6 @@
 // Taken from https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/web_tests/fast/forms/resources/ValidityState-typeMismatch-email.js?q=ValidityState-typeMismatch-email.js&ss=chromium
 import queryString from 'query-string';
+import {translate} from '../../locales';
 
 export const validateEmail = email => {
   return String(email)
@@ -10,7 +11,7 @@ export const validateEmail = email => {
 };
 
 const nameField = {
-  name: 'Name',
+  name: translate('didAuth.name'),
   placeholder: 'John Doe',
   type: 'text',
   id: 'name',
@@ -22,7 +23,7 @@ const knownScopeFields = {
   user: [nameField],
   email: [
     {
-      name: 'Email',
+      name: translate('didAuth.email'),
       placeholder: 'johndoe@dock.io',
       type: 'email',
       id: 'email',
