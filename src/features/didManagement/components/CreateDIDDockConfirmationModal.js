@@ -13,6 +13,10 @@ export function CreateDIDDockConfirmationModal({
   visible,
   onClose,
 }) {
+  const didTypeMap = {
+    diddock: 'did:dock',
+    didkey: 'did:key',
+  };
   return (
     <Modal
       visible={visible}
@@ -37,7 +41,7 @@ export function CreateDIDDockConfirmationModal({
             {translate('didManagement.did_type')}
           </Typography>
           <Typography variant={'description'} mb={1}>
-            {didType}
+            {didTypeMap[didType]}
           </Typography>
         </NBox>
         <NBox mt={5}>
