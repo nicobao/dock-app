@@ -110,9 +110,7 @@ exports[`CreateDIDDockConfirmationModal should render correctly when not visible
         <Styled(Component)
           mb={1}
           variant="description"
-        >
-          ed25519
-        </Styled(Component)>
+        />
       </Memo(ForwardRef(Box))>
       <Memo(ForwardRef(Box))
         mt={5}
@@ -266,9 +264,7 @@ exports[`CreateDIDDockConfirmationModal should render correctly when visible 1`]
         <Styled(Component)
           mb={1}
           variant="description"
-        >
-          ed25519
-        </Styled(Component)>
+        />
       </Memo(ForwardRef(Box))>
       <Memo(ForwardRef(Box))
         mt={5}
