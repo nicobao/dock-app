@@ -254,7 +254,7 @@ describe('DID hooks', () => {
     });
     expect(Share.open).toBeCalled();
     expect(RNFS.writeFile).toBeCalledWith(
-      'DocumentDirectoryPath/did_did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r.json',
+      'DocumentDirectoryPath/did_did-key-z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r.json',
       '{}',
     );
   });
