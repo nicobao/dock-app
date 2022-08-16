@@ -405,8 +405,10 @@ jest.mock('@docknetwork/wallet-sdk-react-native/lib', () => {
     importDID: jest.fn(({password}) => {
       if (password === 'test') {
         return Promise.resolve([]);
+      } else if (password === 'test1') {
+        return Promise.reject(Error('Incorrect password'));
       }
-      return Promise.reject('Incorrect password');
+      return Promise.reject(Error('"jwe" must be an object.'));
     }),
     createDID: jest.fn(didParams => {
       const {type = 'ed25519'} = didParams;

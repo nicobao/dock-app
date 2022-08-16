@@ -52,7 +52,16 @@ export function useDIDManagementHandlers() {
   }, [rawDIDList]);
   const onImportDID = useCallback(
     async ({encryptedJSONWallet, password}) => {
-      await importDID({encryptedJSONWallet, password});
+      try {
+        await importDID({encryptedJSONWallet, password});
+      } catch (e) {
+        switch (e.message) {
+          case '"jwe" must be an object.':
+            throw new Error(translate('didManagement.invalid_did_file'));
+          default:
+            throw new Error(e.message);
+        }
+      }
       showToast({
         message: translate('didManagement.did_imported_successfully'),
         type: 'success',

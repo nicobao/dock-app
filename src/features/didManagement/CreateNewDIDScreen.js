@@ -211,9 +211,9 @@ export function CreateNewDIDScreen({
         mb={70}
         ml={3}
         mr={3}
-        onPress={() => {
+        onPress={async () => {
           if (form.didType === 'didkey') {
-            handleSubmit();
+            await handleSubmit();
           } else if (form.didType === 'diddock') {
             setIsConfirmDIDDockVisible(true);
           }
