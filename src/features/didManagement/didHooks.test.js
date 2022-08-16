@@ -95,7 +95,7 @@ describe('DID hooks', () => {
     });
     const {result: dIDManagementResult} = renderHook(() => useDIDManagement());
     expect(dIDManagementResult.current.deleteDID).toBeCalledWith({
-      id: 'did-key-z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r',
+      id: 'did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r',
     });
   });
   //
@@ -233,7 +233,7 @@ describe('DID hooks', () => {
     });
     expect(Share.open).toBeCalled();
     expect(RNFS.writeFile).toBeCalledWith(
-      'DocumentDirectoryPath/did_did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r.json',
+      'DocumentDirectoryPath/did_did-key-z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r.json',
       '{}',
     );
   });
