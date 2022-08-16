@@ -216,7 +216,28 @@ describe('DID hooks', () => {
 
     await expect(
       result.current.onImportDID({encryptedJSONWallet, password}),
-    ).rejects.toMatch('Incorrect password');
+    ).rejects.toThrowError('Incorrect password');
+  });
+  test('Import DID with invalid json', async () => {
+    const {result} = renderHook(() => useDIDManagementHandlers());
+    const encryptedJSONWallet = {
+      '@context': [
+        'https://www.w3.org/2018/credentials/v1',
+        'https://w3id.org/wallet/v1',
+      ],
+      id: 'did:key:z6LSjTbRETJjUCDiQopbeCgZKRisy7mdchwiMBPTQktcibGh#encrypted-wallet',
+      type: ['VerifiableCredential', 'EncryptedWallet'],
+      issuer: 'did:key:z6LSjTbRETJjUCDiQopbeCgZKRisy7mdchwiMBPTQktcibGh',
+      issuanceDate: '2022-07-19T20:59:44.798Z',
+      credentialSubject: {
+        id: 'did:key:z6LSjTbRETJjUCDiQopbeCgZKRisy7mdchwiMBPTQktcibGh',
+      },
+    };
+    const password = 'errorJson';
+
+    await expect(
+      result.current.onImportDID({encryptedJSONWallet, password}),
+    ).rejects.toThrowError('Invalid DID file provided.');
   });
 
   test('Export DID', async () => {

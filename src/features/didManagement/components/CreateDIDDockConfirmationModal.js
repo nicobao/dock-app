@@ -11,13 +11,18 @@ export function CreateDIDDockConfirmationModal({
   didType,
   onCreateDID,
   visible,
+  onClose,
 }) {
+  const didTypeMap = {
+    diddock: 'did:dock',
+    didkey: 'did:key',
+  };
   return (
     <Modal
       visible={visible}
-      onClose={() => {}}
-      onBackButtonPress={() => {}}
-      modalSize={0.65}>
+      onClose={onClose}
+      onBackButtonPress={onClose}
+      modalSize={0.8}>
       <VStack p={7}>
         <Typography variant="h1" mb={4}>
           {translate('confirm_transaction.title')}
@@ -36,7 +41,7 @@ export function CreateDIDDockConfirmationModal({
             {translate('didManagement.did_type')}
           </Typography>
           <Typography variant={'description'} mb={1}>
-            {didType}
+            {didTypeMap[didType]}
           </Typography>
         </NBox>
         <NBox mt={5}>

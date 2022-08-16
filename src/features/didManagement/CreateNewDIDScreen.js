@@ -211,9 +211,9 @@ export function CreateNewDIDScreen({
         mb={70}
         ml={3}
         mr={3}
-        onPress={() => {
+        onPress={async () => {
           if (form.didType === 'didkey') {
-            handleSubmit();
+            await handleSubmit();
           } else if (form.didType === 'diddock') {
             setIsConfirmDIDDockVisible(true);
           }
@@ -222,6 +222,9 @@ export function CreateNewDIDScreen({
         {translate('didManagement.create')}
       </LoadingButton>
       <CreateDIDDockConfirmationModal
+        onClose={() => {
+          setIsConfirmDIDDockVisible(false);
+        }}
         visible={isConfirmDIDDockVisible}
         didName={form.didName}
         didType={form.didType}
