@@ -122,7 +122,7 @@ export function useDIDManagementHandlers() {
       const encryptedWalletJSONStr =
         typeof res === 'string' ? res : JSON.stringify(res);
 
-      const fileName = `did_${id.replace(/:/g, '')}`;
+      const fileName = `did_${id.replace(/:/g, '-')}`;
       const path = `${RNFS.DocumentDirectoryPath}/${fileName}.json`;
       const mimeType = 'application/json';
       await RNFS.writeFile(path, encryptedWalletJSONStr);
