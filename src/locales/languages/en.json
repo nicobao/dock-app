@@ -355,6 +355,7 @@
     "did_dock": "did:dock",
     "did_dock_description": "W3C compliant Decentralized Identifier created by Dock. Uses blockchain to secure verifiable credentials.",
     "no_name_set": "DID name not set",
-    "did_payment_address": "DID Payment Account"
+    "did_payment_address": "DID Payment Account",
+    "invalid_did_file":"Invalid DID file provided."
   }
 }
