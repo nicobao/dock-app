@@ -8,22 +8,22 @@ export function DIDAdvancedOptions({onChange, form}) {
     if (form.didType === 'diddock') {
       return [
         {
-          label: translate('account_advanced_options.keypair_type_ed25519'),
+          label: translate('did_advenced_options.keypair_type_ed25519'),
           value: 'ed25519',
         },
         {
-          label: translate('account_advanced_options.keypair_type_sr25519'),
+          label: translate('did_advenced_options.keypair_type_sr25519'),
           value: 'sr25519',
         },
         {
-          label: translate('account_advanced_options.keypair_type_ecdsa'),
+          label: translate('did_advenced_options.keypair_type_ecdsa'),
           value: 'ecdsa',
         },
       ];
     }
     return [
       {
-        label: translate('account_advanced_options.keypair_type_ed25519'),
+        label: translate('did_advenced_options.keypair_type_ed25519'),
         value: 'ed25519',
       },
     ];

@@ -124,6 +124,11 @@
     "agreement": "I understand that if I lose my recovery phrase, I will not be able to access my account",
     "success": "Backup complete!"
   },
+  "did_advenced_options": {
+    "keypair_type_sr25519": "Schnorrkel (sr25519, alternative)",
+    "keypair_type_ed25519": "Edwards (ed25519, recommended)",
+    "keypair_type_ecdsa": "ECDSA (Non BTC/ETH compatible)"
+  },
   "account_advanced_options": {
     "advanced_options": "Advanced options",
     "keypair_type": "Keypair crypto type",
