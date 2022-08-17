@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useMemo, useRef, useState} from 'react';
 import {
   BackButton,
   Box,
@@ -38,6 +38,8 @@ export function CreateNewDIDScreen({
   isFormValid,
 }) {
   const [isConfirmDIDDockVisible, setIsConfirmDIDDockVisible] = useState(false);
+  const scrollViewRef = useRef();
+
   return (
     <ScreenContainer {...addTestId('CreateNewDIDScreen')}>
       <Header>
@@ -65,7 +67,12 @@ export function CreateNewDIDScreen({
           <NBox width="80px" alignItems="flex-end" />
         </Box>
       </Header>
-      <ScrollView marginLeft={3} marginRight={3}>
+      <ScrollView
+        ref={view => {
+          scrollViewRef.current = view;
+        }}
+        marginLeft={3}
+        marginRight={3}>
         <FormControl>
           <Stack mt={7}>
             <FormControl.Label>
@@ -202,13 +209,18 @@ export function CreateNewDIDScreen({
         <DIDAdvancedOptions
           {...addTestId('DIDAdvancedOptions')}
           onChange={handleChange}
+          scrollToBottom={() => {
+            if (scrollViewRef?.current) {
+              scrollViewRef.current?.scrollToEnd();
+            }
+          }}
           form={form}
         />
       </ScrollView>
       <LoadingButton
         full
         {...addTestId('CreateNewDIDScreenDIDCreate')}
-        mb={70}
+        mb={30}
         ml={3}
         mr={3}
         onPress={async () => {
