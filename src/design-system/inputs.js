@@ -7,7 +7,7 @@ import {
   Text,
 } from 'native-base';
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {TouchableWithoutFeedback} from 'react-native';
 import {ErrorAlert, InformationCircle} from '../assets/icons';
 import {Modal} from '../components/Modal';
@@ -17,9 +17,13 @@ import {Typography} from './typography';
 
 export {Input, Select, Text} from 'native-base';
 
-export function SelectToggler({children, placeholder}) {
-  const [contentVisible, setContentVisible] = useState();
-
+export function SelectToggler({children, placeholder, onChange}) {
+  const [contentVisible, setContentVisible] = useState(false);
+  useEffect(() => {
+    if (typeof onChange === 'function') {
+      onChange(contentVisible);
+    }
+  }, [contentVisible, onChange]);
   return (
     <Box>
       <TouchableWithoutFeedback

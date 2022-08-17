@@ -3,27 +3,27 @@ import {translate} from '../../../locales';
 import {FormControl, Input, Select, Stack} from 'native-base';
 import {InputPopover, SelectToggler} from '../../../design-system';
 
-export function DIDAdvancedOptions({onChange, form}) {
+export function DIDAdvancedOptions({onChange, form, scrollToBottom}) {
   const keypairType = useMemo(() => {
     if (form.didType === 'diddock') {
       return [
         {
-          label: translate('did_advenced_options.keypair_type_ed25519'),
+          label: translate('did_advanced_options.keypair_type_ed25519'),
           value: 'ed25519',
         },
         {
-          label: translate('did_advenced_options.keypair_type_sr25519'),
+          label: translate('did_advanced_options.keypair_type_sr25519'),
           value: 'sr25519',
         },
         {
-          label: translate('did_advenced_options.keypair_type_ecdsa'),
+          label: translate('did_advanced_options.keypair_type_ecdsa'),
           value: 'ecdsa',
         },
       ];
     }
     return [
       {
-        label: translate('did_advenced_options.keypair_type_ed25519'),
+        label: translate('did_advanced_options.keypair_type_ed25519'),
         value: 'ed25519',
       },
     ];
@@ -31,6 +31,11 @@ export function DIDAdvancedOptions({onChange, form}) {
 
   return (
     <SelectToggler
+      onChange={isVisible => {
+        if (isVisible === true) {
+          scrollToBottom();
+        }
+      }}
       placeholder={translate('account_advanced_options.advanced_options')}>
       <FormControl>
         <Stack mt={7}>

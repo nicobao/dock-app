@@ -135,6 +135,7 @@ exports[`CreateNewDIDScreen should render correctly when form is invalid 1`] = `
               ],
             }
           }
+          scrollToBottom={[Function]}
           testID="DIDAdvancedOptions"
         />
       </ForwardRef>
@@ -142,7 +143,7 @@ exports[`CreateNewDIDScreen should render correctly when form is invalid 1`] = `
         accessibilityLabel="CreateNewDIDScreenDIDCreate"
         full={true}
         isDisabled={true}
-        mb={70}
+        mb={30}
         ml={3}
         mr={3}
         onPress={[Function]}
@@ -297,6 +298,7 @@ exports[`CreateNewDIDScreen should render correctly when form is valid 1`] = `
               ],
             }
           }
+          scrollToBottom={[Function]}
           testID="DIDAdvancedOptions"
         />
       </ForwardRef>
@@ -304,7 +306,7 @@ exports[`CreateNewDIDScreen should render correctly when form is valid 1`] = `
         accessibilityLabel="CreateNewDIDScreenDIDCreate"
         full={true}
         isDisabled={false}
-        mb={70}
+        mb={30}
         ml={3}
         mr={3}
         onPress={[Function]}
@@ -533,6 +535,7 @@ exports[`CreateNewDIDScreen should render correctly with modal 1`] = `
               ],
             }
           }
+          scrollToBottom={[Function]}
           testID="DIDAdvancedOptions"
         />
       </ForwardRef>
@@ -540,7 +543,7 @@ exports[`CreateNewDIDScreen should render correctly with modal 1`] = `
         accessibilityLabel="CreateNewDIDScreenDIDCreate"
         full={true}
         isDisabled={false}
-        mb={70}
+        mb={30}
         ml={3}
         mr={3}
         onPress={[Function]}
