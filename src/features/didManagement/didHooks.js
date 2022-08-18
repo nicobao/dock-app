@@ -56,10 +56,12 @@ export function useDIDManagementHandlers() {
         await importDID({encryptedJSONWallet, password});
       } catch (e) {
         switch (e.message) {
-          case '"jwe" must be an object.':
-            throw new Error(translate('didManagement.invalid_did_file'));
+          case 'Incorrect password':
+            throw new Error(translate('didManagement.invalid_did_password'));
+          case 'DID already exist in wallet':
+            throw new Error(translate('didManagement.duplicate_did'));
           default:
-            throw new Error(e.message);
+            throw new Error(translate('didManagement.invalid_did_file'));
         }
       }
       showToast({
