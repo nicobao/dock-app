@@ -103,7 +103,13 @@ export const appSelectors = {
   getAppLocked: state => getRoot(state).lockedTime > Date.now(),
   getShowTestnetTransactionConfig: state =>
     getRoot(state).showTestnetTransaction,
-  getFeatures: state => getRoot(state).features || defaultFeatures,
+  getFeatures: state => {
+    if (!appSelectors.getDevSettingsEnabled(state)) {
+      return defaultFeatures;
+    }
+
+    getRoot(state).features || defaultFeatures;
+  },
 };
 
 export const appOperations = {
