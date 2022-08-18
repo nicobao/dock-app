@@ -1,6 +1,3 @@
-import React from 'react';
-import {shallow} from 'enzyme';
-import configureMockStore from 'redux-mock-store';
 import {appSelectors} from './app-slice';
 import {defaultFeatures} from './feature-flags';
 
