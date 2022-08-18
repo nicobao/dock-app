@@ -30,6 +30,7 @@ export const defaultFeatures = {
   [Features.showTestnetTransaction.id]: false,
   [Features.credentials.id]: true,
   [Features.transak.id]: true,
+  [Features.didManagement.id]: true,
 };
 
 export type FeatureFlags = {
