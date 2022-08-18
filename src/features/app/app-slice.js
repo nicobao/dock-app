@@ -108,7 +108,7 @@ export const appSelectors = {
       return defaultFeatures;
     }
 
-    getRoot(state).features || defaultFeatures;
+    return getRoot(state).features || defaultFeatures;
   },
 };
 
