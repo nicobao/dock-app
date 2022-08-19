@@ -216,7 +216,7 @@ describe('DID hooks', () => {
 
     await expect(
       result.current.onImportDID({encryptedJSONWallet, password}),
-    ).rejects.toThrowError('Incorrect password');
+    ).rejects.toThrowError('Incorrect Password');
   });
   test('Import DID with invalid json', async () => {
     const {result} = renderHook(() => useDIDManagementHandlers());
@@ -271,5 +271,26 @@ describe('DID hooks', () => {
 
     expect(result.current.didList[0].id).toBe('2');
     expect(result.current.didList[1].id).toBe('1');
+  });
+  test("Can't import duplicate DID", async () => {
+    const {result} = renderHook(() => useDIDManagementHandlers());
+    const encryptedJSONWallet = {
+      '@context': [
+        'https://www.w3.org/2018/credentials/v1',
+        'https://w3id.org/wallet/v1',
+      ],
+      id: 'did:key:z6LSjTbRETJjUCDiQopbeCgZKRisy7mdchwiMBPTQktcibGh#encrypted-wallet',
+      type: ['VerifiableCredential', 'EncryptedWallet'],
+      issuer: 'did:key:z6LSjTbRETJjUCDiQopbeCgZKRisy7mdchwiMBPTQktcibGh',
+      issuanceDate: '2022-07-19T20:59:44.798Z',
+      credentialSubject: {
+        id: 'did:key:z6LSjTbRETJjUCDiQopbeCgZKRisy7mdchwiMBPTQktcibGh',
+      },
+    };
+    const password = 'duplicate';
+
+    await expect(
+      result.current.onImportDID({encryptedJSONWallet, password}),
+    ).rejects.toThrowError('DID already exist in wallet');
   });
 });

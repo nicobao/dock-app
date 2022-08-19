@@ -407,6 +407,8 @@ jest.mock('@docknetwork/wallet-sdk-react-native/lib', () => {
         return Promise.resolve([]);
       } else if (password === 'test1') {
         return Promise.reject(Error('Incorrect password'));
+      } else if (password === 'duplicate') {
+        return Promise.reject(Error('DID already exist in wallet'));
       }
       return Promise.reject(Error('"jwe" must be an object.'));
     }),
