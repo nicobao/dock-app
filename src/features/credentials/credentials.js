@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
 import {getVCData} from '@docknetwork/prettyvc';
 import {pickJSONFile} from '../../core/storage-utils';
-import {showToast} from 'src/core/toast';
+import {showToast, withErrorToast} from 'src/core/toast';
 import {translate} from 'src/locales';
 import assert from 'assert';
 import {credentialServiceRPC} from '@docknetwork/wallet-sdk-core/lib/services/credential';
@@ -116,6 +116,11 @@ export function useCredentials({onPickFile = pickJSONFile} = {}) {
       return;
     }
 
+    assert(
+      jsonData?.issuer?.hasOwnProperty('id') === true,
+      translate('credentials.invalid_credential'),
+    );
+
     try {
       if (doesCredentialExist(items, jsonData)) {
         showToast({
@@ -141,7 +146,7 @@ export function useCredentials({onPickFile = pickJSONFile} = {}) {
   return {
     credentials: items,
     handleRemove,
-    onAdd,
+    onAdd: withErrorToast(onAdd),
   };
 }
 export function getParamsFromUrl(url, param) {

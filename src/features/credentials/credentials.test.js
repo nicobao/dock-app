@@ -179,10 +179,35 @@ describe('Credentials helpers', () => {
       expect(Credentials.getInstance().remove).toBeCalledWith(1);
     });
 
-    it('expect to add credential', async () => {
-      await act(async () => {
-        await hook.current.onAdd();
+    it('expect to add invalid credential', async () => {
+      const onPickInvalidFile = jest.fn().mockResolvedValue({});
+      const {result} = await renderHook(() =>
+        useCredentials({onPickFile: onPickInvalidFile}),
+      );
+
+      await expect(result.current.onAdd()).rejects.toThrowError(
+        'Invalid Credential',
+      );
+    });
+    it('expect to add valid credential', async () => {
+      const onPickValidFile = jest.fn().mockResolvedValue({
+        '@context': ['https://www.w3.org/2018/credentials/v1'],
+        id: 'https://creds.dock.io/8e02c35ae370b02f47d7faaf41cb1386768fc75c9fca7caa6bb389dbe61260eb',
+        type: ['VerifiableCredential', 'UniversityDegreeCredential'],
+        credentialSubject: {},
+        issuanceDate: '2022-06-27T12:08:30.675Z',
+        expirationDate: '2029-06-26T23:00:00.000Z',
+        issuer: {
+          name: 'John Doe',
+          description: '',
+          logo: '',
+          id: 'did:dock:5CJaTP2eGCLf5ZNPUXYbWxUvJQMTseKfc4hi8WVBC1K8eW9N',
+        },
       });
+      const {result} = await renderHook(() =>
+        useCredentials({onPickFile: onPickValidFile}),
+      );
+      await result.current.onAdd();
 
       expect(Credentials.getInstance().add).toBeCalled();
       expect(Credentials.getInstance().query).toBeCalled();
