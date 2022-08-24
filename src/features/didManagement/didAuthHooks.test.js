@@ -1,5 +1,10 @@
+import {useWallet} from '@docknetwork/wallet-sdk-react-native/lib';
 import {renderHook, act} from '@testing-library/react-hooks';
-import {useDIDAuth, useDIDAuthHandlers} from './didAuthHooks';
+import {
+  DID_AUTH_METADATA_ID,
+  useDIDAuth,
+  useDIDAuthHandlers,
+} from './didAuthHooks';
 
 describe('DID auth hooks', () => {
   it('Parse DID list for select dropdown', () => {
@@ -16,6 +21,21 @@ describe('DID auth hooks', () => {
     });
     expect(result.current.authState).toBe('start');
   });
+
+  it('expect to upsert did auth metadata document', async () => {
+    const {wallet} = useWallet();
+    const {result} = renderHook(() => useDIDAuth());
+
+    act(() => {
+      result.current.authenticateDID({
+        dockWalletAuthDeepLink: null,
+        selectedDID: null,
+        profileData: {},
+      });
+    });
+
+    expect(wallet.upsert).toBeCalled();
+  });
 });
 
 describe('DID auth handlers', () => {
@@ -28,7 +48,15 @@ describe('DID auth handlers', () => {
     act(() => {
       result.current.handleChange('did', 'did:key');
     });
+
     expect(result.current.profileData.did).toBeUndefined();
     expect(result.current.selectedDID).toBe('did:key');
+  });
+
+  it('expect to fetch did auth metadata documents', async () => {
+    const {wallet} = useWallet();
+    const {result} = renderHook(() => useDIDAuthHandlers());
+
+    expect(wallet.getDocumentById).toBeCalledWith(DID_AUTH_METADATA_ID);
   });
 });
