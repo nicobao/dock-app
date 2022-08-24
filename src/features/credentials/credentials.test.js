@@ -229,16 +229,7 @@ describe('Credentials helpers', () => {
         'Invalid Credential',
       );
     });
-    it('expect to throw exception if credential only has id', async () => {
-      const onPickInvalidFile = jest.fn().mockResolvedValue({});
-      const {result} = await renderHook(() =>
-        useCredentials({onPickFile: onPickInvalidFile}),
-      );
 
-      await expect(result.current.onAdd()).rejects.toThrowError(
-        'Invalid Credential',
-      );
-    });
     it('expect to add valid credential', async () => {
       const onPickValidFile = jest.fn().mockResolvedValue({
         '@context': ['https://www.w3.org/2018/credentials/v1'],
