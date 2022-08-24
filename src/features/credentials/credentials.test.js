@@ -179,7 +179,7 @@ describe('Credentials helpers', () => {
       expect(Credentials.getInstance().remove).toBeCalledWith(1);
     });
 
-    it('expect to add invalid credential', async () => {
+    it('expect adding invalid credential to throw exception', async () => {
       const onPickInvalidFile = jest.fn().mockResolvedValue({});
       const {result} = await renderHook(() =>
         useCredentials({onPickFile: onPickInvalidFile}),
