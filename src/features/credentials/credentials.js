@@ -86,7 +86,29 @@ export async function processCredential(credential) {
     formattedData,
   };
 }
+const validateCredential = credential => {
+  assert(
+    typeof credential !== 'undefined',
+    translate('credentials.invalid_credential') + 0,
+  );
+  assert(
+    typeof credential?.id === 'string',
+    translate('credentials.invalid_credential') + 1,
+  );
+  assert(
+    credential.hasOwnProperty('@context') === true,
+    translate('credentials.invalid_credential') + 2,
+  );
 
+  assert(
+    credential.type.includes('VerifiableCredential'),
+    translate('credentials.invalid_credential') + 4,
+  );
+  assert(
+    credential?.issuer?.hasOwnProperty('id') === true,
+    translate('credentials.invalid_credential') + 5,
+  );
+};
 export function useCredentials({onPickFile = pickJSONFile} = {}) {
   const [items, setItems] = useState([]);
 
@@ -115,12 +137,7 @@ export function useCredentials({onPickFile = pickJSONFile} = {}) {
     if (!jsonData) {
       return;
     }
-
-    assert(
-      jsonData?.issuer?.hasOwnProperty('id') === true,
-      translate('credentials.invalid_credential'),
-    );
-
+    validateCredential(jsonData);
     try {
       if (doesCredentialExist(items, jsonData)) {
         showToast({
