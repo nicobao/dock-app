@@ -89,24 +89,24 @@ export async function processCredential(credential) {
 const validateCredential = credential => {
   assert(
     typeof credential !== 'undefined',
-    translate('credentials.invalid_credential') + 0,
+    translate('credentials.invalid_credential'),
   );
   assert(
     typeof credential?.id === 'string',
-    translate('credentials.invalid_credential') + 1,
+    translate('credentials.invalid_credential'),
   );
   assert(
     credential.hasOwnProperty('@context') === true,
-    translate('credentials.invalid_credential') + 2,
+    translate('credentials.invalid_credential'),
   );
 
   assert(
-    credential.type.includes('VerifiableCredential'),
-    translate('credentials.invalid_credential') + 4,
+    credential.type?.includes('VerifiableCredential'),
+    translate('credentials.invalid_credential'),
   );
   assert(
     credential?.issuer?.hasOwnProperty('id') === true,
-    translate('credentials.invalid_credential') + 5,
+    translate('credentials.invalid_credential'),
   );
 };
 export function useCredentials({onPickFile = pickJSONFile} = {}) {

@@ -179,7 +179,57 @@ describe('Credentials helpers', () => {
       expect(Credentials.getInstance().remove).toBeCalledWith(1);
     });
 
-    it('expect adding invalid credential to throw exception', async () => {
+    it('expect to throw exception if credential only has id', async () => {
+      const onPickInvalidFile = jest.fn().mockResolvedValue({
+        id: '1661370186105',
+      });
+      const {result} = await renderHook(() =>
+        useCredentials({onPickFile: onPickInvalidFile}),
+      );
+
+      await expect(result.current.onAdd()).rejects.toThrowError(
+        'Invalid Credential',
+      );
+    });
+    it('expect to throw exception if credential only has @context', async () => {
+      const onPickInvalidFile = jest.fn().mockResolvedValue({
+        '@context': '1661370186105',
+      });
+      const {result} = await renderHook(() =>
+        useCredentials({onPickFile: onPickInvalidFile}),
+      );
+
+      await expect(result.current.onAdd()).rejects.toThrowError(
+        'Invalid Credential',
+      );
+    });
+    it('expect to throw exception if credential only has type', async () => {
+      const onPickInvalidFile = jest.fn().mockResolvedValue({
+        type: [],
+      });
+      const {result} = await renderHook(() =>
+        useCredentials({onPickFile: onPickInvalidFile}),
+      );
+
+      await expect(result.current.onAdd()).rejects.toThrowError(
+        'Invalid Credential',
+      );
+    });
+    it('expect to throw exception if credential only has issuer', async () => {
+      const onPickInvalidFile = jest.fn().mockResolvedValue({
+        issuer: {
+          id: 'did:key:1661370186105',
+        },
+      });
+      const {result} = await renderHook(() =>
+        useCredentials({onPickFile: onPickInvalidFile}),
+      );
+
+      await expect(result.current.onAdd()).rejects.toThrowError(
+        'Invalid Credential',
+      );
+    });
+    it('expect to throw exception if credential only has id', async () => {
       const onPickInvalidFile = jest.fn().mockResolvedValue({});
       const {result} = await renderHook(() =>
         useCredentials({onPickFile: onPickInvalidFile}),
