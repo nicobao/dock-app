@@ -64,8 +64,6 @@ export function useDIDAuth() {
         type: 'Metadata',
         value: profileData,
       });
-      // TODO: should we store profileData relating to the website that requested it in wallet
-      // so that we can prepopulate the fields next time?
       setAuthState('processing');
       const keydoc = await getSelectedDIDKeyDoc({selectedDID});
       const result = await authHandler(
