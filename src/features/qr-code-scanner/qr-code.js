@@ -168,6 +168,8 @@ export async function qrCodeHandler(data, handlers = qrCodeHandlers) {
 }
 
 export function isDidAuthUrl(url) {
-  const authLinkPrefix = 'dockwallet://didauth?url=';
-  return typeof url === 'string' && url.indexOf(authLinkPrefix) === 0;
+  return isDeepLinkType(url, 'dockwallet://didauth?url=');
+}
+export function isDeepLinkType(url, prefix) {
+  return typeof url === 'string' && url.indexOf(prefix) === 0;
 }

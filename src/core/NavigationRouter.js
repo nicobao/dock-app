@@ -45,6 +45,8 @@ import {EditDIDScreenContainer} from '../features/didManagement/EditDIDScreen';
 import {ShareDIDScreenContainer} from '../features/didManagement/ShareDIDScreen';
 import {ExportDIDScreenContainer} from '../features/didManagement/ExportDIDScreen';
 import {ImportDIDScreenContainer} from '../features/didManagement/ImportDIDScreen';
+import {ShareCredentialScreenContainer} from '../features/credentials/ShareCredentialScreen';
+import {useDeepLink} from './hooks/deepLinkHooks';
 
 const AppStack = createStackNavigator();
 const RootStack = createStackNavigator();
@@ -354,58 +356,41 @@ function AppStackScreen() {
           },
         })}
       />
+      <AppStack.Screen
+        {...getScreenProps({
+          name: Routes.CREDENTIALS_SHARE_AS_PRESENTATION,
+          component: ShareCredentialScreenContainer,
+          options: {
+            gestureEnabled: false,
+          },
+        })}
+      />
     </AppStack.Navigator>
   );
 }
 
 export function NavigationRouter() {
-  const isLoggedIn = useSelector(authenticationSelectors.isLoggedIn);
+  const {gotoScreenDeepLink} = useDeepLink();
 
-  const navigateToDIDAuthScreen = useCallback(
-    url => {
-      if (isLoggedIn) {
-        navigate(Routes.APP_DID_AUTH, {
-          dockWalletAuthDeepLink: url,
-        });
-      } else {
-        navigate(Routes.UNLOCK_WALLET, {
-          callback: () => {
-            navigate(Routes.APP_DID_AUTH, {
-              dockWalletAuthDeepLink: url,
-            });
-          },
-        });
-      }
-    },
-    [isLoggedIn],
-  );
   useEffect(() => {
     const getAsyncURL = async () => {
       const initialUrl = await Linking.getInitialURL();
       if (initialUrl !== undefined && initialUrl != null) {
-        navigateToDIDAuthScreen(initialUrl);
+        gotoScreenDeepLink({url: initialUrl});
       }
     };
 
     getAsyncURL();
-  }, [navigateToDIDAuthScreen]);
+  }, [gotoScreenDeepLink]);
 
-  const handleUrl = useCallback(
-    ({url}) => {
-      if (isDidAuthUrl(url)) {
-        navigateToDIDAuthScreen(url);
-      }
-    },
-    [navigateToDIDAuthScreen],
-  );
   useEffect(() => {
     DeepLinking.addScheme('dockwallet://');
-    Linking.addEventListener('url', handleUrl);
+    Linking.addEventListener('url', gotoScreenDeepLink);
 
     return () => {
-      Linking.removeEventListener('url', handleUrl);
+      Linking.removeEventListener('url', gotoScreenDeepLink);
     };
-  }, [handleUrl]);
+  }, [gotoScreenDeepLink]);
 
   return (
     <NavigationContainer ref={navigationRef}>
