@@ -7,7 +7,7 @@
     "ios": "react-native run-ios",
     "start": "APP_RUNTIME=default && react-native start",
     "start:storybook": "APP_RUNTIME=storybook && react-native start",
-    "test": "jest --coverage --collectCoverageFrom=src/**/**/*.{js,jsx,ts,tsx} ./src/**",
+    "test": "jest  ./src/**",
     "test:e2e": "detox test",
     "build:e2e": "detox build",
     "lint": "eslint './src/**/*.js' --max-warnings=0 --ignore-path=.prettierignore",
