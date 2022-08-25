@@ -471,11 +471,19 @@ jest.mock('@docknetwork/wallet-sdk-react-native/lib', () => {
     ],
   };
 
+  const walletDocs = {};
+
   const useWalletMockFunctions = {
     wallet: {
-      upsert: jest.fn(() => Promise.resolve(null)),
-      getDocumentById: jest.fn(() => Promise.resolve({})),
-      add: jest.fn(() => Promise.resolve(null)),
+      upsert: jest.fn(doc => {
+        walletDocs[doc.id] = doc;
+        return Promise.resolve(null);
+      }),
+      getDocumentById: jest.fn(id => Promise.resolve(walletDocs[id])),
+      add: jest.fn(doc => {
+        walletDocs[doc.id] = doc;
+        return Promise.resolve(null);
+      }),
     },
   };
 

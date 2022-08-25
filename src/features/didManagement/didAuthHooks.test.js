@@ -55,8 +55,20 @@ describe('DID auth handlers', () => {
 
   it('expect to fetch did auth metadata documents', async () => {
     const {wallet} = useWallet();
-    renderHook(() => useDIDAuthHandlers());
+    const profileData = {
+      name: 'Test',
+      email: 'test@test.com',
+    };
+
+    await wallet.upsert({
+      id: DID_AUTH_METADATA_ID,
+      type: 'Metadata',
+      value: profileData,
+    });
+
+    const {result} = await renderHook(() => useDIDAuthHandlers());
 
     expect(wallet.getDocumentById).toBeCalledWith(DID_AUTH_METADATA_ID);
+    expect(result.current.profileData).toStrictEqual(profileData);
   });
 });
