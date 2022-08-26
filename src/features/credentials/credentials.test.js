@@ -179,46 +179,12 @@ describe('Credentials helpers', () => {
       expect(Credentials.getInstance().remove).toBeCalledWith(1);
     });
 
-    it('expect to throw exception if credential only has id', async () => {
+    it('expect to throw exception if credential has missing id', async () => {
       const onPickInvalidFile = jest.fn().mockResolvedValue({
-        id: '1661370186105',
-      });
-      const {result} = await renderHook(() =>
-        useCredentials({onPickFile: onPickInvalidFile}),
-      );
-
-      await expect(result.current.onAdd()).rejects.toThrowError(
-        'Invalid Credential',
-      );
-    });
-    it('expect to throw exception if credential only has @context', async () => {
-      const onPickInvalidFile = jest.fn().mockResolvedValue({
-        '@context': '1661370186105',
-      });
-      const {result} = await renderHook(() =>
-        useCredentials({onPickFile: onPickInvalidFile}),
-      );
-
-      await expect(result.current.onAdd()).rejects.toThrowError(
-        'Invalid Credential',
-      );
-    });
-    it('expect to throw exception if credential only has type', async () => {
-      const onPickInvalidFile = jest.fn().mockResolvedValue({
-        type: [],
-      });
-      const {result} = await renderHook(() =>
-        useCredentials({onPickFile: onPickInvalidFile}),
-      );
-
-      await expect(result.current.onAdd()).rejects.toThrowError(
-        'Invalid Credential',
-      );
-    });
-    it('expect to throw exception if credential only has issuer', async () => {
-      const onPickInvalidFile = jest.fn().mockResolvedValue({
+        '@context': ['https://www.w3.org/2018/credentials/v1'],
+        type: ['VerifiableCredential', 'UniversityDegreeCredential'],
         issuer: {
-          id: 'did:key:1661370186105',
+          id: 'did:dock:5CJaTP2eGCLf5ZNPUXYbWxUvJQMTseKfc4hi8WVBC1K8eW9N',
         },
       });
       const {result} = await renderHook(() =>
@@ -226,7 +192,54 @@ describe('Credentials helpers', () => {
       );
 
       await expect(result.current.onAdd()).rejects.toThrowError(
-        'Invalid Credential',
+        'Credential has no ID',
+      );
+    });
+    it('expect to throw exception if credential only has missing @context', async () => {
+      const onPickInvalidFile = jest.fn().mockResolvedValue({
+        id: 'https://creds.dock.io/8e02c35ae370b02f47d7faaf41cb1386768fc75c9fca7caa6bb389dbe61260eb',
+        type: ['VerifiableCredential', 'UniversityDegreeCredential'],
+        issuer: {
+          id: 'did:dock:5CJaTP2eGCLf5ZNPUXYbWxUvJQMTseKfc4hi8WVBC1K8eW9N',
+        },
+      });
+      const {result} = await renderHook(() =>
+        useCredentials({onPickFile: onPickInvalidFile}),
+      );
+
+      await expect(result.current.onAdd()).rejects.toThrowError(
+        'Credential has no context',
+      );
+    });
+    it('expect to throw exception if credential has invalid type', async () => {
+      const onPickInvalidFile = jest.fn().mockResolvedValue({
+        '@context': ['https://www.w3.org/2018/credentials/v1'],
+        id: 'https://creds.dock.io/8e02c35ae370b02f47d7faaf41cb1386768fc75c9fca7caa6bb389dbe61260eb',
+        type: ['UniversityDegreeCredential'],
+        issuer: {
+          id: 'did:dock:5CJaTP2eGCLf5ZNPUXYbWxUvJQMTseKfc4hi8WVBC1K8eW9N',
+        },
+      });
+      const {result} = await renderHook(() =>
+        useCredentials({onPickFile: onPickInvalidFile}),
+      );
+
+      await expect(result.current.onAdd()).rejects.toThrowError(
+        'Credential has an invalid type',
+      );
+    });
+    it('expect to throw exception if credential only has no issuer', async () => {
+      const onPickInvalidFile = jest.fn().mockResolvedValue({
+        '@context': ['https://www.w3.org/2018/credentials/v1'],
+        id: 'https://creds.dock.io/8e02c35ae370b02f47d7faaf41cb1386768fc75c9fca7caa6bb389dbe61260eb',
+        type: ['UniversityDegreeCredential', 'VerifiableCredential'],
+      });
+      const {result} = await renderHook(() =>
+        useCredentials({onPickFile: onPickInvalidFile}),
+      );
+
+      await expect(result.current.onAdd()).rejects.toThrowError(
+        'Credential has no Issuer',
       );
     });
 

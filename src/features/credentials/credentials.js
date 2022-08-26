@@ -93,20 +93,20 @@ const validateCredential = credential => {
   );
   assert(
     typeof credential?.id === 'string',
-    translate('credentials.invalid_credential'),
+    translate('credentials.credential_no_id'),
   );
   assert(
     credential.hasOwnProperty('@context') === true,
-    translate('credentials.invalid_credential'),
+    translate('credentials.credential_no_context'),
   );
 
   assert(
     credential.type?.includes('VerifiableCredential'),
-    translate('credentials.invalid_credential'),
+    translate('credentials.credential_no_type'),
   );
   assert(
     credential?.issuer?.hasOwnProperty('id') === true,
-    translate('credentials.invalid_credential'),
+    translate('credentials.credential_no_issuer'),
   );
 };
 export function useCredentials({onPickFile = pickJSONFile} = {}) {
