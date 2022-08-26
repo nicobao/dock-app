@@ -1,13 +1,17 @@
 import {useDIDManagementHandlers} from './didHooks';
-import {useCallback, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {authHandler} from '../qr-code-scanner/qr-code';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {walletService} from '@docknetwork/wallet-sdk-core/lib/services/wallet';
+import {useWallet} from '@docknetwork/wallet-sdk-react-native/lib';
+
+export const DID_AUTH_METADATA_ID = 'did-auth-metadata';
 
 export function useDIDAuthHandlers() {
   const [profileData, setProfileData] = useState({});
   const [selectedDID, setSelectedDID] = useState();
+  const {wallet} = useWallet({syncDocs: false});
 
   const handleChange = useCallback((key, value) => {
     if (key === 'did') {
@@ -20,6 +24,12 @@ export function useDIDAuthHandlers() {
     }
   }, []);
 
+  useEffect(() => {
+    wallet.getDocumentById(DID_AUTH_METADATA_ID).then(data => {
+      setProfileData(data?.value || {});
+    });
+  }, [wallet, profileData]);
+
   return useMemo(
     () => ({handleChange, profileData, selectedDID}),
     [handleChange, profileData, selectedDID],
@@ -29,6 +39,7 @@ export function useDIDAuthHandlers() {
 export function useDIDAuth() {
   const {didList} = useDIDManagementHandlers();
   const [authState, setAuthState] = useState('start');
+  const {wallet} = useWallet({syncDocs: false});
 
   const handleRetry = useCallback(() => {
     setAuthState('start');
@@ -48,8 +59,11 @@ export function useDIDAuth() {
   }, []);
   const authenticateDID = useCallback(
     async ({dockWalletAuthDeepLink, selectedDID, profileData}) => {
-      // TODO: should we store profileData relating to the website that requested it in wallet
-      // so that we can prepopulate the fields next time?
+      wallet.upsert({
+        id: DID_AUTH_METADATA_ID,
+        type: 'Metadata',
+        value: profileData,
+      });
       setAuthState('processing');
       const keydoc = await getSelectedDIDKeyDoc({selectedDID});
       const result = await authHandler(
@@ -66,7 +80,7 @@ export function useDIDAuth() {
         setAuthState('error');
       }
     },
-    [getSelectedDIDKeyDoc],
+    [getSelectedDIDKeyDoc, wallet],
   );
 
   const dids = useMemo(() => {
