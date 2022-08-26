@@ -57,7 +57,7 @@ export function useCredentialPresentation(deepLinkUrl) {
           vp: presentation,
         }),
       });
-      const result = await req.json();
+      await req.json();
       showToast({
         message: translate('credentials.credential_shared'),
         type: 'success',

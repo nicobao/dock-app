@@ -34,8 +34,6 @@ import {Routes} from './routes';
 import {CredentialsContainer} from '../features/credentials/CredentialsScreen';
 import {withNavigationContext} from './NavigationContext';
 import DeepLinking from 'react-native-deep-linking';
-import {isDidAuthUrl} from '../features/qr-code-scanner/qr-code';
-import {navigate} from './navigation';
 import {DIDAuthScreenContainer} from '../features/didManagement/DIDAuthScreen';
 import {CreateNewDIDScreenContainer} from '../features/didManagement/CreateNewDIDScreen';
 import {authenticationSelectors} from '../features/unlock-wallet/unlock-wallet-slice';

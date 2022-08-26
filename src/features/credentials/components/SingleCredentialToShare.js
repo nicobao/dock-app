@@ -1,20 +1,6 @@
 import React from 'react';
-import {
-  HStack,
-  Image,
-  Text,
-  VStack,
-  Checkbox,
-  Stack,
-  Menu,
-  Pressable,
-} from 'native-base';
-import {
-  DotsVerticalIcon,
-  NBox,
-  Theme,
-  Typography,
-} from '../../../design-system';
+import {HStack, Image, Text, VStack, Checkbox} from 'native-base';
+import {NBox, Theme, Typography} from '../../../design-system';
 import {View} from 'react-native';
 import {PolkadotIcon} from '../../../components/PolkadotIcon';
 import {getDIDAddress} from '../credentials';
