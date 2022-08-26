@@ -6,6 +6,21 @@ import mockAsyncStorage from '../node_modules/@react-native-async-storage/async-
 import mockRNPermissions from '../node_modules/react-native-permissions/mock';
 import '../src/core/setup-env';
 import {DebugConstants} from '../src/features/constants';
+import {} from '../src/core/navigation';
+jest.mock('../src/core/navigation', () => {
+  const navigate = jest.fn();
+  const navigationRef = {
+    current: {
+      navigate,
+    },
+  };
+  const navigationMocks = {
+    navigate,
+    navigateBack: jest.fn(),
+    navigationRef,
+  };
+  return navigationMocks;
+});
 
 jest.mock('@docknetwork/wallet-sdk-core/lib/core/realm', () => {
   const realmFunctions = {
