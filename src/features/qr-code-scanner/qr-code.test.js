@@ -7,6 +7,7 @@ import {
   isDidAuthUrl,
   onAuthQRScanned,
   qrCodeHandler,
+  isDeepLinkType,
 } from './qr-code';
 import {navigationRef} from '../../core/navigation';
 import {Routes} from '../../core/routes';
@@ -286,6 +287,18 @@ describe('qr-code', () => {
       expect(isValid1).toBeFalsy();
     });
 
+    it('is presentation URL', () => {
+      const isValid = isDeepLinkType(
+        'dockwallet://proof-request?url=https://auth.dock.io/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',
+        'dockwallet://proof-request?url=',
+      );
+      expect(isValid).toBeTruthy();
+      const isValid1 = isDeepLinkType(
+        'dockwallet://proof-equest?url=https://auth.dock.io/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',
+        'dockwallet://proof-request?url=',
+      );
+      expect(isValid1).toBeFalsy();
+    });
     it('Is did auth URL', () => {
       const isValid = isDidAuthUrl(
         'dockwallet://didauth?url=https://auth.dock.io/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',

@@ -25,13 +25,13 @@ function shouldRenderAttr(attr) {
   return attr.property !== 'id' && attr.property !== 'title';
 }
 
-function renderObjectAttributes({attributes}) {
+export function renderObjectAttributes({attributes}) {
   return (
     <>
-      {attributes.map(attr => {
+      {attributes.map((attr, index) => {
         return (
           shouldRenderAttr(attr) && (
-            <Stack mb={1}>
+            <Stack mb={1} key={`${index}_${attr.value}`}>
               <Text
                 textTransform="capitalize"
                 fontSize={'12px'}
@@ -48,7 +48,7 @@ function renderObjectAttributes({attributes}) {
   );
 }
 
-function EmptyCredentials(props) {
+export function EmptyCredentials(props) {
   return (
     <Center {...props}>
       <Box borderRadius={72} width={72} height={72} backgroundColor={'#27272A'}>

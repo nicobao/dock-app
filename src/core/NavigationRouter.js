@@ -1,7 +1,7 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {View} from 'native-base';
-import React, {useCallback, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {Linking, Platform, StyleSheet} from 'react-native';
 import {Theme} from 'src/design-system';
 import {ReceiveTokenContainer} from 'src/features/tokens/ReceiveTokenScreen';
@@ -370,7 +370,8 @@ function AppStackScreen() {
 }
 
 export function NavigationRouter() {
-  const {gotoScreenDeepLink} = useDeepLink();
+  const isLoggedIn = useSelector(authenticationSelectors.isLoggedIn);
+  const {gotoScreenDeepLink} = useDeepLink({isLoggedIn});
 
   useEffect(() => {
     const getAsyncURL = async () => {

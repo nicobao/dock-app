@@ -5,12 +5,8 @@ import {
 } from '../../features/qr-code-scanner/qr-code';
 import {Routes} from '../routes';
 import {navigate} from '../navigation';
-import {useSelector} from 'react-redux';
-import {authenticationSelectors} from '../../features/unlock-wallet/unlock-wallet-slice';
 
-export function useDeepLink() {
-  const isLoggedIn = useSelector(authenticationSelectors.isLoggedIn);
-
+export function useDeepLink({isLoggedIn}) {
   const navigateToDeepLinkScreen = useCallback(
     (route, params = {}) => {
       if (isLoggedIn) {
@@ -34,7 +30,7 @@ export function useDeepLink() {
         });
       } else if (isDeepLinkType(url, 'dockwallet://proof-request?url=')) {
         navigateToDeepLinkScreen(Routes.CREDENTIALS_SHARE_AS_PRESENTATION, {
-          url,
+          deepLinkUrl: url,
         });
       }
     },

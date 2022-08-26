@@ -8,6 +8,7 @@ import {getJsonOrError} from '../../core';
 import '../credentials/credentials';
 import {onScanAuthQRCode} from '../credentials/credentials';
 import {captureException} from '@sentry/react-native';
+import queryString from 'query-string';
 
 export async function addressHandler(data) {
   const isAddress = await utilCryptoService.isAddressValid(data);
@@ -172,4 +173,7 @@ export function isDidAuthUrl(url) {
 }
 export function isDeepLinkType(url, prefix) {
   return typeof url === 'string' && url.indexOf(prefix) === 0;
+}
+export function getParamsFromUrl(url) {
+  return queryString.parse(url.substring(url.indexOf('?')));
 }

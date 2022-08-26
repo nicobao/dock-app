@@ -85,6 +85,7 @@ export function useDIDAuth() {
       authState,
       handleRetry,
       authenticateDID,
+      getSelectedDIDKeyDoc,
     };
-  }, [dids, authState, handleRetry, authenticateDID]);
+  }, [dids, authState, handleRetry, authenticateDID, getSelectedDIDKeyDoc]);
 }

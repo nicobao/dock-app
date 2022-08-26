@@ -400,7 +400,14 @@ jest.mock('@docknetwork/wallet-sdk-react-native/lib', () => {
   const originalModule = jest.requireActual(
     '@docknetwork/wallet-sdk-react-native/lib',
   );
-
+  const usePresentationMockFunctions = {
+    presentCredentials: jest.fn(params => {
+      if (params.challenge == 2) {
+        return Promise.reject(Error('Incorrect challenge'));
+      }
+      return Promise.resolve();
+    }),
+  };
   const useDIDManagementMockFunctions = {
     importDID: jest.fn(({password}) => {
       if (password === 'test') {
@@ -474,6 +481,7 @@ jest.mock('@docknetwork/wallet-sdk-react-native/lib', () => {
     WalletSDKProvider: originalModule.WalletSDKProvider,
     useDIDManagement: () => useDIDManagementMockFunctions,
     useAccounts: () => useAccountsMockFunctions,
+    usePresentation: () => usePresentationMockFunctions,
   };
 });
 global.fetch = jest.fn(() =>
