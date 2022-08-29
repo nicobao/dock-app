@@ -251,7 +251,7 @@ describe('qr-code', () => {
     });
     it('is Presentation QRCode scanned', () => {
       const isValid1 = onPresentationScanned(
-        'dockwallet://proof-request?ul=https://auth.dock.io/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',
+        'allet://proof-?ul=https://auth.dock.io/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',
       );
       expect(isValid1).toBeFalsy();
       expect(navigate).not.toBeCalled();
