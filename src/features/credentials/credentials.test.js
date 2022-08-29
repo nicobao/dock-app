@@ -262,7 +262,25 @@ describe('Credentials helpers', () => {
       );
     });
 
-    it('expect to add valid credential', async () => {
+    it('expect to add valid credential with string issuer', async () => {
+      const onPickValidFile = jest.fn().mockResolvedValue({
+        '@context': ['https://www.w3.org/2018/credentials/v1'],
+        id: 'https://creds.dock.io/8e02c35ae370b02f47d7faaf41cb1386768fc75c9fca7caa6bb389dbe61260eb',
+        type: ['VerifiableCredential', 'UniversityDegreeCredential'],
+        credentialSubject: {},
+        issuanceDate: '2022-06-27T12:08:30.675Z',
+        expirationDate: '2029-06-26T23:00:00.000Z',
+        issuer: 'did:dock:5CJaTP2eGCLf5ZNPUXYbWxUvJQMTseKfc4hi8WVBC1K8eW9N',
+      });
+      const {result} = await renderHook(() =>
+        useCredentials({onPickFile: onPickValidFile}),
+      );
+      await result.current.onAdd();
+
+      expect(Credentials.getInstance().add).toBeCalled();
+      expect(Credentials.getInstance().query).toBeCalled();
+    });
+    it('expect to add valid credential with issuer object', async () => {
       const onPickValidFile = jest.fn().mockResolvedValue({
         '@context': ['https://www.w3.org/2018/credentials/v1'],
         id: 'https://creds.dock.io/8e02c35ae370b02f47d7faaf41cb1386768fc75c9fca7caa6bb389dbe61260eb',
