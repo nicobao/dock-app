@@ -79,6 +79,15 @@ export async function credentialHandler(data) {
     return false;
   }
 }
+export function onPresentationScanned(url) {
+  if (isDeepLinkType(url, 'dockwallet://proof-request?url=')) {
+    navigate(Routes.CREDENTIALS_SHARE_AS_PRESENTATION, {
+      deepLinkUrl: url,
+    });
+    return true;
+  }
+  return false;
+}
 export function onAuthQRScanned(data) {
   const isAuthLink = isDidAuthUrl(data);
   if (isAuthLink) {

@@ -8,6 +8,7 @@ import {
   onAuthQRScanned,
   qrCodeHandler,
   isDeepLinkType,
+  onPresentationScanned,
 } from './qr-code';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
@@ -252,7 +253,24 @@ describe('qr-code', () => {
 
       expect(credentialServiceRPC.signCredential).toBeCalled();
     });
-
+    it('is Presentation QRCode scanned', () => {
+      const isValid1 = onPresentationScanned(
+        'dockwallet://proof-request?ul=https://auth.dock.io/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',
+      );
+      expect(isValid1).toBeFalsy();
+      expect(navigate).not.toBeCalled();
+      const res = onPresentationScanned(
+        'dockwallet://proof-request?url=https://auth.dock.io/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',
+      );
+      expect(navigate).toBeCalledWith(
+        'credential/shareCredentialAsPresentation',
+        {
+          deepLinkUrl:
+            'dockwallet://proof-request?url=https://auth.dock.io/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',
+        },
+      );
+      expect(res).toBeTruthy();
+    });
     it('is Auth QRCode scanned', () => {
       const res = onAuthQRScanned(
         'dockwallet://didauth?url=https://auth.dock.io/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',

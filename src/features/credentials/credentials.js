@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
 import {getVCData} from '@docknetwork/prettyvc';
 import {pickJSONFile} from '../../core/storage-utils';
-import {showToast} from 'src/core/toast';
+import {showToast, withErrorToast} from 'src/core/toast';
 import {translate} from 'src/locales';
 import assert from 'assert';
 import {credentialServiceRPC} from '@docknetwork/wallet-sdk-core/lib/services/credential';
@@ -86,7 +86,29 @@ export async function processCredential(credential) {
     formattedData,
   };
 }
+const validateCredential = credential => {
+  assert(
+    typeof credential !== 'undefined',
+    translate('credentials.invalid_credential'),
+  );
+  assert(
+    typeof credential?.id === 'string',
+    translate('credentials.credential_no_id'),
+  );
+  assert(
+    credential.hasOwnProperty('@context') === true,
+    translate('credentials.credential_no_context'),
+  );
 
+  assert(
+    credential.type?.includes('VerifiableCredential'),
+    translate('credentials.credential_no_type'),
+  );
+  assert(
+    credential?.issuer?.hasOwnProperty('id') === true,
+    translate('credentials.credential_no_issuer'),
+  );
+};
 export function useCredentials({onPickFile = pickJSONFile} = {}) {
   const [items, setItems] = useState([]);
 
@@ -115,7 +137,7 @@ export function useCredentials({onPickFile = pickJSONFile} = {}) {
     if (!jsonData) {
       return;
     }
-
+    validateCredential(jsonData);
     try {
       if (doesCredentialExist(items, jsonData)) {
         showToast({
@@ -141,7 +163,7 @@ export function useCredentials({onPickFile = pickJSONFile} = {}) {
   return {
     credentials: items,
     handleRemove,
-    onAdd,
+    onAdd: withErrorToast(onAdd),
   };
 }
 export function getParamsFromUrl(url, param) {
