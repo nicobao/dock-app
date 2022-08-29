@@ -96,10 +96,6 @@ describe('qr-code', () => {
         .spyOn(utilCryptoService, 'isAddressValid')
         .mockReturnValueOnce(false);
 
-      // navigationRef.current = {
-      //   navigate: jest.fn(),
-      // };
-
       const result = await addressHandler('some-address');
 
       expect(result).toBeFalsy();
