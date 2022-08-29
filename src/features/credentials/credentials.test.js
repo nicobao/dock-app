@@ -105,8 +105,27 @@ describe('Credentials helpers', () => {
     });
   });
 
+  it('getDIDAddress from issuer object', () => {
+    expect(getDIDAddress()).toBe(null);
+    expect(
+      getDIDAddress({
+        id: 'did:dock:5CNyqnHYmrbSE9nmQnpyhdZHi1TavExi3kFWbfrRh1WxQw6A',
+      }),
+    ).toBe('5CNyqnHYmrbSE9nmQnpyhdZHi1TavExi3kFWbfrRh1WxQw6A');
+    expect(
+      getDIDAddress({
+        id: 'did:other:5CNyqnHYmrbSE9nmQnpyhdZHi1TavExi3kFWbfrRh1WxQw6A',
+      }),
+    ).toBe('5CNyqnHYmrbSE9nmQnpyhdZHi1TavExi3kFWbfrRh1WxQw6A');
+    expect(
+      getDIDAddress({
+        id: '5CNyqnHYmrbSE9nmQnpyhdZHi1TavExi3kFWbfrRh1WxQw6A',
+      }),
+    ).toBe('5CNyqnHYmrbSE9nmQnpyhdZHi1TavExi3kFWbfrRh1WxQw6A');
+  });
+
   it('getDIDAddress', () => {
-    expect(() => getDIDAddress(null)).toThrowError();
+    expect(getDIDAddress()).toBe(null);
     expect(
       getDIDAddress(
         'did:dock:5CNyqnHYmrbSE9nmQnpyhdZHi1TavExi3kFWbfrRh1WxQw6A',

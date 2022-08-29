@@ -67,7 +67,7 @@ function EmptyCredentials(props) {
   );
 }
 
-const CredentialListItem = withErrorBoundary(
+export const CredentialListItem = withErrorBoundary(
   ({credential, formattedData, onRemove}) => {
     const {title = translate('credentials.default_title')} = formattedData;
     return (
@@ -154,11 +154,28 @@ const CredentialListItem = withErrorBoundary(
                   }}
                 />
               </View>
-            ) : (
+            ) : getDIDAddress(credential.issuer) ? (
               <PolkadotIcon
-                address={getDIDAddress(credential.issuer.id)}
+                address={getDIDAddress(credential.issuer)}
                 size={32}
               />
+            ) : (
+              <View
+                style={{
+                  width: 40,
+                  height: 40,
+                }}>
+                <Image
+                  borderRadius={8}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    resizeMode: 'contain',
+                  }}
+                  alt={title}
+                  source={require('../../assets/circle.png')}
+                />
+              </View>
             )}
           </NBox>
         </NBox>
