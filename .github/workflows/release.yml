@@ -1,10 +1,11 @@
 name: Code check
-on:
-  workflow_dispatch:
-  pull_request:
-    branches:
-      - chore/tag-releases
-    types: [closed]
+on: [push]
+# on:
+  # workflow_dispatch:
+  # pull_request:
+  #   branches:
+  #     - chore/tag-releases
+  #   types: [closed]
 jobs:
   lint:
     runs-on: ubuntu-latest
