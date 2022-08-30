@@ -56,6 +56,7 @@ export function useCredentialPresentation(deepLinkUrl) {
         body: JSON.stringify(presentation),
       });
       const response = await req.json();
+      console.log(parsedUrl, JSON.stringify(presentation), response);
       if (response.error) {
         throw new Error(response.error);
       } else {

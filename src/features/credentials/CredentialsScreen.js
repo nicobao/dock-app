@@ -68,7 +68,7 @@ export function EmptyCredentials(props) {
 }
 
 export const CredentialListItem = withErrorBoundary(
-  ({credential, formattedData, onRemove}) => {
+  ({credential, formattedData, credentialActions = <NBox />}) => {
     const {title = translate('credentials.default_title')} = formattedData;
     return (
       <NBox
@@ -105,23 +105,7 @@ export const CredentialListItem = withErrorBoundary(
             {renderObjectAttributes(formattedData)}
           </Stack>
           <NBox flex={1} alignItems="flex-end">
-            <Menu
-              trigger={triggerProps => {
-                return (
-                  <Pressable
-                    p={2}
-                    {...triggerProps}
-                    _pressed={{
-                      opacity: Theme.touchOpacity,
-                    }}>
-                    <DotsVerticalIcon />
-                  </Pressable>
-                );
-              }}>
-              <Menu.Item onPress={() => onRemove(credential)}>
-                {translate('account_list.delete_account')}
-              </Menu.Item>
-            </Menu>
+            {credentialActions}
           </NBox>
         </Stack>
 
@@ -207,14 +191,35 @@ export function CredentialsScreen({credentials, onRemove, onAdd}) {
       </Header>
       <Content>
         {credentials.length ? (
-          credentials.map(item => (
-            <CredentialListItem
-              key={item.id}
-              credential={item.content}
-              formattedData={item.formattedData}
-              onRemove={() => onRemove(item)}
-            />
-          ))
+          credentials.map(item => {
+            const credentialActions = (
+              <Menu
+                trigger={triggerProps => {
+                  return (
+                    <Pressable
+                      p={2}
+                      {...triggerProps}
+                      _pressed={{
+                        opacity: Theme.touchOpacity,
+                      }}>
+                      <DotsVerticalIcon />
+                    </Pressable>
+                  );
+                }}>
+                <Menu.Item onPress={() => onRemove(item)}>
+                  {translate('account_list.delete_account')}
+                </Menu.Item>
+              </Menu>
+            );
+            return (
+              <CredentialListItem
+                key={item.id}
+                credential={item.content}
+                formattedData={item.formattedData}
+                credentialActions={credentialActions}
+              />
+            );
+          })
         ) : (
           <EmptyCredentials mt={'50%'} />
         )}

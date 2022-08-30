@@ -22,7 +22,6 @@ export function SelectCredentialsComponent({
             {...addTestId(`credentials_${index}`)}
             key={item.id}
             rawCredential={item}
-            formattedData={item.formattedData}
             checked={selectedCredentials[item.id]}
             onSelect={isSelected => {
               setSelectedCredentials(prev => {
