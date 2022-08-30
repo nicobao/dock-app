@@ -70,6 +70,7 @@ export function EmptyCredentials(props) {
 export const CredentialListItem = withErrorBoundary(
   ({credential, formattedData, credentialActions = <NBox />}) => {
     const {title = translate('credentials.default_title')} = formattedData;
+
     return (
       <NBox
         bgColor={Theme.colors.credentialCardBg}
@@ -115,7 +116,7 @@ export const CredentialListItem = withErrorBoundary(
               fontSize={'11px'}
               fontWeight={500}
               fontFamily={Theme.fontFamily.montserrat}>
-              {formatDate(credential.issuanceDate)}
+              {formatDate(formattedData.issuanceDate)}
             </Text>
           </NBox>
           <NBox flex={1} alignItems={'flex-end'}>

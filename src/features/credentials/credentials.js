@@ -71,18 +71,17 @@ export async function processCredential(credential) {
     'credential.content.credentialSubject is required',
   );
 
-  if (credential.content.issuanceDate) {
-    const issuanceDate = new Date(credential.content.issuanceDate);
-    const userTimezoneOffset = issuanceDate.getTimezoneOffset() * 60000;
-    credential.content.issuanceDate = new Date(
-      issuanceDate.getTime() + userTimezoneOffset,
-    );
-  }
-
   const formattedData = await getVCData(credential.content, {
     generateImages: false,
     generateQRImage: false,
   });
+  if (formattedData.issuanceDate) {
+    const issuanceDate = new Date(formattedData.issuanceDate);
+    const userTimezoneOffset = issuanceDate.getTimezoneOffset() * 60000;
+    formattedData.issuanceDate = new Date(
+      issuanceDate.getTime() + userTimezoneOffset,
+    );
+  }
 
   return {
     ...credential,
