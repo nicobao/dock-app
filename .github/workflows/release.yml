@@ -7,7 +7,7 @@ on: [push]
   #     - chore/tag-releases
   #   types: [closed]
 jobs:
-  lint:
+  create-tag:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -33,6 +33,7 @@ jobs:
       #   run: |
       #     yarn test
 
-      - name: Create tag
-        run: |
-          git tag -a ${{ github.event.head_commit.message }} -m "${{ github.event.head_commit.message }}"
+      - uses: rickstaa/action-create-tag@v1
+        with:
+          tag: ${{ github.event.head_commit.message }}
+          message: ${{ github.event.head_commit.message }}
