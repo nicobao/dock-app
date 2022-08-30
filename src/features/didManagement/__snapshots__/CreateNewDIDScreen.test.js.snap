@@ -30,7 +30,7 @@ exports[`CreateNewDIDScreen should render correctly when form is invalid 1`] = `
           >
             <BackButton
               accessibilityLabel="CreateNewDIDScreenGoBack"
-              onPress={[Function]}
+              onPress={[MockFunction]}
               testID="CreateNewDIDScreenGoBack"
             />
           </Memo(ForwardRef(Box))>
@@ -193,7 +193,7 @@ exports[`CreateNewDIDScreen should render correctly when form is valid 1`] = `
           >
             <BackButton
               accessibilityLabel="CreateNewDIDScreenGoBack"
-              onPress={[Function]}
+              onPress={[MockFunction]}
               testID="CreateNewDIDScreenGoBack"
             />
           </Memo(ForwardRef(Box))>
@@ -356,7 +356,7 @@ exports[`CreateNewDIDScreen should render correctly with modal 1`] = `
           >
             <BackButton
               accessibilityLabel="CreateNewDIDScreenGoBack"
-              onPress={[Function]}
+              onPress={[MockFunction]}
               testID="CreateNewDIDScreenGoBack"
             />
           </Memo(ForwardRef(Box))>

@@ -299,11 +299,13 @@
     "existing_credential": "This credential already exists in the wallet",
     "empty_items": "You’ll see credentials here once you accept them",
     "default_title": "Untitled Credential",
+    "select_what_to_share": "Select what data to share",
+    "no_key_doc": "No KeyPair Document found",
+    "credential_shared": "Credentials Submitted successfully",
     "credential_no_id": "Credential has no ID",
     "credential_no_context": "Credential has no context",
     "credential_no_type": "Credential has an invalid type",
     "credential_no_issuer": "Credential has no Issuer"
-
   },
   "qr_scanner": {
     "nodids": "You have no Web3 IDs!",

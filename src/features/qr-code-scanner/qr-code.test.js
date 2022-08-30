@@ -7,8 +7,10 @@ import {
   isDidAuthUrl,
   onAuthQRScanned,
   qrCodeHandler,
+  isDeepLinkType,
+  onPresentationScanned,
 } from './qr-code';
-import {navigationRef} from '../../core/navigation';
+import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
 import testCredentialData from '@docknetwork/wallet-sdk-credentials/fixtures/test-credential.json';
@@ -33,6 +35,9 @@ const keyDoc = {
 };
 
 describe('qr-code', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
   it('executeHandlers', async () => {
     expect(await executeHandlers('test', [])).toBeFalsy();
     expect(await executeHandlers('test', [() => true])).toBeTruthy();
@@ -91,28 +96,20 @@ describe('qr-code', () => {
         .spyOn(utilCryptoService, 'isAddressValid')
         .mockReturnValueOnce(false);
 
-      navigationRef.current = {
-        navigate: jest.fn(),
-      };
-
       const result = await addressHandler('some-address');
 
       expect(result).toBeFalsy();
-      expect(navigationRef.current.navigate).not.toBeCalled();
+      expect(navigate).not.toBeCalled();
     });
 
     it('expect to navigate to send tokens route', async () => {
       jest.spyOn(utilCryptoService, 'isAddressValid').mockReturnValueOnce(true);
 
-      navigationRef.current = {
-        navigate: jest.fn(),
-      };
-
       const address = 'some-address';
       const result = await addressHandler(address);
 
       expect(result).toBeTruthy();
-      expect(navigationRef.current.navigate).toBeCalledWith(Routes.TOKEN_SEND, {
+      expect(navigate).toBeCalledWith(Routes.TOKEN_SEND, {
         address,
       });
     });
@@ -126,10 +123,6 @@ describe('qr-code', () => {
     });
 
     it('expect to ignore invalid data', async () => {
-      navigationRef.current = {
-        navigate: jest.fn(),
-      };
-
       const toastMock = {
         show: jest.fn(),
       };
@@ -144,15 +137,11 @@ describe('qr-code', () => {
       const result = await credentialHandler('http://some-url');
 
       expect(result).toBeFalsy();
-      expect(navigationRef.current.navigate).not.toBeCalled();
+      expect(navigate).not.toBeCalled();
       expect(toastMock.show).toBeCalled();
     });
 
     it('expect to add credential from url', async () => {
-      navigationRef.current = {
-        navigate: jest.fn(),
-      };
-
       const credentialData = {
         id: 'test',
         content: 'some-data',
@@ -173,17 +162,10 @@ describe('qr-code', () => {
       const result = await credentialHandler('http://some-url');
 
       expect(result).toBeTruthy();
-      expect(navigationRef.current.navigate).toBeCalledWith(
-        Routes.APP_CREDENTIALS,
-        undefined,
-      );
+      expect(navigate).toBeCalledWith(Routes.APP_CREDENTIALS);
     });
 
     it('expect to handle json data', async () => {
-      navigationRef.current = {
-        navigate: jest.fn(),
-      };
-
       const credentialData = {
         id: Date.now(),
         content: 'some-data',
@@ -206,10 +188,7 @@ describe('qr-code', () => {
       );
 
       expect(result).toBeTruthy();
-      expect(navigationRef.current.navigate).toBeCalledWith(
-        Routes.APP_CREDENTIALS,
-        undefined,
-      );
+      expect(navigate).toBeCalledWith(Routes.APP_CREDENTIALS);
     });
 
     it('expect to not allow duplicated credential', async () => {
@@ -240,10 +219,6 @@ describe('qr-code', () => {
     });
 
     it('expect to handle malformed json', async () => {
-      navigationRef.current = {
-        navigate: jest.fn(),
-      };
-
       const toastMock = {
         show: jest.fn(),
       };
@@ -274,7 +249,24 @@ describe('qr-code', () => {
 
       expect(credentialServiceRPC.signCredential).toBeCalled();
     });
-
+    it('is Presentation QRCode scanned', () => {
+      const isValid1 = onPresentationScanned(
+        'allet://proof-?ul=https://auth.dock.io/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',
+      );
+      expect(isValid1).toBeFalsy();
+      expect(navigate).not.toBeCalled();
+      const res = onPresentationScanned(
+        'dockwallet://proof-request?url=https://auth.dock.io/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',
+      );
+      expect(navigate).toBeCalledWith(
+        'credential/shareCredentialAsPresentation',
+        {
+          deepLinkUrl:
+            'dockwallet://proof-request?url=https://auth.dock.io/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',
+        },
+      );
+      expect(res).toBeTruthy();
+    });
     it('is Auth QRCode scanned', () => {
       const res = onAuthQRScanned(
         'dockwallet://didauth?url=https://auth.dock.io/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',
@@ -286,6 +278,18 @@ describe('qr-code', () => {
       expect(isValid1).toBeFalsy();
     });
 
+    it('is presentation URL', () => {
+      const isValid = isDeepLinkType(
+        'dockwallet://proof-request?url=https://auth.dock.io/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',
+        'dockwallet://proof-request?url=',
+      );
+      expect(isValid).toBeTruthy();
+      const isValid1 = isDeepLinkType(
+        'dockwallet://proof-equest?url=https://auth.dock.io/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',
+        'dockwallet://proof-request?url=',
+      );
+      expect(isValid1).toBeFalsy();
+    });
     it('Is did auth URL', () => {
       const isValid = isDidAuthUrl(
         'dockwallet://didauth?url=https://auth.dock.io/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',

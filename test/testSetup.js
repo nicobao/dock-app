@@ -6,6 +6,21 @@ import mockAsyncStorage from '../node_modules/@react-native-async-storage/async-
 import mockRNPermissions from '../node_modules/react-native-permissions/mock';
 import '../src/core/setup-env';
 import {DebugConstants} from '../src/features/constants';
+import {} from '../src/core/navigation';
+jest.mock('../src/core/navigation', () => {
+  const navigate = jest.fn();
+  const navigationRef = {
+    current: {
+      navigate,
+    },
+  };
+  const navigationMocks = {
+    navigate,
+    navigateBack: jest.fn(),
+    navigationRef,
+  };
+  return navigationMocks;
+});
 
 jest.mock('@docknetwork/wallet-sdk-core/lib/core/realm', () => {
   const realmFunctions = {
@@ -400,7 +415,14 @@ jest.mock('@docknetwork/wallet-sdk-react-native/lib', () => {
   const originalModule = jest.requireActual(
     '@docknetwork/wallet-sdk-react-native/lib',
   );
-
+  const usePresentationMockFunctions = {
+    presentCredentials: jest.fn(params => {
+      if (params.challenge == 2) {
+        return Promise.reject(Error('Incorrect challenge'));
+      }
+      return Promise.resolve();
+    }),
+  };
   const useDIDManagementMockFunctions = {
     importDID: jest.fn(({password}) => {
       if (password === 'test') {
@@ -491,6 +513,7 @@ jest.mock('@docknetwork/wallet-sdk-react-native/lib', () => {
     WalletSDKProvider: originalModule.WalletSDKProvider,
     useDIDManagement: () => useDIDManagementMockFunctions,
     useAccounts: () => useAccountsMockFunctions,
+    usePresentation: () => usePresentationMockFunctions,
     useWallet: () => useWalletMockFunctions,
   };
 });

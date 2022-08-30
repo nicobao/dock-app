@@ -167,6 +167,20 @@ const variantsMap = {
     fontWeight: 500,
     fontSize: 14,
   },
+  credentialShareTitle: {
+    fontFamily: Theme.fontFamily.default,
+    fontWeight: 700,
+    fontSize: 16,
+    lineHeight: 24,
+    color: Theme.colors.textHighlighted,
+  },
+  credentialShareSubjects: {
+    fontFamily: Theme.fontFamily.default,
+    fontWeight: 500,
+    fontSize: 12,
+    lineHeight: 16,
+    color: Theme.colors.textHighlighted,
+  },
 };
 
 export const Typography: ComponentType<TypographyProps> = styled(Text)`

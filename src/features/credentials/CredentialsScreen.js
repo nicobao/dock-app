@@ -25,13 +25,13 @@ function shouldRenderAttr(attr) {
   return attr.property !== 'id' && attr.property !== 'title';
 }
 
-function renderObjectAttributes({attributes}) {
+export function renderObjectAttributes({attributes}) {
   return (
     <>
-      {attributes.map(attr => {
+      {attributes.map((attr, index) => {
         return (
           shouldRenderAttr(attr) && (
-            <Stack mb={1}>
+            <Stack mb={1} key={`${index}_${attr.value}`}>
               <Text
                 textTransform="capitalize"
                 fontSize={'12px'}
@@ -48,7 +48,7 @@ function renderObjectAttributes({attributes}) {
   );
 }
 
-function EmptyCredentials(props) {
+export function EmptyCredentials(props) {
   return (
     <Center {...props}>
       <Box borderRadius={72} width={72} height={72} backgroundColor={'#27272A'}>
@@ -68,8 +68,9 @@ function EmptyCredentials(props) {
 }
 
 export const CredentialListItem = withErrorBoundary(
-  ({credential, formattedData, onRemove}) => {
+  ({credential, formattedData, credentialActions = <NBox />}) => {
     const {title = translate('credentials.default_title')} = formattedData;
+
     return (
       <NBox
         bgColor={Theme.colors.credentialCardBg}
@@ -105,23 +106,7 @@ export const CredentialListItem = withErrorBoundary(
             {renderObjectAttributes(formattedData)}
           </Stack>
           <NBox flex={1} alignItems="flex-end">
-            <Menu
-              trigger={triggerProps => {
-                return (
-                  <Pressable
-                    p={2}
-                    {...triggerProps}
-                    _pressed={{
-                      opacity: Theme.touchOpacity,
-                    }}>
-                    <DotsVerticalIcon />
-                  </Pressable>
-                );
-              }}>
-              <Menu.Item onPress={() => onRemove(credential)}>
-                {translate('account_list.delete_account')}
-              </Menu.Item>
-            </Menu>
+            {credentialActions}
           </NBox>
         </Stack>
 
@@ -131,7 +116,7 @@ export const CredentialListItem = withErrorBoundary(
               fontSize={'11px'}
               fontWeight={500}
               fontFamily={Theme.fontFamily.montserrat}>
-              {formatDate(credential.issuanceDate)}
+              {formatDate(formattedData.issuanceDate)}
             </Text>
           </NBox>
           <NBox flex={1} alignItems={'flex-end'}>
@@ -207,14 +192,35 @@ export function CredentialsScreen({credentials, onRemove, onAdd}) {
       </Header>
       <Content>
         {credentials.length ? (
-          credentials.map(item => (
-            <CredentialListItem
-              key={item.id}
-              credential={item.content}
-              formattedData={item.formattedData}
-              onRemove={() => onRemove(item)}
-            />
-          ))
+          credentials.map(item => {
+            const credentialActions = (
+              <Menu
+                trigger={triggerProps => {
+                  return (
+                    <Pressable
+                      p={2}
+                      {...triggerProps}
+                      _pressed={{
+                        opacity: Theme.touchOpacity,
+                      }}>
+                      <DotsVerticalIcon />
+                    </Pressable>
+                  );
+                }}>
+                <Menu.Item onPress={() => onRemove(item)}>
+                  {translate('account_list.delete_account')}
+                </Menu.Item>
+              </Menu>
+            );
+            return (
+              <CredentialListItem
+                key={item.id}
+                credential={item.content}
+                formattedData={item.formattedData}
+                credentialActions={credentialActions}
+              />
+            );
+          })
         ) : (
           <EmptyCredentials mt={'50%'} />
         )}
