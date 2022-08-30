@@ -53,6 +53,17 @@ describe('DID auth handlers', () => {
     expect(result.current.selectedDID).toBe('did:key');
   });
 
+  it('expect to update profile data', async () => {
+    const {result} = await renderHook(() => useDIDAuthHandlers());
+
+    await act(() => {
+      result.current.handleChange('name', 'test');
+    });
+
+    expect(result.current.profileData.empty).toBeUndefined();
+    expect(result.current.profileData.name).toBe('test');
+  });
+
   it('expect to fetch did auth metadata documents', async () => {
     const {wallet} = useWallet();
     const profileData = {
