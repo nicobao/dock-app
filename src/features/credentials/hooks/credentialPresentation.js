@@ -53,17 +53,19 @@ export function useCredentialPresentation(deepLinkUrl) {
         headers: {
           'content-type': 'application/json',
         },
-        body: JSON.stringify({
-          vp: presentation,
-        }),
+        body: JSON.stringify(presentation),
       });
-      await req.json();
-      showToast({
-        message: translate('credentials.credential_shared'),
-        type: 'success',
-      });
-      navigate(Routes.ACCOUNTS);
-      return presentation;
+      const response = await req.json();
+      if (response.error) {
+        throw new Error(response.error);
+      } else {
+        showToast({
+          message: translate('credentials.credential_shared'),
+          type: 'success',
+        });
+        navigate(Routes.ACCOUNTS);
+        return;
+      }
     }
     throw new Error(translate('credentials.no_key_doc'));
   }, [
