@@ -9,6 +9,7 @@ import {
   qrCodeHandler,
   isDeepLinkType,
   onPresentationScanned,
+  qrCodeHandlers,
 } from './qr-code';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
@@ -323,6 +324,10 @@ describe('qr-code', () => {
           body: expect.any(String),
         },
       );
+    });
+    it('Include presentation QR handlers', () => {
+      expect(qrCodeHandlers.length).toBe(4);
+      expect(qrCodeHandlers[3]).toBe(onPresentationScanned);
     });
   });
 });
