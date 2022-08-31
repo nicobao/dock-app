@@ -150,6 +150,7 @@ export const qrCodeHandlers = [
   onAuthQRScanned,
   addressHandler,
   credentialHandler,
+  onPresentationScanned,
 ];
 
 export async function executeHandlers(data, handlers) {
