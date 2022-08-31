@@ -42,9 +42,10 @@ jobs:
           aws-access-key-id: ${{ secrets.S3_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.S3_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.S3_REGION }}
-      - name: List s3 files
+
+      - name: Copy APK from s3 bucket
         run: |
-          aws s3 cp s3://${{ secrets.S3_APP_BUCKET }}/${{ secrets.S3_ANDROID_APK_DIR }}/v0.2.5_b238/app-release.apk ./
+          aws s3 cp s3://${{ secrets.S3_APP_BUCKET }}/${{ secrets.S3_ANDROID_APK_DIR }}/${{ github.event.head_commit.message }}/app-release.apk ./
           ls ./
 
       - name: Upload binaries to release
