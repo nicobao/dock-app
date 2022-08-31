@@ -44,7 +44,7 @@ jobs:
           aws-region: ${{ secrets.S3_REGION }}
       - name: List s3 files
         run: |
-          aws s3 list-buckets
+          aws s3 ls
       #  S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY }}
       #     S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
       #     S3_APP_BUCKET: ${{ secrets.S3_APP_BUCKET }}
