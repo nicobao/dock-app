@@ -32,8 +32,25 @@ jobs:
       # - name: Unit tests
       #   run: |
       #     yarn test
-
-      - uses: rickstaa/action-create-tag@v1
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          tag: ${{ github.event.head_commit.message }}
-          message: ${{ github.event.head_commit.message }}
+          aws-access-key-id: ${{ secrets.S3_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.S3_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.S3_REGION }}
+      - name: List s3 files
+        run: |
+          aws s3 list-buckets
+      #  S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY }}
+      #     S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
+      #     S3_APP_BUCKET: ${{ secrets.S3_APP_BUCKET }}
+      #     S3_REGION: ${{ secrets.S3_REGION }}
+      #     S3_ANDROID_APK_DIR: ${{ secrets.S3_ANDROID_APK_DIR }}
+      #     S3_ACL: ${{ secrets.S3_ACL }}
+
+      
+      # - uses: rickstaa/action-create-tag@v1
+      #   with:
+      #     tag: ${{ github.event.head_commit.message }}
+      #     message: ${{ github.event.head_commit.message }}
+      
