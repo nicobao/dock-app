@@ -46,14 +46,16 @@ jobs:
         run: |
           aws s3 cp s3://${{ secrets.S3_APP_BUCKET }}/${{ secrets.S3_ANDROID_APK_DIR }}/v0.2.5_b238/app-release.apk ./
           ls ./
-      #  S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY }}
-      #     S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
-      #     S3_APP_BUCKET: ${{ secrets.S3_APP_BUCKET }}
-      #     S3_REGION: ${{ secrets.S3_REGION }}
-      #     S3_ANDROID_APK_DIR: ${{ secrets.S3_ANDROID_APK_DIR }}
-      #     S3_ACL: ${{ secrets.S3_ACL }}
 
-      
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GIT_ACCESS_TOKEN }}
+          file: ./app-release.apk
+          asset_name: dock-wallet.apk
+          tag: ${{ github.event.head_commit.message }}
+          overwrite: true
+          body: ${{ github.event.head_commit.message }}
       # - uses: rickstaa/action-create-tag@v1
       #   with:
       #     tag: ${{ github.event.head_commit.message }}
