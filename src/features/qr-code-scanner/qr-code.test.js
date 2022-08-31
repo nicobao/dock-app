@@ -326,8 +326,7 @@ describe('qr-code', () => {
       );
     });
     it('Include presentation QR handlers', () => {
-      expect(qrCodeHandlers.length).toBe(4);
-      expect(qrCodeHandlers[3]).toBe(onPresentationScanned);
+      expect(qrCodeHandlers.includes(onPresentationScanned)).toBeTruthy();
     });
   });
 });
