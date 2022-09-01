@@ -15,23 +15,24 @@ jobs:
         with:
           persist-credentials: false
 
-      # - name: Setup node
-      #   uses: actions/setup-node@v2
-      #   with:
-      #     node-version: '16.x'
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
 
-      # - name: Install and lint
-      #   run: |
-      #     git config --global url."https://".insteadOf git://
-      #     yarn install
-      #     yarn lint
-      #     git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
-      #     yarn --cwd ../wallet-sdk install
-      #     yarn sync-sdk
+      - name: Install and lint
+        run: |
+          git config --global url."https://".insteadOf git://
+          yarn install
+          yarn lint
+          git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
+          yarn --cwd ../wallet-sdk install
+          yarn sync-sdk
 
-      # - name: Unit tests
-      #   run: |
-      #     yarn test
+      - name: Unit tests
+        run: |
+          yarn test
+
       - name: Install AWS
         id: install-aws-cli
         uses: unfor19/install-aws-cli-action@master
@@ -57,8 +58,3 @@ jobs:
           tag: ${{ github.event.head_commit.message }}
           overwrite: true
           body: ${{ github.event.head_commit.message }}
-      # - uses: rickstaa/action-create-tag@v1
-      #   with:
-      #     tag: ${{ github.event.head_commit.message }}
-      #     message: ${{ github.event.head_commit.message }}
-      
