@@ -54,10 +54,13 @@ export function getCredentialTimestamp(credential) {
 //   remove: params => WalletRpc.remove(params),
 // };
 
-export function getDIDAddress(did) {
-  assert(!!did, 'did is required');
-
-  return did.replace(/did:\w+:/gi, '');
+export function getDIDAddress(issuer) {
+  if (typeof issuer === 'string') {
+    return issuer.replace(/did:\w+:/gi, '');
+  } else if (typeof issuer?.id === 'string') {
+    return issuer.id.replace(/did:\w+:/gi, '');
+  }
+  return null;
 }
 
 export async function processCredential(credential) {
@@ -68,18 +71,17 @@ export async function processCredential(credential) {
     'credential.content.credentialSubject is required',
   );
 
-  if (credential.content.issuanceDate) {
-    const issuanceDate = new Date(credential.content.issuanceDate);
-    const userTimezoneOffset = issuanceDate.getTimezoneOffset() * 60000;
-    credential.content.issuanceDate = new Date(
-      issuanceDate.getTime() + userTimezoneOffset,
-    );
-  }
-
   const formattedData = await getVCData(credential.content, {
     generateImages: false,
     generateQRImage: false,
   });
+  if (formattedData.issuanceDate) {
+    const issuanceDate = new Date(formattedData.issuanceDate);
+    const userTimezoneOffset = issuanceDate.getTimezoneOffset() * 60000;
+    formattedData.issuanceDate = new Date(
+      issuanceDate.getTime() + userTimezoneOffset,
+    );
+  }
 
   return {
     ...credential,
@@ -105,7 +107,8 @@ const validateCredential = credential => {
     translate('credentials.credential_no_type'),
   );
   assert(
-    credential?.issuer?.hasOwnProperty('id') === true,
+    typeof credential?.issuer?.id === 'string' ||
+      typeof credential?.issuer === 'string',
     translate('credentials.credential_no_issuer'),
   );
 };

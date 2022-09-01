@@ -9,7 +9,9 @@ import {useWallet} from '@docknetwork/wallet-sdk-react-native/lib';
 export const DID_AUTH_METADATA_ID = 'did-auth-metadata';
 
 export function useDIDAuthHandlers() {
-  const [profileData, setProfileData] = useState({});
+  const [profileData, setProfileData] = useState({
+    empty: true,
+  });
   const [selectedDID, setSelectedDID] = useState();
   const {wallet} = useWallet({syncDocs: false});
 
@@ -25,6 +27,10 @@ export function useDIDAuthHandlers() {
   }, []);
 
   useEffect(() => {
+    if (!profileData.empty) {
+      return;
+    }
+
     wallet.getDocumentById(DID_AUTH_METADATA_ID).then(data => {
       setProfileData(data?.value || {});
     });
@@ -99,6 +105,7 @@ export function useDIDAuth() {
       authState,
       handleRetry,
       authenticateDID,
+      getSelectedDIDKeyDoc,
     };
-  }, [dids, authState, handleRetry, authenticateDID]);
+  }, [dids, authState, handleRetry, authenticateDID, getSelectedDIDKeyDoc]);
 }

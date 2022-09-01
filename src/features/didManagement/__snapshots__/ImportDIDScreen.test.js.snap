@@ -30,7 +30,7 @@ exports[`ImportDIDScreen should render correctly 1`] = `
           >
             <BackButton
               accessibilityLabel="GoBack"
-              onPress={[Function]}
+              onPress={[MockFunction]}
               testID="GoBack"
             />
           </Memo(ForwardRef(Box))>

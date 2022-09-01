@@ -30,7 +30,7 @@ exports[`EditDIDScreen should render correctly 1`] = `
           >
             <BackButton
               accessibilityLabel="EditDIDScreenGoBack"
-              onPress={[Function]}
+              onPress={[MockFunction]}
               testID="EditDIDScreenGoBack"
             />
           </Memo(ForwardRef(Box))>
@@ -122,7 +122,7 @@ exports[`EditDIDScreen should render correctly when button is not enable 1`] = `
           >
             <BackButton
               accessibilityLabel="EditDIDScreenGoBack"
-              onPress={[Function]}
+              onPress={[MockFunction]}
               testID="EditDIDScreenGoBack"
             />
           </Memo(ForwardRef(Box))>
