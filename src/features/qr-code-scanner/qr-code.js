@@ -8,6 +8,7 @@ import {getJsonOrError} from '../../core';
 import '../credentials/credentials';
 import {onScanAuthQRCode} from '../credentials/credentials';
 import {captureException} from '@sentry/react-native';
+import queryString from 'query-string';
 
 export async function addressHandler(data) {
   const isAddress = await utilCryptoService.isAddressValid(data);
@@ -78,6 +79,15 @@ export async function credentialHandler(data) {
     return false;
   }
 }
+export function onPresentationScanned(url) {
+  if (isDeepLinkType(url, 'dockwallet://proof-request?url=')) {
+    navigate(Routes.CREDENTIALS_SHARE_AS_PRESENTATION, {
+      deepLinkUrl: url,
+    });
+    return true;
+  }
+  return false;
+}
 export function onAuthQRScanned(data) {
   const isAuthLink = isDidAuthUrl(data);
   if (isAuthLink) {
@@ -140,6 +150,7 @@ export const qrCodeHandlers = [
   onAuthQRScanned,
   addressHandler,
   credentialHandler,
+  onPresentationScanned,
 ];
 
 export async function executeHandlers(data, handlers) {
@@ -168,6 +179,11 @@ export async function qrCodeHandler(data, handlers = qrCodeHandlers) {
 }
 
 export function isDidAuthUrl(url) {
-  const authLinkPrefix = 'dockwallet://didauth?url=';
-  return typeof url === 'string' && url.indexOf(authLinkPrefix) === 0;
+  return isDeepLinkType(url, 'dockwallet://didauth?url=');
+}
+export function isDeepLinkType(url, prefix) {
+  return typeof url === 'string' && url.indexOf(prefix) === 0;
+}
+export function getParamsFromUrl(url) {
+  return queryString.parse(url.substring(url.indexOf('?')));
 }
