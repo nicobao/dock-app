@@ -264,6 +264,23 @@ describe('Credentials helpers', () => {
         'Credential has an invalid type',
       );
     });
+    it('expect to throw exception if credential has UniversalWallet2020 as type', async () => {
+      const onPickInvalidFile = jest.fn().mockResolvedValue({
+        '@context': ['https://www.w3.org/2018/credentials/v1'],
+        id: 'https://creds.dock.io/8e02c35ae370b02f47d7faaf41cb1386768fc75c9fca7caa6bb389dbe61260eb',
+        type: ['UniversalWallet2020'],
+        issuer: {
+          id: 'did:dock:5CJaTP2eGCLf5ZNPUXYbWxUvJQMTseKfc4hi8WVBC1K8eW9N',
+        },
+      });
+      const {result} = await renderHook(() =>
+        useCredentials({onPickFile: onPickInvalidFile}),
+      );
+
+      await expect(result.current.onAdd()).rejects.toThrowError(
+        'Credential has an invalid type',
+      );
+    });
     it('expect to throw exception if credential only has no issuer', async () => {
       const onPickInvalidFile = jest.fn().mockResolvedValue({
         '@context': ['https://www.w3.org/2018/credentials/v1'],
