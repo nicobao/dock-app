@@ -107,6 +107,10 @@ const validateCredential = credential => {
     translate('credentials.credential_no_type'),
   );
   assert(
+    !credential.type?.includes('EncryptedWallet'),
+    translate('credentials.credential_no_type'),
+  );
+  assert(
     typeof credential?.issuer?.id === 'string' ||
       typeof credential?.issuer === 'string',
     translate('credentials.credential_no_issuer'),
