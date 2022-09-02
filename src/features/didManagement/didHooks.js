@@ -1,4 +1,4 @@
-import {useCallback, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {showToast, withErrorToast} from '../../core/toast';
 import {translate} from '../../locales';
 import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
@@ -239,4 +239,12 @@ export function useExportDIDHandlers() {
       formValid,
     };
   }, [form, handleChange, formValid]);
+}
+
+export function useSingleDID(dids, onSelectDID) {
+  useEffect(() => {
+    if (dids.length === 1) {
+      onSelectDID(dids[0].value);
+    }
+  }, [dids, onSelectDID]);
 }

@@ -300,7 +300,7 @@
     "empty_items": "You’ll see credentials here once you accept them",
     "default_title": "Untitled Credential",
     "select_what_to_share": "Select what data to share",
-    "select_presentation_holder": "Select Presentation holder",
+    "select_presentation_holder": "Select identity to present",
     "no_key_doc": "No KeyPair Document found",
     "credential_shared": "Credentials Submitted successfully",
     "credential_no_id": "Credential has no ID",

@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import {showToast, withErrorToast} from '../../../core/toast';
 import {usePresentation} from '@docknetwork/wallet-sdk-react-native/lib';
 import {useDIDAuth} from '../../didManagement/didAuthHooks';
@@ -103,11 +103,4 @@ export function useCredentialPresentation(deepLinkUrl) {
       isFormValid,
     };
   }, [isFormValid, onNext, onPresentCredentials, selectedCredentials, step]);
-}
-export function useSingleDID(dids, onSelectDID) {
-  useEffect(() => {
-    if (dids.length === 1) {
-      onSelectDID(dids[0].value);
-    }
-  }, [dids, onSelectDID]);
 }

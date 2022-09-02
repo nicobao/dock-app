@@ -14,8 +14,8 @@ import {useCredentials} from './credentials';
 import {
   SELECT_CREDENTIALS,
   useCredentialPresentation,
-  useSingleDID,
 } from './hooks/credentialPresentation';
+import {useSingleDID} from '../didManagement/didHooks';
 import {SelectCredentialsComponent} from './components/SelectCredentialsComponent';
 import {SelectDIDComponent} from './components/SelectDIDComponent';
 import {useDIDAuth} from '../didManagement/didAuthHooks';

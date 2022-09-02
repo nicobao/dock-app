@@ -1,9 +1,7 @@
 import {renderHook, act} from '@testing-library/react-hooks';
-import {
-  useCredentialPresentation,
-  useSingleDID,
-} from './credentialPresentation';
+import {useCredentialPresentation} from './credentialPresentation';
 import {usePresentation} from '@docknetwork/wallet-sdk-react-native/lib';
+import {useSingleDID} from '../../didManagement/didHooks';
 
 describe('Presentation hooks', () => {
   it('go to next step', () => {
