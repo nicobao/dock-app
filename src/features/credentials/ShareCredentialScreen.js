@@ -15,11 +15,11 @@ import {
   SELECT_CREDENTIALS,
   useCredentialPresentation,
 } from './hooks/credentialPresentation';
+import {useSingleDID} from '../didManagement/didHooks';
 import {SelectCredentialsComponent} from './components/SelectCredentialsComponent';
 import {SelectDIDComponent} from './components/SelectDIDComponent';
 import {useDIDAuth} from '../didManagement/didAuthHooks';
 export function ShareCredentialScreen({
-  onPresentCredentials,
   credentials,
   selectedCredentials,
   setSelectedCredentials,
@@ -51,11 +51,7 @@ export function ShareCredentialScreen({
           {...addTestId('PresentCredentialBtn')}
           full
           onPress={async () => {
-            if (step === SELECT_CREDENTIALS) {
-              onNext();
-            } else {
-              await onPresentCredentials();
-            }
+            await onNext(dids);
           }}
           size="sm">
           <Typography variant="credentialShareTitle" mb={2}>
@@ -74,7 +70,6 @@ export function ShareCredentialScreenContainer({route}) {
   const {
     selectedCredentials,
     setSelectedCredentials,
-    onPresentCredentials,
     onNext,
     step,
     onSelectDID,
@@ -82,12 +77,13 @@ export function ShareCredentialScreenContainer({route}) {
   } = useCredentialPresentation(deepLinkUrl);
   const {dids} = useDIDAuth();
 
+  useSingleDID(dids, onSelectDID);
+
   return (
     <ShareCredentialScreen
       selectedCredentials={selectedCredentials}
       setSelectedCredentials={setSelectedCredentials}
       credentials={credentials}
-      onPresentCredentials={onPresentCredentials}
       onNext={onNext}
       step={step}
       dids={dids}
