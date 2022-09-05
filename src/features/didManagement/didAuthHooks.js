@@ -93,7 +93,10 @@ export function useDIDAuth() {
     return didList.map(did => {
       return {
         value: did.id,
-        label: did.name,
+        label:
+          typeof did.name === 'string' && did.name.length > 0
+            ? did.name
+            : did.didDocument?.id,
         description: did.didDocument?.id,
       };
     });

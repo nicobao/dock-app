@@ -76,16 +76,29 @@ export function useCredentialPresentation(deepLinkUrl) {
     selectedDID,
   ]);
 
-  const onNext = useCallback(() => {
-    setStep(SELECT_DID);
-  }, []);
+  const onNext = useCallback(
+    async dids => {
+      if (
+        step === SELECT_CREDENTIALS &&
+        Array.isArray(dids) &&
+        dids.length === 1
+      ) {
+        await onPresentCredentials();
+      } else if (step === SELECT_CREDENTIALS) {
+        setStep(SELECT_DID);
+      } else if (step === SELECT_DID) {
+        await onPresentCredentials();
+      }
+    },
+    [onPresentCredentials, step],
+  );
   return useMemo(() => {
     return {
       selectedCredentials,
       setSelectedCredentials,
-      onPresentCredentials: withErrorToast(onPresentCredentials),
       step,
-      onNext: onNext,
+      onNext: withErrorToast(onNext),
+      onPresentCredentials: withErrorToast(onPresentCredentials),
       onSelectDID,
       isFormValid,
     };
