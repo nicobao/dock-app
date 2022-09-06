@@ -439,6 +439,7 @@ exports[`CreateNewDIDScreen should render correctly with modal 1`] = `
               DID Payment Account
             </Memo(ForwardRef(FormControlLabel))>
             <CustomSelectInput
+              emptyItemMessage="No Account exists"
               items={
                 Array [
                   Object {

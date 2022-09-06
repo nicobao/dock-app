@@ -8,12 +8,14 @@ import {
 import React, {useState} from 'react';
 import {TouchableWithoutFeedback} from 'react-native';
 import {Theme, Typography} from '../design-system';
+import {translate} from '../locales';
 
 export function CustomSelectInput({
   placeholder = '',
   items = [],
   renderItem,
   onPressItem,
+  emptyItemMessage = translate('didManagement.no_items_found'),
 }) {
   const [contentVisible, setContentVisible] = useState(false);
   const [selectedValue, setSelectedValue] = useState();
@@ -49,6 +51,12 @@ export function CustomSelectInput({
           setContentVisible(false);
         }}>
         <Actionsheet.Content>
+          {items.length === 0 ? (
+            <Typography variant="h2" mt={1}>
+              {emptyItemMessage}
+            </Typography>
+          ) : null}
+
           {items.map((item, index) => {
             return (
               <Actionsheet.Item
