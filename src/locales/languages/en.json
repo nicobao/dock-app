@@ -372,7 +372,7 @@
     "did_payment_address": "DID Payment Account",
     "invalid_did_file":"Invalid DID file provided.",
     "invalid_did_password":"Incorrect Password",
-    "duplicate_did":"That DID already exist in wallet",
+    "duplicate_did":"That DID already exists in wallet",
     "no_items_found": "No items found"
   }
 }
