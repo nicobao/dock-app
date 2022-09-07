@@ -291,6 +291,6 @@ describe('DID hooks', () => {
 
     await expect(
       result.current.onImportDID({encryptedJSONWallet, password}),
-    ).rejects.toThrowError('DID already exist in wallet');
+    ).rejects.toThrowError('DID already exists in wallet');
   });
 });
