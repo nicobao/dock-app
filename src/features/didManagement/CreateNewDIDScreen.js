@@ -140,6 +140,7 @@ export function CreateNewDIDScreen({
                 {translate('didManagement.did_payment_address')}
               </FormControl.Label>
               <CustomSelectInput
+                emptyItemMessage={translate('account_details.no_account_exist')}
                 onPressItem={item => {
                   handleChange('didPaymentAddress')(item.value);
                 }}
