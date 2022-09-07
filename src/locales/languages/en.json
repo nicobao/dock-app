@@ -196,7 +196,7 @@
     "account_removed": "Account Removed",
     "unable_to_remove_account": "Unable to remove the account",
     "buy": "Buy",
-    "no_account_exist": "No Account exists"
+    "no_account_exist": "No account exists"
   },
   "intro_transak": {
     "buy_dock_via_debit_card": "Buy Dock via debit card or bank transfers powered by Transak.",
@@ -372,7 +372,7 @@
     "did_payment_address": "DID Payment Account",
     "invalid_did_file":"Invalid DID file provided.",
     "invalid_did_password":"Incorrect Password",
-    "duplicate_did":"DID already exist in wallet",
+    "duplicate_did":"That DID already exist in wallet",
     "no_items_found": "No items found"
   }
 }

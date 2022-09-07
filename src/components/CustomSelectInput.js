@@ -51,11 +51,11 @@ export function CustomSelectInput({
           setContentVisible(false);
         }}>
         <Actionsheet.Content>
-          {items.length === 0 ? (
+          {items.length === 0 && (
             <Typography variant="h2" mt={1}>
               {emptyItemMessage}
             </Typography>
-          ) : null}
+          )}
 
           {items.map((item, index) => {
             return (
