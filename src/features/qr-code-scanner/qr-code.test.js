@@ -9,6 +9,7 @@ import {
   qrCodeHandler,
   isDeepLinkType,
   onPresentationScanned,
+  importAccountHandler,
   qrCodeHandlers,
 } from './qr-code';
 import {navigate} from '../../core/navigation';
@@ -327,6 +328,18 @@ describe('qr-code', () => {
     });
     it('Include presentation QR handlers', () => {
       expect(qrCodeHandlers.includes(onPresentationScanned)).toBeTruthy();
+    });
+  });
+  describe('importAccountHandler', () => {
+    it('Include import account QR handlers', () => {
+      expect(qrCodeHandlers.includes(importAccountHandler)).toBeTruthy();
+    });
+    it('is import QRCode scanned', async () => {
+      const isValid1 = await importAccountHandler('{"wallet":"","encoded":{}}');
+      expect(isValid1).toBeFalsy();
+
+      const res = await importAccountHandler('{"address":"","encoded":{}}');
+      expect(res).toBeTruthy();
     });
   });
 });
