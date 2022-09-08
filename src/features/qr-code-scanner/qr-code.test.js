@@ -335,7 +335,7 @@ describe('qr-code', () => {
       expect(qrCodeHandlers.includes(importAccountHandler)).toBeTruthy();
     });
     it('is import QRCode scanned', async () => {
-      const isValid1 = await importAccountHandler('{"addres":"","encoded":{}}');
+      const isValid1 = await importAccountHandler('{"wallet":"","encoded":{}}');
       expect(isValid1).toBeFalsy();
 
       const res = await importAccountHandler('{"address":"","encoded":{}}');
