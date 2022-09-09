@@ -152,6 +152,7 @@ export async function importAccountHandler(data) {
   const parsedData = stringToJSON(data);
 
   if (
+    parsedData &&
     parsedData.hasOwnProperty('encoded') &&
     parsedData.hasOwnProperty('address')
   ) {

@@ -39,7 +39,7 @@ describe('storage utils', () => {
 
   it('parse string to JSON', () => {
     const res = stringToJSON('dockwallet://proof-request?url=https%3A%2F%2Fap');
-    expect(res).toEqual({});
+    expect(res).toBe(null);
 
     const res2 = stringToJSON('{"type":"dockwallet"}');
 
