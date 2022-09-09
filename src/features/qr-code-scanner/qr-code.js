@@ -11,6 +11,7 @@ import {captureException} from '@sentry/react-native';
 import queryString from 'query-string';
 import store from '../../core/redux-store';
 import {createAccountOperations} from '../account-creation/create-account-slice';
+import {stringToJSON} from '../../core/storage-utils';
 
 export async function addressHandler(data) {
   const isAddress = await utilCryptoService.isAddressValid(data);
@@ -148,7 +149,7 @@ export async function authHandler(data, keyDoc, profile = {}) {
   }
 }
 export async function importAccountHandler(data) {
-  const parsedData = typeof data === 'string' ? JSON.parse(data) : data;
+  const parsedData = stringToJSON(data);
 
   if (
     parsedData.hasOwnProperty('encoded') &&

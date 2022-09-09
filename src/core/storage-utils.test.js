@@ -1,5 +1,5 @@
 import DocumentPicker from 'react-native-document-picker';
-import {pickDocuments} from './storage-utils';
+import {pickDocuments, stringToJSON} from './storage-utils';
 
 describe('storage utils', () => {
   it('expect to handle files', async () => {
@@ -35,5 +35,14 @@ describe('storage utils', () => {
     const err = await pickDocuments().catch(v => v);
 
     expect(err.code).toBe('OTHER_CODE');
+  });
+
+  it('parse string to JSON', () => {
+    const res = stringToJSON('dockwallet://proof-request?url=https%3A%2F%2Fap');
+    expect(res).toEqual({});
+
+    const res2 = stringToJSON('{"type":"dockwallet"}');
+
+    expect(res2).toHaveProperty('type', 'dockwallet');
   });
 });

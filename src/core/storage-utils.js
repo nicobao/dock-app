@@ -59,3 +59,11 @@ export async function pickJSONFile() {
     throw err;
   }
 }
+
+export function stringToJSON(data) {
+  try {
+    return typeof data === 'string' ? JSON.parse(data) : data;
+  } catch (e) {
+    return {};
+  }
+}
