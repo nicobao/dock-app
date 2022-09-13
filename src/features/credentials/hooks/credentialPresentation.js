@@ -8,11 +8,74 @@ import {navigate} from '../../../core/navigation';
 import {Routes} from '../../../core/routes';
 export const SELECT_CREDENTIALS = 0;
 export const SELECT_DID = 1;
-export function useCredentialPresentation(deepLinkUrl) {
+
+export const PresentationFlow = {
+  deepLink: 'deepLink',
+  qrCode: 'qrCode',
+  jsonFile: 'jsonFile',
+};
+
+async function handleDeepLinkPresentation({
+  parsedSelectedCredentials,
+  deepLinkUrl,
+  keyDoc,
+  presentCredentials,
+}) {
+  const {url, nonce} = getParamsFromUrl(deepLinkUrl);
+
+  const presentation = await presentCredentials({
+    credentials: parsedSelectedCredentials,
+    keyDoc,
+    challenge: nonce,
+    id: deepLinkUrl,
+  });
+  const parsedUrl = decodeURIComponent(url);
+
+  const req = await fetch(parsedUrl, {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify(presentation),
+  });
+  const response = await req.json();
+  if (response.error) {
+    throw new Error(response.error);
+  } else {
+    showToast({
+      message: translate('credentials.credential_shared'),
+      type: 'success',
+    });
+    navigate(Routes.ACCOUNTS);
+    return;
+  }
+}
+
+async function handleQRCodePresentation({
+  parsedSelectedCredentials,
+  keyDoc,
+  presentCredentials,
+  setPresentationData,
+}) {
+  const presentation = await presentCredentials({
+    credentials: parsedSelectedCredentials,
+    keyDoc,
+    challenge: `${Date.now()}`,
+    id: keyDoc.id,
+  });
+
+  setPresentationData(presentation);
+}
+
+export function useCredentialPresentation({
+  deepLinkUrl,
+  flow = PresentationFlow.deepLink,
+} = {}) {
   const [step, setStep] = useState(SELECT_CREDENTIALS);
   const [selectedCredentials, setSelectedCredentials] = useState({});
   const [selectedDID, onSelectDID] = useState();
   const {presentCredentials} = usePresentation();
+  const {presentationData, setPresentationData} = useState();
 
   const {getSelectedDIDKeyDoc} = useDIDAuth();
 
@@ -37,43 +100,36 @@ export function useCredentialPresentation(deepLinkUrl) {
 
   const onPresentCredentials = useCallback(async () => {
     const keyDoc = await getSelectedDIDKeyDoc({selectedDID});
-    const {url, nonce} = getParamsFromUrl(deepLinkUrl);
 
-    if (keyDoc) {
-      const presentation = await presentCredentials({
-        credentials: parsedSelectedCredentials,
-        keyDoc,
-        challenge: nonce,
-        id: deepLinkUrl,
-      });
-      const parsedUrl = decodeURIComponent(url);
-
-      const req = await fetch(parsedUrl, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify(presentation),
-      });
-      const response = await req.json();
-      if (response.error) {
-        throw new Error(response.error);
-      } else {
-        showToast({
-          message: translate('credentials.credential_shared'),
-          type: 'success',
-        });
-        navigate(Routes.ACCOUNTS);
-        return;
-      }
+    if (!keyDoc) {
+      throw new Error(translate('credentials.no_key_doc'));
     }
-    throw new Error(translate('credentials.no_key_doc'));
+
+    if (flow === PresentationFlow.deepLink) {
+      return handleDeepLinkPresentation({
+        deepLinkUrl,
+        keyDoc,
+        parsedSelectedCredentials,
+        presentCredentials,
+      });
+    }
+
+    if (flow === PresentationFlow.qrCode) {
+      return handleQRCodePresentation({
+        setPresentationData,
+        keyDoc,
+        parsedSelectedCredentials,
+        presentCredentials,
+      });
+    }
   }, [
     deepLinkUrl,
+    flow,
     getSelectedDIDKeyDoc,
     parsedSelectedCredentials,
     presentCredentials,
     selectedDID,
+    setPresentationData,
   ]);
 
   const onNext = useCallback(
@@ -101,6 +157,14 @@ export function useCredentialPresentation(deepLinkUrl) {
       onPresentCredentials: withErrorToast(onPresentCredentials),
       onSelectDID,
       isFormValid,
+      presentationData,
     };
-  }, [isFormValid, onNext, onPresentCredentials, selectedCredentials, step]);
+  }, [
+    isFormValid,
+    onNext,
+    onPresentCredentials,
+    selectedCredentials,
+    step,
+    presentationData,
+  ]);
 }

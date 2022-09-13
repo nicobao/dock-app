@@ -37,9 +37,7 @@ export const Theme = {
     qrCodeBackground: '#fff',
     credentialCardBg: '#000',
     bgBlue: '#00174D',
-
     primaryBlue: '#0063F7',
-
     inactiveText: '#fff',
     activeText: '#18181B',
   },
@@ -52,6 +50,10 @@ export const Theme = {
     btnWhiteBackground: '#F4F4F5',
   },
   touchOpacity: 0.2,
+  icons: {
+    color: '#A1A1AA',
+    activeColor: '#1E75C5',
+  },
 };
 
 export function useTheme() {

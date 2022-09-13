@@ -21,6 +21,10 @@ export const Features = {
     id: 'activate_transak',
     title: translate('dev_settings.activate_transak'),
   },
+  credentialVerifier: {
+    id: 'credentialVerifier',
+    title: translate('dev_settings.credential_verifier'),
+  },
 };
 
 export const getAllFeatures = () =>
@@ -31,11 +35,15 @@ export const defaultFeatures = {
   [Features.credentials.id]: true,
   [Features.transak.id]: true,
   [Features.didManagement.id]: true,
+  [Features.credentialVerifier.id]: false,
 };
 
 export type FeatureFlags = {
   showTestnetTransaction: boolean,
   credentials: boolean,
+  credentialVerifier: boolean,
+  didManagement: boolean,
+  transak: boolean,
 };
 
 export function useFeatures() {

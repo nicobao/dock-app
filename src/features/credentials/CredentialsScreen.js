@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {translate} from 'src/locales';
 import {PolkadotIcon} from '../../components/PolkadotIcon';
 import {
@@ -12,6 +12,7 @@ import {
   Theme,
   Typography,
   DotsVerticalIcon,
+  QRCodeIcon,
 } from '../../design-system';
 import PlusCircleWhiteIcon from '../../assets/icons/plus-circle-white.svg';
 import {addTestId} from '../../core/automation-utils';
@@ -20,6 +21,7 @@ import {useCredentials, getDIDAddress} from './credentials';
 import {formatDate} from '@docknetwork/wallet-sdk-core/lib/core/format-utils';
 import {withErrorBoundary} from 'src/core/error-handler';
 import {View} from 'react-native';
+import {QRCodeModal} from '../accounts/QRCodeModal';
 
 function shouldRenderAttr(attr) {
   return attr.property !== 'id' && attr.property !== 'title';
@@ -68,7 +70,12 @@ export function EmptyCredentials(props) {
 }
 
 export const CredentialListItem = withErrorBoundary(
-  ({credential, formattedData, credentialActions = <NBox />}) => {
+  ({
+    credential,
+    formattedData,
+    credentialActions = <NBox />,
+    onPresentation,
+  }) => {
     const {title = translate('credentials.default_title')} = formattedData;
 
     return (
@@ -106,7 +113,14 @@ export const CredentialListItem = withErrorBoundary(
             {renderObjectAttributes(formattedData)}
           </Stack>
           <NBox flex={1} alignItems="flex-end">
-            {credentialActions}
+            <NBox flexDirection="row">
+              <Pressable onPress={onPresentation}>
+                <NBox mt={1}>
+                  <QRCodeIcon color={Theme.icons.color} />
+                </NBox>
+              </Pressable>
+              {credentialActions}
+            </NBox>
           </NBox>
         </Stack>
 
@@ -170,6 +184,8 @@ export const CredentialListItem = withErrorBoundary(
 );
 
 export function CredentialsScreen({credentials, onRemove, onAdd}) {
+  const [showPresentation, setShowPresentation] = useState();
+
   return (
     <ScreenContainer {...addTestId('CredentialsScreen')} showTabNavigation>
       <Header>
@@ -215,6 +231,9 @@ export function CredentialsScreen({credentials, onRemove, onAdd}) {
             return (
               <CredentialListItem
                 key={item.id}
+                onPresentation={() => {
+                  setShowPresentation(true);
+                }}
                 credential={item.content}
                 formattedData={item.formattedData}
                 credentialActions={credentialActions}

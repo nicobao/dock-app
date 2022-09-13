@@ -25,9 +25,13 @@ import EmptyCredentialIcon from './empty-credential.svg';
 import CancelIcon from './cancel.svg';
 import DIDManagementIcon from './did-management.svg';
 import RoundedDIDIcon from './rounded_did.svg';
-
+import VerifiedIcon from './verified.svg';
 import PencilIcon from './pencil.svg';
 import BinIcon from './bin.svg';
+import UploadIcon from './upload.svg';
+import LinkIcon from './link.svg';
+import QRCodeIcon from './qr-code.svg';
+
 export {
   DockLogoIcon,
   DotsVerticalIcon,
@@ -58,4 +62,8 @@ export {
   RoundedDIDIcon,
   PencilIcon,
   BinIcon,
+  VerifiedIcon,
+  UploadIcon,
+  LinkIcon,
+  QRCodeIcon,
 };

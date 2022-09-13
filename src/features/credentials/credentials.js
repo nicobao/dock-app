@@ -143,7 +143,38 @@ export function useCredentials({onPickFile = pickJSONFile} = {}) {
   };
 
   const onAdd = async () => {
-    const jsonData = await onPickFile();
+    const jsonData = {
+      '@context': [
+        'https://www.w3.org/2018/credentials/v1',
+        {
+          dk: 'https://ld.dock.io/credentials#',
+          EmployeeIDCredential: 'dk:EmployeeIDCredential',
+          name: 'dk:name',
+          email: 'dk:email',
+          employeeId: 'dk:employeeId',
+        },
+      ],
+      id: 'https://creds-testnet.dock.io/b753f14f46d1dbb74b2f04273b10b4ac32a4e60f1a2477c8dc47a0efbd081b5e',
+      type: ['VerifiableCredential', 'EmployeeIDCredential'],
+      credentialSubject: {
+        name: 'Alice Doe',
+        email: 'alice@dock.io',
+        employeeId: 123456,
+      },
+      issuanceDate: '2022-08-30T14:38:13.820Z',
+      name: 'Acme Employee ID',
+      proof: {
+        type: 'Ed25519Signature2018',
+        created: '2022-08-30T14:38:13Z',
+        verificationMethod:
+          'did:dock:5D5K67AnGLBKSVJNkFW25uaDa7cSUjx6Zj55tzMdqQvQDPkA#keys-1',
+        proofPurpose: 'assertionMethod',
+        proofValue:
+          'z6GQntBfqmxcyjeLqf7KkAmU2r3EJdAakWKsZe5WQuqBhhzDLZtNz766k3cQ5n5M4HhqKQkRECqqNVWfDPY89ksL',
+      },
+      issuer: 'did:dock:5D5K67AnGLBKSVJNkFW25uaDa7cSUjx6Zj55tzMdqQvQDPkA',
+    };
+    // await onPickFile();
 
     if (!jsonData) {
       return;
