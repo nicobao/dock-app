@@ -16,7 +16,7 @@ import {showConfirmationModal} from 'src/components/ConfirmationModal';
 import {translate} from 'src/locales';
 import {showToast, withErrorToast} from 'src/core/toast';
 import {Logger} from 'src/core/logger';
-import {clearCacheData} from '../../core/realm';
+import {clearCacheData} from '@docknetwork/wallet-sdk-core/lib/core/realm';
 import Clipboard from '@react-native-community/clipboard';
 import {pickDocuments} from '../../core/storage-utils';
 import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
