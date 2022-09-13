@@ -6,7 +6,7 @@ export const withNavigationContext = WrappedComponent => props => {
   const {route} = props;
 
   useEffect(() => {
-    if (route && route.params.currentTab) {
+    if (route && route?.params?.currentTab) {
       setCurrentTab(route.params.currentTab);
     }
   }, [route]);

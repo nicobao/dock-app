@@ -250,11 +250,12 @@ export const walletOperations = {
         }
       }
       dispatch(authenticationActions.setAuth({isLoggedIn: true}));
+
       if (callback) {
         callback();
       } else {
         dispatch(accountOperations.loadAccounts());
-        navigate(Routes.ACCOUNTS);
+        // navigate(Routes.ACCOUNTS);
       }
     },
 
@@ -308,6 +309,7 @@ export const walletOperations = {
 
       dispatch(walletActions.setCreationFlags({}));
 
+      // TODO change auth state
       navigate(Routes.ACCOUNTS);
     },
 };
