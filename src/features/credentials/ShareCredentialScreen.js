@@ -103,8 +103,6 @@ export function ShareCredentialScreenContainer({route}) {
       return setQRCodeData(null);
     }
 
-    debugger;
-    console.log(presentationData);
     setQRCodeData(JSON.stringify(presentationData));
   }, [presentationData]);
 
