@@ -255,7 +255,6 @@ export const walletOperations = {
         callback();
       } else {
         dispatch(accountOperations.loadAccounts());
-        // navigate(Routes.ACCOUNTS);
       }
     },
 
