@@ -75,7 +75,7 @@ export function useCredentialPresentation({
   const [selectedCredentials, setSelectedCredentials] = useState({});
   const [selectedDID, onSelectDID] = useState();
   const {presentCredentials} = usePresentation();
-  const {presentationData, setPresentationData} = useState();
+  const [presentationData, setPresentationData] = useState();
 
   const {getSelectedDIDKeyDoc} = useDIDAuth();
 

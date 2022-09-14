@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {addTestId} from '../../core/automation-utils';
 import {
   BackButton,
@@ -68,7 +68,7 @@ export function ShareCredentialScreen({
       <QRCodeModal
         visible={!!qrCodeData}
         onClose={onCloseQRCode}
-        data="test"
+        data={qrCodeData}
         description="Credential Presentation"
       />
     </ScreenContainer>
@@ -92,6 +92,21 @@ export function ShareCredentialScreenContainer({route}) {
     flow,
   });
   const {dids} = useDIDAuth();
+  const [qrCodeData, setQRCodeData] = useState();
+
+  useEffect(() => {
+    setQRCodeData(null);
+  }, []);
+
+  useEffect(() => {
+    if (!presentationData) {
+      return setQRCodeData(null);
+    }
+
+    debugger;
+    console.log(presentationData);
+    setQRCodeData(JSON.stringify(presentationData));
+  }, [presentationData]);
 
   useSingleDID(dids, onSelectDID);
 
@@ -105,7 +120,7 @@ export function ShareCredentialScreenContainer({route}) {
       dids={dids}
       onSelectDID={onSelectDID}
       isFormValid={isFormValid}
-      qrCodeData={presentationData}
+      qrCodeData={qrCodeData}
       onCloseQRCode={navigateBack}
     />
   );

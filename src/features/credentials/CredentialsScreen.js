@@ -22,6 +22,9 @@ import {formatDate} from '@docknetwork/wallet-sdk-core/lib/core/format-utils';
 import {withErrorBoundary} from 'src/core/error-handler';
 import {View} from 'react-native';
 import {QRCodeModal} from '../accounts/QRCodeModal';
+import { navigate } from '../../core/navigation';
+import { Routes } from '../../core/routes';
+import { PresentationFlow } from './hooks/credentialPresentation';
 
 function shouldRenderAttr(attr) {
   return attr.property !== 'id' && attr.property !== 'title';
@@ -232,7 +235,10 @@ export function CredentialsScreen({credentials, onRemove, onAdd}) {
               <CredentialListItem
                 key={item.id}
                 onPresentation={() => {
-                  setShowPresentation(true);
+                  navigate(Routes.CREDENTIALS_SHARE_AS_PRESENTATION, {
+                    flow: PresentationFlow.qrCode,
+                    credentialId: item.id,
+                  });
                 }}
                 credential={item.content}
                 formattedData={item.formattedData}
