@@ -1,8 +1,9 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {UnlockWalletContainer} from '../../features/unlock-wallet/UnlockWalletScreen';
 import {Routes} from '../routes';
-
+import {StyleSheet} from 'react-native';
 import {AccountsContainer} from '../../features/accounts/AccountsScreen';
 import {AppSettingsContainer} from '../../features/app/AppSettingsScreen';
 import {ImportAccountFromMnemonicContainer} from '../../features/accounts/ImportAccountFromMnemonicScreen';
@@ -29,239 +30,367 @@ import {ShareDIDScreenContainer} from '../../features/didManagement/ShareDIDScre
 import {ExportDIDScreenContainer} from '../../features/didManagement/ExportDIDScreen';
 import {ImportDIDScreenContainer} from '../../features/didManagement/ImportDIDScreen';
 import {ShareCredentialScreenContainer} from '../../features/credentials/ShareCredentialScreen';
+import {View} from 'react-native';
+import {
+  DIDManagementIcon,
+  MenuCredentialsIcon,
+  MenuScanQRIcon,
+  MenuSettingsIcon,
+  MenuTokensIcon,
+  Theme,
+} from '../../design-system';
+import {translate} from '../../locales';
+import {useFeatures} from '../../features/app/feature-flags';
 
-const AuthNavigationStack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
+const TokenNavigationStack = createStackNavigator();
+const CredentialsNavigationStack = createStackNavigator();
+const ScanNavigationStack = createStackNavigator();
+const DIDNavigationStack = createStackNavigator();
+const SettingsNavigationStack = createStackNavigator();
+
+const screenOptions = {
+  headerShown: false,
+};
 const getScreenProps = ({component, options = {}, name}) => {
   return {
     component: component,
     name: name,
     options: {
+      gestureEnabled: false,
       ...screenOptions,
       ...options,
     },
   };
 };
 
-const screenOptions = {
-  headerShown: false,
-};
-export function AuthNavigationStackScreen() {
+function TokenNavigationStackScreen() {
   return (
-    <AuthNavigationStack.Navigator initialRouteName={Routes.ACCOUNTS}>
-      <AuthNavigationStack.Screen
+    <TokenNavigationStack.Navigator initialRouteName={Routes.ACCOUNTS}>
+      <TokenNavigationStack.Screen
         {...getScreenProps({
           name: Routes.ACCOUNTS,
           component: AccountsContainer,
           options: {
-            gestureEnabled: false,
+            headerShown: false,
           },
         })}
       />
-      <AuthNavigationStack.Screen
+      <TokenNavigationStack.Screen
         {...getScreenProps({
-          name: Routes.APP_SETTINGS,
-          component: AppSettingsContainer,
-          options: {
-            gestureEnabled: false,
-          },
-          tab: 'settings',
+          name: Routes.ACCOUNT_DETAILS,
+          component: AccountDetailsContainer,
         })}
       />
-
-      <AuthNavigationStack.Screen
+      <TokenNavigationStack.Screen
         {...getScreenProps({
           name: Routes.ACCOUNT_IMPORT_FROM_MNEMONIC,
           component: ImportAccountFromMnemonicContainer,
         })}
       />
-      <AuthNavigationStack.Screen
+      <TokenNavigationStack.Screen
         {...getScreenProps({
           name: Routes.ACCOUNT_IMPORT_SETUP,
           component: ImportAccountSetupContainer,
         })}
       />
 
-      <AuthNavigationStack.Screen
+      <TokenNavigationStack.Screen
         {...getScreenProps({
           name: Routes.ACCOUNT_IMPORT_SETUP_PASSWORD,
           component: ImportAccountPasswordContainer,
         })}
       />
 
-      <AuthNavigationStack.Screen
+      <TokenNavigationStack.Screen
         {...getScreenProps({
           name: Routes.ACCOUNT_EXPORT_SETUP_PASSWORD,
           component: ExportAccountPasswordContainer,
         })}
       />
 
-      <AuthNavigationStack.Screen
-        {...getScreenProps({
-          name: Routes.ACCOUNT_DETAILS,
-          component: AccountDetailsContainer,
-        })}
-      />
-      <AuthNavigationStack.Screen
+      <TokenNavigationStack.Screen
         {...getScreenProps({
           name: Routes.TRADE_BUY_DOCK,
           component: BuyDockScreenContainer,
         })}
       />
-
-      <AuthNavigationStack.Screen
-        {...getScreenProps({
-          name: Routes.APP_QR_SCANNER,
-          component: QRScanContainer,
-        })}
-      />
-
-      <AuthNavigationStack.Screen
-        {...getScreenProps({
-          name: Routes.APP_DID_AUTH,
-          component: DIDAuthScreenContainer,
-        })}
-      />
-
-      <AuthNavigationStack.Screen
+      <TokenNavigationStack.Screen
         {...getScreenProps({
           name: Routes.CREATE_ACCOUNT_SETUP,
           component: CreateAccountSetupContainer,
         })}
       />
-
-      <AuthNavigationStack.Screen
-        {...getScreenProps({
-          name: Routes.DEV_SETTINGS,
-          component: DevSettingsContainer,
-          tab: 'settings',
-        })}
-      />
-
-      <AuthNavigationStack.Screen
+      <TokenNavigationStack.Screen
         {...getScreenProps({
           name: Routes.CREATE_ACCOUNT_MNEMONIC,
           component: CreateAccountMnemonicContainer,
         })}
       />
 
-      <AuthNavigationStack.Screen
+      <TokenNavigationStack.Screen
         {...getScreenProps({
           name: Routes.CREATE_ACCOUNT_BACKUP,
           component: CreateAccountBackupContainer,
         })}
       />
 
-      <AuthNavigationStack.Screen
+      <TokenNavigationStack.Screen
         {...getScreenProps({
           name: Routes.CREATE_ACCOUNT_VERIFY_PHRASE,
           component: CreateAccountVerifyPhraseContainer,
         })}
       />
+      <TokenNavigationStack.Screen
+        {...getScreenProps({
+          name: Routes.TOKEN_RECEIVE,
+          component: ReceiveTokenContainer,
+        })}
+      />
+      <TokenNavigationStack.Screen
+        {...getScreenProps({
+          name: Routes.TOKEN_SEND,
+          component: SendTokenContainer,
+        })}
+      />
+      <TokenNavigationStack.Screen
+        {...getScreenProps({
+          name: Routes.APP_QR_SCANNER,
+          component: QRScanContainer,
+          options: {
+            headerShown: true,
+          },
+        })}
+      />
+    </TokenNavigationStack.Navigator>
+  );
+}
+function CredentialsNavigationStackScreen() {
+  return (
+    <CredentialsNavigationStack.Navigator
+      initialRouteName={Routes.APP_CREDENTIALS}>
+      <CredentialsNavigationStack.Screen
+        {...getScreenProps({
+          name: Routes.APP_CREDENTIALS,
+          component: CredentialsContainer,
+          options: {
+            headerShown: false,
+          },
+        })}
+      />
+    </CredentialsNavigationStack.Navigator>
+  );
+}
+function ScanNavigationStackScreen() {
+  return (
+    <ScanNavigationStack.Navigator initialRouteName={Routes.APP_QR_SCANNER}>
+      <ScanNavigationStack.Screen
+        {...getScreenProps({
+          name: Routes.APP_QR_SCANNER,
+          component: QRScanContainer,
+          options: {
+            headerShown: false,
+          },
+        })}
+      />
+      <ScanNavigationStack.Screen
+        {...getScreenProps({
+          name: Routes.CREDENTIALS_SHARE_AS_PRESENTATION,
+          component: ShareCredentialScreenContainer,
+        })}
+      />
+      <ScanNavigationStack.Screen
+        {...getScreenProps({
+          name: Routes.APP_DID_AUTH,
+          component: DIDAuthScreenContainer,
+        })}
+      />
+    </ScanNavigationStack.Navigator>
+  );
+}
+function DIDNavigationStackScreen() {
+  return (
+    <DIDNavigationStack.Navigator initialRouteName={Routes.DID_MANAGEMENT_LIST}>
+      <DIDNavigationStack.Screen
+        {...getScreenProps({
+          name: Routes.DID_MANAGEMENT_LIST,
+          component: DIDListScreenContainer,
+          options: {
+            headerShown: false,
+          },
+        })}
+      />
 
-      <AuthNavigationStack.Screen
+      <DIDNavigationStack.Screen
+        {...getScreenProps({
+          name: Routes.DID_MANAGEMENT_NEW_DID,
+          component: CreateNewDIDScreenContainer,
+        })}
+      />
+
+      <DIDNavigationStack.Screen
+        {...getScreenProps({
+          name: Routes.DID_MANAGEMENT_EDIT_DID,
+          component: EditDIDScreenContainer,
+        })}
+      />
+
+      <DIDNavigationStack.Screen
+        {...getScreenProps({
+          name: Routes.DID_MANAGEMENT_SHARE_DID,
+          component: ShareDIDScreenContainer,
+        })}
+      />
+
+      <DIDNavigationStack.Screen
+        {...getScreenProps({
+          name: Routes.DID_MANAGEMENT_EXPORT_DID,
+          component: ExportDIDScreenContainer,
+        })}
+      />
+      <DIDNavigationStack.Screen
+        {...getScreenProps({
+          name: Routes.DID_MANAGEMENT_IMPORT_DID,
+          component: ImportDIDScreenContainer,
+        })}
+      />
+    </DIDNavigationStack.Navigator>
+  );
+}
+function SettingsNavigationStackScreen() {
+  return (
+    <SettingsNavigationStack.Navigator initialRouteName={Routes.APP_SETTINGS}>
+      <SettingsNavigationStack.Screen
+        {...getScreenProps({
+          name: Routes.APP_SETTINGS,
+          component: AppSettingsContainer,
+          options: {
+            headerShown: false,
+          },
+        })}
+      />
+      <SettingsNavigationStack.Screen
+        {...getScreenProps({
+          name: Routes.DEV_SETTINGS,
+          component: DevSettingsContainer,
+        })}
+      />
+      <SettingsNavigationStack.Screen
         {...getScreenProps({
           name: Routes.WALLET_EXPORT_BACKUP,
           component: ExportWalletContainer,
         })}
       />
-
-      <AuthNavigationStack.Screen
-        {...getScreenProps({
-          name: Routes.TOKEN_RECEIVE,
-          component: ReceiveTokenContainer,
-          options: {
-            gestureEnabled: false,
-          },
-        })}
-      />
-      <AuthNavigationStack.Screen
-        {...getScreenProps({
-          name: Routes.TOKEN_SEND,
-          component: SendTokenContainer,
-          options: {
-            gestureEnabled: false,
-          },
-        })}
-      />
-      <AuthNavigationStack.Screen
+      <SettingsNavigationStack.Screen
         {...getScreenProps({
           name: Routes.CONFIRM_WALLET_ACCESS,
           component: UnlockWalletContainer,
         })}
       />
-      <AuthNavigationStack.Screen
-        {...getScreenProps({
-          name: Routes.APP_CREDENTIALS,
-          component: CredentialsContainer,
-          tab: 'credentials',
-        })}
-      />
-      <AuthNavigationStack.Screen
-        {...getScreenProps({
-          name: Routes.DID_MANAGEMENT_LIST,
-          component: DIDListScreenContainer,
-          tab: 'did-management',
-        })}
-      />
-
-      <AuthNavigationStack.Screen
-        {...getScreenProps({
-          name: Routes.DID_MANAGEMENT_NEW_DID,
-          component: CreateNewDIDScreenContainer,
-          options: {
-            gestureEnabled: false,
-          },
-        })}
-      />
-
-      <AuthNavigationStack.Screen
-        {...getScreenProps({
-          name: Routes.DID_MANAGEMENT_EDIT_DID,
-          component: EditDIDScreenContainer,
-          options: {
-            gestureEnabled: false,
-          },
-        })}
-      />
-
-      <AuthNavigationStack.Screen
-        {...getScreenProps({
-          name: Routes.DID_MANAGEMENT_SHARE_DID,
-          component: ShareDIDScreenContainer,
-          options: {
-            gestureEnabled: false,
-          },
-        })}
-      />
-
-      <AuthNavigationStack.Screen
-        {...getScreenProps({
-          name: Routes.DID_MANAGEMENT_EXPORT_DID,
-          component: ExportDIDScreenContainer,
-          options: {
-            gestureEnabled: false,
-          },
-        })}
-      />
-      <AuthNavigationStack.Screen
-        {...getScreenProps({
-          name: Routes.DID_MANAGEMENT_IMPORT_DID,
-          component: ImportDIDScreenContainer,
-          options: {
-            gestureEnabled: false,
-          },
-        })}
-      />
-      <AuthNavigationStack.Screen
-        {...getScreenProps({
-          name: Routes.CREDENTIALS_SHARE_AS_PRESENTATION,
-          component: ShareCredentialScreenContainer,
-          options: {
-            gestureEnabled: false,
-          },
-        })}
-      />
-    </AuthNavigationStack.Navigator>
+    </SettingsNavigationStack.Navigator>
   );
+}
+const styles = StyleSheet.create({
+  tabBar: {
+    flex: 1,
+    backgroundColor: Theme.screen.backgroundColor,
+    borderTopWidth: 0,
+    elevation: 0,
+  },
+});
+function TabNavigatorScreen() {
+  const {features} = useFeatures();
+
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        tabBarBackground: () => <View style={styles.tabBar} />,
+      }}>
+      <Tab.Screen
+        name={translate('app_navigation.tokens')}
+        component={TokenNavigationStackScreen}
+        options={{
+          ...screenOptions,
+          headerShown: false,
+          tabBarIcon: ({color, size, focused}) => (
+            <MenuTokensIcon
+              style={{
+                color: focused ? undefined : Theme.colors.text,
+              }}
+            />
+          ),
+        }}
+      />
+      {features.credentials && (
+        <Tab.Screen
+          name={translate('app_navigation.credentials')}
+          component={CredentialsNavigationStackScreen}
+          options={{
+            ...screenOptions,
+            headerShown: false,
+            tabBarIcon: ({focused}) => (
+              <MenuCredentialsIcon
+                style={{
+                  color: focused ? undefined : Theme.colors.text,
+                }}
+              />
+            ),
+          }}
+        />
+      )}
+
+      <Tab.Screen
+        name={translate('app_navigation.scan')}
+        component={ScanNavigationStackScreen}
+        options={{
+          ...screenOptions,
+          headerShown: false,
+          tabBarIcon: ({focused}) => (
+            <MenuScanQRIcon
+              style={{
+                color: focused ? undefined : Theme.colors.text,
+              }}
+            />
+          ),
+        }}
+      />
+      {features.didManagement && (
+        <Tab.Screen
+          name={translate('app_navigation.did_management')}
+          component={DIDNavigationStackScreen}
+          options={{
+            ...screenOptions,
+            headerShown: false,
+            tabBarIcon: ({focused}) => (
+              <DIDManagementIcon
+                style={{
+                  color: focused ? undefined : Theme.colors.text,
+                }}
+              />
+            ),
+          }}
+        />
+      )}
+
+      <Tab.Screen
+        name={translate('app_navigation.settings')}
+        component={SettingsNavigationStackScreen}
+        options={{
+          ...screenOptions,
+          headerShown: false,
+          tabBarIcon: ({focused}) => (
+            <MenuSettingsIcon
+              style={{
+                color: focused ? undefined : Theme.colors.text,
+              }}
+            />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
+export function AuthNavigationStackScreen() {
+  return <TabNavigatorScreen />;
 }

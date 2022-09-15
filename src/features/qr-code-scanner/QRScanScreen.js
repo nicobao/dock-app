@@ -105,9 +105,6 @@ export function QRScanScreen({onData, isScreenFocus}) {
           <Title style={styles.headerText}>
             {translate('qr_scanner.scan_qr_code')}
           </Title>
-          <IconContainer>
-            <BackButton />
-          </IconContainer>
         </Header>
         <Body>
           <View style={{width: 240, height: 230}}>

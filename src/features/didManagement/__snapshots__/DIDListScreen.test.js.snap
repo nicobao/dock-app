@@ -127,12 +127,6 @@ exports[`DIDListScreen should render correctly with list 1`] = `
         visible={false}
       />
     </Memo(ForwardRef(Box))>
-    <Memo(ForwardRef(Box))
-      flex={1}
-      flexGrow={0.11}
-    >
-      <TabNavigation />
-    </Memo(ForwardRef(Box))>
   </Memo(ForwardRef(Box))>
 </RNCSafeAreaView>
 `;
@@ -241,12 +235,6 @@ exports[`DIDListScreen should render correctly without list 1`] = `
         onClose={[Function]}
         visible={false}
       />
-    </Memo(ForwardRef(Box))>
-    <Memo(ForwardRef(Box))
-      flex={1}
-      flexGrow={0.11}
-    >
-      <TabNavigation />
     </Memo(ForwardRef(Box))>
   </Memo(ForwardRef(Box))>
 </RNCSafeAreaView>
