@@ -9,8 +9,6 @@ import {translate} from 'src/locales';
 import styled from 'styled-components/native';
 import {Theme} from './theme';
 import {Typography} from './typography';
-import {TabNavigation} from './TabNavigation';
-import {isAndroid} from './platform-utils';
 
 function ConnectionStatus({status, loadingText, errorText}) {
   if (!status && loadingText) {
