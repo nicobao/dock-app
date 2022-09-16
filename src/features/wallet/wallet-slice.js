@@ -174,6 +174,7 @@ export const walletOperations = {
     }),
   deleteWallet: () =>
     withErrorToast(async (dispatch, getState) => {
+      dispatch(authenticationActions.setAuth({isLoggedIn: false}));
       await clearCacheData();
       dispatch(accountActions.clearAccounts());
       await AsyncStorage.removeItem('walletInfo');
