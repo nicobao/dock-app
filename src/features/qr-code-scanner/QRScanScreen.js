@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import QRCodeScanner from 'react-native-qrcode-scanner';
-import {Theme} from 'src/design-system';
+import {BackButton, Theme} from 'src/design-system';
 import styled from 'styled-components/native';
 import {Colors} from '../../theme/colors';
 import {qrCodeHandler} from './qr-code';
@@ -119,10 +119,15 @@ export function QRScanScreen({onData, isScreenFocus}) {
     </Container>
   );
 }
-export function QRScanContainer({route}) {
+export function QRScanContainer({route, navigation}) {
   const {onData = qrCodeHandler} = route.params || {};
   const isScreenFocus = useIsFocused();
 
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => <BackButton />,
+    });
+  }, [navigation]);
   return <QRScanScreen onData={onData} isScreenFocus={isScreenFocus} />;
 }
 const styles = StyleSheet.create({

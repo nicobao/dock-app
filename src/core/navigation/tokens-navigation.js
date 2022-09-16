@@ -16,6 +16,8 @@ import {QRScanContainer} from '../../features/qr-code-scanner/QRScanScreen';
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {getScreenProps} from './utils';
+import {Theme} from '../../design-system';
+import {View} from 'react-native';
 
 const TokenNavigationStack = createStackNavigator();
 export function TokenNavigationStackScreen() {
@@ -113,6 +115,12 @@ export function TokenNavigationStackScreen() {
           component: QRScanContainer,
           options: {
             headerShown: true,
+            headerTitle: '',
+            headerBackground: () => (
+              <View
+                style={{flex: 1, backgroundColor: Theme.screen.backgroundColor}}
+              />
+            ),
           },
         })}
       />
