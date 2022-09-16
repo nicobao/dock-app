@@ -309,8 +309,7 @@ export const walletOperations = {
 
       dispatch(walletActions.setCreationFlags({}));
 
-      // TODO change auth state
-      navigate(Routes.ACCOUNTS);
+      dispatch(authenticationActions.setAuth({isLoggedIn: true}));
     },
 };
 
