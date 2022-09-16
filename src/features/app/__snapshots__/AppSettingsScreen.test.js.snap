@@ -73,12 +73,6 @@ exports[`AppSettingsScreen should render correctly 1`] = `
         </Memo(ForwardRef(Stack))>
       </Styled(ScrollView)>
     </Memo(ForwardRef(Box))>
-    <Memo(ForwardRef(Box))
-      flex={1}
-      flexGrow={0.11}
-    >
-      <TabNavigation />
-    </Memo(ForwardRef(Box))>
   </Memo(ForwardRef(Box))>
 </RNCSafeAreaView>
 `;

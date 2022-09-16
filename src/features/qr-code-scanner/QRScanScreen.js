@@ -10,7 +10,6 @@ import {RNCamera} from 'react-native-camera';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import {Theme} from 'src/design-system';
 import styled from 'styled-components/native';
-import {BackButton} from '../../design-system';
 import {Colors} from '../../theme/colors';
 import {qrCodeHandler} from './qr-code';
 import {translate} from '../../locales';
@@ -34,14 +33,6 @@ const Title = styled.Text`
   padding-top: 8px;
   width: 100%;
   text-align: center;
-`;
-
-const IconContainer = styled.View`
-  position: absolute;
-  top: 0px;
-  left: 10px;
-  padding: 20px;
-  z-index: 99999;
 `;
 
 const Footer = styled.View`
@@ -105,9 +96,6 @@ export function QRScanScreen({onData, isScreenFocus}) {
           <Title style={styles.headerText}>
             {translate('qr_scanner.scan_qr_code')}
           </Title>
-          <IconContainer>
-            <BackButton />
-          </IconContainer>
         </Header>
         <Body>
           <View style={{width: 240, height: 230}}>

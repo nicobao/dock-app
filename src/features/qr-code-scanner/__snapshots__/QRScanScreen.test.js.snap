@@ -38,9 +38,6 @@ exports[`QRScanScreen should render correctly when isScreenFocus=false 1`] = `
       >
         Scan QR Code
       </Styled(Text)>
-      <Styled(View)>
-        <BackButton />
-      </Styled(View)>
     </Styled(View)>
     <Styled(View)>
       <View
@@ -290,9 +287,6 @@ exports[`QRScanScreen should render correctly when isScreenFocus=true 1`] = `
       >
         Scan QR Code
       </Styled(Text)>
-      <Styled(View)>
-        <BackButton />
-      </Styled(View)>
     </Styled(View)>
     <Styled(View)>
       <View

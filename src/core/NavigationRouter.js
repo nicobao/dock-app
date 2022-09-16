@@ -31,7 +31,6 @@ export function NavigationRouter() {
   const isLoggedIn = useSelector(authenticationSelectors.isLoggedIn);
   const {gotoScreenDeepLink} = useDeepLink({isLoggedIn});
 
-  console.log(isLoggedIn, 'isLoggedIn');
   useEffect(() => {
     const getAsyncURL = async () => {
       const initialUrl = await Linking.getInitialURL();
