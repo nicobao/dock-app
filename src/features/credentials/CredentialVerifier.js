@@ -34,12 +34,10 @@ export const CredentialVerifier = withErrorBoundary(({handleScan}) => {
           alignItems="center">
           <Box flex={1}>
             <Typography fontFamily="Montserrat" fontSize={24} fontWeight="600">
-              {/* {translate('account_list.title')} */}
-              Verify a credential
+              {translate('credentialVerifier.title')}
             </Typography>
             <Typography marginTop={12}>
-              Verify any verifiable credentials (VCs) via a URL, JSON file or
-              scanning a QR code
+              {translate('credentialVerifier.description')}
             </Typography>
           </Box>
         </Box>

@@ -378,6 +378,8 @@
     "no_items_found": "No items found"
   },
   "credentialVerifier": {
+    "title": "Verify a credential",
+    "description": " Verify any verifiable credentials (VCs) via a URL, JSON file or scanning a QR code",
     "verifyViaQRCode": "Scan QR Code",
     "verifyViaURL": "Verify via a URL",
     "verifyViaJSON": "Verify via a JSON file"
