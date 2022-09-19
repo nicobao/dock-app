@@ -36,6 +36,7 @@ jest.mock('@docknetwork/wallet-sdk-core/lib/core/realm', () => {
   return {
     getRealm: () => realmFunctions,
     addSchema: jest.fn(),
+    clearCacheData: jest.fn(),
   };
 });
 jest.mock('@react-native-async-storage/async-storage', () => mockAsyncStorage);
@@ -110,6 +111,10 @@ jest.mock('react-native-fs', () => ({
 
 jest.mock('react-native-keychain', () => ({
   getSupportedBiometryType: () => Promise.resolve('FaceId'),
+  setGenericPassword: jest.fn(() => Promise.resolve({data: {}})),
+  getGenericPassword: jest.fn(() =>
+    Promise.resolve({username: '{}', password: '', service: '', storage: ''}),
+  ),
   BIOMETRY_TYPE: {
     FACE_ID: 1,
     FINGERPRINT: 2,
@@ -241,6 +246,7 @@ jest.mock('@docknetwork/wallet-sdk-core/lib/modules/wallet', () => {
       accounts: {
         fetchBalance: jest.fn(() => Promise.resolve(0)),
       },
+      deleteWallet: jest.fn(),
     }),
   };
 

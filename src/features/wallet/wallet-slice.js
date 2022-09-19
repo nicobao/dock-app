@@ -174,6 +174,7 @@ export const walletOperations = {
     }),
   deleteWallet: () =>
     withErrorToast(async (dispatch, getState) => {
+      dispatch(authenticationActions.setAuth({isLoggedIn: false}));
       await clearCacheData();
       dispatch(accountActions.clearAccounts());
       await AsyncStorage.removeItem('walletInfo');
@@ -264,7 +265,7 @@ export const walletOperations = {
       const passcode = walletSelectors.getPasscode(getState());
       const keychainId = 'wallet';
       const keychainProps = {
-        passcode: passcode.toString(),
+        passcode: passcode?.toString(),
       };
 
       if (biometry) {
@@ -308,8 +309,7 @@ export const walletOperations = {
 
       dispatch(walletActions.setCreationFlags({}));
 
-      // TODO change auth state
-      navigate(Routes.ACCOUNTS);
+      dispatch(authenticationActions.setAuth({isLoggedIn: true}));
     },
 };
 
