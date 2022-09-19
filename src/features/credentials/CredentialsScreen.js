@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {translate} from 'src/locales';
 import {PolkadotIcon} from '../../components/PolkadotIcon';
 import {
@@ -21,10 +21,9 @@ import {useCredentials, getDIDAddress} from './credentials';
 import {formatDate} from '@docknetwork/wallet-sdk-core/lib/core/format-utils';
 import {withErrorBoundary} from 'src/core/error-handler';
 import {View} from 'react-native';
-import {QRCodeModal} from '../accounts/QRCodeModal';
-import { navigate } from '../../core/navigation';
-import { Routes } from '../../core/routes';
-import { PresentationFlow } from './hooks/credentialPresentation';
+import {navigate} from '../../core/navigation';
+import {Routes} from '../../core/routes';
+import {PresentationFlow} from './hooks/credentialPresentation';
 
 function shouldRenderAttr(attr) {
   return attr.property !== 'id' && attr.property !== 'title';
@@ -187,8 +186,6 @@ export const CredentialListItem = withErrorBoundary(
 );
 
 export function CredentialsScreen({credentials, onRemove, onAdd}) {
-  const [showPresentation, setShowPresentation] = useState();
-
   return (
     <ScreenContainer {...addTestId('CredentialsScreen')} showTabNavigation>
       <Header>

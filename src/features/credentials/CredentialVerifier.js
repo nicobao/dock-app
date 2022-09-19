@@ -5,7 +5,6 @@ import {withErrorBoundary} from 'src/core/error-handler';
 import {navigate} from 'src/core/navigation';
 import {Routes} from 'src/core/routes';
 import {translate} from 'src/locales';
-import PlusCircleIcon from '../../assets/icons/plus-circle.svg';
 import {
   BigButton,
   Box,
