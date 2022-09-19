@@ -265,7 +265,7 @@ export const walletOperations = {
       const passcode = walletSelectors.getPasscode(getState());
       const keychainId = 'wallet';
       const keychainProps = {
-        passcode: passcode.toString(),
+        passcode: passcode?.toString(),
       };
 
       if (biometry) {
