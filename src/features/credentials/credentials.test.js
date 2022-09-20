@@ -151,7 +151,7 @@ describe('Credentials helpers', () => {
         issuer: 'did:dock:xyz',
       };
       const result = await processCredential({content: credential});
-      expect(result.content.issuanceDate.getDate()).toBe(24);
+      expect(result.content.issuanceDate.getDate()).toBe(23);
       expect(result.content.issuanceDate.getMonth()).toBe(3);
     });
 
