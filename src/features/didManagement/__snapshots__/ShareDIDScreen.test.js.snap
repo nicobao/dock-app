@@ -5,7 +5,7 @@ exports[`ShareDIDScreen should render correctly 1`] = `
   accessibilityLabel="ShareDIDScreen"
   style={
     Object {
-      "backgroundColor": "#000",
+      "backgroundColor": "#141417",
       "flex": 1,
     }
   }

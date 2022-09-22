@@ -5,7 +5,7 @@ exports[`ExportDIDScreen should render correctly when form invalid 1`] = `
   accessibilityLabel="ExportDIDScreen"
   style={
     Object {
-      "backgroundColor": "#000",
+      "backgroundColor": "#141417",
       "flex": 1,
     }
   }
@@ -153,7 +153,7 @@ exports[`ExportDIDScreen should render correctly when form valid 1`] = `
   accessibilityLabel="ExportDIDScreen"
   style={
     Object {
-      "backgroundColor": "#000",
+      "backgroundColor": "#141417",
       "flex": 1,
     }
   }
