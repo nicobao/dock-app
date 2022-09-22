@@ -4,7 +4,7 @@ exports[`QRScanScreen should render DIDAuthConfirmScreen  1`] = `
 <RNCSafeAreaView
   style={
     Object {
-      "backgroundColor": "#000",
+      "backgroundColor": "#141417",
       "flex": 1,
     }
   }
@@ -154,7 +154,7 @@ exports[`QRScanScreen should render DIDAuthScreen correctly  1`] = `
 <RNCSafeAreaView
   style={
     Object {
-      "backgroundColor": "#000",
+      "backgroundColor": "#141417",
       "flex": 1,
     }
   }

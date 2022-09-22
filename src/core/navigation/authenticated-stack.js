@@ -48,7 +48,9 @@ function TabNavigatorScreen() {
           tabBarIcon: ({color, size, focused}) => (
             <MenuTokensIcon
               style={{
-                color: focused ? Theme.colors.primaryBlue : Theme.colors.text,
+                color: focused
+                  ? Theme.colors.tabTextHighlightColor
+                  : Theme.colors.text,
               }}
             />
           ),
@@ -64,7 +66,9 @@ function TabNavigatorScreen() {
             tabBarIcon: ({focused}) => (
               <MenuCredentialsIcon
                 style={{
-                  color: focused ? Theme.colors.primaryBlue : Theme.colors.text,
+                  color: focused
+                    ? Theme.colors.tabTextHighlightColor
+                    : Theme.colors.text,
                 }}
               />
             ),
@@ -81,7 +85,9 @@ function TabNavigatorScreen() {
           tabBarIcon: ({focused}) => (
             <MenuScanQRIcon
               style={{
-                color: focused ? Theme.colors.primaryBlue : Theme.colors.text,
+                color: focused
+                  ? Theme.colors.tabTextHighlightColor
+                  : Theme.colors.text,
               }}
             />
           ),
@@ -97,7 +103,9 @@ function TabNavigatorScreen() {
             tabBarIcon: ({focused}) => (
               <DIDManagementIcon
                 style={{
-                  color: focused ? Theme.colors.primaryBlue : Theme.colors.text,
+                  color: focused
+                    ? Theme.colors.tabTextHighlightColor
+                    : Theme.colors.text,
                 }}
               />
             ),
@@ -114,7 +122,9 @@ function TabNavigatorScreen() {
           tabBarIcon: ({focused}) => (
             <MenuSettingsIcon
               style={{
-                color: focused ? Theme.colors.primaryBlue : Theme.colors.text,
+                color: focused
+                  ? Theme.colors.tabTextHighlightColor
+                  : Theme.colors.text,
               }}
             />
           ),

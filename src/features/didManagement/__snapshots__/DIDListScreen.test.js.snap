@@ -5,7 +5,7 @@ exports[`DIDListScreen should render correctly with list 1`] = `
   accessibilityLabel="DIDListScreen"
   style={
     Object {
-      "backgroundColor": "#000",
+      "backgroundColor": "#141417",
       "flex": 1,
     }
   }
@@ -136,7 +136,7 @@ exports[`DIDListScreen should render correctly without list 1`] = `
   accessibilityLabel="DIDListScreen"
   style={
     Object {
-      "backgroundColor": "#000",
+      "backgroundColor": "#141417",
       "flex": 1,
     }
   }

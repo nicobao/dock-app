@@ -5,7 +5,7 @@ exports[`EditDIDScreen should render correctly 1`] = `
   accessibilityLabel="EditDIDScreen"
   style={
     Object {
-      "backgroundColor": "#000",
+      "backgroundColor": "#141417",
       "flex": 1,
     }
   }
@@ -97,7 +97,7 @@ exports[`EditDIDScreen should render correctly when button is not enable 1`] = `
   accessibilityLabel="EditDIDScreen"
   style={
     Object {
-      "backgroundColor": "#000",
+      "backgroundColor": "#141417",
       "flex": 1,
     }
   }
