@@ -179,20 +179,21 @@ jest.mock('@react-native-firebase/analytics', () => {
   };
 });
 
-jest.mock('react-native-screen-capture-secure', () => {
-  const originalModule = jest.requireActual(
-    'react-native-screen-capture-secure',
-  );
-  const enableSecure = jest.fn();
-  const disableSecure = jest.fn();
-  return {
-    __esModule: true,
-    default: {
-      enableSecure,
-      disableSecure,
-    },
-  };
-});
+// TODO: Fix issues with Gradle 7
+// jest.mock('react-native-screen-capture-secure', () => {
+//   const originalModule = jest.requireActual(
+//     'react-native-screen-capture-secure',
+//   );
+//   const enableSecure = jest.fn();
+//   const disableSecure = jest.fn();
+//   return {
+//     __esModule: true,
+//     default: {
+//       enableSecure,
+//       disableSecure,
+//     },
+//   };
+// });
 
 jest.mock('@docknetwork/wallet-sdk-core/lib/services/substrate', () => {
   const originalModule = jest.requireActual(
