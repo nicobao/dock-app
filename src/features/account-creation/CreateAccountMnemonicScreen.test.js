@@ -1,11 +1,7 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import configureMockStore from 'redux-mock-store';
-import {
-  CreateAccountMnemonicScreen,
-  enableScreenShot,
-  preventScreenShot,
-} from './CreateAccountMnemonicScreen';
+import {CreateAccountMnemonicScreen} from './CreateAccountMnemonicScreen';
 // TODO: Fix issues with Gradle 7
 // import ScreenCaptureSecure from 'react-native-screen-capture-secure';
 
