@@ -1244,7 +1244,54 @@
   resolved "https://codeload.github.com/docknetwork/react-native-sdk/tar.gz/6a16d7cb89f40671d148fab256212d281a63a479"
   dependencies:
     "@babel/node" "^7.16.0"
+    "@babel/plugin-proposal-class-properties" "^7.18.6"
+    "@babel/plugin-proposal-private-property-in-object" "^7.18.6"
+    "@babel/plugin-transform-flow-strip-types" "^7.16.0"
+    "@babel/plugin-transform-modules-commonjs" "^7.18.6"
+    "@babel/preset-flow" "^7.16.7"
+    "@docknetwork/wallet-sdk-dids" "^0.2.3"
+    "@react-native-async-storage/async-storage" "^1.15.17"
+    "@rollup/plugin-babel" "^5.3.0"
+    "@rollup/plugin-commonjs" "^21.0.1"
+    "@rollup/plugin-json" "^4.1.0"
+    "@rollup/plugin-node-resolve" "^13.1.3"
+    "@rollup/plugin-wasm" "^5.1.2"
+    "@types/jest" "^28.1.6"
+    assert "^2.0.0"
+    axios "^0.25.0"
+    axios-mock-adapter "^1.20.0"
     babel-node "^0.0.1-security"
+    babel-plugin-transform-flow-strip-types "^6.22.0"
+    babel-preset-es2015 "^6.24.1"
+    bignumber.js "^9.0.1"
+    buffer "^6.0.3"
+    core-js "^3.20.3"
+    crypto-browserify "^3.12.0"
+    documentation "^13.2.5"
+    glob "^7.2.0"
+    https-browserify "^1.0.0"
+    jsdoc "^3.6.7"
+    jsdoc-babel "^0.5.0"
+    jsdocs "^1.0.0"
+    jsdom "^19.0.0"
+    mock-local-storage "^1.1.19"
+    node-localstorage "^2.2.1"
+    nodemon "^2.0.15"
+    os-browserify "^0.3.0"
+    process "^0.11.10"
+    promise-memoize "^1.2.1"
+    react-native-keychain "^8.0.0"
+    realm "10.20.0-alpha.2"
+    regenerator-runtime "^0.13.9"
+    rollup "^2.65.0"
+    rollup-plugin-flow "^1.1.1"
+    rollup-plugin-multi-input "^1.3.1"
+    rollup-plugin-terser "^7.0.2"
+    sinon "^12.0.1"
+    stream-browserify "^3.0.0"
+    ts-jest "^28.0.7"
+    uuid "^8.3.2"
+    winston "^3.3.3"
 
 "@docknetwork/wallet-sdk-core@^0.2.3", "@docknetwork/wallet-sdk-core@^0.2.4":
   version "0.2.4"
@@ -4888,14 +4935,14 @@
   integrity sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==
 
 "@types/node@*":
-  version "18.7.22"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.7.22.tgz#76f7401362ad63d9d7eefa7dcdfa5fcd9baddff3"
-  integrity sha512-TsmoXYd4zrkkKjJB0URF/mTIKPl+kVcbqClB2F/ykU7vil1BfWZVndOnpEIozPv4fURD28gyPFeIkW2G+KXOvw==
+  version "18.7.23"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.7.23.tgz#75c580983846181ebe5f4abc40fe9dfb2d65665f"
+  integrity sha512-DWNcCHolDq0ZKGizjx2DZjR/PqsYwAcYUJmfMWqtVU2MBMG5Mo+xFZrhGId5r/O5HOuMPyQEcM6KUBp5lBZZBg==
 
 "@types/node@^14.14.31":
-  version "14.18.30"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.18.30.tgz#34c8d934fe86b6ee5c21c08fc1b7858599c84a5a"
-  integrity sha512-8OEyg4oc/CqN5+LbInKNLA8MfbGzbC+k8lVPePXazuwEVrVeQ9gwMDX00HJwWbC7syc1FWRU6Mow0Lm+mibHAQ==
+  version "14.18.31"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.18.31.tgz#4b873dea3122e71af4f77e65ec5841397ff254d3"
+  integrity sha512-vQAnaReSQkEDa8uwAyQby8bYGKu84R/deEc6mg5T8fX6gzCn8QW6rziSgsti1fNvsrswKUKPnVTi7uoB+u62Mw==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.1"
@@ -5367,13 +5414,13 @@
     "@webassemblyjs/helper-numbers" "1.11.1"
     "@webassemblyjs/helper-wasm-bytecode" "1.11.1"
 
-"@webassemblyjs/ast@1.11.3":
+"@webassemblyjs/ast@1.11.4":
   version "1.11.3"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.11.3.tgz#d66a7499d7d90d617e97f0183a5ddff229693019"
   integrity sha512-bc89LwRDgLLz1/73y0T/4+CmvEECPZdXSAkuNUyeRXulYfBfHmmBJcAfMyqnTFvFEaC3mPJdwgaPhELGPPIsAg==
   dependencies:
-    "@webassemblyjs/helper-numbers" "1.11.3"
-    "@webassemblyjs/helper-wasm-bytecode" "1.11.3"
+    "@webassemblyjs/helper-numbers" "1.11.4"
+    "@webassemblyjs/helper-wasm-bytecode" "1.11.4"
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
@@ -5389,7 +5436,7 @@
   resolved "https://registry.yarnpkg.com/@webassemblyjs/floating-point-hex-parser/-/floating-point-hex-parser-1.11.1.tgz#f6c61a705f0fd7a6aecaa4e8198f23d9dc179e4f"
   integrity sha512-iGRfyc5Bq+NnNuX8b5hwBrRjzf0ocrJPI6GWFodBFzmFnyvrQ83SHKhmilCU/8Jv67i4GJZBMhEzltxzcNagtQ==
 
-"@webassemblyjs/floating-point-hex-parser@1.11.3", "@webassemblyjs/floating-point-hex-parser@1.11.4":
+"@webassemblyjs/floating-point-hex-parser@1.11.4", "@webassemblyjs/floating-point-hex-parser@1.11.4":
   version "1.11.4"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/floating-point-hex-parser/-/floating-point-hex-parser-1.11.4.tgz#45ab78d748d210566388212a1edd4af7f86a1217"
   integrity sha512-/XkrDSSzPs+PCx//2jTMvrQvdSlBXSkfT+Z3z5avt0Yw0+vfLbsfTOSt+Jp5kZ0qwjIV+MRcgUy/YWg6Z2/SRg==
@@ -5404,7 +5451,7 @@
   resolved "https://registry.yarnpkg.com/@webassemblyjs/helper-api-error/-/helper-api-error-1.11.1.tgz#1a63192d8788e5c012800ba6a7a46c705288fd16"
   integrity sha512-RlhS8CBCXfRUR/cwo2ho9bkheSXG0+NwooXcc3PAILALf2QLdFyj7KGsKRbVc95hZnhnERon4kW/D3SZpp6Tcg==
 
-"@webassemblyjs/helper-api-error@1.11.3", "@webassemblyjs/helper-api-error@1.11.4":
+"@webassemblyjs/helper-api-error@1.11.4", "@webassemblyjs/helper-api-error@1.11.4":
   version "1.11.4"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/helper-api-error/-/helper-api-error-1.11.4.tgz#85a7e704d0ea184e17c7a1317d4d10f7d43ae152"
   integrity sha512-IKwN8aTLugQvTQvXsUIXAA4ApTWIQAGANP5fgpO4+fUSO0afro8qkp9LX4Nl2sjMd67caZy73i1JkwFoPtOMmA==
@@ -5424,12 +5471,12 @@
   resolved "https://registry.yarnpkg.com/@webassemblyjs/helper-buffer/-/helper-buffer-1.9.0.tgz#a1442d269c5feb23fcbc9ef759dac3547f29de00"
   integrity sha512-qZol43oqhq6yBPx7YM3m9Bv7WMV9Eevj6kMi6InKOuZxhw+q9hOkvq5e/PpKSiLfyetpaBnogSbNCfBwyB00CA==
 
-"@webassemblyjs/helper-code-frame@1.11.3":
-  version "1.11.3"
-  resolved "https://registry.yarnpkg.com/@webassemblyjs/helper-code-frame/-/helper-code-frame-1.11.3.tgz#55877931e64b6daf4e58c2a235e0c801f97e9d77"
+"@webassemblyjs/helper-code-frame@1.11.4":
+  version "1.11.4"
+  resolved "https://registry.yarnpkg.com/@webassemblyjs/helper-code-frame/-/helper-code-frame-1.11.4.tgz#55877931e64b6daf4e58c2a235e0c801f97e9d77"
   integrity sha512-f1kxhUt8dn1lLGBbYqNXyvj64C03laG/sbwWiAxbfmJXd8r9WFC663uwT8jhgsHM0+We5IU3f8dfxfwEx4K4vg==
   dependencies:
-    "@webassemblyjs/wast-printer" "1.11.3"
+    "@webassemblyjs/wast-printer" "1.11.4"
 
 "@webassemblyjs/helper-code-frame@1.9.0":
   version "1.9.0"
@@ -5438,22 +5485,22 @@
   dependencies:
     "@webassemblyjs/wast-printer" "1.9.0"
 
-"@webassemblyjs/helper-compiler@1.11.3":
-  version "1.11.3"
-  resolved "https://registry.yarnpkg.com/@webassemblyjs/helper-compiler/-/helper-compiler-1.11.3.tgz#c2b583304ad3cd2dd0894cbf3d90877df5dbf46d"
+"@webassemblyjs/helper-compiler@1.11.4":
+  version "1.11.4"
+  resolved "https://registry.yarnpkg.com/@webassemblyjs/helper-compiler/-/helper-compiler-1.11.4.tgz#c2b583304ad3cd2dd0894cbf3d90877df5dbf46d"
   integrity sha512-1gJJ8b1KyjDPl0Tci/GWUawrD32aEp+28BeeSPbiX8Du9bO67Si4HGd9zoJzf9J3o4ezH5ojVcdPd29oVi5YHA==
   dependencies:
-    "@webassemblyjs/ast" "1.11.3"
-    "@webassemblyjs/helper-flatten-ast" "1.11.3"
+    "@webassemblyjs/ast" "1.11.4"
+    "@webassemblyjs/helper-flatten-ast" "1.11.4"
 
-"@webassemblyjs/helper-flatten-ast@1.11.3":
-  version "1.11.3"
-  resolved "https://registry.yarnpkg.com/@webassemblyjs/helper-flatten-ast/-/helper-flatten-ast-1.11.3.tgz#087a18205f2783cb0d071abb1293d1619636c257"
+"@webassemblyjs/helper-flatten-ast@1.11.4":
+  version "1.11.4"
+  resolved "https://registry.yarnpkg.com/@webassemblyjs/helper-flatten-ast/-/helper-flatten-ast-1.11.4.tgz#087a18205f2783cb0d071abb1293d1619636c257"
   integrity sha512-hRAaIA7OaW7qMuinukhxxIFeikqrgFxr4UuujQY8CwAaVYfb028WaevNa+zHDYYEBMfWuFbEfCJoorZxdbgFSg==
   dependencies:
-    "@webassemblyjs/ast" "1.11.3"
+    "@webassemblyjs/ast" "1.11.4"
 
-"@webassemblyjs/helper-fsm@1.11.3":
+"@webassemblyjs/helper-fsm@1.11.4":
   version "1.11.4"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/helper-fsm/-/helper-fsm-1.11.4.tgz#69b8e085fcbf92a0a7f87ef73ca1e6f0093e5768"
   integrity sha512-AZhsmUnUDxvavYbFAYsE7gU870mIVHF4gvj82+zjJhc6Ia09aB83cDykdNQ4jj6DzXBVn/6f73zwE8JzHIo/EA==
@@ -5479,7 +5526,7 @@
     "@webassemblyjs/helper-api-error" "1.11.1"
     "@xtuc/long" "4.2.2"
 
-"@webassemblyjs/helper-numbers@1.11.3":
+"@webassemblyjs/helper-numbers@1.11.4":
   version "1.11.4"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/helper-numbers/-/helper-numbers-1.11.4.tgz#f26aee856464023c6dc5cbac292e3b56f80d51ab"
   integrity sha512-uCu5WLcMangjRzjOS/GwmjPLoaQ4J8+rFi0Us8FPc/C8rnx6P765khEcTUDf9qW3lS34necU8ads44pACe60rA==
@@ -5493,7 +5540,7 @@
   resolved "https://registry.yarnpkg.com/@webassemblyjs/helper-wasm-bytecode/-/helper-wasm-bytecode-1.11.1.tgz#f328241e41e7b199d0b20c18e88429c4433295e1"
   integrity sha512-PvpoOGiJwXeTrSf/qfudJhwlvDQxFgelbMqtq52WWiXC6Xgg1IREdngmPN3bs4RoO83PnL/nFrxucXj1+BX62Q==
 
-"@webassemblyjs/helper-wasm-bytecode@1.11.3":
+"@webassemblyjs/helper-wasm-bytecode@1.11.4":
   version "1.11.4"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/helper-wasm-bytecode/-/helper-wasm-bytecode-1.11.4.tgz#cdd170d1bc989eea2453b87b732ce5baf933064f"
   integrity sha512-lTKJpKqbue70/EOS7R1ICWYKKKxDKIcyFyQXOH9B6Q2/Bqqgwo8VR/megyJLWMYJC29tpOmJsWkmwRBYQJyC9g==
@@ -5530,7 +5577,7 @@
   dependencies:
     "@xtuc/ieee754" "^1.2.0"
 
-"@webassemblyjs/ieee754@1.11.3":
+"@webassemblyjs/ieee754@1.11.4":
   version "1.11.4"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ieee754/-/ieee754-1.11.4.tgz#2a040cd62469090d3781d1c89b5fd2f993bdc5d9"
   integrity sha512-eld0ZbsBPU/HGJXtwvOWxEIm3fJmYj2Py098N0ukDF02Dp0f+4Sj7QZllTcWh9XtS4ysgAywhk2cbPId2VroLg==
@@ -5551,7 +5598,7 @@
   dependencies:
     "@xtuc/long" "4.2.2"
 
-"@webassemblyjs/leb128@1.11.3":
+"@webassemblyjs/leb128@1.11.4":
   version "1.11.4"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/leb128/-/leb128-1.11.4.tgz#501aa252adabab198f7463ebc15b749c04d3c078"
   integrity sha512-kq6VUWZPbOTTLPZA79BmN/PL/oL4XXAVEbKUHtODBQiWogO0rVNus+faSCmvFq9xIvpQM/PCVoPxbr6Ta+Ch6Q==
@@ -5570,7 +5617,7 @@
   resolved "https://registry.yarnpkg.com/@webassemblyjs/utf8/-/utf8-1.11.1.tgz#d1f8b764369e7c6e6bae350e854dec9a59f0a3ff"
   integrity sha512-9kqcxAEdMhiwQkHpkNiorZzqpGrodQQ2IGrHHxCy+Ozng0ofyMA0lTqiLkVs1uzTRejX+/O0EOT7KxqVPuXosQ==
 
-"@webassemblyjs/utf8@1.11.3":
+"@webassemblyjs/utf8@1.11.4":
   version "1.11.4"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/utf8/-/utf8-1.11.4.tgz#4c99959b6e96084365c3288adbace60425f8ac97"
   integrity sha512-f5vdb2IHu4t1Vt68H8ONGNH2JVHtfNwCgpxiA7xyURhp6W0LGo6wEOqzmlenHuqCp00MEU+NHk+ZDd/YqEV7/Q==
@@ -5580,12 +5627,12 @@
   resolved "https://registry.yarnpkg.com/@webassemblyjs/utf8/-/utf8-1.9.0.tgz#04d33b636f78e6a6813227e82402f7637b6229ab"
   integrity sha512-GZbQlWtopBTP0u7cHrEx+73yZKrQoBMpwkGEIqlacljhXCkVM1kMQge/Mf+csMJAjEdSwhOyLAS0AoR3AG5P8w==
 
-"@webassemblyjs/validation@1.11.3":
-  version "1.11.3"
-  resolved "https://registry.yarnpkg.com/@webassemblyjs/validation/-/validation-1.11.3.tgz#aa80bbb3ca9cfb0d8e2bc23400b41ed084f2774d"
+"@webassemblyjs/validation@1.11.4":
+  version "1.11.4"
+  resolved "https://registry.yarnpkg.com/@webassemblyjs/validation/-/validation-1.11.4.tgz#aa80bbb3ca9cfb0d8e2bc23400b41ed084f2774d"
   integrity sha512-yn7Y4VZOVSI/ajoO4i6Q1O13eHU/tW6X7MZnMuDSmaEQ7oblSTdNsDbP/iM1srIk3NPKCpE6sxd58wSc+m0dMQ==
   dependencies:
-    "@webassemblyjs/ast" "1.11.3"
+    "@webassemblyjs/ast" "1.11.4"
 
 "@webassemblyjs/wasm-edit@1.11.1":
   version "1.11.1"
@@ -5669,17 +5716,17 @@
     "@webassemblyjs/leb128" "1.11.1"
     "@webassemblyjs/utf8" "1.11.1"
 
-"@webassemblyjs/wasm-parser@1.11.3":
-  version "1.11.3"
-  resolved "https://registry.yarnpkg.com/@webassemblyjs/wasm-parser/-/wasm-parser-1.11.3.tgz#1535db423fe1b4279332a4edc251e70003e6d7a9"
+"@webassemblyjs/wasm-parser@1.11.4":
+  version "1.11.4"
+  resolved "https://registry.yarnpkg.com/@webassemblyjs/wasm-parser/-/wasm-parser-1.11.4.tgz#1535db423fe1b4279332a4edc251e70003e6d7a9"
   integrity sha512-vbH9d6t3mjM8U/2XMpljXGT/MxFvwscO4Pjy6JczxssR8gMzdbRAAy5SAWrNrp1PvMqDcJz9aom58/9/8daJMg==
   dependencies:
-    "@webassemblyjs/ast" "1.11.3"
-    "@webassemblyjs/helper-api-error" "1.11.3"
-    "@webassemblyjs/helper-wasm-bytecode" "1.11.3"
-    "@webassemblyjs/ieee754" "1.11.3"
-    "@webassemblyjs/leb128" "1.11.3"
-    "@webassemblyjs/utf8" "1.11.3"
+    "@webassemblyjs/ast" "1.11.4"
+    "@webassemblyjs/helper-api-error" "1.11.4"
+    "@webassemblyjs/helper-wasm-bytecode" "1.11.4"
+    "@webassemblyjs/ieee754" "1.11.4"
+    "@webassemblyjs/leb128" "1.11.4"
+    "@webassemblyjs/utf8" "1.11.4"
 
 "@webassemblyjs/wasm-parser@1.9.0":
   version "1.9.0"
@@ -5693,16 +5740,16 @@
     "@webassemblyjs/leb128" "1.9.0"
     "@webassemblyjs/utf8" "1.9.0"
 
-"@webassemblyjs/wast-parser@1.11.3":
-  version "1.11.3"
-  resolved "https://registry.yarnpkg.com/@webassemblyjs/wast-parser/-/wast-parser-1.11.3.tgz#a6befa9842435df822770fa96536f821f2b1d6de"
+"@webassemblyjs/wast-parser@1.11.4":
+  version "1.11.4"
+  resolved "https://registry.yarnpkg.com/@webassemblyjs/wast-parser/-/wast-parser-1.11.4.tgz#a6befa9842435df822770fa96536f821f2b1d6de"
   integrity sha512-SIe0sqIHeJ9GGVhBCb2Sbc3iLz0juapu/zwtLqp4q6kQPXHBKpi3SAxyN3eSoTqZssOPV4TPNwRwhQkC7UUMow==
   dependencies:
-    "@webassemblyjs/ast" "1.11.3"
-    "@webassemblyjs/floating-point-hex-parser" "1.11.3"
-    "@webassemblyjs/helper-api-error" "1.11.3"
-    "@webassemblyjs/helper-code-frame" "1.11.3"
-    "@webassemblyjs/helper-fsm" "1.11.3"
+    "@webassemblyjs/ast" "1.11.4"
+    "@webassemblyjs/floating-point-hex-parser" "1.11.4"
+    "@webassemblyjs/helper-api-error" "1.11.4"
+    "@webassemblyjs/helper-code-frame" "1.11.4"
+    "@webassemblyjs/helper-fsm" "1.11.4"
     "@xtuc/long" "4.2.2"
 
 "@webassemblyjs/wast-parser@1.9.0":
@@ -5725,12 +5772,12 @@
     "@webassemblyjs/ast" "1.11.1"
     "@xtuc/long" "4.2.2"
 
-"@webassemblyjs/wast-printer@1.11.3":
-  version "1.11.3"
-  resolved "https://registry.yarnpkg.com/@webassemblyjs/wast-printer/-/wast-printer-1.11.3.tgz#39c34f32a816d7f8c7b4f8219ce680b7338cb0cc"
+"@webassemblyjs/wast-printer@1.11.4":
+  version "1.11.4"
+  resolved "https://registry.yarnpkg.com/@webassemblyjs/wast-printer/-/wast-printer-1.11.4.tgz#39c34f32a816d7f8c7b4f8219ce680b7338cb0cc"
   integrity sha512-kmjyNBu6w35c33LADVqSupAEIGQfZE5hUM4TPVVCcFm/mv72j5SVTMfc6S0nv1RQZEwSqi9ykadr5nIgK1NYLQ==
   dependencies:
-    "@webassemblyjs/ast" "1.11.3"
+    "@webassemblyjs/ast" "1.11.4"
     "@xtuc/long" "4.2.2"
 
 "@webassemblyjs/wast-printer@1.9.0":
@@ -9957,9 +10004,9 @@ ejs@^2.7.4:
   integrity sha512-7vmuyh5+kuUyJKePhQfRQBhXV5Ce+RnaeeQArKu1EAMpL3WbgMt5WG6uQZpEVvYSSsxMXRKOewtDk9RaTKXRlA==
 
 electron-to-chromium@^1.3.247, electron-to-chromium@^1.4.251:
-  version "1.4.262"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.262.tgz#25715dfbae4c2e0640517cba184715241ecd8e63"
-  integrity sha512-Ckn5haqmGh/xS8IbcgK3dnwAVnhDyo/WQnklWn6yaMucYTq7NNxwlGE8ElzEOnonzRLzUCo2Ot3vUb2GYUF2Hw==
+  version "1.4.264"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.264.tgz#2f68a062c38b7a04bf57f3e6954b868672fbdcd3"
+  integrity sha512-AZ6ZRkucHOQT8wke50MktxtmcWZr67kE17X/nAXFf62NIdMdgY6xfsaJD5Szoy84lnkuPWH+4tTNE3s2+bPCiw==
 
 element-resize-detector@^1.2.1:
   version "1.2.4"
@@ -10710,9 +10757,9 @@ expect@^28.0.0:
     jest-util "^28.1.3"
 
 expo-font@^10.0.5:
-  version "10.2.0"
-  resolved "https://registry.yarnpkg.com/expo-font/-/expo-font-10.2.0.tgz#881f767e13b2b534a4d3ffaedcf675ce6b63439d"
-  integrity sha512-2V4EcpmhNoppaLn+lPprZVS+3bmV9hxLPKttKh2u8ghjH/oX9bv3u4JVo77SYh0EfrWO4toqVyXn8pXH8GpbIg==
+  version "10.2.1"
+  resolved "https://registry.yarnpkg.com/expo-font/-/expo-font-10.2.1.tgz#c13e65e864befaa4710504096b68635c6f7e48d8"
+  integrity sha512-sxy5GrdtY+Ka8Wo5wnrcFFeO6MbYC6Dris5wMLqshvVK6BneJNMUsFvwRfvVgg0TzsmMAc3Rlca2xyZ8ettinw==
   dependencies:
     fontfaceobserver "^2.1.0"
 
@@ -16351,9 +16398,9 @@ node-abi@^2.21.0:
     semver "^5.4.1"
 
 node-abi@^3.3.0:
-  version "3.24.0"
-  resolved "https://registry.yarnpkg.com/node-abi/-/node-abi-3.24.0.tgz#b9d03393a49f2c7e147d0c99f180e680c27c1599"
-  integrity sha512-YPG3Co0luSu6GwOBsmIdGW6Wx0NyNDLg/hriIyDllVsNwnI6UeqaWShxC3lbH4LtEQUgoLP3XR1ndXiDAWvmRw==
+  version "3.25.0"
+  resolved "https://registry.yarnpkg.com/node-abi/-/node-abi-3.25.0.tgz#ca57dd23ae67679ce152b6c45cae2c57ed04faff"
+  integrity sha512-p+0xx5ruIQ+8X57CRIMxbTZRT7tU0Tjn2C/aAK68AEMrbGsCo6IjnDdPNhEyyjWCT4bRtzomXchYd3sSgk3BJQ==
   dependencies:
     semver "^7.3.5"
 
@@ -22287,15 +22334,15 @@ web-streams-polyfill@^3.0.3:
   integrity sha512-e0MO3wdXWKrLbL0DgGnUV7WHVuw9OUvL4hjgnPkIeEvESk74gAITi5G606JtZPp39cd8HA9VQzCIvA49LpPN5Q==
 
 webassemblyjs@^1.11.0:
-  version "1.11.3"
-  resolved "https://registry.yarnpkg.com/webassemblyjs/-/webassemblyjs-1.11.3.tgz#5393b40bb792d26318862f97c39429af02f432f2"
+  version "1.11.4"
+  resolved "https://registry.yarnpkg.com/webassemblyjs/-/webassemblyjs-1.11.4.tgz#5393b40bb792d26318862f97c39429af02f432f2"
   integrity sha512-TRzjitsCSJhHw2xKqYTCpYOCGEUxDUHUx+pMT7I+mphjRpqWjUCoZez4Rhm2b2xQh+vreWoZ6R5Eact1zrWVVg==
   dependencies:
-    "@webassemblyjs/ast" "1.11.3"
-    "@webassemblyjs/helper-compiler" "1.11.3"
-    "@webassemblyjs/validation" "1.11.3"
-    "@webassemblyjs/wasm-parser" "1.11.3"
-    "@webassemblyjs/wast-parser" "1.11.3"
+    "@webassemblyjs/ast" "1.11.4"
+    "@webassemblyjs/helper-compiler" "1.11.4"
+    "@webassemblyjs/validation" "1.11.4"
+    "@webassemblyjs/wasm-parser" "1.11.4"
+    "@webassemblyjs/wast-parser" "1.11.4"
     "@xtuc/long" "4.2.2"
 
 webidl-conversions@^3.0.0:
