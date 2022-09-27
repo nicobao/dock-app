@@ -21,7 +21,7 @@ export function getDIDAddress(issuer) {
   return null;
 }
 
-export async function processCredential(credential) {
+export async function formatCredential(credential) {
   assert(!!credential, 'Credential is required');
   assert(!!credential.content, 'credential.content is required');
   assert(
@@ -83,10 +83,10 @@ export function useCredentials({onPickFile = pickJSONFile} = {}) {
   const [items, setItems] = useState([]);
 
   const syncCredentials = useCallback(async () => {
-    const processedCredentials = await Promise.all(
-      credentials.map(processCredential),
+    const formattedCredentials = await Promise.all(
+      credentials.map(formatCredential),
     );
-    setItems(processedCredentials);
+    setItems(formattedCredentials);
   }, [credentials]);
 
   useEffect(() => {

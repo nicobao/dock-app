@@ -2,7 +2,7 @@ import {renderHook} from '@testing-library/react-hooks';
 import {
   useCredentials,
   getDIDAddress,
-  processCredential,
+  formatCredential,
   generateAuthVC,
 } from './credentials';
 import {useCredentialUtils} from '@docknetwork/wallet-sdk-react-native/lib';
@@ -91,15 +91,15 @@ describe('Credentials helpers', () => {
         credentialSubject: {},
         issuer: 'did:dock:xyz',
       };
-      const result = await processCredential({content: credential});
+      const result = await formatCredential({content: credential});
       expect(result.content.issuanceDate.getDate()).toBe(24);
       expect(result.content.issuanceDate.getMonth()).toBe(3);
     });
 
     it('expect to handle bad data', async () => {
-      await expect(processCredential({})).rejects.toThrowError();
+      await expect(formatCredential({})).rejects.toThrowError();
 
-      await expect(processCredential(null)).rejects.toThrowError();
+      await expect(formatCredential(null)).rejects.toThrowError();
     });
   });
 
@@ -108,9 +108,10 @@ describe('Credentials helpers', () => {
       jest.clearAllMocks();
     });
     it('expect to delete credential', async () => {
-      const {result} = await renderHook(() => useCredentials({onPickFile: {}}));
+      const onPickFile = jest.fn().mockResolvedValue({});
+      const {result} = await renderHook(() => useCredentials({onPickFile}));
       const {result: useCredentialUtilsResult} = await renderHook(() =>
-        useCredentialUtils({onPickFile: {}}),
+        useCredentialUtils(),
       );
       await result.current.handleRemove({id: 1});
 
@@ -231,7 +232,7 @@ describe('Credentials helpers', () => {
         useCredentials({onPickFile: onPickValidFile}),
       );
       const {result: useCredentialUtilsResult} = await renderHook(() =>
-        useCredentialUtils({onPickFile: {}}),
+        useCredentialUtils(),
       );
       await result.current.onAdd();
 
@@ -264,7 +265,7 @@ describe('Credentials helpers', () => {
         useCredentials({onPickFile: onPickValidFile}),
       );
       const {result: useCredentialUtilsResult} = await renderHook(() =>
-        useCredentialUtils({onPickFile: {}}),
+        useCredentialUtils(),
       );
       await result.current.onAdd();
 
