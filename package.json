@@ -36,6 +36,7 @@
     "@docknetwork/wallet-sdk-transactions": "^0.2.3",
     "@native-base/icons": "^0.0.11",
     "@react-native-async-storage/async-storage": "^1.15.9",
+    "@react-native-community/cli-platform-android": "9.1.0",
     "@react-native-community/clipboard": "^1.5.1",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-community/netinfo": "^8.2.0",
