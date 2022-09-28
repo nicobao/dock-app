@@ -40,24 +40,27 @@ function TabNavigatorScreen() {
       screenOptions={{
         tabBarBackground: () => <View style={styles.tabBar} />,
       }}>
-      <Tab.Screen
-        name={Routes.ACCOUNTS}
-        component={TokenNavigationStackScreen}
-        options={{
-          ...screenOptions,
-          tabBarLabel: translate('app_navigation.tokens'),
-          headerShown: false,
-          tabBarIcon: ({color, size, focused}) => (
-            <MenuTokensIcon
-              style={{
-                color: focused
-                  ? Theme.colors.tabTextHighlightColor
-                  : Theme.colors.text,
-              }}
-            />
-          ),
-        }}
-      />
+      {features.accounts && (
+        <Tab.Screen
+          name={Routes.ACCOUNTS}
+          component={TokenNavigationStackScreen}
+          options={{
+            ...screenOptions,
+            tabBarLabel: translate('app_navigation.tokens'),
+            headerShown: false,
+            tabBarIcon: ({color, size, focused}) => (
+              <MenuTokensIcon
+                style={{
+                  color: focused
+                    ? Theme.colors.tabTextHighlightColor
+                    : Theme.colors.text,
+                }}
+              />
+            ),
+          }}
+        />
+      )}
+
       {features.credentials && (
         <Tab.Screen
           name={Routes.APP_CREDENTIALS}
