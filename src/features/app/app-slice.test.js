@@ -48,7 +48,7 @@ describe('AppSlice', () => {
       ).toBe(customFeatures);
     });
 
-    it('expect default features to include accounts feature', ()=>{
+    it('expect default features to include accounts feature', () => {
       expect(defaultFeatures.accounts).toBeDefined();
       expect(defaultFeatures.accounts).toBeTruthy();
       expect(Features.accounts).toHaveProperty('id', 'accounts');
