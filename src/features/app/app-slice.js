@@ -107,13 +107,11 @@ export const appSelectors = {
     if (!appSelectors.getDevSettingsEnabled(state)) {
       return defaultFeatures;
     }
-    if (getRoot(state).features) {
-      return {
-        ...defaultFeatures,
-        ...getRoot(state).features,
-      };
-    }
-    return defaultFeatures;
+    const storedFeaturesConfig = getRoot(state).features || {};
+    return {
+      ...defaultFeatures,
+      ...storedFeaturesConfig,
+    };
   },
 };
 
