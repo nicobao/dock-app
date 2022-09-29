@@ -181,7 +181,8 @@
     "promise": "^8.1.0",
     "@webassemblyjs/utf8": "1.11.4",
     "@webassemblyjs/leb128": "1.11.4",
-    "@webassemblyjs/helper-fsm": "1.11.4"
+    "@webassemblyjs/helper-fsm": "1.11.4",
+    "@webassemblyjs/helper-api-error": "1.11.4"
   },
   "react-native": {
     "zlib": "browserify-zlib",
