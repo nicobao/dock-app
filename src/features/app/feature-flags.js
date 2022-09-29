@@ -4,6 +4,10 @@ import {translate} from '../../locales';
 import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
 
 export const Features = {
+  accounts: {
+    id: 'accounts',
+    title: translate('dev_settings.show_accounts'),
+  },
   showTestnetTransaction: {
     id: 'showTestnetTransaction',
     title: translate('dev_settings.show_testnet_transaction'),
@@ -27,6 +31,7 @@ export const getAllFeatures = () =>
   Object.keys(Features).map(key => Features[key]);
 
 export const defaultFeatures = {
+  [Features.accounts.id]: true,
   [Features.showTestnetTransaction.id]: false,
   [Features.credentials.id]: true,
   [Features.transak.id]: true,
