@@ -40,134 +40,141 @@ import {pickDocuments} from '../../core/storage-utils';
 import assert from 'assert';
 import {useAccountsList} from './accountsHooks';
 
-const AccountCard = withErrorBoundary(({document, onDetails, onDelete}) => {
-  assert(document.type === 'Address', 'Address document expected');
-  const {address} = document;
-  const {account, fetchBalance} = useAccount(address);
+const AccountCard = withErrorBoundary(
+  ({document, onDetails, onDelete, index}) => {
+    assert(document.type === 'Address', 'Address document expected');
+    const {address} = document;
+    const {account, fetchBalance} = useAccount(address);
 
-  useEffect(() => {
-    fetchBalance(address);
-  }, [address, fetchBalance]);
+    useEffect(() => {
+      fetchBalance(address);
+    }, [address, fetchBalance]);
 
-  if (!account) {
-    return null;
-  }
+    if (!account) {
+      return null;
+    }
 
-  return (
-    <Stack
-      key={account.address}
-      direction="row"
-      borderRadius={12}
-      backgroundColor={Theme.colors.primaryBackground}
-      space={2}
-      mb={4}
-      py={6}
-      px={6}>
-      <Stack direction="column" flex={1}>
-        <Stack direction="row" alignItems="center">
-          <Pressable
-            _pressed={{
-              opacity: Theme.touchOpacity,
-            }}
-            onPress={() => onDetails(account)}
-            flex={1}>
-            <Stack direction="row" flex={1} alignItems="center">
-              <PolkadotIcon address={account.address} size={32} />
-              <Stack direction="row" flex={1} ml={3}>
-                <Typography
-                  color={Theme.colors.textHighlighted}
-                  fontWeight={600}>
-                  {account.name}
-                </Typography>
-                <ChevronRightIcon marginTop={3} />
+    return (
+      <Stack
+        key={account.address}
+        direction="row"
+        borderRadius={12}
+        backgroundColor={Theme.colors.primaryBackground}
+        space={2}
+        mb={4}
+        py={6}
+        px={6}>
+        <Stack direction="column" flex={1}>
+          <Stack direction="row" alignItems="center">
+            <Pressable
+              _pressed={{
+                opacity: Theme.touchOpacity,
+              }}
+              onPress={() => onDetails(account)}
+              flex={1}>
+              <Stack direction="row" flex={1} alignItems="center">
+                <PolkadotIcon address={account.address} size={32} />
+                <Stack direction="row" flex={1} ml={3}>
+                  <Typography
+                    color={Theme.colors.textHighlighted}
+                    fontWeight={600}>
+                    {account.name}
+                  </Typography>
+                  <ChevronRightIcon marginTop={3} />
+                </Stack>
               </Stack>
-            </Stack>
-          </Pressable>
-          <NBox py={1} px={1}>
-            <Stack direction="row">
-              {displayWarning(account) ? (
-                <NBox mr={3} mt={1}>
-                  <AlertIcon />
-                </NBox>
-              ) : null}
-              <Menu
-                trigger={triggerProps => {
-                  return (
-                    <Pressable
-                      {...triggerProps}
-                      _pressed={{
-                        opacity: Theme.touchOpacity,
-                      }}>
-                      <DotsVerticalIcon />
-                    </Pressable>
-                  );
+            </Pressable>
+            <NBox py={1} px={1}>
+              <Stack direction="row">
+                {displayWarning(account) ? (
+                  <NBox mr={3} mt={1}>
+                    <AlertIcon />
+                  </NBox>
+                ) : null}
+                <Menu
+                  {...addTestId(`account-item-menu-${index}`)}
+                  trigger={triggerProps => {
+                    return (
+                      <Pressable
+                        {...triggerProps}
+                        _pressed={{
+                          opacity: Theme.touchOpacity,
+                        }}>
+                        <DotsVerticalIcon />
+                      </Pressable>
+                    );
+                  }}>
+                  <Menu.Item
+                    {...addTestId('account-item-menu-details')}
+                    onPress={() => onDetails(account)}>
+                    {translate('account_list.account_details')}
+                  </Menu.Item>
+                  <Menu.Item
+                    {...addTestId('account-item-menu-delete')}
+                    onPress={() => onDelete(account)}>
+                    {translate('account_list.delete_account')}
+                  </Menu.Item>
+                </Menu>
+              </Stack>
+            </NBox>
+          </Stack>
+
+          <TokenAmount amount={account.balance}>
+            {({fiatAmount, fiatSymbol, tokenAmount, tokenSymbol}) => (
+              <>
+                <Stack direction="column" mt={4}>
+                  <Typography variant="h2">
+                    {tokenAmount} {tokenSymbol}
+                  </Typography>
+                  <Typography fontSize="14px">
+                    {formatCurrency(fiatAmount)}
+                  </Typography>
+                </Stack>
+              </>
+            )}
+          </TokenAmount>
+
+          <Stack direction="row" mt={4}>
+            {
+              <Button
+                width="50%"
+                size="xs"
+                disabled={account.readOnly}
+                variant={'whiteButton'}
+                colorScheme="dark"
+                {...addTestId('TokenSend')}
+                onPress={() => {
+                  navigate(Routes.TOKEN_SEND, {
+                    address: account.address,
+                  });
                 }}>
-                <Menu.Item onPress={() => onDetails(account)}>
-                  {translate('account_list.account_details')}
-                </Menu.Item>
-                <Menu.Item onPress={() => onDelete(account)}>
-                  {translate('account_list.delete_account')}
-                </Menu.Item>
-              </Menu>
-            </Stack>
-          </NBox>
-        </Stack>
-
-        <TokenAmount amount={account.balance}>
-          {({fiatAmount, fiatSymbol, tokenAmount, tokenSymbol}) => (
-            <>
-              <Stack direction="column" mt={4}>
-                <Typography variant="h2">
-                  {tokenAmount} {tokenSymbol}
+                <Typography color={Theme.colors.primaryBackground}>
+                  {translate('account_list.send_token')}
                 </Typography>
-                <Typography fontSize="14px">
-                  {formatCurrency(fiatAmount)}
-                </Typography>
-              </Stack>
-            </>
-          )}
-        </TokenAmount>
-
-        <Stack direction="row" mt={4}>
-          {
+              </Button>
+            }
             <Button
               width="50%"
               size="xs"
-              disabled={account.readOnly}
+              ml={2}
               variant={'whiteButton'}
               colorScheme="dark"
-              {...addTestId('TokenSend')}
+              {...addTestId('TokenReceive')}
               onPress={() => {
-                navigate(Routes.TOKEN_SEND, {
+                navigate(Routes.TOKEN_RECEIVE, {
                   address: account.address,
                 });
               }}>
               <Typography color={Theme.colors.primaryBackground}>
-                {translate('account_list.send_token')}
+                {translate('account_list.receive_token')}
               </Typography>
             </Button>
-          }
-          <Button
-            width="50%"
-            size="xs"
-            ml={2}
-            variant={'whiteButton'}
-            colorScheme="dark"
-            {...addTestId('TokenReceive')}
-            onPress={() => {
-              navigate(Routes.TOKEN_RECEIVE, {
-                address: account.address,
-              });
-            }}>
-            <Typography color={Theme.colors.primaryBackground}>
-              {translate('account_list.receive_token')}
-            </Typography>
-          </Button>
+          </Stack>
         </Stack>
       </Stack>
-    </Stack>
-  );
-});
+    );
+  },
+);
 
 export function displayWarning(account) {
   if (
@@ -234,9 +241,10 @@ export const AccountsScreen = withErrorBoundary(
               </Box>
             ) : (
               <NBox>
-                {accounts.map(account => {
+                {accounts.map((account, index) => {
                   return (
                     <AccountCard
+                      index={index}
                       key={account.id}
                       document={account}
                       onDetails={onDetails}
