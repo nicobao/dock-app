@@ -139,7 +139,7 @@
     "url": "^0.10.3",
     "util": "^0.10.4",
     "vm-browserify": "^0.0.4",
-    "webassemblyjs": "^1.11.0",
+    "webassemblyjs": "1.11.3",
     "winston": "^3.3.3"
   },
   "devDependencies": {
