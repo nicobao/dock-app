@@ -96,7 +96,7 @@ exports[`QRScanScreen should render DIDAuthConfirmScreen  1`] = `
                 marginBottom={12}
                 marginTop={4}
               >
-                <Memo(ForwardRef(Input))
+                <Input
                   accessibilityLabel="Name"
                   autoCapitalize="none"
                   onChangeText={[Function]}

@@ -50,9 +50,7 @@ export function CustomSelectInput({
         onClose={() => {
           setContentVisible(false);
         }}>
-        <Actionsheet.Content
-          backgroundColor={Theme.colors.secondaryBackground}
-        >
+        <Actionsheet.Content backgroundColor={Theme.colors.secondaryBackground}>
           {items.length === 0 && (
             <Typography variant="h2" mt={1}>
               {emptyItemMessage}

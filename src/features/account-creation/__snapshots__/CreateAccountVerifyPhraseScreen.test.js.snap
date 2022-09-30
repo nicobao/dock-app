@@ -44,7 +44,7 @@ exports[`CreateAccountVerifyPhraseScreen should render correctly 1`] = `
               Verify word #
               4
             </Memo(ForwardRef(FormControlLabel))>
-            <Memo(ForwardRef(Input))
+            <Input
               autoCapitalize="none"
               value="test"
             />
@@ -58,7 +58,7 @@ exports[`CreateAccountVerifyPhraseScreen should render correctly 1`] = `
               Verify word #
               6
             </Memo(ForwardRef(FormControlLabel))>
-            <Memo(ForwardRef(Input))
+            <Input
               autoCapitalize="none"
               value="test2"
             />
