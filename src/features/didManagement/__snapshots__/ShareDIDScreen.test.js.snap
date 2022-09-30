@@ -45,7 +45,7 @@ exports[`ShareDIDScreen should render correctly 1`] = `
       >
         <Memo(ForwardRef(Stack))
           alignItems="center"
-          bg="#27272A"
+          backgroundColor="#1F1F21"
           borderRadius={12}
           my={7}
           p={5}

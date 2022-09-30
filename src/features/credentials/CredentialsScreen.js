@@ -73,7 +73,7 @@ export const CredentialListItem = withErrorBoundary(
 
     return (
       <NBox
-        bgColor={Theme.colors.credentialCardBg}
+        backgroundColor={Theme.colors.cardItemBackground}
         p={4}
         borderRadius={10}
         m={2}
