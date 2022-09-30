@@ -11,6 +11,8 @@ export const Theme = {
   },
   borderRadius: 6,
   colors: {
+    inputBackground: '#27272A',
+    cardItemBackground: '#1F1F21',
     tabTextHighlightColor: '#0063F7',
     grey: '#1F1F21',
     backdrop: 'rgba(0, 0, 0, 0.6)',

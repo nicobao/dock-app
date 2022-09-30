@@ -58,7 +58,7 @@ exports[`ImportDIDScreen should render correctly 1`] = `
             <Memo(ForwardRef(FormControlLabel))>
               Enter password
             </Memo(ForwardRef(FormControlLabel))>
-            <Memo(ForwardRef(Input))
+            <Input
               accessibilityLabel="Password"
               autoCapitalize="none"
               secureTextEntry={true}

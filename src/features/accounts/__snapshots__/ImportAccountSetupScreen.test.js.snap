@@ -37,7 +37,7 @@ exports[`ImportAccountSetupScreen should render correctly 1`] = `
         <Memo(ForwardRef(Box))
           mt={7}
         >
-          <Memo(ForwardRef(Input))
+          <Input
             accessibilityLabel="ImportAccountNameInput"
             autoCapitalize="none"
             placeholder="Account name"

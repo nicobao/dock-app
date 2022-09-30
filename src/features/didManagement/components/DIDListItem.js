@@ -20,7 +20,7 @@ export function DIDListItem({didDocumentResolution, onOptionClicked, onShare}) {
       pl={4}
       pr={3}
       style={{
-        backgroundColor: Theme.colors.grey,
+        backgroundColor: Theme.colors.cardItemBackground,
         borderRadius: 12,
       }}>
       <VStack>

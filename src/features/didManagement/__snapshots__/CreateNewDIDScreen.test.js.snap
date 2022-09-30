@@ -64,7 +64,7 @@ exports[`CreateNewDIDScreen should render correctly when form is invalid 1`] = `
             <Memo(ForwardRef(FormControlLabel))>
               DID Name
             </Memo(ForwardRef(FormControlLabel))>
-            <Memo(ForwardRef(Input))
+            <Input
               accessibilityLabel="DIDName"
               autoCapitalize="none"
               testID="DIDName"
@@ -227,7 +227,7 @@ exports[`CreateNewDIDScreen should render correctly when form is valid 1`] = `
             <Memo(ForwardRef(FormControlLabel))>
               DID Name
             </Memo(ForwardRef(FormControlLabel))>
-            <Memo(ForwardRef(Input))
+            <Input
               accessibilityLabel="DIDName"
               autoCapitalize="none"
               testID="DIDName"
@@ -390,7 +390,7 @@ exports[`CreateNewDIDScreen should render correctly with modal 1`] = `
             <Memo(ForwardRef(FormControlLabel))>
               DID Name
             </Memo(ForwardRef(FormControlLabel))>
-            <Memo(ForwardRef(Input))
+            <Input
               accessibilityLabel="DIDName"
               autoCapitalize="none"
               testID="DIDName"

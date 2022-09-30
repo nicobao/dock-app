@@ -47,7 +47,7 @@ exports[`ExportDIDScreen should render correctly when form invalid 1`] = `
               <Memo(ForwardRef(FormControlLabel))>
                 Enter Password
               </Memo(ForwardRef(FormControlLabel))>
-              <Memo(ForwardRef(Input))
+              <Input
                 accessibilityLabel="Password"
                 autoCapitalize="none"
                 placeholder="Password"
@@ -68,7 +68,7 @@ exports[`ExportDIDScreen should render correctly when form invalid 1`] = `
               <Memo(ForwardRef(FormControlLabel))>
                 Confirm Password
               </Memo(ForwardRef(FormControlLabel))>
-              <Memo(ForwardRef(Input))
+              <Input
                 accessibilityLabel="ConfirmPassword"
                 autoCapitalize="none"
                 placeholder="Confirm Password"
@@ -195,7 +195,7 @@ exports[`ExportDIDScreen should render correctly when form valid 1`] = `
               <Memo(ForwardRef(FormControlLabel))>
                 Enter Password
               </Memo(ForwardRef(FormControlLabel))>
-              <Memo(ForwardRef(Input))
+              <Input
                 accessibilityLabel="Password"
                 autoCapitalize="none"
                 placeholder="Password"
@@ -216,7 +216,7 @@ exports[`ExportDIDScreen should render correctly when form valid 1`] = `
               <Memo(ForwardRef(FormControlLabel))>
                 Confirm Password
               </Memo(ForwardRef(FormControlLabel))>
-              <Memo(ForwardRef(Input))
+              <Input
                 accessibilityLabel="ConfirmPassword"
                 autoCapitalize="none"
                 placeholder="Confirm Password"
