@@ -11,9 +11,12 @@ export const Theme = {
   },
   borderRadius: 6,
   colors: {
+    disabledPrimaryColor: '#1E75C5',
+    primaryColor: '#0063f7',
     inputBackground: '#27272A',
     cardItemBackground: '#1F1F21',
     tabTextHighlightColor: '#0063F7',
+
     grey: '#1F1F21',
     backdrop: 'rgba(0, 0, 0, 0.6)',
     transparent: 'transparent',
@@ -71,7 +74,7 @@ const nBaseTheme = extendTheme({
       // 200: '#A2D4EC',
       // 300: '#ccc',
 
-      400: Theme.colors.primaryBlue,
+      400: Theme.colors.primaryColor,
 
       // 500: '#0088CC',
       // 600: '#007AB8',

@@ -128,7 +128,7 @@ export function Button(props) {
   let {children, icon, ...otherProps} = props;
 
   if (!otherProps.bg && otherProps.isDisabled) {
-    otherProps.bg = '#1E75C5';
+    otherProps.bg = Theme.colors.disabledPrimaryColor;
   }
 
   if (otherProps.variant === 'ghost') {
@@ -137,6 +137,7 @@ export function Button(props) {
       color: Theme.colors.textHighlighted,
     };
   }
+  
 
   return (
     <NButton {...otherProps}>
