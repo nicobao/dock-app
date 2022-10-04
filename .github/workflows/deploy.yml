@@ -106,6 +106,7 @@ jobs:
           cd ./android
           mkdir release
           fastlane package_apk
+          cp "app/build/outputs/apk/release/app-release.apk" ${{env.APK_LOCATION}}
           fastlane submit_to_google
           fastlane s3_upload
 
