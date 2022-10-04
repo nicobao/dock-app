@@ -103,6 +103,7 @@ jobs:
           APK_LOCATION: ./release/dock-wallet.apk
         run: |
           echo "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
+          echo "BUILD_TAG=$(node print-build-number|tr -s ' ' '_')" >> $GITHUB_ENV
           cd ./android
           mkdir release
           fastlane package_apk
