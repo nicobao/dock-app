@@ -14,7 +14,7 @@ const config = {
     'node_modules/(?!(@polkadot|@babel|@react-native|@docknetwork|react-native|rn-fetch|redux-persist-filesystem|@react-navigation|@react-native-community|react-navigation|react-navigation-redux-helpers|@sentry))',
   ],
   transform: {
-    // '^.+\\.(ts|js)$': 'metro-react-native-babel-transformer',
+    '^.+\\.(js|jsx|ts|tsx)$': '<rootDir>/test/jestBabelTransform.js',
     '^.+\\.svg$': '<rootDir>/test/svg-transformer.js',
   },
   moduleNameMapper: {
