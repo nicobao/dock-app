@@ -66,7 +66,7 @@ platform :ios do
   desc "Send slack message"
   lane :send_message do
     build_number = get_build_number(xcodeproj: "Project.xcodeproj")
-   
+
    slack(
       message: "iOS App successfully deployed!",
       success: true,
@@ -87,4 +87,28 @@ platform :ios do
        build_release
        upload_release
   end
+
+  desc "Build without uploading"
+  lane :build_no_upload do
+       setup
+       load_asc_api_key
+       prepare_signing
+       build_release
+  end
+
+    desc "Upload to S3 bucket"
+    lane :s3_upload do
+          aws_s3(
+            access_key:  ENV['S3_ACCESS_KEY'],
+            secret_access_key: ENV['S3_SECRET_ACCESS_KEY'],
+            bucket:  ENV['S3_APP_BUCKET'],
+            region: ENV['S3_REGION'],
+            ipa: ENV['IPA_LOCATION'],
+            app_directory: ENV['S3_ANDROID_IPA_DIR'],
+            upload_metadata: true,
+            acl: ENV['S3_ACL'],
+            path: ENV['BUILD_TAG'] + "/"
+          )
+
+    end
 end

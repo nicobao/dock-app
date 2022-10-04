@@ -100,7 +100,8 @@ jobs:
         run: |
           echo "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
           cd ./android
-          fastlane internal
+          fastlane package_apk
+          fastlane submit_to_google
           fastlane s3_upload
 
       - name: Send slack notification
