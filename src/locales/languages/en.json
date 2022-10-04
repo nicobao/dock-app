@@ -110,7 +110,8 @@
     "switch_network_success": "Network switch successful",
     "switch_network_error": "Network switch failed",
     "activate_transak": "Activate Transak",
-    "show_did_management": "Show DID Management"
+    "show_did_management": "Show DID Management",
+    "show_accounts": "Show accounts"
   },
   "account_setup": {
     "title": "Account Name",

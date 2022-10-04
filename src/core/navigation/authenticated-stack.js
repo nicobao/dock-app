@@ -18,6 +18,7 @@ import {CredentialsNavigationStackScreen} from './credentials-navigation';
 import {ScanNavigationStackScreen} from './scan-navigation';
 import {DIDNavigationStackScreen} from './did-navigation';
 import {SettingsNavigationStackScreen} from './settings-navigation';
+import {Routes} from '../routes';
 
 const Tab = createBottomTabNavigator();
 
@@ -39,32 +40,41 @@ function TabNavigatorScreen() {
       screenOptions={{
         tabBarBackground: () => <View style={styles.tabBar} />,
       }}>
-      <Tab.Screen
-        name={translate('app_navigation.tokens')}
-        component={TokenNavigationStackScreen}
-        options={{
-          ...screenOptions,
-          headerShown: false,
-          tabBarIcon: ({color, size, focused}) => (
-            <MenuTokensIcon
-              style={{
-                color: focused ? Theme.colors.primaryBlue : Theme.colors.text,
-              }}
-            />
-          ),
-        }}
-      />
+      {features.accounts && (
+        <Tab.Screen
+          name={Routes.ACCOUNTS}
+          component={TokenNavigationStackScreen}
+          options={{
+            ...screenOptions,
+            tabBarLabel: translate('app_navigation.tokens'),
+            headerShown: false,
+            tabBarIcon: ({color, size, focused}) => (
+              <MenuTokensIcon
+                style={{
+                  color: focused
+                    ? Theme.colors.tabTextHighlightColor
+                    : Theme.colors.text,
+                }}
+              />
+            ),
+          }}
+        />
+      )}
+
       {features.credentials && (
         <Tab.Screen
-          name={translate('app_navigation.credentials')}
+          name={Routes.APP_CREDENTIALS}
           component={CredentialsNavigationStackScreen}
           options={{
             ...screenOptions,
             headerShown: false,
+            tabBarLabel: translate('app_navigation.credentials'),
             tabBarIcon: ({focused}) => (
               <MenuCredentialsIcon
                 style={{
-                  color: focused ? Theme.colors.primaryBlue : Theme.colors.text,
+                  color: focused
+                    ? Theme.colors.tabTextHighlightColor
+                    : Theme.colors.text,
                 }}
               />
             ),
@@ -73,15 +83,18 @@ function TabNavigatorScreen() {
       )}
 
       <Tab.Screen
-        name={translate('app_navigation.scan')}
+        name={Routes.APP_QR_SCANNER}
         component={ScanNavigationStackScreen}
         options={{
           ...screenOptions,
           headerShown: false,
+          tabBarLabel: translate('app_navigation.scan'),
           tabBarIcon: ({focused}) => (
             <MenuScanQRIcon
               style={{
-                color: focused ? Theme.colors.primaryBlue : Theme.colors.text,
+                color: focused
+                  ? Theme.colors.tabTextHighlightColor
+                  : Theme.colors.text,
               }}
             />
           ),
@@ -89,15 +102,18 @@ function TabNavigatorScreen() {
       />
       {features.didManagement && (
         <Tab.Screen
-          name={translate('app_navigation.did_management')}
+          name={Routes.DID_MANAGEMENT_LIST}
           component={DIDNavigationStackScreen}
           options={{
             ...screenOptions,
             headerShown: false,
+            tabBarLabel: translate('app_navigation.did_management'),
             tabBarIcon: ({focused}) => (
               <DIDManagementIcon
                 style={{
-                  color: focused ? Theme.colors.primaryBlue : Theme.colors.text,
+                  color: focused
+                    ? Theme.colors.tabTextHighlightColor
+                    : Theme.colors.text,
                 }}
               />
             ),
@@ -106,15 +122,18 @@ function TabNavigatorScreen() {
       )}
 
       <Tab.Screen
-        name={translate('app_navigation.settings')}
+        name={Routes.APP_SETTINGS}
         component={SettingsNavigationStackScreen}
         options={{
           ...screenOptions,
           headerShown: false,
+          tabBarLabel: translate('app_navigation.settings'),
           tabBarIcon: ({focused}) => (
             <MenuSettingsIcon
               style={{
-                color: focused ? Theme.colors.primaryBlue : Theme.colors.text,
+                color: focused
+                  ? Theme.colors.tabTextHighlightColor
+                  : Theme.colors.text,
               }}
             />
           ),
