@@ -40,7 +40,7 @@ jobs:
           commit_user_name: GitHub Actions Bot
           commit_user_email: github-actions-bot@dock.io
           commit_author: Author <actions@github.com>
-          branch: dev
+          branch: bug/dcka-923_deploy-failure
 
   internal_release_android:
     name: "Android deploy"
