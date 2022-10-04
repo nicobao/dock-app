@@ -4,7 +4,7 @@ exports[`QRScanScreen should render DIDAuthConfirmScreen  1`] = `
 <RNCSafeAreaView
   style={
     Object {
-      "backgroundColor": "#000",
+      "backgroundColor": "#141417",
       "flex": 1,
     }
   }
@@ -96,7 +96,7 @@ exports[`QRScanScreen should render DIDAuthConfirmScreen  1`] = `
                 marginBottom={12}
                 marginTop={4}
               >
-                <Memo(ForwardRef(Input))
+                <Input
                   accessibilityLabel="Name"
                   autoCapitalize="none"
                   onChangeText={[Function]}
@@ -154,7 +154,7 @@ exports[`QRScanScreen should render DIDAuthScreen correctly  1`] = `
 <RNCSafeAreaView
   style={
     Object {
-      "backgroundColor": "#000",
+      "backgroundColor": "#141417",
       "flex": 1,
     }
   }

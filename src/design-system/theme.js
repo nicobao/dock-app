@@ -11,6 +11,9 @@ export const Theme = {
   },
   borderRadius: 6,
   colors: {
+    inputBackground: '#27272A',
+    cardItemBackground: '#1F1F21',
+    tabTextHighlightColor: '#0063F7',
     grey: '#1F1F21',
     backdrop: 'rgba(0, 0, 0, 0.6)',
     transparent: 'transparent',
@@ -35,7 +38,7 @@ export const Theme = {
     transactionFailed: '#F87171',
     transactionPending: '#FBBF24',
     qrCodeBackground: '#fff',
-    credentialCardBg: '#000',
+    credentialCardBg: '#1F1F21',
     bgBlue: '#00174D',
 
     primaryBlue: '#0063F7',
@@ -44,7 +47,7 @@ export const Theme = {
     activeText: '#18181B',
   },
   screen: {
-    backgroundColor: '#000',
+    backgroundColor: '#141417',
   },
   button: {
     backgroundColor: '#0063F7',

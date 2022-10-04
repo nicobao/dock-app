@@ -4,6 +4,7 @@ import {
   ChevronUpIcon,
   Pressable,
   Stack,
+  Input as NBInput,
   Text,
 } from 'native-base';
 
@@ -15,7 +16,11 @@ import {Button} from './buttons';
 import {Theme} from './theme';
 import {Typography} from './typography';
 
-export {Input, Select, Text} from 'native-base';
+export {Select, Text} from 'native-base';
+
+export function Input(props) {
+  return <NBInput backgroundColor={Theme.colors.inputBackground} {...props} />;
+}
 
 export function SelectToggler({children, placeholder, onChange}) {
   const [contentVisible, setContentVisible] = useState(false);

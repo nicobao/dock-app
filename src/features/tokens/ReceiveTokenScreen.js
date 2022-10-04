@@ -46,7 +46,7 @@ export function ReceiveTokenScreen({
       </Stack>
       <Content marginLeft={26} marginRight={26}>
         <Stack
-          bg={Theme.colors.secondaryBackground}
+          backgroundColor={Theme.colors.cardItemBackground}
           p={5}
           alignItems="center"
           borderRadius={12}

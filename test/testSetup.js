@@ -515,6 +515,11 @@ jest.mock('@docknetwork/wallet-sdk-react-native/lib', () => {
       }),
     },
   };
+  const useCredentialUtilsMock = {
+    credentials: [],
+    saveCredential:jest.fn(),
+    deleteCredential: jest.fn(),
+  };
 
   return {
     WalletSDKProvider: originalModule.WalletSDKProvider,
@@ -522,6 +527,7 @@ jest.mock('@docknetwork/wallet-sdk-react-native/lib', () => {
     useAccounts: () => useAccountsMockFunctions,
     usePresentation: () => usePresentationMockFunctions,
     useWallet: () => useWalletMockFunctions,
+    useCredentialUtils: () => useCredentialUtilsMock,
   };
 });
 global.fetch = jest.fn(() =>
