@@ -120,7 +120,6 @@
     "react-native-svg": "^12.1.0",
     "react-native-svg-transformer": "^0.14.3",
     "react-native-tcp": "^4.0.0",
-    "react-native-tcp-socket": "^6.0.1",
     "react-native-udp": "4.1.5",
     "react-native-vector-icons": "^8.1.0",
     "react-native-webview": "^11.4.3",
