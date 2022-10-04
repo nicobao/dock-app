@@ -88,6 +88,8 @@ jobs:
           cp -rf ./certs/.env ./
           rm -rf /tmp/google-play-cert
           cp -rf ./certs/google-play-cert /tmp/google-play-cert
+          echo "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
+          echo "BUILD_TAG=$(node print-build-number|tr -s ' ' '_')" >> $GITHUB_ENV
 
       - name: Install Fastlane
         run: gem install fastlane
@@ -102,8 +104,6 @@ jobs:
           S3_ACL: ${{ secrets.S3_ACL }}
           APK_LOCATION: ./release/dock-wallet.apk
         run: |
-          echo "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
-          echo "BUILD_TAG=$(node print-build-number|tr -s ' ' '_')" >> $GITHUB_ENV
           cd ./android
           mkdir release
           fastlane package_apk
