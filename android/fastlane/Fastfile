@@ -40,13 +40,18 @@ platform :android do
           upload_assets: [ ENV['APK_LOCATION'] ],
           is_prerelease: true
         )
+
+        copy_artifacts(
+          artifacts: ['*/build/outputs/apk/**/*.apk'],
+          target_path: ENV['APK_LOCATION']
+        )
   end
 
   desc "Submit a new Beta Build to Google Play"
   lane :submit_to_google do
         supply(
           track: 'internal',
-          apk: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH].to_s,
+          apk: ENV['APK_LOCATION'],
           skip_upload_metadata: true,
           skip_upload_images: true,
           skip_upload_changelogs: true,

@@ -1,6 +1,9 @@
 name: Deployment
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - bug/dcka-923_deploy-failure
   pull_request:
     branches:
       - dev
@@ -97,9 +100,11 @@ jobs:
           S3_REGION: ${{ secrets.S3_REGION }}
           S3_ANDROID_APK_DIR: ${{ secrets.S3_ANDROID_APK_DIR }}
           S3_ACL: ${{ secrets.S3_ACL }}
+          APK_LOCATION: ./release/dock-wallet.apk
         run: |
           echo "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
           cd ./android
+          mkdir release
           fastlane package_apk
           fastlane submit_to_google
           fastlane s3_upload
