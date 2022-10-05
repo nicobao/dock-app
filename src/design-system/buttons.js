@@ -95,7 +95,7 @@ export function BigButton({icon, children, ...props}) {
     <Box
       row
       borderWidth={1}
-      borderColor="#3F3F46"
+      borderColor={Theme.button.bigButtonBorderColor}
       borderRadius={8}
       padding={25}
       marginBottom={12}
