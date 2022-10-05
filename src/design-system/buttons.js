@@ -143,7 +143,9 @@ export function Button(props) {
     <NButton {...otherProps}>
       <Stack direction="row">
         {icon && <Box marginRight={15}>{icon}</Box>}
-        <Text>{children}</Text>
+        <Text style={{
+          color: Theme.colors.textHighlighted
+        }}>{children}</Text>
       </Stack>
     </NButton>
   );
