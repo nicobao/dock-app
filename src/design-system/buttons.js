@@ -144,7 +144,7 @@ export function Button(props) {
         {icon && <Box marginRight={15}>{icon}</Box>}
         <Text
           style={{
-            color: Theme.colors.textHighlighted,
+            color: Theme.button.textColor,
           }}>
           {children}
         </Text>
