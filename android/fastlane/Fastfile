@@ -46,7 +46,7 @@ platform :android do
   lane :submit_to_google do
         supply(
           track: 'internal',
-          apk: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH].to_s,
+          apk: ENV['APK_LOCATION'],
           skip_upload_metadata: true,
           skip_upload_images: true,
           skip_upload_changelogs: true,
