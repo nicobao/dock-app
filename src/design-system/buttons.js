@@ -95,7 +95,7 @@ export function BigButton({icon, children, ...props}) {
     <Box
       row
       borderWidth={1}
-      borderColor="#3F3F46"
+      borderColor={Theme.button.bigButtonBorderColor}
       borderRadius={8}
       padding={25}
       marginBottom={12}
@@ -128,7 +128,7 @@ export function Button(props) {
   let {children, icon, ...otherProps} = props;
 
   if (!otherProps.bg && otherProps.isDisabled) {
-    otherProps.bg = '#1E75C5';
+    otherProps.bg = Theme.colors.disabledPrimaryColor;
   }
 
   if (otherProps.variant === 'ghost') {
@@ -142,7 +142,12 @@ export function Button(props) {
     <NButton {...otherProps}>
       <Stack direction="row">
         {icon && <Box marginRight={15}>{icon}</Box>}
-        <Text>{children}</Text>
+        <Text
+          style={{
+            color: Theme.button.textColor,
+          }}>
+          {children}
+        </Text>
       </Stack>
     </NButton>
   );
