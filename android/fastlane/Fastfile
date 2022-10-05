@@ -22,13 +22,28 @@ platform :android do
     increment_version_code
   end
 
-  desc "Submit a new Beta Build to Google Play"
-  lane :internal do
+  desc "Build and package APK"
+  lane :package_apk do
         gradle(
           task: 'assemble',
           build_type: 'Release'
         )
+  end
 
+  desc "Push release to repository"
+  lane :push_to_repo do
+        set_github_release(
+          api_token: ENV['GITHUB_TOKEN'],
+          repository_name: ENV['GITHUB_REPO'],
+          tag_name: ENV['GITHUB_RELEASE_TAG'],
+          name: ENV['GITHUB_RELEASE_NAME'],
+          upload_assets: [ ENV['APK_LOCATION'] ],
+          is_prerelease: true
+        )
+  end
+
+  desc "Submit a new Beta Build to Google Play"
+  lane :submit_to_google do
         supply(
           track: 'internal',
           apk: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH].to_s,
@@ -56,20 +71,16 @@ platform :android do
 
   desc "Upload to S3 bucket"
     lane :s3_upload do
-          gradle(
-            task: 'assemble',
-            build_type: 'Release'
-          )
-
           aws_s3(
             access_key:  ENV['S3_ACCESS_KEY'],
             secret_access_key: ENV['S3_SECRET_ACCESS_KEY'],
             bucket:  ENV['S3_APP_BUCKET'],
             region: ENV['S3_REGION'],
-            apk: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH].to_s,
+            apk: ENV['APK_LOCATION'],
             app_directory: ENV['S3_ANDROID_APK_DIR'],
             upload_metadata: true,
             acl: ENV['S3_ACL'],
+            path: ENV['BUILD_TAG'] + "/"
           )
 
     end
