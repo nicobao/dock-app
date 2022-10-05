@@ -7,8 +7,6 @@
 
 const path = require('path');
 const { getDefaultConfig } = require('metro-config');
-// const exclusionList = require('metro-config/src/defaults/exclusionList');
-
 const extraNodeModules = require('node-libs-react-native');
 
 module.exports = (async () => {
@@ -27,8 +25,7 @@ module.exports = (async () => {
       babelTransformerPath: require.resolve('react-native-svg-transformer'),
     },
     resolver: {
-      // blacklistRE: exclusionList([/rn-rpc-webview\/source\/.*/]),
-      resolverMainFields: ["react-native", "main"],
+      resolverMainFields: ['react-native', 'main'],
       assetExts: assetExts.filter(ext => ext !== 'svg'),
       sourceExts: [...sourceExts, 'svg'],
       extraNodeModules: {
@@ -36,12 +33,10 @@ module.exports = (async () => {
         vm: require.resolve('vm-browserify'),
         src: path.resolve(__dirname, './src'),
         realm: require.resolve('realm'),
-        // 'react-native-tcp': require.resolve('react-native-tcp-socket'),
-        '@docknetwork/react-native-sdk': path.resolve(__dirname, '../dock-rn-web-bridge'),
-        mrklt: path.resolve(__dirname, "./src/mrklt.js"),
-        'credentials-context': path.resolve(__dirname, "./rn-packages/credentials-context.js"),
-        'security-context': path.resolve(__dirname, "./rn-packages/security-context.js"),
-      }
-    }
+        mrklt: path.resolve(__dirname, './src/mrklt.js'),
+        'credentials-context': path.resolve(__dirname, './rn-packages/credentials-context.js'),
+        'security-context': path.resolve(__dirname, './rn-packages/security-context.js'),
+      },
+    },
   };
-})
+});
