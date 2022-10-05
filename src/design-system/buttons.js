@@ -137,15 +137,17 @@ export function Button(props) {
       color: Theme.colors.textHighlighted,
     };
   }
-  
 
   return (
     <NButton {...otherProps}>
       <Stack direction="row">
         {icon && <Box marginRight={15}>{icon}</Box>}
-        <Text style={{
-          color: Theme.colors.textHighlighted
-        }}>{children}</Text>
+        <Text
+          style={{
+            color: Theme.colors.textHighlighted,
+          }}>
+          {children}
+        </Text>
       </Stack>
     </NButton>
   );
