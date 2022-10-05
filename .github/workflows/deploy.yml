@@ -1,9 +1,6 @@
 name: Deployment
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - bug/dcka-923_deploy-failure
   pull_request:
     branches:
       - dev
@@ -12,7 +9,7 @@ jobs:
   increment_version:
     runs-on: macos-latest
     name: "Increment app version"
-#    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -40,7 +37,7 @@ jobs:
           commit_user_name: GitHub Actions Bot
           commit_user_email: github-actions-bot@dock.io
           commit_author: Author <actions@github.com>
-          branch: bug/dcka-923_deploy-failure
+          branch: dev
 
   internal_release_android:
     name: "Android deploy"
