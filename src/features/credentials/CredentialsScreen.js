@@ -51,7 +51,11 @@ export function renderObjectAttributes({attributes}) {
 export function EmptyCredentials(props) {
   return (
     <Center {...props}>
-      <Box borderRadius={72} width={72} height={72} backgroundColor={'#27272A'}>
+      <Box
+        borderRadius={72}
+        width={72}
+        height={72}
+        backgroundColor={Theme.colors.secondaryBackground}>
         <Center h="100%" width="100%">
           <EmptyCredentialIcon color={Theme.colors.description} />
         </Center>
