@@ -195,6 +195,7 @@ export function CredentialsScreen({credentials, onRemove, onAdd}) {
           credentials.map(item => {
             const credentialActions = (
               <Menu
+                bg={Theme.colors.tertiaryBackground}
                 trigger={triggerProps => {
                   return (
                     <Pressable
