@@ -24,6 +24,7 @@ export function NewDIDModal({visible, onClose, onImportDID}) {
             title: translate('didManagement.create_new_did'),
             icon: <PlusCircleIcon />,
             onPress: () => {
+              onClose();
               navigate(Routes.DID_MANAGEMENT_NEW_DID);
             },
           },
