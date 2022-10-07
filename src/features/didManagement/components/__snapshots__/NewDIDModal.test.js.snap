@@ -86,13 +86,25 @@ exports[`NewDIDModal should render correctly for modal is not visible 1`] = `
         items={
           Array [
             Object {
-              "icon": <SvgFile />,
+              "icon": <SvgFile
+                style={
+                  Object {
+                    "color": "#ffffff",
+                  }
+                }
+              />,
               "onPress": [Function],
               "testID": "CreateNewDID",
               "title": "Create New DID",
             },
             Object {
-              "icon": <SvgFile />,
+              "icon": <SvgFile
+                style={
+                  Object {
+                    "color": "#ffffff",
+                  }
+                }
+              />,
               "onPress": [MockFunction],
               "testID": "ImportExistingDIDBtn",
               "title": "Import existing DID",
@@ -192,13 +204,25 @@ exports[`NewDIDModal should render correctly for modal is visible 1`] = `
         items={
           Array [
             Object {
-              "icon": <SvgFile />,
+              "icon": <SvgFile
+                style={
+                  Object {
+                    "color": "#ffffff",
+                  }
+                }
+              />,
               "onPress": [Function],
               "testID": "CreateNewDID",
               "title": "Create New DID",
             },
             Object {
-              "icon": <SvgFile />,
+              "icon": <SvgFile
+                style={
+                  Object {
+                    "color": "#ffffff",
+                  }
+                }
+              />,
               "onPress": [MockFunction],
               "testID": "ImportExistingDIDBtn",
               "title": "Import existing DID",

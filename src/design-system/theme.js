@@ -63,7 +63,7 @@ export const Theme = {
     backgroundColor: '#0063F7',
     textColor: '#fff',
     btnWhiteBackground: '#F4F4F5',
-    bigButtonBorderColor: '#3F3F46'
+    bigButtonBorderColor: '#3F3F46',
   },
   touchOpacity: 0.2,
 };
