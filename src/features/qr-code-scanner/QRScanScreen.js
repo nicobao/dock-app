@@ -38,7 +38,7 @@ const Title = styled.Text`
 const Footer = styled.View`
   display: flex;
   justify-content: center;
-  background: #2e3945;
+  background: ${Theme.colors.primaryBackground};
   border-radius: 4px;
   margin: 20px;
   height: 93px;
