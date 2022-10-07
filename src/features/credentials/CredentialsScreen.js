@@ -55,12 +55,13 @@ export function EmptyCredentials(props) {
         borderRadius={72}
         width={72}
         height={72}
-        backgroundColor={Theme.colors.secondaryBackground}>
+        backgroundColor={Theme.colors.iconBackgroundColor}>
         <Center h="100%" width="100%">
           <EmptyCredentialIcon color={Theme.colors.description} />
         </Center>
       </Box>
       <Text
+        color={Theme.colors.textHighlighted}
         fontSize={14}
         pt={2}
         fontWeight={400}
@@ -189,7 +190,11 @@ export function CredentialsScreen({credentials, onRemove, onAdd}) {
           </Box>
           <Box row>
             <IconButton onPress={onAdd} col>
-              <PlusCircleWhiteIcon />
+              <PlusCircleWhiteIcon
+                style={{
+                  color: Theme.colors.headerIconColor,
+                }}
+              />
             </IconButton>
           </Box>
         </Box>

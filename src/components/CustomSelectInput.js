@@ -26,7 +26,7 @@ export function CustomSelectInput({
           setContentVisible(true);
         }}>
         <Stack
-          backgroundColor={Theme.colors.secondaryBackground}
+          backgroundColor={Theme.colors.inputBackground}
           direction="row"
           alignItems="center"
           pl={5}
@@ -41,7 +41,19 @@ export function CustomSelectInput({
             )}
           </Box>
           <Box mt={2}>
-            {contentVisible ? <ChevronUpIcon /> : <ChevronDownIcon />}
+            {contentVisible ? (
+              <ChevronUpIcon
+                style={{
+                  color: Theme.colors.description,
+                }}
+              />
+            ) : (
+              <ChevronDownIcon
+                style={{
+                  color: Theme.colors.description,
+                }}
+              />
+            )}
           </Box>
         </Stack>
       </TouchableWithoutFeedback>
@@ -50,7 +62,7 @@ export function CustomSelectInput({
         onClose={() => {
           setContentVisible(false);
         }}>
-        <Actionsheet.Content backgroundColor={Theme.colors.secondaryBackground}>
+        <Actionsheet.Content backgroundColor={Theme.colors.modalBackground}>
           {items.length === 0 && (
             <Typography variant="h2" mt={1}>
               {emptyItemMessage}

@@ -1,6 +1,6 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 
 import {View} from 'react-native';
 import {
@@ -46,14 +46,26 @@ function TabNavigatorScreen() {
           component={TokenNavigationStackScreen}
           options={{
             ...screenOptions,
-            tabBarLabel: translate('app_navigation.tokens'),
+            tabBarLabel: ({color, size, focused}) => {
+              return (
+                <Text
+                  style={{
+                    color: focused
+                      ? Theme.colors.tabTextHighlightColor
+                      : Theme.colors.tabTextUnHighlightColor,
+                    fontSize: 10,
+                  }}>
+                  {translate('app_navigation.tokens')}
+                </Text>
+              );
+            },
             headerShown: false,
             tabBarIcon: ({color, size, focused}) => (
               <MenuTokensIcon
                 style={{
                   color: focused
-                    ? Theme.colors.tabTextHighlightColor
-                    : Theme.colors.text,
+                    ? Theme.colors.tabIconHighlightColor
+                    : Theme.colors.tabIconUnHighlightColor,
                 }}
               />
             ),
@@ -68,13 +80,25 @@ function TabNavigatorScreen() {
           options={{
             ...screenOptions,
             headerShown: false,
-            tabBarLabel: translate('app_navigation.credentials'),
+            tabBarLabel: ({color, size, focused}) => {
+              return (
+                <Text
+                  style={{
+                    color: focused
+                      ? Theme.colors.tabTextHighlightColor
+                      : Theme.colors.tabTextUnHighlightColor,
+                    fontSize: 10,
+                  }}>
+                  {translate('app_navigation.credentials')}
+                </Text>
+              );
+            },
             tabBarIcon: ({focused}) => (
               <MenuCredentialsIcon
                 style={{
                   color: focused
-                    ? Theme.colors.tabTextHighlightColor
-                    : Theme.colors.text,
+                    ? Theme.colors.tabIconHighlightColor
+                    : Theme.colors.tabIconUnHighlightColor,
                 }}
               />
             ),
@@ -88,13 +112,25 @@ function TabNavigatorScreen() {
         options={{
           ...screenOptions,
           headerShown: false,
-          tabBarLabel: translate('app_navigation.scan'),
+          tabBarLabel: ({color, size, focused}) => {
+            return (
+              <Text
+                style={{
+                  color: focused
+                    ? Theme.colors.tabTextHighlightColor
+                    : Theme.colors.tabTextUnHighlightColor,
+                  fontSize: 10,
+                }}>
+                {translate('app_navigation.scan')}
+              </Text>
+            );
+          },
           tabBarIcon: ({focused}) => (
             <MenuScanQRIcon
               style={{
                 color: focused
-                  ? Theme.colors.tabTextHighlightColor
-                  : Theme.colors.text,
+                  ? Theme.colors.tabIconHighlightColor
+                  : Theme.colors.tabIconUnHighlightColor,
               }}
             />
           ),
@@ -107,13 +143,25 @@ function TabNavigatorScreen() {
           options={{
             ...screenOptions,
             headerShown: false,
-            tabBarLabel: translate('app_navigation.did_management'),
+            tabBarLabel: ({color, size, focused}) => {
+              return (
+                <Text
+                  style={{
+                    color: focused
+                      ? Theme.colors.tabTextHighlightColor
+                      : Theme.colors.tabTextUnHighlightColor,
+                    fontSize: 10,
+                  }}>
+                  {translate('app_navigation.did_management')}
+                </Text>
+              );
+            },
             tabBarIcon: ({focused}) => (
               <DIDManagementIcon
                 style={{
                   color: focused
-                    ? Theme.colors.tabTextHighlightColor
-                    : Theme.colors.text,
+                    ? Theme.colors.tabIconHighlightColor
+                    : Theme.colors.tabIconUnHighlightColor,
                 }}
               />
             ),
@@ -127,13 +175,25 @@ function TabNavigatorScreen() {
         options={{
           ...screenOptions,
           headerShown: false,
-          tabBarLabel: translate('app_navigation.settings'),
+          tabBarLabel: ({color, size, focused}) => {
+            return (
+              <Text
+                style={{
+                  color: focused
+                    ? Theme.colors.tabTextHighlightColor
+                    : Theme.colors.tabTextUnHighlightColor,
+                  fontSize: 10,
+                }}>
+                {translate('app_navigation.settings')}
+              </Text>
+            );
+          },
           tabBarIcon: ({focused}) => (
             <MenuSettingsIcon
               style={{
                 color: focused
-                  ? Theme.colors.tabTextHighlightColor
-                  : Theme.colors.text,
+                  ? Theme.colors.tabIconHighlightColor
+                  : Theme.colors.tabIconUnHighlightColor,
               }}
             />
           ),
