@@ -1,0 +1,237 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewDIDModal should render correctly for modal is not visible 1`] = `
+<ReactNativeModal
+  animationIn="slideInUp"
+  animationInTiming={300}
+  animationOut="slideOutDown"
+  animationOutTiming={300}
+  avoidKeyboard={false}
+  backdropColor="black"
+  backdropOpacity={0.7}
+  backdropTransitionInTiming={300}
+  backdropTransitionOutTiming={300}
+  coverScreen={true}
+  customBackdrop={null}
+  deviceHeight={null}
+  deviceWidth={null}
+  hasBackdrop={true}
+  hideModalContentWhileAnimating={false}
+  isVisible={false}
+  onBackButtonPress={[MockFunction]}
+  onBackdropPress={[MockFunction]}
+  onModalHide={[Function]}
+  onModalShow={[Function]}
+  onModalWillHide={[Function]}
+  onModalWillShow={[Function]}
+  onSwipeComplete={[MockFunction]}
+  panResponderThreshold={4}
+  propagateSwipe={false}
+  scrollHorizontal={false}
+  scrollOffset={0}
+  scrollOffsetMax={0}
+  scrollTo={null}
+  style={
+    Object {
+      "justifyContent": "flex-end",
+      "margin": 0,
+    }
+  }
+  supportedOrientations={
+    Array [
+      "portrait",
+      "landscape",
+    ]
+  }
+  swipeDirection={
+    Array [
+      "down",
+    ]
+  }
+  swipeThreshold={100}
+  useNativeDriver={false}
+>
+  <View
+    style={
+      Object {
+        "backgroundColor": "#18181B",
+        "borderTopLeftRadius": 20,
+        "borderTopRightRadius": 20,
+        "height": 667,
+        "width": "100%",
+      }
+    }
+  >
+    <Memo(ForwardRef(Stack))
+      alignItems="center"
+      mt={6}
+    >
+      <Memo(ForwardRef(Box))
+        backgroundColor="#3F3F46"
+        borderRadius={6}
+        height="4px"
+        width="36px"
+      />
+    </Memo(ForwardRef(Stack))>
+    <Memo(ForwardRef(Stack))
+      p={8}
+      testID="addDIDModal"
+    >
+      <Styled(Component)
+        variant="h1"
+      >
+        Add DID
+      </Styled(Component)>
+      <OptionList
+        items={
+          Array [
+            Object {
+              "icon": <SvgFile
+                style={
+                  Object {
+                    "color": "#ffffff",
+                  }
+                }
+              />,
+              "onPress": [Function],
+              "testID": "CreateNewDID",
+              "title": "Create New DID",
+            },
+            Object {
+              "icon": <SvgFile
+                style={
+                  Object {
+                    "color": "#ffffff",
+                  }
+                }
+              />,
+              "onPress": [MockFunction],
+              "testID": "ImportExistingDIDBtn",
+              "title": "Import existing DID",
+            },
+          ]
+        }
+        mt={5}
+      />
+    </Memo(ForwardRef(Stack))>
+  </View>
+</ReactNativeModal>
+`;
+
+exports[`NewDIDModal should render correctly for modal is visible 1`] = `
+<ReactNativeModal
+  animationIn="slideInUp"
+  animationInTiming={300}
+  animationOut="slideOutDown"
+  animationOutTiming={300}
+  avoidKeyboard={false}
+  backdropColor="black"
+  backdropOpacity={0.7}
+  backdropTransitionInTiming={300}
+  backdropTransitionOutTiming={300}
+  coverScreen={true}
+  customBackdrop={null}
+  deviceHeight={null}
+  deviceWidth={null}
+  hasBackdrop={true}
+  hideModalContentWhileAnimating={false}
+  isVisible={true}
+  onBackButtonPress={[MockFunction]}
+  onBackdropPress={[MockFunction]}
+  onModalHide={[Function]}
+  onModalShow={[Function]}
+  onModalWillHide={[Function]}
+  onModalWillShow={[Function]}
+  onSwipeComplete={[MockFunction]}
+  panResponderThreshold={4}
+  propagateSwipe={false}
+  scrollHorizontal={false}
+  scrollOffset={0}
+  scrollOffsetMax={0}
+  scrollTo={null}
+  style={
+    Object {
+      "justifyContent": "flex-end",
+      "margin": 0,
+    }
+  }
+  supportedOrientations={
+    Array [
+      "portrait",
+      "landscape",
+    ]
+  }
+  swipeDirection={
+    Array [
+      "down",
+    ]
+  }
+  swipeThreshold={100}
+  useNativeDriver={false}
+>
+  <View
+    style={
+      Object {
+        "backgroundColor": "#18181B",
+        "borderTopLeftRadius": 20,
+        "borderTopRightRadius": 20,
+        "height": 667,
+        "width": "100%",
+      }
+    }
+  >
+    <Memo(ForwardRef(Stack))
+      alignItems="center"
+      mt={6}
+    >
+      <Memo(ForwardRef(Box))
+        backgroundColor="#3F3F46"
+        borderRadius={6}
+        height="4px"
+        width="36px"
+      />
+    </Memo(ForwardRef(Stack))>
+    <Memo(ForwardRef(Stack))
+      p={8}
+      testID="addDIDModal"
+    >
+      <Styled(Component)
+        variant="h1"
+      >
+        Add DID
+      </Styled(Component)>
+      <OptionList
+        items={
+          Array [
+            Object {
+              "icon": <SvgFile
+                style={
+                  Object {
+                    "color": "#ffffff",
+                  }
+                }
+              />,
+              "onPress": [Function],
+              "testID": "CreateNewDID",
+              "title": "Create New DID",
+            },
+            Object {
+              "icon": <SvgFile
+                style={
+                  Object {
+                    "color": "#ffffff",
+                  }
+                }
+              />,
+              "onPress": [MockFunction],
+              "testID": "ImportExistingDIDBtn",
+              "title": "Import existing DID",
+            },
+          ]
+        }
+        mt={5}
+      />
+    </Memo(ForwardRef(Stack))>
+  </View>
+</ReactNativeModal>
+`;

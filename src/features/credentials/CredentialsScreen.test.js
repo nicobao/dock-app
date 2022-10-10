@@ -19,6 +19,54 @@ describe('CredentialsScreen', () => {
     );
     expect(wrapper.dive()).toMatchSnapshot();
   });
+  it('should render list of credentials correctly', () => {
+    const initialState = {
+      // placeholder for redux store
+    };
+
+    const credential = {
+      '@context': [
+        'https://www.w3.org/2018/credentials/v1',
+        {
+          dk: 'https://ld.dock.io/credentials#',
+          EmployeeIDCredential: 'dk:EmployeeIDCredential',
+          name: 'dk:name',
+          email: 'dk:email',
+          employeeId: 'dk:employeeId',
+        },
+      ],
+      id: 'https://creds-testnet.dock.io/191ce57b4b9195d823937c016e31544c225279e4fb3e7d5ed88038acf5daac42',
+      type: ['VerifiableCredential', 'EmployeeIDCredential'],
+      credentialSubject: {
+        name: 'Alice Doe',
+        email: 'alice@dock.io',
+        employeeId: 123456,
+      },
+      issuanceDate: '2022-08-29T15:24:47.799Z',
+      name: 'Acme Employee ID',
+      proof: {
+        type: 'Ed25519Signature2018',
+        created: '2022-08-29T16:24:47Z',
+        verificationMethod:
+          'did:dock:5D5K67AnGLBKSVJNkFW25uaDa7cSUjx6Zj55tzMdqQvQDPkA#keys-1',
+        proofPurpose: 'assertionMethod',
+        proofValue:
+          'zYetMX6EPE1Lzqe92ZZopqFQrwN1g9wwXE2UHW6y69cDZQfoCkz7hMZDxURvo8fVW97p2f6tpAfWKEQU8RvRNPxC',
+      },
+      issuer: 'did:dock:5D5K67AnGLBKSVJNkFW25uaDa7cSUjx6Zj55tzMdqQvQDPkA',
+    };
+    const wrapper = shallow(
+      <CredentialsScreen
+        credentials={[credential]}
+        onRemove={jest.fn}
+        onAdd={jest.fn}
+      />,
+      {
+        context: {store: mockStore(initialState)},
+      },
+    );
+    expect(wrapper.dive()).toMatchSnapshot();
+  });
   it('should render correctly credential list with string issuer', () => {
     const initialState = {
       // placeholder for redux store

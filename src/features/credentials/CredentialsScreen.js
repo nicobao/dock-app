@@ -51,12 +51,17 @@ export function renderObjectAttributes({attributes}) {
 export function EmptyCredentials(props) {
   return (
     <Center {...props}>
-      <Box borderRadius={72} width={72} height={72} backgroundColor={'#27272A'}>
+      <Box
+        borderRadius={72}
+        width={72}
+        height={72}
+        backgroundColor={Theme.colors.iconBackgroundColor}>
         <Center h="100%" width="100%">
           <EmptyCredentialIcon color={Theme.colors.description} />
         </Center>
       </Box>
       <Text
+        color={Theme.colors.textHighlighted}
         fontSize={14}
         pt={2}
         fontWeight={400}
@@ -185,7 +190,11 @@ export function CredentialsScreen({credentials, onRemove, onAdd}) {
           </Box>
           <Box row>
             <IconButton onPress={onAdd} col>
-              <PlusCircleWhiteIcon />
+              <PlusCircleWhiteIcon
+                style={{
+                  color: Theme.colors.headerIconColor,
+                }}
+              />
             </IconButton>
           </Box>
         </Box>
@@ -195,6 +204,7 @@ export function CredentialsScreen({credentials, onRemove, onAdd}) {
           credentials.map(item => {
             const credentialActions = (
               <Menu
+                bg={Theme.colors.tertiaryBackground}
                 trigger={triggerProps => {
                   return (
                     <Pressable

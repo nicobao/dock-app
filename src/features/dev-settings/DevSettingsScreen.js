@@ -17,6 +17,7 @@ import {
   NBox,
   OptionList,
   ScreenContainer,
+  Theme,
   Typography,
 } from '../../design-system';
 import {accountOperations} from '../accounts/account-slice';
@@ -60,7 +61,13 @@ export function DevSettingsScreen({
       {
         testID: 'switch-network',
         title: translate('dev_settings.switch_network'),
-        icon: <ChevronRightIcon />,
+        icon: (
+          <ChevronRightIcon
+            style={{
+              color: Theme.colors.secondaryIconColor,
+            }}
+          />
+        ),
         onPress: () => {
           setShowNetworkOptions(true);
         },
@@ -68,7 +75,13 @@ export function DevSettingsScreen({
       {
         testID: 'watch-account',
         title: translate('dev_settings.watch_account'),
-        icon: <ChevronRightIcon />,
+        icon: (
+          <ChevronRightIcon
+            style={{
+              color: Theme.colors.secondaryIconColor,
+            }}
+          />
+        ),
         onPress: () => {
           setShowWatchAccount(true);
         },
@@ -76,7 +89,13 @@ export function DevSettingsScreen({
       {
         testID: 'clear-cache',
         title: translate('dev_settings.clear_cache'),
-        icon: <ChevronRightIcon />,
+        icon: (
+          <ChevronRightIcon
+            style={{
+              color: Theme.colors.secondaryIconColor,
+            }}
+          />
+        ),
         onPress: () => {
           try {
             const realm = getRealm();
@@ -103,7 +122,13 @@ export function DevSettingsScreen({
       options.push({
         testID: feature.id,
         title: feature.title,
-        icon: <ChevronRightIcon />,
+        icon: (
+          <ChevronRightIcon
+            style={{
+              color: Theme.colors.secondaryIconColor,
+            }}
+          />
+        ),
         value: features[feature.id],
         isSwitch: true,
         onPress: () => onFeatureToggled(feature.id),

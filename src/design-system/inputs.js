@@ -19,7 +19,13 @@ import {Typography} from './typography';
 export {Select, Text} from 'native-base';
 
 export function Input(props) {
-  return <NBInput backgroundColor={Theme.colors.inputBackground} {...props} />;
+  return (
+    <NBInput
+      color={Theme.colors.description}
+      backgroundColor={Theme.colors.inputBackground}
+      {...props}
+    />
+  );
 }
 
 export function SelectToggler({children, placeholder, onChange}) {
@@ -34,7 +40,7 @@ export function SelectToggler({children, placeholder, onChange}) {
       <TouchableWithoutFeedback
         onPress={() => setContentVisible(value => !value)}>
         <Stack
-          backgroundColor="#27272A"
+          backgroundColor={Theme.colors.inputBackground}
           mt={8}
           width={0.67}
           direction="row"
