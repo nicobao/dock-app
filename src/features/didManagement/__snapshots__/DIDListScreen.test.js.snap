@@ -45,7 +45,13 @@ exports[`DIDListScreen should render correctly with list 1`] = `
               onPress={[Function]}
               testID="DIDListScreen_Add_DID"
             >
-              <SvgFile />
+              <SvgFile
+                style={
+                  Object {
+                    "color": "#ffffff",
+                  }
+                }
+              />
             </IconButton>
           </Box>
         </Box>
@@ -176,7 +182,13 @@ exports[`DIDListScreen should render correctly without list 1`] = `
               onPress={[Function]}
               testID="DIDListScreen_Add_DID"
             >
-              <SvgFile />
+              <SvgFile
+                style={
+                  Object {
+                    "color": "#ffffff",
+                  }
+                }
+              />
             </IconButton>
           </Box>
         </Box>
@@ -211,7 +223,15 @@ exports[`DIDListScreen should render correctly without list 1`] = `
       >
         <BigButton
           accessibilityLabel="CreateNewDID"
-          icon={<SvgFile />}
+          icon={
+            <SvgFile
+              style={
+                Object {
+                  "color": "#ffffff",
+                }
+              }
+            />
+          }
           onPress={[Function]}
           testID="CreateNewDID"
         >
@@ -219,7 +239,15 @@ exports[`DIDListScreen should render correctly without list 1`] = `
         </BigButton>
         <BigButton
           accessibilityLabel="ImportExistingDIDBtn"
-          icon={<SvgFile />}
+          icon={
+            <SvgFile
+              style={
+                Object {
+                  "color": "#ffffff",
+                }
+              }
+            />
+          }
           testID="ImportExistingDIDBtn"
         >
           Import existing DID

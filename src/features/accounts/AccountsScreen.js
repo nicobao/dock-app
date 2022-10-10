@@ -80,7 +80,12 @@ const AccountCard = withErrorBoundary(
                     fontWeight={600}>
                     {account.name}
                   </Typography>
-                  <ChevronRightIcon marginTop={3} />
+                  <ChevronRightIcon
+                    style={{
+                      color: Theme.colors.primaryIconColor,
+                    }}
+                    marginTop={3}
+                  />
                 </Stack>
               </Stack>
             </Pressable>
@@ -177,13 +182,10 @@ const AccountCard = withErrorBoundary(
 );
 
 export function displayWarning(account) {
-  if (
+  return !!(
     (account.mnemonic && !account.hasBackup) ||
     (account.meta && account.meta.keypairNotFoundWarning)
-  ) {
-    return true;
-  }
-  return false;
+  );
 }
 
 export const AccountsScreen = withErrorBoundary(
@@ -223,7 +225,11 @@ export const AccountsScreen = withErrorBoundary(
                 col
                 {...addTestId(AccountsScreenTestIDs.addAccountMenuBtn)}
                 onPress={() => setShowAddAccount(true)}>
-                <PlusCircleWhiteIcon />
+                <PlusCircleWhiteIcon
+                  style={{
+                    color: Theme.colors.headerIconColor,
+                  }}
+                />
               </IconButton>
             </Box>
           </Box>
@@ -235,7 +241,7 @@ export const AccountsScreen = withErrorBoundary(
           <Stack mx={26} flex={1}>
             {isEmpty ? (
               <Box flex={1} justifyContent="center" alignItems="center">
-                <Typography marginTop={12}>
+                <Typography variant={'h3'} marginTop={12}>
                   {translate('account_list.empty_accounts')}
                 </Typography>
               </Box>
@@ -261,7 +267,13 @@ export const AccountsScreen = withErrorBoundary(
             <BigButton
               {...addTestId('CreateNewAccount')}
               onPress={onAddAccount}
-              icon={<PlusCircleIcon />}>
+              icon={
+                <PlusCircleIcon
+                  style={{
+                    color: Theme.colors.textHighlighted,
+                  }}
+                />
+              }>
               Create new account
             </BigButton>
             <BigButton
@@ -270,7 +282,13 @@ export const AccountsScreen = withErrorBoundary(
                 setShowImportAccount(true);
                 setShowAddAccount(true);
               }}
-              icon={<DocumentDownloadIcon />}>
+              icon={
+                <DocumentDownloadIcon
+                  style={{
+                    color: Theme.colors.textHighlighted,
+                  }}
+                />
+              }>
               {translate('add_account_modal.import_existing')}
             </BigButton>
           </Footer>

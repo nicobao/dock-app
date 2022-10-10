@@ -4,6 +4,7 @@ import {
   DocumentDownloadIcon,
   OptionList,
   PlusCircleIcon,
+  Theme,
 } from 'src/design-system';
 import {translate} from 'src/locales';
 import {Modal} from '../../components/Modal';
@@ -42,7 +43,13 @@ export function AddAccountModal({
           {
             testID: AddAccountModalTestIDs.addAccountOption,
             title: translate('add_account_modal.create_new'),
-            icon: <PlusCircleIcon />,
+            icon: (
+              <PlusCircleIcon
+                style={{
+                  color: Theme.colors.secondaryIconColor,
+                }}
+              />
+            ),
             onPress: () => {
               onAddAccount();
               onClose();
@@ -51,7 +58,13 @@ export function AddAccountModal({
           {
             testID: AddAccountModalTestIDs.importExistingOption,
             title: translate('add_account_modal.import_existing'),
-            icon: <DocumentDownloadIcon />,
+            icon: (
+              <DocumentDownloadIcon
+                style={{
+                  color: Theme.colors.secondaryIconColor,
+                }}
+              />
+            ),
             onPress: () => setImportExisting(true),
           },
         ]}

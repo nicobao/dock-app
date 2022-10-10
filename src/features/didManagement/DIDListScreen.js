@@ -7,6 +7,7 @@ import {
   IconButton,
   NBox,
   ScreenContainer,
+  Theme,
   Typography,
 } from '../../design-system';
 import {translate} from '../../locales';
@@ -52,7 +53,11 @@ export function DIDListScreen({didList, onDeleteDID, onImportDID}) {
               onPress={() => {
                 setIsCreateDIDModalVisible(true);
               }}>
-              <PlusCircleWhiteIcon />
+              <PlusCircleWhiteIcon
+                style={{
+                  color: Theme.colors.headerIconColor,
+                }}
+              />
             </IconButton>
           </Box>
         </Box>
@@ -96,13 +101,25 @@ export function DIDListScreen({didList, onDeleteDID, onImportDID}) {
             onPress={() => {
               navigate(Routes.DID_MANAGEMENT_NEW_DID);
             }}
-            icon={<PlusCircleIcon />}>
+            icon={
+              <PlusCircleIcon
+                style={{
+                  color: Theme.colors.textHighlighted,
+                }}
+              />
+            }>
             {translate('didManagement.create_new_did')}
           </BigButton>
           <BigButton
             {...addTestId('ImportExistingDIDBtn')}
             onPress={onImportDID}
-            icon={<DocumentDownloadIcon />}>
+            icon={
+              <DocumentDownloadIcon
+                style={{
+                  color: Theme.colors.textHighlighted,
+                }}
+              />
+            }>
             {translate('didManagement.import_existing_did')}
           </BigButton>
         </Footer>

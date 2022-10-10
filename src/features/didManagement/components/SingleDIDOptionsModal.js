@@ -1,6 +1,12 @@
 import {Stack} from 'native-base';
 import React, {useCallback} from 'react';
-import {DownloadIcon, BinIcon, OptionList, PencilIcon} from 'src/design-system';
+import {
+  DownloadIcon,
+  BinIcon,
+  OptionList,
+  PencilIcon,
+  Theme,
+} from 'src/design-system';
 import {translate} from 'src/locales';
 import {Modal} from '../../../components/Modal';
 import {Typography} from '../../../design-system';
@@ -40,7 +46,13 @@ export function SingleDIDOptionsModal({
           {
             testID: addTestId('EditDIDOption').testID,
             title: translate('didManagement.edit_did'),
-            icon: <PencilIcon />,
+            icon: (
+              <PencilIcon
+                style={{
+                  color: Theme.colors.secondaryIconColor,
+                }}
+              />
+            ),
             onPress: () => {
               if (didDocumentResolution) {
                 navigate(Routes.DID_MANAGEMENT_EDIT_DID, {
@@ -52,7 +64,13 @@ export function SingleDIDOptionsModal({
           {
             testID: addTestId('ExportDIDOption').testID,
             title: translate('didManagement.export_did'),
-            icon: <DownloadIcon />,
+            icon: (
+              <DownloadIcon
+                style={{
+                  color: Theme.colors.secondaryIconColor,
+                }}
+              />
+            ),
             onPress: () => {
               if (didDocumentResolution) {
                 navigate(Routes.DID_MANAGEMENT_EXPORT_DID, {
@@ -64,7 +82,13 @@ export function SingleDIDOptionsModal({
           {
             testID: addTestId('DeleteDIDOption').testID,
             title: translate('didManagement.delete_did'),
-            icon: <BinIcon />,
+            icon: (
+              <BinIcon
+                style={{
+                  color: Theme.colors.secondaryIconColor,
+                }}
+              />
+            ),
             onPress: () => {
               onClose();
               showConfirmDeleteDIDModal();

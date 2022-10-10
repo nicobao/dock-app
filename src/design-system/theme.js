@@ -16,6 +16,13 @@ export const Theme = {
     inputBackground: '#27272A',
     cardItemBackground: '#1F1F21',
     tabTextHighlightColor: '#0063F7',
+    tabTextUnHighlightColor: '#ffffff',
+    tabIconHighlightColor: '#0063F7',
+    tabIconUnHighlightColor: '#ffffff',
+    primaryIconColor: '#3F3F46',
+    secondaryIconColor: '#ffffff',
+    headerIconColor: '#ffffff',
+    iconBackgroundColor: '#3F3F46',
 
     grey: '#1F1F21',
     backdrop: 'rgba(0, 0, 0, 0.6)',
