@@ -1,5 +1,16 @@
-import {parseTransaction, sortTransactions} from './transactions-slice';
+import {getRealm} from '@docknetwork/wallet-sdk-core/lib/core/realm';
+import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
+import {
+  getTransactionQuery,
+  parseTransaction,
+  sortTransactions,
+  transactionsOperations,
+} from './transactions-slice';
+import {substrateService} from '@docknetwork/wallet-sdk-core/lib/services/substrate';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 
+const mockStore = configureMockStore([thunk]);
 describe('transactions-slice', () => {
   it('expect to parse transaction', () => {
     const t1 = {
@@ -39,5 +50,78 @@ describe('transactions-slice', () => {
     expect(sorted[1]).toBe(t3);
     expect(sorted[2]).toBe(t2);
     expect(sorted[3]).toBe(t1);
+  });
+
+  it('Test if realm delete is called', () => {
+    const initialState = {
+      app: {
+        networkId: 'testnet',
+        devSettingsEnabled: true,
+      },
+      wallet: {},
+      account: {},
+      createAccount: {},
+      qrCode: {},
+      transactions: {
+        loading: false,
+        transactions: [],
+      },
+    };
+
+    const store = mockStore(initialState);
+
+    const realm = getRealm();
+
+    expect(getTransactionQuery('testUUid')).toBe(
+      'hash == "testUUid" OR id == "testUUid"',
+    );
+
+    return store
+      .dispatch(
+        transactionsOperations.sendTransaction({
+          recipientAddress: '3C7Hq5jQGxeYzL7LnVASn48tEfr6D7yKtNYSuXcgioQoWWsB',
+          accountAddress: '4C7Hq5jQGxeYzL7LnVASn48tEfr6D7yKtNYSuXcgioQoWWsB',
+          amount: 1,
+          fee: 1,
+        }),
+      )
+      .then(() => {
+        expect(realm.delete.mock.calls.length).toBe(1);
+      });
+  });
+
+  it('expect to sendTransaction', async () => {
+    const dispatch = () => {};
+    const getState = () => {};
+
+    const walletModule = Wallet.getInstance();
+    const sendTokensSpy = jest.spyOn(substrateService, 'sendTokens');
+    const fetchBalanceSpy = jest.spyOn(walletModule.accounts, 'fetchBalance');
+
+    sendTokensSpy.mockImplementation(() => Promise.resolve({}));
+    fetchBalanceSpy.mockImplementation(() => Promise.resolve({}));
+
+    const form = {
+      recipientAddress: 'address',
+      accountAddress: 'address2',
+      amount: 1,
+      sendMax: true,
+    };
+
+    await transactionsOperations.sendTransaction(form)(dispatch, getState);
+
+    expect(substrateService.sendTokens).toBeCalledWith({
+      toAddress: form.recipientAddress,
+      fromAddress: form.accountAddress,
+      transferAll: form.sendMax,
+      amount: form.amount,
+    });
+
+    expect(walletModule.accounts.fetchBalance).toBeCalledWith(
+      form.recipientAddress,
+    );
+
+    fetchBalanceSpy.mockClear();
+    sendTokensSpy.mockClear();
   });
 });

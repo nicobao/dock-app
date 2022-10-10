@@ -1,6 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {translate} from 'src/locales';
 import {substrateService} from '@docknetwork/wallet-sdk-core/lib/services/substrate';
+import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
 import {Transactions} from '@docknetwork/wallet-sdk-transactions/lib/transactions';
 import uuid from 'uuid';
 import {getRealm} from '@docknetwork/wallet-sdk-core/lib/core/realm';
@@ -66,6 +67,18 @@ export const transactionsSelectors = {
   getTransactions: state => getRoot(state).transactions,
 };
 
+export function getTransactionQuery(internalId) {
+  return `hash == "${internalId}" OR id == "${internalId}"`;
+}
+export function deleteLocalTransaction(internalId) {
+  const realm = getRealm();
+  realm.write(() => {
+    const realmTransaction = realm
+      .objects('Transaction')
+      .filtered(getTransactionQuery(internalId));
+    realm.delete(realmTransaction);
+  });
+}
 export const transactionsOperations = {
   loadExternalTransactions: account => async (dispatch, getState) => {
     const realm = getRealm();
@@ -147,7 +160,14 @@ export const transactionsOperations = {
     },
 
   sendTransaction:
-    ({recipientAddress, accountAddress, amount, fee, prevTransaction}) =>
+    ({
+      recipientAddress,
+      accountAddress,
+      amount,
+      fee,
+      prevTransaction,
+      sendMax,
+    }) =>
     async (dispatch, getState) => {
       showToast({
         message: translate('send_token.transaction_sent'),
@@ -178,26 +198,25 @@ export const transactionsOperations = {
         type: 'success',
         message: translate('confirm_transaction.transfer_initiated'),
       });
-
       substrateService
         .sendTokens({
           toAddress: recipientAddress,
           fromAddress: accountAddress,
+          transferAll: sendMax,
           amount: parsedAmount,
         })
         .then(res => {
+          [recipientAddress, accountAddress].forEach(address => {
+            Wallet.getInstance().accounts.fetchBalance(address);
+          });
+
           const updatedTransation = {
             ...transaction,
             status: TransactionStatus.Complete,
           };
           dispatch(transactionsActions.updateTransaction(updatedTransation));
 
-          realm.write(() => {
-            const realmTransaction = realm
-              .objects('Transaction')
-              .filtered(`hash == "${internalId}"`);
-            realm.delete(realmTransaction);
-          });
+          deleteLocalTransaction(internalId);
 
           showToast({
             type: 'success',

@@ -104,7 +104,7 @@ exports[`BuyDockScreenScreen should render correctly 1`] = `
 <RNCSafeAreaView
   style={
     Object {
-      "backgroundColor": "#000",
+      "backgroundColor": "#141417",
       "flex": 1,
     }
   }

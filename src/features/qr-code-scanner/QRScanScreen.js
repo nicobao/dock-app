@@ -8,9 +8,8 @@ import {
 } from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import QRCodeScanner from 'react-native-qrcode-scanner';
-import {Theme} from 'src/design-system';
+import {BackButton, Theme} from 'src/design-system';
 import styled from 'styled-components/native';
-import {BackButton} from '../../design-system';
 import {Colors} from '../../theme/colors';
 import {qrCodeHandler} from './qr-code';
 import {translate} from '../../locales';
@@ -36,18 +35,10 @@ const Title = styled.Text`
   text-align: center;
 `;
 
-const IconContainer = styled.View`
-  position: absolute;
-  top: 0px;
-  left: 10px;
-  padding: 20px;
-  z-index: 99999;
-`;
-
 const Footer = styled.View`
   display: flex;
   justify-content: center;
-  background: #2e3945;
+  background: ${Theme.colors.primaryBackground};
   border-radius: 4px;
   margin: 20px;
   height: 93px;
@@ -105,9 +96,6 @@ export function QRScanScreen({onData, isScreenFocus}) {
           <Title style={styles.headerText}>
             {translate('qr_scanner.scan_qr_code')}
           </Title>
-          <IconContainer>
-            <BackButton />
-          </IconContainer>
         </Header>
         <Body>
           <View style={{width: 240, height: 230}}>
@@ -131,10 +119,15 @@ export function QRScanScreen({onData, isScreenFocus}) {
     </Container>
   );
 }
-export function QRScanContainer({route}) {
+export function QRScanContainer({route, navigation}) {
   const {onData = qrCodeHandler} = route.params || {};
   const isScreenFocus = useIsFocused();
 
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => <BackButton />,
+    });
+  }, [navigation]);
   return <QRScanScreen onData={onData} isScreenFocus={isScreenFocus} />;
 }
 const styles = StyleSheet.create({

@@ -38,147 +38,160 @@ import {AddAccountModal} from './AddAccountModal';
 import {AccountsScreenTestIDs} from './test-ids';
 import {pickDocuments} from '../../core/storage-utils';
 import assert from 'assert';
+import {useAccountsList} from './accountsHooks';
 
-const AccountCard = withErrorBoundary(({document, onDetails, onDelete}) => {
-  assert(document.type === 'Address', 'Address document expected');
-  const {address} = document;
-  const {account, fetchBalance} = useAccount(address);
+const AccountCard = withErrorBoundary(
+  ({document, onDetails, onDelete, index}) => {
+    assert(document.type === 'Address', 'Address document expected');
+    const {address} = document;
+    const {account, fetchBalance} = useAccount(address);
 
-  useEffect(() => {
-    fetchBalance(address);
-  }, [address, fetchBalance]);
+    useEffect(() => {
+      fetchBalance(address);
+    }, [address, fetchBalance]);
 
-  if (!account) {
-    return null;
-  }
+    if (!account) {
+      return null;
+    }
 
-  return (
-    <Stack
-      key={account.address}
-      direction="row"
-      borderRadius={12}
-      backgroundColor={Theme.colors.primaryBackground}
-      space={2}
-      mb={4}
-      py={6}
-      px={6}>
-      <Stack direction="column" flex={1}>
-        <Stack direction="row" alignItems="center">
-          <Pressable
-            _pressed={{
-              opacity: Theme.touchOpacity,
-            }}
-            onPress={() => onDetails(account)}
-            flex={1}>
-            <Stack direction="row" flex={1} alignItems="center">
-              <PolkadotIcon address={account.address} size={32} />
-              <Stack direction="row" flex={1} ml={3}>
-                <Typography
-                  color={Theme.colors.textHighlighted}
-                  fontWeight={600}>
-                  {account.name}
-                </Typography>
-                <ChevronRightIcon marginTop={3} />
+    return (
+      <Stack
+        key={account.address}
+        direction="row"
+        borderRadius={12}
+        backgroundColor={Theme.colors.cardItemBackground}
+        space={2}
+        mb={4}
+        py={6}
+        px={6}>
+        <Stack direction="column" flex={1}>
+          <Stack direction="row" alignItems="center">
+            <Pressable
+              _pressed={{
+                opacity: Theme.touchOpacity,
+              }}
+              onPress={() => onDetails(account)}
+              flex={1}>
+              <Stack direction="row" flex={1} alignItems="center">
+                <PolkadotIcon address={account.address} size={32} />
+                <Stack direction="row" flex={1} ml={3}>
+                  <Typography
+                    color={Theme.colors.textHighlighted}
+                    fontWeight={600}>
+                    {account.name}
+                  </Typography>
+                  <ChevronRightIcon
+                    style={{
+                      color: Theme.colors.primaryIconColor,
+                    }}
+                    marginTop={3}
+                  />
+                </Stack>
               </Stack>
-            </Stack>
-          </Pressable>
-          <NBox py={1} px={1}>
-            <Stack direction="row">
-              {displayWarning(account) ? (
-                <NBox mr={3} mt={1}>
-                  <AlertIcon />
-                </NBox>
-              ) : null}
-              <Menu
-                trigger={triggerProps => {
-                  return (
-                    <Pressable
-                      {...triggerProps}
-                      _pressed={{
-                        opacity: Theme.touchOpacity,
-                      }}>
-                      <DotsVerticalIcon />
-                    </Pressable>
-                  );
+            </Pressable>
+            <NBox py={1} px={1}>
+              <Stack direction="row">
+                {displayWarning(account) ? (
+                  <NBox mr={3} mt={1}>
+                    <AlertIcon />
+                  </NBox>
+                ) : null}
+                <Menu
+                  {...addTestId(`account-item-menu-${index}`)}
+                  trigger={triggerProps => {
+                    return (
+                      <Pressable
+                        {...triggerProps}
+                        _pressed={{
+                          opacity: Theme.touchOpacity,
+                        }}>
+                        <DotsVerticalIcon />
+                      </Pressable>
+                    );
+                  }}>
+                  <Menu.Item
+                    {...addTestId('account-item-menu-details')}
+                    onPress={() => onDetails(account)}>
+                    {translate('account_list.account_details')}
+                  </Menu.Item>
+                  <Menu.Item
+                    {...addTestId('account-item-menu-delete')}
+                    onPress={() => onDelete(account)}>
+                    {translate('account_list.delete_account')}
+                  </Menu.Item>
+                </Menu>
+              </Stack>
+            </NBox>
+          </Stack>
+
+          <TokenAmount amount={account.balance}>
+            {({fiatAmount, fiatSymbol, tokenAmount, tokenSymbol}) => (
+              <>
+                <Stack direction="column" mt={4}>
+                  <Typography variant="h2">
+                    {tokenAmount} {tokenSymbol}
+                  </Typography>
+                  <Typography fontSize="14px">
+                    {formatCurrency(fiatAmount)}
+                  </Typography>
+                </Stack>
+              </>
+            )}
+          </TokenAmount>
+
+          <Stack direction="row" mt={4}>
+            {
+              <Button
+                width="50%"
+                size="xs"
+                disabled={account.readOnly}
+                variant={'whiteButton'}
+                colorScheme="dark"
+                {...addTestId('TokenSend')}
+                onPress={() => {
+                  navigate(Routes.TOKEN_SEND, {
+                    address: account.address,
+                  });
                 }}>
-                <Menu.Item onPress={() => onDetails(account)}>
-                  {translate('account_list.account_details')}
-                </Menu.Item>
-                <Menu.Item onPress={() => onDelete(account)}>
-                  {translate('account_list.delete_account')}
-                </Menu.Item>
-              </Menu>
-            </Stack>
-          </NBox>
-        </Stack>
-
-        <TokenAmount amount={account.balance}>
-          {({fiatAmount, fiatSymbol, tokenAmount, tokenSymbol}) => (
-            <>
-              <Stack direction="column" mt={4}>
-                <Typography variant="h2">
-                  {tokenAmount} {tokenSymbol}
+                <Typography color={Theme.colors.primaryBackground}>
+                  {translate('account_list.send_token')}
                 </Typography>
-                <Typography fontSize="14px">
-                  {formatCurrency(fiatAmount)}
-                </Typography>
-              </Stack>
-            </>
-          )}
-        </TokenAmount>
-
-        <Stack direction="row" mt={4}>
-          {
+              </Button>
+            }
             <Button
               width="50%"
               size="xs"
-              disabled={account.readOnly}
+              ml={2}
               variant={'whiteButton'}
               colorScheme="dark"
-              {...addTestId('TokenSend')}
+              {...addTestId('TokenReceive')}
               onPress={() => {
-                navigate(Routes.TOKEN_SEND, {
+                navigate(Routes.TOKEN_RECEIVE, {
                   address: account.address,
                 });
               }}>
               <Typography color={Theme.colors.primaryBackground}>
-                {translate('account_list.send_token')}
+                {translate('account_list.receive_token')}
               </Typography>
             </Button>
-          }
-          <Button
-            width="50%"
-            size="xs"
-            ml={2}
-            variant={'whiteButton'}
-            colorScheme="dark"
-            {...addTestId('TokenReceive')}
-            onPress={() => {
-              navigate(Routes.TOKEN_RECEIVE, {
-                address: account.address,
-              });
-            }}>
-            <Typography color={Theme.colors.primaryBackground}>
-              {translate('account_list.receive_token')}
-            </Typography>
-          </Button>
+          </Stack>
         </Stack>
       </Stack>
-    </Stack>
-  );
-});
+    );
+  },
+);
 
 export function displayWarning(account) {
-  if (
-    account.hasBackup === false ||
+  return !!(
+    (account.mnemonic && !account.hasBackup) ||
     (account.meta && account.meta.keypairNotFoundWarning)
-  ) {
-    return true;
-  }
-  return false;
+  );
 }
+
 export const AccountsScreen = withErrorBoundary(
   ({
+    status,
+    migrated,
     accounts = [],
     onAddAccount,
     onImportExistingAccount,
@@ -212,7 +225,11 @@ export const AccountsScreen = withErrorBoundary(
                 col
                 {...addTestId(AccountsScreenTestIDs.addAccountMenuBtn)}
                 onPress={() => setShowAddAccount(true)}>
-                <PlusCircleWhiteIcon />
+                <PlusCircleWhiteIcon
+                  style={{
+                    color: Theme.colors.headerIconColor,
+                  }}
+                />
               </IconButton>
             </Box>
           </Box>
@@ -224,15 +241,16 @@ export const AccountsScreen = withErrorBoundary(
           <Stack mx={26} flex={1}>
             {isEmpty ? (
               <Box flex={1} justifyContent="center" alignItems="center">
-                <Typography marginTop={12}>
+                <Typography variant={'h3'} marginTop={12}>
                   {translate('account_list.empty_accounts')}
                 </Typography>
               </Box>
             ) : (
               <NBox>
-                {accounts.map(account => {
+                {accounts.map((account, index) => {
                   return (
                     <AccountCard
+                      index={index}
                       key={account.id}
                       document={account}
                       onDetails={onDetails}
@@ -249,7 +267,13 @@ export const AccountsScreen = withErrorBoundary(
             <BigButton
               {...addTestId('CreateNewAccount')}
               onPress={onAddAccount}
-              icon={<PlusCircleIcon />}>
+              icon={
+                <PlusCircleIcon
+                  style={{
+                    color: Theme.colors.textHighlighted,
+                  }}
+                />
+              }>
               Create new account
             </BigButton>
             <BigButton
@@ -258,7 +282,13 @@ export const AccountsScreen = withErrorBoundary(
                 setShowImportAccount(true);
                 setShowAddAccount(true);
               }}
-              icon={<DocumentDownloadIcon />}>
+              icon={
+                <DocumentDownloadIcon
+                  style={{
+                    color: Theme.colors.textHighlighted,
+                  }}
+                />
+              }>
               {translate('add_account_modal.import_existing')}
             </BigButton>
           </Footer>
@@ -280,8 +310,9 @@ export const AccountsScreen = withErrorBoundary(
 
 export const AccountsContainer = withErrorBoundary(({navigation}) => {
   const dispatch = useDispatch();
-  const {documents, refetch} = useWallet({syncDocs: true});
-  const accounts = documents.filter(doc => doc.type === 'Address');
+  const {refetch, status, migrated} = useWallet({syncDocs: true});
+
+  const {accounts} = useAccountsList();
   const [isRefreshing, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(() => {
@@ -306,6 +337,8 @@ export const AccountsContainer = withErrorBoundary(({navigation}) => {
 
   return (
     <AccountsScreen
+      status={status}
+      migrated={migrated}
       onDelete={accountId => {
         dispatch(accountOperations.removeAccount(accountId));
       }}

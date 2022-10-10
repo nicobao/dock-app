@@ -1,6 +1,13 @@
 import {translate} from 'src/locales';
-import {validateWalletImport} from './wallet-slice';
+import {
+  validateWalletImport,
+  walletActions,
+  walletOperations,
+} from './wallet-slice';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 
+const mockStore = configureMockStore([thunk]);
 jest.mock('@docknetwork/wallet-sdk-core/lib/services/wallet', () => ({
   __esModule: true,
   default: jest.fn(() => 42),
@@ -32,6 +39,68 @@ describe('Wallet Slice', () => {
     return expect(validateWalletImport(fileData, 'wrong')).rejects.toThrow(
       'Invalid backup file',
     );
+  });
+
+  it('expect to change auth state when wallet is created', () => {
+    const initialState = {
+      app: {
+        networkId: 'testnet',
+        devSettingsEnabled: true,
+      },
+      wallet: {},
+      account: {},
+      createAccount: {},
+      qrCode: {},
+      transactions: {
+        loading: false,
+        transactions: [],
+      },
+    };
+    const store = mockStore(initialState);
+    store.dispatch(walletActions.setPasscode('12345'));
+
+    return store
+      .dispatch(walletOperations.createWallet({biometry: false}))
+      .then(() => {
+        const actions = store.getActions();
+        const authAction = actions.filter(action => {
+          const {type, payload} = action;
+          return (
+            type === 'authentication/setAuth' && payload?.isLoggedIn === true
+          );
+        });
+        expect(authAction.length).toBe(1);
+      });
+  });
+  it('expect to change auth state when wallet is deleted', () => {
+    const initialState = {
+      app: {
+        networkId: 'testnet',
+        devSettingsEnabled: true,
+      },
+      wallet: {},
+      account: {},
+      createAccount: {},
+      qrCode: {},
+      transactions: {
+        loading: false,
+        transactions: [],
+      },
+    };
+    const store = mockStore(initialState);
+
+    return store
+      .dispatch(walletOperations.deleteWallet({biometry: false}))
+      .then(() => {
+        const actions = store.getActions();
+        const authAction = actions.filter(action => {
+          const {type, payload} = action;
+          return (
+            type === 'authentication/setAuth' && payload?.isLoggedIn === false
+          );
+        });
+        expect(authAction.length).toBe(1);
+      });
   });
 
   // it('expect to  import wallet with accurate data', () => {

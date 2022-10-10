@@ -1,13 +1,14 @@
 import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
 import {didServiceRPC} from '@docknetwork/wallet-sdk-core/lib/services/dids';
 import {captureException} from '@sentry/react-native';
+import {translate} from '../../locales';
 
 const wallet = Wallet.getInstance();
 
-const createKeyDoc = () => {
-  return didServiceRPC.generateKeyDoc({});
+const createKeyDoc = ({type, derivePath}) => {
+  return didServiceRPC.generateKeyDoc({type, derivePath});
 };
-const createDID = async keyDoc => {
+const createKeyDID = async (keyDoc, didDocumentCustomProp = {}) => {
   try {
     const correlations = Array.isArray(keyDoc.correlation)
       ? keyDoc.correlation
@@ -18,6 +19,7 @@ const createDID = async keyDoc => {
     });
 
     const didDocumentResolution = await didServiceRPC.getDIDResolution({
+      didDocumentCustomProp,
       didDocument,
     });
 
@@ -33,10 +35,11 @@ const createDID = async keyDoc => {
     });
   } catch (e) {
     captureException(e);
+    throw new Error(e.message);
   }
 };
 
-const initializeDID = async () => {
+export const createDefaultDID = async () => {
   const keyDocs = await wallet.query({
     type: 'Ed25519VerificationKey2018',
   });
@@ -47,24 +50,43 @@ const initializeDID = async () => {
     });
 
     if (didResolutionDocuments.length === 0) {
-      await createDID(keyDocs[0]);
+      await createKeyDID(keyDocs[0], {
+        name: translate('didManagement.default'),
+      });
     }
   } else if (keyDocs.length === 0) {
     try {
-      const keyDoc = await createKeyDoc();
+      const keyDoc = await createKeyDoc({
+        type: 'ed25519',
+        derivePath: '',
+      });
       await wallet.add({
         ...keyDoc,
       });
 
-      await initializeDID();
+      await createDefaultDID();
     } catch (e) {
       captureException(e);
     }
   }
 };
+const createDockDID = () => {};
+export const createNewDID = async newDidParams => {
+  const didFactories = {
+    diddock: createDockDID,
+    didkey: async () => {
+      const keyDoc = await createKeyDoc(newDidParams);
+      await wallet.add({
+        ...keyDoc,
+      });
+      await createKeyDID(keyDoc, newDidParams);
+    },
+  };
+  await didFactories[newDidParams.didType]();
+};
 
 export const didOperations = {
   initializeDID: () => async (dispatch, getState) => {
-    await initializeDID();
+    await createDefaultDID();
   },
 };

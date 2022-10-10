@@ -16,11 +16,11 @@ import {showConfirmationModal} from 'src/components/ConfirmationModal';
 import {translate} from 'src/locales';
 import {showToast, withErrorToast} from 'src/core/toast';
 import {Logger} from 'src/core/logger';
-import {clearCacheData} from '../../core/realm';
+import {clearCacheData} from '@docknetwork/wallet-sdk-core/lib/core/realm';
 import Clipboard from '@react-native-community/clipboard';
 import {pickDocuments} from '../../core/storage-utils';
 import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
-
+import {authenticationActions} from '../unlock-wallet/unlock-wallet-slice';
 const initialState = {
   loading: true,
   passcode: null,
@@ -174,6 +174,7 @@ export const walletOperations = {
     }),
   deleteWallet: () =>
     withErrorToast(async (dispatch, getState) => {
+      dispatch(authenticationActions.setAuth({isLoggedIn: false}));
       await clearCacheData();
       dispatch(accountActions.clearAccounts());
       await AsyncStorage.removeItem('walletInfo');
@@ -249,12 +250,12 @@ export const walletOperations = {
           });
         }
       }
+      dispatch(authenticationActions.setAuth({isLoggedIn: true}));
 
       if (callback) {
         callback();
       } else {
         dispatch(accountOperations.loadAccounts());
-        navigate(Routes.ACCOUNTS);
       }
     },
 
@@ -264,7 +265,7 @@ export const walletOperations = {
       const passcode = walletSelectors.getPasscode(getState());
       const keychainId = 'wallet';
       const keychainProps = {
-        passcode: passcode.toString(),
+        passcode: passcode?.toString(),
       };
 
       if (biometry) {
@@ -308,7 +309,7 @@ export const walletOperations = {
 
       dispatch(walletActions.setCreationFlags({}));
 
-      navigate(Routes.ACCOUNTS);
+      dispatch(authenticationActions.setAuth({isLoggedIn: true}));
     },
 };
 

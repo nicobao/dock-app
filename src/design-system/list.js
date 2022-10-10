@@ -41,7 +41,11 @@ export function OptionList({items, postPress, ...otherProps}) {
                 <Switch isChecked={value} onToggle={onPress} />
               </Box>
             ) : (
-              <ChevronRightIcon />
+              <ChevronRightIcon
+                style={{
+                  color: Theme.colors.primaryIconColor,
+                }}
+              />
             )}
           </Stack>
         </Pressable>

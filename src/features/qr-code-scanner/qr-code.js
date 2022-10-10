@@ -8,6 +8,10 @@ import {getJsonOrError} from '../../core';
 import '../credentials/credentials';
 import {onScanAuthQRCode} from '../credentials/credentials';
 import {captureException} from '@sentry/react-native';
+import queryString from 'query-string';
+import store from '../../core/redux-store';
+import {createAccountOperations} from '../account-creation/create-account-slice';
+import {stringToJSON} from '../../core/storage-utils';
 
 export async function addressHandler(data) {
   const isAddress = await utilCryptoService.isAddressValid(data);
@@ -78,6 +82,15 @@ export async function credentialHandler(data) {
     return false;
   }
 }
+export function onPresentationScanned(url) {
+  if (isDeepLinkType(url, 'dockwallet://proof-request?url=')) {
+    navigate(Routes.CREDENTIALS_SHARE_AS_PRESENTATION, {
+      deepLinkUrl: url,
+    });
+    return true;
+  }
+  return false;
+}
 export function onAuthQRScanned(data) {
   const isAuthLink = isDidAuthUrl(data);
   if (isAuthLink) {
@@ -88,7 +101,7 @@ export function onAuthQRScanned(data) {
   }
   return false;
 }
-export async function authHandler(data) {
+export async function authHandler(data, keyDoc, profile = {}) {
   try {
     const authLinkPrefix = 'dockwallet://didauth?url=';
     const isAuthLink = isDidAuthUrl(data);
@@ -99,7 +112,7 @@ export async function authHandler(data) {
       });
       const url = decodeURIComponent(data.substr(authLinkPrefix.length));
 
-      const vc = await onScanAuthQRCode(url);
+      const vc = await onScanAuthQRCode(url, keyDoc, profile);
       const req = await fetch(url, {
         method: 'POST',
         headers: {
@@ -135,11 +148,26 @@ export async function authHandler(data) {
     return false;
   }
 }
+export async function importAccountHandler(data) {
+  const parsedData = stringToJSON(data);
+
+  if (
+    parsedData &&
+    parsedData.hasOwnProperty('encoded') &&
+    parsedData.hasOwnProperty('address')
+  ) {
+    store.dispatch(createAccountOperations.importFromJson(data));
+    return true;
+  }
+  return false;
+}
 
 export const qrCodeHandlers = [
+  importAccountHandler,
   onAuthQRScanned,
   addressHandler,
   credentialHandler,
+  onPresentationScanned,
 ];
 
 export async function executeHandlers(data, handlers) {
@@ -168,6 +196,11 @@ export async function qrCodeHandler(data, handlers = qrCodeHandlers) {
 }
 
 export function isDidAuthUrl(url) {
-  const authLinkPrefix = 'dockwallet://didauth?url=';
-  return typeof url === 'string' && url.indexOf(authLinkPrefix) === 0;
+  return isDeepLinkType(url, 'dockwallet://didauth?url=');
+}
+export function isDeepLinkType(url, prefix) {
+  return typeof url === 'string' && url.indexOf(prefix) === 0;
+}
+export function getParamsFromUrl(url) {
+  return queryString.parse(url.substring(url.indexOf('?')));
 }

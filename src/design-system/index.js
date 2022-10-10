@@ -9,8 +9,6 @@ import {translate} from 'src/locales';
 import styled from 'styled-components/native';
 import {Theme} from './theme';
 import {Typography} from './typography';
-import {TabNavigation} from './TabNavigation';
-import {isAndroid} from './platform-utils';
 
 function ConnectionStatus({status, loadingText, errorText}) {
   if (!status && loadingText) {
@@ -69,11 +67,6 @@ export function ScreenContainer({
       {hideGlobalHeader ? null : <AppGlobalHeader />}
       <Box flex={1}>
         <Box flex={1}>{children}</Box>
-        {showTabNavigation ? (
-          <Box flex={1} flexGrow={isAndroid() ? 0.15 : 0.11}>
-            <TabNavigation />
-          </Box>
-        ) : null}
       </Box>
     </SafeAreaView>
   );

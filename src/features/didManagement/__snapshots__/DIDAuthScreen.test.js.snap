@@ -1,10 +1,160 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`QRScanScreen should render correctly when isScreenFocus=true 1`] = `
+exports[`QRScanScreen should render DIDAuthConfirmScreen  1`] = `
 <RNCSafeAreaView
   style={
     Object {
-      "backgroundColor": "#000",
+      "backgroundColor": "#141417",
+      "flex": 1,
+    }
+  }
+  testID="DIDAuthConfirmScreen"
+>
+  <AppGlobalHeader />
+  <Memo(ForwardRef(Box))
+    flex={1}
+  >
+    <Memo(ForwardRef(Box))
+      flex={1}
+    >
+      <ScrollView
+        contentContainerStyle={
+          Object {
+            "flexGrow": 1,
+          }
+        }
+        keyboardShouldPersistTaps="handled"
+      >
+        <Styled(View)
+          marginTop={22}
+        >
+          <Box
+            alignItems="center"
+            flexDirection="row"
+            marginLeft={22}
+            marginRight={22}
+          >
+            <Box
+              flex={1}
+            >
+              <Styled(Component)
+                textAlign="center"
+                variant="h1"
+              >
+                Authorize
+                 
+                Unnamed App
+              </Styled(Component)>
+            </Box>
+          </Box>
+        </Styled(View)>
+        <Memo(ForwardRef(Stack))
+          direction="column"
+          mx={4}
+        >
+          <Memo(ForwardRef(Box))
+            mb={50}
+          >
+            <Styled(Component)
+              textAlign="center"
+              variant="list-description"
+            >
+              Sign in with your Web3 ID
+            </Styled(Component)>
+          </Memo(ForwardRef(Box))>
+          <Memo(ForwardRef(FormControl))
+            isInvalid={false}
+          >
+            <Memo(ForwardRef(Stack))
+              mt={7}
+            >
+              <Memo(ForwardRef(FormControlLabel))>
+                DID Name
+              </Memo(ForwardRef(FormControlLabel))>
+              <CustomSelectInput
+                accessibilityLabel="DID"
+                items={Array []}
+                onPressItem={[Function]}
+                renderItem={[Function]}
+                testID="DID"
+              />
+            </Memo(ForwardRef(Stack))>
+          </Memo(ForwardRef(FormControl))>
+          <Memo(ForwardRef(FormControl))
+            isInvalid={false}
+          >
+            <Box
+              marginTop={12}
+            >
+              <Styled(Component)
+                variant="field-label"
+              >
+                Name
+                :
+              </Styled(Component)>
+              <Box
+                marginBottom={12}
+                marginTop={4}
+              >
+                <Input
+                  accessibilityLabel="Name"
+                  autoCapitalize="none"
+                  onChangeText={[Function]}
+                  placeholder="John Doe"
+                  secureTextEntry={false}
+                  testID="Name"
+                />
+              </Box>
+            </Box>
+            <Memo(ForwardRef(FormControlErrorMessage)) />
+          </Memo(ForwardRef(FormControl))>
+        </Memo(ForwardRef(Stack))>
+        <Memo(ForwardRef(Stack))
+          direction="row"
+          mb={10}
+          mt="auto"
+          mx={4}
+        >
+          <Memo(ForwardRef)
+            mx={
+              Object {
+                "base": "auto",
+                "md": 0,
+              }
+            }
+            size="md"
+          >
+            <Memo(ForwardRef(Button))
+              colorScheme="dark"
+              onPress={[Function]}
+              width="48.5%"
+            >
+              <Styled(Component)>
+                Cancel
+              </Styled(Component)>
+            </Memo(ForwardRef(Button))>
+            <Memo(ForwardRef(Button))
+              disabled={true}
+              onPress={[Function]}
+              width="48.5%"
+            >
+              <Styled(Component)>
+                Approve
+              </Styled(Component)>
+            </Memo(ForwardRef(Button))>
+          </Memo(ForwardRef)>
+        </Memo(ForwardRef(Stack))>
+      </ScrollView>
+    </Memo(ForwardRef(Box))>
+  </Memo(ForwardRef(Box))>
+</RNCSafeAreaView>
+`;
+
+exports[`QRScanScreen should render DIDAuthScreen correctly  1`] = `
+<RNCSafeAreaView
+  style={
+    Object {
+      "backgroundColor": "#141417",
       "flex": 1,
     }
   }
@@ -32,7 +182,7 @@ exports[`QRScanScreen should render correctly when isScreenFocus=true 1`] = `
               fontSize={24}
               fontWeight="600"
             >
-              DID Authorization
+              Web3 ID Authorization
             </Styled(Component)>
           </Box>
         </Box>

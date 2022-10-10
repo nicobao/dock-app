@@ -4,10 +4,11 @@ import {
   ChevronUpIcon,
   Pressable,
   Stack,
+  Input as NBInput,
   Text,
 } from 'native-base';
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {TouchableWithoutFeedback} from 'react-native';
 import {ErrorAlert, InformationCircle} from '../assets/icons';
 import {Modal} from '../components/Modal';
@@ -15,17 +16,31 @@ import {Button} from './buttons';
 import {Theme} from './theme';
 import {Typography} from './typography';
 
-export {Input, Select, Text} from 'native-base';
+export {Select, Text} from 'native-base';
 
-export function SelectToggler({children, placeholder}) {
-  const [contentVisible, setContentVisible] = useState();
+export function Input(props) {
+  return (
+    <NBInput
+      color={Theme.colors.description}
+      backgroundColor={Theme.colors.inputBackground}
+      {...props}
+    />
+  );
+}
 
+export function SelectToggler({children, placeholder, onChange}) {
+  const [contentVisible, setContentVisible] = useState(false);
+  useEffect(() => {
+    if (typeof onChange === 'function') {
+      onChange(contentVisible);
+    }
+  }, [contentVisible, onChange]);
   return (
     <Box>
       <TouchableWithoutFeedback
         onPress={() => setContentVisible(value => !value)}>
         <Stack
-          backgroundColor="#27272A"
+          backgroundColor={Theme.colors.inputBackground}
           mt={8}
           width={0.67}
           direction="row"

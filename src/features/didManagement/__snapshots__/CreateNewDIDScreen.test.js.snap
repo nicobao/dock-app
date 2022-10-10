@@ -1,0 +1,466 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateNewDIDScreen should render correctly when form is invalid 1`] = `
+<RNCSafeAreaView
+  accessibilityLabel="CreateNewDIDScreen"
+  style={
+    Object {
+      "backgroundColor": "#141417",
+      "flex": 1,
+    }
+  }
+  testID="CreateNewDIDScreen"
+>
+  <AppGlobalHeader />
+  <Memo(ForwardRef(Box))
+    flex={1}
+  >
+    <Memo(ForwardRef(Box))
+      flex={1}
+    >
+      <Styled(View)>
+        <Box
+          alignItems="center"
+          flexDirection="row"
+          marginLeft={1}
+          marginRight={22}
+        >
+          <Memo(ForwardRef(Box))
+            width="80px"
+          >
+            <BackButton
+              accessibilityLabel="CreateNewDIDScreenGoBack"
+              onPress={[MockFunction]}
+              testID="CreateNewDIDScreenGoBack"
+            />
+          </Memo(ForwardRef(Box))>
+          <Memo(ForwardRef(Box))
+            alignContent="center"
+            alignItems="center"
+            flex={1}
+            pl={15}
+            width="100%"
+          >
+            <Styled(Component)
+              variant="h3"
+            >
+              Create New DID
+            </Styled(Component)>
+          </Memo(ForwardRef(Box))>
+          <Memo(ForwardRef(Box))
+            alignItems="flex-end"
+            width="80px"
+          />
+        </Box>
+      </Styled(View)>
+      <ForwardRef
+        marginLeft={3}
+        marginRight={3}
+      >
+        <Memo(ForwardRef(FormControl))>
+          <Memo(ForwardRef(Stack))
+            mt={7}
+          >
+            <Memo(ForwardRef(FormControlLabel))>
+              DID Name
+            </Memo(ForwardRef(FormControlLabel))>
+            <Input
+              accessibilityLabel="DIDName"
+              autoCapitalize="none"
+              testID="DIDName"
+              value=""
+            />
+            <Memo(ForwardRef(FormControlHelperText))>
+              This will just be used for easy reference
+            </Memo(ForwardRef(FormControlHelperText))>
+          </Memo(ForwardRef(Stack))>
+        </Memo(ForwardRef(FormControl))>
+        <Memo(ForwardRef(FormControl))
+          isInvalid=""
+        >
+          <Memo(ForwardRef(Stack))
+            mt={7}
+          >
+            <Memo(ForwardRef(FormControlLabel))>
+              DID Type
+            </Memo(ForwardRef(FormControlLabel))>
+            <CustomSelectInput
+              items={
+                Array [
+                  Object {
+                    "description": "W3C compliant Decentralized identifier",
+                    "label": "did:key",
+                    "value": "didkey",
+                  },
+                  Object {
+                    "description": "W3C compliant Decentralized Identifier created by Dock. Uses blockchain to secure verifiable credentials.",
+                    "label": "did:dock",
+                    "value": "diddock",
+                  },
+                ]
+              }
+              onPressItem={[Function]}
+              renderItem={[Function]}
+            />
+          </Memo(ForwardRef(Stack))>
+          <Memo(ForwardRef(FormControlErrorMessage)) />
+        </Memo(ForwardRef(FormControl))>
+      </ForwardRef>
+      <LoadingButton
+        accessibilityLabel="CreateNewDIDScreenDIDCreate"
+        full={true}
+        isDisabled={true}
+        mb={30}
+        ml={3}
+        mr={3}
+        onPress={[Function]}
+        testID="CreateNewDIDScreenDIDCreate"
+      >
+        Create
+      </LoadingButton>
+      <CreateDIDDockConfirmationModal
+        didName=""
+        didType="didkey"
+        onClose={[Function]}
+        onCreateDID={[MockFunction]}
+        visible={false}
+      />
+    </Memo(ForwardRef(Box))>
+  </Memo(ForwardRef(Box))>
+</RNCSafeAreaView>
+`;
+
+exports[`CreateNewDIDScreen should render correctly when form is valid 1`] = `
+<RNCSafeAreaView
+  accessibilityLabel="CreateNewDIDScreen"
+  style={
+    Object {
+      "backgroundColor": "#141417",
+      "flex": 1,
+    }
+  }
+  testID="CreateNewDIDScreen"
+>
+  <AppGlobalHeader />
+  <Memo(ForwardRef(Box))
+    flex={1}
+  >
+    <Memo(ForwardRef(Box))
+      flex={1}
+    >
+      <Styled(View)>
+        <Box
+          alignItems="center"
+          flexDirection="row"
+          marginLeft={1}
+          marginRight={22}
+        >
+          <Memo(ForwardRef(Box))
+            width="80px"
+          >
+            <BackButton
+              accessibilityLabel="CreateNewDIDScreenGoBack"
+              onPress={[MockFunction]}
+              testID="CreateNewDIDScreenGoBack"
+            />
+          </Memo(ForwardRef(Box))>
+          <Memo(ForwardRef(Box))
+            alignContent="center"
+            alignItems="center"
+            flex={1}
+            pl={15}
+            width="100%"
+          >
+            <Styled(Component)
+              variant="h3"
+            >
+              Create New DID
+            </Styled(Component)>
+          </Memo(ForwardRef(Box))>
+          <Memo(ForwardRef(Box))
+            alignItems="flex-end"
+            width="80px"
+          />
+        </Box>
+      </Styled(View)>
+      <ForwardRef
+        marginLeft={3}
+        marginRight={3}
+      >
+        <Memo(ForwardRef(FormControl))>
+          <Memo(ForwardRef(Stack))
+            mt={7}
+          >
+            <Memo(ForwardRef(FormControlLabel))>
+              DID Name
+            </Memo(ForwardRef(FormControlLabel))>
+            <Input
+              accessibilityLabel="DIDName"
+              autoCapitalize="none"
+              testID="DIDName"
+              value="Default"
+            />
+            <Memo(ForwardRef(FormControlHelperText))>
+              This will just be used for easy reference
+            </Memo(ForwardRef(FormControlHelperText))>
+          </Memo(ForwardRef(Stack))>
+        </Memo(ForwardRef(FormControl))>
+        <Memo(ForwardRef(FormControl))
+          isInvalid=""
+        >
+          <Memo(ForwardRef(Stack))
+            mt={7}
+          >
+            <Memo(ForwardRef(FormControlLabel))>
+              DID Type
+            </Memo(ForwardRef(FormControlLabel))>
+            <CustomSelectInput
+              items={
+                Array [
+                  Object {
+                    "description": "W3C compliant Decentralized identifier",
+                    "label": "did:key",
+                    "value": "didkey",
+                  },
+                  Object {
+                    "description": "W3C compliant Decentralized Identifier created by Dock. Uses blockchain to secure verifiable credentials.",
+                    "label": "did:dock",
+                    "value": "diddock",
+                  },
+                ]
+              }
+              onPressItem={[Function]}
+              renderItem={[Function]}
+            />
+          </Memo(ForwardRef(Stack))>
+          <Memo(ForwardRef(FormControlErrorMessage)) />
+        </Memo(ForwardRef(FormControl))>
+      </ForwardRef>
+      <LoadingButton
+        accessibilityLabel="CreateNewDIDScreenDIDCreate"
+        full={true}
+        isDisabled={false}
+        mb={30}
+        ml={3}
+        mr={3}
+        onPress={[Function]}
+        testID="CreateNewDIDScreenDIDCreate"
+      >
+        Create
+      </LoadingButton>
+      <CreateDIDDockConfirmationModal
+        didName="Default"
+        didType="didkey"
+        onClose={[Function]}
+        onCreateDID={[MockFunction]}
+        visible={false}
+      />
+    </Memo(ForwardRef(Box))>
+  </Memo(ForwardRef(Box))>
+</RNCSafeAreaView>
+`;
+
+exports[`CreateNewDIDScreen should render correctly with modal 1`] = `
+<RNCSafeAreaView
+  accessibilityLabel="CreateNewDIDScreen"
+  style={
+    Object {
+      "backgroundColor": "#141417",
+      "flex": 1,
+    }
+  }
+  testID="CreateNewDIDScreen"
+>
+  <AppGlobalHeader />
+  <Memo(ForwardRef(Box))
+    flex={1}
+  >
+    <Memo(ForwardRef(Box))
+      flex={1}
+    >
+      <Styled(View)>
+        <Box
+          alignItems="center"
+          flexDirection="row"
+          marginLeft={1}
+          marginRight={22}
+        >
+          <Memo(ForwardRef(Box))
+            width="80px"
+          >
+            <BackButton
+              accessibilityLabel="CreateNewDIDScreenGoBack"
+              onPress={[MockFunction]}
+              testID="CreateNewDIDScreenGoBack"
+            />
+          </Memo(ForwardRef(Box))>
+          <Memo(ForwardRef(Box))
+            alignContent="center"
+            alignItems="center"
+            flex={1}
+            pl={15}
+            width="100%"
+          >
+            <Styled(Component)
+              variant="h3"
+            >
+              Create New DID
+            </Styled(Component)>
+          </Memo(ForwardRef(Box))>
+          <Memo(ForwardRef(Box))
+            alignItems="flex-end"
+            width="80px"
+          />
+        </Box>
+      </Styled(View)>
+      <ForwardRef
+        marginLeft={3}
+        marginRight={3}
+      >
+        <Memo(ForwardRef(FormControl))>
+          <Memo(ForwardRef(Stack))
+            mt={7}
+          >
+            <Memo(ForwardRef(FormControlLabel))>
+              DID Name
+            </Memo(ForwardRef(FormControlLabel))>
+            <Input
+              accessibilityLabel="DIDName"
+              autoCapitalize="none"
+              testID="DIDName"
+              value=""
+            />
+            <Memo(ForwardRef(FormControlHelperText))>
+              This will just be used for easy reference
+            </Memo(ForwardRef(FormControlHelperText))>
+          </Memo(ForwardRef(Stack))>
+        </Memo(ForwardRef(FormControl))>
+        <Memo(ForwardRef(FormControl))
+          isInvalid=""
+        >
+          <Memo(ForwardRef(Stack))
+            mt={7}
+          >
+            <Memo(ForwardRef(FormControlLabel))>
+              DID Type
+            </Memo(ForwardRef(FormControlLabel))>
+            <CustomSelectInput
+              items={
+                Array [
+                  Object {
+                    "description": "W3C compliant Decentralized identifier",
+                    "label": "did:key",
+                    "value": "didkey",
+                  },
+                  Object {
+                    "description": "W3C compliant Decentralized Identifier created by Dock. Uses blockchain to secure verifiable credentials.",
+                    "label": "did:dock",
+                    "value": "diddock",
+                  },
+                ]
+              }
+              onPressItem={[Function]}
+              renderItem={[Function]}
+            />
+          </Memo(ForwardRef(Stack))>
+          <Memo(ForwardRef(FormControlErrorMessage)) />
+        </Memo(ForwardRef(FormControl))>
+        <Memo(ForwardRef(FormControl))>
+          <Memo(ForwardRef(Stack))
+            mt={7}
+          >
+            <Memo(ForwardRef(FormControlLabel))>
+              DID Payment Account
+            </Memo(ForwardRef(FormControlLabel))>
+            <CustomSelectInput
+              emptyItemMessage="No account exists"
+              items={
+                Array [
+                  Object {
+                    "description": "6GwnHZARcEkJio9dxPYy6SC5sAL6PxpZAB6VYwoFjGMU",
+                    "label": "Test Account",
+                    "value": "6GwnHZARcEkJio9dxPYy6SC5sAL6PxpZAB6VYwoFjGMU",
+                  },
+                ]
+              }
+              onPressItem={[Function]}
+              renderItem={[Function]}
+            />
+          </Memo(ForwardRef(Stack))>
+          <Memo(ForwardRef(FormControlErrorMessage)) />
+        </Memo(ForwardRef(FormControl))>
+        <Memo(ForwardRef(VStack))
+          mt={7}
+          pb={5}
+          pt={3}
+          px={5}
+          style={
+            Object {
+              "backgroundColor": "#00174D",
+              "borderRadius": 6,
+            }
+          }
+        >
+          <Memo(ForwardRef(HStack))>
+            <Memo(ForwardRef(HStack))
+              style={
+                Object {
+                  "flexGrow": 1,
+                }
+              }
+            >
+              <Memo(ForwardRef(Box))
+                mt={4}
+              >
+                <SvgFile />
+              </Memo(ForwardRef(Box))>
+              <Styled(Component)
+                ml={1}
+                mt={2}
+                variant="h3"
+              >
+                 Quick Info
+              </Styled(Component)>
+            </Memo(ForwardRef(HStack))>
+            <IconButton
+              accessibilityLabel="CreateNewDIDScreenCloseQuickInfo"
+              onPress={[Function]}
+              testID="CreateNewDIDScreenCloseQuickInfo"
+            >
+              <Memo(ForwardRef(Icon))
+                as={[Function]}
+                name="close-outline"
+              />
+            </IconButton>
+          </Memo(ForwardRef(HStack))>
+          <Styled(Component)
+            textAlign="left"
+            variant="didDescription"
+          >
+            did:dock requires DOCK token to create. This is used for the transaction fee required to create the DID and have a record on the blockchain.
+          </Styled(Component)>
+        </Memo(ForwardRef(VStack))>
+      </ForwardRef>
+      <LoadingButton
+        accessibilityLabel="CreateNewDIDScreenDIDCreate"
+        full={true}
+        isDisabled={false}
+        mb={30}
+        ml={3}
+        mr={3}
+        onPress={[Function]}
+        testID="CreateNewDIDScreenDIDCreate"
+      >
+        Create
+      </LoadingButton>
+      <CreateDIDDockConfirmationModal
+        didName=""
+        didType="diddock"
+        onClose={[Function]}
+        onCreateDID={[MockFunction]}
+        visible={false}
+      />
+    </Memo(ForwardRef(Box))>
+  </Memo(ForwardRef(Box))>
+</RNCSafeAreaView>
+`;

@@ -34,4 +34,11 @@ export const ANALYTICS_EVENT = {
     SWITCH_NETWORK: 'settings_switch_network',
   },
   FAILURES: 'failure',
+  DID: {
+    DID_CREATED: 'didCreated',
+    DID_UPDATED: 'didUpdated',
+    DID_IMPORTED: 'didUpdated',
+    DID_SHARED: 'didShared',
+    DID_EXPORTED: 'didExported',
+  },
 };

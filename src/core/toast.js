@@ -5,6 +5,10 @@ import {Pressable} from 'react-native';
 import {translate} from 'src/locales';
 import {CheckCircleIcon, Text, XCircleIcon} from '../design-system';
 import {Theme} from '../design-system/theme';
+import {
+  ANALYTICS_EVENT,
+  logAnalyticsEvent,
+} from '../features/analytics/analytics-slice';
 
 let toast;
 
@@ -33,9 +37,14 @@ export const withErrorToast =
     try {
       await fn(...params);
     } catch (err) {
-      console.error(err);
+      const errorMessage = message || getErrorMessageFromErrorObject(err);
       captureException(err);
-      showUnexpectedErrorToast(message);
+      showUnexpectedErrorToast(errorMessage);
+
+      logAnalyticsEvent(ANALYTICS_EVENT.FAILURES, {
+        ...params,
+        message: errorMessage,
+      });
       throw err;
     }
   };
@@ -48,7 +57,17 @@ export function showUnexpectedErrorToast(
     type: 'error',
   });
 }
-
+export function getErrorMessageFromErrorObject(err) {
+  if (typeof err === 'string') {
+    if (err.indexOf('AssertionError') > -1) {
+      return err.substring(16, err.length - 1).trim();
+    }
+    return err.trim();
+  } else if (err?.message && typeof err.message === 'string') {
+    return getErrorMessageFromErrorObject(err.message);
+  }
+  return translate('global.unexpected_error');
+}
 export function showToast({message, type = 'success', duration = 2000}) {
   if (!toast) {
     return;

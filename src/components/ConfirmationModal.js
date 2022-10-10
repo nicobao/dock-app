@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Modal, Stack, Text} from 'native-base';
+import {Button, Modal, Stack, Text, HStack} from 'native-base';
 import {AlertModalIcon, InfoModalIcon, Theme} from 'src/design-system';
 
 let globalController;
@@ -66,23 +66,27 @@ export function ConfirmationModal() {
           <Text mt={4} fontSize={14} fontWeight={400}>
             {configs.description}
           </Text>
-          <Button
-            mt={4}
-            size="sm"
-            width="100%"
-            onPress={handleConfirm}
-            bg={Theme.colors.info2}>
-            {configs.confirmText}
-          </Button>
-          <Button
-            mt={2}
-            size="sm"
-            width="100%"
-            variant="solid"
-            onPress={handleCancel}
-            bg={Theme.colors.tertiaryBackground}>
-            {configs.cancelText}
-          </Button>
+
+          <HStack>
+            <Button
+              mt={2}
+              mx={1}
+              size="sm"
+              width="45%"
+              onPress={handleConfirm}
+              bg={Theme.colors.info2}>
+              {configs.confirmText}
+            </Button>
+            <Button
+              mx={1}
+              mt={2}
+              size="sm"
+              width="45%"
+              onPress={handleCancel}
+              bg={Theme.colors.tertiaryBackground}>
+              {configs.cancelText}
+            </Button>
+          </HStack>
         </Stack>
       </Modal.Content>
     </Modal>

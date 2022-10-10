@@ -5,6 +5,7 @@ import {
   DocumentDownloadIcon,
   OptionList,
   PlusCircleIcon,
+  Theme,
 } from 'src/design-system';
 import {Modal} from '../../components/Modal';
 import {Typography} from '../../design-system';
@@ -36,12 +37,24 @@ export function AccountSettingsModal({
               ? null
               : {
                   title: 'Export account',
-                  icon: <PlusCircleIcon />,
+                  icon: (
+                    <PlusCircleIcon
+                      style={{
+                        color: Theme.colors.secondaryIconColor,
+                      }}
+                    />
+                  ),
                   onPress: () => setView('export'),
                 },
             {
               title: 'Delete account',
-              icon: <DocumentDownloadIcon />,
+              icon: (
+                <DocumentDownloadIcon
+                  style={{
+                    color: Theme.colors.secondaryIconColor,
+                  }}
+                />
+              ),
               onPress: () => {
                 onDelete();
                 onClose();
@@ -55,7 +68,11 @@ export function AccountSettingsModal({
         <Stack direction="row">
           <Pressable onPress={() => setView('options')}>
             <Box pt={1} pr={5}>
-              <BackIcon />
+              <BackIcon
+                style={{
+                  color: Theme.colors.secondaryIconColor,
+                }}
+              />
             </Box>
           </Pressable>
           <Typography variant="h1">
@@ -68,12 +85,24 @@ export function AccountSettingsModal({
           items={[
             {
               title: translate('account_settings_modal.export_via_json'),
-              icon: <DocumentDownloadIcon />,
+              icon: (
+                <DocumentDownloadIcon
+                  style={{
+                    color: Theme.colors.secondaryIconColor,
+                  }}
+                />
+              ),
               onPress: () => onExport('json'),
             },
             {
               title: translate('account_settings_modal.export_via_qrcode'),
-              icon: <DocumentDownloadIcon />,
+              icon: (
+                <DocumentDownloadIcon
+                  style={{
+                    color: Theme.colors.secondaryIconColor,
+                  }}
+                />
+              ),
               onPress: () => onExport('qrcode'),
             },
           ]}

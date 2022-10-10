@@ -5,7 +5,8 @@
     "skip": "Skip",
     "close": "Close",
     "cancel": "Cancel",
-    "ok": "OK"
+    "ok": "OK",
+    "approve": "Approve"
   },
   "global": {
     "rendering_error": "Something went wrong",
@@ -19,8 +20,10 @@
     "invalid_json_file": "Invalid json file"
   },
   "auth": {
-    "auth_sign_in": "Signing in with debug credential",
-    "auth_sign_in_success": "Success! Signed in with DID!",
+    "authorize": "Authorize",
+    "sign_in_msg": "Sign in with your Web3 ID",
+    "auth_sign_in": "Signing in...",
+    "auth_sign_in_success": "Success! Signed in with Web3 ID!",
     "auth_sign_in_failed": "Unknown error on sign in"
   },
   "delete_wallet_confirmation": {
@@ -35,7 +38,7 @@
     "confirm": "Back up",
     "cancel": "Skip"
   },
-  "backup_wallet" : {
+  "backup_wallet": {
     "error": "Unable to generate backup"
   },
   "export_account": {
@@ -46,7 +49,8 @@
     "tokens": "Tokens",
     "credentials": "Credentials",
     "scan": "Scan",
-    "settings": "Settings"
+    "settings": "Settings",
+    "did_management": "DIDs"
   },
   "unlock_wallet": {
     "enter_passcode": "Enter your passcode",
@@ -79,7 +83,9 @@
   },
   "password_input": {
     "title": "Enter password",
-    "submit": "Next"
+    "submit": "Next",
+    "password": "Password",
+    "confirm_password": "Confirm Password"
   },
   "settings": {
     "title": "Settings",
@@ -103,7 +109,9 @@
     "hide_testnet_transaction": "Hide testnet Transactions",
     "switch_network_success": "Network switch successful",
     "switch_network_error": "Network switch failed",
-    "activate_transak": "Activate Transak"
+    "activate_transak": "Activate Transak",
+    "show_did_management": "Show DID Management",
+    "show_accounts": "Show accounts"
   },
   "account_setup": {
     "title": "Account Name",
@@ -116,6 +124,11 @@
     "description": "In the next step you will see an account recovery phrase. This phrase is the only way you can recover access to your account if your phone is lost or stolen.",
     "agreement": "I understand that if I lose my recovery phrase, I will not be able to access my account",
     "success": "Backup complete!"
+  },
+  "did_advanced_options": {
+    "keypair_type_sr25519": "Schnorrkel (sr25519, alternative)",
+    "keypair_type_ed25519": "Edwards (ed25519, recommended)",
+    "keypair_type_ecdsa": "ECDSA (Non BTC/ETH compatible)"
   },
   "account_advanced_options": {
     "advanced_options": "Advanced options",
@@ -183,9 +196,10 @@
     "export_success": "Account exported",
     "account_removed": "Account Removed",
     "unable_to_remove_account": "Unable to remove the account",
-    "buy": "Buy"
+    "buy": "Buy",
+    "no_account_exist": "No account exists"
   },
-  "intro_transak" : {
+  "intro_transak": {
     "buy_dock_via_debit_card": "Buy Dock via debit card or bank transfers powered by Transak.",
     "countries_available": "Available at 59+ countries.",
     "continue_to_transak": "Continue Transak",
@@ -286,17 +300,80 @@
     "invalid_credential": "Invalid Credential",
     "existing_credential": "This credential already exists in the wallet",
     "empty_items": "You’ll see credentials here once you accept them",
-    "default_title": "Untitled Credential"
+    "default_title": "Untitled Credential",
+    "select_what_to_share": "Select what data to share",
+    "select_presentation_holder": "Select identity to present",
+    "no_key_doc": "No KeyPair Document found",
+    "credential_shared": "Credentials Submitted successfully",
+    "credential_no_id": "Credential has no ID",
+    "credential_no_context": "Credential has no context",
+    "credential_no_type": "Credential has an invalid type",
+    "credential_no_issuer": "Credential has no Issuer"
   },
   "qr_scanner": {
+    "nodids": "You have no Web3 IDs!",
     "not_supported_data": "Not supported QR Code",
     "scan_qr_code": "Scan QR Code",
     "no_key_doc": "No key document found",
     "start": "Start",
     "processing": "Processing...",
-    "completed": "DID Authorized",
-    "error": "DID Error",
-    "header": "DID Authorization",
-    "retry": "Retry"
+    "completed": "Web3 ID Authorized",
+    "error": "Web3 ID Error",
+    "header": "Web3 ID Authorization",
+    "retry": "Retry",
+    "unamed_app": "Unnamed App"
+  },
+  "didAuth": {
+    "email": "Email",
+    "name": "Name"
+  },
+  "didManagement": {
+    "create_password": "Create a password",
+    "create_password_desc": "This will be used to import your DID to a new device",
+    "did_definition": "Decentralized Identifiers (DIDs) are a new type of identifier that enables a decentralized digital identity and allows you to accept verifiable credentials.",
+    "learn_more": "Learn More",
+    "create_new_did": "Create New DID",
+    "edit_did": "Edit DID",
+    "import_existing_did": "Import existing DID",
+    "did_name": "DID Name",
+    "did_name_input_hint": "This will just be used for easy reference",
+    "did_type": "DID Type",
+    "quick_info": "Quick Info",
+    "create": "Create",
+    "save": "Save",
+    "share_did": "Share DID",
+    "copy_did": "Copy DID",
+    "share_did_desc": "Share your Decentralized Identifier",
+    "did_dock_info": "did:dock requires DOCK token to create. This is used for the transaction fee required to create the DID and have a record on the blockchain.",
+    "enter_password": "Enter Password",
+    "confirm_password": "Confirm Password",
+    "share": "Share",
+    "did_created": "DID Created",
+    "did_deleted": "DID Deleted Successfully",
+    "did_creation_error": "An error occurred creating DID",
+    "did_updating_error": "An error occurred updating DID",
+    "error_keypair_type": "%{keypairType} keypair type is not supported.",
+    "export_did": "Export DID",
+    "delete_did": "Delete DID",
+    "delete_description": "This can’t be undone. Verifiable credentials received through this DID will not be deleted, you can delete it manually.",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "default": "Default DID",
+    "did_edited_successfully": "DID updated successfully",
+    "did_imported_successfully": "DID imported successfully",
+    "add_did": "Add DID",
+    "did_copied": "DID Copied",
+    "did_exported": "DID exported successfully ",
+    "export_error": "Unable to export DID",
+    "did_key": "did:key",
+    "did_key_description": "W3C compliant Decentralized identifier",
+    "did_dock": "did:dock",
+    "did_dock_description": "W3C compliant Decentralized Identifier created by Dock. Uses blockchain to secure verifiable credentials.",
+    "no_name_set": "DID name not set",
+    "did_payment_address": "DID Payment Account",
+    "invalid_did_file":"Invalid DID file provided.",
+    "invalid_did_password":"Incorrect Password",
+    "duplicate_did":"That DID already exists in wallet",
+    "no_items_found": "No items found"
   }
 }

@@ -7,21 +7,39 @@ import {
   isDidAuthUrl,
   onAuthQRScanned,
   qrCodeHandler,
+  isDeepLinkType,
+  onPresentationScanned,
+  importAccountHandler,
+  qrCodeHandlers,
 } from './qr-code';
-import {navigationRef} from '../../core/navigation';
+import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
 import testCredentialData from '@docknetwork/wallet-sdk-credentials/fixtures/test-credential.json';
 import {setToast} from '../../core/toast';
 import {getParamsFromUrl, onScanAuthQRCode} from '../credentials/credentials';
-import {didOperations} from '../didManagement/didManagment-slice';
-import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
 import {credentialServiceRPC} from '@docknetwork/wallet-sdk-core/lib/services/credential';
 import {translate} from 'src/locales';
-const mockStore = configureMockStore([thunk]);
+
+const keyDoc = {
+  '@context': ['https://w3id.org/wallet/v1'],
+  id: 'urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130002',
+  name: 'My Test Key 2',
+  image: 'https://via.placeholder.com/150',
+  description: 'For testing only, totally compromised.',
+  tags: ['professional', 'organization', 'compromised'],
+  correlation: ['4058a72a-9523-11ea-bb37-0242ac130002'],
+  controller: 'did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r',
+  type: 'Ed25519VerificationKey2018',
+  privateKeyBase58:
+    '3CQCBKF3Mf1tU5q1FLpHpbxYrNYxLiZk4adDtfyPEfc39Wk6gsTb2qoc1ZtpqzJYdM1rG4gpaD3ZVKdkiDrkLF1p',
+  publicKeyBase58: '6GwnHZARcEkJio9dxPYy6SC5sAL6PxpZAB6VYwoFjGMU',
+};
 
 describe('qr-code', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
   it('executeHandlers', async () => {
     expect(await executeHandlers('test', [])).toBeFalsy();
     expect(await executeHandlers('test', [() => true])).toBeTruthy();
@@ -80,28 +98,20 @@ describe('qr-code', () => {
         .spyOn(utilCryptoService, 'isAddressValid')
         .mockReturnValueOnce(false);
 
-      navigationRef.current = {
-        navigate: jest.fn(),
-      };
-
       const result = await addressHandler('some-address');
 
       expect(result).toBeFalsy();
-      expect(navigationRef.current.navigate).not.toBeCalled();
+      expect(navigate).not.toBeCalled();
     });
 
     it('expect to navigate to send tokens route', async () => {
       jest.spyOn(utilCryptoService, 'isAddressValid').mockReturnValueOnce(true);
 
-      navigationRef.current = {
-        navigate: jest.fn(),
-      };
-
       const address = 'some-address';
       const result = await addressHandler(address);
 
       expect(result).toBeTruthy();
-      expect(navigationRef.current.navigate).toBeCalledWith(Routes.TOKEN_SEND, {
+      expect(navigate).toBeCalledWith(Routes.TOKEN_SEND, {
         address,
       });
     });
@@ -115,10 +125,6 @@ describe('qr-code', () => {
     });
 
     it('expect to ignore invalid data', async () => {
-      navigationRef.current = {
-        navigate: jest.fn(),
-      };
-
       const toastMock = {
         show: jest.fn(),
       };
@@ -133,15 +139,11 @@ describe('qr-code', () => {
       const result = await credentialHandler('http://some-url');
 
       expect(result).toBeFalsy();
-      expect(navigationRef.current.navigate).not.toBeCalled();
+      expect(navigate).not.toBeCalled();
       expect(toastMock.show).toBeCalled();
     });
 
     it('expect to add credential from url', async () => {
-      navigationRef.current = {
-        navigate: jest.fn(),
-      };
-
       const credentialData = {
         id: 'test',
         content: 'some-data',
@@ -162,17 +164,10 @@ describe('qr-code', () => {
       const result = await credentialHandler('http://some-url');
 
       expect(result).toBeTruthy();
-      expect(navigationRef.current.navigate).toBeCalledWith(
-        Routes.APP_CREDENTIALS,
-        undefined,
-      );
+      expect(navigate).toBeCalledWith(Routes.APP_CREDENTIALS);
     });
 
     it('expect to handle json data', async () => {
-      navigationRef.current = {
-        navigate: jest.fn(),
-      };
-
       const credentialData = {
         id: Date.now(),
         content: 'some-data',
@@ -195,10 +190,7 @@ describe('qr-code', () => {
       );
 
       expect(result).toBeTruthy();
-      expect(navigationRef.current.navigate).toBeCalledWith(
-        Routes.APP_CREDENTIALS,
-        undefined,
-      );
+      expect(navigate).toBeCalledWith(Routes.APP_CREDENTIALS);
     });
 
     it('expect to not allow duplicated credential', async () => {
@@ -229,10 +221,6 @@ describe('qr-code', () => {
     });
 
     it('expect to handle malformed json', async () => {
-      navigationRef.current = {
-        navigate: jest.fn(),
-      };
-
       const toastMock = {
         show: jest.fn(),
       };
@@ -245,52 +233,79 @@ describe('qr-code', () => {
       expect(result).toBeFalsy();
     });
 
-    it('expect to onScanAuth0QRCode to generate credential', async () => {
-      const url =
-        'https://auth-server-i78ydv67d-docklabs.vercel.app/verify?id=dockstagingtestHsBR-jkCCPl4sBOh3f3_n66r9X1uIKgW&scope=public email';
-      await expect(onScanAuthQRCode(url)).rejects.toThrow(
+    it('expect to onScanAuth0QRCode to error with no keydoc', async () => {
+      await expect(
+        onScanAuthQRCode('https://url.com', null, {}),
+      ).rejects.toThrow(
         translate('qr_scanner.no_key_doc', {
           locale: 'en',
         }),
       );
-      const store = mockStore({});
-      await store.dispatch(didOperations.initializeDID());
-      await onScanAuthQRCode(url);
-
-      const subject = {
-        state: 'dockstagingtestHsBR-jkCCPl4sBOh3f3_n66r9X1uIKgW',
-      };
-
-      expect(credentialServiceRPC.generateCredential).toBeCalledWith({subject});
-      await credentialServiceRPC.generateCredential({});
-      expect(credentialServiceRPC.signCredential).toBeCalled();
     });
 
+    it('expect to onScanAuth0QRCode to generate credential', async () => {
+      const url =
+        'https://auth.dock.io/verify?id=dockstagingtestHsBR-jkCCPl4sBOh3f3_n66r9X1uIKgW&scope=public email';
+
+      await onScanAuthQRCode(url, keyDoc, {});
+
+      expect(credentialServiceRPC.signCredential).toBeCalled();
+    });
+    it('is Presentation QRCode scanned', () => {
+      const isValid1 = onPresentationScanned(
+        'allet://proof-?ul=https://auth.dock.io/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',
+      );
+      expect(isValid1).toBeFalsy();
+      expect(navigate).not.toBeCalled();
+      const res = onPresentationScanned(
+        'dockwallet://proof-request?url=https://auth.dock.io/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',
+      );
+      expect(navigate).toBeCalledWith(
+        'credential/shareCredentialAsPresentation',
+        {
+          deepLinkUrl:
+            'dockwallet://proof-request?url=https://auth.dock.io/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',
+        },
+      );
+      expect(res).toBeTruthy();
+    });
     it('is Auth QRCode scanned', () => {
       const res = onAuthQRScanned(
-        'dockwallet://didauth?url=https://auth-server-i78ydv67d-docklabs.vercel.app/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',
+        'dockwallet://didauth?url=https://auth.dock.io/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',
       );
       expect(res).toBeTruthy();
       const isValid1 = onAuthQRScanned(
-        'dockwallet://didauth?ul=https://auth-server-i78ydv67d-docklabs.vercel.app/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',
+        'dockwallet://didauth?ul=https://auth.dock.io/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',
       );
       expect(isValid1).toBeFalsy();
     });
 
+    it('is presentation URL', () => {
+      const isValid = isDeepLinkType(
+        'dockwallet://proof-request?url=https://auth.dock.io/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',
+        'dockwallet://proof-request?url=',
+      );
+      expect(isValid).toBeTruthy();
+      const isValid1 = isDeepLinkType(
+        'dockwallet://proof-equest?url=https://auth.dock.io/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',
+        'dockwallet://proof-request?url=',
+      );
+      expect(isValid1).toBeFalsy();
+    });
     it('Is did auth URL', () => {
       const isValid = isDidAuthUrl(
-        'dockwallet://didauth?url=https://auth-server-i78ydv67d-docklabs.vercel.app/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',
+        'dockwallet://didauth?url=https://auth.dock.io/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',
       );
       expect(isValid).toBeTruthy();
       const isValid1 = isDidAuthUrl(
-        'dockwallet://didauth?ul=https://auth-server-i78ydv67d-docklabs.vercel.app/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',
+        'dockwallet://didauth?ul=https://auth.dock.io/verify?id=dockstagingtestRgMV0IwPQELYDbVkGXUfMQnOb912660w&scope=public email',
       );
       expect(isValid1).toBeFalsy();
     });
 
     it('Get param from url', () => {
       const url =
-        'https://auth-server-i78ydv67d-docklabs.vercel.app/verify?id=dockstagingtestHsBR-jkCCPl4sBOh3f3_n66r9X1uIKgW&scope=public email';
+        'https://auth.dock.io/verify?id=dockstagingtestHsBR-jkCCPl4sBOh3f3_n66r9X1uIKgW&scope=public email';
       const id = getParamsFromUrl(url, 'id');
       expect(id).toBe('dockstagingtestHsBR-jkCCPl4sBOh3f3_n66r9X1uIKgW');
     });
@@ -298,6 +313,7 @@ describe('qr-code', () => {
     it('expect authHandler to sign and upload vc', async () => {
       await authHandler(
         'dockwallet://didauth?url=https%3A%2F%2Fauth.dock.io%2Fverify%3Fid%3Dqi0hkXbZQzpuAVgzM6Zkq905w0LnegROzDrsvy0W%26scope%3Dpublic%20email',
+        keyDoc,
       );
       expect(fetch).toHaveBeenCalledWith(
         'https://auth.dock.io/verify?id=qi0hkXbZQzpuAVgzM6Zkq905w0LnegROzDrsvy0W&scope=public email',
@@ -306,48 +322,24 @@ describe('qr-code', () => {
           headers: {
             'content-type': 'application/json',
           },
-          body: JSON.stringify({
-            vc: {
-              '@context': [
-                'https://www.w3.org/2018/credentials/v1',
-                {
-                  dk: 'https://ld.dock.io/credentials#',
-                  DockAuthCredential: 'dk:DockAuthCredential',
-                  name: 'dk:name',
-                  email: 'dk:email',
-                  state: 'dk:state',
-                  description: 'dk:description',
-                  logo: 'dk:logo',
-                },
-              ],
-              id: 'didauth:dock:clientid',
-              type: ['VerifiableCredential', 'DockAuthCredential'],
-              credentialSubject: {
-                name: 'John Doe',
-                email: 'test@dock.io',
-                state: 'debugstate',
-              },
-              issuanceDate: '2022-04-01T18:26:21.637Z',
-              expirationDate: '2023-04-01T18:26:21.637Z',
-              proof: {
-                type: 'Ed25519Signature2018',
-                created: '2022-05-13T17:57:12Z',
-                verificationMethod:
-                  'did:dock:5FbQXJULrLt8kymWe4ScrM2MyRWAweYXCQ79EpL7ADUV2H8Y#keys-1',
-                proofPurpose: 'assertionMethod',
-                proofValue:
-                  'z4ndjdQcqyypWAdtmRcz8KRh6cMzQCuDrQfq4fwa7WdANtxjsXje8UN7Pc16w1DDYNWdrWuV75bWvd6H2VDYfG1qB',
-              },
-              issuer: {
-                name: 'Auth Test',
-                description: 'test',
-                logo: '',
-                id: 'did:dock:5FbQXJULrLt8kymWe4ScrM2MyRWAweYXCQ79EpL7ADUV2H8Y',
-              },
-            },
-          }),
+          body: expect.any(String),
         },
       );
+    });
+    it('Include presentation QR handlers', () => {
+      expect(qrCodeHandlers.includes(onPresentationScanned)).toBeTruthy();
+    });
+  });
+  describe('importAccountHandler', () => {
+    it('Include import account QR handlers', () => {
+      expect(qrCodeHandlers.includes(importAccountHandler)).toBeTruthy();
+    });
+    it('is import QRCode scanned', async () => {
+      const isValid1 = await importAccountHandler('{"wallet":"","encoded":{}}');
+      expect(isValid1).toBeFalsy();
+
+      const res = await importAccountHandler('{"address":"","encoded":{}}');
+      expect(res).toBeTruthy();
     });
   });
 });

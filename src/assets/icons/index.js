@@ -23,7 +23,11 @@ import MenuScanQRIcon from './menu_scan_qr.svg';
 import MenuSettingsIcon from './menu_settings.svg';
 import EmptyCredentialIcon from './empty-credential.svg';
 import CancelIcon from './cancel.svg';
+import DIDManagementIcon from './did-management.svg';
+import RoundedDIDIcon from './rounded_did.svg';
 
+import PencilIcon from './pencil.svg';
+import BinIcon from './bin.svg';
 export {
   DockLogoIcon,
   DotsVerticalIcon,
@@ -50,4 +54,8 @@ export {
   MenuSettingsIcon,
   EmptyCredentialIcon,
   CancelIcon,
+  DIDManagementIcon,
+  RoundedDIDIcon,
+  PencilIcon,
+  BinIcon,
 };

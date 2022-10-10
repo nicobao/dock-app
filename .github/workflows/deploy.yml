@@ -1,5 +1,6 @@
 name: Deployment
 on:
+  workflow_dispatch:
   pull_request:
     branches:
       - dev
@@ -72,6 +73,7 @@ jobs:
           git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
           yarn --cwd ../wallet-sdk install
           yarn sync-sdk
+          yarn build-sdk
           rm -rf ./certs
           git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/dock-app-certs.git" ./certs
           mv ./certs/google-play.json ./
@@ -83,6 +85,8 @@ jobs:
           cp -rf ./certs/.env ./
           rm -rf /tmp/google-play-cert
           cp -rf ./certs/google-play-cert /tmp/google-play-cert
+          echo "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
+          echo "BUILD_TAG=$(node print-build-number|tr -s ' ' '_')" >> $GITHUB_ENV
 
       - name: Install Fastlane
         run: gem install fastlane
@@ -95,10 +99,13 @@ jobs:
           S3_REGION: ${{ secrets.S3_REGION }}
           S3_ANDROID_APK_DIR: ${{ secrets.S3_ANDROID_APK_DIR }}
           S3_ACL: ${{ secrets.S3_ACL }}
+          APK_LOCATION: ./release/dock-wallet.apk
         run: |
-          echo "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
           cd ./android
-          fastlane internal
+          mkdir release
+          fastlane package_apk
+          cp "app/build/outputs/apk/release/app-release.apk" ${{env.APK_LOCATION}}
+          fastlane submit_to_google
           fastlane s3_upload
 
       - name: Send slack notification
@@ -162,6 +169,7 @@ jobs:
           git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
           yarn --cwd ../wallet-sdk install
           yarn sync-sdk
+          yarn build-sdk
           echo "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
           git clone "${{ secrets.CERTS_REPO_URL }}" ./certs
           # Pull env variables from certs repo

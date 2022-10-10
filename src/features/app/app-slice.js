@@ -103,7 +103,16 @@ export const appSelectors = {
   getAppLocked: state => getRoot(state).lockedTime > Date.now(),
   getShowTestnetTransactionConfig: state =>
     getRoot(state).showTestnetTransaction,
-  getFeatures: state => getRoot(state).features || defaultFeatures,
+  getFeatures: state => {
+    if (!appSelectors.getDevSettingsEnabled(state)) {
+      return defaultFeatures;
+    }
+    const storedFeaturesConfig = getRoot(state).features || {};
+    return {
+      ...defaultFeatures,
+      ...storedFeaturesConfig,
+    };
+  },
 };
 
 export const appOperations = {
@@ -145,9 +154,11 @@ export const appOperations = {
     return;
   },
   initialize: () => async (dispatch, getState) => {
-    SplashScreen.hide();
-
     const wallet = Wallet.getInstance();
+
+    wallet.eventManager.on(WalletEvents.migrated, () => {
+      SplashScreen.hide();
+    });
 
     wallet.eventManager.on(WalletEvents.ready, () => {
       dispatch(appActions.setDockReady(true));

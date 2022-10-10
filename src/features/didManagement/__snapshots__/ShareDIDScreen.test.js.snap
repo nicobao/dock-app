@@ -1,0 +1,129 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ShareDIDScreen should render correctly 1`] = `
+<RNCSafeAreaView
+  accessibilityLabel="ShareDIDScreen"
+  style={
+    Object {
+      "backgroundColor": "#141417",
+      "flex": 1,
+    }
+  }
+  testID="ShareDIDScreen"
+>
+  <AppGlobalHeader />
+  <Memo(ForwardRef(Box))
+    flex={1}
+  >
+    <Memo(ForwardRef(Box))
+      flex={1}
+    >
+      <Styled(View)>
+        <BackButton
+          accessibilityLabel="BackButton"
+          testID="BackButton"
+        />
+      </Styled(View)>
+      <Memo(ForwardRef(Stack))
+        alignItems="center"
+      >
+        <Styled(Component)
+          mb={2}
+          variant="h1"
+        >
+          Share DID
+        </Styled(Component)>
+        <Styled(Component)
+          variant="screen-description"
+        >
+          Share your Decentralized Identifier
+        </Styled(Component)>
+      </Memo(ForwardRef(Stack))>
+      <Styled(ScrollView)
+        marginLeft={26}
+        marginRight={26}
+      >
+        <Memo(ForwardRef(Stack))
+          alignItems="center"
+          backgroundColor="#1F1F21"
+          borderRadius={12}
+          my={7}
+          p={5}
+        >
+          <Memo(ForwardRef(Stack))
+            bg="#fff"
+            p={2}
+          >
+            <QRCode
+              size={375}
+              value="did:dock:5EfZQN8LKZvqwE9oda4wiognj3217bMj5AaDX4jBgEe3orJk"
+            />
+          </Memo(ForwardRef(Stack))>
+          <Memo(ForwardRef(Stack))
+            alignItems="center"
+            direction="row"
+            flex={1}
+            pt={5}
+          >
+            <Memo(ForwardRef(Box))
+              pr={2}
+            >
+              <Image
+                source={
+                  Object {
+                    "testUri": "../../../src/assets/circle.png",
+                  }
+                }
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              />
+              <Memo()
+                address="did:dock:5EfZQN8LKZvqwE9oda4wiognj3217bMj5AaDX4jBgEe3orJk"
+                size={32}
+              />
+            </Memo(ForwardRef(Box))>
+            <Memo(ForwardRef(Stack))
+              alignItems="flex-start"
+              direction="column"
+              flex={1}
+            >
+              <Styled(Component)
+                variant="h3"
+              >
+                TestDID
+              </Styled(Component)>
+              <Styled(Component)
+                numberOfLines={1}
+              >
+                did:dock:5EfZQN8LKZvqwE9oda4wiognj3217bMj5AaDX4jBgEe3orJk
+              </Styled(Component)>
+            </Memo(ForwardRef(Stack))>
+          </Memo(ForwardRef(Stack))>
+        </Memo(ForwardRef(Stack))>
+      </Styled(ScrollView)>
+      <Memo(ForwardRef(Box))
+        mb={7}
+        mx={7}
+      >
+        <Button
+          onPress={[MockFunction]}
+          size="sm"
+          startIcon={
+            <Memo
+              as={[Function]}
+              name="copy-outline"
+              size="sm"
+            />
+          }
+        >
+          Copy DID
+        </Button>
+      </Memo(ForwardRef(Box))>
+    </Memo(ForwardRef(Box))>
+  </Memo(ForwardRef(Box))>
+</RNCSafeAreaView>
+`;

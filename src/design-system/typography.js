@@ -69,6 +69,14 @@ const variantsMap = {
     fontWeight: 400,
     lineHeight: 22,
   },
+  'field-label': {
+    fontFamily: Theme.fontFamily.default,
+    color: Theme.colors.description,
+    fontWeight: 600,
+    fontSize: 16,
+    fontStyle: 'normal',
+    lineHeight: '24px',
+  },
   'transaction-type-label': {
     fontFamily: Theme.fontFamily.default,
     fontWeight: 600,
@@ -133,6 +141,11 @@ const variantsMap = {
     fontSize: 14,
     color: Theme.colors.description,
   },
+  selectText: {
+    fontWeight: 600,
+    fontSize: 14,
+    color: Theme.colors.headerText,
+  },
   warning: {
     color: Theme.colors.warningText,
   },
@@ -143,11 +156,36 @@ const variantsMap = {
     lineHeight: 20,
     color: Theme.colors.primaryBackground,
   },
+  didTitle: {
+    fontFamily: Theme.fontFamily.default,
+    fontWeight: 700,
+    fontSize: 16,
+    color: Theme.colors.textHighlighted,
+  },
+  didDescription: {
+    fontFamily: Theme.fontFamily.default,
+    fontWeight: 500,
+    fontSize: 14,
+  },
+  credentialShareTitle: {
+    fontFamily: Theme.fontFamily.default,
+    fontWeight: 700,
+    fontSize: 16,
+    lineHeight: 24,
+    color: Theme.colors.textHighlighted,
+  },
+  credentialShareSubjects: {
+    fontFamily: Theme.fontFamily.default,
+    fontWeight: 500,
+    fontSize: 12,
+    lineHeight: 16,
+    color: Theme.colors.textHighlighted,
+  },
 };
 
 export const Typography: ComponentType<TypographyProps> = styled(Text)`
   font-family: ${Theme.fontFamily.default};
-  line-height: 25px;
+  line-height: 24px;
   color: ${props => (props.color ? props.color : Theme.colors.text)};
   ${({variant}) => {
     return variantsMap[variant] || {};

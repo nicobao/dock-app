@@ -6,8 +6,23 @@ import mockAsyncStorage from '../node_modules/@react-native-async-storage/async-
 import mockRNPermissions from '../node_modules/react-native-permissions/mock';
 import '../src/core/setup-env';
 import {DebugConstants} from '../src/features/constants';
-import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
-jest.mock('../src/core/realm', () => {
+import {} from '../src/core/navigation';
+jest.mock('../src/core/navigation', () => {
+  const navigate = jest.fn();
+  const navigationRef = {
+    current: {
+      navigate,
+    },
+  };
+  const navigationMocks = {
+    navigate,
+    navigateBack: jest.fn(),
+    navigationRef,
+  };
+  return navigationMocks;
+});
+
+jest.mock('@docknetwork/wallet-sdk-core/lib/core/realm', () => {
   const realmFunctions = {
     write: jest.fn(callback => {
       callback();
@@ -20,13 +35,23 @@ jest.mock('../src/core/realm', () => {
   };
   return {
     getRealm: () => realmFunctions,
+    addSchema: jest.fn(),
+    clearCacheData: jest.fn(),
   };
 });
 jest.mock('@react-native-async-storage/async-storage', () => mockAsyncStorage);
 jest.mock('react-native-device-info', () => 'DeviceInfo');
 jest.mock('react-native-permissions', () => mockRNPermissions);
 
-jest.mock('react-native-share', () => 'RNShare');
+jest.mock('react-native-share', () => {
+  const open = jest.fn(() => Promise.resolve([]));
+  return {
+    __esModule: true,
+    default: {
+      open,
+    },
+  };
+});
 
 Enzyme.configure({adapter: new Adapter()});
 
@@ -39,7 +64,7 @@ jest.mock('react-native-keyboard-aware-scroll-view', () => {
 
 jest.mock('react-native-fs', () => ({
   CachesDirectoryPath: jest.fn(),
-  DocumentDirectoryPath: jest.fn(),
+  DocumentDirectoryPath: 'DocumentDirectoryPath',
   ExternalDirectoryPath: jest.fn(),
   ExternalStorageDirectoryPath: jest.fn(),
   LibraryDirectoryPath: jest.fn(),
@@ -86,6 +111,10 @@ jest.mock('react-native-fs', () => ({
 
 jest.mock('react-native-keychain', () => ({
   getSupportedBiometryType: () => Promise.resolve('FaceId'),
+  setGenericPassword: jest.fn(() => Promise.resolve({data: {}})),
+  getGenericPassword: jest.fn(() =>
+    Promise.resolve({username: '{}', password: '', service: '', storage: ''}),
+  ),
   BIOMETRY_TYPE: {
     FACE_ID: 1,
     FINGERPRINT: 2,
@@ -165,33 +194,15 @@ jest.mock('react-native-screen-capture-secure', () => {
   };
 });
 
-jest.mock('@docknetwork/react-native-sdk/src/client/wallet-rpc', () => {
+jest.mock('@docknetwork/wallet-sdk-core/lib/services/substrate', () => {
   const originalModule = jest.requireActual(
-    '@docknetwork/react-native-sdk/src/client/wallet-rpc',
+    '@docknetwork/wallet-sdk-core/lib/services/substrate',
   );
-  const {WalletRpc} = originalModule;
+  const {substrateService} = originalModule;
   return {
     __esModule: true,
-    WalletRpc: {
-      ...WalletRpc,
-      importWallet: jest.fn(() => Promise.resolve()),
-      query: jest.fn(() => Promise.resolve([])),
-      remove: jest.fn(),
-      create: jest.fn(),
-      load: jest.fn(),
-      sync: jest.fn(),
-    },
-  };
-});
-jest.mock('@docknetwork/react-native-sdk/src/client/api-rpc', () => {
-  const originalModule = jest.requireActual(
-    '@docknetwork/react-native-sdk/src/client/api-rpc',
-  );
-  const {ApiRpc} = originalModule;
-  return {
-    __esModule: true,
-    ApiRpc: {
-      ...ApiRpc,
+    substrateService: {
+      ...substrateService,
       sendTokens: jest.fn(() => Promise.resolve()),
     },
   };
@@ -201,7 +212,7 @@ jest.mock('@docknetwork/wallet-sdk-core/lib/modules/wallet', () => {
   const originalModule = jest.requireActual(
     '@docknetwork/wallet-sdk-core/lib/modules/wallet',
   );
-  const docs = [];
+  let docs = [];
   const mockFunctions = {
     getInstance: jest.fn().mockReturnValue({
       query: jest.fn(q => {
@@ -227,6 +238,15 @@ jest.mock('@docknetwork/wallet-sdk-core/lib/modules/wallet', () => {
           }
         });
       }),
+      remove: jest.fn(documentId => {
+        docs = docs.filter(doc => {
+          return doc.id !== documentId;
+        });
+      }),
+      accounts: {
+        fetchBalance: jest.fn(() => Promise.resolve(0)),
+      },
+      deleteWallet: jest.fn(),
     }),
   };
 
@@ -380,6 +400,133 @@ jest.mock('@docknetwork/wallet-sdk-core/lib/services/wallet', () => {
   return {
     ...originalModule,
     walletService: mockFunctions,
+  };
+});
+
+jest.mock('@docknetwork/wallet-sdk-core/lib/services/keyring', () => {
+  const originalModule = jest.requireActual(
+    '@docknetwork/wallet-sdk-core/lib/services/keyring',
+  );
+  const mockFunctions = {
+    addFromJson: jest.fn(() => {}),
+  };
+
+  return {
+    ...originalModule,
+    keyringService: mockFunctions,
+  };
+});
+
+jest.mock('@docknetwork/wallet-sdk-react-native/lib', () => {
+  const originalModule = jest.requireActual(
+    '@docknetwork/wallet-sdk-react-native/lib',
+  );
+  const usePresentationMockFunctions = {
+    presentCredentials: jest.fn(params => {
+      if (params.challenge == 2) {
+        return Promise.reject(Error('Incorrect challenge'));
+      }
+      return Promise.resolve();
+    }),
+  };
+  const useDIDManagementMockFunctions = {
+    importDID: jest.fn(({password}) => {
+      if (password === 'test') {
+        return Promise.resolve([]);
+      } else if (password === 'test1') {
+        return Promise.reject(Error('Incorrect password'));
+      } else if (password === 'duplicate') {
+        return Promise.reject(Error('DID already exist in wallet'));
+      }
+      return Promise.reject(Error('"jwe" must be an object.'));
+    }),
+    createDID: jest.fn(didParams => {
+      const {type = 'ed25519'} = didParams;
+      if (type === 'ed25519') {
+        return Promise.resolve();
+      }
+      return Promise.reject('Only ed25519 keypair is supported.');
+    }),
+    deleteDID: jest.fn(() => {}),
+    editDID: jest.fn(didParams => {
+      const {id} = didParams;
+      if (typeof id === 'string' && id.length > 0) {
+        return Promise.resolve();
+      }
+      return Promise.reject('Document ID is not set');
+    }),
+    exportDID: jest.fn(({id, password}) => {
+      if (id) {
+        return Promise.resolve({});
+      }
+      return Promise.reject('DID Document not found');
+    }),
+    didList: [
+      {
+        '@context': ['https://w3id.org/wallet/v1'],
+        id: '1',
+        type: 'DIDResolutionResponse',
+        name: 'Test DID 1',
+        didDocument: {
+          id: 'did:key:z6MkhN7PBjWgSMQ24Bebdpvvw8fVRv7m6MHDqiwTKozzBgr',
+        },
+        correlation: ['urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130002'],
+      },
+      {
+        '@context': ['https://w3id.org/wallet/v1'],
+        id: '2',
+        type: 'DIDResolutionResponse',
+        name: 'Test DID 2',
+        didDocument: {
+          id: 'did:key:z6MkhN7PBjWgSMQ24Bebdpvvw8fVRv7m6MHDqiwTKozzBlr',
+        },
+        correlation: ['urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130002'],
+      },
+    ],
+  };
+  const useAccountsMockFunctions = {
+    accounts: [
+      {
+        '@context': ['https://w3id.org/wallet/v1'],
+        id: '1',
+        type: 'Address',
+      },
+      {
+        '@context': ['https://w3id.org/wallet/v1'],
+        id: '2',
+        type: 'Address',
+      },
+    ],
+  };
+
+  const walletDocs = {};
+
+  const useWalletMockFunctions = {
+    wallet: {
+      upsert: jest.fn(doc => {
+        walletDocs[doc.id] = doc;
+        return Promise.resolve(null);
+      }),
+      getDocumentById: jest.fn(id => Promise.resolve(walletDocs[id])),
+      add: jest.fn(doc => {
+        walletDocs[doc.id] = doc;
+        return Promise.resolve(null);
+      }),
+    },
+  };
+  const useCredentialUtilsMock = {
+    credentials: [],
+    saveCredential:jest.fn(),
+    deleteCredential: jest.fn(),
+  };
+
+  return {
+    WalletSDKProvider: originalModule.WalletSDKProvider,
+    useDIDManagement: () => useDIDManagementMockFunctions,
+    useAccounts: () => useAccountsMockFunctions,
+    usePresentation: () => usePresentationMockFunctions,
+    useWallet: () => useWalletMockFunctions,
+    useCredentialUtils: () => useCredentialUtilsMock,
   };
 });
 global.fetch = jest.fn(() =>
