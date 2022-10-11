@@ -156,7 +156,7 @@ export const transactionsOperations = {
         fromAddress: accountAddress,
         amount: amount,
       });
-    }, translate('transactions.transaction_fee_error')),
+    }, translate('send_token.transaction_fee_error')),
 
   sendTransaction:
     ({
