@@ -239,6 +239,7 @@
     "send_max": "Send Max",
     "insufficient_balance": "Insufficient balance",
     "calculating_fee": "Calculating fee...",
+    "transaction_fee_error": "Unable to fetch transaction fee",
     "transaction_sent": "Transaction Sent",
     "insufficient_funds": "Insufficient funds",
     "invalid_amount": "The amount is not valid",
