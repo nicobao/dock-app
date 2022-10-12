@@ -204,6 +204,7 @@ jest.mock('@docknetwork/wallet-sdk-core/lib/services/substrate', () => {
     substrateService: {
       ...substrateService,
       sendTokens: jest.fn(() => Promise.resolve()),
+      getFeeAmount: jest.fn(() => Promise.resolve()),
     },
   };
 });
