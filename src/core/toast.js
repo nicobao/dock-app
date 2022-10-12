@@ -35,7 +35,7 @@ export const withErrorToast =
   (fn, message) =>
   async (...params) => {
     try {
-      await fn(...params);
+      return await fn(...params);
     } catch (err) {
       const errorMessage = message || getErrorMessageFromErrorObject(err);
       captureException(err);

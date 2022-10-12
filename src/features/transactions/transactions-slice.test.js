@@ -124,4 +124,21 @@ describe('transactions-slice', () => {
     fetchBalanceSpy.mockClear();
     sendTokensSpy.mockClear();
   });
+
+  it('getFeeAmount', async () => {
+    const fn = jest.spyOn(substrateService, 'getFeeAmount');
+    const fee = Date.now();
+
+    fn.mockReturnValue(fee);
+
+    const result = await transactionsOperations.getFeeAmount({
+      recipientAddress: 'address',
+      accountAddress: 'address',
+      amount: 1,
+    })();
+
+    expect(result).toBe(fee);
+
+    fn.mockReset();
+  });
 });
