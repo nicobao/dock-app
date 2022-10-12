@@ -4,8 +4,8 @@ import RNFS from 'react-native-fs';
 import {translate} from 'src/locales';
 import {showToast} from './toast';
 
-export function pickDocuments() {
-  return DocumentPicker.pick({
+export function pickDocument() {
+  return DocumentPicker.pickSingle({
     type: [DocumentPicker.types.allFiles],
   }).catch(err => {
     if (err.code === 'DOCUMENT_PICKER_CANCELED') {
@@ -28,13 +28,11 @@ export function readFile(path) {
 }
 
 export async function pickFileData() {
-  const files = await pickDocuments();
+  const file = await pickDocument();
 
-  if (!files.length) {
+  if (!file) {
     return;
   }
-
-  const [file] = files;
 
   assert(!!file, 'file is not defined');
   assert(!!file.fileCopyUri, 'fileCopyUri is not defined');
