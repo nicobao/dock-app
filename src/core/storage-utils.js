@@ -9,7 +9,7 @@ export function pickDocument() {
     type: [DocumentPicker.types.allFiles],
   }).catch(err => {
     if (err.code === 'DOCUMENT_PICKER_CANCELED') {
-      return [];
+      return undefined;
     }
 
     throw err;

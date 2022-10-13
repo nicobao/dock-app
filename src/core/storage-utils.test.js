@@ -5,7 +5,7 @@ describe('storage utils', () => {
   it('expect to handle files', async () => {
     const result = 'some-data';
     jest
-      .spyOn(DocumentPicker, 'pick')
+      .spyOn(DocumentPicker, 'pickSingle')
       .mockImplementationOnce(() => Promise.resolve(result));
 
     const file = await pickDocument();
@@ -14,7 +14,7 @@ describe('storage utils', () => {
   });
 
   it('expect to handle cancel event on document picker', async () => {
-    jest.spyOn(DocumentPicker, 'pick').mockImplementationOnce(() => {
+    jest.spyOn(DocumentPicker, 'pickSingle').mockImplementationOnce(() => {
       return Promise.reject({
         code: 'DOCUMENT_PICKER_CANCELED',
       });
@@ -26,7 +26,7 @@ describe('storage utils', () => {
   });
 
   it('expect to handle unexpected picker error', async () => {
-    jest.spyOn(DocumentPicker, 'pick').mockImplementationOnce(() => {
+    jest.spyOn(DocumentPicker, 'pickSingle').mockImplementationOnce(() => {
       return Promise.reject({
         code: 'OTHER_CODE',
       });
