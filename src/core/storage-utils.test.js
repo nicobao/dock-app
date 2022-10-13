@@ -1,6 +1,6 @@
 import DocumentPicker from 'react-native-document-picker';
 import {pickDocument, stringToJSON} from './storage-utils';
-import { setToast } from './toast';
+import {setToast} from './toast';
 
 describe('storage utils', () => {
   it('expect to handle files', async () => {
