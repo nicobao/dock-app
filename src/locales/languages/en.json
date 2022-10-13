@@ -17,7 +17,8 @@
     "subscan_unable_to_fetch": "Unable to fetch transaction history",
     "unexpected_error": "Unexpected error, please try again",
     "fetching_data": "Fetching remote data, please wait",
-    "invalid_json_file": "Invalid json file"
+    "invalid_json_file": "Invalid json file",
+    "unable_to_read_file": "Unable to read the file"
   },
   "auth": {
     "authorize": "Authorize",

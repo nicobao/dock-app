@@ -1,3 +1,4 @@
+import {captureException} from '@sentry/react-native';
 import assert from 'assert';
 import DocumentPicker from 'react-native-document-picker';
 import RNFS from 'react-native-fs';
@@ -11,6 +12,13 @@ export function pickDocument() {
     if (err.code === 'DOCUMENT_PICKER_CANCELED') {
       return undefined;
     }
+
+    captureException(err);
+
+    showToast({
+      type: 'error',
+      message: translate('global.unable_to_read_file'),
+    });
 
     throw err;
   });
@@ -52,7 +60,7 @@ export async function pickJSONFile() {
   } catch (err) {
     showToast({
       type: 'error',
-      message: translate('globals.invalid_json_file'),
+      message: translate('global.invalid_json_file'),
     });
     throw err;
   }

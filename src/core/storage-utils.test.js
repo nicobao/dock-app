@@ -1,5 +1,6 @@
 import DocumentPicker from 'react-native-document-picker';
 import {pickDocument, stringToJSON} from './storage-utils';
+import { setToast } from './toast';
 
 describe('storage utils', () => {
   it('expect to handle files', async () => {
@@ -32,9 +33,16 @@ describe('storage utils', () => {
       });
     });
 
+    const toastMock = {
+      show: jest.fn(),
+    };
+
+    setToast(toastMock);
+
     const err = await pickDocument().catch(v => v);
 
     expect(err.code).toBe('OTHER_CODE');
+    expect(toastMock.show).toBeCalled();
   });
 
   it('parse string to JSON', () => {
