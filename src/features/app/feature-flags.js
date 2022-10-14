@@ -2,6 +2,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {appOperations, appSelectors} from './app-slice';
 import {translate} from '../../locales';
 import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
+import featureConfig from '../../../features_config.json';
 
 export const Features = {
   accounts: {
@@ -30,12 +31,16 @@ export const Features = {
 export const getAllFeatures = () =>
   Object.keys(Features).map(key => Features[key]);
 
+const featureDict = featureConfig
+  ? Object.assign({}, ...featureConfig.map(f => ({[f.id]: f.enabled})))
+  : {};
+
 export const defaultFeatures = {
-  [Features.accounts.id]: true,
+  [Features.accounts.id]: featureDict[Features.accounts.id] ?? true,
   [Features.showTestnetTransaction.id]: false,
-  [Features.credentials.id]: true,
-  [Features.transak.id]: true,
-  [Features.didManagement.id]: true,
+  [Features.credentials.id]: featureDict[Features.credentials.id] ?? true,
+  [Features.transak.id]: featureDict[Features.transak.id] ?? true,
+  [Features.didManagement.id]: featureDict[Features.didManagement.id] ?? true,
 };
 
 export type FeatureFlags = {
