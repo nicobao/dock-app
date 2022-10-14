@@ -159,6 +159,7 @@ jest.mock(
 );
 jest.mock('react-native-document-picker', () => ({
   pick: jest.fn(),
+  pickSingle: jest.fn(() => Promise.resolve({})),
   types: {},
 }));
 
@@ -204,6 +205,7 @@ jest.mock('@docknetwork/wallet-sdk-core/lib/services/substrate', () => {
     substrateService: {
       ...substrateService,
       sendTokens: jest.fn(() => Promise.resolve()),
+      getFeeAmount: jest.fn(() => Promise.resolve()),
     },
   };
 });
