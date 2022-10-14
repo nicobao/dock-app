@@ -159,6 +159,7 @@ jest.mock(
 );
 jest.mock('react-native-document-picker', () => ({
   pick: jest.fn(),
+  pickSingle: jest.fn(() => Promise.resolve({})),
   types: {},
 }));
 
