@@ -8,39 +8,54 @@ export const Features = {
   accounts: {
     id: 'accounts',
     title: translate('dev_settings.show_accounts'),
+    defaultToEnabled: true,
   },
   showTestnetTransaction: {
     id: 'showTestnetTransaction',
     title: translate('dev_settings.show_testnet_transaction'),
     visible: ({currentNetworkId}) => currentNetworkId !== 'mainnet',
+    defaultToEnabled: false,
   },
   credentials: {
     id: 'credentials',
     title: translate('dev_settings.show_credentials'),
+    defaultToEnabled: true,
   },
   didManagement: {
     id: 'didManagement',
     title: translate('dev_settings.show_did_management'),
+    defaultToEnabled: true,
   },
   transak: {
     id: 'activate_transak',
     title: translate('dev_settings.activate_transak'),
+    defaultToEnabled: true,
   },
 };
 
 export const getAllFeatures = () =>
   Object.keys(Features).map(key => Features[key]);
 
-const featureDict = featureConfig
-  ? Object.assign({}, ...featureConfig.map(f => ({[f.id]: f.enabled})))
-  : {};
+export const isFeatureEnabled = (id, config = featureConfig) => {
+  const entry = config && config.find(f => f.id === id);
+
+  // if no override found, return the defaults
+  if (!entry) {
+    const defaultEntry = getAllFeatures().find(f => f.id === id);
+    return defaultEntry && defaultEntry.defaultToEnabled;
+  }
+
+  return entry && entry.enabled;
+};
 
 export const defaultFeatures = {
-  [Features.accounts.id]: featureDict[Features.accounts.id] ?? true,
-  [Features.showTestnetTransaction.id]: false,
-  [Features.credentials.id]: featureDict[Features.credentials.id] ?? true,
-  [Features.transak.id]: featureDict[Features.transak.id] ?? true,
-  [Features.didManagement.id]: featureDict[Features.didManagement.id] ?? true,
+  [Features.accounts.id]: isFeatureEnabled(Features.accounts.id),
+  [Features.showTestnetTransaction.id]: isFeatureEnabled(
+    Features.showTestnetTransaction.id,
+  ),
+  [Features.credentials.id]: isFeatureEnabled(Features.credentials.id),
+  [Features.transak.id]: isFeatureEnabled(Features.transak.id),
+  [Features.didManagement.id]: isFeatureEnabled(Features.didManagement.id),
 };
 
 export type FeatureFlags = {
