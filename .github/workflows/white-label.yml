@@ -157,8 +157,9 @@ jobs:
           git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/${{ matrix.app }}.git" ../distro_configs
           ls -R ../distro_configs
           cp -r ../distro_configs/src .
+          grep -i "IOS_BUNDLE_ID" ../distro_configs/packaging.config
           grep -i "IOS_BUNDLE_ID" ../distro_configs/packaging.config >> $GITHUB_ENV
-          echo "${{env.IOS_BUNDLE_ID}}"
+          echo "IOS_BUNDLE_ID is: ${{env.IOS_BUNDLE_ID}}"
 
       # - name: Run fastlane setup
       #   env:
