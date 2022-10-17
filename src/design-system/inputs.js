@@ -53,7 +53,19 @@ export function SelectToggler({children, placeholder, onChange}) {
             <Typography variant="label">{placeholder}</Typography>
           </Box>
           <Box mt={2}>
-            {contentVisible ? <ChevronUpIcon /> : <ChevronDownIcon />}
+            {contentVisible ? (
+              <ChevronUpIcon
+                style={{
+                  color: Theme.colors.activeText,
+                }}
+              />
+            ) : (
+              <ChevronDownIcon
+                style={{
+                  color: Theme.colors.activeText,
+                }}
+              />
+            )}
           </Box>
         </Stack>
       </TouchableWithoutFeedback>
