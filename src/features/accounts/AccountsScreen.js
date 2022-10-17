@@ -97,6 +97,7 @@ const AccountCard = withErrorBoundary(
                   </NBox>
                 ) : null}
                 <Menu
+                  bg={Theme.colors.tertiaryBackground}
                   {...addTestId(`account-item-menu-${index}`)}
                   trigger={triggerProps => {
                     return (
