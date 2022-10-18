@@ -44,17 +44,17 @@ export function SelectToggler({children, placeholder, onChange}) {
           <Box flex={1}>
             <Typography variant="label">{placeholder}</Typography>
           </Box>
-          <Box p={4} mt={2}>
+          <Box p={3} mt={2}>
             {contentVisible ? (
               <ChevronUpIcon
                 style={{
-                  color: Theme.colors.activeText,
+                  color: Theme.colors.description,
                 }}
               />
             ) : (
               <ChevronDownIcon
                 style={{
-                  color: Theme.colors.activeText,
+                  color: Theme.colors.description,
                 }}
               />
             )}
