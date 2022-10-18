@@ -166,7 +166,7 @@ jobs:
         run: |
           export ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }}
           export MATCH_REPOSITORY=${{ env.MATCH_REPOSITORY }}
-          echo "${MATCH_REPOSITORY/git@/"https://$ACCESS_TOKEN@"}"
+          echo "${MATCH_REPOSITORY/git@/https://$ACCESS_TOKEN@}"
 
       # - name: Run fastlane setup
       #   env:
