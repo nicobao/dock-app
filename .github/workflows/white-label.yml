@@ -158,7 +158,8 @@ jobs:
           ls -R ../distro_configs
           cp -r ../distro_configs/src .
           grep -i "IOS_BUNDLE_ID" ../distro_configs/packaging.config
-          grep -i "IOS_BUNDLE_ID" ../distro_configs/packaging.config >> $GITHUB_ENV
+          # grep -i "IOS_BUNDLE_ID" ../distro_configs/packaging.config >> $GITHUB_ENV
+          cat ../distro_configs/packaging.config >> $GITHUB_ENV
           #export IOS_BUNDLE_ID=$(grep -i "IOS_BUNDLE_ID" ../distro_configs/packaging.config)
           #echo "IOS_BUNDLE_ID=labs.dock.DockWalletUI" >> $GITHUB_ENV
           
@@ -167,6 +168,7 @@ jobs:
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           CERTS_REPO_URL: ${{ secrets.CERTS_REPO_URL }}
+          MATCH_REPO_URL: ${{ secrets.CERTS_REPO_URL }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }}
           FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD:  ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
@@ -196,7 +198,7 @@ jobs:
           # cp -rf ./certs/GoogleService-Info.plist ./ios/
           sed -i -e "s/labs.dock.DockApp/${{env.IOS_BUNDLE_ID}}/g" ./ios/DockApp.xcodeproj/project.pbxproj
           cat ./ios/DockApp.xcodeproj/project.pbxproj
-          # cd ./ios
+          cd ./ios
           # pod install
           # fastlane build_no_upload
 
