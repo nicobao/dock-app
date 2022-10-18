@@ -159,14 +159,14 @@ jobs:
           cp -r ../distro_configs/src .
           grep -i "IOS_BUNDLE_ID" ../distro_configs/packaging.config
           cat ../distro_configs/packaging.config >> $GITHUB_ENV
+          echo "MATCH_REPOSITORY=https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/${{ matrix.app }}.git" >> $GITHUB_ENV
 
-      - name: Process packaging.config
-        env:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        run: |
-          export ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }}
-          export MATCH_REPOSITORY=${{ env.MATCH_REPOSITORY }}
-          echo "MATCH_REPOSITORY=${MATCH_REPOSITORY/git@/https://$ACCESS_TOKEN@}" >> $GITHUB_ENV
+      # - name: Process packaging.config
+      #   env:
+      #     ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+      #   run: |
+      #     export ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }}
+      #     export MATCH_REPOSITORY=${{ env.MATCH_REPOSITORY }}
 
       - name: Run fastlane setup
         env:
