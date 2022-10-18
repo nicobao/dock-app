@@ -158,7 +158,8 @@ jobs:
           ls -R ../distro_configs
           cp -r ../distro_configs/src .
           grep -i "IOS_BUNDLE_ID" ../distro_configs/packaging.config
-          cat ../distro_configs/packaging.config >> $GITHUB_ENV
+          grep -i "MATCH_PASSWORD" ../distro_configs/packaging.config >> $GITHUB_ENV
+          # cat ../distro_configs/packaging.config >> $GITHUB_ENV
           echo "MATCH_REPOSITORY=https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/${{ matrix.app }}.git" >> $GITHUB_ENV
 
       # - name: Process packaging.config
@@ -189,6 +190,9 @@ jobs:
           echo "IOS_BUNDLE_ID is: ${{env.IOS_BUNDLE_ID}}"
           git config --global url."https://".insteadOf git://
           xcodebuild -version
+          # sed -i -e "s/labs.dock.DockApp/${{env.IOS_BUNDLE_ID}}/g" ./ios/DockApp.xcodeproj/project.pbxproj
+          sed -i -e "s/labs.dock.DockApp/${grep -i "IOS_BUNDLE_ID" ../distro_configs/packaging.config}/g" ./ios/DockApp.xcodeproj/project.pbxproj
+          cat ./ios/DockApp.xcodeproj/project.pbxproj
           yarn install
           git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
           yarn --cwd ../wallet-sdk install
@@ -201,8 +205,7 @@ jobs:
           # It will inject sentry token in the JS thread
           cp -rf ./certs/.env ./
           cp -rf ./certs/GoogleService-Info.plist ./ios/
-          sed -i -e "s/labs.dock.DockApp/${{env.IOS_BUNDLE_ID}}/g" ./ios/DockApp.xcodeproj/project.pbxproj
-          cat ./ios/DockApp.xcodeproj/project.pbxproj
+          
           cd ./ios
           pod install
           fastlane build_no_upload
