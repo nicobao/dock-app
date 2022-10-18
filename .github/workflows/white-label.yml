@@ -158,18 +158,14 @@ jobs:
           ls -R ../distro_configs
           cp -r ../distro_configs/src .
           grep -i "IOS_BUNDLE_ID" ../distro_configs/packaging.config
-          # grep -i "IOS_BUNDLE_ID" ../distro_configs/packaging.config >> $GITHUB_ENV
           cat ../distro_configs/packaging.config >> $GITHUB_ENV
-          #export IOS_BUNDLE_ID=$(grep -i "IOS_BUNDLE_ID" ../distro_configs/packaging.config)
-          #echo "IOS_BUNDLE_ID=labs.dock.DockWalletUI" >> $GITHUB_ENV
-          
 
       - name: Run fastlane setup
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           CERTS_REPO_URL: ${{ secrets.CERTS_REPO_URL }}
-          MATCH_REPO_URL: ${{ secrets.CERTS_REPO_URL }}
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          MATCH_REPO_URL: ${{ env.MATCH_REPOSITORY }}
+          MATCH_PASSWORD: ${{ env.MATCH_PASSWORD }}
           FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }}
           FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD:  ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
           FASTLANE_APP_IDENTIFIER: ${{ secrets.FASTLANE_APP_IDENTIFIER }}
@@ -182,25 +178,25 @@ jobs:
           ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
         run: |
           echo "IOS_BUNDLE_ID is: ${{env.IOS_BUNDLE_ID}}"
-          # git config --global url."https://".insteadOf git://
-          # xcodebuild -version
-          # yarn install
-          # git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
-          # yarn --cwd ../wallet-sdk install
-          # yarn sync-sdk
-          # yarn build-sdk
-          # echo "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
-          # echo "BUILD_TAG=$(node print-build-number|tr -s ' ' '_')" >> $GITHUB_ENV
-          # git clone "${{ secrets.CERTS_REPO_URL }}" ./certs
-          # Pull env variables from certs repo
-          # It will inject sentry token in the JS thread
-          # cp -rf ./certs/.env ./
-          # cp -rf ./certs/GoogleService-Info.plist ./ios/
+          git config --global url."https://".insteadOf git://
+          xcodebuild -version
+          yarn install
+          git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
+          yarn --cwd ../wallet-sdk install
+          yarn sync-sdk
+          yarn build-sdk
+          echo "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
+          echo "BUILD_TAG=$(node print-build-number|tr -s ' ' '_')" >> $GITHUB_ENV
+          git clone "${{ secrets.CERTS_REPO_URL }}" ./certs
+          Pull env variables from certs repo
+          It will inject sentry token in the JS thread
+          cp -rf ./certs/.env ./
+          cp -rf ./certs/GoogleService-Info.plist ./ios/
           sed -i -e "s/labs.dock.DockApp/${{env.IOS_BUNDLE_ID}}/g" ./ios/DockApp.xcodeproj/project.pbxproj
           cat ./ios/DockApp.xcodeproj/project.pbxproj
           cd ./ios
-          # pod install
-          # fastlane build_no_upload
+          pod install
+          fastlane build_no_upload
 
       # - name: Upload to S3
       #   env:
