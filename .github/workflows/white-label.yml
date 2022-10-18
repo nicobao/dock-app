@@ -188,8 +188,8 @@ jobs:
           echo "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
           echo "BUILD_TAG=$(node print-build-number|tr -s ' ' '_')" >> $GITHUB_ENV
           git clone "${{ secrets.CERTS_REPO_URL }}" ./certs
-          Pull env variables from certs repo
-          It will inject sentry token in the JS thread
+          # Pull env variables from certs repo
+          # It will inject sentry token in the JS thread
           cp -rf ./certs/.env ./
           cp -rf ./certs/GoogleService-Info.plist ./ios/
           sed -i -e "s/labs.dock.DockApp/${{env.IOS_BUNDLE_ID}}/g" ./ios/DockApp.xcodeproj/project.pbxproj
@@ -198,19 +198,19 @@ jobs:
           pod install
           fastlane build_no_upload
 
-      # - name: Upload to S3
-      #   env:
-      #     S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY }}
-      #     S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
-      #     S3_APP_BUCKET: ${{ secrets.S3_APP_BUCKET }}
-      #     S3_REGION: ${{ secrets.S3_REGION }}
-      #     S3_ANDROID_IPA_DIR: ${{matrix.app}}
-      #     S3_ACL: ${{ secrets.S3_ACL }}
-      #     IPA_LOCATION: "./DockApp.ipa"
-      #   run: |
-      #     echo "${{env.BUILD_TAG}}"
-      #     cd ./ios
-      #     fastlane s3_upload
+      - name: Upload to S3
+        env:
+          S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY }}
+          S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
+          S3_APP_BUCKET: ${{ secrets.S3_APP_BUCKET }}
+          S3_REGION: ${{ secrets.S3_REGION }}
+          S3_ANDROID_IPA_DIR: ${{matrix.app}}
+          S3_ACL: ${{ secrets.S3_ACL }}
+          IPA_LOCATION: "./DockApp.ipa"
+        run: |
+          echo "${{env.BUILD_TAG}}"
+          cd ./ios
+          fastlane s3_upload
 
   # create-tag:
   #   runs-on: ubuntu-latest
