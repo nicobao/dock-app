@@ -159,8 +159,9 @@ jobs:
           cp -r ../distro_configs/src .
           grep -i "IOS_BUNDLE_ID" ../distro_configs/packaging.config
           # grep -i "IOS_BUNDLE_ID" ../distro_configs/packaging.config >> $GITHUB_ENV
-          echo "IOS_BUNDLE_ID=labs.dock.DockWalletUI" >> $GITHUB_ENV
-          echo "IOS_BUNDLE_ID is: ${{env.IOS_BUNDLE_ID}}"
+          export IOS_BUNDLE_ID=$(grep -i "IOS_BUNDLE_ID" ../distro_configs/packaging.config)
+          #echo "IOS_BUNDLE_ID=labs.dock.DockWalletUI" >> $GITHUB_ENV
+          echo "IOS_BUNDLE_ID is: ${{$IOS_BUNDLE_ID}}"
 
       # - name: Run fastlane setup
       #   env:
