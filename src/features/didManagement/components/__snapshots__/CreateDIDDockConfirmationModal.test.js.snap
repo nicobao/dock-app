@@ -87,7 +87,7 @@ exports[`CreateDIDDockConfirmationModal should render correctly when not visible
       >
         <Styled(Component)
           mb={1}
-          variant="label"
+          variant="didModalInfoTitle"
         >
           DID Name
         </Styled(Component)>
@@ -103,7 +103,7 @@ exports[`CreateDIDDockConfirmationModal should render correctly when not visible
       >
         <Styled(Component)
           mb={1}
-          variant="label"
+          variant="didModalInfoTitle"
         >
           DID Type
         </Styled(Component)>
@@ -117,7 +117,7 @@ exports[`CreateDIDDockConfirmationModal should render correctly when not visible
       >
         <Styled(Component)
           mb={1}
-          variant="label"
+          variant="didModalInfoTitle"
         >
           Transaction Fee
         </Styled(Component)>
@@ -131,7 +131,7 @@ exports[`CreateDIDDockConfirmationModal should render correctly when not visible
       >
         <Styled(Component)
           mb={1}
-          variant="label"
+          variant="didModalInfoTitle"
         >
           Total
         </Styled(Component)>
@@ -241,7 +241,7 @@ exports[`CreateDIDDockConfirmationModal should render correctly when visible 1`]
       >
         <Styled(Component)
           mb={1}
-          variant="label"
+          variant="didModalInfoTitle"
         >
           DID Name
         </Styled(Component)>
@@ -257,7 +257,7 @@ exports[`CreateDIDDockConfirmationModal should render correctly when visible 1`]
       >
         <Styled(Component)
           mb={1}
-          variant="label"
+          variant="didModalInfoTitle"
         >
           DID Type
         </Styled(Component)>
@@ -271,7 +271,7 @@ exports[`CreateDIDDockConfirmationModal should render correctly when visible 1`]
       >
         <Styled(Component)
           mb={1}
-          variant="label"
+          variant="didModalInfoTitle"
         >
           Transaction Fee
         </Styled(Component)>
@@ -285,7 +285,7 @@ exports[`CreateDIDDockConfirmationModal should render correctly when visible 1`]
       >
         <Styled(Component)
           mb={1}
-          variant="label"
+          variant="didModalInfoTitle"
         >
           Total
         </Styled(Component)>

@@ -35,7 +35,12 @@ export function CustomSelectInput({
           borderRadius={6}>
           <Box flex={1}>
             {typeof selectedValue === 'string' && selectedValue.length > 0 ? (
-              <Typography variant="selectText">{selectedValue}</Typography>
+              <Typography
+                style={{
+                  color: Theme.colors.description,
+                }}>
+                {selectedValue}
+              </Typography>
             ) : (
               <Typography variant="label">{placeholder}</Typography>
             )}
