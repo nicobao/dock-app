@@ -180,24 +180,25 @@ jobs:
           ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
         run: |
           echo "IOS_BUNDLE_ID is: ${{env.IOS_BUNDLE_ID}}"
-      #     git config --global url."https://".insteadOf git://
-      #     xcodebuild -version
-      #     yarn install
-      #     git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
-      #     yarn --cwd ../wallet-sdk install
-      #     yarn sync-sdk
-      #     yarn build-sdk
-      #     echo "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
-      #     echo "BUILD_TAG=$(node print-build-number|tr -s ' ' '_')" >> $GITHUB_ENV
-      #     git clone "${{ secrets.CERTS_REPO_URL }}" ./certs
-      #     # Pull env variables from certs repo
-      #     # It will inject sentry token in the JS thread
-      #     cp -rf ./certs/.env ./
-      #     cp -rf ./certs/GoogleService-Info.plist ./ios/
-      #     cd ./ios
-      #     sed -i -e "s/labs.dock.DockApp/labs.dock.DockWalletUI/g" ./ios/DockApp.xcodeproj/project.pbxproj
-      #     pod install
-      #     fastlane build_no_upload
+          # git config --global url."https://".insteadOf git://
+          # xcodebuild -version
+          # yarn install
+          # git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
+          # yarn --cwd ../wallet-sdk install
+          # yarn sync-sdk
+          # yarn build-sdk
+          # echo "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
+          # echo "BUILD_TAG=$(node print-build-number|tr -s ' ' '_')" >> $GITHUB_ENV
+          # git clone "${{ secrets.CERTS_REPO_URL }}" ./certs
+          # Pull env variables from certs repo
+          # It will inject sentry token in the JS thread
+          # cp -rf ./certs/.env ./
+          # cp -rf ./certs/GoogleService-Info.plist ./ios/
+          sed -i -e "s/labs.dock.DockApp/${{env.IOS_BUNDLE_ID}}/g" ./ios/DockApp.xcodeproj/project.pbxproj
+          cat ./ios/DockApp.xcodeproj/project.pbxproj
+          # cd ./ios
+          # pod install
+          # fastlane build_no_upload
 
       # - name: Upload to S3
       #   env:
