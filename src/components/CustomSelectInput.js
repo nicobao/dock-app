@@ -1,13 +1,12 @@
-import {
-  Actionsheet,
-  Box,
-  ChevronDownIcon,
-  ChevronUpIcon,
-  Stack,
-} from 'native-base';
+import {Actionsheet, Box, Stack} from 'native-base';
 import React, {useState} from 'react';
 import {TouchableWithoutFeedback} from 'react-native';
-import {Theme, Typography} from '../design-system';
+import {
+  Theme,
+  Typography,
+  ChevronDownIcon,
+  ChevronUpIcon,
+} from '../design-system';
 import {translate} from '../locales';
 
 export function CustomSelectInput({
@@ -45,7 +44,7 @@ export function CustomSelectInput({
               <Typography variant="label">{placeholder}</Typography>
             )}
           </Box>
-          <Box mt={2}>
+          <Box p={4} mt={2}>
             {contentVisible ? (
               <ChevronUpIcon
                 style={{
