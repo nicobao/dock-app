@@ -205,7 +205,6 @@ jobs:
           # It will inject sentry token in the JS thread
           cp -rf ./certs/.env ./
           cp -rf ./certs/GoogleService-Info.plist ./ios/
-          
           cd ./ios
           pod install
           fastlane build_no_upload
