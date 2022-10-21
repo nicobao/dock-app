@@ -37,7 +37,7 @@ platform :ios do
   lane :prepare_signing do
       match(
          type: "appstore",
-         readonly: false,
+         readonly: true,
          keychain_name: "ci_keychain",
          keychain_password: "ci_keychain"
       )
