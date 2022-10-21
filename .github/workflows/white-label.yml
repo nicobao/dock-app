@@ -179,7 +179,6 @@ jobs:
           ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
           ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
         run: |
-          yarn set version berry
           echo "MATCH_REPO_URL is: ${{env.MATCH_REPO_URL}}"
           echo "IOS_BUNDLE_ID is: ${{env.IOS_BUNDLE_ID}}"
           echo "MATCH_REPO_URL is: ${{env.MATCH_REPOSITORY}}"
@@ -202,9 +201,6 @@ jobs:
           cp -rf ./certs/GoogleService-Info.plist ./ios/
           cd ./ios
           pod install
-          fastlane setup
-          fastlane load_asc_api_key
-          fastlane prepare_signing
           fastlane build_no_upload
 
       - name: Upload to S3
