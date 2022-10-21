@@ -189,13 +189,12 @@ jobs:
           echo "MATCH_REPO_URL is: ${{env.MATCH_REPO_URL}}"
           echo "IOS_BUNDLE_ID is: ${{env.IOS_BUNDLE_ID}}"
           echo "MATCH_REPO_URL is: ${{env.MATCH_REPOSITORY}}"
-          
           git config --global url."https://".insteadOf git://
           xcodebuild -version
-          # sed -i -e "s/labs.dock.DockApp/${{env.IOS_BUNDLE_ID}}/g" ./ios/DockApp.xcodeproj/project.pbxproj
+          sed -i -e "s/labs.dock.DockApp/${{env.IOS_BUNDLE_ID}}/g" ./ios/DockApp.xcodeproj/project.pbxproj
           # sed -i -e "s/labs.dock.DockApp/labs.dock.DockWalletUI/g" ./ios/DockApp.xcodeproj/project.pbxproj
-          # cat ./ios/DockApp.xcodeproj/project.pbxproj
-          # rm ./ios/DockApp.xcodeproj/project.pbxproj-e
+          cat ./ios/DockApp.xcodeproj/project.pbxproj
+          rm ./ios/DockApp.xcodeproj/project.pbxproj-e
           # yarn install
           # git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
           # yarn --cwd ../wallet-sdk install
