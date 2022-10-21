@@ -1,7 +1,7 @@
 git_url(ENV['MATCH_REPO_URL'])
 storage_mode("git")
 
-type("appstore") # The default type, can be: appstore, adhoc, enterprise or development
+type("development") # The default type, can be: appstore, adhoc, enterprise or development
 verbose(true)
 skip_certificate_matching(true)
 # app_identifier(["tools.fastlane.app", "tools.fastlane.app2"])
