@@ -179,6 +179,7 @@ jobs:
           ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
           ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
         run: |
+          yarn set version berry
           echo "MATCH_REPO_URL is: ${{env.MATCH_REPO_URL}}"
           echo "IOS_BUNDLE_ID is: ${{env.IOS_BUNDLE_ID}}"
           echo "MATCH_REPO_URL is: ${{env.MATCH_REPOSITORY}}"
