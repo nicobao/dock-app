@@ -199,15 +199,15 @@ jobs:
           # yarn --cwd ../wallet-sdk install
           # yarn sync-sdk
           # yarn build-sdk
-          echo "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
-          echo "BUILD_TAG=$(node print-build-number|tr -s ' ' '_')" >> $GITHUB_ENV
+          # echo "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
+          # echo "BUILD_TAG=$(node print-build-number|tr -s ' ' '_')" >> $GITHUB_ENV
           git clone "${{ secrets.CERTS_REPO_URL }}" ./certs
           # Pull env variables from certs repo
           # It will inject sentry token in the JS thread
           cp -rf ./certs/.env ./
           cp -rf ./certs/GoogleService-Info.plist ./ios/
           cd ./ios
-          pod install
+          # pod install
           fastlane prepare_signing
           # fastlane build_no_upload
 
