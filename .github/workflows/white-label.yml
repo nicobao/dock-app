@@ -93,7 +93,7 @@ jobs:
           cp -rf ./certs/.env ./
           rm -rf /tmp/google-play-cert
           cp -rf ./certs/google-play-cert /tmp/google-play-cert
-
+          yarn update-android-id
       - name: Set build number env vars
         id: set-build-env
         run: |
