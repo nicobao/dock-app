@@ -157,7 +157,7 @@ jobs:
           git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/${{ matrix.app }}.git" ../distro_configs
           ls -R ../distro_configs
           cp -r ../distro_configs/src .
-          grep -i "IOS_BUNDLE_ID" ../distro_configs/packaging.config >> $GITHUB_ENV
+          # grep -i "IOS_BUNDLE_ID" ../distro_configs/packaging.config >> $GITHUB_ENV
           grep -i "MATCH_PASSWORD" ../distro_configs/packaging.config >> $GITHUB_ENV
           # cat ../distro_configs/packaging.config >> $GITHUB_ENV
           echo "MATCH_REPOSITORY=https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/${{ matrix.app }}.git" >> $GITHUB_ENV
@@ -188,6 +188,8 @@ jobs:
         run: |
           echo "MATCH_REPO_URL is: ${{env.MATCH_REPO_URL}}"
           echo "IOS_BUNDLE_ID is: ${{env.IOS_BUNDLE_ID}}"
+          echo "MATCH_REPO_URL is: ${{env.MATCH_REPOSITORY}}"
+          
           git config --global url."https://".insteadOf git://
           xcodebuild -version
           # sed -i -e "s/labs.dock.DockApp/${{env.IOS_BUNDLE_ID}}/g" ./ios/DockApp.xcodeproj/project.pbxproj
