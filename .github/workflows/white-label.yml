@@ -1,11 +1,13 @@
+#name: Build White Label Deployments
+#on:
+#  workflow_dispatch:
+#  pull_request:
+#    branches:
+#      - main
+#      - dev
+#    types: [closed]
 name: Build White Label Deployments
-on:
-  workflow_dispatch:
-  pull_request:
-    branches:
-      - main
-      - dev
-    types: [closed]
+on: [push]
 jobs:
   setup_distribution_matrix:
     runs-on: ubuntu-latest
@@ -84,7 +86,6 @@ jobs:
           rm -rf ./certs
           git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/dock-app-certs.git" ./certs
           mv ./certs/google-play.json ./
-          cp -rf ./certs/google-services.json ./android/app/
           rm -rf ./android/gradle.properties
           cp -rf ./certs/gradle.properties ./android/gradle.properties
           # Pull env variables from certs repo
@@ -155,7 +156,7 @@ jobs:
         run: |
           git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/${{ matrix.app }}.git" ../distro_configs
           ls -R ../distro_configs
-          cp -r ../distro_configs/src .
+          cp -rv ../distro_configs/* .
 
       - name: Run fastlane setup
         env:
@@ -186,7 +187,6 @@ jobs:
           # Pull env variables from certs repo
           # It will inject sentry token in the JS thread
           cp -rf ./certs/.env ./
-          cp -rf ./certs/GoogleService-Info.plist ./ios/
           cd ./ios
           pod install
           fastlane build_no_upload
