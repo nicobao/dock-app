@@ -195,8 +195,8 @@ jobs:
           # cat ./ios/DockApp.xcodeproj/project.pbxproj
           # rm ./ios/DockApp.xcodeproj/project.pbxproj-e
           # yarn install
-          git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
-          yarn --cwd ../wallet-sdk install
+          # git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
+          # yarn --cwd ../wallet-sdk install
           # yarn sync-sdk
           # yarn build-sdk
           echo "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
