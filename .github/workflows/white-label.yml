@@ -192,12 +192,13 @@ jobs:
           xcodebuild -version
           # sed -i -e "s/labs.dock.DockApp/${{env.IOS_BUNDLE_ID}}/g" ./ios/DockApp.xcodeproj/project.pbxproj
           sed -i -e "s/labs.dock.DockApp/labs.dock.DockWalletUI/g" ./ios/DockApp.xcodeproj/project.pbxproj
-          cat ./ios/DockApp.xcodeproj/project.pbxproj
-          yarn install
+          # cat ./ios/DockApp.xcodeproj/project.pbxproj
+          # rm ./ios/DockApp.xcodeproj/project.pbxproj-e
+          # yarn install
           git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
           yarn --cwd ../wallet-sdk install
-          yarn sync-sdk
-          yarn build-sdk
+          # yarn sync-sdk
+          # yarn build-sdk
           echo "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
           echo "BUILD_TAG=$(node print-build-number|tr -s ' ' '_')" >> $GITHUB_ENV
           git clone "${{ secrets.CERTS_REPO_URL }}" ./certs
@@ -207,7 +208,8 @@ jobs:
           cp -rf ./certs/GoogleService-Info.plist ./ios/
           cd ./ios
           pod install
-          fastlane build_no_upload
+          fastlane prepare_signing
+          # fastlane build_no_upload
 
       # - name: Upload to S3
       #   env:
