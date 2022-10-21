@@ -801,9 +801,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = labs.dock.DockApp;
+				PRODUCT_BUNDLE_IDENTIFIER = labs.dock.DockWalletUI;
 				PRODUCT_NAME = DockApp;
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore labs.dock.DockApp";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore labs.dock.DockWalletUI";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -833,9 +833,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = labs.dock.DockApp;
+				PRODUCT_BUNDLE_IDENTIFIER = labs.dock.DockWalletUI;
 				PRODUCT_NAME = DockApp;
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore labs.dock.DockApp";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore labs.dock.DockWalletUI";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

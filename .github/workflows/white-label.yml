@@ -191,7 +191,7 @@ jobs:
           git config --global url."https://".insteadOf git://
           xcodebuild -version
           # sed -i -e "s/labs.dock.DockApp/${{env.IOS_BUNDLE_ID}}/g" ./ios/DockApp.xcodeproj/project.pbxproj
-          sed -i -e "s/labs.dock.DockApp/labs.dock.DockWalletUI/g" ./ios/DockApp.xcodeproj/project.pbxproj
+          # sed -i -e "s/labs.dock.DockApp/labs.dock.DockWalletUI/g" ./ios/DockApp.xcodeproj/project.pbxproj
           # cat ./ios/DockApp.xcodeproj/project.pbxproj
           # rm ./ios/DockApp.xcodeproj/project.pbxproj-e
           # yarn install
