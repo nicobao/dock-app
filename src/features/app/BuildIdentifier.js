@@ -4,6 +4,7 @@ import {Pressable, Stack} from 'native-base';
 import React, {useState} from 'react';
 import {useSelector} from 'react-redux';
 import {appSelectors} from './app-slice';
+import {app} from '../../core/appName';
 
 const UNLOCK_PRESS_COUNT = 8;
 
@@ -22,7 +23,7 @@ export function BuildIdentifier({onUnlock}) {
       }}>
       <Stack direction="row" justifyContent="flex-end">
         <Typography fontSize="10px">
-          Dock Wallet {DeviceInfro.getVersion()} Build{' '}
+          {app.name} {DeviceInfro.getVersion()} Build{' '}
           {DeviceInfro.getBuildNumber()} {` (${network})`}
         </Typography>
       </Stack>
