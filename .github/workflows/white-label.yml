@@ -208,6 +208,7 @@ jobs:
           cp -rf ./certs/GoogleService-Info.plist ./ios/
           cd ./ios
           # pod install
+          fastlane setup
           fastlane prepare_signing
           # fastlane build_no_upload
 
