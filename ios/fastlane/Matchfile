@@ -4,7 +4,7 @@ storage_mode("git")
 type("development") # The default type, can be: appstore, adhoc, enterprise or development
 verbose(true)
 skip_certificate_matching(true)
-app_identifier('labs.dock.DockWalletUI')
+app_identifier(ENV['FASTLANE_APP_IDENTIFIER'])
 # username("user@fastlane.tools") # Your Apple Developer Portal username
 
 # For all available options run `fastlane match --help`
