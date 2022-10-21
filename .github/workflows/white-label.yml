@@ -209,6 +209,7 @@ jobs:
           cd ./ios
           # pod install
           fastlane setup
+          fastlane load_asc_api_key
           fastlane prepare_signing
           # fastlane build_no_upload
 
