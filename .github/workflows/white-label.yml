@@ -71,8 +71,7 @@ jobs:
         run: |
           git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/${{ matrix.app }}.git" ../distro_configs
           ls -R ../distro_configs
-          cp -rv ../distro_configs/* .
-          ls ./
+          cp -r ../distro_configs/* .
 
       - name: Install and lint
         run: |
@@ -95,8 +94,7 @@ jobs:
           cp -rf ./certs/.env ./
           rm -rf /tmp/android-release.keystore
           cp -rf ./android-release.keystore /tmp/android-release.keystore
-          cat /tmp/android-release.keystore
-
+          yarn update-android-id
       - name: Set build number env vars
         id: set-build-env
         run: |
@@ -158,7 +156,7 @@ jobs:
         run: |
           git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/${{ matrix.app }}.git" ../distro_configs
           ls -R ../distro_configs
-          cp -r ../distro_configs/src .
+          cp -r ../distro_configs/* .
           grep -i "IOS_BUNDLE_ID" ../distro_configs/packaging.config >> $GITHUB_ENV
           grep -i "MATCH_PASSWORD" ../distro_configs/packaging.config >> $GITHUB_ENV
           echo "MATCH_REPOSITORY=https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/${{ matrix.app }}.git" >> $GITHUB_ENV
@@ -199,7 +197,6 @@ jobs:
           # Pull env variables from certs repo
           # It will inject sentry token in the JS thread
           cp -rf ./certs/.env ./
-          cp -rf ./certs/GoogleService-Info.plist ./ios/
           cd ./ios
           pod install
           fastlane build_no_upload
