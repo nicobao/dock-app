@@ -77,19 +77,16 @@ jobs:
         run: |
           git config --global url."https://".insteadOf git://
           echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-          # yarn install
-          # yarn postinstall
+          yarn install
+          yarn postinstall
           git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
-          # yarn --cwd ../wallet-sdk install
-          # yarn sync-sdk
-          # yarn build-sdk
+          yarn --cwd ../wallet-sdk install
+          yarn sync-sdk
+          yarn build-sdk
           rm -rf ./certs
           git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/dock-app-certs.git" ./certs
-          # mv ./certs/google-play.json ./
-          # cp -rf ./certs/google-services.json ./android/app/
           rm -rf ./android/gradle.properties
           cp -rf ./certs/gradle.properties ./android/gradle.properties
-          # inject distro configs variables
           cat ./packaging.config >> ./android/gradle.properties
           cat ./android/gradle.properties
           # Pull env variables from certs repo
@@ -98,40 +95,39 @@ jobs:
           rm -rf /tmp/android-release.keystore
           cp -rf ./android-release.keystore /tmp/android-release.keystore
           cat /tmp/android-release.keystore
-      # - name: Set build number env vars
-      #   id: set-build-env
-      #   run: |
-      #     echo "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
-      #     echo "BUILD_TAG=$(node print-build-number|tr -s ' ' '_')" >> $GITHUB_ENV
+      - name: Set build number env vars
+        id: set-build-env
+        run: |
+          echo "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
+          echo "BUILD_TAG=$(node print-build-number|tr -s ' ' '_')" >> $GITHUB_ENV
 
+      - name: Install Fastlane
+        run: gem install fastlane
 
-      # - name: Install Fastlane
-      #   run: gem install fastlane
+      - name: Build APK
+        env:
+          APK_LOCATION: "release/dock-wallet.apk"
+        run: |
+          echo "${{env.BUILD_NUMBER}}"
+          cd ./android
+          fastlane package_apk
+          mkdir release
+          cp "app/build/outputs/apk/release/app-release.apk" ${{env.APK_LOCATION}}
 
-      # - name: Build APK
-      #   env:
-      #     APK_LOCATION: "release/dock-wallet.apk"
-      #   run: |
-      #     echo "${{env.BUILD_NUMBER}}"
-      #     cd ./android
-      #     fastlane package_apk
-      #     mkdir release
-      #     cp "app/build/outputs/apk/release/app-release.apk" ${{env.APK_LOCATION}}
-
-      # - name: Upload to S3
-      #   id: upload_s3
-      #   env:
-      #     S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY }}
-      #     S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
-      #     S3_APP_BUCKET: ${{ secrets.S3_APP_BUCKET }}
-      #     S3_REGION: ${{ secrets.S3_REGION }}
-      #     S3_ANDROID_APK_DIR: ${{matrix.app}}
-      #     S3_ACL: ${{ secrets.S3_ACL }}
-      #     APK_LOCATION: "release/dock-wallet.apk"
-      #   run: |
-      #     echo ::set-output name=build_tag::${{env.BUILD_TAG}}
-      #     cd ./android
-      #     fastlane s3_upload
+      - name: Upload to S3
+        id: upload_s3
+        env:
+          S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY }}
+          S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
+          S3_APP_BUCKET: ${{ secrets.S3_APP_BUCKET }}
+          S3_REGION: ${{ secrets.S3_REGION }}
+          S3_ANDROID_APK_DIR: ${{matrix.app}}
+          S3_ACL: ${{ secrets.S3_ACL }}
+          APK_LOCATION: "release/dock-wallet.apk"
+        run: |
+          echo ::set-output name=build_tag::${{env.BUILD_TAG}}
+          cd ./android
+          fastlane s3_upload
 
   # run-white-label-ios-builds:
   #   runs-on: macos-latest
