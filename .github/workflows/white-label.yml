@@ -71,6 +71,7 @@ jobs:
           git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/${{ matrix.app }}.git" ../distro_configs
           ls -R ../distro_configs
           cp -rv ../distro_configs/* .
+          ls ./
 
       - name: Install and lint
         run: |
@@ -94,9 +95,9 @@ jobs:
           # Pull env variables from certs repo
           # It will inject sentry token in the JS thread
           cp -rf ./certs/.env ./
-          rm -rf /tmp/google-play-cert
-          cp -rf ./certs/google-play-cert /tmp/google-play-cert
-
+          rm -rf /tmp/android-release.keystore
+          cp -rf ./android-release.keystore /tmp/android-release.keystore
+          cat /tmp/android-release.keystore
       # - name: Set build number env vars
       #   id: set-build-env
       #   run: |
