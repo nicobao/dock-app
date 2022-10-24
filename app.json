@@ -1,4 +1,5 @@
 {
   "name": "DockApp",
-  "displayName": "DockApp"
+  "displayName": "Dock Wallet",
+  "packageId": "com.dockapp"
 }

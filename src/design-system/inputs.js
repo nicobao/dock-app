@@ -1,12 +1,4 @@
-import {
-  Box,
-  ChevronDownIcon,
-  ChevronUpIcon,
-  Pressable,
-  Stack,
-  Input as NBInput,
-  Text,
-} from 'native-base';
+import {Box, Pressable, Stack, Input as NBInput, Text} from 'native-base';
 
 import React, {useEffect, useState} from 'react';
 import {TouchableWithoutFeedback} from 'react-native';
@@ -15,7 +7,7 @@ import {Modal} from '../components/Modal';
 import {Button} from './buttons';
 import {Theme} from './theme';
 import {Typography} from './typography';
-
+import {ChevronDownIcon, ChevronUpIcon} from '../design-system';
 export {Select, Text} from 'native-base';
 
 export function Input(props) {
@@ -52,17 +44,17 @@ export function SelectToggler({children, placeholder, onChange}) {
           <Box flex={1}>
             <Typography variant="label">{placeholder}</Typography>
           </Box>
-          <Box mt={2}>
+          <Box p={3} mt={2}>
             {contentVisible ? (
               <ChevronUpIcon
                 style={{
-                  color: Theme.colors.activeText,
+                  color: Theme.colors.description,
                 }}
               />
             ) : (
               <ChevronDownIcon
                 style={{
-                  color: Theme.colors.activeText,
+                  color: Theme.colors.description,
                 }}
               />
             )}
