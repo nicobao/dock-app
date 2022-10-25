@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+// TODO: Get ScreenCaptureSecurePackage working with react-native 0.70
+// https://dock-team.atlassian.net/browse/DCK-2277
 // import com.reactlibrarylizhming.ScreenCaptureSecurePackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
