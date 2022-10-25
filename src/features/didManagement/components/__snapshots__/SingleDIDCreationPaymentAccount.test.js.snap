@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SingleDIDCreationPaymentAccount should render correctly  1`] = `
+<NativeBaseProvider
+  initialWindowMetrics={
+    Object {
+      "frame": Object {
+        "height": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0,
+      },
+      "insets": Object {
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+      },
+    }
+  }
+>
+  <SingleDIDCreationPaymentAccount
+    item={Object {}}
+  />
+</NativeBaseProvider>
+`;
