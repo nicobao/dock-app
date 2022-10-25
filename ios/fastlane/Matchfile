@@ -1,9 +1,10 @@
-git_url(ENV['CERTS_REPO_URL'])
+git_url(ENV['MATCH_REPO_URL'])
 storage_mode("git")
 
 type("development") # The default type, can be: appstore, adhoc, enterprise or development
-
-# app_identifier(["tools.fastlane.app", "tools.fastlane.app2"])
+verbose(true)
+skip_certificate_matching(true)
+app_identifier(ENV['FASTLANE_APP_IDENTIFIER'])
 # username("user@fastlane.tools") # Your Apple Developer Portal username
 
 # For all available options run `fastlane match --help`
