@@ -4,12 +4,14 @@ import {pickJSONFile} from '../../core/storage-utils';
 import {withErrorToast} from 'src/core/toast';
 import {translate} from 'src/locales';
 import assert from 'assert';
+import {formatDate} from '@docknetwork/wallet-sdk-core/lib/core/format-utils';
 import {credentialServiceRPC} from '@docknetwork/wallet-sdk-core/lib/services/credential';
 import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
 import queryString from 'query-string';
 import {captureException} from '@sentry/react-native';
 import {walletService} from '@docknetwork/wallet-sdk-core/lib/services/wallet';
 import {useCredentialUtils} from '@docknetwork/wallet-sdk-react-native/lib';
+import {showConfirmationModal} from '../../components/ConfirmationModal';
 const wallet = Wallet.getInstance();
 
 export function getDIDAddress(issuer) {
@@ -99,12 +101,29 @@ export function useCredentials({onPickFile = pickJSONFile} = {}) {
 
   const onAdd = async () => {
     const jsonData = await onPickFile();
-
     if (!jsonData) {
       return;
     }
     validateCredential(jsonData);
-    await saveCredential(jsonData);
+    const hasExpired = jsonData.expirationDate
+      ? isInThePast(new Date(jsonData.expirationDate))
+      : false;
+
+    if (!hasExpired) {
+      return saveCredential(jsonData);
+    }
+    showConfirmationModal({
+      type: 'alert',
+      title: translate('credentials.import_expired_credential'),
+      description: translate('credentials.import_expired_credential_desc', {
+        expirationDate: formatDate(jsonData.expirationDate),
+      }),
+      confirmText: translate('navigation.ok'),
+      cancelText: translate('navigation.cancel'),
+      onConfirm: async () => {
+        await saveCredential(jsonData);
+      },
+    });
   };
 
   return {
@@ -220,4 +239,10 @@ export async function onScanAuthQRCode(url, keyDoc, profile) {
   } else {
     throw new Error(translate('qr_scanner.no_key_doc'));
   }
+}
+
+export function isInThePast(date) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return date < today;
 }
