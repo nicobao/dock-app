@@ -4,6 +4,7 @@ import {
   getDIDAddress,
   formatCredential,
   generateAuthVC,
+  isInThePast,
 } from './credentials';
 import {useCredentialUtils} from '@docknetwork/wallet-sdk-react-native/lib';
 
@@ -283,6 +284,11 @@ describe('Credentials helpers', () => {
           id: 'did:dock:5CJaTP2eGCLf5ZNPUXYbWxUvJQMTseKfc4hi8WVBC1K8eW9N',
         },
       });
+    });
+
+    it('check when credential has expired', () => {
+      expect(isInThePast(new Date('2022-01-25'))).toBeTruthy();
+      expect(isInThePast(new Date())).toBeFalsy();
     });
   });
 });
