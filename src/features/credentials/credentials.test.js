@@ -7,6 +7,7 @@ import {
   isInThePast,
 } from './credentials';
 import {useCredentialUtils} from '@docknetwork/wallet-sdk-react-native/lib';
+import * as modals from '../../components/ConfirmationModal';
 
 describe('Credentials helpers', () => {
   describe('generateAuthVC', () => {
@@ -289,6 +290,56 @@ describe('Credentials helpers', () => {
     it('check when credential has expired', () => {
       expect(isInThePast(new Date('2022-01-25'))).toBeTruthy();
       expect(isInThePast(new Date())).toBeFalsy();
+    });
+    it('expect to confirm before importing expired credential', async () => {
+      const onPickValidFile = jest.fn().mockResolvedValue({
+        '@context': ['https://www.w3.org/2018/credentials/v1'],
+        id: 'https://creds.dock.io/8e02c35ae370b02f47d7faaf41cb1386768fc75c9fca7caa6bb389dbe61260eb',
+        type: ['VerifiableCredential', 'UniversityDegreeCredential'],
+        credentialSubject: {},
+        issuanceDate: '2022-06-27T12:08:30.675Z',
+        expirationDate: '2019-06-26T23:00:00.000Z',
+        issuer: {
+          name: 'John Doe',
+          description: '',
+          logo: '',
+          id: 'did:dock:5CJaTP2eGCLf5ZNPUXYbWxUvJQMTseKfc4hi8WVBC1K8eW9N',
+        },
+      });
+      const {result} = await renderHook(() =>
+        useCredentials({onPickFile: onPickValidFile}),
+      );
+
+      jest
+        .spyOn(modals, 'showConfirmationModal')
+        .mockImplementationOnce(async () => []);
+      await result.current.onAdd();
+      expect(modals.showConfirmationModal).toBeCalled();
+    });
+    it('expect not to confirm before importing a valid credential', async () => {
+      const onPickValidFile = jest.fn().mockResolvedValue({
+        '@context': ['https://www.w3.org/2018/credentials/v1'],
+        id: 'https://creds.dock.io/8e02c35ae370b02f47d7faaf41cb1386768fc75c9fca7caa6bb389dbe61260eb',
+        type: ['VerifiableCredential', 'UniversityDegreeCredential'],
+        credentialSubject: {},
+        issuanceDate: '2022-06-27T12:08:30.675Z',
+        expirationDate: '2029-06-26T23:00:00.000Z',
+        issuer: {
+          name: 'John Doe',
+          description: '',
+          logo: '',
+          id: 'did:dock:5CJaTP2eGCLf5ZNPUXYbWxUvJQMTseKfc4hi8WVBC1K8eW9N',
+        },
+      });
+      const {result} = await renderHook(() =>
+        useCredentials({onPickFile: onPickValidFile}),
+      );
+
+      jest
+        .spyOn(modals, 'showConfirmationModal')
+        .mockImplementationOnce(async () => []);
+      await result.current.onAdd();
+      expect(modals.showConfirmationModal).toHaveBeenCalledTimes(0);
     });
   });
 });

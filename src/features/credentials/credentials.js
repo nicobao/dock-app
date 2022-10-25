@@ -109,22 +109,21 @@ export function useCredentials({onPickFile = pickJSONFile} = {}) {
       ? isInThePast(new Date(jsonData.expirationDate))
       : false;
 
-    if (hasExpired) {
-      showConfirmationModal({
-        type: 'alert',
-        title: translate('credentials.import_expired_credential'),
-        description: translate('credentials.import_expired_credential_desc', {
-          expirationDate: formatDate(jsonData.expirationDate),
-        }),
-        confirmText: translate('navigation.ok'),
-        cancelText: translate('navigation.cancel'),
-        onConfirm: async () => {
-          await saveCredential(jsonData);
-        },
-      });
-    } else {
-      await saveCredential(jsonData);
+    if (!hasExpired) {
+      return saveCredential(jsonData);
     }
+    showConfirmationModal({
+      type: 'alert',
+      title: translate('credentials.import_expired_credential'),
+      description: translate('credentials.import_expired_credential_desc', {
+        expirationDate: formatDate(jsonData.expirationDate),
+      }),
+      confirmText: translate('navigation.ok'),
+      cancelText: translate('navigation.cancel'),
+      onConfirm: async () => {
+        await saveCredential(jsonData);
+      },
+    });
   };
 
   return {
