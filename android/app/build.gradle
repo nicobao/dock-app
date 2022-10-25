@@ -139,7 +139,7 @@ android {
         applicationId "com.dockapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 295
+        versionCode 296
         versionName "0.2.6"
         missingDimensionStrategy 'react-native-camera', 'general'
     }
