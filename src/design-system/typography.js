@@ -141,6 +141,12 @@ const variantsMap = {
     fontSize: 14,
     color: Theme.colors.description,
   },
+  didModalInfoTitle: {
+    fontFamily: Theme.fontFamily.default,
+    fontWeight: 600,
+    fontSize: 14,
+    color: Theme.colors.textHighlighted,
+  },
   selectText: {
     fontWeight: 600,
     fontSize: 14,

@@ -25,9 +25,10 @@ import EmptyCredentialIcon from './empty-credential.svg';
 import CancelIcon from './cancel.svg';
 import DIDManagementIcon from './did-management.svg';
 import RoundedDIDIcon from './rounded_did.svg';
-
 import PencilIcon from './pencil.svg';
 import BinIcon from './bin.svg';
+import ChevronDownIcon from './select_dropdown.svg';
+import ChevronUpIcon from './chevron-up-icon.svg';
 export {
   DockLogoIcon,
   DotsVerticalIcon,
@@ -58,4 +59,6 @@ export {
   RoundedDIDIcon,
   PencilIcon,
   BinIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
 };

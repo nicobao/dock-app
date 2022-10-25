@@ -1,6 +1,6 @@
 import {useAccount} from '@docknetwork/wallet-sdk-react-native/lib';
 import Clipboard from '@react-native-community/clipboard';
-import {Box, FormControl, Input, Stack} from 'native-base';
+import {Box, FormControl, Stack} from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {Keyboard} from 'react-native';
 import Share from 'react-native-share';
@@ -16,6 +16,7 @@ import {showToast} from 'src/core/toast';
 
 import {formatCurrency} from 'src/core/format-utils';
 import {
+  Input,
   BackButton,
   Button,
   Content,

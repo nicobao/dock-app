@@ -17,7 +17,8 @@
     "subscan_unable_to_fetch": "Unable to fetch transaction history",
     "unexpected_error": "Unexpected error, please try again",
     "fetching_data": "Fetching remote data, please wait",
-    "invalid_json_file": "Invalid json file"
+    "invalid_json_file": "Invalid json file",
+    "unable_to_read_file": "Unable to read the file"
   },
   "auth": {
     "authorize": "Authorize",
@@ -239,6 +240,7 @@
     "send_max": "Send Max",
     "insufficient_balance": "Insufficient balance",
     "calculating_fee": "Calculating fee...",
+    "transaction_fee_error": "Unable to fetch transaction fee",
     "transaction_sent": "Transaction Sent",
     "insufficient_funds": "Insufficient funds",
     "invalid_amount": "The amount is not valid",
@@ -308,7 +310,9 @@
     "credential_no_id": "Credential has no ID",
     "credential_no_context": "Credential has no context",
     "credential_no_type": "Credential has an invalid type",
-    "credential_no_issuer": "Credential has no Issuer"
+    "credential_no_issuer": "Credential has no Issuer",
+    "import_expired_credential": "Import Expired Credential?",
+    "import_expired_credential_desc": "This credential expired on %{expirationDate} , are you sure you want to import this credential?"
   },
   "qr_scanner": {
     "nodids": "You have no Web3 IDs!",

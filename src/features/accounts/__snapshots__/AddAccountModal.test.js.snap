@@ -86,13 +86,25 @@ exports[`AddAccountModal should render correctly 1`] = `
         items={
           Array [
             Object {
-              "icon": <SvgFile />,
+              "icon": <SvgFile
+                style={
+                  Object {
+                    "color": "#ffffff",
+                  }
+                }
+              />,
               "onPress": [Function],
               "testID": "addAccountOption",
               "title": "Create new account",
             },
             Object {
-              "icon": <SvgFile />,
+              "icon": <SvgFile
+                style={
+                  Object {
+                    "color": "#ffffff",
+                  }
+                }
+              />,
               "onPress": [Function],
               "testID": "importExistingOption",
               "title": "Import existing account",

@@ -1,0 +1,18 @@
+[
+  {
+    "id": "accounts",
+    "enabled": true
+  },
+  {
+    "id": "credentials",
+    "enabled": true
+  },
+  {
+    "id": "didManagement",
+    "enabled": true
+  },
+  {
+    "id": "activate_transak",
+    "enabled": true
+  }
+]

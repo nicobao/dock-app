@@ -24,7 +24,8 @@
     "increment_version": "yarn increment_version:ios && yarn increment_version:android",
     "sync-sdk:watch": "node ./scripts/sync-sdk --watch",
     "sync-sdk": "node ./scripts/sync-sdk",
-    "build-sdk": "node  ../wallet-sdk/packages/react-native/bundler/build-and-copy.js"
+    "build-sdk": "node  ../wallet-sdk/packages/react-native/bundler/build-and-copy.js",
+    "update-android-id": "node ./scripts/android_package.js"
   },
   "dependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.15.4",

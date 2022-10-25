@@ -1,12 +1,4 @@
-import {
-  Box,
-  ChevronDownIcon,
-  ChevronUpIcon,
-  Pressable,
-  Stack,
-  Input as NBInput,
-  Text,
-} from 'native-base';
+import {Box, Pressable, Stack, Input as NBInput, Text} from 'native-base';
 
 import React, {useEffect, useState} from 'react';
 import {TouchableWithoutFeedback} from 'react-native';
@@ -15,11 +7,17 @@ import {Modal} from '../components/Modal';
 import {Button} from './buttons';
 import {Theme} from './theme';
 import {Typography} from './typography';
-
+import {ChevronDownIcon, ChevronUpIcon} from '../design-system';
 export {Select, Text} from 'native-base';
 
 export function Input(props) {
-  return <NBInput backgroundColor={Theme.colors.inputBackground} {...props} />;
+  return (
+    <NBInput
+      color={Theme.colors.description}
+      backgroundColor={Theme.colors.inputBackground}
+      {...props}
+    />
+  );
 }
 
 export function SelectToggler({children, placeholder, onChange}) {
@@ -34,7 +32,7 @@ export function SelectToggler({children, placeholder, onChange}) {
       <TouchableWithoutFeedback
         onPress={() => setContentVisible(value => !value)}>
         <Stack
-          backgroundColor="#27272A"
+          backgroundColor={Theme.colors.inputBackground}
           mt={8}
           width={0.67}
           direction="row"
@@ -46,8 +44,20 @@ export function SelectToggler({children, placeholder, onChange}) {
           <Box flex={1}>
             <Typography variant="label">{placeholder}</Typography>
           </Box>
-          <Box mt={2}>
-            {contentVisible ? <ChevronUpIcon /> : <ChevronDownIcon />}
+          <Box p={3} mt={2}>
+            {contentVisible ? (
+              <ChevronUpIcon
+                style={{
+                  color: Theme.colors.description,
+                }}
+              />
+            ) : (
+              <ChevronDownIcon
+                style={{
+                  color: Theme.colors.description,
+                }}
+              />
+            )}
           </Box>
         </Stack>
       </TouchableWithoutFeedback>

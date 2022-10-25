@@ -18,7 +18,7 @@ import {showToast, withErrorToast} from 'src/core/toast';
 import {Logger} from 'src/core/logger';
 import {clearCacheData} from '@docknetwork/wallet-sdk-core/lib/core/realm';
 import Clipboard from '@react-native-community/clipboard';
-import {pickDocuments} from '../../core/storage-utils';
+import {pickDocument} from '../../core/storage-utils';
 import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
 import {authenticationActions} from '../unlock-wallet/unlock-wallet-slice';
 const initialState = {
@@ -93,14 +93,14 @@ async function validateAndImport(fileData, password) {
 export const walletOperations = {
   pickWalletBackup: () =>
     withErrorToast(async (dispatch, getState) => {
-      const files = await pickDocuments();
+      const file = await pickDocument();
 
-      if (!files.length) {
+      if (!file) {
         return;
       }
 
       navigate(Routes.WALLET_IMPORT_BACKUP_PASSWORD, {
-        fileUri: files[0].fileCopyUri,
+        fileUri: file.fileCopyUri,
       });
     }),
 

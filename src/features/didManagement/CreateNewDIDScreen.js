@@ -21,7 +21,6 @@ import {
   VStack,
 } from 'native-base';
 import {translate} from '../../locales';
-import {DIDAdvancedOptions} from './components/DIDAdvancedOptions';
 import {Ionicons} from '@native-base/icons';
 import {addTestId} from '../../core/automation-utils';
 import {useDIDManagementHandlers} from './didHooks';
@@ -206,17 +205,6 @@ export function CreateNewDIDScreen({
             </Typography>
           </VStack>
         ) : null}
-
-        <DIDAdvancedOptions
-          {...addTestId('DIDAdvancedOptions')}
-          onChange={handleChange}
-          scrollToBottom={() => {
-            if (scrollViewRef?.current) {
-              scrollViewRef.current?.scrollToEnd();
-            }
-          }}
-          form={form}
-        />
       </ScrollView>
       <LoadingButton
         full

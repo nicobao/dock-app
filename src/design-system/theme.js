@@ -11,9 +11,20 @@ export const Theme = {
   },
   borderRadius: 6,
   colors: {
+    disabledPrimaryColor: '#1E75C5',
+    primaryColor: '#0063f7',
+    secondaryColor: '#27272A',
     inputBackground: '#27272A',
     cardItemBackground: '#1F1F21',
     tabTextHighlightColor: '#0063F7',
+    tabTextUnHighlightColor: '#ffffff',
+    tabIconHighlightColor: '#0063F7',
+    tabIconUnHighlightColor: '#ffffff',
+    primaryIconColor: '#3F3F46',
+    secondaryIconColor: '#ffffff',
+    headerIconColor: '#ffffff',
+    iconBackgroundColor: '#3F3F46',
+
     grey: '#1F1F21',
     backdrop: 'rgba(0, 0, 0, 0.6)',
     transparent: 'transparent',
@@ -53,6 +64,7 @@ export const Theme = {
     backgroundColor: '#0063F7',
     textColor: '#fff',
     btnWhiteBackground: '#F4F4F5',
+    bigButtonBorderColor: '#3F3F46',
   },
   touchOpacity: 0.2,
 };
@@ -71,7 +83,7 @@ const nBaseTheme = extendTheme({
       // 200: '#A2D4EC',
       // 300: '#ccc',
 
-      400: Theme.colors.primaryBlue,
+      400: Theme.colors.primaryColor,
 
       // 500: '#0088CC',
       // 600: '#007AB8',
@@ -80,7 +92,16 @@ const nBaseTheme = extendTheme({
       // 900: '#003F5E',
     },
     secondary: {
-      400: Theme.colors.secondaryBackground,
+      50: '#5e5e93',
+      100: '#545475',
+      200: '#494959',
+      300: '#3a3a3f',
+      400: '#27272a',
+      500: '#1e1e1c',
+      600: '#131310',
+      700: '#060605',
+      800: '#060605',
+      900: '#060605',
     },
     tertiary: {
       400: Theme.colors.tertiaryBackground,
