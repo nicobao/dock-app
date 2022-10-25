@@ -165,7 +165,6 @@ jobs:
           ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
           ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD: true
         run: |
-          echo "ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}"
           git config --global url."https://".insteadOf git://
           xcodebuild -version
           yarn install
