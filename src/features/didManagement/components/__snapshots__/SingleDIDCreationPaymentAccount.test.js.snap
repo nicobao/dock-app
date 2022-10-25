@@ -20,7 +20,15 @@ exports[`SingleDIDCreationPaymentAccount should render correctly  1`] = `
   }
 >
   <SingleDIDCreationPaymentAccount
-    item={Object {}}
+    item={
+      Object {
+        "balance": "0.01",
+        "description": "3C7Hq5jQGxeYzL7LnVASn48tEfr6D7yKtNYSuXcgioQoWWsB",
+        "fetchBalance": [MockFunction],
+        "label": "Test Account",
+        "value": "3C7Hq5jQGxeYzL7LnVASn48tEfr6D7yKtNYSuXcgioQoWWsB",
+      }
+    }
   />
 </NativeBaseProvider>
 `;

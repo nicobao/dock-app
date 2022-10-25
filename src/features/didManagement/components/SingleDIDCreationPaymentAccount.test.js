@@ -13,7 +13,17 @@ describe('SingleDIDCreationPaymentAccount', () => {
     };
 
     const wrapper = shallow(
-      renderAppProviders(<SingleDIDCreationPaymentAccount item={{}} />),
+      renderAppProviders(
+        <SingleDIDCreationPaymentAccount
+          item={{
+            value: '3C7Hq5jQGxeYzL7LnVASn48tEfr6D7yKtNYSuXcgioQoWWsB',
+            label: 'Test Account',
+            description: '3C7Hq5jQGxeYzL7LnVASn48tEfr6D7yKtNYSuXcgioQoWWsB',
+            balance: '0.01',
+            fetchBalance: jest.fn(),
+          }}
+        />,
+      ),
       {
         context: {store: mockStore(initialState)},
       },
