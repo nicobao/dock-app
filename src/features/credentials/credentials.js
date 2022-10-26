@@ -105,11 +105,9 @@ export function useCredentials({onPickFile = pickJSONFile} = {}) {
       return;
     }
     validateCredential(jsonData);
-    const hasExpired = jsonData.expirationDate
-      ? isInThePast(new Date(jsonData.expirationDate))
-      : false;
+    const isValidCredential = isCredentialValid(jsonData);
 
-    if (!hasExpired) {
+    if (isValidCredential) {
       return saveCredential(jsonData);
     }
     showConfirmationModal({
@@ -245,4 +243,15 @@ export function isInThePast(date) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   return date < today;
+}
+
+export function isCredentialValid(credential) {
+  const hasExpired = credential.expirationDate
+    ? isInThePast(new Date(credential.expirationDate))
+    : false;
+  if (hasExpired) {
+    return false;
+  }
+  //TODO check if credential has been revoked
+  return true;
 }
