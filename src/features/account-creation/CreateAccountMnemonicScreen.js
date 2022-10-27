@@ -20,13 +20,14 @@ import {BackButton} from '../../design-system';
 import {translate} from '../../locales';
 import {createAccountSelectors} from './create-account-slice';
 import {withErrorBoundary} from '../../core/error-handler';
-import ScreenCaptureSecure from 'react-native-screen-capture-secure';
+// TODO: Fix issues with Gradle 7
+// import ScreenCaptureSecure from 'react-native-screen-capture-secure';
 
 export function preventScreenShot() {
-  ScreenCaptureSecure.enableSecure();
+  // ScreenCaptureSecure.enableSecure();
 }
 export function enableScreenShot() {
-  ScreenCaptureSecure.disableSecure();
+  // ScreenCaptureSecure.disableSecure();
 }
 export function CreateAccountMnemonicScreen({phrase, onCopy, onSubmit}) {
   useEffect(() => {

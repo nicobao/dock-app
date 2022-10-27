@@ -19,7 +19,7 @@ export function setToast(t) {
 const typeMap = {
   success: {
     icon: () => <CheckCircleIcon />,
-    bg: '#27272A',
+    bg: Theme.colors.secondaryColor,
   },
   error: {
     icon: () => <XCircleIcon />,
@@ -35,7 +35,7 @@ export const withErrorToast =
   (fn, message) =>
   async (...params) => {
     try {
-      await fn(...params);
+      return await fn(...params);
     } catch (err) {
       const errorMessage = message || getErrorMessageFromErrorObject(err);
       captureException(err);
@@ -94,7 +94,13 @@ export function showToast({message, type = 'success', duration = 2000}) {
             mb={5}
             direction="row">
             {typeProps.icon()}
-            <Text ml={2} fontWeight={600} fontSize={14}>
+            <Text
+              style={{
+                color: Theme.colors.description,
+              }}
+              ml={2}
+              fontWeight={600}
+              fontSize={14}>
               {message}
             </Text>
           </Stack>

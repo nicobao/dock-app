@@ -36,7 +36,7 @@ import {TokenAmount} from '../tokens/ConfirmTransactionModal';
 import {accountOperations} from './account-slice';
 import {AddAccountModal} from './AddAccountModal';
 import {AccountsScreenTestIDs} from './test-ids';
-import {pickDocuments} from '../../core/storage-utils';
+import {pickDocument} from '../../core/storage-utils';
 import assert from 'assert';
 import {useAccountsList} from './accountsHooks';
 
@@ -97,6 +97,7 @@ const AccountCard = withErrorBoundary(
                   </NBox>
                 ) : null}
                 <Menu
+                  bg={Theme.colors.tertiaryBackground}
                   {...addTestId(`account-item-menu-${index}`)}
                   trigger={triggerProps => {
                     return (
@@ -363,13 +364,13 @@ export const AccountsContainer = withErrorBoundary(({navigation}) => {
             },
           });
         } else if (method === 'json') {
-          const files = await pickDocuments();
+          const file = await pickDocument();
 
-          if (!files.length) {
+          if (!file) {
             return;
           }
 
-          const fileData = await RNFS.readFile(files[0].fileCopyUri);
+          const fileData = await RNFS.readFile(file.fileCopyUri);
 
           dispatch(createAccountOperations.importFromJson(fileData));
         }

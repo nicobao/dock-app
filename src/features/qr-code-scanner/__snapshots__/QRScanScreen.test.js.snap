@@ -26,7 +26,7 @@ exports[`QRScanScreen should render correctly when isScreenFocus=false 1`] = `
   forwardedRef={null}
 >
   <Styled(View) />
-  <Styled(Component)>
+  <Styled(RCTSafeAreaView)>
     <Styled(View)>
       <Styled(Text)
         style={
@@ -138,7 +138,7 @@ exports[`QRScanScreen should render correctly when isScreenFocus=false 1`] = `
         </Styled(Text)>
       </Styled(View)>
     </TouchableWithoutFeedback>
-  </Styled(Component)>
+  </Styled(RCTSafeAreaView)>
 </StyledNativeComponent>
 `;
 
@@ -275,7 +275,7 @@ exports[`QRScanScreen should render correctly when isScreenFocus=true 1`] = `
       vibrate={true}
     />
   </Styled(View)>
-  <Styled(Component)>
+  <Styled(RCTSafeAreaView)>
     <Styled(View)>
       <Styled(Text)
         style={
@@ -387,6 +387,6 @@ exports[`QRScanScreen should render correctly when isScreenFocus=true 1`] = `
         </Styled(Text)>
       </Styled(View)>
     </TouchableWithoutFeedback>
-  </Styled(Component)>
+  </Styled(RCTSafeAreaView)>
 </StyledNativeComponent>
 `;
