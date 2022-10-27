@@ -12,8 +12,14 @@ import {captureException} from '@sentry/react-native';
 import {walletService} from '@docknetwork/wallet-sdk-core/lib/services/wallet';
 import {useCredentialUtils} from '@docknetwork/wallet-sdk-react-native/lib';
 import {showConfirmationModal} from '../../components/ConfirmationModal';
+import {getCredentialStatus} from '@docknetwork/wallet-sdk-react-native/lib';
 const wallet = Wallet.getInstance();
 
+export const CREDENTIAL_STATUS = {
+  INVALID: 1,
+  EXPIRED: 2,
+  VERIFIED: 3,
+};
 export function getDIDAddress(issuer) {
   if (typeof issuer === 'string') {
     return issuer.replace(/did:\w+:/gi, '');
@@ -105,9 +111,9 @@ export function useCredentials({onPickFile = pickJSONFile} = {}) {
       return;
     }
     validateCredential(jsonData);
-    const isValidCredential = isCredentialValid(jsonData);
+    const {verified} = await isCredentialValid(jsonData);
 
-    if (isValidCredential) {
+    if (verified) {
       return saveCredential(jsonData);
     }
     showConfirmationModal({
@@ -245,13 +251,19 @@ export function isInThePast(date) {
   return date < today;
 }
 
-export function isCredentialValid(credential) {
+export async function isCredentialValid(credential) {
   const hasExpired = credential.expirationDate
     ? isInThePast(new Date(credential.expirationDate))
     : false;
   if (hasExpired) {
-    return false;
+    return {
+      verified: false,
+      status: CREDENTIAL_STATUS.EXPIRED,
+    };
   }
-  //TODO check if credential has been revoked
-  return true;
+  const {verified} = await getCredentialStatus(credential);
+  return {
+    verified,
+    status: verified ? CREDENTIAL_STATUS.VERIFIED : CREDENTIAL_STATUS.INVALID,
+  };
 }

@@ -29,7 +29,13 @@ import PencilIcon from './pencil.svg';
 import BinIcon from './bin.svg';
 import ChevronDownIcon from './select_dropdown.svg';
 import ChevronUpIcon from './chevron-up-icon.svg';
+import VerifiedIcon from './verified.svg';
+import InvalidIcon from './invalid.svg';
+import ExpiredIcon from './expired.svg';
 export {
+  VerifiedIcon,
+  InvalidIcon,
+  ExpiredIcon,
   DockLogoIcon,
   DotsVerticalIcon,
   CheckCircleIcon,

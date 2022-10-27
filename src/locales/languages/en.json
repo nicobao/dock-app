@@ -312,7 +312,10 @@
     "credential_no_type": "Credential has an invalid type",
     "credential_no_issuer": "Credential has no Issuer",
     "import_expired_credential": "Import Expired Credential?",
-    "import_expired_credential_desc": "This credential expired on %{expirationDate} , are you sure you want to import this credential?"
+    "import_expired_credential_desc": "This credential expired on %{expirationDate} , are you sure you want to import this credential?",
+    "invalid": "Invalid",
+    "valid": "Valid",
+    "expired": "Expired"
   },
   "qr_scanner": {
     "nodids": "You have no Web3 IDs!",

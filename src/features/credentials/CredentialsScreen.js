@@ -16,10 +16,11 @@ import {
 import PlusCircleWhiteIcon from '../../assets/icons/plus-circle-white.svg';
 import {addTestId} from '../../core/automation-utils';
 import {Center, Image, Text, Stack, Menu, Pressable} from 'native-base';
-import {useCredentials, getDIDAddress, isCredentialValid} from './credentials';
+import {useCredentials, getDIDAddress} from './credentials';
 import {formatDate} from '@docknetwork/wallet-sdk-core/lib/core/format-utils';
 import {withErrorBoundary} from 'src/core/error-handler';
 import {View} from 'react-native';
+import {CredentialStatus} from './components/CredentialStatus';
 
 function shouldRenderAttr(attr) {
   return attr.property !== 'id' && attr.property !== 'title';
@@ -116,36 +117,12 @@ export const CredentialListItem = withErrorBoundary(
         </Stack>
 
         <NBox mt={4} flexDirection="row" alignItems={'flex-end'}>
-          {!isCredentialValid(credential) ? (
-            <NBox
-              mr={1}
-              style={{
-                width: 12,
-                height: 12,
-                borderRadius: 6,
-                backgroundColor: Theme.colors.error,
-              }}
-            />
-          ) : (
-            <NBox
-              mr={1}
-              style={{
-                width: 12,
-                height: 12,
-                borderRadius: 6,
-                backgroundColor: Theme.colors.circleChecked,
-              }}
-            />
-          )}
-
           <NBox>
-            <Text
-              fontSize={'11px'}
-              fontWeight={500}
-              fontFamily={Theme.fontFamily.montserrat}>
+            <Typography variant={'credentialIssuanceDate'}>
               {formatDate(formattedData.issuanceDate)}
-            </Text>
+            </Typography>
           </NBox>
+          <CredentialStatus credential={credential} />
           <NBox flex={1} alignItems={'flex-end'}>
             {formattedData.image ? (
               <View
