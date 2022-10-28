@@ -4,7 +4,6 @@ import {pickJSONFile} from '../../core/storage-utils';
 import {withErrorToast} from 'src/core/toast';
 import {translate} from 'src/locales';
 import assert from 'assert';
-import {formatDate} from '@docknetwork/wallet-sdk-core/lib/core/format-utils';
 import {credentialServiceRPC} from '@docknetwork/wallet-sdk-core/lib/services/credential';
 import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
 import queryString from 'query-string';
@@ -19,6 +18,7 @@ export const CREDENTIAL_STATUS = {
   INVALID: 1,
   EXPIRED: 2,
   VERIFIED: 3,
+  REVOKED: 4,
 };
 export function getDIDAddress(issuer) {
   if (typeof issuer === 'string') {
@@ -111,7 +111,7 @@ export function useCredentials({onPickFile = pickJSONFile} = {}) {
       return;
     }
     validateCredential(jsonData);
-    const {verified} = await isCredentialValid(jsonData);
+    const {verified, message} = await isCredentialValid(jsonData);
 
     if (verified) {
       return saveCredential(jsonData);
@@ -119,9 +119,7 @@ export function useCredentials({onPickFile = pickJSONFile} = {}) {
     showConfirmationModal({
       type: 'alert',
       title: translate('credentials.import_expired_credential'),
-      description: translate('credentials.import_expired_credential_desc', {
-        expirationDate: formatDate(jsonData.expirationDate),
-      }),
+      description: message,
       confirmText: translate('navigation.ok'),
       cancelText: translate('navigation.cancel'),
       onConfirm: async () => {
@@ -255,15 +253,31 @@ export async function isCredentialValid(credential) {
   const hasExpired = credential.expirationDate
     ? isInThePast(new Date(credential.expirationDate))
     : false;
+
   if (hasExpired) {
     return {
       verified: false,
       status: CREDENTIAL_STATUS.EXPIRED,
+      message: translate('credentials.import_expired_credential_desc'),
     };
   }
-  const {verified} = await getCredentialStatus(credential);
+  const {verified, error} = await getCredentialStatus(credential);
+
+  if (
+    typeof error === 'string' &&
+    error.toLowerCase().indexOf('revocation') > -1
+  ) {
+    return {
+      verified,
+      status: CREDENTIAL_STATUS.REVOKED,
+      message: translate('credentials.import_revoked_credential_desc'),
+    };
+  }
   return {
     verified,
     status: verified ? CREDENTIAL_STATUS.VERIFIED : CREDENTIAL_STATUS.INVALID,
+    message: verified
+      ? ''
+      : translate('credentials.import_invalid_credential_desc'),
   };
 }
