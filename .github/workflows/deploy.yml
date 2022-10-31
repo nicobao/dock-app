@@ -7,42 +7,42 @@ on: [push]
 #       - dev
 #     types: [closed]
 jobs:
-  increment_version:
-    runs-on: macos-latest
-    name: "Increment app version"
-    if: github.event.pull_request.merged == true
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          token: "${{ secrets.GIT_ACCESS_TOKEN }}"
+  # increment_version:
+  #   runs-on: macos-latest
+  #   name: "Increment app version"
+  #   if: github.event.pull_request.merged == true
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+  #       with:
+  #         token: "${{ secrets.GIT_ACCESS_TOKEN }}"
 
-      - name: Setup node
-        uses: actions/setup-node@v1
-        with:
-          node-version: '15.x'
+  #     - name: Setup node
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: '15.x'
 
-      - uses: actions/setup-ruby@v1
-        with:
-          ruby-version: '2.x'
+  #     - uses: actions/setup-ruby@v1
+  #       with:
+  #         ruby-version: '2.x'
 
-      - name: Increment app version
-        run: |
-          yarn increment_version:android
-          yarn increment_version:ios
+  #     - name: Increment app version
+  #       run: |
+  #         yarn increment_version:android
+  #         yarn increment_version:ios
 
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: (CI) Increment build number
-          file_pattern: "*.pbxproj *.plist *.gradle"
-          commit_user_name: GitHub Actions Bot
-          commit_user_email: github-actions-bot@dock.io
-          commit_author: Author <actions@github.com>
-          branch: dev
+  #     - uses: stefanzweifel/git-auto-commit-action@v4
+  #       with:
+  #         commit_message: (CI) Increment build number
+  #         file_pattern: "*.pbxproj *.plist *.gradle"
+  #         commit_user_name: GitHub Actions Bot
+  #         commit_user_email: github-actions-bot@dock.io
+  #         commit_author: Author <actions@github.com>
+  #         branch: dev
 
   internal_release_android:
     name: "Android deploy"
-    needs: increment_version
+    # needs: increment_version
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
