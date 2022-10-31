@@ -20,6 +20,7 @@ import {useCredentials, getDIDAddress} from './credentials';
 import {formatDate} from '@docknetwork/wallet-sdk-core/lib/core/format-utils';
 import {withErrorBoundary} from 'src/core/error-handler';
 import {View} from 'react-native';
+import {CredentialStatus} from './components/CredentialStatus';
 
 function shouldRenderAttr(attr) {
   return attr.property !== 'id' && attr.property !== 'title';
@@ -117,13 +118,11 @@ export const CredentialListItem = withErrorBoundary(
 
         <NBox mt={4} flexDirection="row" alignItems={'flex-end'}>
           <NBox>
-            <Text
-              fontSize={'11px'}
-              fontWeight={500}
-              fontFamily={Theme.fontFamily.montserrat}>
+            <Typography variant={'credentialIssuanceDate'}>
               {formatDate(formattedData.issuanceDate)}
-            </Text>
+            </Typography>
           </NBox>
+          <CredentialStatus credential={credential} />
           <NBox flex={1} alignItems={'flex-end'}>
             {formattedData.image ? (
               <View

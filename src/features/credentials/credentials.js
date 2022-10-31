@@ -1,10 +1,9 @@
-import {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {getVCData} from '@docknetwork/prettyvc';
 import {pickJSONFile} from '../../core/storage-utils';
 import {withErrorToast} from 'src/core/toast';
 import {translate} from 'src/locales';
 import assert from 'assert';
-import {formatDate} from '@docknetwork/wallet-sdk-core/lib/core/format-utils';
 import {credentialServiceRPC} from '@docknetwork/wallet-sdk-core/lib/services/credential';
 import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
 import queryString from 'query-string';
@@ -12,6 +11,17 @@ import {captureException} from '@sentry/react-native';
 import {walletService} from '@docknetwork/wallet-sdk-core/lib/services/wallet';
 import {useCredentialUtils} from '@docknetwork/wallet-sdk-react-native/lib';
 import {showConfirmationModal} from '../../components/ConfirmationModal';
+import {
+  getCredentialStatus,
+  CREDENTIAL_STATUS,
+} from '@docknetwork/wallet-sdk-react-native/lib';
+import {
+  ExpiredIcon,
+  InvalidIcon,
+  RevokedIcon,
+  VerifiedIcon,
+} from '../../assets/icons';
+import {Theme} from '../../design-system';
 const wallet = Wallet.getInstance();
 
 export function getDIDAddress(issuer) {
@@ -101,23 +111,20 @@ export function useCredentials({onPickFile = pickJSONFile} = {}) {
 
   const onAdd = async () => {
     const jsonData = await onPickFile();
+
     if (!jsonData) {
       return;
     }
     validateCredential(jsonData);
-    const hasExpired = jsonData.expirationDate
-      ? isInThePast(new Date(jsonData.expirationDate))
-      : false;
+    const status = await getCredentialStatus(jsonData);
 
-    if (!hasExpired) {
+    if (status === CREDENTIAL_STATUS.VERIFIED) {
       return saveCredential(jsonData);
     }
     showConfirmationModal({
       type: 'alert',
-      title: translate('credentials.import_expired_credential'),
-      description: translate('credentials.import_expired_credential_desc', {
-        expirationDate: formatDate(jsonData.expirationDate),
-      }),
+      title: translate('credentials.import_credential'),
+      description: credentialStatusData[status].description,
       confirmText: translate('navigation.ok'),
       cancelText: translate('navigation.cancel'),
       onConfirm: async () => {
@@ -241,8 +248,29 @@ export async function onScanAuthQRCode(url, keyDoc, profile) {
   }
 }
 
-export function isInThePast(date) {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  return date < today;
-}
+export const credentialStatusData = {
+  [CREDENTIAL_STATUS.INVALID]: {
+    message: translate('credentials.invalid'),
+    description: translate('credentials.import_invalid_credential_desc'),
+    icon: <InvalidIcon />,
+    color: Theme.colors.errorText,
+  },
+  [CREDENTIAL_STATUS.EXPIRED]: {
+    message: translate('credentials.expired'),
+    description: translate('credentials.import_expired_credential_desc'),
+    icon: <ExpiredIcon />,
+    color: Theme.colors.warningText,
+  },
+  [CREDENTIAL_STATUS.REVOKED]: {
+    message: translate('credentials.revoked'),
+    description: translate('credentials.import_revoked_credential_desc'),
+    icon: <RevokedIcon />,
+    color: Theme.colors.errorText,
+  },
+  [CREDENTIAL_STATUS.VERIFIED]: {
+    message: translate('credentials.valid'),
+    description: '',
+    icon: <VerifiedIcon />,
+    color: Theme.colors.circleChecked,
+  },
+};

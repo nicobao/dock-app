@@ -187,6 +187,12 @@ const variantsMap = {
     lineHeight: 16,
     color: Theme.colors.textHighlighted,
   },
+  credentialIssuanceDate: {
+    fontFamily: Theme.fontFamily.default,
+    fontWeight: 400,
+    fontSize: 12,
+    lineHeight: 16,
+  },
 };
 
 export const Typography: ComponentType<TypographyProps> = styled(Text)`
