@@ -32,9 +32,9 @@ import ChevronUpIcon from './chevron-up-icon.svg';
 import VerifiedIcon from './verified.svg';
 import InvalidIcon from './invalid.svg';
 import ExpiredIcon from './expired.svg';
-import RevokeIcon from './revoke.svg';
+import RevokedIcon from './revoke.svg';
 export {
-  RevokeIcon,
+  RevokedIcon,
   VerifiedIcon,
   InvalidIcon,
   ExpiredIcon,

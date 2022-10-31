@@ -567,17 +567,17 @@ jest.mock('@docknetwork/wallet-sdk-react-native/lib', () => {
     useWallet: () => useWalletMockFunctions,
     useCredentialUtils: () => useCredentialUtilsMock,
     getCredentialStatus: jest.fn(credential => {
-      if (typeof credential.issuer === 'undefined') {
-        return {
-          verified: false,
-          status: 1,
-        };
-      }
-      return {
-        verified: true,
-        status: 3,
-      };
+      return credential.status || 3;
     }),
+    useGetCredentialStatus: jest.fn(({credential}) => {
+      return credential.status || 3;
+    }),
+    CREDENTIAL_STATUS: {
+      INVALID: 1,
+      EXPIRED: 2,
+      VERIFIED: 3,
+      REVOKED: 4,
+    },
   };
 });
 global.fetch = jest.fn(() =>
