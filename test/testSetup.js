@@ -555,7 +555,7 @@ jest.mock('@docknetwork/wallet-sdk-react-native/lib', () => {
   };
   const useCredentialUtilsMock = {
     credentials: [],
-    saveCredential:jest.fn(),
+    saveCredential: jest.fn(),
     deleteCredential: jest.fn(),
   };
 
@@ -566,6 +566,18 @@ jest.mock('@docknetwork/wallet-sdk-react-native/lib', () => {
     usePresentation: () => usePresentationMockFunctions,
     useWallet: () => useWalletMockFunctions,
     useCredentialUtils: () => useCredentialUtilsMock,
+    getCredentialStatus: jest.fn(credential => {
+      return credential.status || 3;
+    }),
+    useGetCredentialStatus: jest.fn(({credential}) => {
+      return credential.status || 3;
+    }),
+    CREDENTIAL_STATUS: {
+      INVALID: 1,
+      EXPIRED: 2,
+      VERIFIED: 3,
+      REVOKED: 4,
+    },
   };
 });
 global.fetch = jest.fn(() =>
