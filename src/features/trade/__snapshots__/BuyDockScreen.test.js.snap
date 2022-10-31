@@ -43,7 +43,7 @@ exports[`BuyDockScreenScreen should render TransakProvider Webview 1`] = `
     injectedJavaScriptForMainFrameOnly={true}
     javaScriptEnabled={true}
     key="webViewKey"
-    messagingEnabled={false}
+    messagingEnabled={true}
     onContentProcessDidTerminate={[Function]}
     onHttpError={[Function]}
     onLoadingError={[Function]}
@@ -69,6 +69,7 @@ exports[`BuyDockScreenScreen should render TransakProvider Webview 1`] = `
         undefined,
       ]
     }
+    textInteractionEnabled={true}
     useSharedProcessPool={true}
   />
 </View>
