@@ -8,6 +8,7 @@ import {showToast} from './toast';
 export function pickDocument() {
   return DocumentPicker.pickSingle({
     type: [DocumentPicker.types.allFiles],
+    copyTo: 'documentDirectory',
   }).catch(err => {
     if (err.code === 'DOCUMENT_PICKER_CANCELED') {
       return undefined;
