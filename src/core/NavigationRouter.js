@@ -44,11 +44,8 @@ export function NavigationRouter() {
 
   useEffect(() => {
     DeepLinking.addScheme('dockwallet://');
-    Linking.addEventListener('url', gotoScreenDeepLink);
-
-    return () => {
-      Linking.removeEventListener('url', gotoScreenDeepLink);
-    };
+    const subscription = Linking.addEventListener('url', gotoScreenDeepLink);
+    return () => subscription.remove();
   }, [gotoScreenDeepLink]);
 
   return (
