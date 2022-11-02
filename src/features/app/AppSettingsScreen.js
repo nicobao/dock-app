@@ -10,6 +10,7 @@ import {
   TrashIcon,
   VerifiedIcon,
   ChevronRightIcon,
+  Theme,
 } from '../../design-system';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppConstants} from './constants';
@@ -57,13 +58,25 @@ export function AppSettingsScreen({
               {
                 testID: constants.testID.backupWalletOption,
                 title: translate('settings.backup_wallet'),
-                icon: <DownloadIcon />,
+                icon: (
+                  <DownloadIcon
+                    style={{
+                      color: Theme.colors.secondaryIconColor,
+                    }}
+                  />
+                ),
                 onPress: onBackupWallet,
               },
               {
                 testID: constants.testID.deleteWalletOption,
                 title: translate('settings.delete_wallet'),
-                icon: <TrashIcon />,
+                icon: (
+                  <TrashIcon
+                    style={{
+                      color: Theme.colors.secondaryIconColor,
+                    }}
+                  />
+                ),
                 onPress: onDeleteWallet,
               },
               credentialVerifierEnabled
@@ -78,7 +91,13 @@ export function AppSettingsScreen({
                 ? {
                     testID: constants.testID.devSettings,
                     title: translate('settings.dev_settings'),
-                    icon: <ChevronRightIcon />,
+                    icon: (
+                      <ChevronRightIcon
+                        style={{
+                          color: Theme.colors.secondaryIconColor,
+                        }}
+                      />
+                    ),
                     onPress: onDevSettings,
                   }
                 : false,

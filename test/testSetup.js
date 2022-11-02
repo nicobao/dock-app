@@ -5,7 +5,6 @@ import {NativeModules} from 'react-native';
 import mockAsyncStorage from '../node_modules/@react-native-async-storage/async-storage/jest/async-storage-mock';
 import mockRNPermissions from '../node_modules/react-native-permissions/mock';
 import '../src/core/setup-env';
-import {DebugConstants} from '../src/features/constants';
 import {} from '../src/core/navigation';
 jest.mock('../src/core/navigation', () => {
   const navigate = jest.fn();
@@ -159,6 +158,7 @@ jest.mock(
 );
 jest.mock('react-native-document-picker', () => ({
   pick: jest.fn(),
+  pickSingle: jest.fn(() => Promise.resolve({})),
   types: {},
 }));
 
@@ -179,20 +179,21 @@ jest.mock('@react-native-firebase/analytics', () => {
   };
 });
 
-jest.mock('react-native-screen-capture-secure', () => {
-  const originalModule = jest.requireActual(
-    'react-native-screen-capture-secure',
-  );
-  const enableSecure = jest.fn();
-  const disableSecure = jest.fn();
-  return {
-    __esModule: true,
-    default: {
-      enableSecure,
-      disableSecure,
-    },
-  };
-});
+// TODO: Fix issues with Gradle 7
+// jest.mock('react-native-screen-capture-secure', () => {
+//   const originalModule = jest.requireActual(
+//     'react-native-screen-capture-secure',
+//   );
+//   const enableSecure = jest.fn();
+//   const disableSecure = jest.fn();
+//   return {
+//     __esModule: true,
+//     default: {
+//       enableSecure,
+//       disableSecure,
+//     },
+//   };
+// });
 
 jest.mock('@docknetwork/wallet-sdk-core/lib/services/substrate', () => {
   const originalModule = jest.requireActual(
@@ -204,6 +205,7 @@ jest.mock('@docknetwork/wallet-sdk-core/lib/services/substrate', () => {
     substrateService: {
       ...substrateService,
       sendTokens: jest.fn(() => Promise.resolve()),
+      getFeeAmount: jest.fn(() => Promise.resolve()),
     },
   };
 });
@@ -347,7 +349,44 @@ jest.mock('@docknetwork/wallet-sdk-core/lib/services/credential', () => {
       credentialSubject: [],
       issuanceDate: '2022-06-01T12:32:13.106Z',
     }),
-    signCredential: jest.fn().mockResolvedValue(DebugConstants.authCredential),
+    signCredential: jest.fn().mockResolvedValue({
+      '@context': [
+        'https://www.w3.org/2018/credentials/v1',
+        {
+          dk: 'https://ld.dock.io/credentials#',
+          DockAuthCredential: 'dk:DockAuthCredential',
+          name: 'dk:name',
+          email: 'dk:email',
+          state: 'dk:state',
+          description: 'dk:description',
+          logo: 'dk:logo',
+        },
+      ],
+      id: 'didauth:dock:clientid',
+      type: ['VerifiableCredential', 'DockAuthCredential'],
+      credentialSubject: {
+        name: 'John Doe',
+        email: 'test@dock.io',
+        state: 'debugstate',
+      },
+      issuanceDate: '2022-04-01T18:26:21.637Z',
+      expirationDate: '2023-04-01T18:26:21.637Z',
+      proof: {
+        type: 'Ed25519Signature2018',
+        created: '2022-05-13T17:57:12Z',
+        verificationMethod:
+          'did:dock:5FbQXJULrLt8kymWe4ScrM2MyRWAweYXCQ79EpL7ADUV2H8Y#keys-1',
+        proofPurpose: 'assertionMethod',
+        proofValue:
+          'z4ndjdQcqyypWAdtmRcz8KRh6cMzQCuDrQfq4fwa7WdANtxjsXje8UN7Pc16w1DDYNWdrWuV75bWvd6H2VDYfG1qB',
+      },
+      issuer: {
+        name: 'Auth Test',
+        description: 'test',
+        logo: '',
+        id: 'did:dock:5FbQXJULrLt8kymWe4ScrM2MyRWAweYXCQ79EpL7ADUV2H8Y',
+      },
+    }),
   };
 
   return {
@@ -514,6 +553,11 @@ jest.mock('@docknetwork/wallet-sdk-react-native/lib', () => {
       }),
     },
   };
+  const useCredentialUtilsMock = {
+    credentials: [],
+    saveCredential: jest.fn(),
+    deleteCredential: jest.fn(),
+  };
 
   return {
     WalletSDKProvider: originalModule.WalletSDKProvider,
@@ -521,6 +565,19 @@ jest.mock('@docknetwork/wallet-sdk-react-native/lib', () => {
     useAccounts: () => useAccountsMockFunctions,
     usePresentation: () => usePresentationMockFunctions,
     useWallet: () => useWalletMockFunctions,
+    useCredentialUtils: () => useCredentialUtilsMock,
+    getCredentialStatus: jest.fn(credential => {
+      return credential.status || 3;
+    }),
+    useGetCredentialStatus: jest.fn(({credential}) => {
+      return credential.status || 3;
+    }),
+    CREDENTIAL_STATUS: {
+      INVALID: 1,
+      EXPIRED: 2,
+      VERIFIED: 3,
+      REVOKED: 4,
+    },
   };
 });
 global.fetch = jest.fn(() =>

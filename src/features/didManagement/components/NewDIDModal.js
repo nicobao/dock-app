@@ -5,6 +5,7 @@ import {
   DownloadIcon,
   OptionList,
   PlusCircleIcon,
+  Theme,
   Typography,
 } from '../../../design-system';
 import {translate} from '../../../locales';
@@ -22,15 +23,28 @@ export function NewDIDModal({visible, onClose, onImportDID}) {
           {
             testID: addTestId('CreateNewDID').testID,
             title: translate('didManagement.create_new_did'),
-            icon: <PlusCircleIcon />,
+            icon: (
+              <PlusCircleIcon
+                style={{
+                  color: Theme.colors.secondaryIconColor,
+                }}
+              />
+            ),
             onPress: () => {
+              onClose();
               navigate(Routes.DID_MANAGEMENT_NEW_DID);
             },
           },
           {
             testID: addTestId('ImportExistingDIDBtn').testID,
             title: translate('didManagement.import_existing_did'),
-            icon: <DownloadIcon />,
+            icon: (
+              <DownloadIcon
+                style={{
+                  color: Theme.colors.secondaryIconColor,
+                }}
+              />
+            ),
             onPress: onImportDID,
           },
         ]}

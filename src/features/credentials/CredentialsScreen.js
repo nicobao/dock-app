@@ -24,6 +24,7 @@ import {View} from 'react-native';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {PresentationFlow} from './hooks/credentialPresentation';
+import {CredentialStatus} from './components/CredentialStatus';
 
 function shouldRenderAttr(attr) {
   return attr.property !== 'id' && attr.property !== 'title';
@@ -55,12 +56,17 @@ export function renderObjectAttributes({attributes}) {
 export function EmptyCredentials(props) {
   return (
     <Center {...props}>
-      <Box borderRadius={72} width={72} height={72} backgroundColor={'#27272A'}>
+      <Box
+        borderRadius={72}
+        width={72}
+        height={72}
+        backgroundColor={Theme.colors.iconBackgroundColor}>
         <Center h="100%" width="100%">
           <EmptyCredentialIcon color={Theme.colors.description} />
         </Center>
       </Box>
       <Text
+        color={Theme.colors.textHighlighted}
         fontSize={14}
         pt={2}
         fontWeight={400}
@@ -82,7 +88,7 @@ export const CredentialListItem = withErrorBoundary(
 
     return (
       <NBox
-        bgColor={Theme.colors.credentialCardBg}
+        backgroundColor={Theme.colors.cardItemBackground}
         p={4}
         borderRadius={10}
         m={2}
@@ -128,13 +134,11 @@ export const CredentialListItem = withErrorBoundary(
 
         <NBox mt={4} flexDirection="row" alignItems={'flex-end'}>
           <NBox>
-            <Text
-              fontSize={'11px'}
-              fontWeight={500}
-              fontFamily={Theme.fontFamily.montserrat}>
+            <Typography variant={'credentialIssuanceDate'}>
               {formatDate(formattedData.issuanceDate)}
-            </Text>
+            </Typography>
           </NBox>
+          <CredentialStatus credential={credential} />
           <NBox flex={1} alignItems={'flex-end'}>
             {formattedData.image ? (
               <View
@@ -201,7 +205,11 @@ export function CredentialsScreen({credentials, onRemove, onAdd}) {
           </Box>
           <Box row>
             <IconButton onPress={onAdd} col>
-              <PlusCircleWhiteIcon />
+              <PlusCircleWhiteIcon
+                style={{
+                  color: Theme.colors.headerIconColor,
+                }}
+              />
             </IconButton>
           </Box>
         </Box>
@@ -211,6 +219,7 @@ export function CredentialsScreen({credentials, onRemove, onAdd}) {
           credentials.map(item => {
             const credentialActions = (
               <Menu
+                bg={Theme.colors.tertiaryBackground}
                 trigger={triggerProps => {
                   return (
                     <Pressable

@@ -31,8 +31,17 @@ import BinIcon from './bin.svg';
 import UploadIcon from './upload.svg';
 import LinkIcon from './link.svg';
 import QRCodeIcon from './qr-code.svg';
+import ChevronDownIcon from './select_dropdown.svg';
+import ChevronUpIcon from './chevron-up-icon.svg';
+import InvalidIcon from './invalid.svg';
+import ExpiredIcon from './expired.svg';
+import RevokedIcon from './revoke.svg';
 
 export {
+  RevokedIcon,
+  VerifiedIcon,
+  InvalidIcon,
+  ExpiredIcon,
   DockLogoIcon,
   DotsVerticalIcon,
   CheckCircleIcon,
@@ -62,8 +71,9 @@ export {
   RoundedDIDIcon,
   PencilIcon,
   BinIcon,
-  VerifiedIcon,
   UploadIcon,
   LinkIcon,
   QRCodeIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
 };

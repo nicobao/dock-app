@@ -5,6 +5,7 @@ import {
   PlusCircleIcon,
   OptionList,
   Theme,
+  MenuScanQRIcon,
 } from 'src/design-system';
 import {translate} from '../../locales';
 import {BackIcon, Typography} from '../../design-system';
@@ -32,17 +33,35 @@ export function ImportExistingAccount({onSelect, onClose, onBack}) {
         items={[
           {
             title: translate('import_account_modal.recovery_phrase_option'),
-            icon: <PlusCircleIcon />,
+            icon: (
+              <PlusCircleIcon
+                style={{
+                  color: Theme.colors.secondaryIconColor,
+                }}
+              />
+            ),
             onPress: () => onSelect('mnemonic'),
           },
           {
             title: translate('import_account_modal.upload_json_option'),
-            icon: <DocumentDownloadIcon />,
+            icon: (
+              <DocumentDownloadIcon
+                style={{
+                  color: Theme.colors.secondaryIconColor,
+                }}
+              />
+            ),
             onPress: () => onSelect('json'),
           },
           {
             title: translate('import_account_modal.scan_qr_code_option'),
-            icon: <DocumentDownloadIcon />,
+            icon: (
+              <MenuScanQRIcon
+                style={{
+                  color: Theme.colors.secondaryIconColor,
+                }}
+              />
+            ),
             onPress: () => onSelect('qrcode'),
           },
         ]}

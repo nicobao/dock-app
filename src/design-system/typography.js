@@ -141,6 +141,12 @@ const variantsMap = {
     fontSize: 14,
     color: Theme.colors.description,
   },
+  didModalInfoTitle: {
+    fontFamily: Theme.fontFamily.default,
+    fontWeight: 600,
+    fontSize: 14,
+    color: Theme.colors.textHighlighted,
+  },
   selectText: {
     fontWeight: 600,
     fontSize: 14,
@@ -180,6 +186,12 @@ const variantsMap = {
     fontSize: 12,
     lineHeight: 16,
     color: Theme.colors.textHighlighted,
+  },
+  credentialIssuanceDate: {
+    fontFamily: Theme.fontFamily.default,
+    fontWeight: 400,
+    fontSize: 12,
+    lineHeight: 16,
   },
 };
 

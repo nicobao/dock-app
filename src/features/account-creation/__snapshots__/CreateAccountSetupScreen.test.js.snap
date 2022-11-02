@@ -4,7 +4,7 @@ exports[`CreateAccountSetupScreen should render correctly 1`] = `
 <RNCSafeAreaView
   style={
     Object {
-      "backgroundColor": "#000",
+      "backgroundColor": "#141417",
       "flex": 1,
     }
   }
@@ -41,7 +41,7 @@ exports[`CreateAccountSetupScreen should render correctly 1`] = `
         <Memo(ForwardRef(Box))
           mt={7}
         >
-          <Memo(ForwardRef(Input))
+          <Input
             placeholder="Account name"
             testID="createAccountSetupScreen.acountNameInput"
             value="test"

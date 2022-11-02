@@ -1,6 +1,6 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 
 import {View} from 'react-native';
 import {
@@ -18,6 +18,7 @@ import {CredentialsNavigationStackScreen} from './credentials-navigation';
 import {ScanNavigationStackScreen} from './scan-navigation';
 import {DIDNavigationStackScreen} from './did-navigation';
 import {SettingsNavigationStackScreen} from './settings-navigation';
+import {Routes} from '../routes';
 
 const Tab = createBottomTabNavigator();
 
@@ -39,32 +40,65 @@ function TabNavigatorScreen() {
       screenOptions={{
         tabBarBackground: () => <View style={styles.tabBar} />,
       }}>
-      <Tab.Screen
-        name={translate('app_navigation.tokens')}
-        component={TokenNavigationStackScreen}
-        options={{
-          ...screenOptions,
-          headerShown: false,
-          tabBarIcon: ({color, size, focused}) => (
-            <MenuTokensIcon
-              style={{
-                color: focused ? undefined : Theme.colors.text,
-              }}
-            />
-          ),
-        }}
-      />
+      {features.accounts && (
+        <Tab.Screen
+          name={Routes.ACCOUNTS}
+          component={TokenNavigationStackScreen}
+          options={{
+            ...screenOptions,
+            tabBarLabel: ({color, size, focused}) => {
+              return (
+                <Text
+                  style={{
+                    color: focused
+                      ? Theme.colors.tabTextHighlightColor
+                      : Theme.colors.tabTextUnHighlightColor,
+                    fontSize: 10,
+                  }}>
+                  {translate('app_navigation.tokens')}
+                </Text>
+              );
+            },
+            headerShown: false,
+            tabBarIcon: ({color, size, focused}) => (
+              <MenuTokensIcon
+                style={{
+                  color: focused
+                    ? Theme.colors.tabIconHighlightColor
+                    : Theme.colors.tabIconUnHighlightColor,
+                }}
+              />
+            ),
+          }}
+        />
+      )}
+
       {features.credentials && (
         <Tab.Screen
-          name={translate('app_navigation.credentials')}
+          name={Routes.APP_CREDENTIALS}
           component={CredentialsNavigationStackScreen}
           options={{
             ...screenOptions,
             headerShown: false,
+            tabBarLabel: ({color, size, focused}) => {
+              return (
+                <Text
+                  style={{
+                    color: focused
+                      ? Theme.colors.tabTextHighlightColor
+                      : Theme.colors.tabTextUnHighlightColor,
+                    fontSize: 10,
+                  }}>
+                  {translate('app_navigation.credentials')}
+                </Text>
+              );
+            },
             tabBarIcon: ({focused}) => (
               <MenuCredentialsIcon
                 style={{
-                  color: focused ? undefined : Theme.colors.text,
+                  color: focused
+                    ? Theme.colors.tabIconHighlightColor
+                    : Theme.colors.tabIconUnHighlightColor,
                 }}
               />
             ),
@@ -73,15 +107,30 @@ function TabNavigatorScreen() {
       )}
 
       <Tab.Screen
-        name={translate('app_navigation.scan')}
+        name={Routes.APP_QR_SCANNER}
         component={ScanNavigationStackScreen}
         options={{
           ...screenOptions,
           headerShown: false,
+          tabBarLabel: ({color, size, focused}) => {
+            return (
+              <Text
+                style={{
+                  color: focused
+                    ? Theme.colors.tabTextHighlightColor
+                    : Theme.colors.tabTextUnHighlightColor,
+                  fontSize: 10,
+                }}>
+                {translate('app_navigation.scan')}
+              </Text>
+            );
+          },
           tabBarIcon: ({focused}) => (
             <MenuScanQRIcon
               style={{
-                color: focused ? undefined : Theme.colors.text,
+                color: focused
+                  ? Theme.colors.tabIconHighlightColor
+                  : Theme.colors.tabIconUnHighlightColor,
               }}
             />
           ),
@@ -89,15 +138,30 @@ function TabNavigatorScreen() {
       />
       {features.didManagement && (
         <Tab.Screen
-          name={translate('app_navigation.did_management')}
+          name={Routes.DID_MANAGEMENT_LIST}
           component={DIDNavigationStackScreen}
           options={{
             ...screenOptions,
             headerShown: false,
+            tabBarLabel: ({color, size, focused}) => {
+              return (
+                <Text
+                  style={{
+                    color: focused
+                      ? Theme.colors.tabTextHighlightColor
+                      : Theme.colors.tabTextUnHighlightColor,
+                    fontSize: 10,
+                  }}>
+                  {translate('app_navigation.did_management')}
+                </Text>
+              );
+            },
             tabBarIcon: ({focused}) => (
               <DIDManagementIcon
                 style={{
-                  color: focused ? undefined : Theme.colors.text,
+                  color: focused
+                    ? Theme.colors.tabIconHighlightColor
+                    : Theme.colors.tabIconUnHighlightColor,
                 }}
               />
             ),
@@ -106,15 +170,30 @@ function TabNavigatorScreen() {
       )}
 
       <Tab.Screen
-        name={translate('app_navigation.settings')}
+        name={Routes.APP_SETTINGS}
         component={SettingsNavigationStackScreen}
         options={{
           ...screenOptions,
           headerShown: false,
+          tabBarLabel: ({color, size, focused}) => {
+            return (
+              <Text
+                style={{
+                  color: focused
+                    ? Theme.colors.tabTextHighlightColor
+                    : Theme.colors.tabTextUnHighlightColor,
+                  fontSize: 10,
+                }}>
+                {translate('app_navigation.settings')}
+              </Text>
+            );
+          },
           tabBarIcon: ({focused}) => (
             <MenuSettingsIcon
               style={{
-                color: focused ? undefined : Theme.colors.text,
+                color: focused
+                  ? Theme.colors.tabIconHighlightColor
+                  : Theme.colors.tabIconUnHighlightColor,
               }}
             />
           ),

@@ -1,16 +1,25 @@
+import {captureException} from '@sentry/react-native';
 import assert from 'assert';
 import DocumentPicker from 'react-native-document-picker';
 import RNFS from 'react-native-fs';
 import {translate} from 'src/locales';
 import {showToast} from './toast';
 
-export function pickDocuments() {
-  return DocumentPicker.pick({
+export function pickDocument() {
+  return DocumentPicker.pickSingle({
     type: [DocumentPicker.types.allFiles],
+    copyTo: 'documentDirectory',
   }).catch(err => {
     if (err.code === 'DOCUMENT_PICKER_CANCELED') {
-      return [];
+      return undefined;
     }
+
+    captureException(err);
+
+    showToast({
+      type: 'error',
+      message: translate('global.unable_to_read_file'),
+    });
 
     throw err;
   });
@@ -28,13 +37,11 @@ export function readFile(path) {
 }
 
 export async function pickFileData() {
-  const files = await pickDocuments();
+  const file = await pickDocument();
 
-  if (!files.length) {
+  if (!file) {
     return;
   }
-
-  const [file] = files;
 
   assert(!!file, 'file is not defined');
   assert(!!file.fileCopyUri, 'fileCopyUri is not defined');
@@ -54,7 +61,7 @@ export async function pickJSONFile() {
   } catch (err) {
     showToast({
       type: 'error',
-      message: translate('globals.invalid_json_file'),
+      message: translate('global.invalid_json_file'),
     });
     throw err;
   }

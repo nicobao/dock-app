@@ -5,7 +5,7 @@ import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
 import {Transactions} from '@docknetwork/wallet-sdk-transactions/lib/transactions';
 import uuid from 'uuid';
 import {getRealm} from '@docknetwork/wallet-sdk-core/lib/core/realm';
-import {showToast} from 'src/core/toast';
+import {showToast, withErrorToast} from 'src/core/toast';
 import {DOCK_TOKEN_UNIT} from 'src/core/format-utils';
 import {fetchTransactions} from '../../core/subscan';
 import BigNumber from 'bignumber.js';
@@ -149,15 +149,14 @@ export const transactionsOperations = {
     dispatch(transactionsActions.updateTransaction(transaction));
   },
 
-  getFeeAmount:
-    ({recipientAddress, accountAddress, amount}) =>
-    async (dispatch, getState) => {
+  getFeeAmount: ({recipientAddress, accountAddress, amount}) =>
+    withErrorToast(async (dispatch, getState) => {
       return substrateService.getFeeAmount({
         toAddress: recipientAddress,
         fromAddress: accountAddress,
         amount: amount,
       });
-    },
+    }, translate('send_token.transaction_fee_error')),
 
   sendTransaction:
     ({

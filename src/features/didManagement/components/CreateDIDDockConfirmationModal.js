@@ -28,7 +28,7 @@ export function CreateDIDDockConfirmationModal({
           {translate('confirm_transaction.title')}
         </Typography>
         <NBox mt={5}>
-          <Typography variant={'label'} mb={1}>
+          <Typography variant={'didModalInfoTitle'} mb={1}>
             {translate('didManagement.did_name')}
           </Typography>
           <Typography variant={'description'} mb={1}>
@@ -37,7 +37,7 @@ export function CreateDIDDockConfirmationModal({
         </NBox>
 
         <NBox mt={5}>
-          <Typography variant={'label'} mb={1}>
+          <Typography variant={'didModalInfoTitle'} mb={1}>
             {translate('didManagement.did_type')}
           </Typography>
           <Typography variant={'description'} mb={1}>
@@ -45,13 +45,13 @@ export function CreateDIDDockConfirmationModal({
           </Typography>
         </NBox>
         <NBox mt={5}>
-          <Typography variant={'label'} mb={1}>
+          <Typography variant={'didModalInfoTitle'} mb={1}>
             {translate('confirm_transaction.fee')}
           </Typography>
           <AmountDetails amount={1} symbol={'DOCK'} />
         </NBox>
         <NBox mt={5}>
-          <Typography variant={'label'} mb={1}>
+          <Typography variant={'didModalInfoTitle'} mb={1}>
             {translate('confirm_transaction.total')}
           </Typography>
           <AmountDetails amount={1} symbol={'DOCK'} />

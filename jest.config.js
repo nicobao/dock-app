@@ -6,7 +6,7 @@ const config = {
       functions: 25,
       lines: 25,
       statements: 25,
-    }
+    },
   },
   setupFilesAfterEnv: ['@testing-library/jest-native/extend-expect'],
   setupFiles: ['<rootDir>/test/testSetup.js'],
@@ -14,8 +14,7 @@ const config = {
     'node_modules/(?!(@polkadot|@babel|@react-native|@docknetwork|react-native|rn-fetch|redux-persist-filesystem|@react-navigation|@react-native-community|react-navigation|react-navigation-redux-helpers|@sentry))',
   ],
   transform: {
-    '^.+\\.(ts|js)$':
-      '<rootDir>/node_modules/react-native/jest/preprocessor.js',
+    '^.+\\.(js|jsx|ts|tsx)$': '<rootDir>/test/jestBabelTransform.js',
     '^.+\\.svg$': '<rootDir>/test/svg-transformer.js',
   },
   moduleNameMapper: {

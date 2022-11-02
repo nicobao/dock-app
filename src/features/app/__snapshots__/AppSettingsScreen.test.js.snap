@@ -4,7 +4,7 @@ exports[`AppSettingsScreen should render correctly 1`] = `
 <RNCSafeAreaView
   style={
     Object {
-      "backgroundColor": "#000",
+      "backgroundColor": "#141417",
       "flex": 1,
     }
   }
@@ -48,13 +48,25 @@ exports[`AppSettingsScreen should render correctly 1`] = `
             items={
               Array [
                 Object {
-                  "icon": <SvgFile />,
+                  "icon": <SvgFile
+                    style={
+                      Object {
+                        "color": "#ffffff",
+                      }
+                    }
+                  />,
                   "onPress": undefined,
                   "testID": "backupWallet",
                   "title": "Backup wallet",
                 },
                 Object {
-                  "icon": <SvgFile />,
+                  "icon": <SvgFile
+                    style={
+                      Object {
+                        "color": "#ffffff",
+                      }
+                    }
+                  />,
                   "onPress": undefined,
                   "testID": "deleteWallet",
                   "title": "Remove wallet",

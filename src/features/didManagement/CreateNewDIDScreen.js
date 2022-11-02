@@ -21,7 +21,6 @@ import {
   VStack,
 } from 'native-base';
 import {translate} from '../../locales';
-import {DIDAdvancedOptions} from './components/DIDAdvancedOptions';
 import {Ionicons} from '@native-base/icons';
 import {addTestId} from '../../core/automation-utils';
 import {useDIDManagementHandlers} from './didHooks';
@@ -29,6 +28,7 @@ import QuickInfoIcon from '../../assets/icons/quick-info.svg';
 import {CustomSelectInput} from '../../components/CustomSelectInput';
 import {useAccountsList} from '../accounts/accountsHooks';
 import {CreateDIDDockConfirmationModal} from './components/CreateDIDDockConfirmationModal';
+import {SingleDIDCreationPaymentAccount} from './components/SingleDIDCreationPaymentAccount';
 
 export function CreateNewDIDScreen({
   form,
@@ -145,22 +145,7 @@ export function CreateNewDIDScreen({
                   handleChange('didPaymentAddress')(item.value);
                 }}
                 renderItem={item => {
-                  return (
-                    <>
-                      <Typography
-                        numberOfLines={1}
-                        textAlign="left"
-                        variant="description">
-                        {item.label}
-                      </Typography>
-                      <Typography
-                        numberOfLines={1}
-                        textAlign="left"
-                        variant="screen-description">
-                        {item.description}
-                      </Typography>
-                    </>
-                  );
+                  return <SingleDIDCreationPaymentAccount item={item} />;
                 }}
                 items={accounts}
               />
@@ -206,17 +191,6 @@ export function CreateNewDIDScreen({
             </Typography>
           </VStack>
         ) : null}
-
-        <DIDAdvancedOptions
-          {...addTestId('DIDAdvancedOptions')}
-          onChange={handleChange}
-          scrollToBottom={() => {
-            if (scrollViewRef?.current) {
-              scrollViewRef.current?.scrollToEnd();
-            }
-          }}
-          form={form}
-        />
       </ScrollView>
       <LoadingButton
         full
@@ -254,6 +228,7 @@ export function CreateNewDIDScreenContainer() {
   const parseAccounts = useMemo(() => {
     return accounts.map(account => {
       return {
+        ...account,
         value: account.address,
         label: account.name,
         description: account.address,

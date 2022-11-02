@@ -5,6 +5,7 @@ on:
     branches:
       - dev
     types: [closed]
+
 jobs:
   increment_version:
     runs-on: macos-latest
@@ -85,6 +86,8 @@ jobs:
           cp -rf ./certs/.env ./
           rm -rf /tmp/google-play-cert
           cp -rf ./certs/google-play-cert /tmp/google-play-cert
+          echo "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
+          echo "BUILD_TAG=$(node print-build-number|tr -s ' ' '_')" >> $GITHUB_ENV
 
       - name: Install Fastlane
         run: gem install fastlane
@@ -97,10 +100,13 @@ jobs:
           S3_REGION: ${{ secrets.S3_REGION }}
           S3_ANDROID_APK_DIR: ${{ secrets.S3_ANDROID_APK_DIR }}
           S3_ACL: ${{ secrets.S3_ACL }}
+          APK_LOCATION: ./release/dock-wallet.apk
         run: |
-          echo "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
           cd ./android
-          fastlane internal
+          mkdir release
+          fastlane package_apk
+          cp "app/build/outputs/apk/release/app-release.apk" ${{env.APK_LOCATION}}
+          fastlane submit_to_google
           fastlane s3_upload
 
       - name: Send slack notification
@@ -146,6 +152,7 @@ jobs:
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           CERTS_REPO_URL: ${{ secrets.CERTS_REPO_URL }}
+          MATCH_REPO_URL: ${{ secrets.CERTS_REPO_URL }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }}
           FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD:  ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
@@ -157,6 +164,7 @@ jobs:
           ASC_KEY: ${{ secrets.ASC_KEY }}
           ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
           ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD: true
         run: |
           git config --global url."https://".insteadOf git://
           xcodebuild -version
