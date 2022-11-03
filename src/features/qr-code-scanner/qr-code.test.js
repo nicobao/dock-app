@@ -20,6 +20,8 @@ import {setToast} from '../../core/toast';
 import {getParamsFromUrl, onScanAuthQRCode} from '../credentials/credentials';
 import {credentialServiceRPC} from '@docknetwork/wallet-sdk-core/lib/services/credential';
 import {translate} from 'src/locales';
+import {CREDENTIAL_STATUS} from '@docknetwork/wallet-sdk-react-native/lib';
+import * as modals from '../../components/ConfirmationModal';
 
 const keyDoc = {
   '@context': ['https://w3id.org/wallet/v1'],
@@ -143,6 +145,111 @@ describe('qr-code', () => {
       expect(toastMock.show).toBeCalled();
     });
 
+    it('expect to show confirm dialog after scanning invalid credential', async () => {
+      const credentialData = {
+        '@context': ['https://www.w3.org/2018/credentials/v1'],
+        id: 'https://creds.dock.io/8e02c35ae370b02f47d7faaf41cb1386768fc75c9fca7caa6bb389dbe61260eb',
+        type: ['VerifiableCredential', 'UniversityDegreeCredential'],
+        credentialSubject: {},
+        issuanceDate: '2022-06-27T12:08:30.675Z',
+        expirationDate: '2029-06-26T23:00:00.000Z',
+        issuer: {
+          name: 'John Doe',
+          description: '',
+          logo: '',
+          id: 'did:dock:5CJaTP2eGCLf5ZNPUXYbWxUvJQMTseKfc4hi8WVBC1K8eW9N',
+        },
+        status: CREDENTIAL_STATUS.INVALID,
+      };
+      jest
+        .spyOn(modals, 'showConfirmationModal')
+        .mockImplementationOnce(async () => []);
+      jest
+        .spyOn(Credentials.getInstance(), 'getCredentialFromUrl')
+        .mockImplementationOnce(async () => credentialData);
+
+      jest
+        .spyOn(Credentials.getInstance(), 'add')
+        .mockImplementationOnce(async () => true);
+
+      jest
+        .spyOn(Credentials.getInstance(), 'query')
+        .mockImplementationOnce(async () => []);
+
+      await credentialHandler('http://some-url');
+
+      expect(modals.showConfirmationModal).toBeCalled();
+    });
+    it('expect to show confirm dialog after scanning revoked credential', async () => {
+      const credentialData = {
+        '@context': ['https://www.w3.org/2018/credentials/v1'],
+        id: 'https://creds.dock.io/8e02c35ae370b02f47d7faaf41cb1386768fc75c9fca7caa6bb389dbe61260eb',
+        type: ['VerifiableCredential', 'UniversityDegreeCredential'],
+        credentialSubject: {},
+        issuanceDate: '2022-06-27T12:08:30.675Z',
+        expirationDate: '2029-06-26T23:00:00.000Z',
+        issuer: {
+          name: 'John Doe',
+          description: '',
+          logo: '',
+          id: 'did:dock:5CJaTP2eGCLf5ZNPUXYbWxUvJQMTseKfc4hi8WVBC1K8eW9N',
+        },
+        status: CREDENTIAL_STATUS.REVOKED,
+      };
+      jest
+        .spyOn(modals, 'showConfirmationModal')
+        .mockImplementationOnce(async () => []);
+      jest
+        .spyOn(Credentials.getInstance(), 'getCredentialFromUrl')
+        .mockImplementationOnce(async () => credentialData);
+
+      jest
+        .spyOn(Credentials.getInstance(), 'add')
+        .mockImplementationOnce(async () => true);
+
+      jest
+        .spyOn(Credentials.getInstance(), 'query')
+        .mockImplementationOnce(async () => []);
+
+      await credentialHandler('http://some-url');
+
+      expect(modals.showConfirmationModal).toBeCalled();
+    });
+    it('expect to show confirm dialog after scanning expired credential', async () => {
+      const credentialData = {
+        '@context': ['https://www.w3.org/2018/credentials/v1'],
+        id: 'https://creds.dock.io/8e02c35ae370b02f47d7faaf41cb1386768fc75c9fca7caa6bb389dbe61260eb',
+        type: ['VerifiableCredential', 'UniversityDegreeCredential'],
+        credentialSubject: {},
+        issuanceDate: '2022-06-27T12:08:30.675Z',
+        expirationDate: '2029-06-26T23:00:00.000Z',
+        issuer: {
+          name: 'John Doe',
+          description: '',
+          logo: '',
+          id: 'did:dock:5CJaTP2eGCLf5ZNPUXYbWxUvJQMTseKfc4hi8WVBC1K8eW9N',
+        },
+        status: CREDENTIAL_STATUS.EXPIRED,
+      };
+      jest
+        .spyOn(modals, 'showConfirmationModal')
+        .mockImplementationOnce(async () => []);
+      jest
+        .spyOn(Credentials.getInstance(), 'getCredentialFromUrl')
+        .mockImplementationOnce(async () => credentialData);
+
+      jest
+        .spyOn(Credentials.getInstance(), 'add')
+        .mockImplementationOnce(async () => true);
+
+      jest
+        .spyOn(Credentials.getInstance(), 'query')
+        .mockImplementationOnce(async () => []);
+
+      await credentialHandler('http://some-url');
+
+      expect(modals.showConfirmationModal).toBeCalled();
+    });
     it('expect to add credential from url', async () => {
       const credentialData = {
         '@context': ['https://www.w3.org/2018/credentials/v1'],
@@ -173,6 +280,7 @@ describe('qr-code', () => {
 
       const result = await credentialHandler('http://some-url');
 
+      expect(modals.showConfirmationModal).not.toBeCalled();
       expect(result).toBeTruthy();
       expect(navigate).toBeCalledWith(Routes.APP_CREDENTIALS);
     });
