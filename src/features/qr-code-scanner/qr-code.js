@@ -6,12 +6,21 @@ import {showToast} from '../../core/toast';
 import {translate} from '../../locales';
 import {getJsonOrError} from '../../core';
 import '../credentials/credentials';
-import {onScanAuthQRCode} from '../credentials/credentials';
+import {
+  credentialStatusData,
+  onScanAuthQRCode,
+  validateCredential,
+} from '../credentials/credentials';
 import {captureException} from '@sentry/react-native';
 import queryString from 'query-string';
 import store from '../../core/redux-store';
 import {createAccountOperations} from '../account-creation/create-account-slice';
 import {stringToJSON} from '../../core/storage-utils';
+import {
+  getCredentialStatus,
+  CREDENTIAL_STATUS,
+} from '@docknetwork/wallet-sdk-react-native/lib';
+import {showConfirmationModal} from '../../components/ConfirmationModal';
 
 export async function addressHandler(data) {
   const isAddress = await utilCryptoService.isAddressValid(data);
@@ -59,9 +68,25 @@ export async function credentialHandler(data) {
       return true;
     }
 
-    await credentials.add(credentialData);
+    validateCredential(credentialData);
+    const status = await getCredentialStatus(credentialData);
+    if (status === CREDENTIAL_STATUS.VERIFIED) {
+      await credentials.add(credentialData);
+      navigate(Routes.APP_CREDENTIALS);
+      return true;
+    }
+    showConfirmationModal({
+      type: 'alert',
+      title: translate('credentials.import_credential'),
+      description: credentialStatusData[status].description,
+      confirmText: translate('navigation.ok'),
+      cancelText: translate('navigation.cancel'),
+      onConfirm: async () => {
+        await credentials.add(credentialData);
+        navigate(Routes.APP_CREDENTIALS);
+      },
+    });
 
-    navigate(Routes.APP_CREDENTIALS);
     return true;
   } catch (err) {
     console.error(err);
