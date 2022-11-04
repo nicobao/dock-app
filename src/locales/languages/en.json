@@ -112,7 +112,10 @@
     "switch_network_error": "Network switch failed",
     "activate_transak": "Activate Transak",
     "show_did_management": "Show DID Management",
-    "show_accounts": "Show accounts"
+    "show_accounts": "Show accounts",
+    "log_request": "Log Request",
+    "export_request_log": "Export Request Logs",
+    "export_error": "Unable to export logs"
   },
   "account_setup": {
     "title": "Account Name",

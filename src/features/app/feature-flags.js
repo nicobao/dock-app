@@ -31,6 +31,11 @@ export const Features = {
     title: translate('dev_settings.activate_transak'),
     defaultToEnabled: true,
   },
+  shouldLogRequest: {
+    id: 'shouldLogRequest',
+    title: translate('dev_settings.log_request'),
+    defaultToEnabled: false,
+  },
 };
 
 export const getAllFeatures = () =>

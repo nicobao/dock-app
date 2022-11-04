@@ -30,6 +30,7 @@ import {
 import {utilCryptoService} from '@docknetwork/wallet-sdk-core/lib/services/util-crypto';
 import {FeatureFlags, getAllFeatures, useFeatures} from '../app/feature-flags';
 import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
+import {useRequestLogger} from './hooks/requestLogHooks';
 
 type Props = {
   onAddAccount: any,
@@ -43,6 +44,7 @@ export function DevSettingsScreen({
   onNetworkChange,
   onFeatureToggled,
   features,
+  exportLogRequest,
 }: Props) {
   const [showNetworkOptions, setShowNetworkOptions] = useState();
   const [showWatchAccount, setShowWatchAccount] = useState();
@@ -102,6 +104,7 @@ export function DevSettingsScreen({
             realm.write(() => {
               realm.delete(realm.objects('Account'));
               realm.delete(realm.objects('Transaction'));
+              realm.delete(realm.objects('RequestLog'));
               showToast({
                 message: translate('dev_settings.clear_cache_success'),
                 type: 'success',
@@ -134,9 +137,23 @@ export function DevSettingsScreen({
         onPress: () => onFeatureToggled(feature.id),
       });
     });
+    if (features?.shouldLogRequest) {
+      options.push({
+        testID: 'export-request-log',
+        title: translate('dev_settings.export_request_log'),
+        icon: (
+          <ChevronRightIcon
+            style={{
+              color: Theme.colors.secondaryIconColor,
+            }}
+          />
+        ),
+        onPress: exportLogRequest,
+      });
+    }
 
     return options;
-  }, [currentNetworkId, features, onFeatureToggled]);
+  }, [currentNetworkId, exportLogRequest, features, onFeatureToggled]);
 
   return (
     <ScreenContainer testID="DevSettingsScreen" showTabNavigation>
@@ -283,6 +300,7 @@ export function DevSettingsScreen({
 export function DevSettingsContainer() {
   const dispatch = useDispatch();
   const {features, updateFeature} = useFeatures();
+  const {exportLogRequest} = useRequestLogger();
 
   const handleNetworkChange = networkId => {
     return dispatch(appOperations.setNetwork(networkId));
@@ -302,6 +320,7 @@ export function DevSettingsContainer() {
       onNetworkChange={handleNetworkChange}
       onAddAccount={handleAddAccount}
       onFeatureToggled={handleFeatureToggled}
+      exportLogRequest={exportLogRequest}
     />
   );
 }
