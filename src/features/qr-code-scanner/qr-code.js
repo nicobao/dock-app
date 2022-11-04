@@ -21,6 +21,7 @@ import {
   CREDENTIAL_STATUS,
 } from '@docknetwork/wallet-sdk-react-native/lib';
 import {showConfirmationModal} from '../../components/ConfirmationModal';
+import axios from '../../core/network-service';
 
 export async function addressHandler(data) {
   const isAddress = await utilCryptoService.isAddressValid(data);
@@ -138,16 +139,19 @@ export async function authHandler(data, keyDoc, profile = {}) {
       const url = decodeURIComponent(data.substr(authLinkPrefix.length));
 
       const vc = await onScanAuthQRCode(url, keyDoc, profile);
-      const req = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify({
+      const response = await axios.post(
+        url,
+        JSON.stringify({
           vc,
         }),
-      });
-      const result = await req.json();
+        {
+          headers: {
+            'content-type': 'application/json',
+          },
+        },
+      );
+      const result = response.data;
+
       if (result.verified) {
         showToast({
           type: 'message',
