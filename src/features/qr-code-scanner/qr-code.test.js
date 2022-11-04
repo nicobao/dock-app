@@ -22,6 +22,7 @@ import {credentialServiceRPC} from '@docknetwork/wallet-sdk-core/lib/services/cr
 import {translate} from 'src/locales';
 import {CREDENTIAL_STATUS} from '@docknetwork/wallet-sdk-react-native/lib';
 import * as modals from '../../components/ConfirmationModal';
+import axios from 'axios';
 
 const keyDoc = {
   '@context': ['https://w3id.org/wallet/v1'],
@@ -433,14 +434,13 @@ describe('qr-code', () => {
         'dockwallet://didauth?url=https%3A%2F%2Fauth.dock.io%2Fverify%3Fid%3Dqi0hkXbZQzpuAVgzM6Zkq905w0LnegROzDrsvy0W%26scope%3Dpublic%20email',
         keyDoc,
       );
-      expect(fetch).toHaveBeenCalledWith(
+      expect(axios.post).toHaveBeenCalledWith(
         'https://auth.dock.io/verify?id=qi0hkXbZQzpuAVgzM6Zkq905w0LnegROzDrsvy0W&scope=public email',
+        expect.any(String),
         {
-          method: 'POST',
           headers: {
             'content-type': 'application/json',
           },
-          body: expect.any(String),
         },
       );
     });

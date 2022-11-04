@@ -5,7 +5,29 @@ import {NativeModules} from 'react-native';
 import mockAsyncStorage from '../node_modules/@react-native-async-storage/async-storage/jest/async-storage-mock';
 import mockRNPermissions from '../node_modules/react-native-permissions/mock';
 import '../src/core/setup-env';
-import {} from '../src/core/navigation';
+import axios from 'axios';
+
+jest.mock('axios', () => {
+  const axiosInstance = {
+    get: jest.fn().mockResolvedValue({data: {}}),
+    post: jest.fn().mockResolvedValue({data: {}}),
+    interceptors: {
+      request: {
+        use: jest.fn(),
+      },
+      response: {
+        use: jest.fn(),
+      },
+    },
+  };
+  return {
+    __esModule: true,
+    default: {
+      create: jest.fn(() => axiosInstance),
+      ...axiosInstance,
+    },
+  };
+});
 jest.mock('../src/core/navigation', () => {
   const navigate = jest.fn();
   const navigationRef = {
