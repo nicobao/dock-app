@@ -12,6 +12,7 @@ import {
   Theme,
   Typography,
   DotsVerticalIcon,
+  QRCodeIcon,
 } from '../../design-system';
 import PlusCircleWhiteIcon from '../../assets/icons/plus-circle-white.svg';
 import {addTestId} from '../../core/automation-utils';
@@ -20,6 +21,9 @@ import {useCredentials, getDIDAddress} from './credentials';
 import {formatDate} from '@docknetwork/wallet-sdk-core/lib/core/format-utils';
 import {withErrorBoundary} from 'src/core/error-handler';
 import {View} from 'react-native';
+import {navigate} from '../../core/navigation';
+import {Routes} from '../../core/routes';
+import {PresentationFlow} from './hooks/credentialPresentation';
 import {CredentialStatus} from './components/CredentialStatus';
 
 function shouldRenderAttr(attr) {
@@ -74,7 +78,12 @@ export function EmptyCredentials(props) {
 }
 
 export const CredentialListItem = withErrorBoundary(
-  ({credential, formattedData, credentialActions = <NBox />}) => {
+  ({
+    credential,
+    formattedData,
+    credentialActions = <NBox />,
+    onPresentation,
+  }) => {
     const {title = translate('credentials.default_title')} = formattedData;
 
     return (
@@ -112,7 +121,14 @@ export const CredentialListItem = withErrorBoundary(
             {renderObjectAttributes(formattedData)}
           </Stack>
           <NBox flex={1} alignItems="flex-end">
-            {credentialActions}
+            <NBox flexDirection="row">
+              <Pressable onPress={onPresentation}>
+                <NBox mt={1}>
+                  <QRCodeIcon color={Theme.icons.color} />
+                </NBox>
+              </Pressable>
+              {credentialActions}
+            </NBox>
           </NBox>
         </Stack>
 
@@ -224,6 +240,12 @@ export function CredentialsScreen({credentials, onRemove, onAdd}) {
             return (
               <CredentialListItem
                 key={item.id}
+                onPresentation={() => {
+                  navigate(Routes.CREDENTIALS_SHARE_AS_PRESENTATION, {
+                    flow: PresentationFlow.qrCode,
+                    credentialId: item.id,
+                  });
+                }}
                 credential={item.content}
                 formattedData={item.formattedData}
                 credentialActions={credentialActions}

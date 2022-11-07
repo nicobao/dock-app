@@ -400,7 +400,7 @@ PODS:
     - React-Core
   - react-native-camera/RN (4.2.1):
     - React-Core
-  - react-native-document-picker (5.3.0):
+  - react-native-document-picker (8.1.2):
     - React-Core
   - react-native-netinfo (8.3.1):
     - React-Core
@@ -859,7 +859,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 1363be638eccfe1aea1b10dd42e632b0397e5ec8
   React-logger: 7bd569e3857d74ed412ce0a5c51f421ff7d4ca7f
   react-native-camera: 3eae183c1d111103963f3dd913b65d01aef8110f
-  react-native-document-picker: 226068006be4c52f8ef7f32d855ee025a12e9e64
+  react-native-document-picker: f5ec1a712ca2a975c233117f044817bb8393cad4
   react-native-netinfo: 1a6035d3b9780221d407c277ebfb5722ace00658
   react-native-randombytes: 421f1c7d48c0af8dbcd471b0324393ebf8fe7846
   react-native-safe-area-context: 9e40fb181dac02619414ba1294d6c2a807056ab9
