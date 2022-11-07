@@ -58,7 +58,7 @@ export async function formatCredential(credential) {
     formattedData,
   };
 }
-const validateCredential = credential => {
+export const validateCredential = credential => {
   assert(
     typeof credential !== 'undefined',
     translate('credentials.invalid_credential'),
