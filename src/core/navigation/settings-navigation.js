@@ -3,6 +3,7 @@ import {AppSettingsContainer} from '../../features/app/AppSettingsScreen';
 import {DevSettingsContainer} from '../../features/dev-settings/DevSettingsScreen';
 import {ExportWalletContainer} from '../../features/wallet/ExportWalletScreen';
 import {UnlockWalletContainer} from '../../features/unlock-wallet/UnlockWalletScreen';
+import {CredentialVerifierContainer} from '../../features/credentials/CredentialVerifier';
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {getScreenProps} from './utils';
@@ -36,6 +37,12 @@ export function SettingsNavigationStackScreen() {
         {...getScreenProps({
           name: Routes.CONFIRM_WALLET_ACCESS,
           component: UnlockWalletContainer,
+        })}
+      />
+      <SettingsNavigationStack.Screen
+        {...getScreenProps({
+          name: Routes.CREDENTIAL_VERIFIER,
+          component: CredentialVerifierContainer,
         })}
       />
     </SettingsNavigationStack.Navigator>

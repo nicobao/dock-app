@@ -92,6 +92,7 @@
     "title": "Settings",
     "backup_wallet": "Backup wallet",
     "delete_wallet": "Remove wallet",
+    "credential_verifier": "Credential Verifier",
     "dev_settings": "Dev settings"
   },
   "dev_settings": {
@@ -112,6 +113,7 @@
     "switch_network_error": "Network switch failed",
     "activate_transak": "Activate Transak",
     "show_did_management": "Show DID Management",
+    "credential_verifier": "Credential Verifier",
     "show_accounts": "Show accounts"
   },
   "account_setup": {
@@ -387,5 +389,12 @@
     "invalid_did_password":"Incorrect Password",
     "duplicate_did":"That DID already exists in wallet",
     "no_items_found": "No items found"
+  },
+  "credentialVerifier": {
+    "title": "Verify a credential",
+    "description": " Verify any verifiable credentials (VCs) via a URL, JSON file or scanning a QR code",
+    "verifyViaQRCode": "Scan QR Code",
+    "verifyViaURL": "Verify via a URL",
+    "verifyViaJSON": "Verify via a JSON file"
   }
 }

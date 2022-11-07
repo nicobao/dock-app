@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {addTestId} from '../../core/automation-utils';
 import {
   BackButton,
@@ -12,6 +12,7 @@ import {translate} from '../../locales';
 import {ScrollView} from 'native-base';
 import {useCredentials} from './credentials';
 import {
+  PresentationFlow,
   SELECT_CREDENTIALS,
   useCredentialPresentation,
 } from './hooks/credentialPresentation';
@@ -19,6 +20,9 @@ import {useSingleDID} from '../didManagement/didHooks';
 import {SelectCredentialsComponent} from './components/SelectCredentialsComponent';
 import {SelectDIDComponent} from './components/SelectDIDComponent';
 import {useDIDAuth} from '../didManagement/didAuthHooks';
+import {navigateBack} from '../../core/navigation';
+import {QRCodeModal} from '../accounts/QRCodeModal';
+
 export function ShareCredentialScreen({
   credentials,
   selectedCredentials,
@@ -28,6 +32,8 @@ export function ShareCredentialScreen({
   dids,
   onSelectDID,
   isFormValid,
+  qrCodeData,
+  onCloseQRCode,
 }) {
   return (
     <ScreenContainer {...addTestId('ShareCredentialScreen')}>
@@ -59,12 +65,18 @@ export function ShareCredentialScreen({
           </Typography>
         </LoadingButton>
       </NBox>
+      <QRCodeModal
+        visible={!!qrCodeData}
+        onClose={onCloseQRCode}
+        data={qrCodeData}
+        description="Credential Presentation"
+      />
     </ScreenContainer>
   );
 }
 
 export function ShareCredentialScreenContainer({route}) {
-  const {deepLinkUrl} = route.params || {};
+  const {deepLinkUrl, flow = PresentationFlow.deepLink} = route.params || {};
 
   const {credentials} = useCredentials({onPickFile: () => {}});
   const {
@@ -74,8 +86,25 @@ export function ShareCredentialScreenContainer({route}) {
     step,
     onSelectDID,
     isFormValid,
-  } = useCredentialPresentation(deepLinkUrl);
+    presentationData,
+  } = useCredentialPresentation({
+    deepLinkUrl,
+    flow,
+  });
   const {dids} = useDIDAuth();
+  const [qrCodeData, setQRCodeData] = useState();
+
+  useEffect(() => {
+    setQRCodeData(null);
+  }, []);
+
+  useEffect(() => {
+    if (!presentationData) {
+      return setQRCodeData(null);
+    }
+
+    setQRCodeData(JSON.stringify(presentationData));
+  }, [presentationData]);
 
   useSingleDID(dids, onSelectDID);
 
@@ -89,6 +118,8 @@ export function ShareCredentialScreenContainer({route}) {
       dids={dids}
       onSelectDID={onSelectDID}
       isFormValid={isFormValid}
+      qrCodeData={qrCodeData}
+      onCloseQRCode={navigateBack}
     />
   );
 }

@@ -8,6 +8,7 @@ import {
   OptionList,
   DownloadIcon,
   TrashIcon,
+  VerifiedIcon,
   ChevronRightIcon,
   Theme,
 } from '../../design-system';
@@ -20,6 +21,7 @@ import {translate} from 'src/locales';
 import {BuildIdentifier} from './BuildIdentifier';
 import {Stack} from 'native-base';
 import {appActions, appSelectors} from './app-slice';
+import {useFeatures} from './feature-flags';
 
 const constants = AppConstants.settings;
 
@@ -29,6 +31,7 @@ export function AppSettingsScreen({
   onDevSettings,
   dispatch,
   devSettingsEnabled,
+  credentialVerifierEnabled,
 }) {
   return (
     <ScreenContainer testID="AccountDetailsScreen" showTabNavigation>
@@ -76,6 +79,14 @@ export function AppSettingsScreen({
                 ),
                 onPress: onDeleteWallet,
               },
+              credentialVerifierEnabled
+                ? {
+                    testID: 'credential_verifier',
+                    title: translate('settings.credential_verifier'),
+                    icon: <VerifiedIcon />,
+                    onPress: () => navigate(Routes.CREDENTIAL_VERIFIER),
+                  }
+                : false,
               devSettingsEnabled
                 ? {
                     testID: constants.testID.devSettings,
@@ -107,11 +118,13 @@ export function AppSettingsScreen({
 
 export function AppSettingsContainer() {
   const dispatch = useDispatch();
+  const {features} = useFeatures();
   const devSettingsEnabled = useSelector(appSelectors.getDevSettingsEnabled);
 
   return (
     <AppSettingsScreen
       devSettingsEnabled={devSettingsEnabled}
+      credentialVerifierEnabled={features.credentialVerifier}
       dispatch={dispatch}
       onDeleteWallet={() => {
         return dispatch(walletOperations.confirmWalletDelete());
