@@ -19,4 +19,14 @@ describe('Request Logs', () => {
     expect(RNFS.writeFile).toBeCalled();
     expect(utils.exportFile).toBeCalled();
   });
+  it('expect to clear logs', async () => {
+    const {result} = renderHook(() => useRequestLogger());
+    jest
+      .spyOn(RequestLogger, 'clearLogs')
+      .mockImplementationOnce(async () => undefined);
+
+    await result.current.clearRequestLogs();
+
+    expect(RequestLogger.clearLogs).toBeCalled();
+  });
 });

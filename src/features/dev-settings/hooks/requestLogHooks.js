@@ -3,6 +3,7 @@ import {RequestLogger} from '@docknetwork/wallet-sdk-request-logger/lib/request-
 import RNFS from 'react-native-fs';
 import {exportFile} from '../../accounts/account-slice';
 import {translate} from '../../../locales';
+import {showToast, withErrorToast} from '../../../core/toast';
 
 export function useRequestLogger() {
   const exportLogRequest = useCallback(async () => {
@@ -21,8 +22,18 @@ export function useRequestLogger() {
       errorMessage: translate('dev_settings.export_error'),
     });
   }, []);
+  const clearRequestLogs = useCallback(async () => {
+    RequestLogger.clearLogs();
+    showToast({
+      message: translate('dev_settings.cleared_log_request_successfully'),
+      type: 'success',
+    });
+  }, []);
 
   return useMemo(() => {
-    return {exportLogRequest};
-  }, [exportLogRequest]);
+    return {
+      exportLogRequest: withErrorToast(exportLogRequest),
+      clearRequestLogs: withErrorToast(clearRequestLogs),
+    };
+  }, [clearRequestLogs, exportLogRequest]);
 }
