@@ -1,9 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {translate} from 'src/locales';
 import {PolkadotIcon} from '../../components/PolkadotIcon';
 import {
   Box,
-  Content,
   EmptyCredentialIcon,
   Header,
   IconButton,
@@ -15,12 +14,21 @@ import {
 } from '../../design-system';
 import PlusCircleWhiteIcon from '../../assets/icons/plus-circle-white.svg';
 import {addTestId} from '../../core/automation-utils';
-import {Center, Image, Text, Stack, Menu, Pressable} from 'native-base';
+import {
+  Center,
+  Image,
+  Text,
+  Stack,
+  Menu,
+  Pressable,
+  FlatList,
+} from 'native-base';
 import {useCredentials, getDIDAddress} from './credentials';
 import {formatDate} from '@docknetwork/wallet-sdk-core/lib/core/format-utils';
 import {withErrorBoundary} from 'src/core/error-handler';
 import {View} from 'react-native';
 import {CredentialStatus} from './components/CredentialStatus';
+import {useIsFocused} from '@react-navigation/native';
 
 function shouldRenderAttr(attr) {
   return attr.property !== 'id' && attr.property !== 'title';
@@ -173,7 +181,13 @@ export const CredentialListItem = withErrorBoundary(
   },
 );
 
-export function CredentialsScreen({credentials, onRemove, onAdd}) {
+export function CredentialsScreen({
+  credentials,
+  onRemove,
+  onAdd,
+  refreshing,
+  onRefresh,
+}) {
   return (
     <ScreenContainer {...addTestId('CredentialsScreen')} showTabNavigation>
       <Header>
@@ -198,53 +212,56 @@ export function CredentialsScreen({credentials, onRemove, onAdd}) {
           </Box>
         </Box>
       </Header>
-      <Content>
-        {credentials.length ? (
-          credentials.map(item => {
-            const credentialActions = (
-              <Menu
-                bg={Theme.colors.tertiaryBackground}
-                trigger={triggerProps => {
-                  return (
-                    <Pressable
-                      p={2}
-                      {...triggerProps}
-                      _pressed={{
-                        opacity: Theme.touchOpacity,
-                      }}>
-                      <DotsVerticalIcon />
-                    </Pressable>
-                  );
-                }}>
-                <Menu.Item onPress={() => onRemove(item)}>
-                  {translate('account_list.delete_account')}
-                </Menu.Item>
-              </Menu>
-            );
-            return (
-              <CredentialListItem
-                key={item.id}
-                credential={item.content}
-                formattedData={item.formattedData}
-                credentialActions={credentialActions}
-              />
-            );
-          })
-        ) : (
-          <EmptyCredentials mt={'50%'} />
-        )}
-      </Content>
+      <FlatList
+        refreshing={refreshing}
+        onRefresh={onRefresh}
+        data={credentials}
+        renderItem={({item}) => {
+          const credentialActions = (
+            <Menu
+              bg={Theme.colors.tertiaryBackground}
+              trigger={triggerProps => {
+                return (
+                  <Pressable
+                    p={2}
+                    {...triggerProps}
+                    _pressed={{
+                      opacity: Theme.touchOpacity,
+                    }}>
+                    <DotsVerticalIcon />
+                  </Pressable>
+                );
+              }}>
+              <Menu.Item onPress={() => onRemove(item)}>
+                {translate('account_list.delete_account')}
+              </Menu.Item>
+            </Menu>
+          );
+          return (
+            <CredentialListItem
+              key={item.id}
+              credential={item.content}
+              formattedData={item.formattedData}
+              credentialActions={credentialActions}
+            />
+          );
+        }}
+      />
     </ScreenContainer>
   );
 }
 
 export function CredentialsContainer(props) {
-  const {credentials, handleRemove, onAdd} = useCredentials();
+  const {credentials, handleRemove, onAdd, refreshing, onRefresh} =
+    useCredentials();
+
   return (
     <CredentialsScreen
       credentials={credentials}
       onRemove={handleRemove}
       onAdd={onAdd}
+      refreshing={refreshing}
+      onRefresh={onRefresh}
     />
   );
 }

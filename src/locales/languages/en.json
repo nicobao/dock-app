@@ -319,7 +319,8 @@
     "invalid": "Invalid",
     "valid": "Valid",
     "expired": "Expired",
-    "revoked": "Revoked"
+    "revoked": "Revoked",
+    "pending": "Loading..."
   },
   "qr_scanner": {
     "nodids": "You have no Web3 IDs!",
