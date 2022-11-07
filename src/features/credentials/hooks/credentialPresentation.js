@@ -1,4 +1,5 @@
 import {useCallback, useMemo, useState} from 'react';
+import uuid from 'uuid/v4';
 import {showToast, withErrorToast} from '../../../core/toast';
 import {usePresentation} from '@docknetwork/wallet-sdk-react-native/lib';
 import {useDIDAuth} from '../../didManagement/didAuthHooks';
@@ -60,7 +61,7 @@ async function handleQRCodePresentation({
   const presentation = await presentCredentials({
     credentials: parsedSelectedCredentials,
     keyDoc,
-    challenge: `${Date.now()}`,
+    challenge: uuid(),
     id: keyDoc.id,
   });
 
