@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {translate} from 'src/locales';
 import {PolkadotIcon} from '../../components/PolkadotIcon';
 import {
@@ -28,7 +28,6 @@ import {formatDate} from '@docknetwork/wallet-sdk-core/lib/core/format-utils';
 import {withErrorBoundary} from 'src/core/error-handler';
 import {View} from 'react-native';
 import {CredentialStatus} from './components/CredentialStatus';
-import {useIsFocused} from '@react-navigation/native';
 
 function shouldRenderAttr(attr) {
   return attr.property !== 'id' && attr.property !== 'title';
