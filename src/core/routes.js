@@ -43,4 +43,5 @@ export const Routes = {
   DID_MANAGEMENT_EXPORT_DID: 'didManagement/exportDID',
   DID_MANAGEMENT_IMPORT_DID: 'didManagement/importDID',
   CREDENTIALS_SHARE_AS_PRESENTATION: 'credential/shareCredentialAsPresentation',
+  CREDENTIAL_VERIFIER: 'credential/verifier',
 };

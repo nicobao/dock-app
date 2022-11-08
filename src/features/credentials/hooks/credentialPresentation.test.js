@@ -6,7 +6,9 @@ import {useSingleDID} from '../../didManagement/didHooks';
 describe('Presentation hooks', () => {
   it('go to next step', () => {
     const {result} = renderHook(() =>
-      useCredentialPresentation('dockwallet://proof-request?url=https&nonce=1'),
+      useCredentialPresentation({
+        deepLinkUrl: 'dockwallet://proof-request?url=https&nonce=1',
+      }),
     );
     act(() => {
       result.current.onNext();
@@ -15,7 +17,9 @@ describe('Presentation hooks', () => {
   });
   it('Is form valid', () => {
     const {result} = renderHook(() =>
-      useCredentialPresentation('dockwallet://proof-request?url=https&nonce=1'),
+      useCredentialPresentation({
+        deepLinkUrl: 'dockwallet://proof-request?url=https&nonce=1',
+      }),
     );
     expect(result.current.isFormValid).toBe(false);
     act(() => {
@@ -34,7 +38,9 @@ describe('Presentation hooks', () => {
   it('on present credential', async () => {
     const {result: presentationResult} = renderHook(() => usePresentation());
     const {result} = renderHook(() =>
-      useCredentialPresentation('dockwallet://proof-request?url=https&nonce=1'),
+      useCredentialPresentation({
+        deepLinkUrl: 'dockwallet://proof-request?url=https&nonce=1',
+      }),
     );
     await result.current.onPresentCredentials();
     expect(presentationResult.current.presentCredentials).toBeCalledWith({
@@ -59,7 +65,9 @@ describe('Presentation hooks', () => {
   });
   it('handle errors in presentation', async () => {
     const {result} = renderHook(() =>
-      useCredentialPresentation('dockwallet://proof-request?url=https&nonce=2'),
+      useCredentialPresentation({
+        deepLinkUrl: 'dockwallet://proof-request?url=https&nonce=2',
+      }),
     );
     await expect(result.current.onPresentCredentials()).rejects.toThrow();
   });
@@ -78,7 +86,9 @@ describe('Presentation hooks', () => {
   it('go to next step when multiple dids', () => {
     const dids = [{value: 1}, {value: 2}];
     const {result} = renderHook(() =>
-      useCredentialPresentation('dockwallet://proof-request?url=https&nonce=1'),
+      useCredentialPresentation({
+        deepLinkUrl: 'dockwallet://proof-request?url=https&nonce=1',
+      }),
     );
     act(() => {
       result.current.onNext(dids);
@@ -88,7 +98,9 @@ describe('Presentation hooks', () => {
   it('proceed should create presentation when there is single did', async () => {
     const dids = [{value: 1}];
     const {result} = renderHook(() =>
-      useCredentialPresentation('dockwallet://proof-request?url=https&nonce=1'),
+      useCredentialPresentation({
+        deepLinkUrl: 'dockwallet://proof-request?url=https&nonce=1',
+      }),
     );
     const {result: presentationResult} = renderHook(() => usePresentation());
     await result.current.onNext(dids);

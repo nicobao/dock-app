@@ -92,6 +92,7 @@
     "title": "Settings",
     "backup_wallet": "Backup wallet",
     "delete_wallet": "Remove wallet",
+    "credential_verifier": "Credential Verifier",
     "dev_settings": "Dev settings"
   },
   "dev_settings": {
@@ -117,7 +118,8 @@
     "export_request_log": "Export Request Logs",
     "export_error": "Unable to export logs",
     "clear_log_request": "Clear request logs",
-    "cleared_log_request_successfully": "Cleared request logs successfully"
+    "cleared_log_request_successfully": "Cleared request logs successfully",
+    "credential_verifier": "Credential Verifier"
   },
   "account_setup": {
     "title": "Account Name",
@@ -324,7 +326,8 @@
     "invalid": "Invalid",
     "valid": "Valid",
     "expired": "Expired",
-    "revoked": "Revoked"
+    "revoked": "Revoked",
+    "pending": "Loading..."
   },
   "qr_scanner": {
     "nodids": "You have no Web3 IDs!",
@@ -391,5 +394,12 @@
     "invalid_did_password":"Incorrect Password",
     "duplicate_did":"That DID already exists in wallet",
     "no_items_found": "No items found"
+  },
+  "credentialVerifier": {
+    "title": "Verify a credential",
+    "description": " Verify any verifiable credentials (VCs) via a URL, JSON file or scanning a QR code",
+    "verifyViaQRCode": "Scan QR Code",
+    "verifyViaURL": "Verify via a URL",
+    "verifyViaJSON": "Verify via a JSON file"
   }
 }
