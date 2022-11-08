@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {translate} from 'src/locales';
 import {PolkadotIcon} from '../../components/PolkadotIcon';
 import {
@@ -32,6 +32,7 @@ import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
 import {PresentationFlow} from './hooks/credentialPresentation';
 import {CredentialStatus} from './components/CredentialStatus';
+import {useIsFocused} from '@react-navigation/native';
 
 function shouldRenderAttr(attr) {
   return attr.property !== 'id' && attr.property !== 'title';
@@ -276,6 +277,15 @@ export function CredentialsContainer(props) {
   const {credentials, handleRemove, onAdd, refreshing, onRefresh} =
     useCredentials();
 
+  const isScreenFocus = useIsFocused();
+
+  useEffect(() => {
+    if (isScreenFocus) {
+      console.log('12');
+      onRefresh();
+    }
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isScreenFocus]);
   return (
     <CredentialsScreen
       credentials={credentials}
