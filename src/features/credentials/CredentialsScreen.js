@@ -281,7 +281,6 @@ export function CredentialsContainer(props) {
 
   useEffect(() => {
     if (isScreenFocus) {
-      console.log('12');
       onRefresh();
     }
     //eslint-disable-next-line react-hooks/exhaustive-deps
