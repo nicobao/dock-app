@@ -16,6 +16,7 @@ import {
   CREDENTIAL_STATUS,
 } from '@docknetwork/wallet-sdk-react-native/lib';
 import {
+  AlertIcon,
   ExpiredIcon,
   InvalidIcon,
   RevokedIcon,
@@ -93,11 +94,14 @@ export const validateCredential = credential => {
 export function useCredentials({onPickFile = pickJSONFile} = {}) {
   const {credentials, saveCredential, deleteCredential} = useCredentialUtils();
   const [items, setItems] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
 
   const syncCredentials = useCallback(async () => {
+    setRefreshing(true);
     const formattedCredentials = await Promise.all(
       credentials.map(formatCredential),
     );
+    setRefreshing(false);
     setItems(formattedCredentials);
   }, [credentials]);
 
@@ -109,6 +113,10 @@ export function useCredentials({onPickFile = pickJSONFile} = {}) {
     await deleteCredential(item.id);
   };
 
+  const onRefresh = useCallback(() => {
+    setItems([]);
+    syncCredentials();
+  }, [syncCredentials]);
   const onAdd = async () => {
     const jsonData = await onPickFile();
 
@@ -137,6 +145,8 @@ export function useCredentials({onPickFile = pickJSONFile} = {}) {
     credentials: items,
     handleRemove: withErrorToast(handleRemove),
     onAdd: withErrorToast(onAdd),
+    onRefresh: withErrorToast(onRefresh),
+    refreshing,
   };
 }
 export function getParamsFromUrl(url, param) {
@@ -272,5 +282,11 @@ export const credentialStatusData = {
     description: '',
     icon: <VerifiedIcon />,
     color: Theme.colors.circleChecked,
+  },
+  [CREDENTIAL_STATUS.PENDING]: {
+    message: translate('credentials.pending'),
+    description: '',
+    icon: <AlertIcon />,
+    color: Theme.colors.warningText,
   },
 };
