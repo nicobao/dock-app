@@ -6,6 +6,7 @@ import {useDIDAuth} from '../../didManagement/didAuthHooks';
 import {getParamsFromUrl} from '../../qr-code-scanner/qr-code';
 import {translate} from '../../../locales';
 import {navigate} from '../../../core/navigation';
+import axios from '../../../core/network-service';
 import {Routes} from '../../../core/routes';
 export const SELECT_CREDENTIALS = 0;
 export const SELECT_DID = 1;
@@ -31,15 +32,13 @@ async function handleDeepLinkPresentation({
     id: deepLinkUrl,
   });
   const parsedUrl = decodeURIComponent(url);
-
-  const req = await fetch(parsedUrl, {
-    method: 'POST',
+  const result = await axios.post(parsedUrl, JSON.stringify(presentation), {
     headers: {
       'content-type': 'application/json',
     },
-    body: JSON.stringify(presentation),
   });
-  const response = await req.json();
+  const response = result.data;
+
   if (response.error) {
     throw new Error(response.error);
   } else {

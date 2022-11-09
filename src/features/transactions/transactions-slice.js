@@ -6,9 +6,7 @@ import {Transactions} from '@docknetwork/wallet-sdk-transactions/lib/transaction
 import uuid from 'uuid';
 import {getRealm} from '@docknetwork/wallet-sdk-core/lib/core/realm';
 import {showToast, withErrorToast} from 'src/core/toast';
-import {DOCK_TOKEN_UNIT} from 'src/core/format-utils';
-import {fetchTransactions} from '../../core/subscan';
-import BigNumber from 'bignumber.js';
+
 import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
 
 export const TransactionStatus = {
@@ -80,56 +78,6 @@ export function deleteLocalTransaction(internalId) {
   });
 }
 export const transactionsOperations = {
-  loadExternalTransactions: account => async (dispatch, getState) => {
-    const realm = getRealm();
-    const dbTransactions = realm.objects('Transaction').toJSON();
-
-    const handleTransaction = tx => {
-      if (tx.from !== account && tx.to !== account) {
-        return;
-      }
-
-      if (dbTransactions.find(item => item.hash === tx.hash)) {
-        return;
-      }
-
-      const newTx = {
-        amount: BigNumber(tx.amount).times(DOCK_TOKEN_UNIT).toString(),
-        feeAmount: tx.fee,
-        recipientAddress: tx.to,
-        fromAddress: tx.from,
-        id: tx.hash,
-        hash: tx.hash,
-        network: 'mainnet',
-        status: TransactionStatus.Complete,
-        date: new Date(parseInt(tx.block_timestamp + '000', 10)),
-      };
-
-      realm.write(() => {
-        realm.create('Transaction', newTx, 'modified');
-      });
-    };
-
-    let data;
-    let page = 0;
-
-    try {
-      do {
-        data = await fetchTransactions({
-          address: account,
-          page,
-        });
-        if (Array.isArray(data.transfers)) {
-          data.transfers.forEach(handleTransaction);
-          page++;
-        } else {
-          break;
-        }
-      } while (data.hasNextPage);
-    } catch (err) {
-      console.log(err);
-    }
-  },
   loadTransactions:
     (accountAddress, realm = getRealm()) =>
     async (dispatch, getState) => {

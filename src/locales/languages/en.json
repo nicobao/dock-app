@@ -113,8 +113,13 @@
     "switch_network_error": "Network switch failed",
     "activate_transak": "Activate Transak",
     "show_did_management": "Show DID Management",
-    "credential_verifier": "Credential Verifier",
-    "show_accounts": "Show accounts"
+    "show_accounts": "Show accounts",
+    "log_request": "Log Request",
+    "export_request_log": "Export Request Logs",
+    "export_error": "Unable to export logs",
+    "clear_log_request": "Clear request logs",
+    "cleared_log_request_successfully": "Cleared request logs successfully",
+    "credential_verifier": "Credential Verifier"
   },
   "account_setup": {
     "title": "Account Name",

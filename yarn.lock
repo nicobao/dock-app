@@ -1498,6 +1498,16 @@
     webpack "^5.67.0"
     webpack-dev-server "3.11.1"
 
+"@docknetwork/wallet-sdk-request-logger@/Users/osinakayah/Workspace/wallet-sdk/packages/request-logger":
+  version "0.0.1"
+  dependencies:
+    uuid "^9.0.0"
+
+"@docknetwork/wallet-sdk-request-logger@file:../wallet-sdk/packages/request-logger":
+  version "0.0.1"
+  dependencies:
+    uuid "^9.0.0"
+
 "@docknetwork/wallet-sdk-transactions@^0.2.3", "@docknetwork/wallet-sdk-transactions@^0.2.4":
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/@docknetwork/wallet-sdk-transactions/-/wallet-sdk-transactions-0.2.4.tgz#6a3d45c7ddb1eda30aef4ab2997032af67694a84"
@@ -19273,6 +19283,11 @@ uuid@^8.3.0, uuid@^8.3.2:
   version "8.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
+
+uuid@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.0.tgz#592f550650024a38ceb0c562f2f6aa435761efb5"
+  integrity sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==
 
 v8-compile-cache@^2.0.3:
   version "2.3.0"
