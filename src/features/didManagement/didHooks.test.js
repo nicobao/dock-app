@@ -1,6 +1,9 @@
 import {renderHook, act} from '@testing-library/react-hooks';
+import * as didHooks from './didHooks';
+import {useWallet} from '@docknetwork/wallet-sdk-react-native/lib';
 import {useDIDManagementHandlers, useExportDIDHandlers} from './didHooks';
 import {useDIDManagement} from '@docknetwork/wallet-sdk-react-native/lib';
+import * as didAuthModule from './didAuthHooks';
 import Share from 'react-native-share';
 import RNFS from 'react-native-fs';
 describe('DID hooks', () => {
@@ -269,8 +272,8 @@ describe('DID hooks', () => {
   test('test DID reversal', () => {
     const {result} = renderHook(() => useDIDManagementHandlers());
 
-    expect(result.current.didList[0].id).toBe('2');
-    expect(result.current.didList[1].id).toBe('1');
+    expect(result.current.didList[1].id).toBe('2');
+    expect(result.current.didList[2].id).toBe('1');
   });
   test("Can't import duplicate DID", async () => {
     const {result} = renderHook(() => useDIDManagementHandlers());
@@ -292,5 +295,64 @@ describe('DID hooks', () => {
     await expect(
       result.current.onImportDID({encryptedJSONWallet, password}),
     ).rejects.toThrowError('DID already exists in wallet');
+  });
+});
+
+describe('Test migration of invalid keydoc', () => {
+  beforeEach(() => {
+    jest.spyOn(didAuthModule, 'useDIDAuth').mockImplementation(() => {
+      return {
+        getSelectedDIDKeyDoc: jest.fn().mockResolvedValue({
+          '@context': ['https://w3id.org/wallet/v1'],
+          controller:
+            'did:key:z6MkpUt4291WvhZrezcqNCDzQvHodmh2Pyto9Hsiv7KpSyvn',
+          id: 'did:key:z6MkpUt4291WvhZrezcqNCDzQvHodmh2Pyto9Hsiv7KpSyvn#z6MkpUt4291WvhZrezcqNCDzQvHodmh2Pyto9Hsiv7KpSyvn',
+          privateKeyBase58:
+            'eho948eKny7rTsx2XvgPpYVRcLaq3CPLS8Es9LixXuZSdJChhSmBBk6XE6BMHAMnkjFQ3RwkfiudiPimQb2sB9G',
+          privateKeyMultibase:
+            'zeho948eKny7rTsx2XvgPpYVRcLaq3CPLS8Es9LixXuZSdJChhSmBBk6XE6BMHAMnkjFQ3RwkfiudiPimQb2sB9G',
+          publicKeyBase58: 'B2d1Rtm5bA5PYVn8gdG9ZpjopCRAz6eSTGxo5qMoXm9Q',
+          publicKeyMultibase: 'zB2d1Rtm5bA5PYVn8gdG9ZpjopCRAz6eSTGxo5qMoXm9Q',
+          type: 'Ed25519VerificationKey2018',
+        }),
+      };
+    });
+  });
+  it('expect to generate new keydoc with correct controller', async () => {
+    const {result} = renderHook(() => didHooks.useMigrateInvalidKeyDocs());
+    const {wallet} = useWallet();
+
+    await result.current.migrateInvalidKeyDoc();
+    expect(wallet.remove).toBeCalledWith(
+      'did:key:z6MkpUt4291WvhZrezcqNCDzQvHodmh2Pyto9Hsiv7KpSyvn#z6MkpUt4291WvhZrezcqNCDzQvHodmh2Pyto9Hsiv7KpSyvn',
+    );
+    expect(wallet.add).toBeCalledWith({
+      controller: 'did:dock:5HT98yDTxg6iRCBnGpXL5Jr8epTf1EdZgfqByTN1AubPLKRt',
+      id: 'did:dock:5HT98yDTxg6iRCBnGpXL5Jr8epTf1EdZgfqByTN1AubPLKRt#5GNJyEQhxxeFQ2ziuqaeKWc3Qx6ma12De9D1bD3viADBUEfU',
+      privateKeyBase58:
+        '5V4vL5oPZLKSHMom9enEFzPN4ipVB4t8Cntp2sBQ6FaGHjjqp273XpvSrP53FNygPwiAWSV6canaGdPYGSB5pYw9',
+      privateKeyMultibase:
+        'z5V4vL5oPZLKSHMom9enEFzPN4ipVB4t8Cntp2sBQ6FaGHjjqp273XpvSrP53FNygPwiAWSV6canaGdPYGSB5pYw9',
+      publicKeyBase58: 'Dp7sMrPeHhPrpQmmHJnn9Y6dd2gVZ6bHhRpVMEds2ubm',
+      publicKeyMultibase: 'zDp7sMrPeHhPrpQmmHJnn9Y6dd2gVZ6bHhRpVMEds2ubm',
+      type: 'Ed25519VerificationKey2018',
+    });
+    expect(wallet.update).toBeCalledWith({
+      '@context': ['https://w3id.org/wallet/v1'],
+      correlation: [
+        '827a521f-e3a4-4084-8aa0-bdbe75ee04a5',
+        'did:dock:5HT98yDTxg6iRCBnGpXL5Jr8epTf1EdZgfqByTN1AubPLKRt#5GNJyEQhxxeFQ2ziuqaeKWc3Qx6ma12De9D1bD3viADBUEfU',
+      ],
+      didDocument: {
+        '@context': ['https://www.w3.org/ns/did/v1'],
+        controller: [
+          'did:dock:5HT98yDTxg6iRCBnGpXL5Jr8epTf1EdZgfqByTN1AubPLKRt',
+        ],
+        id: 'did:dock:5HT98yDTxg6iRCBnGpXL5Jr8epTf1EdZgfqByTN1AubPLKRt',
+      },
+      id: 'did:dock:5HT98yDTxg6iRCBnGpXL5Jr8epTf1EdZgfqByTN1AubPLKRt',
+      name: 'Wrong DIDDOCK',
+      type: 'DIDResolutionResponse',
+    });
   });
 });

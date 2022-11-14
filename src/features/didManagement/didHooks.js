@@ -4,9 +4,14 @@ import {translate} from '../../locales';
 import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
-import {useDIDManagement} from '@docknetwork/wallet-sdk-react-native/lib';
+import {
+  useDIDManagement,
+  useDIDUtils,
+} from '@docknetwork/wallet-sdk-react-native/lib';
 import RNFS from 'react-native-fs';
 import {exportFile} from '../accounts/account-slice';
+import {useDIDAuth} from './didAuthHooks';
+import {useWallet} from '@docknetwork/wallet-sdk-react-native/lib';
 
 export function useDIDManagementHandlers() {
   const {
@@ -247,4 +252,47 @@ export function useSingleDID(dids, onSelectDID) {
       onSelectDID(dids[0].value);
     }
   }, [dids, onSelectDID]);
+}
+
+export function useMigrateInvalidKeyDocs() {
+  const {wallet} = useWallet({syncDocs: true});
+  const {createDIDKeypairDocument} = useDIDUtils();
+  const {didList} = useDIDManagementHandlers();
+  const {getSelectedDIDKeyDoc} = useDIDAuth();
+
+  const migrateInvalidKeyDoc = useCallback(async () => {
+    const dockDIDs = didList.filter(({id}) => {
+      return typeof id === 'string' && id.startsWith('did:dock:');
+    });
+
+    for (const did of dockDIDs) {
+      const keyDoc = await getSelectedDIDKeyDoc({selectedDID: did.id});
+
+      if (keyDoc && keyDoc.controller.startsWith('did:key:')) {
+        const newKeyDoc = await createDIDKeypairDocument({
+          derivePath: '',
+          type: 'ed25519',
+          controller: did.id,
+        });
+        const oldCorrelation = did.correlation;
+        const newCorrelation = oldCorrelation.filter(corrId => {
+          return corrId !== keyDoc.id;
+        });
+        newCorrelation.push(newKeyDoc.id);
+
+        await wallet.remove(keyDoc.id);
+        await wallet.add(newKeyDoc);
+        await wallet.update({
+          ...did,
+          correlation: newCorrelation,
+        });
+      }
+    }
+  }, [createDIDKeypairDocument, didList, getSelectedDIDKeyDoc, wallet]);
+
+  return useMemo(() => {
+    return {
+      migrateInvalidKeyDoc,
+    };
+  }, [migrateInvalidKeyDoc]);
 }
