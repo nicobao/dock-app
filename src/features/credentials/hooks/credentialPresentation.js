@@ -31,6 +31,7 @@ async function handleDeepLinkPresentation({
     challenge: nonce,
     id: deepLinkUrl,
   });
+
   const parsedUrl = decodeURIComponent(url);
   const result = await axios.post(parsedUrl, JSON.stringify(presentation), {
     headers: {
