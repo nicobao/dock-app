@@ -15,8 +15,7 @@ platform :ios do
        default_keychain: true,
        unlock: true,
        timeout: 36000,
-       lock_when_sleeps: false,
-       require_create: true
+       lock_when_sleeps: false
      )
  end
 
