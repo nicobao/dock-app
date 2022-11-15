@@ -14,8 +14,9 @@ platform :ios do
        password: "ci_keychain",
        default_keychain: true,
        unlock: true,
-       timeout: 3600,
-       lock_when_sleeps: false
+       timeout: 36000,
+       lock_when_sleeps: false,
+       require_create: true
      )
  end
 
