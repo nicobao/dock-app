@@ -182,6 +182,7 @@ jobs:
           cp -rf ./certs/GoogleService-Info.plist ./ios/
           cd ./ios
           pod install
+          gem install fastlane
           fastlane build_upload_testflight
 
       - name: Send slack notification
