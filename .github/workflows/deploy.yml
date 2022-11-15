@@ -184,10 +184,11 @@ jobs:
           pod install
           gem install fastlane
           fastlane build_upload_testflight
+
       - name: Send slack notification
         if: always()
         run: |
-        cat /Users/runner/Library/Logs/gym/DockApp-DockApp.log
+          cat /Users/runner/Library/Logs/gym/DockApp-DockApp.log
 
       - name: Send slack notification
         if: always()
