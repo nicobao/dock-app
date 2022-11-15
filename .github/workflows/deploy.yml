@@ -130,7 +130,7 @@ jobs:
 
   internal_release_ios:
     name: "iOS deploy"
-    needs: increment_version
+    # needs: increment_version
     runs-on: macos-latest
     steps:
       - name: Checkout
