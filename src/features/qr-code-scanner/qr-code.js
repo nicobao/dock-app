@@ -190,8 +190,22 @@ export async function importAccountHandler(data) {
   }
   return false;
 }
-
+export async function onScanEncryptedWallet(data) {
+  const parsedData = stringToJSON(data);
+  if (
+    parsedData &&
+    Array.isArray(parsedData.type) &&
+    parsedData.type.includes('EncryptedWallet')
+  ) {
+    navigate(Routes.DID_MANAGEMENT_IMPORT_DID, {
+      encryptedJSONWallet: parsedData,
+    });
+    return true;
+  }
+  return false;
+}
 export const qrCodeHandlers = [
+  onScanEncryptedWallet,
   importAccountHandler,
   onAuthQRScanned,
   addressHandler,
