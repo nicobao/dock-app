@@ -164,7 +164,6 @@ jobs:
           ASC_KEY: ${{ secrets.ASC_KEY }}
           ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
           ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
-          ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD: true
         run: |
           git config --global url."https://".insteadOf git://
           xcodebuild -version
@@ -181,7 +180,13 @@ jobs:
           cp -rf ./certs/GoogleService-Info.plist ./ios/
           cd ./ios
           pod install
+          gem install fastlane
           fastlane build_upload_testflight
+
+      - name: Print build logs
+        if: always()
+        run: |
+          cat /Users/runner/Library/Logs/gym/DockApp-DockApp.log
 
       - name: Send slack notification
         if: always()
