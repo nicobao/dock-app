@@ -11,6 +11,7 @@ import {
   onPresentationScanned,
   importAccountHandler,
   qrCodeHandlers,
+  onScanEncryptedWallet,
 } from './qr-code';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
@@ -446,6 +447,22 @@ describe('qr-code', () => {
     });
     it('Include presentation QR handlers', () => {
       expect(qrCodeHandlers.includes(onPresentationScanned)).toBeTruthy();
+    });
+  });
+  describe('onScanEncryptedWallet', () => {
+    it('Include import encrypted wallet QR handler', () => {
+      expect(qrCodeHandlers.includes(onScanEncryptedWallet)).toBeTruthy();
+    });
+    it('is encrypted wallet scanned', async () => {
+      const isValid1 = await onScanEncryptedWallet(
+        '{"wallet":"","encoded":{}}',
+      );
+      expect(isValid1).toBeFalsy();
+
+      const res = await onScanEncryptedWallet(
+        '{"@context":["https://w3id.org/wallet/v1"],"id":"did:key:z6LSd1HEdsPzejHbcKpWH44bF5oA4ET2hvxRBGJK17m4EQgH#encrypted-wallet","type":["EncryptedWallet"],"issuer":"did:key:z6LSd1HEdsPzejHbcKpWH44bF5oA4ET2hvxRBGJK17m4EQgH","issuanceDate":"2022-03-28T11:44:06.296Z","credentialSubject":{"id":"did:key:z6LSd1HEdsPzejHbcKpWH44bF5oA4ET2hvxRBGJK17m4EQgH","encryptedWalletContents":{}}}',
+      );
+      expect(res).toBeTruthy();
     });
   });
   describe('importAccountHandler', () => {
