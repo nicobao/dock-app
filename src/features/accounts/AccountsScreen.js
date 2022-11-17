@@ -36,7 +36,7 @@ import {TokenAmount} from '../tokens/ConfirmTransactionModal';
 import {accountOperations} from './account-slice';
 import {AddAccountModal} from './AddAccountModal';
 import {AccountsScreenTestIDs} from './test-ids';
-import {pickDocument} from '../../core/storage-utils';
+import {pickDocument, readFile} from '../../core/storage-utils';
 import assert from 'assert';
 import {useAccountsList} from './accountsHooks';
 
@@ -370,7 +370,7 @@ export const AccountsContainer = withErrorBoundary(({navigation}) => {
             return;
           }
 
-          const fileData = await RNFS.readFile(file.fileCopyUri);
+          const fileData = await readFile(file.fileCopyUri);
 
           dispatch(createAccountOperations.importFromJson(fileData));
         }
