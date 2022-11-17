@@ -228,6 +228,7 @@ export function CredentialsScreen({
           </Box>
         </Box>
       </Header>
+      {!credentials.length && <EmptyCredentials mt={'50%'} />}
       <FlatList
         refreshing={refreshing}
         onRefresh={onRefresh}
