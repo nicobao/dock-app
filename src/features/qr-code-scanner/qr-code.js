@@ -1,7 +1,9 @@
 import {utilCryptoService} from '@docknetwork/wallet-sdk-core/lib/services/util-crypto';
+import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
+import {captureException} from '@sentry/react-native';
+import queryString from 'query-string';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
-import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
 import {showToast} from '../../core/toast';
 import {translate} from '../../locales';
 import {getJsonOrError} from '../../core';
@@ -11,8 +13,6 @@ import {
   onScanAuthQRCode,
   validateCredential,
 } from '../credentials/credentials';
-import {captureException} from '@sentry/react-native';
-import queryString from 'query-string';
 import store from '../../core/redux-store';
 import {createAccountOperations} from '../account-creation/create-account-slice';
 import {stringToJSON} from '../../core/storage-utils';
@@ -33,7 +33,6 @@ export async function addressHandler(data) {
     return true;
   }
 
-  console.log('not an address', data);
   return false;
 }
 
@@ -41,18 +40,35 @@ export async function credentialHandler(data) {
   const isUrl = typeof data === 'string' && data.indexOf('http') === 0;
 
   try {
-    // @ts-ignore
-    const credentials: Credentials = Credentials.getInstance();
+    const credentials = Credentials.getInstance();
 
     let credentialData;
-    if (isUrl) {
-      showToast({
-        type: 'message',
-        message: translate('global.fetching_data'),
-      });
-      credentialData = await credentials.getCredentialFromUrl(data);
-    } else {
-      credentialData = JSON.parse(data);
+    try {
+      if (isUrl) {
+        showToast({
+          type: 'message',
+          message: translate('global.fetching_data'),
+        });
+        credentialData = await credentials.getCredentialFromUrl(data);
+      } else {
+        credentialData = JSON.parse(data);
+      }
+    } catch (err) {
+      console.error(err);
+
+      if (isUrl) {
+        console.error(`Unable to resolve url: ${data}`);
+      } else {
+        const jsonOrError = getJsonOrError(credentialData);
+        if (typeof jsonOrError === 'string') {
+          console.error(`Unable to resolve json: ${jsonOrError}`);
+        } else {
+          console.error(jsonOrError);
+        }
+      }
+
+      console.error(err);
+      throw err;
     }
 
     const items = await credentials.query({});
@@ -70,12 +86,25 @@ export async function credentialHandler(data) {
     }
 
     validateCredential(credentialData);
-    const status = await getCredentialStatus(credentialData);
-    if (status === CREDENTIAL_STATUS.VERIFIED) {
-      await credentials.add(credentialData);
-      navigate(Routes.APP_CREDENTIALS);
-      return true;
+
+    let status = CREDENTIAL_STATUS.INVALID;
+    try {
+      status = await getCredentialStatus(credentialData);
+      if (status === CREDENTIAL_STATUS.VERIFIED) {
+        await credentials.add(credentialData);
+        navigate(Routes.APP_CREDENTIALS);
+        return true;
+      }
+    } catch (err) {
+      // Credential verifying threw an error
+      // doesnt mean the credential is invalid entirely (such as BBS+ atm)
+      // however this could be handled better downstream in the Dock SDK
+      // so that it wont require a try/catch here if verifying never threw
+      // an error but always returned verified false
+      console.error(err);
+      captureException(err);
     }
+
     showConfirmationModal({
       type: 'alert',
       title: translate('credentials.import_credential'),
@@ -91,20 +120,7 @@ export async function credentialHandler(data) {
     return true;
   } catch (err) {
     console.error(err);
-
-    if (isUrl) {
-      console.error(`Unable to resolve url: ${data}`);
-    } else {
-      const jsonOrError = getJsonOrError(data);
-
-      if (typeof jsonOrError === 'string') {
-        console.error(`Unable to resolve json: ${jsonOrError}`);
-      } else {
-        console.error(jsonOrError);
-      }
-    }
-
-    console.error(err);
+    captureException(err);
     return false;
   }
 }
@@ -228,7 +244,12 @@ export async function executeHandlers(data, handlers) {
 }
 
 export async function qrCodeHandler(data, handlers = qrCodeHandlers) {
-  const success = await executeHandlers(data, handlers);
+  let success = false;
+  try {
+    success = await executeHandlers(data, handlers);
+  } catch (error) {
+    captureException(error);
+  }
 
   if (!success) {
     showToast({
