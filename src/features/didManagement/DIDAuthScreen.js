@@ -17,8 +17,6 @@ import {validateEmail, getScopeFields, extractClientInfo} from './didAuthUtils';
 import {KeyboardAvoidingView, Platform} from 'react-native';
 import {CustomSelectInput} from '../../components/CustomSelectInput';
 import {useDIDAuth, useDIDAuthHandlers} from './didAuthHooks';
-const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0;
-// Taken from https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/web_tests/fast/forms/resources/ValidityState-typeMismatch-email.js?q=ValidityState-typeMismatch-email.js&ss=chromium
 
 export function DIDAuthConfirmScreen({
   authenticateDID,
@@ -209,8 +207,7 @@ export function DIDAuthScreenContainer({route}) {
 
   return (
     <KeyboardAvoidingView
-      keyboardVerticalOffset={keyboardVerticalOffset}
-      behavior="padding"
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{flex: 1}}>
       {authState === 'start' ? (
         <DIDAuthConfirmScreen
