@@ -2,7 +2,6 @@ import {Menu, Pressable, ScrollView, Stack} from 'native-base';
 import React, {useCallback, useEffect, useState} from 'react';
 import {Platform, RefreshControl} from 'react-native';
 import RNExitApp from 'react-native-exit-app';
-import RNFS from 'react-native-fs';
 import {useDispatch} from 'react-redux';
 import {addTestId} from 'src/core/automation-utils';
 import {withErrorBoundary} from 'src/core/error-handler';
