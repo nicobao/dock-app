@@ -33,6 +33,7 @@ import {Routes} from '../../core/routes';
 import {PresentationFlow} from './hooks/credentialPresentation';
 import {CredentialStatus} from './components/CredentialStatus';
 import {useIsFocused} from '@react-navigation/native';
+import {useFeatures} from '../app/feature-flags';
 
 function shouldRenderAttr(attr) {
   return attr.property !== 'id' && attr.property !== 'title';
@@ -91,6 +92,7 @@ export const CredentialListItem = withErrorBoundary(
     formattedData,
     credentialActions = <NBox />,
     onPresentation,
+    credentialVerifierEnabled,
   }) => {
     const {title = translate('credentials.default_title')} = formattedData;
 
@@ -130,11 +132,13 @@ export const CredentialListItem = withErrorBoundary(
           </Stack>
           <NBox flex={1} alignItems="flex-end">
             <NBox flexDirection="row">
-              <Pressable onPress={onPresentation}>
-                <NBox mt={1}>
-                  <QRCodeIcon color={Theme.icons.color} />
-                </NBox>
-              </Pressable>
+              {Boolean(credentialVerifierEnabled) && (
+                <Pressable onPress={onPresentation}>
+                  <NBox mt={1}>
+                    <QRCodeIcon color={Theme.icons.color} />
+                  </NBox>
+                </Pressable>
+              )}
               {credentialActions}
             </NBox>
           </NBox>
@@ -203,6 +207,7 @@ export function CredentialsScreen({
   onAdd,
   refreshing,
   onRefresh,
+  credentialVerifierEnabled,
 }) {
   return (
     <ScreenContainer {...addTestId('CredentialsScreen')} showTabNavigation>
@@ -256,6 +261,7 @@ export function CredentialsScreen({
           );
           return (
             <CredentialListItem
+              credentialVerifierEnabled={credentialVerifierEnabled}
               onPresentation={() => {
                 navigate(Routes.CREDENTIALS_SHARE_AS_PRESENTATION, {
                   flow: PresentationFlow.qrCode,
@@ -277,7 +283,7 @@ export function CredentialsScreen({
 export function CredentialsContainer(props) {
   const {credentials, handleRemove, onAdd, refreshing, onRefresh} =
     useCredentials();
-
+  const {features} = useFeatures();
   const isScreenFocus = useIsFocused();
 
   useEffect(() => {
@@ -288,6 +294,7 @@ export function CredentialsContainer(props) {
   }, [isScreenFocus]);
   return (
     <CredentialsScreen
+      credentialVerifierEnabled={features.credentialVerifier}
       credentials={credentials}
       onRemove={handleRemove}
       onAdd={onAdd}
