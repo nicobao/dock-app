@@ -29,7 +29,7 @@ export function readFile(path) {
   assert(!!path, 'file path is required');
 
   try {
-    return RNFS.readFile(path);
+    return RNFS.readFile(path.replace(/%20/gi, ' '));
   } catch (err) {
     console.error(err);
     throw new Error(`Unable to read file ${path}`);

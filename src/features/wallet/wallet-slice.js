@@ -18,7 +18,7 @@ import {showToast, withErrorToast} from 'src/core/toast';
 import {Logger} from 'src/core/logger';
 import {clearCacheData} from '@docknetwork/wallet-sdk-core/lib/core/realm';
 import Clipboard from '@react-native-community/clipboard';
-import {pickDocument} from '../../core/storage-utils';
+import {pickDocument, readFile} from '../../core/storage-utils';
 import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
 import {authenticationActions} from '../unlock-wallet/unlock-wallet-slice';
 const initialState = {
@@ -117,8 +117,7 @@ export const walletOperations = {
       try {
         if (fileUri) {
           try {
-            fileUri = fileUri.replace(/%20/gi, ' ');
-            fileData = await RNFS.readFile(fileUri);
+            fileData = await readFile(fileUri);
           } catch (err) {
             console.error(err);
 
