@@ -33,7 +33,7 @@ import {Routes} from '../../core/routes';
 import {PresentationFlow} from './hooks/credentialPresentation';
 import {CredentialStatus} from './components/CredentialStatus';
 import {useIsFocused} from '@react-navigation/native';
-import { useFeatures } from '../app/feature-flags';
+import {useFeatures} from '../app/feature-flags';
 
 function shouldRenderAttr(attr) {
   return attr.property !== 'id' && attr.property !== 'title';
@@ -132,11 +132,13 @@ export const CredentialListItem = withErrorBoundary(
           </Stack>
           <NBox flex={1} alignItems="flex-end">
             <NBox flexDirection="row">
-              {Boolean(credentialVerifierEnabled) && <Pressable onPress={onPresentation}>
-                <NBox mt={1}>
-                  <QRCodeIcon color={Theme.icons.color} />
-                </NBox>
-              </Pressable>}
+              {Boolean(credentialVerifierEnabled) && (
+                <Pressable onPress={onPresentation}>
+                  <NBox mt={1}>
+                    <QRCodeIcon color={Theme.icons.color} />
+                  </NBox>
+                </Pressable>
+              )}
               {credentialActions}
             </NBox>
           </NBox>
