@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {getVCData} from '@docknetwork/prettyvc';
 import {pickJSONFile} from '../../core/storage-utils';
-import {showToast, withErrorToast} from 'src/core/toast';
+import {withErrorToast} from 'src/core/toast';
 import {translate} from 'src/locales';
 import assert from 'assert';
 import {credentialServiceRPC} from '@docknetwork/wallet-sdk-core/lib/services/credential';
