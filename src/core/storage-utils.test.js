@@ -1,5 +1,5 @@
 import DocumentPicker from 'react-native-document-picker';
-import {pickDocument, stringToJSON} from './storage-utils';
+import {isValidUrl, pickDocument, stringToJSON} from './storage-utils';
 import {setToast} from './toast';
 
 describe('storage utils', () => {
@@ -52,5 +52,14 @@ describe('storage utils', () => {
     const res2 = stringToJSON('{"type":"dockwallet"}');
 
     expect(res2).toHaveProperty('type', 'dockwallet');
+  });
+  it('expect to be false when given invalid url', () => {
+    expect(isValidUrl('test')).toBeFalsy();
+    expect(isValidUrl()).toBeFalsy();
+    expect(isValidUrl(null)).toBeFalsy();
+    expect(isValidUrl('http://')).toBeFalsy();
+  });
+  it('expect to be true when given valid url', () => {
+    expect(isValidUrl('http://google.com')).toBeTruthy();
   });
 });

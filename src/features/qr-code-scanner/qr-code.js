@@ -15,13 +15,14 @@ import {
 } from '../credentials/credentials';
 import store from '../../core/redux-store';
 import {createAccountOperations} from '../account-creation/create-account-slice';
-import {stringToJSON} from '../../core/storage-utils';
+import {isValidUrl, stringToJSON} from '../../core/storage-utils';
 import {
   getCredentialStatus,
   CREDENTIAL_STATUS,
 } from '@docknetwork/wallet-sdk-react-native/lib';
 import {showConfirmationModal} from '../../components/ConfirmationModal';
 import axios from '../../core/network-service';
+import {getDataFromUrl} from '../didManagement/didManagment-slice';
 
 export async function addressHandler(data) {
   const isAddress = await utilCryptoService.isAddressValid(data);
@@ -207,18 +208,28 @@ export async function importAccountHandler(data) {
   return false;
 }
 export async function onScanEncryptedWallet(data) {
-  const parsedData = stringToJSON(data);
-  if (
-    parsedData &&
-    Array.isArray(parsedData.type) &&
-    parsedData.type.includes('EncryptedWallet')
-  ) {
-    navigate(Routes.DID_MANAGEMENT_IMPORT_DID, {
-      encryptedJSONWallet: parsedData,
-    });
-    return true;
+  try {
+    const parsedData = isValidUrl(data)
+      ? await getDataFromUrl(data)
+      : stringToJSON(data);
+
+    if (
+      parsedData &&
+      Array.isArray(parsedData.type) &&
+      parsedData.type.includes('EncryptedWallet')
+    ) {
+      navigate(Routes.DID_MANAGEMENT_LIST, {
+        screen: Routes.DID_MANAGEMENT_IMPORT_DID,
+        params: {encryptedJSONWallet: parsedData},
+      });
+
+      return true;
+    }
+    return false;
+  } catch (e) {
+    captureException(e);
+    return false;
   }
-  return false;
 }
 export const qrCodeHandlers = [
   onScanEncryptedWallet,
