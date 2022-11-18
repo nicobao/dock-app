@@ -86,7 +86,16 @@ export async function credentialHandler(data) {
       return true;
     }
 
-    validateCredential(credentialData);
+    try {
+      validateCredential(credentialData);
+    } catch (err) {
+      captureException(err);
+      showToast({
+        message: translate('credentials.invalid_credential'),
+        type: 'error',
+      });
+      return;
+    }
 
     let status = CREDENTIAL_STATUS.INVALID;
     try {

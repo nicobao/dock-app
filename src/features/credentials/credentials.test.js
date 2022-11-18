@@ -135,7 +135,7 @@ describe('Credentials helpers', () => {
       );
 
       await expect(result.current.onAdd()).rejects.toThrowError(
-        'Credential has no ID',
+        'Invalid Credential',
       );
     });
     it('expect to throw exception if credential only has missing @context', async () => {
@@ -151,7 +151,7 @@ describe('Credentials helpers', () => {
       );
 
       await expect(result.current.onAdd()).rejects.toThrowError(
-        'Credential has no context',
+        'Invalid Credential',
       );
     });
     it('expect to throw exception if credential has invalid type', async () => {
@@ -168,7 +168,7 @@ describe('Credentials helpers', () => {
       );
 
       await expect(result.current.onAdd()).rejects.toThrowError(
-        'Credential has an invalid type',
+        'Invalid Credential',
       );
     });
     it('expect to throw exception if credential has EncryptedWallet as type', async () => {
@@ -185,7 +185,7 @@ describe('Credentials helpers', () => {
       );
 
       await expect(result.current.onAdd()).rejects.toThrowError(
-        'Credential has an invalid type',
+        'Invalid Credential',
       );
     });
     it('expect to throw exception if credential has UniversalWallet2020 as type', async () => {
@@ -202,7 +202,7 @@ describe('Credentials helpers', () => {
       );
 
       await expect(result.current.onAdd()).rejects.toThrowError(
-        'Credential has an invalid type',
+        'Invalid Credential',
       );
     });
     it('expect to throw exception if credential only has no issuer', async () => {
@@ -216,7 +216,7 @@ describe('Credentials helpers', () => {
       );
 
       await expect(result.current.onAdd()).rejects.toThrowError(
-        'Credential has no Issuer',
+        'Invalid Credential',
       );
     });
 
