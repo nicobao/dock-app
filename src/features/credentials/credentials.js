@@ -123,7 +123,14 @@ export function useCredentials({onPickFile = pickJSONFile} = {}) {
     if (!jsonData) {
       return;
     }
-    validateCredential(jsonData);
+
+    try {
+      validateCredential(jsonData);
+    } catch (err) {
+      captureException(err);
+      throw new Error(translate('credentials.invalid_credential'));
+    }
+
     const status = await getCredentialStatus(jsonData);
 
     if (status === CREDENTIAL_STATUS.VERIFIED) {
