@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {getVCData} from '@docknetwork/prettyvc';
 import {pickJSONFile} from '../../core/storage-utils';
-import {withErrorToast} from 'src/core/toast';
+import {showToast, withErrorToast} from 'src/core/toast';
 import {translate} from 'src/locales';
 import assert from 'assert';
 import {credentialServiceRPC} from '@docknetwork/wallet-sdk-core/lib/services/credential';
@@ -123,7 +123,18 @@ export function useCredentials({onPickFile = pickJSONFile} = {}) {
     if (!jsonData) {
       return;
     }
-    validateCredential(jsonData);
+
+    try {
+      validateCredential(jsonData);
+    } catch (err) {
+      captureException(err);
+      showToast({
+        message: translate('credentials.invalid_credential'),
+        type: 'error',
+      });
+      return;
+    }
+
     const status = await getCredentialStatus(jsonData);
 
     if (status === CREDENTIAL_STATUS.VERIFIED) {
