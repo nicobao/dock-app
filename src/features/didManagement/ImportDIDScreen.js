@@ -64,7 +64,9 @@ export function ImportDIDScreen({
           testID="next-btn"
           mb={70}
           onPress={handleSubmit}
-          isDisabled={form.password.trim().length <= 0 && encryptedJSONWallet}>
+          isDisabled={
+            form.password.trim().length <= 0 && !!encryptedJSONWallet
+          }>
           {translate('password_input.submit')}
         </LoadingButton>
       </NBox>
