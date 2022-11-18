@@ -1,5 +1,5 @@
 import Clipboard from '@react-native-community/clipboard';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Dimensions,
   StyleSheet,
@@ -8,16 +8,17 @@ import {
 } from 'react-native';
 import {RNCamera} from 'react-native-camera';
 import QRCodeScanner from 'react-native-qrcode-scanner';
-import {BackButton, Theme} from 'src/design-system';
+import {BackButton, Button, Theme} from 'src/design-system';
 import styled from 'styled-components/native';
 import {Colors} from '../../theme/colors';
 import {qrCodeHandler} from './qr-code';
 import {translate} from '../../locales';
 import {useIsFocused} from '@react-navigation/native';
+import {Box, Spinner} from 'native-base';
 
 const Container = styled.View`
   flex: 1;
-  background-color: ${Colors.darkBlue};
+  background-color: ${Colors.black};
 `;
 
 const Header = styled.View`
@@ -74,11 +75,65 @@ const QRCodeContainer = styled.View`
   height: 100%;
 `;
 
+const ScreenState = {
+  scanning: 'scanning',
+  dataLoaded: 'dataLoaded',
+  paused: 'loading',
+};
+
 export function QRScanScreen({onData, isScreenFocus}) {
+  const [state, setState] = useState(ScreenState.scanning);
+
+  const handleData = data => {
+    setState(ScreenState.loading);
+    onData(data).finally(() => {
+      setState(ScreenState.dataLoaded);
+    });
+  };
+
+  const renderFooter = () => {
+    if (state === ScreenState.scanning) {
+      return (
+        <TouchableWithoutFeedback
+          onPress={async () => {
+            const text = await Clipboard.getString();
+            handleData(text);
+          }}>
+          <Footer>
+            <Description>{translate('qr_scanner.scanning_footer')}</Description>
+            <SmallDescription>
+              {translate('qr_scanner.scanning_instructions')}
+            </SmallDescription>
+          </Footer>
+        </TouchableWithoutFeedback>
+      );
+    }
+
+    if (state === ScreenState.dataLoaded) {
+      return (
+        <Box mb={6} mx={8}>
+          <Button onPress={() => setState(ScreenState.scanning)}>
+            {translate('qr_scanner.scan_new')}
+          </Button>
+        </Box>
+      );
+    }
+
+    return (
+      <Box mb={6}>
+        <Spinner color={Colors.white} />
+      </Box>
+    );
+  };
+
+  useEffect(() => {
+    setState(ScreenState.scanning);
+  }, []);
+
   return (
     <Container>
       <QRCodeContainer>
-        {Boolean(isScreenFocus) && (
+        {Boolean(isScreenFocus) && state === ScreenState.scanning && (
           <QRCodeScanner
             style={styles.scanner}
             reactivate={true}
@@ -87,14 +142,14 @@ export function QRScanScreen({onData, isScreenFocus}) {
             cameraStyle={{height: Dimensions.get('window').height}}
             topViewStyle={styles.scannerTopView}
             bottomViewStyle={styles.scannerBottomView}
-            onRead={event => onData(event.data)}
+            onRead={event => handleData(event.data)}
           />
         )}
       </QRCodeContainer>
       <Wrapper>
         <Header>
           <Title style={styles.headerText}>
-            {translate('qr_scanner.scan_qr_code')}
+            {translate('qr_scanner.title')}
           </Title>
         </Header>
         <Body>
@@ -105,16 +160,7 @@ export function QRScanScreen({onData, isScreenFocus}) {
             <View style={[styles.frame, styles.frameRightBottom]} />
           </View>
         </Body>
-        <TouchableWithoutFeedback
-          onPress={async () => {
-            const text = await Clipboard.getString();
-            onData(text);
-          }}>
-          <Footer>
-            <Description>Scan the QR Code</Description>
-            <SmallDescription>Place the code inside the box</SmallDescription>
-          </Footer>
-        </TouchableWithoutFeedback>
+        {renderFooter()}
       </Wrapper>
     </Container>
   );
@@ -163,8 +209,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderStyle: 'solid',
-    borderColor: '#00C0D9',
-
+    borderColor: Colors.blue,
     position: 'absolute',
   },
   frameLeftTop: {
