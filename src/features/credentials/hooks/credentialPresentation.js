@@ -17,7 +17,7 @@ export const PresentationFlow = {
   jsonFile: 'jsonFile',
 };
 
-async function handleDeepLinkPresentation({
+export async function handleDeepLinkPresentation({
   parsedSelectedCredentials,
   deepLinkUrl,
   keyDoc,
@@ -27,7 +27,12 @@ async function handleDeepLinkPresentation({
 
   const presentation = await presentCredentials({
     credentials: parsedSelectedCredentials,
-    keyDoc,
+    keyDoc: {
+      ...keyDoc,
+      id: keyDoc.controller.startsWith('did:key:')
+        ? keyDoc.id
+        : `${keyDoc.controller}#keys-1`, // HACK: make it work with SDK did resolution, this is an SDK limitation
+    },
     challenge: nonce,
     id: deepLinkUrl,
   });
@@ -62,7 +67,9 @@ async function handleQRCodePresentation({
     credentials: parsedSelectedCredentials,
     keyDoc,
     challenge: uuid(),
-    id: keyDoc.id,
+    id: keyDoc.controller.startsWith('did:key:')
+      ? keyDoc.id
+      : `${keyDoc.controller}#keys-1`, // HACK: make it work with SDK did resolution, this is an SDK limitation
   });
 
   setPresentationData(presentation);
