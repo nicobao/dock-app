@@ -74,7 +74,7 @@ exports[`ImportDIDScreen should render correctly 1`] = `
         <LoadingButton
           accessibilityLabel="Next"
           full={true}
-          isDisabled={Object {}}
+          isDisabled={true}
           mb={70}
           onPress={[MockFunction]}
           testID="next-btn"
