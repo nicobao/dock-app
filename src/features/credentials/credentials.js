@@ -128,11 +128,7 @@ export function useCredentials({onPickFile = pickJSONFile} = {}) {
       validateCredential(jsonData);
     } catch (err) {
       captureException(err);
-      showToast({
-        message: translate('credentials.invalid_credential'),
-        type: 'error',
-      });
-      return;
+      throw new Error(translate('credentials.invalid_credential'));
     }
 
     const status = await getCredentialStatus(jsonData);
