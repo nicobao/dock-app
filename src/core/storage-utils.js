@@ -77,6 +77,7 @@ export function stringToJSON(data) {
 
 export function isValidUrl(string) {
   try {
+    // eslint-disable-next-line no-new
     new URL(string);
     return true;
   } catch (err) {
