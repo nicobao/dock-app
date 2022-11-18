@@ -74,3 +74,13 @@ export function stringToJSON(data) {
     return null;
   }
 }
+
+export function isValidUrl(string) {
+  try {
+    // eslint-disable-next-line no-new
+    new URL(string);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}

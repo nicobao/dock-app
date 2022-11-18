@@ -2,6 +2,7 @@ import {Wallet} from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
 import {didServiceRPC} from '@docknetwork/wallet-sdk-core/lib/services/dids';
 import {captureException} from '@sentry/react-native';
 import {translate} from '../../locales';
+import axios from '../../core/network-service';
 
 const wallet = Wallet.getInstance();
 
@@ -90,3 +91,13 @@ export const didOperations = {
     await createDefaultDID();
   },
 };
+
+export async function getDataFromUrl(url) {
+  try {
+    const {data} = await axios.get(url);
+    return data;
+  } catch (error) {
+    captureException(error);
+    return null;
+  }
+}
