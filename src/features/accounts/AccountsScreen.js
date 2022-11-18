@@ -2,7 +2,6 @@ import {Menu, Pressable, ScrollView, Stack} from 'native-base';
 import React, {useCallback, useEffect, useState} from 'react';
 import {Platform, RefreshControl} from 'react-native';
 import RNExitApp from 'react-native-exit-app';
-import RNFS from 'react-native-fs';
 import {useDispatch} from 'react-redux';
 import {addTestId} from 'src/core/automation-utils';
 import {withErrorBoundary} from 'src/core/error-handler';
@@ -36,7 +35,7 @@ import {TokenAmount} from '../tokens/ConfirmTransactionModal';
 import {accountOperations} from './account-slice';
 import {AddAccountModal} from './AddAccountModal';
 import {AccountsScreenTestIDs} from './test-ids';
-import {pickDocument} from '../../core/storage-utils';
+import {pickDocument, readFile} from '../../core/storage-utils';
 import assert from 'assert';
 import {useAccountsList} from './accountsHooks';
 
@@ -370,7 +369,7 @@ export const AccountsContainer = withErrorBoundary(({navigation}) => {
             return;
           }
 
-          const fileData = await RNFS.readFile(file.fileCopyUri);
+          const fileData = await readFile(file.fileCopyUri);
 
           dispatch(createAccountOperations.importFromJson(fileData));
         }
