@@ -96,8 +96,8 @@ export async function getDataFromUrl(url) {
   try {
     const {data} = await axios.get(url);
     return data;
-  } catch (e) {
-    captureException(e);
+  } catch (error) {
+    captureException(error);
     return null;
   }
 }
