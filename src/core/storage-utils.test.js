@@ -58,8 +58,12 @@ describe('storage utils', () => {
     expect(isValidUrl()).toBeFalsy();
     expect(isValidUrl(null)).toBeFalsy();
     expect(isValidUrl('http://')).toBeFalsy();
+    expect(isValidUrl('dockwallet://proof-request?url')).toBeFalsy();
+    expect(isValidUrl('ftp://proof-request')).toBeFalsy();
+    expect(isValidUrl('httpss://google.com')).toBeFalsy();
   });
   it('expect to be true when given valid url', () => {
     expect(isValidUrl('http://google.com')).toBeTruthy();
+    expect(isValidUrl('https://google.com')).toBeTruthy();
   });
 });
