@@ -78,7 +78,7 @@ export function stringToJSON(data) {
 export function isValidUrl(string) {
   try {
     const url = new URL(string);
-    return url.protocol.startsWith('http');
+    return url.protocol === 'http:' || url.protocol === 'https:';
   } catch (err) {
     return false;
   }
