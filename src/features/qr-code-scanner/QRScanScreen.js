@@ -15,6 +15,7 @@ import {qrCodeHandler} from './qr-code';
 import {translate} from '../../locales';
 import {useIsFocused} from '@react-navigation/native';
 import {Box, Spinner} from 'native-base';
+import QRCode from 'react-native-qrcode-svg';
 
 const Container = styled.View`
   flex: 1;
@@ -83,8 +84,11 @@ const ScreenState = {
 
 export function QRScanScreen({onData, isScreenFocus}) {
   const [state, setState] = useState(ScreenState.scanning);
+  const [qrData, setQRData] = useState();
+  const windowWidth = Dimensions.get('window').width;
 
   const handleData = data => {
+    setQRData(data);
     setState(ScreenState.loading);
     onData(data).finally(() => {
       setState(ScreenState.dataLoaded);
@@ -160,7 +164,11 @@ export function QRScanScreen({onData, isScreenFocus}) {
               <View style={[styles.frame, styles.frameLeftBottom]} />
               <View style={[styles.frame, styles.frameRightBottom]} />
             </View>
-          ) : null}
+          ) : (
+            Boolean(qrData) && (
+              <QRCode value={qrData} size={windowWidth * 0.8} />
+            )
+          )}
         </Body>
         {renderFooter()}
       </Wrapper>
