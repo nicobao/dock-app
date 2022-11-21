@@ -9,9 +9,12 @@ export const emptyResponse = {
 
 export const getCoinCapToken = async tokenSymbol => {
   try {
-    const {data} = await axios.get(
+    const {data: res} = await axios.get(
       `https://api.coincap.io/v2/assets/${tokenSymbol}`,
     );
+
+    const {data} = res;
+
     return {
       priceUsd: data.priceUsd,
     };
