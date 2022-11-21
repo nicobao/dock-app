@@ -77,9 +77,8 @@ export function stringToJSON(data) {
 
 export function isValidUrl(string) {
   try {
-    // eslint-disable-next-line no-new
-    new URL(string);
-    return true;
+    const url = new URL(string);
+    return url.protocol.startsWith('http');
   } catch (err) {
     return false;
   }
