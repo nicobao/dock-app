@@ -63,5 +63,6 @@ describe('storage utils', () => {
   });
   it('expect to be true when given valid url', () => {
     expect(isValidUrl('http://google.com')).toBeTruthy();
+    expect(isValidUrl('https://google.com')).toBeTruthy();
   });
 });
