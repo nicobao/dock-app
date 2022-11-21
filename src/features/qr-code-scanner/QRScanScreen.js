@@ -153,12 +153,14 @@ export function QRScanScreen({onData, isScreenFocus}) {
           </Title>
         </Header>
         <Body>
-          <View style={{width: 240, height: 230}}>
-            <View style={[styles.frame, styles.frameLeftTop]} />
-            <View style={[styles.frame, styles.frameRightTop]} />
-            <View style={[styles.frame, styles.frameLeftBottom]} />
-            <View style={[styles.frame, styles.frameRightBottom]} />
-          </View>
+          {state === ScreenState.scanning ? (
+            <View style={{width: 240, height: 230}}>
+              <View style={[styles.frame, styles.frameLeftTop]} />
+              <View style={[styles.frame, styles.frameRightTop]} />
+              <View style={[styles.frame, styles.frameLeftBottom]} />
+              <View style={[styles.frame, styles.frameRightBottom]} />
+            </View>
+          ) : null}
         </Body>
         {renderFooter()}
       </Wrapper>
