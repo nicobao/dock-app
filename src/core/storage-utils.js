@@ -77,8 +77,13 @@ export function stringToJSON(data) {
 
 export function isValidUrl(string) {
   try {
-    const url = new URL(string);
-    return url.protocol === 'http:' || url.protocol === 'https:';
+    const parsedUrl = string.trim();
+    // eslint-disable-next-line no-new
+    new URL(parsedUrl);
+    return (
+      parsedUrl.substring(0, 5) === 'http:' ||
+      parsedUrl.substring(0, 6) === 'https:'
+    );
   } catch (err) {
     return false;
   }
