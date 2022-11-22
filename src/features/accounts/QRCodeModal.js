@@ -19,7 +19,9 @@ export function QRCodeModal({onClose, visible, data, title, description}) {
           alignItems="center"
           p={3}
           bg={Theme.colors.qrCodeBackground}>
-          <QRCode value={data} logo={DockLogoIcon} size={windowWidth * 0.8} />
+          {data && (
+            <QRCode value={data} logo={DockLogoIcon} size={windowWidth * 0.8} />
+          )}
         </Box>
         <Stack mt={5}>
           <Button variant="solid" size="sm" onPress={onClose}>
