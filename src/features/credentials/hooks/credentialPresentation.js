@@ -38,23 +38,26 @@ export async function handleDeepLinkPresentation({
   });
 
   const parsedUrl = decodeURIComponent(url);
-  const result = await axios.post(parsedUrl, JSON.stringify(presentation), {
-    headers: {
-      'content-type': 'application/json',
-    },
-  });
-  const response = result.data;
 
-  if (response.error) {
-    throw new Error(response.error);
-  } else {
-    showToast({
-      message: translate('credentials.credential_shared'),
-      type: 'success',
+  try {
+    await axios.post(parsedUrl, JSON.stringify(presentation), {
+      headers: {
+        'content-type': 'application/json',
+      },
     });
-    navigate(Routes.ACCOUNTS);
-    return;
+  } catch (e) {
+    const responseError = e?.response?.data?.error;
+    if (typeof responseError === 'string') {
+      throw responseError;
+    }
+    throw e;
   }
+
+  showToast({
+    message: translate('credentials.credential_shared'),
+    type: 'success',
+  });
+  navigate(Routes.ACCOUNTS);
 }
 
 async function handleQRCodePresentation({
