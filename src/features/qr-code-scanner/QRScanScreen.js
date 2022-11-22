@@ -90,7 +90,7 @@ export function QRScanScreen({onData, isScreenFocus}) {
   const handleData = data => {
     setQRData(data);
     setState(ScreenState.loading);
-    onData(data).finally(() => {
+    Promise.resolve(onData(data)).finally(() => {
       setState(ScreenState.dataLoaded);
     });
   };
