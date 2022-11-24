@@ -183,6 +183,8 @@ export async function authHandler(data, keyDoc, profile = {}) {
       });
       const url = decodeURIComponent(data.substr(authLinkPrefix.length));
 
+      keyDoc.id = `${keyDoc.controller}#keys-1`;
+
       const vc = await onScanAuthQRCode(url, keyDoc, profile);
       const response = await axios.post(
         url,
