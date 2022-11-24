@@ -12,6 +12,7 @@ import {
   importAccountHandler,
   qrCodeHandlers,
   onScanEncryptedWallet,
+  getWeb3IdErrorMessage,
 } from './qr-code';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
@@ -475,6 +476,78 @@ describe('qr-code', () => {
 
       const res = await importAccountHandler('{"address":"","encoded":{}}');
       expect(res).toBeTruthy();
+    });
+  });
+
+  describe('getWeb3IdErrorMessage', () => {
+    const errorMock = {
+      verified: false,
+      error: {
+        verified: false,
+        results: [
+          {
+            proof: {
+              '@context': [
+                'https://www.w3.org/2018/credentials/v1',
+                {
+                  dk: 'https://ld.dock.io/credentials#',
+                  DockAuthCredential: 'dk:DockAuthCredential',
+                  name: 'dk:name',
+                  email: 'dk:email',
+                  state: 'dk:state',
+                  IssuerPolicy: 'dk:IssuerPolicy',
+                  AllVerifiers: 'dk:AllVerifiers',
+                  Archival: 'dk:Archival',
+                  prohibition: 'dk:prohibition',
+                  action: 'dk:action',
+                  assignee: 'dk:assignee',
+                  assigner: 'dk:assigner',
+                  target: 'dk:target',
+                },
+              ],
+              type: 'Sr25519Signature2020',
+              created: '2022-11-24T17:23:15Z',
+              verificationMethod:
+                'did:dock:5CNunNiQbFXnf5bC555nGzqfgcEA7rgQprhLYc7Yz5pVkA42#5H4MZpxujyZErMseJ87oDVn8eFKaCozporcP4esEp39DrkkV',
+              proofPurpose: 'assertionMethod',
+              proofValue:
+                'z346Dv5frAx8nRJsfeUSreTrHZrk25QDdjV3oHFJPsDAciL8ghSxcxwxUjiBQXNJiHePVF7VjnJxd2NuQRwBz7w8R',
+            },
+            verified: false,
+            error:
+              'verification method should have type Sr25519VerificationKey2020 - got: undefined',
+          },
+        ],
+      },
+      userId: 'did:dock:5CNunNiQbFXnf5bC555nGzqfgcEA7rgQprhLYc7Yz5pVkA42',
+    };
+
+    const unknownErrorMessage = 'Unknown error on sign in';
+
+    it('expect to return error received from the api', () => {
+      const message = getWeb3IdErrorMessage(errorMock);
+      expect(message).toBe(
+        'verification method should have type Sr25519VerificationKey2020 - got: undefined',
+      );
+    });
+
+    it('expect to handle uknown error', () => {
+      expect(getWeb3IdErrorMessage(null)).toBe(unknownErrorMessage);
+      expect(getWeb3IdErrorMessage({error: 'bad data'})).toBe(
+        unknownErrorMessage,
+      );
+      expect(getWeb3IdErrorMessage({})).toBe(unknownErrorMessage);
+      expect(
+        getWeb3IdErrorMessage({
+          error: {
+            results: [
+              {
+                error: 2,
+              },
+            ],
+          },
+        }),
+      ).toBe(unknownErrorMessage);
     });
   });
 });
