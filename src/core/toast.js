@@ -101,7 +101,7 @@ export function showToast({message, type = 'success', duration = 2000}) {
               ml={2}
               fontWeight={600}
               fontSize={14}>
-              {message}
+              {typeof message === 'string' ? message : JSON.stringify(message)}
             </Text>
           </Stack>
         </Pressable>
