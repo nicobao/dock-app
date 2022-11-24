@@ -16,7 +16,7 @@ export function setToast(t) {
   toast = t;
 }
 
-const typeMap = {
+export const typeMap = {
   success: {
     icon: () => <CheckCircleIcon />,
     bg: Theme.colors.secondaryColor,
@@ -68,6 +68,35 @@ export function getErrorMessageFromErrorObject(err) {
   }
   return translate('global.unexpected_error');
 }
+
+export function renderToastElement({typeProps, message}) {
+  return (
+    <Pressable
+      onPress={toast.closeAll}
+      _pressed={{
+        opacity: Theme.touchOpacity,
+      }}>
+      <Stack
+        bg={typeProps.bg}
+        px={6}
+        py={4}
+        rounded="md"
+        mb={5}
+        direction="row">
+        {typeProps.icon()}
+        <Text
+          style={{
+            color: Theme.colors.description,
+          }}
+          ml={2}
+          fontWeight={600}
+          fontSize={14}>
+          {typeof message === 'string' ? message : JSON.stringify(message)}
+        </Text>
+      </Stack>
+    </Pressable>
+  );
+}
 export function showToast({message, type = 'success', duration = 2000}) {
   if (!toast) {
     return;
@@ -80,32 +109,7 @@ export function showToast({message, type = 'success', duration = 2000}) {
     render: props => {
       const typeProps = typeMap[type] || typeMap.success;
 
-      return (
-        <Pressable
-          onPress={toast.closeAll}
-          _pressed={{
-            opacity: Theme.touchOpacity,
-          }}>
-          <Stack
-            bg={typeProps.bg}
-            px={6}
-            py={4}
-            rounded="md"
-            mb={5}
-            direction="row">
-            {typeProps.icon()}
-            <Text
-              style={{
-                color: Theme.colors.description,
-              }}
-              ml={2}
-              fontWeight={600}
-              fontSize={14}>
-              {typeof message === 'string' ? message : JSON.stringify(message)}
-            </Text>
-          </Stack>
-        </Pressable>
-      );
+      return renderToastElement({typeProps, message});
     },
   });
 }

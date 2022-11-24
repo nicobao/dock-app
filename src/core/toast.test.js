@@ -1,4 +1,11 @@
-import {getErrorMessageFromErrorObject, withErrorToast} from './toast';
+import {shallow} from 'enzyme';
+import {
+  getErrorMessageFromErrorObject,
+  renderToastElement,
+  setToast,
+  typeMap,
+  withErrorToast,
+} from './toast';
 import {translate} from '../locales';
 import analytics from '@react-native-firebase/analytics';
 
@@ -33,6 +40,41 @@ describe('Toast', () => {
         0: 'Sample argument',
         message: 'Test Error',
       });
+    });
+  });
+
+  describe('toast element', () => {
+    beforeAll(() => {
+      setToast({
+        closeAll: () => {},
+      });
+    });
+
+    it('should render without errors', () => {
+      const message = 'Some message';
+      const wrapper = shallow(
+        renderToastElement({typeProps: typeMap.success, message}),
+      );
+
+      expect(wrapper.dive()).toMatchSnapshot();
+    });
+
+    it('should handle non string messages without errors', () => {
+      const message = {test: true};
+      const wrapper = shallow(
+        renderToastElement({typeProps: typeMap.success, message}),
+      );
+
+      expect(wrapper.dive()).toMatchSnapshot();
+    });
+
+    it('should handle undefined messages without errors', () => {
+      const message = 'Some message';
+      const wrapper = shallow(
+        renderToastElement({typeProps: typeMap.success, message}),
+      );
+
+      expect(wrapper.dive()).toMatchSnapshot();
     });
   });
 });
