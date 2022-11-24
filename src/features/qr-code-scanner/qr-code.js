@@ -153,6 +153,25 @@ export function onAuthQRScanned(data) {
   }
   return false;
 }
+
+export function getWeb3IdErrorMessage(result) {
+  let error;
+  try {
+    const apiError = result.error.results[0].error;
+
+    if (typeof apiError !== 'string') {
+      throw new Error(
+        `Error is not a string, received: ${JSON.stringify(apiError)}`,
+      );
+    }
+    error = apiError;
+  } catch (err) {
+    console.error(err);
+  }
+
+  return error || translate('auth.auth_sign_in_failed');
+}
+
 export async function authHandler(data, keyDoc, profile = {}) {
   try {
     const authLinkPrefix = 'dockwallet://didauth?url=';
@@ -187,7 +206,7 @@ export async function authHandler(data, keyDoc, profile = {}) {
       } else {
         showToast({
           type: 'error',
-          message: result.error || translate('auth.auth_sign_in_failed'),
+          message: getWeb3IdErrorMessage(result),
         });
         captureException(result);
         return false;
