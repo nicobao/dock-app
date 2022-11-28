@@ -1441,7 +1441,54 @@
   resolved "https://codeload.github.com/docknetwork/react-native-sdk/tar.gz/6a16d7cb89f40671d148fab256212d281a63a479"
   dependencies:
     "@babel/node" "^7.16.0"
+    "@babel/plugin-proposal-class-properties" "^7.18.6"
+    "@babel/plugin-proposal-private-property-in-object" "^7.18.6"
+    "@babel/plugin-transform-flow-strip-types" "^7.16.0"
+    "@babel/plugin-transform-modules-commonjs" "^7.18.6"
+    "@babel/preset-flow" "^7.16.7"
+    "@docknetwork/wallet-sdk-dids" "^0.2.3"
+    "@react-native-async-storage/async-storage" "^1.15.17"
+    "@rollup/plugin-babel" "^5.3.0"
+    "@rollup/plugin-commonjs" "^21.0.1"
+    "@rollup/plugin-json" "^4.1.0"
+    "@rollup/plugin-node-resolve" "^13.1.3"
+    "@rollup/plugin-wasm" "^5.1.2"
+    "@types/jest" "^28.1.6"
+    assert "^2.0.0"
+    axios "^0.25.0"
+    axios-mock-adapter "^1.20.0"
     babel-node "^0.0.1-security"
+    babel-plugin-transform-flow-strip-types "^6.22.0"
+    babel-preset-es2015 "^6.24.1"
+    bignumber.js "^9.0.1"
+    buffer "^6.0.3"
+    core-js "^3.20.3"
+    crypto-browserify "^3.12.0"
+    documentation "^13.2.5"
+    glob "^7.2.0"
+    https-browserify "^1.0.0"
+    jsdoc "^3.6.7"
+    jsdoc-babel "^0.5.0"
+    jsdocs "^1.0.0"
+    jsdom "^19.0.0"
+    mock-local-storage "^1.1.19"
+    node-localstorage "^2.2.1"
+    nodemon "^2.0.15"
+    os-browserify "^0.3.0"
+    process "^0.11.10"
+    promise-memoize "^1.2.1"
+    react-native-keychain "^8.0.0"
+    realm "10.20.0-alpha.2"
+    regenerator-runtime "^0.13.9"
+    rollup "^2.65.0"
+    rollup-plugin-flow "^1.1.1"
+    rollup-plugin-multi-input "^1.3.1"
+    rollup-plugin-terser "^7.0.2"
+    sinon "^12.0.1"
+    stream-browserify "^3.0.0"
+    ts-jest "^28.0.7"
+    uuid "^8.3.2"
+    winston "^3.3.3"
 
 "@docknetwork/wallet-sdk-core@^0.2.3", "@docknetwork/wallet-sdk-core@^0.2.4":
   version "0.2.4"
@@ -1498,13 +1545,10 @@
     webpack "^5.67.0"
     webpack-dev-server "3.11.1"
 
-"@docknetwork/wallet-sdk-request-logger@/Users/osinakayah/Workspace/wallet-sdk/packages/request-logger":
+"@docknetwork/wallet-sdk-request-logger@^0.0.1":
   version "0.0.1"
-  dependencies:
-    uuid "^9.0.0"
-
-"@docknetwork/wallet-sdk-request-logger@file:../wallet-sdk/packages/request-logger":
-  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@docknetwork/wallet-sdk-request-logger/-/wallet-sdk-request-logger-0.0.1.tgz#f9dbf3eceadcb5286ba95c2bc58d9099462f6b82"
+  integrity sha512-v9u4z4untMCVkfg6cx03tOipBDmc64D92ZHXPpytuBCXQt084+6Uianzyrhso2PQUYGde5KxhG6ZrHIDcjYfuA==
   dependencies:
     uuid "^9.0.0"
 
@@ -6908,6 +6952,13 @@ brace-expansion@^1.1.7:
     balanced-match "^1.0.0"
     concat-map "0.0.1"
 
+brace-expansion@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-2.0.1.tgz#1edc459e0f0c548486ecf9fc99f2221364b9a0ae"
+  integrity sha512-XnAIvQ8eM+kC6aULx6wuQiwVsnzsi9d3WxzV3FpWTGA19F621kwdbsAcFKXgKUHZWsy+mY6iL1sHTxWEFCytDA==
+  dependencies:
+    balanced-match "^1.0.0"
+
 braces@^2.3.1, braces@^2.3.2:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/braces/-/braces-2.3.2.tgz#5979fd3f14cd531565e5fa2df1abfff1dfaee729"
@@ -10465,6 +10516,17 @@ glob@^7.0.3:
     minimatch "^3.1.1"
     once "^1.3.0"
     path-is-absolute "^1.0.0"
+
+glob@^8.0.3:
+  version "8.0.3"
+  resolved "https://registry.yarnpkg.com/glob/-/glob-8.0.3.tgz#415c6eb2deed9e502c68fa44a272e6da6eeca42e"
+  integrity sha512-ull455NHSHI/Y1FqGaaYFaLGkNMMJbavMrEGFXG/PGrg6y7sutWHUHrz6gy6WEBH6akM1M414dWKCNs+IhKdiQ==
+  dependencies:
+    fs.realpath "^1.0.0"
+    inflight "^1.0.4"
+    inherits "2"
+    minimatch "^5.0.1"
+    once "^1.3.0"
 
 global-modules@2.0.0:
   version "2.0.0"
@@ -14040,6 +14102,13 @@ minimatch@^3.1.1, minimatch@^3.1.2:
   integrity sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==
   dependencies:
     brace-expansion "^1.1.7"
+
+minimatch@^5.0.1:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-5.1.0.tgz#1717b464f4971b144f6aabe8f2d0b8e4511e09c7"
+  integrity sha512-9TPBGGak4nHfGZsPBohm9AWg6NoT7QTCehS3BIJABslyZbzxfV78QM2Y6+i741OPZIafFAaiiEMh5OyIrJPgtg==
+  dependencies:
+    brace-expansion "^2.0.1"
 
 minimist@^1.1.1, minimist@^1.1.2, minimist@^1.2.0, minimist@^1.2.3, minimist@^1.2.5:
   version "1.2.5"
