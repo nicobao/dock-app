@@ -4,6 +4,9 @@ const appConfig = require('../app.json');
 const OLD_PACKAGE_NAME = 'com.dockapp';
 const NEW_PACKAGE_NAME = appConfig.packageId;
 
+
+console.log('Patch android package name');
+console.log('NEW_PACKAGE_NAME: ' + NEW_PACKAGE_NAME);
 const updatePackageId = (sourceFilePath, destinationFilePath) => {
   const oldFileContent = fs.readFileSync(sourceFilePath, 'ascii');
   const newFileContent = oldFileContent.replace(
@@ -32,8 +35,9 @@ if (OLD_PACKAGE_NAME !== NEW_PACKAGE_NAME) {
     const files = fs.readdirSync(oldFullPath);
 
     for (const file of files) {
-      const oldFileContent = fs.readFileSync(
-        path.join(oldFullPath, file),
+      const filePath = path.join(oldFullPath, file);
+      console.log(`File: ${filePath}`)
+      const oldFileContent = fs.readFileSync(filePath,
         'ascii',
       );
       const pattern = `package ${OLD_PACKAGE_NAME};`;
