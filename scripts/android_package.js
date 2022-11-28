@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require("fs-extra");
 const glob = require('glob');
 const path = require('path');
 const appConfig = require('../app.json');
@@ -33,12 +33,15 @@ if (OLD_PACKAGE_NAME !== NEW_PACKAGE_NAME) {
 
     fs.mkdirSync(newFullPath, {recursive: true});
 
-    const files = glob.sync(`${oldPackageDirectory}/**/**`);
-
+    const files = glob.sync(`${oldFullPath}/**/**`, {
+      nodir: true,
+    });
 
     for (const file of files) {
-      const filePath = path.join(oldFullPath, file);
-      console.log(`File: ${filePath}`)
+      const filePath = path.resolve(file);
+      console.log(`Copying file: ${filePath}`);
+      const newFileDestination = filePath.replace(oldFullPath, newFullPath);
+      console.log(`to ${newFileDestination}`)
       const oldFileContent = fs.readFileSync(filePath,
         'ascii',
       );
@@ -47,7 +50,10 @@ if (OLD_PACKAGE_NAME !== NEW_PACKAGE_NAME) {
         new RegExp(pattern, 'g'),
         `package ${NEW_PACKAGE_NAME};`,
       );
-      fs.writeFileSync(path.join(newFullPath, file), newFileContent);
+      const dirName = path.dirname(newFileDestination);
+
+      fs.ensureDirSync(dirName);
+      fs.writeFileSync(newFileDestination, newFileContent);
     }
     fs.rmdirSync(oldFullPath, {recursive: true});
 
