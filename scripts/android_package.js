@@ -1,8 +1,9 @@
 const fs = require('fs');
+const glob = require('glob');
 const path = require('path');
 const appConfig = require('../app.json');
 const OLD_PACKAGE_NAME = 'com.dockapp';
-const NEW_PACKAGE_NAME = appConfig.packageId;
+const NEW_PACKAGE_NAME = 'com.dockappUI';
 
 
 console.log('Patch android package name');
@@ -32,7 +33,8 @@ if (OLD_PACKAGE_NAME !== NEW_PACKAGE_NAME) {
 
     fs.mkdirSync(newFullPath, {recursive: true});
 
-    const files = fs.readdirSync(oldFullPath);
+    const files = glob.sync(`${oldPackageDirectory}/**/**`);
+
 
     for (const file of files) {
       const filePath = path.join(oldFullPath, file);
