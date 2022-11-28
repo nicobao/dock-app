@@ -8,6 +8,7 @@ import {showToast} from './toast';
 export function pickDocument() {
   return DocumentPicker.pickSingle({
     type: [DocumentPicker.types.allFiles],
+    copyTo: 'documentDirectory',
   }).catch(err => {
     if (err.code === 'DOCUMENT_PICKER_CANCELED') {
       return undefined;
@@ -28,7 +29,7 @@ export function readFile(path) {
   assert(!!path, 'file path is required');
 
   try {
-    return RNFS.readFile(path);
+    return RNFS.readFile(path.replace(/%20/gi, ' '));
   } catch (err) {
     console.error(err);
     throw new Error(`Unable to read file ${path}`);
@@ -71,5 +72,19 @@ export function stringToJSON(data) {
     return typeof data === 'string' ? JSON.parse(data) : data;
   } catch (e) {
     return null;
+  }
+}
+
+export function isValidUrl(string) {
+  try {
+    const parsedUrl = string.trim();
+    // eslint-disable-next-line no-new
+    new URL(parsedUrl);
+    return (
+      parsedUrl.substring(0, 5) === 'http:' ||
+      parsedUrl.substring(0, 6) === 'https:'
+    );
+  } catch (err) {
+    return false;
   }
 }

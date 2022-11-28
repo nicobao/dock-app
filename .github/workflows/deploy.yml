@@ -5,6 +5,7 @@ on:
     branches:
       - dev
     types: [closed]
+
 jobs:
   increment_version:
     runs-on: macos-latest
@@ -179,7 +180,13 @@ jobs:
           cp -rf ./certs/GoogleService-Info.plist ./ios/
           cd ./ios
           pod install
+          gem install fastlane
           fastlane build_upload_testflight
+
+      - name: Print build logs
+        if: always()
+        run: |
+          cat /Users/runner/Library/Logs/gym/DockApp-DockApp.log
 
       - name: Send slack notification
         if: always()

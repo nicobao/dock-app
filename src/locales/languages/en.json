@@ -92,6 +92,7 @@
     "title": "Settings",
     "backup_wallet": "Backup wallet",
     "delete_wallet": "Remove wallet",
+    "credential_verifier": "Credential Verifier",
     "dev_settings": "Dev settings"
   },
   "dev_settings": {
@@ -112,7 +113,13 @@
     "switch_network_error": "Network switch failed",
     "activate_transak": "Activate Transak",
     "show_did_management": "Show DID Management",
-    "show_accounts": "Show accounts"
+    "show_accounts": "Show accounts",
+    "log_request": "Log Request",
+    "export_request_log": "Export Request Logs",
+    "export_error": "Unable to export logs",
+    "clear_log_request": "Clear request logs",
+    "cleared_log_request_successfully": "Cleared request logs successfully",
+    "credential_verifier": "Credential Verifier"
   },
   "account_setup": {
     "title": "Account Name",
@@ -311,13 +318,21 @@
     "credential_no_context": "Credential has no context",
     "credential_no_type": "Credential has an invalid type",
     "credential_no_issuer": "Credential has no Issuer",
+    "import_credential": "Import Credential",
     "import_expired_credential": "Import Expired Credential?",
-    "import_expired_credential_desc": "This credential expired on %{expirationDate} , are you sure you want to import this credential?"
+    "import_expired_credential_desc": "This credential has expired, are you sure you want to import this credential?",
+    "import_revoked_credential_desc": "This credential has been revoked, are you sure you want to import this credential?",
+    "import_invalid_credential_desc": "This credential is invalid, are you sure you want to import this credential?",
+    "invalid": "Invalid",
+    "valid": "Valid",
+    "expired": "Expired",
+    "revoked": "Revoked",
+    "pending": "Loading..."
   },
   "qr_scanner": {
     "nodids": "You have no Web3 IDs!",
     "not_supported_data": "Not supported QR Code",
-    "scan_qr_code": "Scan QR Code",
+    "title": "Scan QR Code",
     "no_key_doc": "No key document found",
     "start": "Start",
     "processing": "Processing...",
@@ -325,7 +340,10 @@
     "error": "Web3 ID Error",
     "header": "Web3 ID Authorization",
     "retry": "Retry",
-    "unamed_app": "Unnamed App"
+    "unamed_app": "Unnamed App",
+    "scanning_footer": "Scan the QR Code",
+    "scanning_instructions": "Place the code inside the box",
+    "scan_new": "Scan new QR Code"
   },
   "didAuth": {
     "email": "Email",
@@ -375,9 +393,16 @@
     "did_dock_description": "W3C compliant Decentralized Identifier created by Dock. Uses blockchain to secure verifiable credentials.",
     "no_name_set": "DID name not set",
     "did_payment_address": "DID Payment Account",
-    "invalid_did_file":"Invalid DID file provided.",
-    "invalid_did_password":"Incorrect Password",
-    "duplicate_did":"That DID already exists in wallet",
+    "invalid_did_file": "Invalid DID file provided.",
+    "invalid_did_password": "Incorrect Password",
+    "duplicate_did": "That DID already exists in wallet",
     "no_items_found": "No items found"
+  },
+  "credentialVerifier": {
+    "title": "Verify a credential",
+    "description": " Verify any verifiable credentials (VCs) via a URL, JSON file or scanning a QR code",
+    "verifyViaQRCode": "Scan QR Code",
+    "verifyViaURL": "Verify via a URL",
+    "verifyViaJSON": "Verify via a JSON file"
   }
 }

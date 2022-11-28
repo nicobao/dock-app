@@ -105,7 +105,7 @@ exports[`NewDIDModal should render correctly for modal is not visible 1`] = `
                   }
                 }
               />,
-              "onPress": [MockFunction],
+              "onPress": [Function],
               "testID": "ImportExistingDIDBtn",
               "title": "Import existing DID",
             },
@@ -223,7 +223,7 @@ exports[`NewDIDModal should render correctly for modal is visible 1`] = `
                   }
                 }
               />,
-              "onPress": [MockFunction],
+              "onPress": [Function],
               "testID": "ImportExistingDIDBtn",
               "title": "Import existing DID",
             },

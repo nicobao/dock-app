@@ -1,17 +1,28 @@
 import {utilCryptoService} from '@docknetwork/wallet-sdk-core/lib/services/util-crypto';
+import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
+import {captureException} from '@sentry/react-native';
+import queryString from 'query-string';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
-import {Credentials} from '@docknetwork/wallet-sdk-credentials/lib';
 import {showToast} from '../../core/toast';
 import {translate} from '../../locales';
 import {getJsonOrError} from '../../core';
 import '../credentials/credentials';
-import {onScanAuthQRCode} from '../credentials/credentials';
-import {captureException} from '@sentry/react-native';
-import queryString from 'query-string';
+import {
+  credentialStatusData,
+  onScanAuthQRCode,
+  validateCredential,
+} from '../credentials/credentials';
 import store from '../../core/redux-store';
 import {createAccountOperations} from '../account-creation/create-account-slice';
-import {stringToJSON} from '../../core/storage-utils';
+import {isValidUrl, stringToJSON} from '../../core/storage-utils';
+import {
+  getCredentialStatus,
+  CREDENTIAL_STATUS,
+} from '@docknetwork/wallet-sdk-react-native/lib';
+import {showConfirmationModal} from '../../components/ConfirmationModal';
+import axios from '../../core/network-service';
+import {getDataFromUrl} from '../didManagement/didManagment-slice';
 
 export async function addressHandler(data) {
   const isAddress = await utilCryptoService.isAddressValid(data);
@@ -23,7 +34,6 @@ export async function addressHandler(data) {
     return true;
   }
 
-  console.log('not an address', data);
   return false;
 }
 
@@ -31,18 +41,35 @@ export async function credentialHandler(data) {
   const isUrl = typeof data === 'string' && data.indexOf('http') === 0;
 
   try {
-    // @ts-ignore
-    const credentials: Credentials = Credentials.getInstance();
+    const credentials = Credentials.getInstance();
 
     let credentialData;
-    if (isUrl) {
-      showToast({
-        type: 'message',
-        message: translate('global.fetching_data'),
-      });
-      credentialData = await credentials.getCredentialFromUrl(data);
-    } else {
-      credentialData = JSON.parse(data);
+    try {
+      if (isUrl) {
+        showToast({
+          type: 'message',
+          message: translate('global.fetching_data'),
+        });
+        credentialData = await credentials.getCredentialFromUrl(data);
+      } else {
+        credentialData = JSON.parse(data);
+      }
+    } catch (err) {
+      console.error(err);
+
+      if (isUrl) {
+        console.error(`Unable to resolve url: ${data}`);
+      } else {
+        const jsonOrError = getJsonOrError(credentialData);
+        if (typeof jsonOrError === 'string') {
+          console.error(`Unable to resolve json: ${jsonOrError}`);
+        } else {
+          console.error(jsonOrError);
+        }
+      }
+
+      console.error(err);
+      throw err;
     }
 
     const items = await credentials.query({});
@@ -59,26 +86,51 @@ export async function credentialHandler(data) {
       return true;
     }
 
-    await credentials.add(credentialData);
+    try {
+      validateCredential(credentialData);
+    } catch (err) {
+      captureException(err);
+      showToast({
+        message: translate('credentials.invalid_credential'),
+        type: 'error',
+      });
+      return;
+    }
 
-    navigate(Routes.APP_CREDENTIALS);
+    let status = CREDENTIAL_STATUS.INVALID;
+    try {
+      status = await getCredentialStatus(credentialData);
+      if (status === CREDENTIAL_STATUS.VERIFIED) {
+        await credentials.add(credentialData);
+        navigate(Routes.APP_CREDENTIALS);
+        return true;
+      }
+    } catch (err) {
+      // Credential verifying threw an error
+      // doesnt mean the credential is invalid entirely (such as BBS+ atm)
+      // however this could be handled better downstream in the Dock SDK
+      // so that it wont require a try/catch here if verifying never threw
+      // an error but always returned verified false
+      console.error(err);
+      captureException(err);
+    }
+
+    showConfirmationModal({
+      type: 'alert',
+      title: translate('credentials.import_credential'),
+      description: credentialStatusData[status].description,
+      confirmText: translate('navigation.ok'),
+      cancelText: translate('navigation.cancel'),
+      onConfirm: async () => {
+        await credentials.add(credentialData);
+        navigate(Routes.APP_CREDENTIALS);
+      },
+    });
+
     return true;
   } catch (err) {
     console.error(err);
-
-    if (isUrl) {
-      console.error(`Unable to resolve url: ${data}`);
-    } else {
-      const jsonOrError = getJsonOrError(data);
-
-      if (typeof jsonOrError === 'string') {
-        console.error(`Unable to resolve json: ${jsonOrError}`);
-      } else {
-        console.error(jsonOrError);
-      }
-    }
-
-    console.error(err);
+    captureException(err);
     return false;
   }
 }
@@ -101,6 +153,25 @@ export function onAuthQRScanned(data) {
   }
   return false;
 }
+
+export function getWeb3IdErrorMessage(result) {
+  let error;
+  try {
+    const apiError = result.error.results[0].error;
+
+    if (typeof apiError !== 'string') {
+      throw new Error(
+        `Error is not a string, received: ${JSON.stringify(apiError)}`,
+      );
+    }
+    error = apiError;
+  } catch (err) {
+    console.error(err);
+  }
+
+  return error || translate('auth.auth_sign_in_failed');
+}
+
 export async function authHandler(data, keyDoc, profile = {}) {
   try {
     const authLinkPrefix = 'dockwallet://didauth?url=';
@@ -112,17 +183,22 @@ export async function authHandler(data, keyDoc, profile = {}) {
       });
       const url = decodeURIComponent(data.substr(authLinkPrefix.length));
 
+      keyDoc.id = `${keyDoc.controller}#keys-1`;
+
       const vc = await onScanAuthQRCode(url, keyDoc, profile);
-      const req = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify({
+      const response = await axios.post(
+        url,
+        JSON.stringify({
           vc,
         }),
-      });
-      const result = await req.json();
+        {
+          headers: {
+            'content-type': 'application/json',
+          },
+        },
+      );
+      const result = response.data;
+
       if (result.verified) {
         showToast({
           type: 'message',
@@ -132,7 +208,7 @@ export async function authHandler(data, keyDoc, profile = {}) {
       } else {
         showToast({
           type: 'error',
-          message: result.error || translate('auth.auth_sign_in_failed'),
+          message: getWeb3IdErrorMessage(result),
         });
         captureException(result);
         return false;
@@ -161,8 +237,32 @@ export async function importAccountHandler(data) {
   }
   return false;
 }
+export async function onScanEncryptedWallet(data) {
+  try {
+    const parsedData = isValidUrl(data)
+      ? await getDataFromUrl(data)
+      : stringToJSON(data);
 
+    if (
+      parsedData &&
+      Array.isArray(parsedData.type) &&
+      parsedData.type.includes('EncryptedWallet')
+    ) {
+      navigate(Routes.DID_MANAGEMENT_LIST, {
+        screen: Routes.DID_MANAGEMENT_IMPORT_DID,
+        params: {encryptedJSONWallet: parsedData},
+      });
+
+      return true;
+    }
+    return false;
+  } catch (e) {
+    captureException(e);
+    return false;
+  }
+}
 export const qrCodeHandlers = [
+  onScanEncryptedWallet,
   importAccountHandler,
   onAuthQRScanned,
   addressHandler,
@@ -185,7 +285,12 @@ export async function executeHandlers(data, handlers) {
 }
 
 export async function qrCodeHandler(data, handlers = qrCodeHandlers) {
-  const success = await executeHandlers(data, handlers);
+  let success = false;
+  try {
+    success = await executeHandlers(data, handlers);
+  } catch (error) {
+    captureException(error);
+  }
 
   if (!success) {
     showToast({

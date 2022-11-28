@@ -5,7 +5,29 @@ import {NativeModules} from 'react-native';
 import mockAsyncStorage from '../node_modules/@react-native-async-storage/async-storage/jest/async-storage-mock';
 import mockRNPermissions from '../node_modules/react-native-permissions/mock';
 import '../src/core/setup-env';
-import {} from '../src/core/navigation';
+import axios from 'axios';
+
+jest.mock('axios', () => {
+  const axiosInstance = {
+    get: jest.fn().mockResolvedValue({data: {}}),
+    post: jest.fn().mockResolvedValue({data: {}}),
+    interceptors: {
+      request: {
+        use: jest.fn(),
+      },
+      response: {
+        use: jest.fn(),
+      },
+    },
+  };
+  return {
+    __esModule: true,
+    default: {
+      create: jest.fn(() => axiosInstance),
+      ...axiosInstance,
+    },
+  };
+});
 jest.mock('../src/core/navigation', () => {
   const navigate = jest.fn();
   const navigationRef = {
@@ -468,6 +490,21 @@ jest.mock('@docknetwork/wallet-sdk-react-native/lib', () => {
       return Promise.resolve();
     }),
   };
+  const useDIDUtilsMock = {
+    createDIDKeypairDocument: jest.fn(({controller}) => {
+      return {
+        controller: controller,
+        id: `${controller}#5GNJyEQhxxeFQ2ziuqaeKWc3Qx6ma12De9D1bD3viADBUEfU`,
+        privateKeyBase58:
+          '5V4vL5oPZLKSHMom9enEFzPN4ipVB4t8Cntp2sBQ6FaGHjjqp273XpvSrP53FNygPwiAWSV6canaGdPYGSB5pYw9',
+        privateKeyMultibase:
+          'z5V4vL5oPZLKSHMom9enEFzPN4ipVB4t8Cntp2sBQ6FaGHjjqp273XpvSrP53FNygPwiAWSV6canaGdPYGSB5pYw9',
+        publicKeyBase58: 'Dp7sMrPeHhPrpQmmHJnn9Y6dd2gVZ6bHhRpVMEds2ubm',
+        publicKeyMultibase: 'zDp7sMrPeHhPrpQmmHJnn9Y6dd2gVZ6bHhRpVMEds2ubm',
+        type: 'Ed25519VerificationKey2018',
+      };
+    }),
+  };
   const useDIDManagementMockFunctions = {
     importDID: jest.fn(({password}) => {
       if (password === 'test') {
@@ -521,6 +558,24 @@ jest.mock('@docknetwork/wallet-sdk-react-native/lib', () => {
         },
         correlation: ['urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130002'],
       },
+      {
+        '@context': ['https://w3id.org/wallet/v1'],
+        correlation: [
+          'did:key:z6MkpUt4291WvhZrezcqNCDzQvHodmh2Pyto9Hsiv7KpSyvn#z6MkpUt4291WvhZrezcqNCDzQvHodmh2Pyto9Hsiv7KpSyvn',
+          '827a521f-e3a4-4084-8aa0-bdbe75ee04a5',
+        ],
+        didDocument: {
+          '@context': ['https://www.w3.org/ns/did/v1'],
+
+          controller: [
+            'did:dock:5HT98yDTxg6iRCBnGpXL5Jr8epTf1EdZgfqByTN1AubPLKRt',
+          ],
+          id: 'did:dock:5HT98yDTxg6iRCBnGpXL5Jr8epTf1EdZgfqByTN1AubPLKRt',
+        },
+        id: 'did:dock:5HT98yDTxg6iRCBnGpXL5Jr8epTf1EdZgfqByTN1AubPLKRt',
+        name: 'Wrong DIDDOCK',
+        type: 'DIDResolutionResponse',
+      },
     ],
   };
   const useAccountsMockFunctions = {
@@ -551,21 +606,36 @@ jest.mock('@docknetwork/wallet-sdk-react-native/lib', () => {
         walletDocs[doc.id] = doc;
         return Promise.resolve(null);
       }),
+      remove: jest.fn(),
+      update: jest.fn(),
     },
   };
   const useCredentialUtilsMock = {
     credentials: [],
-    saveCredential:jest.fn(),
+    saveCredential: jest.fn(),
     deleteCredential: jest.fn(),
   };
 
   return {
     WalletSDKProvider: originalModule.WalletSDKProvider,
     useDIDManagement: () => useDIDManagementMockFunctions,
+    useDIDUtils: () => useDIDUtilsMock,
     useAccounts: () => useAccountsMockFunctions,
     usePresentation: () => usePresentationMockFunctions,
     useWallet: () => useWalletMockFunctions,
     useCredentialUtils: () => useCredentialUtilsMock,
+    getCredentialStatus: jest.fn(credential => {
+      return credential.status || 3;
+    }),
+    useGetCredentialStatus: jest.fn(({credential}) => {
+      return credential.status || 3;
+    }),
+    CREDENTIAL_STATUS: {
+      INVALID: 1,
+      EXPIRED: 2,
+      VERIFIED: 3,
+      REVOKED: 4,
+    },
   };
 });
 global.fetch = jest.fn(() =>

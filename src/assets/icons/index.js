@@ -25,11 +25,23 @@ import EmptyCredentialIcon from './empty-credential.svg';
 import CancelIcon from './cancel.svg';
 import DIDManagementIcon from './did-management.svg';
 import RoundedDIDIcon from './rounded_did.svg';
+import VerifiedIcon from './verified.svg';
 import PencilIcon from './pencil.svg';
 import BinIcon from './bin.svg';
+import UploadIcon from './upload.svg';
+import LinkIcon from './link.svg';
+import QRCodeIcon from './qr-code.svg';
 import ChevronDownIcon from './select_dropdown.svg';
 import ChevronUpIcon from './chevron-up-icon.svg';
+import InvalidIcon from './invalid.svg';
+import ExpiredIcon from './expired.svg';
+import RevokedIcon from './revoke.svg';
+
 export {
+  RevokedIcon,
+  VerifiedIcon,
+  InvalidIcon,
+  ExpiredIcon,
   DockLogoIcon,
   DotsVerticalIcon,
   CheckCircleIcon,
@@ -59,6 +71,9 @@ export {
   RoundedDIDIcon,
   PencilIcon,
   BinIcon,
+  UploadIcon,
+  LinkIcon,
+  QRCodeIcon,
   ChevronDownIcon,
   ChevronUpIcon,
 };

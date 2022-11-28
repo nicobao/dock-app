@@ -11,6 +11,8 @@ import {
   onPresentationScanned,
   importAccountHandler,
   qrCodeHandlers,
+  onScanEncryptedWallet,
+  getWeb3IdErrorMessage,
 } from './qr-code';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
@@ -20,6 +22,9 @@ import {setToast} from '../../core/toast';
 import {getParamsFromUrl, onScanAuthQRCode} from '../credentials/credentials';
 import {credentialServiceRPC} from '@docknetwork/wallet-sdk-core/lib/services/credential';
 import {translate} from 'src/locales';
+import {CREDENTIAL_STATUS} from '@docknetwork/wallet-sdk-react-native/lib';
+import * as modals from '../../components/ConfirmationModal';
+import axios from 'axios';
 
 const keyDoc = {
   '@context': ['https://w3id.org/wallet/v1'],
@@ -143,10 +148,125 @@ describe('qr-code', () => {
       expect(toastMock.show).toBeCalled();
     });
 
+    it('expect to show confirm dialog after scanning invalid credential', async () => {
+      const credentialData = {
+        '@context': ['https://www.w3.org/2018/credentials/v1'],
+        id: 'https://creds.dock.io/8e02c35ae370b02f47d7faaf41cb1386768fc75c9fca7caa6bb389dbe61260eb',
+        type: ['VerifiableCredential', 'UniversityDegreeCredential'],
+        credentialSubject: {},
+        issuanceDate: '2022-06-27T12:08:30.675Z',
+        expirationDate: '2029-06-26T23:00:00.000Z',
+        issuer: {
+          name: 'John Doe',
+          description: '',
+          logo: '',
+          id: 'did:dock:5CJaTP2eGCLf5ZNPUXYbWxUvJQMTseKfc4hi8WVBC1K8eW9N',
+        },
+        status: CREDENTIAL_STATUS.INVALID,
+      };
+      jest
+        .spyOn(modals, 'showConfirmationModal')
+        .mockImplementationOnce(async () => []);
+      jest
+        .spyOn(Credentials.getInstance(), 'getCredentialFromUrl')
+        .mockImplementationOnce(async () => credentialData);
+
+      jest
+        .spyOn(Credentials.getInstance(), 'add')
+        .mockImplementationOnce(async () => true);
+
+      jest
+        .spyOn(Credentials.getInstance(), 'query')
+        .mockImplementationOnce(async () => []);
+
+      await credentialHandler('http://some-url');
+
+      expect(modals.showConfirmationModal).toBeCalled();
+    });
+    it('expect to show confirm dialog after scanning revoked credential', async () => {
+      const credentialData = {
+        '@context': ['https://www.w3.org/2018/credentials/v1'],
+        id: 'https://creds.dock.io/8e02c35ae370b02f47d7faaf41cb1386768fc75c9fca7caa6bb389dbe61260eb',
+        type: ['VerifiableCredential', 'UniversityDegreeCredential'],
+        credentialSubject: {},
+        issuanceDate: '2022-06-27T12:08:30.675Z',
+        expirationDate: '2029-06-26T23:00:00.000Z',
+        issuer: {
+          name: 'John Doe',
+          description: '',
+          logo: '',
+          id: 'did:dock:5CJaTP2eGCLf5ZNPUXYbWxUvJQMTseKfc4hi8WVBC1K8eW9N',
+        },
+        status: CREDENTIAL_STATUS.REVOKED,
+      };
+      jest
+        .spyOn(modals, 'showConfirmationModal')
+        .mockImplementationOnce(async () => []);
+      jest
+        .spyOn(Credentials.getInstance(), 'getCredentialFromUrl')
+        .mockImplementationOnce(async () => credentialData);
+
+      jest
+        .spyOn(Credentials.getInstance(), 'add')
+        .mockImplementationOnce(async () => true);
+
+      jest
+        .spyOn(Credentials.getInstance(), 'query')
+        .mockImplementationOnce(async () => []);
+
+      await credentialHandler('http://some-url');
+
+      expect(modals.showConfirmationModal).toBeCalled();
+    });
+    it('expect to show confirm dialog after scanning expired credential', async () => {
+      const credentialData = {
+        '@context': ['https://www.w3.org/2018/credentials/v1'],
+        id: 'https://creds.dock.io/8e02c35ae370b02f47d7faaf41cb1386768fc75c9fca7caa6bb389dbe61260eb',
+        type: ['VerifiableCredential', 'UniversityDegreeCredential'],
+        credentialSubject: {},
+        issuanceDate: '2022-06-27T12:08:30.675Z',
+        expirationDate: '2029-06-26T23:00:00.000Z',
+        issuer: {
+          name: 'John Doe',
+          description: '',
+          logo: '',
+          id: 'did:dock:5CJaTP2eGCLf5ZNPUXYbWxUvJQMTseKfc4hi8WVBC1K8eW9N',
+        },
+        status: CREDENTIAL_STATUS.EXPIRED,
+      };
+      jest
+        .spyOn(modals, 'showConfirmationModal')
+        .mockImplementationOnce(async () => []);
+      jest
+        .spyOn(Credentials.getInstance(), 'getCredentialFromUrl')
+        .mockImplementationOnce(async () => credentialData);
+
+      jest
+        .spyOn(Credentials.getInstance(), 'add')
+        .mockImplementationOnce(async () => true);
+
+      jest
+        .spyOn(Credentials.getInstance(), 'query')
+        .mockImplementationOnce(async () => []);
+
+      await credentialHandler('http://some-url');
+
+      expect(modals.showConfirmationModal).toBeCalled();
+    });
     it('expect to add credential from url', async () => {
       const credentialData = {
-        id: 'test',
-        content: 'some-data',
+        '@context': ['https://www.w3.org/2018/credentials/v1'],
+        id: 'https://creds.dock.io/8e02c35ae370b02f47d7faaf41cb1386768fc75c9fca7caa6bb389dbe61260eb',
+        type: ['VerifiableCredential', 'UniversityDegreeCredential'],
+        credentialSubject: {},
+        issuanceDate: '2022-06-27T12:08:30.675Z',
+        expirationDate: '2029-06-26T23:00:00.000Z',
+        issuer: {
+          name: 'John Doe',
+          description: '',
+          logo: '',
+          id: 'did:dock:5CJaTP2eGCLf5ZNPUXYbWxUvJQMTseKfc4hi8WVBC1K8eW9N',
+        },
       };
 
       jest
@@ -163,6 +283,7 @@ describe('qr-code', () => {
 
       const result = await credentialHandler('http://some-url');
 
+      expect(modals.showConfirmationModal).not.toBeCalled();
       expect(result).toBeTruthy();
       expect(navigate).toBeCalledWith(Routes.APP_CREDENTIALS);
     });
@@ -315,19 +436,34 @@ describe('qr-code', () => {
         'dockwallet://didauth?url=https%3A%2F%2Fauth.dock.io%2Fverify%3Fid%3Dqi0hkXbZQzpuAVgzM6Zkq905w0LnegROzDrsvy0W%26scope%3Dpublic%20email',
         keyDoc,
       );
-      expect(fetch).toHaveBeenCalledWith(
+      expect(axios.post).toHaveBeenCalledWith(
         'https://auth.dock.io/verify?id=qi0hkXbZQzpuAVgzM6Zkq905w0LnegROzDrsvy0W&scope=public email',
+        expect.any(String),
         {
-          method: 'POST',
           headers: {
             'content-type': 'application/json',
           },
-          body: expect.any(String),
         },
       );
     });
     it('Include presentation QR handlers', () => {
       expect(qrCodeHandlers.includes(onPresentationScanned)).toBeTruthy();
+    });
+  });
+  describe('onScanEncryptedWallet', () => {
+    it('Include import encrypted wallet QR handler', () => {
+      expect(qrCodeHandlers.includes(onScanEncryptedWallet)).toBeTruthy();
+    });
+    it('is encrypted wallet scanned', async () => {
+      const isValid1 = await onScanEncryptedWallet(
+        '{"wallet":"","encoded":{}}',
+      );
+      expect(isValid1).toBeFalsy();
+
+      const res = await onScanEncryptedWallet(
+        '{"@context":["https://w3id.org/wallet/v1"],"id":"did:key:z6LSd1HEdsPzejHbcKpWH44bF5oA4ET2hvxRBGJK17m4EQgH#encrypted-wallet","type":["EncryptedWallet"],"issuer":"did:key:z6LSd1HEdsPzejHbcKpWH44bF5oA4ET2hvxRBGJK17m4EQgH","issuanceDate":"2022-03-28T11:44:06.296Z","credentialSubject":{"id":"did:key:z6LSd1HEdsPzejHbcKpWH44bF5oA4ET2hvxRBGJK17m4EQgH","encryptedWalletContents":{}}}',
+      );
+      expect(res).toBeTruthy();
     });
   });
   describe('importAccountHandler', () => {
@@ -340,6 +476,78 @@ describe('qr-code', () => {
 
       const res = await importAccountHandler('{"address":"","encoded":{}}');
       expect(res).toBeTruthy();
+    });
+  });
+
+  describe('getWeb3IdErrorMessage', () => {
+    const errorMock = {
+      verified: false,
+      error: {
+        verified: false,
+        results: [
+          {
+            proof: {
+              '@context': [
+                'https://www.w3.org/2018/credentials/v1',
+                {
+                  dk: 'https://ld.dock.io/credentials#',
+                  DockAuthCredential: 'dk:DockAuthCredential',
+                  name: 'dk:name',
+                  email: 'dk:email',
+                  state: 'dk:state',
+                  IssuerPolicy: 'dk:IssuerPolicy',
+                  AllVerifiers: 'dk:AllVerifiers',
+                  Archival: 'dk:Archival',
+                  prohibition: 'dk:prohibition',
+                  action: 'dk:action',
+                  assignee: 'dk:assignee',
+                  assigner: 'dk:assigner',
+                  target: 'dk:target',
+                },
+              ],
+              type: 'Sr25519Signature2020',
+              created: '2022-11-24T17:23:15Z',
+              verificationMethod:
+                'did:dock:5CNunNiQbFXnf5bC555nGzqfgcEA7rgQprhLYc7Yz5pVkA42#5H4MZpxujyZErMseJ87oDVn8eFKaCozporcP4esEp39DrkkV',
+              proofPurpose: 'assertionMethod',
+              proofValue:
+                'z346Dv5frAx8nRJsfeUSreTrHZrk25QDdjV3oHFJPsDAciL8ghSxcxwxUjiBQXNJiHePVF7VjnJxd2NuQRwBz7w8R',
+            },
+            verified: false,
+            error:
+              'verification method should have type Sr25519VerificationKey2020 - got: undefined',
+          },
+        ],
+      },
+      userId: 'did:dock:5CNunNiQbFXnf5bC555nGzqfgcEA7rgQprhLYc7Yz5pVkA42',
+    };
+
+    const unknownErrorMessage = 'Unknown error on sign in';
+
+    it('expect to return error received from the api', () => {
+      const message = getWeb3IdErrorMessage(errorMock);
+      expect(message).toBe(
+        'verification method should have type Sr25519VerificationKey2020 - got: undefined',
+      );
+    });
+
+    it('expect to handle uknown error', () => {
+      expect(getWeb3IdErrorMessage(null)).toBe(unknownErrorMessage);
+      expect(getWeb3IdErrorMessage({error: 'bad data'})).toBe(
+        unknownErrorMessage,
+      );
+      expect(getWeb3IdErrorMessage({})).toBe(unknownErrorMessage);
+      expect(
+        getWeb3IdErrorMessage({
+          error: {
+            results: [
+              {
+                error: 2,
+              },
+            ],
+          },
+        }),
+      ).toBe(unknownErrorMessage);
     });
   });
 });

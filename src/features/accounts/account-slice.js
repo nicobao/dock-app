@@ -12,6 +12,7 @@ import {translate} from 'src/locales';
 import {appOperations} from '../app/app-slice';
 import {Logger} from 'src/core/logger';
 import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
+import {captureException} from '@sentry/react-native';
 
 // Period in seconds
 const BALANCE_FETCH_PERIOD = 30;
@@ -71,7 +72,7 @@ export function exportFile({path, mimeType, errorMessage}) {
       if (err.message === 'User did not share') {
         return;
       }
-
+      captureException(err);
       console.error(err);
       showToast({
         message: errorMessage,

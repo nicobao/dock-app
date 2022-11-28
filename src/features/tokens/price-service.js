@@ -1,4 +1,5 @@
 import {getRealm} from '@docknetwork/wallet-sdk-core/lib/core/realm';
+import axios from '../../core/network-service';
 
 const tokenPrices = {};
 
@@ -6,18 +7,20 @@ export const emptyResponse = {
   priceUsd: 0,
 };
 
-export const getCoinCapToken = tokenSymbol => {
-  return fetch(`https://api.coincap.io/v2/assets/${tokenSymbol}`)
-    .then(res => {
-      if (res.status !== 200) {
-        return {
-          data: emptyResponse,
-        };
-      }
+export const getCoinCapToken = async tokenSymbol => {
+  try {
+    const {data: res} = await axios.get(
+      `https://api.coincap.io/v2/assets/${tokenSymbol}`,
+    );
 
-      return res.json();
-    })
-    .then(res => res.data);
+    const {data} = res;
+
+    return {
+      priceUsd: data.priceUsd,
+    };
+  } catch (e) {
+    return emptyResponse;
+  }
 };
 
 function getTokenPrice(symbol) {

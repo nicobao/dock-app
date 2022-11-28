@@ -73,7 +73,11 @@ export function AddAccountModal({
   ) : (
     <ImportExistingAccount
       onClose={onClose}
-      onSelect={onImportExistingAccount}
+      onSelect={option => {
+        return Promise.resolve(onImportExistingAccount(option)).finally(
+          onClose,
+        );
+      }}
       onBack={handleBack}
     />
   );

@@ -20,6 +20,9 @@ describe('AppSlice', () => {
       expect(isFeatureEnabled(Features.didManagement.id, [])).toBe(
         Features.didManagement.defaultToEnabled,
       );
+      expect(isFeatureEnabled(Features.shouldLogRequest.id, [])).toBe(
+        Features.shouldLogRequest.defaultToEnabled,
+      );
     });
 
     it('expect settings from features_config when no configs overridden', () => {
@@ -154,6 +157,17 @@ describe('AppSlice', () => {
       expect(defaultFeatures.accounts).toBeTruthy();
       expect(Features.accounts).toHaveProperty('id', 'accounts');
       expect(Features.accounts).toHaveProperty('title', 'Show accounts');
+    });
+    it('expect to contain log dev settings', () => {
+      expect(Features.shouldLogRequest).toHaveProperty(
+        'id',
+        'shouldLogRequest',
+      );
+      expect(Features.shouldLogRequest).toHaveProperty(
+        'defaultToEnabled',
+        false,
+      );
+      expect(Features.shouldLogRequest).toHaveProperty('title', 'Log Request');
     });
   });
 });

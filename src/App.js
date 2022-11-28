@@ -17,6 +17,7 @@ import {setToast} from './core/toast';
 import {ThemeProvider} from './design-system';
 import {appOperations} from './features/app/app-slice';
 import {didOperations} from './features/didManagement/didManagment-slice';
+import {useMigrateInvalidKeyDocs} from './features/didManagement/didHooks';
 
 if (SENTRY_DSN && process.env.NODE_ENV !== 'test') {
   try {
@@ -48,12 +49,18 @@ export function Test() {
 export function GlobalComponents() {
   const dispatch = useDispatch();
   const {status} = useWallet({syncDocs: true});
+  const {migrateInvalidKeyDoc} = useMigrateInvalidKeyDocs();
 
   useEffect(() => {
     if (status === 'ready') {
       dispatch(didOperations.initializeDID());
     }
   }, [dispatch, status]);
+  useEffect(() => {
+    if (status === 'ready') {
+      migrateInvalidKeyDoc();
+    }
+  }, [migrateInvalidKeyDoc, status]);
   const toast = useToast();
 
   useEffect(() => {

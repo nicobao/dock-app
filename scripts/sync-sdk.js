@@ -25,3 +25,4 @@ syncPackage('react-native');
 syncPackage('credentials');
 syncPackage('transactions');
 syncPackage('dids');
+syncPackage('request-logger');

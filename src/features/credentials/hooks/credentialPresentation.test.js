@@ -1,12 +1,17 @@
 import {renderHook, act} from '@testing-library/react-hooks';
-import {useCredentialPresentation} from './credentialPresentation';
+import {
+  handleDeepLinkPresentation,
+  useCredentialPresentation,
+} from './credentialPresentation';
 import {usePresentation} from '@docknetwork/wallet-sdk-react-native/lib';
 import {useSingleDID} from '../../didManagement/didHooks';
 
 describe('Presentation hooks', () => {
   it('go to next step', () => {
     const {result} = renderHook(() =>
-      useCredentialPresentation('dockwallet://proof-request?url=https&nonce=1'),
+      useCredentialPresentation({
+        deepLinkUrl: 'dockwallet://proof-request?url=https&nonce=1',
+      }),
     );
     act(() => {
       result.current.onNext();
@@ -15,7 +20,9 @@ describe('Presentation hooks', () => {
   });
   it('Is form valid', () => {
     const {result} = renderHook(() =>
-      useCredentialPresentation('dockwallet://proof-request?url=https&nonce=1'),
+      useCredentialPresentation({
+        deepLinkUrl: 'dockwallet://proof-request?url=https&nonce=1',
+      }),
     );
     expect(result.current.isFormValid).toBe(false);
     act(() => {
@@ -34,7 +41,9 @@ describe('Presentation hooks', () => {
   it('on present credential', async () => {
     const {result: presentationResult} = renderHook(() => usePresentation());
     const {result} = renderHook(() =>
-      useCredentialPresentation('dockwallet://proof-request?url=https&nonce=1'),
+      useCredentialPresentation({
+        deepLinkUrl: 'dockwallet://proof-request?url=https&nonce=1',
+      }),
     );
     await result.current.onPresentCredentials();
     expect(presentationResult.current.presentCredentials).toBeCalledWith({
@@ -57,9 +66,93 @@ describe('Presentation hooks', () => {
       },
     });
   });
+  it('expect to include keydoc hack for did:key', async () => {
+    const presentCredentials = jest.fn();
+    await handleDeepLinkPresentation({
+      parsedSelectedCredentials: [],
+      deepLinkUrl: 'dockwallet://proof-request?url=https&nonce=1',
+      keyDoc: {
+        '@context': ['https://w3id.org/wallet/v1'],
+        id: 'urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130002',
+        name: 'My Test Key 2',
+        image: 'https://via.placeholder.com/150',
+        description: 'For testing only, totally compromised.',
+        tags: ['professional', 'organization', 'compromised'],
+        correlation: ['1654905466848'],
+        controller: 'did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r',
+        type: 'Ed25519VerificationKey2018',
+        privateKeyBase58:
+          '3CQCBKF3Mf1tU5q1FLpHpbxYrNYxLiZk4adDtfyPEfc39Wk6gsTb2qoc1ZtpqzJYdM1rG4gpaD3ZVKdkiDrkLF1p',
+        publicKeyBase58: '6GwnHZARcEkJio9dxPYy6SC5sAL6PxpZAB6VYwoFjGMU',
+      },
+      presentCredentials: presentCredentials,
+    });
+    expect(presentCredentials).toBeCalledWith({
+      challenge: '1',
+      credentials: [],
+      id: 'dockwallet://proof-request?url=https&nonce=1',
+      keyDoc: {
+        '@context': ['https://w3id.org/wallet/v1'],
+        controller: 'did:key:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r',
+        correlation: ['1654905466848'],
+        description: 'For testing only, totally compromised.',
+        id: 'urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130002',
+        image: 'https://via.placeholder.com/150',
+        name: 'My Test Key 2',
+        privateKeyBase58:
+          '3CQCBKF3Mf1tU5q1FLpHpbxYrNYxLiZk4adDtfyPEfc39Wk6gsTb2qoc1ZtpqzJYdM1rG4gpaD3ZVKdkiDrkLF1p',
+        publicKeyBase58: '6GwnHZARcEkJio9dxPYy6SC5sAL6PxpZAB6VYwoFjGMU',
+        tags: ['professional', 'organization', 'compromised'],
+        type: 'Ed25519VerificationKey2018',
+      },
+    });
+  });
+  it('expect to include keydoc hack for did:dock', async () => {
+    const presentCredentials = jest.fn();
+    await handleDeepLinkPresentation({
+      parsedSelectedCredentials: [],
+      deepLinkUrl: 'dockwallet://proof-request?url=https&nonce=1',
+      keyDoc: {
+        '@context': ['https://w3id.org/wallet/v1'],
+        id: 'urn:uuid:e8fc7810-9524-11ea-bb37-0242ac130002',
+        name: 'My Test Key 2',
+        image: 'https://via.placeholder.com/150',
+        description: 'For testing only, totally compromised.',
+        tags: ['professional', 'organization', 'compromised'],
+        correlation: ['1654905466848'],
+        controller: 'did:dock:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r',
+        type: 'Ed25519VerificationKey2018',
+        privateKeyBase58:
+          '3CQCBKF3Mf1tU5q1FLpHpbxYrNYxLiZk4adDtfyPEfc39Wk6gsTb2qoc1ZtpqzJYdM1rG4gpaD3ZVKdkiDrkLF1p',
+        publicKeyBase58: '6GwnHZARcEkJio9dxPYy6SC5sAL6PxpZAB6VYwoFjGMU',
+      },
+      presentCredentials: presentCredentials,
+    });
+    expect(presentCredentials).toBeCalledWith({
+      challenge: '1',
+      credentials: [],
+      id: 'dockwallet://proof-request?url=https&nonce=1',
+      keyDoc: {
+        '@context': ['https://w3id.org/wallet/v1'],
+        controller: 'did:dock:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r',
+        correlation: ['1654905466848'],
+        description: 'For testing only, totally compromised.',
+        id: 'did:dock:z6MkjjCpsoQrwnEmqHzLdxWowXk5gjbwor4urC1RPDmGeV8r#keys-1',
+        image: 'https://via.placeholder.com/150',
+        name: 'My Test Key 2',
+        privateKeyBase58:
+          '3CQCBKF3Mf1tU5q1FLpHpbxYrNYxLiZk4adDtfyPEfc39Wk6gsTb2qoc1ZtpqzJYdM1rG4gpaD3ZVKdkiDrkLF1p',
+        publicKeyBase58: '6GwnHZARcEkJio9dxPYy6SC5sAL6PxpZAB6VYwoFjGMU',
+        tags: ['professional', 'organization', 'compromised'],
+        type: 'Ed25519VerificationKey2018',
+      },
+    });
+  });
   it('handle errors in presentation', async () => {
     const {result} = renderHook(() =>
-      useCredentialPresentation('dockwallet://proof-request?url=https&nonce=2'),
+      useCredentialPresentation({
+        deepLinkUrl: 'dockwallet://proof-request?url=https&nonce=2',
+      }),
     );
     await expect(result.current.onPresentCredentials()).rejects.toThrow();
   });
@@ -78,7 +171,9 @@ describe('Presentation hooks', () => {
   it('go to next step when multiple dids', () => {
     const dids = [{value: 1}, {value: 2}];
     const {result} = renderHook(() =>
-      useCredentialPresentation('dockwallet://proof-request?url=https&nonce=1'),
+      useCredentialPresentation({
+        deepLinkUrl: 'dockwallet://proof-request?url=https&nonce=1',
+      }),
     );
     act(() => {
       result.current.onNext(dids);
@@ -88,7 +183,9 @@ describe('Presentation hooks', () => {
   it('proceed should create presentation when there is single did', async () => {
     const dids = [{value: 1}];
     const {result} = renderHook(() =>
-      useCredentialPresentation('dockwallet://proof-request?url=https&nonce=1'),
+      useCredentialPresentation({
+        deepLinkUrl: 'dockwallet://proof-request?url=https&nonce=1',
+      }),
     );
     const {result: presentationResult} = renderHook(() => usePresentation());
     await result.current.onNext(dids);

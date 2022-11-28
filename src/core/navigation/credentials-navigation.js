@@ -3,6 +3,7 @@ import {CredentialsContainer} from '../../features/credentials/CredentialsScreen
 import React from 'react';
 import {getScreenProps} from './utils';
 import {createStackNavigator} from '@react-navigation/stack';
+import {ShareCredentialScreenContainer} from 'src/features/credentials/ShareCredentialScreen';
 
 const CredentialsNavigationStack = createStackNavigator();
 export function CredentialsNavigationStackScreen() {
@@ -16,6 +17,12 @@ export function CredentialsNavigationStackScreen() {
           options: {
             headerShown: false,
           },
+        })}
+      />
+      <CredentialsNavigationStack.Screen
+        {...getScreenProps({
+          name: Routes.CREDENTIALS_SHARE_AS_PRESENTATION,
+          component: ShareCredentialScreenContainer,
         })}
       />
     </CredentialsNavigationStack.Navigator>

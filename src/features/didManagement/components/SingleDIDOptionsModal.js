@@ -55,6 +55,7 @@ export function SingleDIDOptionsModal({
             ),
             onPress: () => {
               if (didDocumentResolution) {
+                onClose();
                 navigate(Routes.DID_MANAGEMENT_EDIT_DID, {
                   didDocumentResolution,
                 });
@@ -73,6 +74,7 @@ export function SingleDIDOptionsModal({
             ),
             onPress: () => {
               if (didDocumentResolution) {
+                onClose();
                 navigate(Routes.DID_MANAGEMENT_EXPORT_DID, {
                   didDocumentResolution,
                 });

@@ -45,7 +45,7 @@ export function NewDIDModal({visible, onClose, onImportDID}) {
                 }}
               />
             ),
-            onPress: onImportDID,
+            onPress: () => onImportDID().finally(onClose),
           },
         ]}
       />

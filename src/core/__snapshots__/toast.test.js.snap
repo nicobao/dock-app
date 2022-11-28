@@ -1,0 +1,145 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Toast toast element should handle non string messages without errors 1`] = `
+<View
+  _pressed={
+    Object {
+      "opacity": 0.2,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+>
+  <Memo(ForwardRef(Stack))
+    bg="#27272A"
+    direction="row"
+    mb={5}
+    px={6}
+    py={4}
+    rounded="md"
+  >
+    <SvgFile />
+    <Memo(ForwardRef(Text))
+      fontSize={14}
+      fontWeight={600}
+      ml={2}
+      style={
+        Object {
+          "color": "#A1A1AA",
+        }
+      }
+    >
+      {"test":true}
+    </Memo(ForwardRef(Text))>
+  </Memo(ForwardRef(Stack))>
+  <PressabilityDebugView
+    color="red"
+  />
+</View>
+`;
+
+exports[`Toast toast element should handle undefined messages without errors 1`] = `
+<View
+  _pressed={
+    Object {
+      "opacity": 0.2,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+>
+  <Memo(ForwardRef(Stack))
+    bg="#27272A"
+    direction="row"
+    mb={5}
+    px={6}
+    py={4}
+    rounded="md"
+  >
+    <SvgFile />
+    <Memo(ForwardRef(Text))
+      fontSize={14}
+      fontWeight={600}
+      ml={2}
+      style={
+        Object {
+          "color": "#A1A1AA",
+        }
+      }
+    >
+      Some message
+    </Memo(ForwardRef(Text))>
+  </Memo(ForwardRef(Stack))>
+  <PressabilityDebugView
+    color="red"
+  />
+</View>
+`;
+
+exports[`Toast toast element should render without errors 1`] = `
+<View
+  _pressed={
+    Object {
+      "opacity": 0.2,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+>
+  <Memo(ForwardRef(Stack))
+    bg="#27272A"
+    direction="row"
+    mb={5}
+    px={6}
+    py={4}
+    rounded="md"
+  >
+    <SvgFile />
+    <Memo(ForwardRef(Text))
+      fontSize={14}
+      fontWeight={600}
+      ml={2}
+      style={
+        Object {
+          "color": "#A1A1AA",
+        }
+      }
+    >
+      Some message
+    </Memo(ForwardRef(Text))>
+  </Memo(ForwardRef(Stack))>
+  <PressabilityDebugView
+    color="red"
+  />
+</View>
+`;
