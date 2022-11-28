@@ -45,10 +45,10 @@ if (OLD_PACKAGE_NAME !== NEW_PACKAGE_NAME) {
       const oldFileContent = fs.readFileSync(filePath,
         'ascii',
       );
-      const pattern = `package ${OLD_PACKAGE_NAME};`;
+      const pattern = `package ${OLD_PACKAGE_NAME}`;
       const newFileContent = oldFileContent.replace(
         new RegExp(pattern, 'g'),
-        `package ${NEW_PACKAGE_NAME};`,
+        `package ${NEW_PACKAGE_NAME}`,
       );
       const dirName = path.dirname(newFileDestination);
 
