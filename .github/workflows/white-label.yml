@@ -193,6 +193,7 @@ jobs:
   #         yarn build-sdk
   #         echo "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
   #         echo "BUILD_TAG=$(node print-build-number|tr -s ' ' '_')" >> $GITHUB_ENV
+  #         rm -rf ./certs
   #         git clone "${{ secrets.CERTS_REPO_URL }}" ./certs
   #         # Pull env variables from certs repo
   #         # It will inject sentry token in the JS thread
