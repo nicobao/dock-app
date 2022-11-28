@@ -3,7 +3,7 @@ const glob = require('glob');
 const path = require('path');
 const appConfig = require('../app.json');
 const OLD_PACKAGE_NAME = 'com.dockapp';
-const NEW_PACKAGE_NAME = 'com.dockappUI';
+const NEW_PACKAGE_NAME = appConfig.packageId;
 
 
 console.log('Patch android package name');
