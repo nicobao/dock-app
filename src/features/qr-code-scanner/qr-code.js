@@ -166,7 +166,7 @@ export function getWeb3IdErrorMessage(result) {
     }
     error = apiError;
   } catch (err) {
-    // console.error(err);
+    console.error(err);
   }
 
   return error || translate('auth.auth_sign_in_failed');
