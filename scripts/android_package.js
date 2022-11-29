@@ -3,7 +3,7 @@ const glob = require('glob');
 const path = require('path');
 const appConfig = require('../app.json');
 const OLD_PACKAGE_NAME = 'com.dockapp';
-const NEW_PACKAGE_NAME = appConfig.packageId;
+const NEW_PACKAGE_NAME = 'com.appruvr';
 
 
 console.log('Patch android package name');
@@ -26,11 +26,6 @@ if (OLD_PACKAGE_NAME !== NEW_PACKAGE_NAME) {
     const environmentBasePath = path.join('android', 'app', 'src', envVar);
     const javaBaseDirectory = path.join(environmentBasePath, 'java', path.sep);
 
-    // updatePackageId(
-    //   path.join(environmentBasePath, 'AndroidManifest.xml'),
-    //   path.join(environmentBasePath, 'AndroidManifest.xml'),
-    // );
-
     updatePackageId(
       path.join('android', 'app', 'build.gradle'),
       path.join('android', 'app', 'build.gradle'),
@@ -39,6 +34,11 @@ if (OLD_PACKAGE_NAME !== NEW_PACKAGE_NAME) {
     if (!shouldUpdatePackageName) {
       return;
     }
+
+    updatePackageId(
+      path.join(environmentBasePath, 'AndroidManifest.xml'),
+      path.join(environmentBasePath, 'AndroidManifest.xml'),
+    );
 
     const newPackageDirectory = path.join(...NEW_PACKAGE_NAME.split('.'));
     const oldPackageDirectory = path.join(...OLD_PACKAGE_NAME.split('.'));
