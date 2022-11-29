@@ -223,7 +223,7 @@ jobs:
 
   create-tag:
     runs-on: ubuntu-latest
-    needs: [setup_distribution_matrix, run-white-label-ios-builds, run-white-label-apk-builds]
+    needs: [setup_distribution_matrix, run-white-label-ios-builds]
     strategy:
       fail-fast: false
       matrix: ${{fromJson(needs.setup_distribution_matrix.outputs.matrix)}}
