@@ -166,10 +166,27 @@ export function getWeb3IdErrorMessage(result) {
     }
     error = apiError;
   } catch (err) {
-    console.error(err);
+    // console.error(err);
   }
 
   return error || translate('auth.auth_sign_in_failed');
+}
+
+const isDIDDockRegex = /did:dock/gi;
+const hasDIDFragmentRegex = /#/gi;
+
+export function ensureDIDDockFragment(keyDoc) {
+  if (hasDIDFragmentRegex.test(keyDoc.controller)) {
+    return keyDoc;
+  }
+
+  if (!isDIDDockRegex.test(keyDoc.controller)) {
+    return keyDoc;
+  }
+
+  keyDoc.controller = `${keyDoc.controller}#keys-1`;
+
+  return keyDoc;
 }
 
 export async function authHandler(data, keyDoc, profile = {}) {
@@ -183,7 +200,7 @@ export async function authHandler(data, keyDoc, profile = {}) {
       });
       const url = decodeURIComponent(data.substr(authLinkPrefix.length));
 
-      keyDoc.id = `${keyDoc.controller}#keys-1`;
+      keyDoc = ensureDIDDockFragment(keyDoc);
 
       const vc = await onScanAuthQRCode(url, keyDoc, profile);
       const response = await axios.post(
