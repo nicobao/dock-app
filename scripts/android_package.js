@@ -26,10 +26,10 @@ if (OLD_PACKAGE_NAME !== NEW_PACKAGE_NAME) {
     const environmentBasePath = path.join('android', 'app', 'src', envVar);
     const javaBaseDirectory = path.join(environmentBasePath, 'java', path.sep);
 
-    updatePackageId(
-      path.join(environmentBasePath, 'AndroidManifest.xml'),
-      path.join(environmentBasePath, 'AndroidManifest.xml'),
-    );
+    // updatePackageId(
+    //   path.join(environmentBasePath, 'AndroidManifest.xml'),
+    //   path.join(environmentBasePath, 'AndroidManifest.xml'),
+    // );
 
     updatePackageId(
       path.join('android', 'app', 'build.gradle'),
@@ -70,8 +70,8 @@ if (OLD_PACKAGE_NAME !== NEW_PACKAGE_NAME) {
       fs.ensureDirSync(dirName);
       fs.writeFileSync(newFileDestination, newFileContent);
     }
+
     fs.rmdirSync(oldFullPath, {recursive: true});
 
-    
   });
 }
