@@ -37,97 +37,97 @@ jobs:
          echo ::set-output name=matrix::$(cat ./white-label-distributions.json|tr '\n' ' ')
 
 
-  run-white-label-apk-builds:
-    runs-on: ubuntu-latest
-    needs: setup_distribution_matrix
-    outputs:
-      build_tag: "${{ steps.upload_s3.outputs.build_tag }}"
-    strategy:
-      fail-fast: false
-      matrix: ${{fromJson(needs.setup_distribution_matrix.outputs.matrix)}}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          token: "${{ secrets.GIT_ACCESS_TOKEN }}"
+  # run-white-label-apk-builds:
+  #   runs-on: ubuntu-latest
+  #   needs: setup_distribution_matrix
+  #   outputs:
+  #     build_tag: "${{ steps.upload_s3.outputs.build_tag }}"
+  #   strategy:
+  #     fail-fast: false
+  #     matrix: ${{fromJson(needs.setup_distribution_matrix.outputs.matrix)}}
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+  #       with:
+  #         token: "${{ secrets.GIT_ACCESS_TOKEN }}"
 
-      - name: Get Pull Request Number
-        id: pr
-        run: echo "::set-output name=pull_request_number::$(gh pr view --json number -q .number || echo "")"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
+  #     - name: Get Pull Request Number
+  #       id: pr
+  #       run: echo "::set-output name=pull_request_number::$(gh pr view --json number -q .number || echo "")"
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
 
-      - name: Setup node
-        uses: actions/setup-node@v1
-        with:
-          node-version: '16.x'
+  #     - name: Setup node
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: '16.x'
 
-      - name: Install ruby
-        uses: actions/setup-ruby@v1
-        with:
-          ruby-version: '2.x'
+  #     - name: Install ruby
+  #       uses: actions/setup-ruby@v1
+  #       with:
+  #         ruby-version: '2.x'
 
-      - name: Copy in distribution configs
-        run: |
-          git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/${{ matrix.app }}.git" ../distro_configs
-          ls -R ../distro_configs
-          cp -r ../distro_configs/* .
+  #     - name: Copy in distribution configs
+  #       run: |
+  #         git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/${{ matrix.app }}.git" ../distro_configs
+  #         ls -R ../distro_configs
+  #         cp -r ../distro_configs/* .
 
-      - name: Install and lint
-        run: |
-          git config --global url."https://".insteadOf git://
-          echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-          yarn install
-          yarn postinstall
-          git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
-          yarn --cwd ../wallet-sdk install
-          yarn sync-sdk
-          yarn build-sdk
-          rm -rf ./certs
-          git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/dock-app-certs.git" ./certs
-          rm -rf ./android/gradle.properties
-          cp -rf ./certs/gradle.properties ./android/gradle.properties
-          cat ./packaging.config >> ./android/gradle.properties
-          cat ./android/gradle.properties
-          # Pull env variables from certs repo
-          # It will inject sentry token in the JS thread
-          cp -rf ./certs/.env ./
-          rm -rf /tmp/android-release.keystore
-          cp -rf ./android-release.keystore /tmp/android-release.keystore
-          yarn update-android-id
-      - name: Set build number env vars
-        id: set-build-env
-        run: |
-          echo "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
-          echo "BUILD_TAG=$(node print-build-number|tr -s ' ' '_')" >> $GITHUB_ENV
+  #     - name: Install and lint
+  #       run: |
+  #         git config --global url."https://".insteadOf git://
+  #         echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+  #         yarn install
+  #         yarn postinstall
+  #         git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/react-native-sdk.git" ../wallet-sdk
+  #         yarn --cwd ../wallet-sdk install
+  #         yarn sync-sdk
+  #         yarn build-sdk
+  #         rm -rf ./certs
+  #         git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/docknetwork/dock-app-certs.git" ./certs
+  #         rm -rf ./android/gradle.properties
+  #         cp -rf ./certs/gradle.properties ./android/gradle.properties
+  #         cat ./packaging.config >> ./android/gradle.properties
+  #         cat ./android/gradle.properties
+  #         # Pull env variables from certs repo
+  #         # It will inject sentry token in the JS thread
+  #         cp -rf ./certs/.env ./
+  #         rm -rf /tmp/android-release.keystore
+  #         cp -rf ./android-release.keystore /tmp/android-release.keystore
+  #         yarn update-android-id
+  #     - name: Set build number env vars
+  #       id: set-build-env
+  #       run: |
+  #         echo "BUILD_NUMBER=$(node print-build-number)" >> $GITHUB_ENV
+  #         echo "BUILD_TAG=$(node print-build-number|tr -s ' ' '_')" >> $GITHUB_ENV
 
-      - name: Install Fastlane
-        run: gem install fastlane
+  #     - name: Install Fastlane
+  #       run: gem install fastlane
 
-      - name: Build APK
-        env:
-          APK_LOCATION: "release/dock-wallet.apk"
-        run: |
-          echo "${{env.BUILD_NUMBER}}"
-          cd ./android
-          fastlane package_apk
-          mkdir release
-          cp "app/build/outputs/apk/release/app-release.apk" ${{env.APK_LOCATION}}
+  #     - name: Build APK
+  #       env:
+  #         APK_LOCATION: "release/dock-wallet.apk"
+  #       run: |
+  #         echo "${{env.BUILD_NUMBER}}"
+  #         cd ./android
+  #         fastlane package_apk
+  #         mkdir release
+  #         cp "app/build/outputs/apk/release/app-release.apk" ${{env.APK_LOCATION}}
 
-      - name: Upload to S3
-        id: upload_s3
-        env:
-          S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY }}
-          S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
-          S3_APP_BUCKET: ${{ secrets.S3_APP_BUCKET }}
-          S3_REGION: ${{ secrets.S3_REGION }}
-          S3_ANDROID_APK_DIR: ${{matrix.app}}
-          S3_ACL: ${{ secrets.S3_ACL }}
-          APK_LOCATION: "release/dock-wallet.apk"
-        run: |
-          echo ::set-output name=build_tag::${{env.BUILD_TAG}}
-          cd ./android
-          fastlane s3_upload
+  #     - name: Upload to S3
+  #       id: upload_s3
+  #       env:
+  #         S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY }}
+  #         S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
+  #         S3_APP_BUCKET: ${{ secrets.S3_APP_BUCKET }}
+  #         S3_REGION: ${{ secrets.S3_REGION }}
+  #         S3_ANDROID_APK_DIR: ${{matrix.app}}
+  #         S3_ACL: ${{ secrets.S3_ACL }}
+  #         APK_LOCATION: "release/dock-wallet.apk"
+  #       run: |
+  #         echo ::set-output name=build_tag::${{env.BUILD_TAG}}
+  #         cd ./android
+  #         fastlane s3_upload
 
   run-white-label-ios-builds:
     runs-on: macos-latest
@@ -201,6 +201,11 @@ jobs:
           cd ./ios
           pod install
           fastlane build_no_upload
+
+      - name: Print build logs
+        if: always()
+        run: |
+          cat /Users/runner/Library/Logs/gym/DockApp-DockApp.log
 
       - name: Upload to S3
         env:
