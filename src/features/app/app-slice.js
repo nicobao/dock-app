@@ -12,6 +12,7 @@ import {
   WalletEvents,
 } from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
 import {NetworkManager} from '@docknetwork/wallet-sdk-core/lib/modules/network-manager';
+import {createDefaultDID} from '../didManagement/didManagment-slice';
 
 export const BiometryType = {
   FaceId: Keychain.BIOMETRY_TYPE.FACE_ID,
@@ -158,6 +159,10 @@ export const appOperations = {
 
     wallet.eventManager.on(WalletEvents.migrated, () => {
       SplashScreen.hide();
+    });
+
+    wallet.eventManager.on(WalletEvents.walletDeleted, () => {
+      createDefaultDID();
     });
 
     wallet.eventManager.on(WalletEvents.ready, () => {
