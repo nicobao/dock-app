@@ -184,7 +184,7 @@ export function ensureDIDDockFragment(keyDoc) {
     return keyDoc;
   }
 
-  keyDoc.controller = `${keyDoc.controller}#keys-1`;
+  keyDoc.id = keyDoc.id.replace(/#.+/, '#keys-1');
 
   return keyDoc;
 }
