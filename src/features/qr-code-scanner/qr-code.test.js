@@ -459,7 +459,7 @@ describe('qr-code', () => {
     it('expect to add did frament to did:dock', () => {
       expect(
         ensureDIDDockFragment({
-          controller: didDock,
+          id: didDock,
         }).controller,
       ).toBe(`${didDock}#keys-1`);
     });
@@ -467,7 +467,7 @@ describe('qr-code', () => {
     it('expect to NOT add did frament to did:key', () => {
       expect(
         ensureDIDDockFragment({
-          controller: didKey,
+          id: didKey,
         }).controller,
       ).toBe(didKey);
     });
@@ -476,7 +476,7 @@ describe('qr-code', () => {
       const did = `${didDock}#another-fragment`;
       expect(
         ensureDIDDockFragment({
-          controller: did,
+          id: did,
         }).controller,
       ).toBe(did);
     });
