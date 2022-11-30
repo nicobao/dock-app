@@ -460,7 +460,7 @@ describe('qr-code', () => {
       expect(
         ensureDIDDockFragment({
           id: didDock,
-        }).controller,
+        }).id,
       ).toBe(`${didDock}#keys-1`);
     });
 
@@ -468,7 +468,7 @@ describe('qr-code', () => {
       expect(
         ensureDIDDockFragment({
           id: didKey,
-        }).controller,
+        }).id,
       ).toBe(didKey);
     });
 
@@ -477,8 +477,8 @@ describe('qr-code', () => {
       expect(
         ensureDIDDockFragment({
           id: did,
-        }).controller,
-      ).toBe(did);
+        }).id,
+      ).toBe(`${didDock}#keys-1`);
     });
   });
 
