@@ -41,6 +41,14 @@ const createKeyDID = async (keyDoc, didDocumentCustomProp = {}) => {
 };
 
 export const createDefaultDID = async () => {
+  const didDocs = await wallet.query({
+    type: 'DIDResolutionResponse',
+  });
+
+  if (didDocs.length) {
+    return;
+  }
+
   const keyDocs = await wallet.query({
     type: 'Ed25519VerificationKey2018',
   });
