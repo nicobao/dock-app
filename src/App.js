@@ -53,11 +53,6 @@ export function GlobalComponents() {
 
   useEffect(() => {
     if (status === 'ready') {
-      createDefaultDID();
-    }
-  }, [dispatch, status]);
-  useEffect(() => {
-    if (status === 'ready') {
       migrateInvalidKeyDoc();
     }
   }, [migrateInvalidKeyDoc, status]);

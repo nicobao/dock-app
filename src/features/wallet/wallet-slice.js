@@ -21,6 +21,8 @@ import Clipboard from '@react-native-community/clipboard';
 import {pickDocument, readFile} from '../../core/storage-utils';
 import {ANALYTICS_EVENT, logAnalyticsEvent} from '../analytics/analytics-slice';
 import {authenticationActions} from '../unlock-wallet/unlock-wallet-slice';
+import { createDefaultDID } from '../didManagement/didManagment-slice';
+
 const initialState = {
   loading: true,
   passcode: null,
@@ -302,9 +304,7 @@ export const walletOperations = {
 
       dispatch(walletActions.setWalletInfo(walletInfo));
 
-      // if (!flags.importWalletFlow) {
-      // await Wallet.getInstance().create(keychainId);
-      // }
+      await createDefaultDID();
 
       dispatch(walletActions.setCreationFlags({}));
 

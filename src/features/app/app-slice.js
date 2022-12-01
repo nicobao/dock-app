@@ -161,10 +161,6 @@ export const appOperations = {
       SplashScreen.hide();
     });
 
-    wallet.eventManager.on(WalletEvents.walletDeleted, () => {
-      createDefaultDID();
-    });
-
     wallet.eventManager.on(WalletEvents.ready, () => {
       dispatch(appActions.setDockReady(true));
       dispatch(appActions.setRpcReady(true));
