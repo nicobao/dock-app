@@ -17,13 +17,28 @@ const updatePackageId = (sourceFilePath, destinationFilePath) => {
   fs.writeFileSync(destinationFilePath, newFileContent);
 };
 
+const shouldUpdatePackageName = false;
+
 if (OLD_PACKAGE_NAME !== NEW_PACKAGE_NAME) {
   const environments = ['main', 'debug'];
 
   environments.forEach(envVar => {
     const environmentBasePath = path.join('android', 'app', 'src', envVar);
-
     const javaBaseDirectory = path.join(environmentBasePath, 'java', path.sep);
+
+    updatePackageId(
+      path.join('android', 'app', 'build.gradle'),
+      path.join('android', 'app', 'build.gradle'),
+    );
+
+    if (!shouldUpdatePackageName) {
+      return;
+    }
+
+    updatePackageId(
+      path.join(environmentBasePath, 'AndroidManifest.xml'),
+      path.join(environmentBasePath, 'AndroidManifest.xml'),
+    );
 
     const newPackageDirectory = path.join(...NEW_PACKAGE_NAME.split('.'));
     const oldPackageDirectory = path.join(...OLD_PACKAGE_NAME.split('.'));
@@ -45,25 +60,18 @@ if (OLD_PACKAGE_NAME !== NEW_PACKAGE_NAME) {
       const oldFileContent = fs.readFileSync(filePath,
         'ascii',
       );
-      const pattern = `package ${OLD_PACKAGE_NAME};`;
+      const pattern = `package ${OLD_PACKAGE_NAME}`;
       const newFileContent = oldFileContent.replace(
         new RegExp(pattern, 'g'),
-        `package ${NEW_PACKAGE_NAME};`,
+        `package ${NEW_PACKAGE_NAME}`,
       );
       const dirName = path.dirname(newFileDestination);
 
       fs.ensureDirSync(dirName);
       fs.writeFileSync(newFileDestination, newFileContent);
     }
+
     fs.rmdirSync(oldFullPath, {recursive: true});
 
-    updatePackageId(
-      path.join(environmentBasePath, 'AndroidManifest.xml'),
-      path.join(environmentBasePath, 'AndroidManifest.xml'),
-    );
-    updatePackageId(
-      path.join('android', 'app', 'build.gradle'),
-      path.join('android', 'app', 'build.gradle'),
-    );
   });
 }
