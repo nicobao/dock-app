@@ -12,7 +12,6 @@ import {
   WalletEvents,
 } from '@docknetwork/wallet-sdk-core/lib/modules/wallet';
 import {NetworkManager} from '@docknetwork/wallet-sdk-core/lib/modules/network-manager';
-import {createDefaultDID} from '../didManagement/didManagment-slice';
 
 export const BiometryType = {
   FaceId: Keychain.BIOMETRY_TYPE.FACE_ID,
