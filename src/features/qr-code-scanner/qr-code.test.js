@@ -13,6 +13,7 @@ import {
   qrCodeHandlers,
   onScanEncryptedWallet,
   getWeb3IdErrorMessage,
+  ensureDIDDockFragment,
 } from './qr-code';
 import {navigate} from '../../core/navigation';
 import {Routes} from '../../core/routes';
@@ -450,6 +451,37 @@ describe('qr-code', () => {
       expect(qrCodeHandlers.includes(onPresentationScanned)).toBeTruthy();
     });
   });
+
+  describe('ensureDIDDockFragment', () => {
+    const didDock = 'did:dock:5CNunNiQbFXnf5bC555nGzqfgcEA7rgQprhLYc7Yz5pVkA42';
+    const didKey = 'did:key:5CNunNiQbFXnf5bC555nGzqfgcEA7rgQprhLYc7Yz5pVkA42';
+
+    it('expect to add did frament to did:dock', () => {
+      expect(
+        ensureDIDDockFragment({
+          id: didDock,
+        }).id,
+      ).toBe(`${didDock}#keys-1`);
+    });
+
+    it('expect to NOT add did frament to did:key', () => {
+      expect(
+        ensureDIDDockFragment({
+          id: didKey,
+        }).id,
+      ).toBe(didKey);
+    });
+
+    it('expect to NOT add did frament to did:dock if fragment exists', () => {
+      const did = `${didDock}#another-fragment`;
+      expect(
+        ensureDIDDockFragment({
+          id: did,
+        }).id,
+      ).toBe(`${didDock}#keys-1`);
+    });
+  });
+
   describe('onScanEncryptedWallet', () => {
     it('Include import encrypted wallet QR handler', () => {
       expect(qrCodeHandlers.includes(onScanEncryptedWallet)).toBeTruthy();
